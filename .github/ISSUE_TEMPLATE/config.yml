@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Strapi Project Issues
+    url: https://github.com/strapi/strapi/issues
+    about: Please use the strapi/strapi repo for these issues.
