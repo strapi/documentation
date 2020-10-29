@@ -51,10 +51,20 @@ The core team will review your pull request and will either merge it, request ch
 ### Repository Organization
 
 We have various types of documentation that are maintained on their own:
+
 - developer-docs
   - This documentation is tailored for developers and administrators and provide documentation on the technical aspects of Strapi
 - user-docs
   - This documentation is tailored for users and content-creators of Strapi and outline the user interface and usage of Strapi
+
+We have a few primary branches that are used for different purposes:
+
+- main
+  - This branch is used by the Strapi to push documentation on new features before they are released, it should not be used for PRs by the community unless instructed to do so by a Strapi team member
+- documentation
+  - This branch is for the current released version of Strapi, all documentation requests, updates, and removals should be pointed here
+- docs/*
+  - This collection of branches is for current work in progress changes, Strapi team members push our changes here to make PRs against the documentation branch
 
 ### Reporting an issue
 
