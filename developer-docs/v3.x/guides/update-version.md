@@ -18,8 +18,7 @@ For example moving from `3.0.4` to `3.0.5`
   "dependencies": {
     "strapi": "3.0.5",
     "strapi-admin": "3.0.5",
-    "strapi-hook-bookshelf": "3.0.5",
-    "strapi-hook-knex": "3.0.5",
+    "strapi-connector-bookshelf": "3.0.5",
     "strapi-plugin-content-manager": "3.0.5",
     "strapi-plugin-content-type-builder": "3.0.5",
     "strapi-plugin-email": "3.0.5",
@@ -42,8 +41,7 @@ For example moving from `3.0.4` to `3.0.5`
   "dependencies": {
     "strapi": "3.0.6",
     "strapi-admin": "3.0.6",
-    "strapi-hook-bookshelf": "3.0.6",
-    "strapi-hook-knex": "3.0.6",
+    "strapi-connector-bookshelf": "3.0.6",
     "strapi-plugin-content-manager": "3.0.6",
     "strapi-plugin-content-type-builder": "3.0.6",
     "strapi-plugin-email": "3.0.6",
@@ -60,7 +58,26 @@ For example moving from `3.0.4` to `3.0.5`
 
 ::::
 
-Then run either `yarn install` or `npm install` to install the specified version.
+Install the specified version:
+:::: tabs
+
+::: tab yarn
+
+```bash
+yarn install
+```
+
+:::
+
+::: tab npm
+
+```bash
+npm install
+```
+
+:::
+
+::::
 
 ::: tip
 If the operation doesn't work, you should probably remove your `yarn.lock` or `package-lock.json`. If it still does not work, let's run the hard mode `rm -Rf node_modules`
@@ -77,12 +94,25 @@ rm -rf build
 ```
 
 Build the administration panel:
+:::: tabs
+
+::: tab yarn
 
 ```bash
 yarn build
-# or
+```
+
+:::
+
+::: tab npm
+
+```bash
 npm run build
 ```
+
+:::
+
+::::
 
 ::: tip
 If the operation doesn't work, you should probably remove the `.cache` folder too.
