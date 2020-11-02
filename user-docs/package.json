@@ -1,5 +1,5 @@
 {
-  "name": "developer-docs",
+  "name": "user-docs",
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
@@ -7,10 +7,13 @@
     "build": "vuepress build"
   },
   "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  },
   "dependencies": {
     "@vuepress/plugin-google-analytics": "^1.2.0",
     "@vuepress/plugin-medium-zoom": "^1.2.0",
-    "vuepress": "^1.2.0",
+    "vuepress": "^1.5.3",
     "vuepress-plugin-element-tabs": "^0.1.8",
     "vuepress-plugin-font-awesome": "1.90.6"
   },
