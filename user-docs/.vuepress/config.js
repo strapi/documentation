@@ -155,9 +155,45 @@ module.exports = {
       '/latest/': [
         {
           collapsable: false,
-          title: '🚀 Getting Started',
+          title: '',
           children: [
-            ['/v3.x/getting-started/introduction', 'Introduction'],
+            ['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!'],
+            ['/latest/getting-started/accessing-admin-panel', 'Accessing the admin panel'],
+            ['/latest/getting-started/setting-up-profile', 'Setting up your user profile'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: '📝 Content Manager',
+          children: [
+          ],
+        },
+        {
+          collapsable: false,
+          title: '🖌 Content-Types Builder',
+          children: [
+
+          ],
+        },
+        {
+          collapsable: false,
+          title: '🎟 Users, roles & permissions',
+          children: [
+
+          ],
+        },
+        {
+          collapsable: false,
+          title: '🧩 Plugins',
+          children: [
+
+          ],
+        },
+        {
+          collapsable: false,
+          title: '⚙️ Settings',
+          children: [
+
           ],
         },
       ],
