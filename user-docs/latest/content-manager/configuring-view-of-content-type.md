@@ -1,0 +1,1 @@
+# Configuring the view of a content type
