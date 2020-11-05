@@ -150,7 +150,7 @@ module.exports = {
     editLinks: true,
     editLinkText: 'Improve this page',
     serviceWorker: true,
-    sidebarDepth: 1,
+    sidebarDepth: 2,
     sidebar: {
       '/latest/': [
         {
