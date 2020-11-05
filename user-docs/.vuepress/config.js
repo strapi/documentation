@@ -166,6 +166,11 @@ module.exports = {
           collapsable: false,
           title: '📝 Content Manager',
           children: [
+            ['/latest/content-manager/introduction-to-content-manager', 'Introduction to the Content Manager'],
+            ['/latest/content-manager/writing-content', 'Writing content'],
+            ['/latest/content-manager/configuring-view-of-content-type', 'Configuring the view of a content type'],
+            ['/latest/content-manager/saving-and-publishing-content', 'Saving and publishing content'],
+            ['/latest/content-manager/deleting-content', 'Deleting content'],
           ],
         },
         {
