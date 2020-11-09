@@ -6,7 +6,7 @@ From the Content Manager, admin panel users can create, manage and distribute co
 
 The Content Manager is divided into 2 parts in the admin panel: Collection types and Single types, both accessible from the main navigation.
 
-::: tip TIP
+::: tip 💡 TIP
 If you have many content types, don't hesitate to click the search icon <Fa-Search /> to use a text search and find your content type more quickly.
 :::
 
@@ -21,7 +21,7 @@ Clicking on a collection type redirects to its list view, which displays all ent
 From a collection type's list view, it is possible to:
 
 - search (1) and filter (2) the entries,
-- configure temporarily or permanently the settings of the list view (3),
+- configure the settings of the list view (3),
 - create a new entry (4),
 - click on an entry to access its edit view, from which admin panel users are allowed to:
   - write and edit the content of the entry,
@@ -38,7 +38,7 @@ At the top of the list view, a search bar is displayed. It allows you to make a 
 
 #### Using filters
 
-Right above the list view, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 To set a new filter:
 
@@ -60,11 +60,11 @@ To delete a filter while configuring filters, click on the **-** button on the l
 
 ### Configuring list view settings
 
-The configuration of the list view can be modified either permanently for all users, or temporarily, just for you.
+Right above the list view table, on the right side of the interface, a <Fa-Cog /> button is displayed. It allows to access the settings that can be configured for the list view of the chosen collection type (i.e. Disabling the search or filters for a collection type does not mean that they will also be disabled for all other collection types.).
 
-To permanently modify the list view settings:
+To configure the list view settings: 
 
-1. Click on the <Fa-Cog /> button, right above the table, on the right side of the list view.
+1. Click on the <Fa-Cog /> button.
 2. Click on the **Configure the view** button.
 3. Define your chosen new settings:
 
@@ -84,17 +84,15 @@ To permanently modify the list view settings:
 
 ![Settings of a list view in the Content Manager](../assets/content-manager/content-manager_settings-list-view.png)
 
-::: tip NOTE
-Modifying the configurations of a list view will only apply to that of the chosen collection type. E.g. Disabling the search or filters for a collection type does not mean that they will also be disabled for all other collection types.
-:::
+::: tip 💡 TIP
+Displayed fields can also be configured temporarily (i.e. they are resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager).
 
-To temporarily choose what fields to display:
-
-1. Click on the <Fa-Cog /> button, right above the table, on the right side of the list view.
+1. Click on the <Fa-Cog /> button.
 2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you want to remove from the table.
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
+:::
 
 ### Creating a new entry
 
