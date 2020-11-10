@@ -80,6 +80,7 @@ To configure the list view settings:
    - Click the [+] button to add a new field.
    - Click the [x] button to remove a field.
    - Click the [::] button and drag and drop it to the place you want it to be displayed amond the other fields.
+   - Click the name of the field to edit the label and/or enable or disable sort on that field.
 5. Click on the **Save** button.
 
 ::: tip 💡 TIP
@@ -90,6 +91,15 @@ Displayed fields can also be configured temporarily (i.e. resetted as soon as th
 3. Untick the boxes associated with the fields you want to remove from the table.
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
+:::
+
+::: tip NOTE
+Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
+
+- Only one relational field can be displayed per relation.
+- Only first-level relation fields can be displayed (i.e. we cannot display fields from the relation of a relation).
+- If the displayed field contains more than one value, we will not display all values but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
+
 :::
 
 
