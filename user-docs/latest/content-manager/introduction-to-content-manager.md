@@ -22,7 +22,7 @@ From the list view, it is possible to:
 
 - make a textual search (1) or set filters (2) to find specific entries,
 - create a new entry (3),
-- configure the settings of the list view (4).
+- configure the fields displayed in the table of the list view (4).
 
 ### Filtering entries
 
@@ -52,46 +52,21 @@ On the top right left side of the list view interface, a **Add New [collection t
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the newly created entry (see [Writing content](writing-content.md)).
 
 
-### Configuring list view settings
+### Configuring the table fields
 
-Right above the list view table, on the right side of the interface, a settings <Fa-Cog /> button is displayed. It allows to access the settings that can be configured for the list view of your collection type.
+Right above the list view table, on the right side of the interface, a settings <Fa-Cog /> button is displayed. It allows to access the settings that can be configured for the list view of your collection type (see [Configuring view of content type](../content-types-builder/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
 ::: tip NOTE
-The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-types-builder/configuring-view-of-content-type.md).
 :::
 
-![Settings of a list view in the Content Manager](../assets/content-manager/content-manager_settings-list-view.png)
+![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
 
-To configure the list view settings: 
-
-1. Click on the <Fa-Cog /> button.
-2. Click on the **Configure the view** button.
-3. Define your chosen new settings:
-
-| Setting name           | Instructions                                                                                       |
-| ---------------------- |----------------------------------------------------------------------------------------------------|
-| Enable search          | Click on **ON** or **OFF** to able or disable the search.                                          |
-| Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
-| Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
-| Entries per page       | Choose among the list box the number of entries per page.                                          |
-| Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
-
-4. Define what fields to display in the list view table, and in what order:
-   - Click the [+] button to add a new field.
-   - Click the [x] button to remove a field.
-   - Click the [::] button and drag and drop it to the place you want it to be displayed amond the other fields.
-   - Click the name of the field to edit the label and/or enable or disable sort on that field.
-5. Click on the **Save** button.
-
-::: tip 💡 TIP
-Displayed fields can also be configured temporarily (i.e. resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager).
+To temporarily configure the fields displayed in the table:
 
 1. Click on the <Fa-Cog /> button.
 2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you want to remove from the table.
-
-![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
-:::
 
 ::: tip NOTE
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
