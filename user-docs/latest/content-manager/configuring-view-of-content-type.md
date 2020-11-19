@@ -1,6 +1,6 @@
 # Configuring the view of a content type
 
-Right above the list view table, on the right side of the interface, a settings <Fa-Cog /> button is displayed. It allows to access the settings that can be configured for the list view of your collection type, and to choose which fields to display in the table.
+Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 ::: tip NOTE
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -12,7 +12,7 @@ Note also that the explanations below explain how to permanently configure which
 
 To configure the list view settings: 
 
-1. Click on the <Fa-Cog /> button.
+1. Click on the settings button <Fa-Cog />.
 2. Click on the **Configure the view** button.
 3. Define your chosen new settings:
 
@@ -25,9 +25,9 @@ To configure the list view settings:
 | Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
 
 4. Define what fields to display in the list view table, and in what order:
-   - Click the [+] button to add a new field.
-   - Click the [x] button to remove a field.
-   - Click the [::] button and drag and drop it to the place you want it to be displayed amond the other fields.
+   - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
+   - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
+   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed amond the other fields.
    - Click the name of the field to edit the label and/or enable or disable sort on that field.
 5. Click on the **Save** button.
 

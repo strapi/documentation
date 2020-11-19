@@ -29,7 +29,7 @@ When arriving on the edit view of a content type, if another user is already edi
 
 [screenshot]
 
-From there, you will be able to choose between 2 options:
+From there, you can choose between 2 options:
 
-- Activate the read-only mode, meaning that you will access the edit view of the content type and see its content, but you will not be able to do any action whatsoever, until the other user has finished and saved the current editing.
+- Activate the read-only mode, meaning that you access the edit view of the content type and see its content, but you cannot do any action whatsoever, until the other user has finished and saved the current editing.
 - Take over the editing of the page, meaning that you can edit the content type. However, the other user will see a notification pop up to inform them of your choice, and that their modifications cannot be saved.
