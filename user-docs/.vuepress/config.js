@@ -162,34 +162,34 @@ module.exports = {
         },
         {
           collapsable: false,
-          title: '📝 Content Manager',
+          title: 'Content Manager',
           children: [
           ],
         },
         {
           collapsable: false,
-          title: '🖌 Content-Types Builder',
-          children: [
-
-          ],
-        },
-        {
-          collapsable: false,
-          title: '🎟 Users, roles & permissions',
+          title: 'Content-Types Builder',
           children: [
 
           ],
         },
         {
           collapsable: false,
-          title: '🧩 Plugins',
+          title: 'Users, roles & permissions',
           children: [
 
           ],
         },
         {
           collapsable: false,
-          title: '⚙️ Settings',
+          title: 'Plugins',
+          children: [
+
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Settings',
           children: [
 
           ],
