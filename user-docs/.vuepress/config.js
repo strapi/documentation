@@ -158,8 +158,6 @@ module.exports = {
           title: '',
           children: [
             ['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!'],
-            ['/latest/getting-started/accessing-admin-panel', 'Accessing the admin panel'],
-            ['/latest/getting-started/setting-up-profile', 'Setting up your user profile'],
           ],
         },
         {
