@@ -1,6 +1,6 @@
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi, which is always activated by default and can't be deleted. It is accessible both when the application is in environment development, and in production.
+The Content Manager is a core plugin of Strapi: its is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in environment development, and in production.
 
 The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage and distribute content.
 
@@ -33,8 +33,8 @@ Right above the list view table, on the left side of the interface, a **Filters*
 To set a new filter:
 
 1. Click on the **Filters** button.
-2. Click on the 1st list box to choose the field on which the condition will be applied.
-3. Click on the 2nd list box to choose the type of condition to apply.
+2. Click on the 1st listbox to choose the field on which the condition will be applied.
+3. Click on the 2nd listbox to choose the type of condition to apply.
 4. Enter the value of the condition in the 3rd box.
 5. (optional) Click on the add button ![icon add new](../assets/content-manager/icon_add2.png) to add another condition-based filter.
 6. Click on the **Apply** button.
@@ -45,7 +45,7 @@ When active, filters are displayed next to the **Filters** button. They can be d
 
 ### Creating a new entry
 
-On the top right left side of the list view interface, a **Add New [collection type name]** button is displayed. It allows to create a new entry for your collection type.
+On the top right left side of the list view interface, an **Add New [collection type name]** button is displayed. It allows to create a new entry for your collection type.
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the newly created entry (see [Writing content](writing-content.md)).
 

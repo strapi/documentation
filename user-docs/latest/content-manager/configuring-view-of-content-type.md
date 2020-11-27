@@ -12,7 +12,7 @@ Note also that the explanations below explain how to permanently configure which
 
 To configure the list view settings: 
 
-1. Click on the settings button <Fa-Cog />.
+1. In the list view, click on the settings button <Fa-Cog />.
 2. Click on the **Configure the view** button.
 3. Define your chosen new settings:
 
@@ -21,7 +21,7 @@ To configure the list view settings:
 | Enable search          | Click on **ON** or **OFF** to able or disable the search.                                          |
 | Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
 | Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
-| Entries per page       | Choose among the list box the number of entries per page.                                          |
+| Entries per page       | Choose among the listbox the number of entries per page.                                           |
 | Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
 
 4. Define what fields to display in the list view table, and in what order:
