@@ -2,28 +2,25 @@
 
 This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application. 
 
-> What is Strapi? <br>
-> Strapi is a flexible, open-source, headless CMS (Content Management System) that gives developers the freedom to choose their favorite tools and frameworks while also allowing editors to easily manage and distribute their content. By making the admin panel and API extensible through a plugin system, Strapi enables the world's largest companies to accelerate content delivery while building beautiful digital experiences.
-
 ![Homepage of the Admin Panel](../assets/getting-started/admin-panel-homepage.png)
 
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
 
-- **Development Environment or in Production** <br> Your Strapi application can have 2 statuses. When starting working on your application, it is in development environment. It is made to structure and configure your application and its content the way you want. After deploying your application, it is in production. This status change has impacts on how you can use your Strapi application, as some features are only available in development environment, such as the Content-Types Builder. In the user guide, in the introduction of each Strapi feature, the availability or not of the feature depending on the application status, is always mentioned.
+- **Development environment or Production** <br> When starting working on your application, it is in development environment, which is the status for the structuration and configuration phrase of your application and its content. After deploying your application, it is in production. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-Types Builder. In the user guide, the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
 
 - **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version, especially since our documentation, including this user guide, are only aligned with the latest version. If you are on an older version of Strapi, some information in this documentation may not apply to your application. 
 
-- **Roles and Permissions** <br> Some features of the admin panel, as well as the content created with Strapi itself, are ruled by a system of permissions. From your Strapi application, you have the possibility to define, at a detailed level, who (among both admin panel users and end-users) should belong to which role, access to which feature and under what conditions. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
+- **Roles and Permissions** <br> Some features of the admin panel, as well as the content created with Strapi itself, are ruled by a system of permissions. From your Strapi application, you have the possibility to define, at a detailed level, the roles and permissions of all admin panel users and end-users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
 
 With all this in mind, you should be ready to start your Strapi experience!
 
 
 ## Accessing the admin panel
 
-The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both for the admin panel and your Strapi application.
+The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both admin panel users and end-users of your Strapi application.
 
 ::: tip NOTE
-Strapi can either be used locally, or be hosted on a server, making it available at a specific URL. No matter how you choose to use Strapi, your application will work the same way. The main difference is that, if using it locally, you will need to use your terminal to launch Strapi.
+Strapi can either be used locally, or hosted on a server, making it available at a specific URL. No matter how you choose to use Strapi, your application will work the same way. The main difference is that, if using it locally, you will need to use your terminal to launch Strapi.
 :::
 
 ![User profile](../assets/getting-started/login-page.png)
@@ -56,7 +53,7 @@ To modify your user information:
 | First name             | Write your first name in the textbox.                                                                    |
 | Last name              | Write your last name in the textbox.                                                                     |
 | Email                  | Write your complete email address in the textbox.                                                        |
-| Username               | (optional) Write a username.                                                                             |
+| Username               | (optional) Write a username in the textbox.                                                              |
 | Password               | Write a new password in the textbox. You can click on the eye icon for the password to be shown.         |
 | Confirmation password  | Write the same new password in the textbox. You can click on the eye icon for the password to be shown.  |
 
