@@ -6,7 +6,7 @@ This user guide contains the functional documentation related to all features av
 
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
 
-- **Development, Staging or Production Environment** <br> When starting working on your application, it is in development environment, which is the status for the content structuration and application configuration phase. After deploying your application, it is in production. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-Types Builder. In the user guide, the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
+- **Development, Staging or Production Environment** <br> When starting working on your application, it is in a development environment, which is the status for the content structuration and application configuration phase. After deploying your application, it is in production or staging. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-Types Builder. In the user guide, the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
 
 - **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version, especially since our documentation, including this user guide, are only aligned with the latest<!-- (see Update Strapi version or refer to our migration guides to update your Strapi application) -->. If you are on an older version of Strapi, some information in this documentation may not apply to your application. 
 
@@ -20,7 +20,7 @@ With all this in mind, you should be ready to start your Strapi experience!
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end-users of your Strapi application.
 
 ::: tip IMPORTANT
-In order to access the admin panel, your Strapi application must be launched, and you must be aware of its URL.
+In order to access the admin panel, your Strapi application must be launched<!-- (see Installing Strapi) -->, and you must be aware of its URL.
 :::
 
 ![User profile](../assets/getting-started/login-page.png)
@@ -42,7 +42,7 @@ If you are a new administrator, we recommend making sure your user profile is al
 To modify your user information:
 
 1. Click on your user name in the top right hand corner of the admin panel.
-2. Click on **Profile**.
+2. In the drop-down menu, click on **Profile**.
 3. Modify the information of your choice:
 
 | User information       | Instructions                                                                                             |
