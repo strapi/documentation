@@ -1,8 +1,8 @@
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi: its is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in environment development, and in production.
+The Content Manager is a core plugin of Strapi: its is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage and distribute content.
+The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage and publish content.
 
 ::: tip 💡 TIP
 Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of you content types more quickly!
@@ -40,22 +40,26 @@ To set a new filter:
 6. Click on the **Apply** button.
 
 ::: tip NOTE
-When active, filters are displayed next to the **Filters** button. They can be deactivated by clicking on the delete icon ![icon delete](../assets/content-manager/icon_delete2.png).
+When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![icon delete](../assets/content-manager/icon_delete2.png).
 :::
 
 ### Creating a new entry
 
 On the top right left side of the list view interface, an **Add New [collection type name]** button is displayed. It allows to create a new entry for your collection type.
 
-Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the newly created entry (see [Writing content](writing-content.md)).
+Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
+
+::: tip NOTE
+New entries are only considered created, therefore listed in the list view, once they have been saved at least once.
+:::
 
 
 ### Configuring the table fields
 
-Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring view of content type](../content-types-builder/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
+Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
 ::: tip NOTE
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-types-builder/configuring-view-of-content-type.md).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md).
 :::
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
@@ -64,14 +68,14 @@ To temporarily configure the fields displayed in the table:
 
 1. Click on the settings button <Fa-Cog />.
 2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
-3. Untick the boxes associated with the fields you want to remove from the table.
+3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
 ::: tip NOTE
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
 
-- Only one relational field can be displayed per relation.
-- Only first-level relation fields can be displayed (i.e. we cannot display fields from the relation of a relation).
-- If the displayed field contains more than one value, we will not display all values but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
+- Only one field can be displayed per relational field.
+- Only first-level fields can be displayed (i.e. fields from the relation of a relation can't be displayed).
+- If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
 
 :::
 

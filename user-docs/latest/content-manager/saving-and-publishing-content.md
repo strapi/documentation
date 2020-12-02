@@ -1,6 +1,6 @@
 # Saving, publishing and deleting content
 
-Strapi allows your to manage your content throughout its whole lifecycle, whether your are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
+Strapi allows you to manage your content throughout its whole lifecycle, whether your are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
 
 ## Saving & publishing content
 
@@ -35,14 +35,12 @@ To unpublish content, click on the **Unpublish** button in the top right corner 
 
 ## Deleting content
 
-For collection types, you can delete content by deleting entries of that collection type:
+You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
-1. In the edit view of the entry, click on the **Delete this entry** button.
+1. In the edit view of the entry, click on the **Delete this entry** button, located on the right of the interface, below the Information box.
 2. In the window that pops up, click on the **Yes, confirm** button to confirm the deletion.
 
 ::: tip 💡 TIP
 You can also delete entries from the list view of a collection type. To do so, select one or more entries in the table, and click the trash icon.
 :::
 
-
-For single types, it is not possible to delete content through the Content Manager. You must go to the Content-Types Builder and delete your single type from there.

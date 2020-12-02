@@ -29,20 +29,25 @@ To write or edit content:
 
 Components are a combination of several fields. Writing their content works exactly like for independant fields. They differ in their display, since the fields of a component are grouped together.
 
+There are however 2 types of components: repeatable and non-repeatable components. Repeatable components allow to create multiple component entries, that follow the same combination of fields. These component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
+
+- Use the drag & drop button ![icon dragdrop](../assets/content-manager/icon_dragdrop.png) to reorder entries of your repeatable component.
+- Use the trash button ![icon delete](../assets/content-manager/icon_delete3.png) to delete an entry from your repeatable component.
+
 ![Writing content for a component](../assets/content-manager/edit-view_component.png)
 
 ### Dynamic zones
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
+![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone1.png)
+![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone3.png)
+
 1. Click on the ![icon add to content](../assets/content-manager/icon_add3.png) **Add to content** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
 
-![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone1.png)
-![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone2.png)
-
-In contrary to regular fields and components, dynamic zones can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the dynamic zone area.
+Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
 - Use the arrow button ![icon reorder](../assets/content-manager/icon_reorder.png) to reorder components in your dynamic zone.
 - Use the trash button ![icon delete](../assets/content-manager/icon_delete3.png) to delete a component from your dynamic zone.
