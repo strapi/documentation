@@ -34,8 +34,8 @@ To configure the list view settings:
 ::: tip NOTE
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
 
-- Only one relational field can be displayed per relation.
-- Only first-level relation fields can be displayed (i.e. we cannot display fields from the relation of a relation).
-- If the displayed field contains more than one value, we will not display all values but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
+- Only one field can be displayed per relational field.
+- Only first-level fields can be displayed (i.e. fields from the relation of a relation can't be displayed).
+- If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
 
 :::

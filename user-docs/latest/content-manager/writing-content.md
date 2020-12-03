@@ -27,14 +27,43 @@ To write or edit content:
 
 ### Components
 
-Components are a combination of several fields. Writing their content works exactly like for independant fields. They differ in their display, since the fields of a component are grouped together.
+Components are a combination of several fields, which are displayed grouped together in the edit view. Writing their content works exactly like for independant fields, but there are some specificities to components.
 
-There are however 2 types of components: repeatable and non-repeatable components. Repeatable components allow to create multiple component entries, that follow the same combination of fields. These component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
+There are 2 types of components: non-repeatable and repeatable components.
+
+#### Non-repeatable components
+
+![Writing content for a component](../assets/content-manager/edit-view_component3.png)
+![Writing content for a component](../assets/content-manager/edit-view_component2.png)
+
+Non-repeatable components are a combination of fields which can be used only once.
+
+By default, the combination of fields are not directly displayed in the edit view:
+
+1. Click on the ![icon add to content](../assets/content-manager/icon_add3.png) button to add the component.
+2. Fill in the fields of the component.
+
+To delete the non-repeatable component, click on the trash button ![icon delete](../assets/content-manager/icon_delete3.png), located on the top right corner of the component area.
+
+#### Repeatable components
+
+![Writing content for a component](../assets/content-manager/edit-view_component4.png)
+
+Repeatable components are also a combination of fields, but they allow to create multiple component entries, all following the same combination of fields. 
+
+To add a new entry and display its combination of fields:
+
+1. Click on the ![icon add to content](../assets/content-manager/icon_add4.png) **Add new entry** button.
+2. Fill in the fields of the component.
+
+The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
 - Use the drag & drop button ![icon dragdrop](../assets/content-manager/icon_dragdrop.png) to reorder entries of your repeatable component.
 - Use the trash button ![icon delete](../assets/content-manager/icon_delete3.png) to delete an entry from your repeatable component.
 
-![Writing content for a component](../assets/content-manager/edit-view_component.png)
+::: tip NOTE
+Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end-users will read/see the content.
+:::
 
 ### Dynamic zones
 
@@ -56,6 +85,7 @@ Dynamic zones' components can also be reordered or deleted directly in the edit 
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end-users will read/see the content.
 :::
 
+<!--
 ## Collaborating on content writing
 
 Contents created with Strapi may be edited by several admin panel users. Since these contents cannot be versioned, and to prevent any content loss, Strapi automatically informs users of concurrent edition situations.
@@ -66,3 +96,4 @@ From there, you can choose between 2 options:
 
 - Activate the read-only mode, meaning that you access the edit view of the content type and see its content, but you cannot do any action whatsoever, until the other user has finished and saved the current editing.
 - Take over the editing of the page, meaning that you can edit the content type. However, the other user will see a notification pop up to inform them of your choice, and that their modifications cannot be saved.
+-->

@@ -50,7 +50,7 @@ On the top right left side of the list view interface, an **Add New [collection 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
 ::: tip NOTE
-New entries are only considered created, therefore listed in the list view, once they have been saved at least once.
+New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
 :::
 
 
