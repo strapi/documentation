@@ -1,6 +1,6 @@
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi: its is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
+The Content Manager is a core plugin of Strapi: it is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
 The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage and publish content.
 
@@ -24,6 +24,10 @@ From the list view, it is possible to:
 - create a new entry (3),
 - configure the fields displayed in the table of the list view (4).
 
+::: tip 💡 TIP
+Sorting can be enabled for any field displayed in the list view table (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
+:::
+
 ### Filtering entries
 
 Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
@@ -45,7 +49,7 @@ When active, filters are displayed next to the **Filters** button. They can be r
 
 ### Creating a new entry
 
-On the top right left side of the list view interface, an **Add New [collection type name]** button is displayed. It allows to create a new entry for your collection type.
+On the top right side of the list view interface, an **Add New [collection type name]** button is displayed. It allows to create a new entry for your collection type.
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
@@ -75,7 +79,12 @@ Relational fields can also be displayed in the list view. There are however some
 
 - Only one field can be displayed per relational field.
 - Only first-level fields can be displayed (i.e. fields from the relation of a relation can't be displayed).
-- If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
+- If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see in a tooltip an extract of the values of the relational field.
+
+Note also that relational fields have a couple limitations when it comes to sorting options:
+
+- Sorting cannot be enabled for relational fields which display several fields.
+- Relational fields cannot be set as default sort.
 
 :::
 
