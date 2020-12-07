@@ -1,8 +1,8 @@
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi: it is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
+The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage and publish content.
+The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage, and publish content.
 
 ::: tip 💡 TIP
 Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of you content types more quickly!
@@ -10,9 +10,9 @@ Click the search icon <Fa-Search /> in the main navigation to use a text search 
 
 ## Collection types
 
-The *Collection types* category of the Content Manager displays the list of available collection types, which are directly accessible from the main navigation of the admin panel.
+The *Collection types* category of the Content Manager displays the list of available collection types which are directly accessible from the main navigation of the admin panel.
 
-For each available collection type, multiple entries can be created, which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
+For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
 
 The list view of a collection type displays all entries created for that collection type.
 
@@ -63,7 +63,7 @@ New entries are only considered created once some of their content has been writ
 Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
 ::: tip NOTE
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be resetted as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md).
 :::
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
