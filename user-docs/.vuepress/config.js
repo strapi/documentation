@@ -167,6 +167,7 @@ module.exports = {
             ['/latest/content-manager/introduction-to-content-manager', 'Introduction to the Content Manager'],
             ['/latest/content-manager/configuring-view-of-content-type', 'Configuring the view of a content type'],
             ['/latest/content-manager/writing-content', 'Writing content'],
+            ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
             ['/latest/content-manager/saving-and-publishing-content', 'Saving, publishing and deleting content'],
           ],
         },
