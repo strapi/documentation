@@ -1144,7 +1144,7 @@
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-google-analytics@^1.2.0":
+"@vuepress/plugin-google-analytics@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.7.1.tgz#c337e13c8a27f6fea911a04db22a3f3596a571fb"
   integrity sha512-27fQzRMsqGYpMf+ruyhsdfLv/n6z6b6LutFLE/pH66Itlh6ox9ew31x0pqYBbWIC/a4lBfXYUwFvi+DEvlb1EQ==
@@ -1156,7 +1156,7 @@
   dependencies:
     cross-spawn "^6.0.5"
 
-"@vuepress/plugin-medium-zoom@^1.2.0":
+"@vuepress/plugin-medium-zoom@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-medium-zoom/-/plugin-medium-zoom-1.7.1.tgz#170598bba9941dbd047cffaa659023db8f46e337"
   integrity sha512-pYI6myr4bi9SYzvR6D4r7+YpjpXgudCbontXKZIARS7hJ+kVBapVYnetrbeNFKq+7a/QGOkAuAK2j39dQLaMXQ==
@@ -8114,10 +8114,10 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-element-tabs@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-element-tabs/-/vuepress-plugin-element-tabs-0.1.8.tgz#13a7a69fd3fe1325a4d0e649c7fff571640518d5"
-  integrity sha512-BVG/ooJpuNpuh1XEsXlOf3V21A8JDWqN3KPF0BzH3v28bOxvC8ZoFfG+OsbJYTHYNJYGGaAZoyFb9IbWiCVpyg==
+vuepress-plugin-element-tabs@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-element-tabs/-/vuepress-plugin-element-tabs-0.2.8.tgz#7e52c97090156c11b18450f848cd4a5767f76502"
+  integrity sha512-wyZNM++o5nIncgqHBHwlDf8B5o5o235ZWRFjLGgFiXY5Zds7Hl/fB0DL54skqNSP6Vn2MOEPd9pyYBW+piYjwA==
   dependencies:
     node-sass "^4.11.0"
     resize-observer-polyfill "^1.5.1"
@@ -8133,6 +8133,11 @@ vuepress-plugin-font-awesome@1.90.6:
     "@fortawesome/vue-fontawesome" "^0.1.6"
     yargs "^13.3.0"
 
+vuepress-plugin-seo@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-seo/-/vuepress-plugin-seo-0.1.4.tgz#be8e5577491c1fc317a7ad4abe3ae51ff317be1e"
+  integrity sha512-foNKrAAKihiC47bx0UXFzs/+BIFmnowTQsLVF/8pfsnsPDp8FXjkTGyjxyjOhbwj7ADPv32CdX3pEoYGnZ7OjA==
+
 vuepress-plugin-smooth-scroll@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/vuepress-plugin-smooth-scroll/-/vuepress-plugin-smooth-scroll-0.0.3.tgz#6eff2d4c186cca917cc9f7df2b0af7de7c8c6438"
@@ -8140,7 +8145,7 @@ vuepress-plugin-smooth-scroll@^0.0.3:
   dependencies:
     smoothscroll-polyfill "^0.4.3"
 
-vuepress@^1.5.3:
+vuepress@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-1.7.1.tgz#bb0e139d8c407a0b5aa962cf9577832a5808937e"
   integrity sha512-AdA3do1L4DNzeF8sMTE+cSUJ5hR/6f3YujU8DVowi/vFOg/SX2lJF8urvDkZUSXzaAT6aSgkI9L+B6D+i7SJjA==
