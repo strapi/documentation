@@ -21,7 +21,7 @@ To configure the list view settings:
 | Enable search          | Click on **ON** or **OFF** to able or disable the search.                                          |
 | Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
 | Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
-| Entries per page       | Choose among the listbox the number of entries per page.                                           |
+| Entries per page       | Choose among the drop-down list the number of entries per page.                                    |
 | Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
 
 4. Define what fields to display in the list view table, and in what order:

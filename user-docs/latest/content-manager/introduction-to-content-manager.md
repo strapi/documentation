@@ -37,8 +37,8 @@ Right above the list view table, on the left side of the interface, a **Filters*
 To set a new filter:
 
 1. Click on the **Filters** button.
-2. Click on the 1st listbox to choose the field on which the condition will be applied.
-3. Click on the 2nd listbox to choose the type of condition to apply.
+2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
+3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value of the condition in the 3rd box.
 5. (optional) Click on the add button ![icon add new](../assets/content-manager/icon_add2.png) to add another condition-based filter.
 6. Click on the **Apply** button.
@@ -75,16 +75,7 @@ To temporarily configure the fields displayed in the table:
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
 ::: tip NOTE
-Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
-
-- Only one field can be displayed per relational field.
-- Only first-level fields can be displayed (i.e. fields from the relation of a relation can't be displayed).
-- If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see in a tooltip an extract of the values of the relational field.
-
-Note also that relational fields have a couple limitations when it comes to sorting options:
-
-- Sorting cannot be enabled for relational fields which display several fields.
-- Relational fields cannot be set as default sort.
+Relational fields can also be displayed in the list view. Please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 
 :::
 

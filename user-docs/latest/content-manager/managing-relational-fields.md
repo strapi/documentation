@@ -1,6 +1,6 @@
 # Managing relational fields
 
-Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type. These fields are called "relational fields".
+Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".
 
 Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). 
 
@@ -18,39 +18,49 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 ![Relational fields box in the edit view](../assets/content-manager/edit-view_relational-fields.png)
 
-The relational fields of a content-type are managed from the Relational fields box, located in the right side of the edit view interface. It lists the names of the relational fields. Under each relational field name is displayed a listbox containing all available entry titles.
+The relational fields of a content-type are managed from the Relational fields box, located in the right side of the edit view interface. It lists the names of the relational fields. Under each relational field name is displayed a drop-down list containing all available entry titles.
 
 The Relational fields box allows to choose which entries the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
+::: tip 💡 TIP
+Instead of choosing an entry by scrolling the list, you can click any drop-down list from the Relational fields box and type to search a specific entry.
+:::
+
+::: tip NOTE
+If the Draft & Publish feature (see [Saving, publishing and deleting content](saving-and-publishing-content.md)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
+:::
+
 ## Managing one-choice relational fields
 
-Many-to-one and one-to-one types of relation only allow to choose one entry per relational field.
+Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
 <img src="../assets/content-manager/RF_one-choice.png" width="45%">
 
 To select the only relevant relational field's entry:
 
-1. In the Relational fields box of your content-type's edit view, click on the listbox of the relational field.
+1. In the Relational fields box of your content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 
 ::: tip 💡 TIP
-Click on **Details** to be redirected to the edit view of the content-type the relational field originally belongs to.
+Click on **Details** to be redirected to the edit view of the content-type the relational field originally belongs to. Make sure you save your page first, to avoid losing your last modifications.
 :::
+
+To remove the entry selected in the drop-down list, click on the ![icon delete](../assets/content-manager/icon_delete6.png) button.
 
 ## Managing multiple-choices relational fields
 
-Many-to-many and one-to-many types of relation allow to choose several entries per relational field.
+Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
 <img src="../assets/content-manager/RF_multiple-choices.png" width="40%">
 
 To select the relevant relational field's entries:
 
-1. In the Relational fields box of your content-type's edit view, click on the listbox of the relational field.
+1. In the Relational fields box of your content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 3. Repeat step 2 until all relevant entries have been chosen.
 
 ::: tip 💡 TIP
-All selected entries are listed right below the listbox. Click on the name of an entry to be redirected to the edit view of the content-type the relational field originally belongs to.
+All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the content-type the relational field originally belongs to.
 :::
 
 To remove an entry, click on the ![icon delete](../assets/content-manager/icon_delete5.png) button in the selected entries list.
