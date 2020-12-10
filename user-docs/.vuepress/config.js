@@ -175,7 +175,7 @@ module.exports = {
           collapsable: false,
           title: 'Content-Types Builder',
           children: [
-
+            ['/latest/content-types-builder/introduction-to-content-types-builder', 'Introduction to the Content-Types Builder'],
           ],
         },
         {
