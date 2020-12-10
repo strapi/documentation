@@ -19,7 +19,7 @@ With all this in mind, you should be ready to start your Strapi experience!
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end-users of your Strapi application.
 
-::: tip IMPORTANT
+::: warning IMPORTANT
 In order to access the admin panel, your Strapi application must be launched<!-- (see Installing Strapi) -->, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
 :::
 
@@ -32,9 +32,9 @@ To access the admin panel:
 3. Click on the **Log in** button. You should be redirected to the homepage of the admin panel.
 
 
-## Setting up your user profile
+## Setting up your administrator profile
 
-If you are a new administrator, we recommend making sure your user profile is all set, before diving into your Strapi application. From your admin panel user profile, you are able to modify your user information, such as name, username, email or password.
+If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information, such as name, username, email or password.
 
 ![User profile](../assets/getting-started/user-information-profile.png)
 
