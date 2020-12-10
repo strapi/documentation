@@ -88,7 +88,7 @@ Unlike regular fields, the order of the fields and components inside a dynamic f
 <!--
 ## Collaborating on content writing
 
-Contents created with Strapi may be edited by several admin panel users. Since these contents cannot be versioned, and to prevent any content loss, Strapi automatically informs users of concurrent edition situations.
+Contents created with Strapi may be edited by several administrators. Since these contents cannot be versioned, and to prevent any content loss, Strapi automatically informs users of concurrent edition situations.
 
 When arriving on the edit view of a content type, if another user is already editing it, you will see the following window pop up on your screen.
 

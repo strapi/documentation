@@ -2,10 +2,10 @@
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, admin panel users can create, manage, and publish content.
+The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip 💡 TIP
-Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of you content types more quickly!
+Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of your content types more quickly!
 :::
 
 ## Collection types
@@ -53,7 +53,7 @@ On the top right side of the list view interface, an **Add New [collection type 
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
-::: tip NOTE
+::: warning IMPORTANT
 New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
 :::
 
