@@ -236,53 +236,47 @@ module.exports = {
 		serviceWorker: true,
 		sidebarDepth: 2,
 		sidebar: {
-			'/latest/': [
-				{
-					collapsable: false,
-					title: '',
-					children: [['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!']],
-				},
-				{
-					collapsable: false,
-					title: 'Content Manager',
-					children: [
-						[
-							'/latest/content-manager/introduction-to-content-manager',
-							'Introduction to the Content Manager',
-						],
-						[
-							'/latest/content-manager/configuring-view-of-content-type',
-							'Configuring the view of a content type',
-						],
-						['/latest/content-manager/writing-content', 'Writing content'],
-						['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
-						[
-							'/latest/content-manager/saving-and-publishing-content',
-							'Saving, publishing and deleting content',
-						],
-					],
-				},
-				{
-					collapsable: false,
-					title: 'Content-Types Builder',
-					children: [],
-				},
-				{
-					collapsable: false,
-					title: 'Users, Roles, & Permissions',
-					children: [],
-				},
-				{
-					collapsable: false,
-					title: 'Plugins',
-					children: [],
-				},
-				{
-					collapsable: false,
-					title: 'Settings',
-					children: [],
-				},
-			],
-		},
-	},
+      '/latest/': [
+        {
+          collapsable: false,
+          title: '',
+          children: [
+            ['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Content Manager',
+          children: [
+            ['/latest/content-manager/introduction-to-content-manager', 'Introduction to the Content Manager'],
+            ['/latest/content-manager/configuring-view-of-content-type', 'Configuring the view of a content type'],
+            ['/latest/content-manager/writing-content', 'Writing content'],
+            ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
+            ['/latest/content-manager/saving-and-publishing-content', 'Saving, publishing and deleting content'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Content-Types Builder',
+          children: [
+            ['/latest/content-types-builder/introduction-to-content-types-builder', 'Introduction to the Content-Types Builder'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Users, roles & permissions',
+          children: [
+            ['/latest/users-roles-permissions/introduction-to-users-roles-permissions', 'Introduction to users, roles & permissions'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Plugins',
+          children: [
+            ['/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
+          ],
+        },
+      ],
+    }
+  },
 };
