@@ -175,28 +175,21 @@ module.exports = {
           collapsable: false,
           title: 'Content-Types Builder',
           children: [
-
+            ['/latest/content-types-builder/introduction-to-content-types-builder', 'Introduction to the Content-Types Builder'],
           ],
         },
         {
           collapsable: false,
           title: 'Users, roles & permissions',
           children: [
-
+            ['/latest/users-roles-permissions/introduction-to-users-roles-permissions', 'Introduction to users, roles & permissions'],
           ],
         },
         {
           collapsable: false,
           title: 'Plugins',
           children: [
-
-          ],
-        },
-        {
-          collapsable: false,
-          title: 'Settings',
-          children: [
-
+            ['/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
           ],
         },
       ],
