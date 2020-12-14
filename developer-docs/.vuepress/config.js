@@ -1,281 +1,363 @@
 module.exports = {
-  title: null,
-  description: 'The headless CMS developers love.',
-  base: '/documentation/',
-  plugins: [
-    '@vuepress/medium-zoom',
-    'vuepress-plugin-element-tabs',
-    [
-      '@vuepress/google-analytics',
-      {
-        ga: 'UA-54313258-1',
-      },
-    ],
-  ],
-  head: [
-    [
-      'link',
-      {
-        rel: 'icon',
-        href: 'https://strapi.io/assets/favicon-32x32.png',
-      },
-    ],
+	title: 'Strapi Developer Documentation',
+	port: 8081,
+	description: 'The headless CMS developers love.',
+	base: '/documentation/developer-docs/',
+	plugins: {
+		'@vuepress/medium-zoom': {},
+		'vuepress-plugin-element-tabs': {},
+		'@vuepress/google-analytics': {
+			ga: 'UA-54313258-1',
+		},
+		seo: {
+			siteTitle: (_, $site) => $site.title,
+			title: ($page) => $page.title,
+		},
+	},
+	head: [
+		[
+			'link',
+			{
+				rel: 'icon',
+				href: 'https://strapi.io/assets/favicon-32x32.png',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:title',
+				content: 'Strapi Developer Documentation',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:type',
+				content: 'article',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:url',
+				content: 'https://strapi.io/documentation/developer-docs/',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:description',
+				content: 'The headless CMS developers love.',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:image',
+				content: 'https://strapi.io/documentation/developer-docs/assets/meta.png',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'og:article:author',
+				content: 'strapi',
+			},
+		],
 
-    [
-      'meta',
-      {
-        property: 'og:title',
-        content: 'Strapi Documentation',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'og:type',
-        content: 'article',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'og:url',
-        content: 'https://strapi.io/documentation/',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'og:description',
-        content: 'The headless CMS developers love.',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'og:image',
-        content: 'https://strapi.io/documentation/assets/meta.png',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'og:article:author',
-        content: 'strapi',
-      },
-    ],
-
-    [
-      'meta',
-      {
-        property: 'twitter:card',
-        content: 'summary_large_image',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'twitter:url',
-        content: 'https://strapi.io/documentation/',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'twitter:site',
-        content: '@strapijs',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'twitter:title',
-        content: 'Strapi Documentation',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'twitter:description',
-        content: 'The headless CMS developers love.',
-      },
-    ],
-    [
-      'meta',
-      {
-        property: 'twitter:image',
-        content: 'http://strapi.io/assets/images/strapi-website-preview.png',
-      },
-    ],
-  ],
-  themeConfig: {
-    logo: '/assets/logo.png',
-    nav: [
-      {
-        text: 'Versions',
-        items: [
-          {
-            text: 'Version 3.x',
-            link: '/v3.x/',
-          },
-        ],
-      },
-      {
-        text: 'Website',
-        link: 'https://strapi.io',
-      },
-      {
-        text: 'Forum',
-        link: 'https://forum.strapi.io',
-      },
-      {
-        text: 'Slack',
-        link: 'https://slack.strapi.io',
-      },
-      {
-        text: 'Blog',
-        link: 'https://strapi.io/blog',
-      },
-      {
-        text: 'Tutorials',
-        link: 'https://strapi.io/tutorials',
-      },
-    ],
-    repo: 'strapi/documentation',
-    docsDir: 'developer-docs',
-    docsBranch: 'documentation',
-    algolia: {
-      apiKey: 'a93451de224096fb34471c8b8b049de7',
-      indexName: 'strapi',
-    },
-    editLinks: true,
-    editLinkText: 'Improve this page',
-    serviceWorker: true,
-    sidebarDepth: 1,
-    sidebar: {
-      '/v3.x/': [
-        {
-          collapsable: false,
-          title: '🚀 Getting Started',
-          children: [
-            ['/v3.x/getting-started/introduction', 'Introduction'],
-            ['/v3.x/getting-started/installation', 'Installation'],
-            ['/v3.x/getting-started/deployment', 'Deployment'],
-            ['/v3.x/getting-started/contributing', 'Contributing'],
-            ['/v3.x/getting-started/troubleshooting', 'Troubleshooting'],
-            ['/v3.x/getting-started/usage-information', 'Telemetry'],
-            '/v3.x/getting-started/quick-start',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '📄 Content API',
-          children: [
-            ['/v3.x/content-api/api-endpoints', 'API Endpoints'],
-            ['/v3.x/content-api/parameters', 'Parameters'],
-            ['/v3.x/content-api/integrations', 'Integrations'],
-          ],
-        },
-        {
-          collapsable: true,
-          title: '💡 Concepts',
-          children: [
-            '/v3.x/concepts/configurations',
-            '/v3.x/concepts/controllers',
-            '/v3.x/concepts/customization',
-            '/v3.x/concepts/draft-and-publish',
-            '/v3.x/concepts/file-structure',
-            '/v3.x/concepts/hooks',
-            '/v3.x/concepts/middlewares',
-            '/v3.x/concepts/models',
-            '/v3.x/concepts/plugins',
-            '/v3.x/concepts/policies',
-            '/v3.x/concepts/public-assets',
-            '/v3.x/concepts/queries',
-            '/v3.x/concepts/requests-responses',
-            '/v3.x/concepts/routing',
-            '/v3.x/concepts/services',
-            '/v3.x/concepts/templates',
-            '/v3.x/concepts/webhooks',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '📚 Guides',
-          children: [
-            '/v3.x/guides/api-token',
-            '/v3.x/guides/auth-request',
-            '/v3.x/guides/count-graphql',
-            '/v3.x/guides/slug',
-            '/v3.x/guides/is-owner',
-            '/v3.x/guides/custom-admin',
-            '/v3.x/guides/custom-data-response',
-            '/v3.x/guides/databases',
-            '/v3.x/guides/draft',
-            '/v3.x/guides/error-catching',
-            '/v3.x/guides/external-data',
-            '/v3.x/guides/jwt-validation',
-            '/v3.x/guides/process-manager',
-            '/v3.x/guides/scheduled-publication',
-            '/v3.x/guides/secure-your-app',
-            '/v3.x/guides/send-email',
-            '/v3.x/guides/registering-a-field-in-admin',
-            '/v3.x/guides/client',
-            '/v3.x/guides/update-version',
-            '/v3.x/guides/unit-testing',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '⚙️️ Admin Panel',
-          children: [
-            '/v3.x/admin-panel/customization',
-            '/v3.x/admin-panel/custom-webpack-config',
-            '/v3.x/admin-panel/deploy',
-            '/v3.x/admin-panel/forgot-password',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '📦 Plugins',
-          children: [
-            '/v3.x/plugins/documentation',
-            '/v3.x/plugins/email',
-            '/v3.x/plugins/graphql',
-            '/v3.x/plugins/upload',
-            '/v3.x/plugins/users-permissions',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '🔌 Local Plugins',
-          children: [
-            '/v3.x/plugin-development/quick-start',
-            '/v3.x/plugin-development/plugin-architecture',
-            '/v3.x/plugin-development/backend-development',
-            '/v3.x/plugin-development/frontend-development',
-            '/v3.x/plugin-development/frontend-field-api',
-            '/v3.x/plugin-development/frontend-settings-api',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '💻 Command Line Interface',
-          children: ['/v3.x/cli/CLI'],
-        },
-        {
-          collapsable: true,
-          title: '🏗 Global strapi',
-          children: ['/v3.x/global-strapi/api-reference'],
-        },
-        {
-          collapsable: false,
-          title: '📚 Resources',
-          children: [
-            ['https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md', 'Contributing guide'],
-            '/v3.x/migration-guide/',
-          ],
-        },
-      ],
-    },
-  },
+		[
+			'meta',
+			{
+				property: 'twitter:card',
+				content: 'summary_large_image',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'twitter:url',
+				content: 'https://strapi.io/documentation/developer-docs/',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'twitter:site',
+				content: '@strapijs',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'twitter:title',
+				content: 'Strapi Documentation',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'twitter:description',
+				content: 'The headless CMS developers love.',
+			},
+		],
+		[
+			'meta',
+			{
+				property: 'twitter:image',
+				content: 'http://strapi.io/assets/images/strapi-website-preview.png',
+			},
+		],
+	],
+	themeConfig: {
+		logo: '/assets/logo.png',
+		nav: [
+			{
+				text: 'Strapi Version',
+				items: [
+					{
+						text: 'Latest',
+						link: '/latest/',
+					},
+				],
+			},
+			{
+				text: 'Documentation',
+				items: [
+					{
+						text: 'Developer Docs',
+						items: [
+							{
+								text: 'Getting Started',
+								link: '/latest/getting-started/introduction.html',
+							},
+							{
+								text: 'Content API',
+								link: '/latest/content-api/parameters.html',
+							},
+							{
+								text: 'Configuration',
+								link: '/latest/concepts/configurations.html',
+							},
+						],
+					},
+					{
+						text: 'User Guide',
+						items: [
+							{
+								text: 'Getting Started',
+								link:
+									'https://strapi.io/documentation/user-docs/latest/getting-started/introduction.html',
+							},
+							{
+								text: 'Content Manager',
+								link:
+									'https://strapi.io/documentation/user-docs/latest/content-manager/introduction-to-content-manager.html',
+							},
+							// {
+							// 	text: 'Content-Types Builder',
+							// 	link: 'https://strapi.io/documentation/user-docs/latest/',
+							// },
+							// {
+							// 	text: 'Users, Roles, and Permissions',
+							// 	link: 'https://strapi.io/documentation/user-docs/latest/',
+							// },
+							// {
+							// 	text: 'Plugins',
+							// 	link: 'https://strapi.io/documentation/user-docs/latest/',
+							// },
+							// {
+							// 	text: 'Settings',
+							// 	link: 'https://strapi.io/documentation/user-docs/latest/',
+							// },
+						],
+					},
+				],
+			},
+			{
+				text: 'Ecosystem',
+				items: [
+					{
+						text: 'Strapi',
+						items: [
+							{
+								text: 'Website',
+								link: 'https://strapi.io',
+							},
+							{
+								text: 'Blog',
+								link: 'https://strapi.io/blog',
+							},
+						],
+					},
+					{
+						text: 'Community',
+						items: [
+							{
+								text: 'Forum',
+								link: 'https://forum.strapi.io',
+							},
+							{
+								text: 'Slack',
+								link: 'https://slack.strapi.io',
+							},
+							{
+								text: 'Awesome-Strapi',
+								link: 'https://github.com/strapi/awesome-strapi',
+							},
+						],
+					},
+					{
+						text: 'Resources',
+						items: [
+							{
+								text: 'Tutorials',
+								link: 'https://strapi.io/tutorials',
+							},
+							{
+								text: 'Academy',
+								link: 'https://academy.strapi.io/',
+							},
+						],
+					},
+				],
+			},
+		],
+		repo: 'strapi/documentation',
+		docsDir: 'developer-docs',
+		docsBranch: 'documentation',
+		algolia: {
+			apiKey: 'a93451de224096fb34471c8b8b049de7',
+			indexName: 'strapi',
+		},
+		editLinks: true,
+		editLinkText: 'Improve this page',
+		serviceWorker: true,
+		sidebarDepth: 2,
+		sidebar: {
+			'/latest/': [
+				{
+					collapsable: false,
+					title: '🚀 Getting Started',
+					children: [
+						['/latest/getting-started/introduction', 'Introduction'],
+						['/latest/getting-started/installation', 'Installation'],
+						['/latest/getting-started/deployment', 'Deployment'],
+						['/latest/getting-started/contributing', 'Contributing'],
+						['/latest/getting-started/troubleshooting', 'Troubleshooting'],
+						['/latest/getting-started/usage-information', 'Telemetry'],
+						'/latest/getting-started/quick-start',
+					],
+				},
+				{
+					collapsable: true,
+					title: '📄 Content API',
+					children: [
+						['/latest/content-api/api-endpoints', 'API Endpoints'],
+						['/latest/content-api/parameters', 'Parameters'],
+						['/latest/content-api/integrations', 'Integrations'],
+					],
+				},
+				{
+					collapsable: true,
+					title: '💡 Concepts',
+					children: [
+						'/latest/concepts/configurations',
+						'/latest/concepts/controllers',
+						'/latest/concepts/customization',
+						'/latest/concepts/draft-and-publish',
+						'/latest/concepts/file-structure',
+						'/latest/concepts/hooks',
+						'/latest/concepts/middlewares',
+						'/latest/concepts/models',
+						'/latest/concepts/plugins',
+						'/latest/concepts/policies',
+						'/latest/concepts/public-assets',
+						'/latest/concepts/queries',
+						'/latest/concepts/requests-responses',
+						'/latest/concepts/routing',
+						'/latest/concepts/services',
+						'/latest/concepts/templates',
+						'/latest/concepts/webhooks',
+					],
+				},
+				{
+					collapsable: true,
+					title: '📚 Guides',
+					children: [
+						'/latest/guides/api-token',
+						'/latest/guides/auth-request',
+						'/latest/guides/count-graphql',
+						'/latest/guides/slug',
+						'/latest/guides/is-owner',
+						'/latest/guides/custom-admin',
+						'/latest/guides/custom-data-response',
+						'/latest/guides/databases',
+						'/latest/guides/draft',
+						'/latest/guides/error-catching',
+						'/latest/guides/external-data',
+						'/latest/guides/jwt-validation',
+						'/latest/guides/process-manager',
+						'/latest/guides/scheduled-publication',
+						'/latest/guides/secure-your-app',
+						'/latest/guides/send-email',
+						'/latest/guides/registering-a-field-in-admin',
+						'/latest/guides/client',
+						'/latest/guides/update-version',
+						'/latest/guides/unit-testing',
+					],
+				},
+				{
+					collapsable: true,
+					title: '⚙️️ Admin Panel',
+					children: [
+						'/latest/admin-panel/customization',
+						'/latest/admin-panel/custom-webpack-config',
+						'/latest/admin-panel/deploy',
+						'/latest/admin-panel/forgot-password',
+					],
+				},
+				{
+					collapsable: true,
+					title: '📦 Plugins',
+					children: [
+						'/latest/plugins/documentation',
+						'/latest/plugins/email',
+						'/latest/plugins/graphql',
+						'/latest/plugins/upload',
+						'/latest/plugins/users-permissions',
+					],
+				},
+				{
+					collapsable: true,
+					title: '🔌 Local Plugins',
+					children: [
+						'/latest/plugin-development/quick-start',
+						'/latest/plugin-development/plugin-architecture',
+						'/latest/plugin-development/backend-development',
+						'/latest/plugin-development/frontend-development',
+						'/latest/plugin-development/frontend-field-api',
+						'/latest/plugin-development/frontend-settings-api',
+					],
+				},
+				{
+					collapsable: true,
+					title: '💻 Command Line Interface',
+					children: ['/latest/cli/CLI'],
+				},
+				{
+					collapsable: true,
+					title: '🏗 Global strapi',
+					children: ['/latest/global-strapi/api-reference'],
+				},
+				{
+					collapsable: false,
+					title: '📚 Resources',
+					children: [
+						['https://github.com/strapi/documentation/blob/master/CONTRIBUTING.md', 'Contributing guide'],
+						'/latest/migration-guide/',
+					],
+				},
+			],
+		},
+	},
 };
