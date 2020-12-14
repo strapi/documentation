@@ -2,12 +2,13 @@
 
 Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".
 
-Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). 
+Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)).
 
 However, relational fields can point to one or several entries of the other content-type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
 
 ::: details Example
 In my Strapi admin panel I have created 2 collection types:
+
 - Restaurant, where each entry is a restaurant
 - Category, where each entry is a type of restaurant
 

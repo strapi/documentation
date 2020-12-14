@@ -2,7 +2,7 @@
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is divided into 2 categories, both displayed in the main navigation: *Collection types* and *Single types*. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
+The Content Manager is divided into 2 categories, both displayed in the main navigation: _Collection types_ and _Single types_. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip 💡 TIP
 Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of your content types more quickly!
@@ -10,7 +10,7 @@ Click the search icon <Fa-Search /> in the main navigation to use a text search 
 
 ## Collection types
 
-The *Collection types* category of the Content Manager displays the list of available collection types which are directly accessible from the main navigation of the admin panel.
+The _Collection types_ category of the Content Manager displays the list of available collection types which are directly accessible from the main navigation of the admin panel.
 
 For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
 
@@ -57,7 +57,6 @@ Clicking on the new entry button will redirect you to the edit view, where you w
 New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
 :::
 
-
 ### Configuring the table fields
 
 Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
@@ -79,10 +78,9 @@ Relational fields can also be displayed in the list view. Please refer to [Confi
 
 :::
 
-
 ## Single types
 
-The *Single types* category of the Content Manager displays the list of available single types, which are directly accessible from the main navigation of the admin panel.
+The _Single types_ category of the Content Manager displays the list of available single types, which are directly accessible from the main navigation of the admin panel.
 
 Unlike collection types which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
 

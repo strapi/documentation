@@ -253,12 +253,18 @@ module.exports = {
             ['/latest/content-manager/writing-content', 'Writing content'],
             ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
             ['/latest/content-manager/saving-and-publishing-content', 'Saving, publishing and deleting content'],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Content-Type Builder',
+          children: [
             ['/latest/content-types-builder/introduction-to-content-types-builder', 'Introduction to the Content-Types Builder'],
           ],
         },
         {
           collapsable: false,
-          title: 'Users, roles & permissions',
+          title: 'Users, Roles & Permissions',
           children: [
             ['/latest/users-roles-permissions/introduction-to-users-roles-permissions', 'Introduction to users, roles & permissions'],
           ],

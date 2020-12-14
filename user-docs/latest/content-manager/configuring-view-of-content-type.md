@@ -10,14 +10,14 @@ Note also that the explanations below explain how to permanently configure which
 
 ![Settings of a list view in the Content Manager](../assets/content-manager/content-manager_settings-list-view.png)
 
-To configure the list view settings: 
+To configure the list view settings:
 
 1. In the list view, click on the settings button <Fa-Cog />.
 2. Click on the **Configure the view** button.
 3. Define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
-| ---------------------- |----------------------------------------------------------------------------------------------------|
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
 | Enable search          | Click on **ON** or **OFF** to able or disable the search.                                          |
 | Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
 | Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
@@ -42,5 +42,4 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 - Sorting cannot be enabled for relational fields which display several fields.
 - Relational fields cannot be set as default sort.
-
 :::

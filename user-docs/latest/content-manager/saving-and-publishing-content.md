@@ -32,7 +32,6 @@ Published contents can be unpublished, switching back to being drafts again.
 
 To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
 
-
 ## Deleting content
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
@@ -43,4 +42,3 @@ You can delete content by deleting any entry of a collection type, or the defaul
 ::: tip 💡 TIP
 You can delete entries from the list view of a collection type, by clicking on the trash button ![icon delete](../assets/content-manager/icon_delete3.png) on the right side of the entry's record in the table. <br> You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on **Delete selected** ![icon delete](../assets/content-manager/icon_delete4.png) located right below the header of the table.
 :::
-
