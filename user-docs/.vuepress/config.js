@@ -253,12 +253,6 @@ module.exports = {
             ['/latest/content-manager/writing-content', 'Writing content'],
             ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
             ['/latest/content-manager/saving-and-publishing-content', 'Saving, publishing and deleting content'],
-          ],
-        },
-        {
-          collapsable: false,
-          title: 'Content-Types Builder',
-          children: [
             ['/latest/content-types-builder/introduction-to-content-types-builder', 'Introduction to the Content-Types Builder'],
           ],
         },
