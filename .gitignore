@@ -89,7 +89,7 @@ dist
 # public
 
 # vuepress build output
-.vuepress/dist
+*.vuepress/dist
 
 # Serverless directories
 .serverless/
@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Other
+*.DS_Store
