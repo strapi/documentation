@@ -349,7 +349,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Checkout the documentation about using an upload provider [here](https://strapi.io/documentation/v3.x/plugins/upload.html#using-a-provider).
+Checkout the documentation about using an upload provider [here](../plugins/upload.md#using-a-provider).
 
 #### 4. Push your local changes to your project's GitHub repository.
 

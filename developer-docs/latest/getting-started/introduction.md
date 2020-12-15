@@ -45,6 +45,10 @@ Don't be bogged down by tech you don't need!
 
 Strapi is an open-source project. See the [LICENSE](https://github.com/strapi/strapi/blob/master/LICENSE) file for licensing information. The core project can be found at the [strapi/strapi](https://github.com/strapi/strapi) GitHub repository and you will find all other tools in the [Strapi](https://github.com/strapi) GitHub organization.
 
+### Documentation
+
+The Strapi documentation is also open-source and can be found at the [strapi/documentation](https://github.com/strapi/documentation) GitHub repository. There is a specific [contribution guide](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) for adding, updating, or removing content from the documentation that will provide all the information you need to contribute.
+
 ### Marketplace
 
 Official Strapi plugins will be found in the marketplace section of the admin panel. Unfortunately, the Strapi marketplace is not open to outside contribution, but stay tuned as that may change in the near future.
