@@ -15,22 +15,22 @@ Download and install the `Heroku CLI` for your operating system:
 
 :::: tabs
 
-::: tab "Mac O/S"
+::: tab Ubuntu
+Run the following from your terminal:
+
+```bash
+sudo snap install --classic heroku
+```
+
+:::
+
+::: tab Mac
 [Download the installer](https://cli-assets.heroku.com/heroku.pkg)
 
 Also available via Homebrew:
 
 ```bash
 brew tap heroku/brew && brew install heroku
-```
-
-:::
-
-::: tab Ubuntu
-Run the following from your terminal:
-
-```bash
-sudo snap install --classic heroku
 ```
 
 :::
@@ -200,7 +200,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create a new `database.js` in a new [env](../concepts/configurations.html#environments) folder. When you run locally you should be using the `./config/database.js` which should be set to use SQLite.
+Create a new `database.js` in a new [env](../concepts/configurations.html#environments) folder. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](../concepts/configurations.md#database).
 
 `Path: ./config/env/production/database.js`
 
@@ -220,9 +220,12 @@ module.exports = ({ env }) => ({
         database: config.database,
         username: config.user,
         password: config.password,
+        ssl: {
+          rejectUnauthorized: false
+        }
       },
       options: {
-        ssl: false,
+        ssl: true,
       },
     },
   },
@@ -235,7 +238,25 @@ We also need to set the `NODE_ENV` variable on Heroku to `production` to ensure 
 heroku config:set NODE_ENV=production
 ```
 
-#### 5. Install the `pg` node module
+#### 5. Create your Strapi server config for production
+
+Create a new `server.js` in a new [env](../concepts/configurations.html#environments) folder. In this file we only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+
+`Path: ./config/env/production/server.js`
+
+```js
+module.exports = ({ env }) => ({
+  url: env('HEROKU_URL'),
+});
+```
+
+And finally we just need to set the environment variable in Heroku for the `HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
+
+```bash
+heroku config:set HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
+```
+
+#### 6. Install the `pg` node module
 
 Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
 
