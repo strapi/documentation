@@ -27,19 +27,19 @@ Here we will be able to setup the `slug` field.
 
 :::: tabs
 
-::: tab "View before"
+::: tab View before
 
 ![View before](../assets/guides/slug/layout-before.png)
 
 :::
 
-::: tab "View after"
+::: tab View after
 
 ![View after](../assets/guides/slug/layout-after.png)
 
 :::
 
-::: tab "View configuration"
+::: tab View configuration
 
 ![Edit View config](../assets/guides/slug/layout-config.png)
 
