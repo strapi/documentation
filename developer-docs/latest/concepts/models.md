@@ -261,7 +261,7 @@ Relations let you create links (relations) between your Content Types.
 
 :::: tabs
 
-::: tab "One-Way" id="one-way"
+::: tab One-Way
 
 One-way relationships are useful to link one entry to one other entry. However, only one of the models can be queried with its linked item.
 
@@ -297,7 +297,7 @@ xhr.send(
 
 :::
 
-::: tab "Many-way" id="many-way"
+::: tab Many-way
 
 Many-way relationships are useful to link one entry to many other entries. However, only one of the models can be queried with its linked items.
 
@@ -333,7 +333,7 @@ xhr.send(
 
 :::
 
-::: tab "One-to-One" id="one-to-one"
+::: tab One-to-One
 
 One-to-One relationships are useful when you have one entity that could be linked to only one other entity. _**And vice versa**_.
 
@@ -382,7 +382,7 @@ xhr.send(
 
 :::
 
-::: tab "One-to-Many" id="one-to-many"
+::: tab One-to-Many
 
 One-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to only one entry.
 
@@ -441,7 +441,7 @@ xhr.send(
 
 :::
 
-::: tab "Many-to-Many" id="many-to-many"
+::: tab Many-to-Many
 
 Many-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to many entries.
 
@@ -499,7 +499,7 @@ xhr.send(
 
 :::
 
-::: tab "Polymorphic" id="polymorphic"
+::: tab Polymorphic
 
 Polymorphic relationships are the solution when you don't know which kind of model will be associated to your entry, or when you want to connect different types of models to a model.
 A common use case is an `Image` model that can be associated to different types of models (Article, Product, User, etc.).

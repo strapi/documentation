@@ -23,7 +23,7 @@ As an **example**, let's consider the following models:
 
 :::: tabs
 
-::: tab "Content Types"
+::: tab Content Types
 
 ### `Restaurant` Content Type
 
@@ -111,7 +111,7 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 :::: tabs
 
-::: tab "Collection Type"
+::: tab Collection Type
 
 <div id="endpoint-table">
 
@@ -128,7 +128,7 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 :::
 
-::: tab "Single Type"
+::: tab Single Type
 
 <div id="endpoint-table">
 

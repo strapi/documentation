@@ -60,7 +60,7 @@ Please complete the installation steps appropriate to your operating system.
 
 :::: tabs
 
-::: tab "Windows 10"
+::: tab Windows 10
 
 #### Install MongoDB on Windows 10
 
@@ -80,7 +80,7 @@ You have now installed MongoDB for _Windows 10_. You are now ready to [install S
 
 :::
 
-::: tab "Mac O/S"
+::: tab Mac
 
 #### Install MongoDB on Mac
 
@@ -108,7 +108,7 @@ You have now installed MongoDB for _Mac_. You are now ready to [install Strapi w
 
 :::
 
-::: tab "Ubuntu 18.04"
+::: tab Ubuntu
 
 #### Install MongoDB on Ubuntu
 

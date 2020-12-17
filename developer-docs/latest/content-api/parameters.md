@@ -25,19 +25,21 @@ When using filters you can either pass simple filters in the root of the query p
 
 Filters are used as a suffix of a field name:
 
-- No suffix or `eq`: Equals
-- `ne`: Not equals
-- `lt`: Less than
-- `gt`: Greater than
-- `lte`: Less than or equal to
-- `gte`: Greater than or equal to
-- `in`: Included in an array of values
-- `nin`: Isn't included in an array of values
-- `contains`: Contains
-- `ncontains`: Doesn't contain
-- `containss`: Contains case sensitive
-- `ncontainss`: Doesn't contain case sensitive
-- `null`: Is null/Is not null
+| Filter            | Description                     |
+| :---------------- | :------------------------------ |
+| No suffix or `eq` | Equal                           |
+| `ne`              | Not equal                       |
+| `lt`              | Less than                       |
+| `gt`              | Greater than                    |
+| `lte`             | Less than or equal to           |
+| `gte`             | Greater than or equal to        |
+| `in`              | Included in an array            |
+| `nin`             | Not included in an array        |
+| `contains`        | Contains                        |
+| `ncontains`       | Doesn't contain                 |
+| `containss`       | Contains, case sensitive        |
+| `ncontainss`      | Doesn't contain, case sensitive |
+| `null`            | Is null or not null             |
 
 ### Examples
 
