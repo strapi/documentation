@@ -329,7 +329,7 @@ You can configure these global headers by updating the file at `./config/server.
 
 :::: tabs
 
-::: tab "Simple token"
+::: tab Simple token
 
 ```js
 module.exports = {
@@ -343,7 +343,7 @@ module.exports = {
 
 :::
 
-::: tab "Environment variable"
+::: tab Environment variable
 
 ```js
 module.exports = {

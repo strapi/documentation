@@ -6,15 +6,23 @@ Strapi is a community oriented project and we really appreciate every contributi
 
 ### [strapi/strapi](https://github.com/strapi/strapi)
 
-This repository contains the core of Strapi. It means the admin panel, core plugins (Content Manager, Content Type Builder, etc...), the documentation and the code that runs your Strapi app. You will also find some plugin providers. This is the main repo of the Strapi organization.
+This repository contains the core of Strapi. It means the admin panel, core plugins (Content Manager, Content Type Builder, etc...), and the code that runs your Strapi app. You will also find some plugin providers. This is the main repo of the Strapi organization.
+
+### [strapi/documentation](https://github.com/strapi/documentation)
+
+This repository contains the documentation of Strapi, it's a central place for all our primary learning and knowledge resources.
 
 ### [strapi/buffet](https://github.com/strapi/buffet)
 
-[Buffet](https://buffetjs.io) is the componenent library that is used in the admin panel. This brings consistency throughout the different admin plugins.
+[Buffet](https://buffetjs.io) is the component library that is used in the admin panel. This brings consistency throughout the different admin plugins.
 
 ### [strapi/strapi-docker](https://github.com/strapi/strapi-docker)
 
 This is the code used to generate the official Docker images for Strapi. These images are available through our [Docker Hub](https://hub.docker.com/r/strapi/strapi).
+
+### [strapi/awesome-strapi](https://github.com/strapi/awesome-strapi)
+
+This repository contains all the community built and managed plugins, it's used a central place to find and submit new packages such as plugins, middlewares, hooks, and just general enhancements to the core of Strapi.
 
 ## Contributing guide
 

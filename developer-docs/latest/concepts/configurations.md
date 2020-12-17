@@ -179,18 +179,80 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 ## Server
 
+### Examples
+
+:::: tabs
+
+::: tab Minimal
+
+#### Minimal Server Config
+
+This is the default config created with any new project, all these keys are required at the very least, environmental configs do not need to contain all these values so long as they exist in the default `./config/server.js`.
+
 **Path —** `./config/server.js`.
 
 ```js
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  admin: {
+    auth: {
+      secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+    },
+  },
 });
 ```
 
-**Available options**
+:::
+
+::: tab Full
+
+#### Full Server Config
+
+This is an example of a full configuration, typically certain keys do not need to present in environmental configs, and not all of these keys are required. Please see the table below to see what each key does.
+
+**Path —** `./config/server.js`.
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  socket: '/tmp/nginx.socket', // only use if absolutely required
+  emitErrors: false,
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  proxy: env.bool('IS_PROXIED', true),
+  cron: {
+    enabled: env.bool('CRON_ENABLED', false),
+  },
+  admin: {
+    auth: {
+      secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+    },
+    url: env('PUBLIC_ADMIN_URL', '/dashboard'),
+    autoOpen: false,
+    watchIgnoreFiles: [
+      './my-custom-folder', // Folder
+      './scripts/someScript.sh' // File
+    ],
+    host: 'localhost', // Only used for --watch-admin
+    port: 8003, // Only used for --watch-admin
+    serveAdminPanel: env.bool('SERVE_ADMIN', true),
+    forgotPassword: {
+      from: 'no-reply@example.com',
+      replyTo: 'no-reply@example.com',
+    },
+  },
+});
+```
+
+:::
+
+::::
+
+### Available options
+
 | Property | Description | Type | Default |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| -------- | ----------- | ---- | ------- |
 | `host` | Host name | string | `localhost` |
 | `port` | Port on which the server should be running. | integer | `1337` |
 | `socket` | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer | `/tmp/nginx.socket` |
@@ -451,7 +513,7 @@ You can find [supported database and versions](../installation/cli.md#databases)
 
 :::: tabs
 
-::: tab Postgres
+::: tab PostgreSQL
 
 ```js
 module.exports = ({ env }) => ({
@@ -466,9 +528,14 @@ module.exports = ({ env }) => ({
         database: env('DATABASE_NAME', 'strapi'),
         username: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
-        schema: 'public',
+        schema: env('DATABASE_SCHEMA', 'public'), // Not Required
+        ssl: {
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        },
       },
-      options: {},
+      options: {
+        ssl: env.bool('DATABASE_SSL', false),
+      },
     },
   },
 });
@@ -477,18 +544,29 @@ module.exports = ({ env }) => ({
 Please note that if you need client side SSL CA verification you will need to use the `ssl:{}` object with the fs module to convert your CA certificate to a string. You can see an example below:
 
 ```js
-settings: {
-  client: 'postgres',
-  ...
-  ssl: {
-    ca: fs.readFileSync(`${__dirname}/path/to/your/ca-certificate.crt`).toString(),
-  }
-},
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+          ...
+        ssl: {
+          ca: fs.readFileSync(`${__dirname}/path/to/your/ca-certificate.crt`).toString(),
+        },
+      },
+      options: {
+        ssl: true
+      },
+    },
+  },
+});
 ```
 
 :::
 
-::: tab MySQL
+::: tab MySQL/MariaDB
 
 ```js
 module.exports = ({ env }) => ({
@@ -534,7 +612,7 @@ module.exports = ({ env }) => ({
 
 :::
 
-::: tab Mongo
+::: tab MongoDB
 
 ```js
 module.exports = ({ env }) => ({

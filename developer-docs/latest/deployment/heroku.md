@@ -15,7 +15,7 @@ Download and install the `Heroku CLI` for your operating system:
 
 :::: tabs
 
-::: tab "Mac O/S"
+::: tab Mac
 [Download the installer](https://cli-assets.heroku.com/heroku.pkg)
 
 Also available via Homebrew:
