@@ -23,7 +23,7 @@ To help with this, here is a migration script to enable the sorting in the exist
 
 > This migration step is **not required**. If you prefer doing the configuration updates manually, you can ignore it.
 
-> This migration script changes the configuration stored in database. If you upgrade an application running in production, you will have to run the script on the production envrionment too.
+> This migration script changes the configuration stored in database. If you upgrade an application running in production, you will have to run the script on the production environment too.
 
 What the script will do:
 
