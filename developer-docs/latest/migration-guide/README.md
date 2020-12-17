@@ -1,6 +1,8 @@
 # Migrations guides
 
-Please also refer to the following [update guide](../guides/update-version.md) for a better understanding of how to update your project.
+Please also refer to the following [update guide](../guides/update-version.md) for a better understanding of how to update your project. 
+
+**Pay special attention to the [note](../guides/update-version.md#extensions) about upgrading if you are using the extensions system.**
 
 ## Instructions
 
@@ -11,28 +13,43 @@ When upgrading you will need to follow every migration guide between your curren
 If you were upgrading from the `3.0.0-beta.19.5` to `3.2.0`, here are the following guides you would have to follow:
 
 - Migration guide from beta.19.4+ to beta.20.
-- Migration guide from beta.20+ to 3.0.0.
+- Migration guide from beta.20+ to stable.
 - Migration guide from 3.0.x to 3.1.x.
-- Migration guide from 3.1.x to 3.2.x.
+- Migration guide from 3.1.x to 3.2.3.
 
 ## V3 guides
 
+- [Migration guide from 3.3.x to 3.4.0](migration-guide-3.3.x-to-3.4.0.md)
 - [Migration guide from 3.2.5 to 3.3.0](migration-guide-3.2.5-to-3.3.0.md)
 - [Migration guide from 3.2.3 to 3.2.4](migration-guide-3.2.3-to-3.2.4.md)
 - [Migration guide from 3.1.x to 3.2.3](migration-guide-3.1.x-to-3.2.x.md)
 - [Migration guide from 3.0.x to 3.1.x](migration-guide-3.0.x-to-3.1.x.md)
 
+
 ## Beta guides
 
-- [Migration guide from beta.15 to beta.16](migration-guide-beta.15-to-beta.16.md)
-- [Migration guide from beta.16+ to beta.17.4](migration-guide-beta.16-to-beta.17.4.md)
-- [Migration guide from beta.17+ to beta.18](migration-guide-beta.17-to-beta.18.md)
-- [Migration guide from beta.18 to beta.19](migration-guide-beta.18-to-beta.19.md)
-- [Migration guide from beta.19+ to beta.19.4](migration-guide-beta.19-to-beta.19.4.md)
-- [Migration guide from beta.19.4+ to beta.20](migration-guide-beta.19-to-beta.20.md)
+::: warning
+
+The Strapi Beta version is no longer supported, you should upgrade to the V3 Stable.
+
+:::
+
 - [Migration guide from beta.20+ to stable](migration-guide-beta.20-to-3.0.0.md)
+- [Migration guide from beta.19.4+ to beta.20](migration-guide-beta.19-to-beta.20.md)
+- [Migration guide from beta.19+ to beta.19.4](migration-guide-beta.19-to-beta.19.4.md)
+- [Migration guide from beta.18 to beta.19](migration-guide-beta.18-to-beta.19.md)
+- [Migration guide from beta.17+ to beta.18](migration-guide-beta.17-to-beta.18.md)
+- [Migration guide from beta.16+ to beta.17.4](migration-guide-beta.16-to-beta.17.4.md)
+- [Migration guide from beta.15 to beta.16](migration-guide-beta.15-to-beta.16.md)
 
 ## Alpha guides
+
+::: warning
+
+The Strapi Alpha version is no longer supported, you should upgrade to the V3 Stable.
+If you have issues upgrading, it's our general recommendation to create a new project.
+
+:::
 
 - [Migrating from v1 to v3](migration-guide-1-to-3.md)
 - [Migration guide from alpha.7.4 to alpha.8](migration-guide-alpha.7.4-to-alpha.8.md)
