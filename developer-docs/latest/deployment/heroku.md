@@ -182,7 +182,7 @@ This should print something like this: `DATABASE_URL: postgres://ebitxebvixeeqd:
 
 #### 3. Set Database variables automatically
 
-Strapi expects a variable for each database connection configuration (host, username, etc.). So, from the url above, we will deconstruct that environment variable using [pg-connection-string](https://www.npmjs.com/package/pg-connection-string). Heroku will sometimes change the above url, so it's best to automate the deconstruction of it, as Heroku will automatically update the `DATABASE_URL` environment variable.
+Strapi expects a variable for each database connection configuration (host, username, etc.). So, from the url above, Strapi will deconstruct that environment variable using [pg-connection-string](https://www.npmjs.com/package/pg-connection-string) package. Heroku will sometimes change the above url, so it's best to automate the deconstruction of it, as Heroku will automatically update the `DATABASE_URL` environment variable.
 
 Install the package:
 
@@ -232,7 +232,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-We also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
+You also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
 
 ```bash
 heroku config:set NODE_ENV=production
@@ -240,7 +240,7 @@ heroku config:set NODE_ENV=production
 
 #### 5. Create your Strapi server config for production
 
-Create a new `server.js` in a new [env](../concepts/configurations.html#environments) folder. In this file we only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+Create a new `server.js` in a new [env](../concepts/configurations.html#environments) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
 
 `Path: ./config/env/production/server.js`
 
@@ -250,7 +250,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-And finally we just need to set the environment variable in Heroku for the `HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
+You will also need to set the environment variable in Heroku for the `HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
 
 ```bash
 heroku config:set HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
