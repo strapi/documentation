@@ -35,7 +35,7 @@ for each contentType
 
 **Run the script**
 
-1. Download the migration script: <a :href="$withBase('/assets/migrations/scripts/migrate-3.4.0.js')" download>migrate-3.4.0.js</a>
+1. Download the migration script: <a :href="$withBase('/assets/migration/scripts/migrate-3.4.0.js')" download>migrate-3.4.0.js</a>
 2. Execute it with the following command: `node migrate-3.4.0.js [path-to-your-project]`
 3. Delete the script
 
