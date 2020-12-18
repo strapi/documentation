@@ -1,0 +1,23 @@
+name: Documentation Bug Report
+about: Create a report to help us improve the Strapi documentation.
+title: "[Bug]: "
+labels: "type: bug, status: pending reproduction"
+issue_body: true
+inputs:
+- type: input
+  attributes:
+    label: Link to the documentation page or resource
+    required: true
+    placeholder: https://strapi.io/documentation/developer-docs/latest/somepage.html
+- type: textarea
+  attributes:
+    label: Describe the bug
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
+    required: false
+- type: textarea
+  attributes:
+    label: Suggested improvements or fixes
+    required: false
