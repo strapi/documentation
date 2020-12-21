@@ -94,7 +94,7 @@ If you are using [extensions](../concepts/customization.md) to create custom cod
 ## Migration guides
 
 Sometimes Strapi introduces **breaking changes** that need more than just the previous steps.
-That is the reason for the [Migration guides](../migration-guide/README.md) page.
+That is the reason for the [Migration guides](README.md) page.
 Just make sure when you update your version that a migration guide exists or not.
 
 ## Start your application

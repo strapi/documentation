@@ -250,11 +250,9 @@ module.exports = {
       '/latest/': [
         {
           collapsable: false,
-          title: '🚀 Getting Started',
+          title: 'Getting Started',
           children: [
             ['/latest/getting-started/introduction', 'Introduction'],
-            ['/latest/getting-started/installation', 'Installation'],
-            ['/latest/getting-started/deployment', 'Deployment'],
             ['/latest/getting-started/contributing', 'Contributing'],
             ['/latest/getting-started/troubleshooting', 'Troubleshooting'],
             ['/latest/getting-started/usage-information', 'Telemetry'],
@@ -262,40 +260,36 @@ module.exports = {
           ],
         },
         {
-          collapsable: true,
-          title: '📄 Content API',
+          collapsable: false,
+          title: 'Setup & Deployment',
           children: [
-            ['/latest/content-api/api-endpoints', 'API Endpoints'],
-            ['/latest/content-api/parameters', 'Parameters'],
-            ['/latest/content-api/integrations', 'Integrations'],
+            ['/latest/setup-deployment-guides/installation.md', 'Installation'],
+            ['/latest/setup-deployment-guides/framework-configurations/configurations.md', 'Configuration'],
+            ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
+          ]
+        },
+        {
+          collapsable: false,
+          title: 'Update & Migration',
+          children: [
+            ['/latest/update-migration-guides/update-version.md', 'Update'],
+            ['/latest/update-migration-guides/migration-guides.md', 'Migration'],
+          ]
+        },
+        {
+          collapsable: false,
+          title: 'Developer Resources',
+          children: [
+            ['/latest/developer-resources/content-api/api-endpoints', 'Content API Endpoints'],
+            ['/latest/developer-resources/content-api/parameters', 'Content API Parameters'],
+            ['/latest/developer-resources/content-api/integrations', 'Content API Integrations'],
+            ['/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+            ['/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference'],
           ],
         },
         {
           collapsable: true,
-          title: '💡 Concepts',
-          children: [
-            '/latest/concepts/configurations',
-            '/latest/concepts/controllers',
-            '/latest/concepts/customization',
-            '/latest/concepts/draft-and-publish',
-            '/latest/concepts/file-structure',
-            '/latest/concepts/hooks',
-            '/latest/concepts/middlewares',
-            '/latest/concepts/models',
-            '/latest/concepts/plugins',
-            '/latest/concepts/policies',
-            '/latest/concepts/public-assets',
-            '/latest/concepts/queries',
-            '/latest/concepts/requests-responses',
-            '/latest/concepts/routing',
-            '/latest/concepts/services',
-            '/latest/concepts/templates',
-            '/latest/concepts/webhooks',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '📚 Guides',
+          title: 'Jim Recipes',
           children: [
             '/latest/guides/api-token',
             '/latest/guides/auth-request',
@@ -315,62 +309,7 @@ module.exports = {
             '/latest/guides/send-email',
             '/latest/guides/registering-a-field-in-admin',
             '/latest/guides/client',
-            '/latest/guides/update-version',
             '/latest/guides/unit-testing',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '⚙️️ Admin Panel',
-          children: [
-            '/latest/admin-panel/customization',
-            '/latest/admin-panel/custom-webpack-config',
-            '/latest/admin-panel/deploy',
-            '/latest/admin-panel/forgot-password',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '📦 Plugins',
-          children: [
-            '/latest/plugins/documentation',
-            '/latest/plugins/email',
-            '/latest/plugins/graphql',
-            '/latest/plugins/upload',
-            '/latest/plugins/users-permissions',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '🔌 Local Plugins',
-          children: [
-            '/latest/plugin-development/quick-start',
-            '/latest/plugin-development/plugin-architecture',
-            '/latest/plugin-development/backend-development',
-            '/latest/plugin-development/frontend-development',
-            '/latest/plugin-development/frontend-field-api',
-            '/latest/plugin-development/frontend-settings-api',
-          ],
-        },
-        {
-          collapsable: true,
-          title: '💻 Command Line Interface',
-          children: ['/latest/cli/CLI'],
-        },
-        {
-          collapsable: true,
-          title: '🏗 Global strapi',
-          children: ['/latest/global-strapi/api-reference'],
-        },
-        {
-          collapsable: false,
-          title: '📚 Resources',
-          children: [
-            [
-              'https://github.com/strapi/documentation/blob/master/CONTRIBUTING.md',
-              'Contributing guide',
-            ],
-            '/latest/migration-guide/',
           ],
         },
       ],
