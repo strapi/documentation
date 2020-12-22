@@ -289,7 +289,7 @@ Here are some Content Type examples
 
 ## Get entries
 
-Returns entries matching the query filters. You can read more about parameters [here](./parameters.md).
+Returns entries matching the query filters. You can read more about parameters [here](parameters.md).
 
 :::: tabs
 
@@ -453,7 +453,7 @@ GET http://localhost:1337/restaurants/1
 
 ## Count entries
 
-Returns the count of entries matching the query filters. You can read more about parameters [here](./parameters.md).
+Returns the count of entries matching the query filters. You can read more about parameters [here](parameters.md).
 
 :::: tabs
 

@@ -211,7 +211,7 @@ To achieve this, there are three options:
 
 - Build a custom route.
 - Modify your services.
-- Use [GraphQL](../plugins/graphql.md#query-api).
+- Use [GraphQL](../setup-deployment-guides/customization/admin/plugins/graphql.md#query-api).
   :::
 
 ::: warning

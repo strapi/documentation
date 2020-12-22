@@ -253,10 +253,10 @@ module.exports = {
           title: 'Getting Started',
           children: [
             ['/latest/getting-started/introduction', 'Introduction'],
+            ['/latest/getting-started/quick-start', 'Quick Start Guide'],
             ['/latest/getting-started/contributing', 'Contributing'],
             ['/latest/getting-started/troubleshooting', 'Troubleshooting'],
             ['/latest/getting-started/usage-information', 'Telemetry'],
-            '/latest/getting-started/quick-start',
           ],
         },
         {
@@ -280,9 +280,7 @@ module.exports = {
           collapsable: false,
           title: 'Developer Resources',
           children: [
-            ['/latest/developer-resources/content-api/api-endpoints', 'Content API Endpoints'],
-            ['/latest/developer-resources/content-api/parameters', 'Content API Parameters'],
-            ['/latest/developer-resources/content-api/integrations', 'Content API Integrations'],
+            ['/latest/developer-resources/content-api/content-api.md', 'Content API'],
             ['/latest/developer-resources/cli/CLI', 'Command Line Interface'],
             ['/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference'],
           ],
