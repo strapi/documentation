@@ -1,5 +1,7 @@
 # Configuring the view of a content type
 
+## Configuring the list view
+
 Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 ::: tip NOTE
@@ -43,3 +45,6 @@ Note also that relational fields have a couple limitations when it comes to sort
 - Sorting cannot be enabled for relational fields which display several fields.
 - Relational fields cannot be set as default sort.
 :::
+
+## Configuring the edit view
+
