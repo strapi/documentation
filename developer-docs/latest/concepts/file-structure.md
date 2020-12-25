@@ -11,6 +11,7 @@ By default, your project's structure will look like this:
     - [`/models`](./models.md): contains the API's models.
     - [`/services`](./services.md): contains the API's custom services.
 - `/build`: contains your admin panel UI build.
+- [`/components`](./models.md#components): contains the components used by the API's models.
 - [`/config`](./configurations.md)
   - [`/functions`](./configurations.md#functions): contains lifecycle or generic functions of the project.
     - [`/responses`](./configurations.md#responses): contains custom responses.
