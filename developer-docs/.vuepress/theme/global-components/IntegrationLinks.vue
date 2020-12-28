@@ -2,7 +2,7 @@
   <div>
     <!-- React -->
     <div>
-      <InstallLink link="../getting-started/react.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/react.html">
         <template #icon>
         <svg width="2500" height="2246" viewBox="0 0 256 230" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet"><path d="M.754 114.75c0 19.215 18.763 37.152 48.343 47.263-5.907 29.737-1.058 53.706 15.136 63.045 16.645 9.6 41.443 2.955 64.98-17.62 22.943 19.744 46.13 27.514 62.31 18.148 16.63-9.627 21.687-35.221 15.617-65.887 30.81-10.186 48.044-25.481 48.044-44.949 0-18.769-18.797-35.006-47.979-45.052 6.535-31.933.998-55.32-15.867-65.045-16.259-9.376-39.716-1.204-62.996 19.056C104.122 2.205 80.897-4.36 64.05 5.392 47.806 14.795 43.171 39.2 49.097 69.487 20.515 79.452.754 96.057.754 114.75z" fill="#FFF"></path><path d="M201.025 79.674a151.364 151.364 0 0 0-7.274-2.292 137.5 137.5 0 0 0 1.124-4.961c5.506-26.728 1.906-48.26-10.388-55.348-11.787-6.798-31.065.29-50.535 17.233a151.136 151.136 0 0 0-5.626 5.163 137.573 137.573 0 0 0-3.744-3.458c-20.405-18.118-40.858-25.752-53.139-18.643-11.776 6.817-15.264 27.06-10.307 52.39a150.91 150.91 0 0 0 1.67 7.484c-2.894.822-5.689 1.698-8.363 2.63-23.922 8.34-39.2 21.412-39.2 34.97 0 14.004 16.4 28.05 41.318 36.566a128.44 128.44 0 0 0 6.11 1.91 147.813 147.813 0 0 0-1.775 8.067c-4.726 24.89-1.035 44.653 10.71 51.428 12.131 6.995 32.491-.195 52.317-17.525 1.567-1.37 3.14-2.823 4.715-4.346a148.34 148.34 0 0 0 6.108 5.573c19.204 16.525 38.17 23.198 49.905 16.405 12.12-7.016 16.058-28.247 10.944-54.078-.39-1.973-.845-3.988-1.355-6.04 1.43-.422 2.833-.858 4.202-1.312 25.904-8.582 42.757-22.457 42.757-36.648 0-13.607-15.77-26.767-40.174-35.168z" fill="#53C1DE"></path><path d="M195.406 142.328c-1.235.409-2.503.804-3.795 1.187-2.86-9.053-6.72-18.68-11.442-28.625 4.507-9.71 8.217-19.213 10.997-28.208 2.311.67 4.555 1.375 6.717 2.12 20.91 7.197 33.664 17.84 33.664 26.04 0 8.735-13.775 20.075-36.14 27.486zm-9.28 18.389c2.261 11.422 2.584 21.749 1.086 29.822-1.346 7.254-4.052 12.09-7.398 14.027-7.121 4.122-22.35-1.236-38.772-15.368-1.883-1.62-3.78-3.35-5.682-5.18 6.367-6.964 12.73-15.06 18.94-24.05 10.924-.969 21.244-2.554 30.603-4.717.46 1.86.87 3.683 1.223 5.466zm-93.85 43.137c-6.957 2.457-12.498 2.527-15.847.596-7.128-4.11-10.09-19.98-6.049-41.265a138.507 138.507 0 0 1 1.65-7.502c9.255 2.047 19.5 3.52 30.45 4.408 6.251 8.797 12.798 16.883 19.396 23.964a118.863 118.863 0 0 1-4.305 3.964c-8.767 7.664-17.552 13.1-25.294 15.835zm-32.593-61.58c-11.018-3.766-20.117-8.66-26.354-14-5.604-4.8-8.434-9.565-8.434-13.432 0-8.227 12.267-18.722 32.726-25.855a139.276 139.276 0 0 1 7.777-2.447c2.828 9.197 6.537 18.813 11.013 28.537-4.534 9.869-8.296 19.638-11.15 28.943a118.908 118.908 0 0 1-5.578-1.746zm10.926-74.37c-4.247-21.703-1.427-38.074 5.67-42.182 7.56-4.376 24.275 1.864 41.893 17.507 1.126 1 2.257 2.047 3.39 3.13-6.564 7.049-13.051 15.074-19.248 23.82-10.627.985-20.8 2.567-30.152 4.686a141.525 141.525 0 0 1-1.553-6.962zm97.467 24.067a306.982 306.982 0 0 0-6.871-11.3c7.21.91 14.117 2.12 20.603 3.601-1.947 6.241-4.374 12.767-7.232 19.457a336.42 336.42 0 0 0-6.5-11.758zm-39.747-38.714c4.452 4.823 8.911 10.209 13.297 16.052a284.245 284.245 0 0 0-26.706-.006c4.39-5.789 8.887-11.167 13.409-16.046zm-40.002 38.78a285.24 285.24 0 0 0-6.378 11.685c-2.811-6.667-5.216-13.222-7.18-19.552 6.447-1.443 13.322-2.622 20.485-3.517a283.79 283.79 0 0 0-6.927 11.384zm7.133 57.683c-7.4-.826-14.379-1.945-20.824-3.348 1.995-6.442 4.453-13.138 7.324-19.948a283.494 283.494 0 0 0 6.406 11.692 285.27 285.27 0 0 0 7.094 11.604zm33.136 27.389c-4.575-4.937-9.138-10.397-13.595-16.27 4.326.17 8.737.256 13.22.256 4.606 0 9.159-.103 13.64-.303-4.4 5.98-8.843 11.448-13.265 16.317zm46.072-51.032c3.02 6.884 5.566 13.544 7.588 19.877-6.552 1.495-13.625 2.699-21.078 3.593a337.537 337.537 0 0 0 6.937-11.498 306.632 306.632 0 0 0 6.553-11.972zm-14.915 7.15a316.478 316.478 0 0 1-10.84 17.49c-6.704.479-13.632.726-20.692.726-7.031 0-13.871-.219-20.458-.646A273.798 273.798 0 0 1 96.72 133.28a271.334 271.334 0 0 1-9.64-18.206 273.864 273.864 0 0 1 9.611-18.216v.002a271.252 271.252 0 0 1 10.956-17.442c6.72-.508 13.61-.774 20.575-.774 6.996 0 13.895.268 20.613.78a290.704 290.704 0 0 1 10.887 17.383 316.418 316.418 0 0 1 9.741 18.13 290.806 290.806 0 0 1-9.709 18.29zm19.913-107.792c7.566 4.364 10.509 21.961 5.755 45.038a127.525 127.525 0 0 1-1.016 4.492c-9.374-2.163-19.554-3.773-30.212-4.773-6.209-8.841-12.642-16.88-19.1-23.838a141.92 141.92 0 0 1 5.196-4.766c16.682-14.518 32.273-20.25 39.377-16.153z" fill="#FFF"></path><path d="M128.221 94.665c11.144 0 20.177 9.034 20.177 20.177 0 11.144-9.033 20.178-20.177 20.178-11.143 0-20.177-9.034-20.177-20.178 0-11.143 9.034-20.177 20.177-20.177" fill="#53C1DE"></path></svg>
         </template>
@@ -15,7 +15,7 @@
 
     <!-- Vue -->
     <div>
-      <InstallLink link="../getting-started/vue-js.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/vue-js.html">
         <template #icon>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 261.76 226.69"><g transform="matrix(1.3333 0 0 -1.3333 -76.311 313.34)"><g transform="translate(178.06 235.01)"><path d="m0 0-22.669-39.264-22.669 39.264h-75.491l98.16-170.02 98.16 170.02z" fill="#41b883"/></g><g transform="translate(178.06 235.01)"><path d="m0 0-22.669-39.264-22.669 39.264h-36.227l58.896-102.01 58.896 102.01z" fill="#34495e"/></g></g></svg>
         </template>
@@ -28,7 +28,7 @@
 
     <!-- Angular -->
     <div>
-      <InstallLink link="../getting-started/angular.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/angular.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
           <style type="text/css">
@@ -52,7 +52,7 @@
 
     <!-- Next.js -->
     <div>
-      <InstallLink link="../getting-started/next-js.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/next-js.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="207px" height="124px" viewBox="0 0 207 124" version="1.1">
             <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
@@ -81,7 +81,7 @@
 
     <!-- Nuxt.js -->
     <div>
-      <InstallLink link="../getting-started/nuxt-js.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/nuxt-js.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 298">
             <g fill-rule="nonzero" fill="none">
@@ -100,7 +100,7 @@
 
     <!-- GraphQL -->
     <div>
-      <InstallLink link="../getting-started/graphql.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/graphql.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="GraphQL_Logo" x="0px" y="0px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
             <g>
@@ -174,7 +174,7 @@
 
     <!-- Gatsby -->
     <div>
-      <InstallLink link="../getting-started/gatsby.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/gatsby.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" focusable="false"><title>Gatsby</title><path fill="#663399" d="M14,0C6.268,0,0,6.268,0,14s6.268,14,14,14s14-6.268,14-14S21.732,0,14,0z M6.2,21.8 C4.1,19.7,3,16.9,3,14.2L13.9,25C11.1,24.9,8.3,23.9,6.2,21.8z M16.4,24.7L3.3,11.6C4.4,6.7,8.8,3,14,3c3.7,0,6.9,1.8,8.9,4.5 l-1.5,1.3C19.7,6.5,17,5,14,5c-3.9,0-7.2,2.5-8.5,6L17,22.5c2.9-1,5.1-3.5,5.8-6.5H18v-2h7C25,19.2,21.3,23.6,16.4,24.7z"></path><g id="innards" fill="white"><path d="M6.2,21.8C4.1,19.7,3,16.9,3,14.2L13.9,25C11.1,24.9,8.3,23.9,6.2,21.8z"></path><path d="M16.4,24.7L3.3,11.6C4.4,6.7,8.8,3,14,3c3.7,0,6.9,1.8,8.9,4.5l-1.5,1.3C19.7,6.5,17,5,14,5 c-3.9,0-7.2,2.5-8.5,6L17,22.5c2.9-1,5.1-3.5,5.8-6.5H18v-2h7C25,19.2,21.3,23.6,16.4,24.7z"></path></g></svg>
         </template>
@@ -187,7 +187,7 @@
 
     <!-- Grisdome -->
     <div>
-      <InstallLink link="../getting-started/gridsome.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/gridsome.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
             <rect width="512" height="512" rx="256" fill="white"/>
@@ -212,7 +212,7 @@
 
     <!-- Jekyll -->
     <div>
-      <InstallLink link="../getting-started/jekyll.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/jekyll.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 32 32"><defs><linearGradient id="A" y2="277.465" x2="296.661" y1="238.547" x1="195.456" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#919191"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="B" y2="327.266" x2="254.14" y1="303.705" x1="192.87" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#900"/><stop offset="1" stop-color="#e80000"/></linearGradient></defs><g transform="matrix(.077756 0 0 .077756 -3.451258 -3.954841)"><path d="M269.02 59.15c-.184.737-.188 1.53-.033 2.365 0 0 2.507 16.642-.34 24.048L147.652 400.2c-8.636 23.1 2.937 48.91 26.014 57.787s48.955-2.524 58.03-25.464l.01.005 121.005-314.634c2.366-6.155 15.86-18.08 15.86-18.08.677-.516 1.202-1.108 1.56-1.778l.06-.122c.065-.132.14-.258.193-.395 3.12-8.113-17.005-23.405-44.952-34.152s-53.133-12.884-56.253-4.77c-.053.137-.083.28-.122.422l-.037.13z" opacity=".3"/><path d="M265.523 56.477c-.185.737-.2 1.53-.033 2.365 0 0 2.508 16.642-.34 24.048L144.155 397.526c-8.635 23.1 2.937 48.91 26.014 57.787s48.955-2.524 58.03-25.464v.005L349.215 115.22c2.365-6.155 15.86-18.08 15.86-18.08.677-.516 1.202-1.107 1.56-1.778l.058-.122c.065-.13.14-.258.193-.395 3.12-8.113-17.005-23.404-44.95-34.152s-53.133-12.884-56.253-4.77c-.053.137-.083.28-.122.422l-.037.132z" fill="url(#A)"/><path d="M303.48 198.814L216.275 425.73c-6.436 16.262-25.166 24.723-41.78 18.333s-25.608-25.512-19.488-41.897l55.758-144.982s6.964-11.233 20.637-19.225 24.95-6.305 40.132-13.053 31.947-26.093 31.947-26.093z" fill="url(#B)"/><ellipse ry="8.85" rx="33.648" cy="76.201" cx="315.97" transform="matrix(.9334 .359 -.359 .9334 48.4129 -108.3439)" fill="#333"/><g fill="#fff"><path d="M265.49 58.84s2.47 16.737-.34 24.048L144.155 397.526c-8.635 23.1 2.937 48.91 26.014 57.787 4.005 1.54 8.092 2.455 12.164 2.822-15.556-11.702-22.23-32.632-15.093-51.73l-.01-.004L285.833 98.01S269.69 82.85 265.49 58.84z" opacity=".3"/><circle r="3.506" cy="261.806" cx="226.531" opacity=".5"/><circle r="5.285" cy="287.227" cx="249.514" opacity=".5"/><circle r="9.915" cy="317.459" cx="214.429" opacity=".5"/><circle r="5.286" cy="335.795" cx="198.375" opacity=".5"/><circle r="3.506" cy="375.008" cx="219.43" opacity=".5"/></g></g></svg>
         </template>
@@ -225,7 +225,7 @@
 
     <!-- 11ty -->
     <div>
-      <InstallLink link="../getting-started/11ty.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/11ty.html">
         <template #icon>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="400.000000pt" height="400.000000pt" viewBox="0 0 400.000000 400.000000" preserveAspectRatio="xMidYMid meet">
         <metadata>
@@ -245,7 +245,7 @@
 
     <!-- Svelte -->
     <div>
-      <InstallLink link="../getting-started/svelte.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/svelte.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 98.1 118" style="enable-background:new 0 0 98.1 118;" xml:space="preserve">
           <style type="text/css">
@@ -266,7 +266,7 @@
 
     <!-- Sapper -->
     <div>
-      <InstallLink link="../getting-started/sapper.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/sapper.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 98.1 118" style="enable-background:new 0 0 98.1 118;" xml:space="preserve">
           <style type="text/css">
@@ -286,7 +286,7 @@
 
     <!-- Ruby -->
     <div>
-      <InstallLink link="../getting-started/ruby.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/ruby.html">
         <template #icon>
           <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="Layer_1" width="198.13" height="197.58" viewBox="0 0 198.13 197.58" overflow="visible" enable-background="new 0 0 198.13 197.58" xml:space="preserve" inkscape:version="0.48.0 r9654" sodipodi:docname="Logo-Ruby.svg"><metadata id="metadata3320"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/></cc:Work></rdf:RDF></metadata><defs id="defs3489"><linearGradient id="XMLID_17_-9" gradientUnits="userSpaceOnUse" x1="174.0737" y1="215.5488" x2="132.27631" y2="141.7533"><stop offset="0" style="stop-color:#FB7655" id="stop3272-4"/><stop offset="0" style="stop-color:#FB7655" id="stop3274-5"/><stop offset="0.41" style="stop-color:#E42B1E" id="stop3276-1"/><stop offset="0.99" style="stop-color:#990000" id="stop3278-0"/><stop offset="1" style="stop-color:#990000" id="stop3280-3"/></linearGradient><linearGradient id="XMLID_18_-7" gradientUnits="userSpaceOnUse" x1="194.895" y1="153.5576" x2="141.0276" y2="117.4093"><stop offset="0" style="stop-color:#871101" id="stop3285-8"/><stop offset="0" style="stop-color:#871101" id="stop3287-8"/><stop offset="0.99" style="stop-color:#911209" id="stop3289-6"/><stop offset="1" style="stop-color:#911209" id="stop3291-0"/></linearGradient><linearGradient id="XMLID_19_-4" gradientUnits="userSpaceOnUse" x1="151.79539" y1="217.7852" x2="97.929703" y2="181.638"><stop offset="0" style="stop-color:#871101" id="stop3296-6"/><stop offset="0" style="stop-color:#871101" id="stop3298-7"/><stop offset="0.99" style="stop-color:#911209" id="stop3300-6"/><stop offset="1" style="stop-color:#911209" id="stop3302-0"/></linearGradient><linearGradient id="XMLID_20_-9" gradientUnits="userSpaceOnUse" x1="38.696301" y1="127.3906" x2="47.046902" y2="181.66141"><stop offset="0" style="stop-color:#FFFFFF" id="stop3307-7"/><stop offset="0" style="stop-color:#FFFFFF" id="stop3309-5"/><stop offset="0.23" style="stop-color:#E57252" id="stop3311-9"/><stop offset="0.46" style="stop-color:#DE3B20" id="stop3313-7"/><stop offset="0.99" style="stop-color:#A60003" id="stop3315-8"/><stop offset="1" style="stop-color:#A60003" id="stop3317-5"/></linearGradient><linearGradient id="XMLID_21_-3" gradientUnits="userSpaceOnUse" x1="96.132797" y1="76.715302" x2="99.209602" y2="132.1021"><stop offset="0" style="stop-color:#FFFFFF" id="stop3322-3"/><stop offset="0" style="stop-color:#FFFFFF" id="stop3324-8"/><stop offset="0.23" style="stop-color:#E4714E" id="stop3326-3"/><stop offset="0.56" style="stop-color:#BE1A0D" id="stop3328-7"/><stop offset="0.99" style="stop-color:#A80D00" id="stop3330-9"/><stop offset="1" style="stop-color:#A80D00" id="stop3332-3"/></linearGradient><linearGradient id="XMLID_22_-7" gradientUnits="userSpaceOnUse" x1="147.103" y1="25.521" x2="156.3141" y2="65.216202"><stop offset="0" style="stop-color:#FFFFFF" id="stop3337-8"/><stop offset="0" style="stop-color:#FFFFFF" id="stop3339-7"/><stop offset="0.18" style="stop-color:#E46342" id="stop3341-4"/><stop offset="0.4" style="stop-color:#C82410" id="stop3343-1"/><stop offset="0.99" style="stop-color:#A80D00" id="stop3345-9"/><stop offset="1" style="stop-color:#A80D00" id="stop3347-0"/></linearGradient><linearGradient id="XMLID_23_-9" gradientUnits="userSpaceOnUse" x1="118.9761" y1="11.5415" x2="158.66859" y2="-8.3048"><stop offset="0" style="stop-color:#FFFFFF" id="stop3352-8"/><stop offset="0" style="stop-color:#FFFFFF" id="stop3354-8"/><stop offset="0.54" style="stop-color:#C81F11" id="stop3356-5"/><stop offset="0.99" style="stop-color:#BF0905" id="stop3358-8"/><stop offset="1" style="stop-color:#BF0905" id="stop3360-4"/></linearGradient><linearGradient id="XMLID_24_-3" gradientUnits="userSpaceOnUse" x1="3.9033" y1="113.5547" x2="7.1701999" y2="146.2628"><stop offset="0" style="stop-color:#FFFFFF" id="stop3365-7"/><stop offset="0" style="stop-color:#FFFFFF" id="stop3367-1"/><stop offset="0.31" style="stop-color:#DE4024" id="stop3369-3"/><stop offset="0.99" style="stop-color:#BF190B" id="stop3371-8"/><stop offset="1" style="stop-color:#BF190B" id="stop3373-0"/></linearGradient><linearGradient id="XMLID_25_-9" gradientUnits="userSpaceOnUse" x1="-18.5557" y1="155.10451" x2="135.0152" y2="-2.8092999"><stop offset="0" style="stop-color:#BD0012" id="stop3380-7"/><stop offset="0" style="stop-color:#BD0012" id="stop3382-9"/><stop offset="0.07" style="stop-color:#FFFFFF" id="stop3384-9"/><stop offset="0.17" style="stop-color:#FFFFFF" id="stop3386-3"/><stop offset="0.27" style="stop-color:#C82F1C" id="stop3388-2"/><stop offset="0.33" style="stop-color:#820C01" id="stop3390-4"/><stop offset="0.46" style="stop-color:#A31601" id="stop3392-3"/><stop offset="0.72" style="stop-color:#B31301" id="stop3394-7"/><stop offset="0.99" style="stop-color:#E82609" id="stop3396-1"/><stop offset="1" style="stop-color:#E82609" id="stop3398-2"/></linearGradient><linearGradient id="XMLID_26_-2" gradientUnits="userSpaceOnUse" x1="99.074699" y1="171.0332" x2="52.817699" y2="159.61659"><stop offset="0" style="stop-color:#8C0C01" id="stop3403-0"/><stop offset="0" style="stop-color:#8C0C01" id="stop3405-2"/><stop offset="0.54" style="stop-color:#990C00" id="stop3407-1"/><stop offset="0.99" style="stop-color:#A80D0E" id="stop3409-7"/><stop offset="1" style="stop-color:#A80D0E" id="stop3411-5"/></linearGradient><linearGradient id="XMLID_27_-1" gradientUnits="userSpaceOnUse" x1="178.52589" y1="115.5146" x2="137.43269" y2="78.683998"><stop offset="0" style="stop-color:#7E110B" id="stop3416-7"/><stop offset="0" style="stop-color:#7E110B" id="stop3418-4"/><stop offset="0.99" style="stop-color:#9E0C00" id="stop3420-1"/><stop offset="1" style="stop-color:#9E0C00" id="stop3422-7"/></linearGradient><linearGradient id="XMLID_28_-1" gradientUnits="userSpaceOnUse" x1="193.6235" y1="47.937" x2="173.15421" y2="26.053801"><stop offset="0" style="stop-color:#79130D" id="stop3427-1"/><stop offset="0" style="stop-color:#79130D" id="stop3429-1"/><stop offset="0.99" style="stop-color:#9E120B" id="stop3431-7"/><stop offset="1" style="stop-color:#9E120B" id="stop3433-0"/></linearGradient><radialGradient id="XMLID_29_-4" cx="143.8315" cy="79.388199" r="50.357601" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#A80D00" id="stop3440-0"/><stop offset="0" style="stop-color:#A80D00" id="stop3442-8"/><stop offset="0.99" style="stop-color:#7E0E08" id="stop3444-5"/><stop offset="1" style="stop-color:#7E0E08" id="stop3446-1"/></radialGradient><radialGradient id="XMLID_30_-6" cx="74.0923" cy="145.75101" r="66.943703" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#A30C00" id="stop3451-6"/><stop offset="0" style="stop-color:#A30C00" id="stop3453-2"/><stop offset="0.99" style="stop-color:#800E08" id="stop3455-1"/><stop offset="1" style="stop-color:#800E08" id="stop3457-9"/></radialGradient><linearGradient id="XMLID_31_-6" gradientUnits="userSpaceOnUse" x1="26.669901" y1="197.33591" x2="9.9886999" y2="140.742"><stop offset="0" style="stop-color:#8B2114" id="stop3462-4"/><stop offset="0" style="stop-color:#8B2114" id="stop3464-8"/><stop offset="0.43" style="stop-color:#9E100A" id="stop3466-0"/><stop offset="0.99" style="stop-color:#B3100C" id="stop3468-8"/><stop offset="1" style="stop-color:#B3100C" id="stop3470-1"/></linearGradient><linearGradient id="XMLID_32_-0" gradientUnits="userSpaceOnUse" x1="154.6411" y1="9.7979002" x2="192.039" y2="26.305901"><stop offset="0" style="stop-color:#B31000" id="stop3475-2"/><stop offset="0" style="stop-color:#B31000" id="stop3477-2"/><stop offset="0.44" style="stop-color:#910F08" id="stop3479-9"/><stop offset="0.99" style="stop-color:#791C12" id="stop3481-7"/><stop offset="1" style="stop-color:#791C12" id="stop3483-5"/></linearGradient><linearGradient y2="141.7533" x2="132.27631" y1="215.5488" x1="174.0737" gradientUnits="userSpaceOnUse" id="linearGradient3448" xlink:href="#XMLID_17_-9" inkscape:collect="always"/></defs><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1036" inkscape:window-height="1124" id="namedview3487" showgrid="false" inkscape:zoom="1.3412289" inkscape:cx="99.065005" inkscape:cy="98.790004" inkscape:window-x="882" inkscape:window-y="24" inkscape:window-maximized="0" inkscape:current-layer="Layer_1"/>
           <linearGradient id="XMLID_17_" gradientUnits="userSpaceOnUse" x1="174.0737" y1="215.5488" x2="132.2763" y2="141.7533">
@@ -432,7 +432,7 @@
 
     <!-- Python -->
     <div>
-      <InstallLink link="../getting-started/python.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/python.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2490" viewBox="0 0 256 255" preserveAspectRatio="xMinYMin meet"><defs><linearGradient x1="12.959%" y1="12.039%" x2="79.639%" y2="78.201%" id="a"><stop stop-color="#387EB8" offset="0%"/><stop stop-color="#366994" offset="100%"/></linearGradient><linearGradient x1="19.128%" y1="20.579%" x2="90.742%" y2="88.429%" id="b"><stop stop-color="#FFE052" offset="0%"/><stop stop-color="#FFC331" offset="100%"/></linearGradient></defs><path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072zM92.802 19.66a11.12 11.12 0 0 1 11.13 11.13 11.12 11.12 0 0 1-11.13 11.13 11.12 11.12 0 0 1-11.13-11.13 11.12 11.12 0 0 1 11.13-11.13z" fill="url(#a)"/><path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897zm34.114-19.586a11.12 11.12 0 0 1-11.13-11.13 11.12 11.12 0 0 1 11.13-11.131 11.12 11.12 0 0 1 11.13 11.13 11.12 11.12 0 0 1-11.13 11.13z" fill="url(#b)"/></svg>
         </template>
