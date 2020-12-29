@@ -264,7 +264,7 @@ module.exports = {
           title: 'Setup & Deployment',
           children: [
             ['/latest/setup-deployment-guides/installation.md', 'Installation'],
-            ['/latest/setup-deployment-guides/framework-configurations/configurations.md', 'Configuration'],
+            ['/latest/setup-deployment-guides/framework-configurations.md', 'Configuration'],
             ['/latest/setup-deployment-guides/customization.md', 'Customization'],
             ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
           ]
