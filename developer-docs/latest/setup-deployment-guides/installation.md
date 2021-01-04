@@ -6,8 +6,6 @@ Strapi gives you many possible installation options for your project or applicat
 For a more detailed overview of deployment please see the [related documentation](./deployment.md).
 :::
 
-## Installation guides
-
 <div>
 	<InstallLink link="installation/cli.html">
 		<template #icon>
