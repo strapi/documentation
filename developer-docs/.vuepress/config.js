@@ -265,7 +265,7 @@ module.exports = {
           children: [
             ['/latest/setup-deployment-guides/installation.md', 'Installation'],
             ['/latest/setup-deployment-guides/framework-configurations.md', 'Framework configuration'],
-            ['/latest/setup-deployment-guides/customization.md', 'Customization'],
+            ['/latest/setup-deployment-guides/customization.md', 'Backend customization'],
             ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
           ]
         },
