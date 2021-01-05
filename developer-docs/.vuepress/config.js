@@ -284,6 +284,7 @@ module.exports = {
           title: 'Developer Resources',
           children: [
             ['/latest/developer-resources/content-api/content-api.md', 'Content API'],
+            ['/latest/developer-resources/content-api/integrations.md', 'Integrations'],
             ['/latest/developer-resources/cli/CLI', 'Command Line Interface'],
             ['/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference'],
           ],
