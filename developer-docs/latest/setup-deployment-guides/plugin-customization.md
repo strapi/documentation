@@ -1,3 +1,7 @@
+---
+sidebarDepth: 3
+---
+
 # Plugins customization
 
 ## Plugin extensions

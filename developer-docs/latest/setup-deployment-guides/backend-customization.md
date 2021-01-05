@@ -1,3 +1,7 @@
+---
+sidebarDepth: 3
+---
+
 # Backend customization
 
 <!--- BEGINNING OF ROUTING --->
