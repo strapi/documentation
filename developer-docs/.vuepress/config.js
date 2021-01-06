@@ -268,6 +268,7 @@ module.exports = {
             ['/latest/setup-deployment-guides/backend-customization.md', 'Backend customization'],
             ['/latest/setup-deployment-guides/admin-customization.md', 'Admin panel customization'],
             ['/latest/setup-deployment-guides/plugin-customization.md', 'Plugins customization'],
+            ['/latest/setup-deployment-guides/local-plugins-customization.md', 'Local plugins creation guide'],
             ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
           ]
         },
