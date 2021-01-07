@@ -104,6 +104,7 @@ strapi configuration:dump
 
 Options:
   -f, --file <file>  Output file, default output is stdout
+  -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
 ```
 
 **Examples**
