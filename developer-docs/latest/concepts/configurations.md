@@ -295,7 +295,7 @@ module.exports = ({ env }) => ({
 | `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
 | `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
-| `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `-1` which fetches all results                                                         | Integer      | `-1`    |
+| `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                         | Integer      | `null`    |
 
 ## Functions
 
