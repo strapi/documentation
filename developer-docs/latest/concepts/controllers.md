@@ -352,3 +352,36 @@ module.exports = {
 ::: tip
 A route handler can only access the controllers defined in the `./api/**/controllers` folders.
 :::
+
+### Error handling
+
+Sometimes in your custom controller you might need to run some validation and throw a specific error to the front-end. We can use [Koa's methods](https://strapi.io/documentation/developer-docs/latest/concepts/requests-responses.html#request) to return custom status codes and errors.
+In this example, we will be using Validatorjs; it is super easy.
+
+```js
+const { sanitizeEntity } = require('strapi-utils');
+const Validator = require('validatorjs');
+// POST
+async create(ctx) {
+    const body = ctx.request.body;
+    
+    // We are creating some custom validation rules
+    const validation = new Validator(body, {
+      email: 'required|email',
+      username: 'required|max:50'
+      password: 'required|min:8'
+    })
+    
+    try {
+      if (validation.passes()) {
+        const entity = await strapi.services['chef'].create(body);
+        return 'Profile created successfully'
+      } else {
+        throw new Error
+    } catch {
+      // ctx.throw([status], [msg], [properties])
+      // Will throw an error with code 422 and a custom message
+      return ctx.throw(422, 'Form validation failed')
+    }
+},
+```
