@@ -56,7 +56,7 @@ npx create-strapi-app my-project --quickstart
 ::::
 
 ::: tip
-If you want to use specific database, you don't have to use the `--quickstart` flag. The CLI will let you choose the database of your choice. The `--quickstart` flag sets the database  to SQLite.
+If you want to use specific database, you don't have to use the `--quickstart` flag. The CLI will let you choose the database of your choice. The `--quickstart` flag sets the database to SQLite.
 :::
 
 :::tip
