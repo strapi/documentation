@@ -11,7 +11,7 @@ Deploying **databases** along with Strapi is covered in the [Databases Guide](..
 Manual guides for deployment on various platforms, for One-click and docker please see the [installation](../getting-started/installation.md) guides.
 
 <div>
-    <InstallLink link="../deployment/amazon-aws.html">
+    <InstallLink link="../deployment/21yunbox.html">
     <template #icon>
     <svg width="64px" height="55px" viewBox="0 0 64 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <title>Group</title>
