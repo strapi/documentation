@@ -24,7 +24,9 @@ For more information consult [21YunBox's Deploy Strapi guide](https://www.21yunb
 
 ## Prerequisites
 
-This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](/getting-started/quick-start) to get started or fork 21YunBox's Strapi Example on [Gitee](https://gitee.com/eryiyunbox-examples/hello-strapi-sqlite) or [Github](https://github.com/tobyglei/hello-strapi-sqlite) before continuing.
+This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](/getting-started/quick-start) to get started or fork 21YunBox's Strapi Examples:
+- [Strapi with SQLite Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-sqlite)
+- [Strapi with Postgres Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-postgres)
 
 ## Setup
 
@@ -45,12 +47,15 @@ You can set up a Strapi CMS on 21YunBox in four quick steps:
    | Setting               | Value                                                 |
    | --------------------- | ------------------------------------------------ |
    | **NODE_ENV**       | `production`                                    |
-   | **DATABASE_FILENAME**     | `/data/strapi.db`|
-
+   | **DATABASE_FILENAME**     | If you use SQLite database, use `/data/strapi.db`|
+   | **DATABASE_URL**     | If you use Postgres database, paste the database URL here (we have demo video below if you are unsure)|
 
 That's it! Your site will be live on your 21YunBox URL (which looks like `yoursite.21yunbox.com`) as soon as the build is done.
 
-If you are unsure the steps above, we have created two webcast for the steps above, you can view them at [part1](https://www.bilibili.com/video/BV1fK4y1j7U8?zw) and [part2](https://www.bilibili.com/video/BV1Ta4y1W7bD?zw).
+If you are unsure the steps above, we have created few webcast for the steps above, you can view them at:
+- Part 1: [Demo how to deploy Strapi with SQLite in production](https://www.bilibili.com/video/BV1fK4y1j7U8?zw)
+- Part 2: [Demo how to get in the development mode and create content on Strapi](https://www.bilibili.com/video/BV1Ta4y1W7bD?zw)
+- Part 3: [Demo how to deploy Strapi with database in production](https://www.bilibili.com/video/BV1Nf4y1k7ZP/)
 
 ## Continuous deploys
 
@@ -59,3 +64,7 @@ Now that 21YunBox is connected to your repo, it will automatically build and pub
 ## Custom domains
 
 Add your own domains to your site easily using 21YunBox's [custom domains](https://www.21yunbox.com/docs/#/custom-domains) guide.
+
+## Questions?
+
+[Contact us](https://www.21yunbox.com/docs/#/contact) if you need customized deployment with Strapi.
