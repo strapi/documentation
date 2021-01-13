@@ -265,7 +265,7 @@ module.exports = {
             ],
             [
               '/latest/content-manager/configuring-view-of-content-type',
-              'Configuring the view of a content type',
+              'Configuring the views of a content type',
             ],
             ['/latest/content-manager/writing-content', 'Writing content'],
             ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],

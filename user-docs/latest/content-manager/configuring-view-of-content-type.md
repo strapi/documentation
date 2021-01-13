@@ -1,4 +1,4 @@
-# Configuring the view of a content type
+# Configuring the views of a content type
 
 Depending on their type, content types can be divided into 2 interfaces: the list view and the edit view. Both interfaces can be configured.
 
