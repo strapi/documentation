@@ -4,7 +4,7 @@ Depending on their type, content types can be divided into 2 interfaces: the lis
 
 ## Configuring the list view
 
-Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
+On the right side of the list view interface, right above the table, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 ::: tip NOTE
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -14,11 +14,11 @@ Note also that the explanations below explain how to permanently configure which
 
 ![Settings of a list view in the Content Manager](../assets/content-manager/content-manager_settings-list-view.png)
 
-To configure the list view settings:
+### List view settings
 
-1. In the list view, click on the settings button <Fa-Cog />.
+1. In the list view of your collection type, click on the settings button <Fa-Cog />.
 2. Click on the **Configure the view** button.
-3. Define your chosen new settings:
+3. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
 | ---------------------- | -------------------------------------------------------------------------------------------------- |
@@ -28,11 +28,23 @@ To configure the list view settings:
 | Entries per page       | Choose among the drop-down list the number of entries per page.                                    |
 | Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
 
-4. Define what fields to display in the list view table, and in what order:
+4. Click on the **Save** button.
+
+### List view display
+
+1. In the list view of your collection type, click on the settings button <Fa-Cog />.
+2. Click on the **Configure the view** button.
+3. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
    - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
    - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed amond the other fields.
-   - Click the name of the field to edit the label and/or enable or disable sort on that field.
+4. Click the name of the field to access its available own settings:
+
+| Setting name              | Instructions                                                              |
+| ------------------------- | ------------------------------------------------------------------------- |
+| Label                     | Write the label to should be used for the field in the list view table.   |
+| Enable sort on this field | Click on **ON** or **OFF** to able or disable the sort on the field.      |
+
 5. Click on the **Save** button.
 
 ::: tip NOTE
@@ -54,10 +66,10 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 
 ![Configuring the edit view of the Content Manager](../assets/content-manager/edit-view-config.png)
 
-### Configuring settings
+### Edit view settings
 
 1. In the edit view, click on the **Configure the view** button.
-2. In the Settings area, configure the available settings:
+2. In the Settings area, define your chosen new settings:
 
 | Setting name    | Instructions                                                                          |
 | --------------- | ------------------------------------------------------------------------------------- |
@@ -65,14 +77,14 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 
 3. Click on the **Save** button.
 
-### Configuring view display
+### Edit view display
 
 1. In the edit view, click on the **Configure the view** button.
 2. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
    - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
    - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed amond the other fields.
-3. Click the name of a field to access its available settings:
+3. Click the name of a field to access its available own settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
