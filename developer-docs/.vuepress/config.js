@@ -264,12 +264,18 @@ module.exports = {
           title: 'Setup & Deployment',
           children: [
             ['/latest/setup-deployment-guides/installation.md', 'Installation'],
-            ['/latest/setup-deployment-guides/framework-configurations.md', 'Framework configuration'],
-            ['/latest/setup-deployment-guides/backend-customization.md', 'Backend customization'],
-            ['/latest/setup-deployment-guides/admin-customization.md', 'Admin panel customization'],
-            ['/latest/setup-deployment-guides/plugin-customization.md', 'Plugins customization'],
-            ['/latest/setup-deployment-guides/local-plugins-customization.md', 'Local plugins creation guide'],
+            ['/latest/setup-deployment-guides/framework-configurations.md', 'Configuration'],
             ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
+          ]
+        },
+        {
+          collapsable: false,
+          title: 'Development',
+          children: [
+            ['/latest/development/backend-customization.md', 'Backend customization'],
+            ['/latest/development/admin-customization.md', 'Admin panel customization'],
+            ['/latest/development/plugin-customization.md', 'Plugins customization'],
+            ['/latest/development/local-plugins-customization.md', 'Local plugins creation guide'],
           ]
         },
         {
