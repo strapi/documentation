@@ -1,7 +1,3 @@
----
-sidebarDepth: 3
----
-
 # Admin panel customization
 
 ## Admin extension
