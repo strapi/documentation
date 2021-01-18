@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 
-# Framework configurations
+# Configurations
 
 Your application configuration lives in the `config` folder. All the configuration files are loaded on startup and can be accessed through the configuration provider.
 
