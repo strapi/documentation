@@ -1,4 +1,4 @@
-# Plugins
+# Plugins customization
 
 In Strapi you can install plugins in your `node_modules`. This allows for easy updates and respect best practices. To customize those installed plugins you can work in the `/extensions` directory. It contains all the plugins' customizable files.
 

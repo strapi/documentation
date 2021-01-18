@@ -274,7 +274,7 @@ module.exports = {
           children: [
             ['/latest/development/backend-customization.md', 'Backend customization'],
             ['/latest/development/admin-customization.md', 'Admin panel customization'],
-            ['/latest/development/plugin-customization.md', 'Plugins'],
+            ['/latest/development/plugin-customization.md', 'Plugins customization'],
             ['/latest/development/local-plugins-customization.md', 'Local plugins creation guide'],
           ]
         },
