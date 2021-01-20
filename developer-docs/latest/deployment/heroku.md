@@ -334,7 +334,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Then set the development and the production configurations separatly:
+Then set the development and the production configurations separately:
 
 `Path: ./config/env/development/database.js`.
 
