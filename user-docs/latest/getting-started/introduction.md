@@ -22,13 +22,19 @@ The admin panel is the back office of your Strapi application. From the admin pa
 In order to access the admin panel, your Strapi application must be launched<!-- (see Installing Strapi) -->, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
 :::
 
-![User profile](../assets/getting-started/login-page.png)
+![Login page with SSO activated](../assets/getting-started/login-page-SSO.png)
 
 To access the admin panel:
 
 1. Go to the URL of your Strapi application's admin panel.
 2. Enter your credentials to log in.
 3. Click on the **Log in** button. You should be redirected to the homepage of the admin panel.
+
+### Using SSO for authentication
+
+If your Strapi application was configured to allow authentication through SSO (Single Sign On), you can access the admin panel using a specific provider instead of a regular Strapi account.
+
+To do so, in the login page of your Strapi application, click on a chosen provider. If you cannot see your provider, click the ![icon more](../assets/getting-started/icon_more.png) button to access the full list of all available providers. You will be redirected to your provider's own login page where you will be able to authenticate.
 
 ## Setting up your administrator profile
 
