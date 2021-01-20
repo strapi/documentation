@@ -300,6 +300,15 @@ module.exports = {
           title: 'Plugins',
           children: [['/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
         },
+        {
+          collapsable: false,
+          title: 'General settings',
+          children: [
+            [
+              '/latest/settings/managing-global-settings', 'Managing global settings',
+            ],
+          ],
+        },
       ],
     },
   },
