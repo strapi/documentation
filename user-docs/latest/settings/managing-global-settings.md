@@ -10,7 +10,7 @@ For more information about pricing, please refer to [the Strapi website](https:/
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow users to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
-<!--- screenshot --->
+![SSO settings](../assets/settings/settings-sso.png)
 
 To configure the SSO feature settings:
 
