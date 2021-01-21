@@ -256,7 +256,7 @@ config/env/production/server.js
 ```js
 module.exports = {
   admin: {
-    path: '/dashboard',
+    url: '/dashboard',
   },
 };
 ```
