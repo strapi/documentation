@@ -27,7 +27,7 @@ To configure the list view settings:
 4. Define what fields to display in the list view table, and in what order:
    - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
    - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
-   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed amond the other fields.
+   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed among the other fields.
    - Click the name of the field to edit the label and/or enable or disable sort on that field.
 5. Click on the **Save** button.
 
