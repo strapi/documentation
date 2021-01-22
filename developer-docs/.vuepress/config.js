@@ -250,7 +250,7 @@ module.exports = {
       '/latest/': [
         {
           collapsable: false,
-          title: 'Getting Started',
+          title: '🚀 Getting Started',
           children: [
             ['/latest/getting-started/introduction', 'Introduction'],
             ['/latest/getting-started/quick-start', 'Quick Start Guide'],
@@ -261,7 +261,7 @@ module.exports = {
         },
         {
           collapsable: false,
-          title: 'Setup & Deployment',
+          title: '⚙️ Setup & Deployment',
           children: [
             ['/latest/setup-deployment-guides/installation.md', 'Installation'],
             ['/latest/setup-deployment-guides/configurations.md', 'Configurations'],
@@ -270,7 +270,7 @@ module.exports = {
         },
         {
           collapsable: false,
-          title: 'Development',
+          title: '🔧 Development',
           children: [
             ['/latest/development/backend-customization.md', 'Backend customization'],
             ['/latest/development/admin-customization.md', 'Admin panel customization'],
@@ -280,7 +280,7 @@ module.exports = {
         },
         {
           collapsable: false,
-          title: 'Update & Migration',
+          title: '♻️ Update & Migration',
           children: [
             ['/latest/update-migration-guides/update-version.md', 'Update'],
             ['/latest/update-migration-guides/migration-guides.md', 'Migration'],
@@ -288,7 +288,7 @@ module.exports = {
         },
         {
           collapsable: false,
-          title: 'Developer Resources',
+          title: '💻 Developer Resources',
           children: [
             ['/latest/developer-resources/content-api/content-api.md', 'Content API'],
             ['/latest/developer-resources/content-api/integrations.md', 'Integrations'],
@@ -298,7 +298,7 @@ module.exports = {
         },
         {
           collapsable: true,
-          title: 'Guides',
+          title: '📚 Guides',
           children: [
             ['/latest/guides/api-token', 'API tokens'],
             ['/latest/guides/auth-request', 'Authenticated request'],
