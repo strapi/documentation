@@ -4,6 +4,24 @@ Thanks to the plugin `Upload`, you can upload any kind of file on your server or
 
 ## Configuration
 
+### Local server
+
+This plugin accepts `localServer` configurations as the options for [koa-static](https://github.com/koajs/static).
+
+You can pass them by create or edit the file at `./config/plugins.js`. The example below set `maxAge` header for locally uploaded assets.
+
+```js
+module.exports = ({ env })=>({
+  upload: {
+    localServer: {
+      maxAge: 300000
+    }
+  }
+});
+```
+
+### File size
+
 Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of **200MB**.
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
