@@ -298,7 +298,7 @@ module.exports = {
         },
         {
           collapsable: true,
-          title: 'Jim Recipes',
+          title: 'Guides',
           children: [
             ['/latest/guides/api-token', 'API tokens'],
             ['/latest/guides/auth-request', 'Authenticated request'],
