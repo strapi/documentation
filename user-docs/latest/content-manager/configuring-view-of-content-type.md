@@ -97,18 +97,18 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 
 ::: warning IMPORTANT
 The settings and display of a component's fields cannot be managed and reordered through the entry's edit view configuration page. Click on the **Set the component's layout** button of a component to access the component's own configuration page. You will find the exact same settings and display options as for the entry, but that will specifically apply to your component.
+
+Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content type where the component is used. 
 :::
 
 #### Relational fields
 
-On the right side of the View area is displayed a Relational fields part. As in the edit view, regular fields and relational fields are managed separately (see [Managing relational fields](managing-relational-fields.md)). Relational fields configurations indeed have some specificities.
-
-The Relational fields part of the View area allows to choose what relational fields .
+On the right side of the View area is displayed a Relational fields part. As in the edit view, regular fields and relational fields are managed separately (see [Managing relational fields](managing-relational-fields.md)). Although most configuration options are similar to regular fields', relational fields configurations have some specificities.
 
 To define what relational fields of an entry should be available in the edit view, the following options are available:
 
-- Click the **Insert another relational field** button to be add another relational field to your entry. If the button remains unclickable, it means that no other relational field can be added.
-- Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a relational field.
-- Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed among the other relational fields.
+- the **Insert another relational field** button, to add another relational field to your entry. If the button remains unclickable, it means that no other relational field can be added.
+- the delete button ![icon delete](../assets/content-manager/icon_delete.png), to remove a relational field.
+- the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png), to drag and drop to the place you want your relational field to be displayed among the others.
 
 As for regular fields, it is possible to access the available settings of the relational fields by clicking on their name. Most settings are the same as for regular fields (see [Edit view display](./configuring-view-of-content-type.md#edit-view-display)) except for "Entry title" which is only available for relational fields. It is recommended to choose well the entry title of relational fields as the more comprehensive it is, the easier it will be for administrators to manage the content of relational fields from the edit view.
