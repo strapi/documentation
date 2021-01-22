@@ -8,13 +8,13 @@ Thanks to the plugin `Upload`, you can upload any kind of file on your server or
 
 This plugin accepts `localServer` configurations as the options for [koa-static](https://github.com/koajs/static).
 
-You can pass them by create or edit the file at `./config/plugins.js`. The example below set `maxAge` header for locally uploaded assets.
+You can pass them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header for locally uploaded assets.
 
 ```js
 module.exports = ({ env })=>({
   upload: {
     localServer: {
-      maxAge: 300000
+      maxage: 300000
     }
   }
 });
