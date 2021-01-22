@@ -1,4 +1,4 @@
-# Local plugins customization
+# Local plugins
 
 ## Quick start
 
