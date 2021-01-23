@@ -14,3 +14,7 @@ Create a development project
 In a new terminal window:
 
 1. Generate a new plugin: `cd /path/to/myDevelopmentProject && strapi generate:plugin my-plugin`
+
+::: tip NOTE
+After you have succesfully generated your new custom plugin, you would need to run `strapi build` to generate the new field in the admin UI
+:::
