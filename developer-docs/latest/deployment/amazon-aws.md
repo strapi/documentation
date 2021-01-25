@@ -138,7 +138,7 @@ Follow these steps to complete installation of a `PostgreSQL` database:
 
 After a few minutes, you may refresh your page and see that your database has been successfully created.
 
-### Configure S3 for image hosting
+### Configure S3 for image hosting (optional)
 
 Amazon calls cloud storage services **S3**. You create a **bucket**, which holds the files, images, folders, etc... which then can be accessed and served by your application. This guide will show you how to use **Amazon S3** to host the images for your project.
 
@@ -276,6 +276,15 @@ Only do if _not installed_, as above. Please follow these directions on [how to 
 #### 3. Configure the global **username** and **email** settings: [Setting up Git - Your Identity](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
 
 After installing and configuring Git on your EC2 instance. Please continue to the next step.
+
+### Before proceding, we need to add PostgreSQL port 5432 or other database and port to our default security inbound rules so our database can connect to our EC2 instance.
+
+on your aws console left menu, click on the  **Security Groups** under  **Network and Security** dropdown.
+from the list of security groups click on the default, under the inbound Rules, click on  **Edit Inbound Rules** 
+before you proceed, copy the internal Private IPv4 addresses from your EC2 instance. eg. 172.x.xx.x
+
+type: postgresSQL   protocol: TCP port range: 5432  source: custom  and paste your Private IPv4 addresses/32
+click save rule
 
 ### Prepare and clone Strapi project to server
 
