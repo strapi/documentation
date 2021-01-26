@@ -4,7 +4,7 @@ sidebarDepth: 0
 
 # Frequently Asked Questions
 
-Below are solutions to some common issues that you may experience when working with Strapi. You can also post questions to [our community forum](https://forum.strapi.io) or reach out to the members of our [Slack](https://slack.strapi.io) community!
+Below are answers and solutions to most common issues that you may experience when working with Strapi.
 
 ## Why can't I create or update content-types in production/staging?
 
