@@ -254,7 +254,6 @@ module.exports = {
           children: [
             ['/latest/getting-started/introduction', 'Introduction'],
             ['/latest/getting-started/quick-start', 'Quick Start Guide'],
-            ['/latest/getting-started/contributing', 'Contributing'],
             ['/latest/getting-started/troubleshooting', 'Troubleshooting'],
             ['/latest/getting-started/usage-information', 'Telemetry'],
           ],
