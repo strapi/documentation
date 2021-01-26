@@ -1,10 +1,12 @@
-# Collected Usage Information
+---
+sidebarDepth: 0
+---
 
-## Commitment to our users & data collection
+# Collected Usage Information
 
 We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today. To that end, Strapi contains a feature in which anonymous and otherwise non-sensitive data is collected. This data is collectively aggregated for all our users, which when taken together give us a better global understanding of how users are interacting and using Strapi.
 
-### Why?
+## Context
 
 The number of developers using Strapi is growing significantly. As mentioned earlier, we are committed to providing the best experience to our users. We will always continue to do hands-on UI/UX testing, surveys, issue tracking, roadmap votes, etc... and otherwise talk with the Strapi Community while striving to understand and deliver what is being asked for and what is needed, by any means available.
 
@@ -19,7 +21,9 @@ However, these above actions alone are often insufficient to maintain an overall
 
 Without these metrics, we wouldn't be able to make the right choices as we continue to move forward with the roadmap and provide what you, the community and users, are asking for.
 
-### What data is collected?
+## Collected data
+
+The following data is collected:
 
 - Unique project ID (generated with UUID)
 - Unique machine ID (generated with [node-machine-id](https://www.npmjs.com/package/node-machine-id))
@@ -31,7 +35,7 @@ Without these metrics, we wouldn't be able to make the right choices as we conti
 The collected data are of a non-sensitive nature and no personal data is collected. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
 :::
 
-### How to opt-out?
+### Opt-out
 
 You can easily disable the default data collection feature.
 
@@ -48,6 +52,6 @@ Should you decide to opt-out, you may do so by removing the `uuid` property in t
 }
 ```
 
-### Questions?
-
-Should you have any questions regarding this feature, feel free to email [privacy@strapi.io](mailto:privacy@strapi.io), and we will answer as soon as possible.
+::: tip NOTE
+Should you have any questions regarding this feature, feel free to email [privacy@strapi.io](mailto:privacy@strapi.io).
+:::
