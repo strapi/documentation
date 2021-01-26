@@ -9,7 +9,7 @@ To extend this package you will have to create an `admin` folder at the root of 
 In this folder you will be able to override admin files and functions.
 
 
-## Customization
+## Customization options
 
 The administration panel can be customized according to your needs, so you can make it reflect your identity.
 
