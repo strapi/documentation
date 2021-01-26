@@ -383,6 +383,30 @@ module.exports = ({ env }) => ({
 | `admin.forgotPassword.from` | Sender mail address | string | Default value defined in your [provider configuration](../plugins/email.md#configure-the-plugin) |
 | `admin.forgotPassword.replyTo` | Default address or addresses the receiver is asked to reply to | string | Default value defined in your [provider configuration](../plugins/email.md#configure-the-plugin) |
 
+
+### Formats
+
+You can either use `.js` or `.json` files to configure your application.
+
+When using a `.js` you can either export an object:
+
+```js
+module.exports = {
+  mySecret: 'someValue',
+};
+```
+
+or a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables).
+
+```js
+module.exports = ({ env }) => {
+  return {
+    mySecret: 'someValue',
+  };
+};
+```
+
+
 ## Optional configurations
 
 ### Environment
@@ -1057,25 +1081,3 @@ module.exports = (bookshelf, connection) => {
 :::
 
 ::::
-
-### Formats
-
-You can either use `.js` or `.json` files to configure your application.
-
-When using a `.js` you can either export an object:
-
-```js
-module.exports = {
-  mySecret: 'someValue',
-};
-```
-
-or a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables).
-
-```js
-module.exports = ({ env }) => {
-  return {
-    mySecret: 'someValue',
-  };
-};
-```
