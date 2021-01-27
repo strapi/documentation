@@ -9,6 +9,7 @@ module.exports = {
     '@vuepress/google-analytics': {
       ga: 'UA-54313258-1',
     },
+    'check-md': {},
     seo: {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
