@@ -6,7 +6,7 @@ This documentation contains all technical documentation related to the setup, de
 You can directly head to the [Quick Start](quick-start.md)! <br> If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
 :::
 
-The original purpose of the project was to help Boot**strap** your **API**: that's how Strapi was created. Now, Strapi is an open-source headless CMS that gives developers the freedom to choose their favorite tools and frameworks and allows editors to manage and distribute their content using their application's admin panel. Based on a plugin system, Strapi is a flexible CMS which admin panel and API are extensible - and which every part is customizable to match any use case. Strapi also has a built-in user system to manage in details what the administrators and end-users have access to.
+The original purpose of the project was to help Boot**strap** your **API**: that's how Strapi was created. Now, Strapi is an open-source headless CMS that gives developers the freedom to choose their favorite tools and frameworks and allows editors to manage and distribute their content using their application's admin panel. Based on a plugin system, Strapi is a flexible CMS which admin panel and API are extensible - and which every part is customizable to match any use case. Strapi also has a built-in user system to manage in detail what the administrators and end-users have access to.
 
 ## Open-source & Contribution
 
@@ -25,7 +25,7 @@ As it goes hand in hand with the open-source ecosystem, Strapi is open to contri
 
 Strapi is a community-oriented project with an emphasis on transparency. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the [roadmap](https://portal.productboard.com/strapi) is open: as all insights are very important and will help steer the project in the right direction, any community member is most welcome to share ideas and opinions there.
 
-Community members also take great part in providing the whole community a plethora of resources about Strapi. You can find [tutorials](https://strapi.io/tutorials/) on the Strapi website, where you can also create your own. Also, as an open-source project, the technical documentation of Strapi is open to contributions (see [The Ecosystem](#the-ecosystem)).
+Community members also take great part in providing the whole community a plethora of resources about Strapi. You can find [tutorials](https://strapi.io/tutorials/) on the Strapi website, where you can also create your own. Also, as an open-source project, the technical documentation of Strapi is open to contributions (see [Open-source & Contribution](#open-source-contribution)).
 
 ::: tip 🤓 Want to join the community?
 You can join [GitHub](https://github.com/strapi/strapi) and the [forum](https://forum.strapi.io/) and share your ideas and opinions with other community members and members of the Strapi team. If you're looking for news and updates about Strapi, [Twitter](https://twitter.com/strapijs) and the [blog](https://strapi.io/blog) are pretty good places to start!
@@ -34,7 +34,7 @@ You can join [GitHub](https://github.com/strapi/strapi) and the [forum](https://
 
 ## Support
 
-Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strpai community and core developers often check this platform and answer posts.
+Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
 
 For enterprise support, please fill in the form on the [Support page](https://strapi.io/support) of the Strapi website.
 
