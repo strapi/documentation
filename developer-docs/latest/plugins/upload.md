@@ -28,7 +28,7 @@ module.exports = {
 
 #### Responsive Images
 
-When the `Enable responsive friendly upload` setting is enabled in settings panel the plugin will generate the following responsive image sizes:
+When the `Enable responsive friendly upload` setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
 | Name    | Largest Dimension |
 | :------ | :--------- |
 | large   | 1000px     |
@@ -49,6 +49,9 @@ module.exports = {
   }
 }
 ```
+::: warning
+  Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
+:::
 
 ## Endpoints
 
