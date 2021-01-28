@@ -133,7 +133,7 @@ Only one email provider will be active at all time. If the email provider settin
 
 ::: tip
 When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test.
-More info here: [Configure templates Locally](http://localhost:1337/admin/plugins/users-permissions/email-templates)
+More info here: [Configure templates Locally](../plugins/users-permissions.md#templating-emails)
 :::
 
 ## Create new provider
