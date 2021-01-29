@@ -5,16 +5,12 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 ## Prerequisites
 
 - A Strapi application running on version 3.5.0 or higher is required.
-- To configure SSO on your application, you will need an **EE license**.
-- If needed, **make sure Strapi is part of the applications you can access with you provider**.
-
-  For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications.
-
-  Please refer to your provider(s) documentation to learn more about that.
+- To configure SSO on your application, you will need an EE license with a Gold plan.
+- Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
 
 ## Usage
 
-SSO configuration lives in the server configuration (found within `/config/server.js`).
+SSO configuration lives in the server configuration of your application found within `/config/server.js`.
 
 ### Accessing the configuration
 
@@ -36,7 +32,7 @@ module.exports = ({ env }) => ({
 
 ### Provider Configuration
 
-A provider's configuration is a simple Javascript object built with the following properties:
+A provider's configuration is a Javascript object built with the following properties:
 
 | Name             | Required | Type     | Description                                                                    |
 |----------------- |----------|----------|--------------------------------------------------------------------------------|
@@ -46,23 +42,21 @@ A provider's configuration is a simple Javascript object built with the followin
 | `createStrategy` | true     | function | A factory that will build and return a new passport strategy for your provider. Takes the strapi instance as parameter |
 
 ::: tip
-The `uid` property is the unique identifier of each strategy and is generally found in the strategy's package.
-
-If you are not sure of what it refers to, please contact the maintainer of the strategy.
+The `uid` property is the unique identifier of each strategy and is generally found in the strategy's package. If you are not sure of what it refers to, please contact the maintainer of the strategy.
 :::
 
 #### The `createStrategy` Factory
 
-A passport strategy is usually built by instantiating it using two parameters:
+A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
 
 ##### Configuration Object
 
-The configuration object depends on the strategy needs, but often ask for a callback url to be redirected to once the connection has been made on the provider side.
+The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
 
-You can generate a specific callback url for your provider using the `getProviderCallbackUrl` method.
+You can generate a specific callback URL for your provider using the `getStrategyCallbackURL` method.
 
 ::: tip
-`strapi.admin.services.passport.getProviderCallbackUrl` is a Strapi util you can use to get a callback URL for a specific provider. It takes a provider name as a parameter and returns a URL as a string.
+`strapi.admin.services.passport.getStrategyCallbackURL` is a Strapi helper you can use to get a callback URL for a specific provider. It takes a provider name as a parameter and returns a URL as a string.
 :::
 
 If needed, this is also where you will put your client ID and secret key for your OAuth2 application.
@@ -83,7 +77,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 Adding a new provider means adding a new way for your administrators to log-in.
 
-To achieve a great flexibility and a large choice of provider, we use [Passport.js](http://www.passportjs.org/) under the hood. It means that any valid passport strategy that doesn't need additional custom data should also work with Strapi. 
+To achieve a great flexibility and a large choice of provider, Strapi uses [Passport.js](http://www.passportjs.org/). Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
 
 ::: warning
 Strategies such as [ldapauth](https://github.com/vesse/passport-ldapauth) don't work out of the box since they require extra data to be sent from the admin panel.
@@ -93,11 +87,11 @@ You can also use services such as Okta and Auth0 as bridge services.
 
 ### Configuring the provider
 
-Configuring a new provider is straight-forward:
+To configure a provider, follow the procedure below:
 
-1. First, make sure to import your strategy in your server configuration file. (from an installed package or a local file)
-2. Next, you'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#provider-configuration)
-3. Finally, restart your application, the provider should appear on your admin login page.
+1. Make sure to import your strategy in your server configuration file, either from an installed package or a local file.
+2. You'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#provider-configuration)
+3. Restart your application, the provider should appear on your admin login page.
 
 ## Examples
 
@@ -136,7 +130,7 @@ module.exports = ({ env }) => ({
                 'https://www.googleapis.com/auth/userinfo.email',
                 'https://www.googleapis.com/auth/userinfo.profile'
               ],
-              callbackURL: strapi.admin.services.passport.getProviderCallbackUrl('google')
+              callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('google')
             }, (request, accessToken, refreshToken, profile, done) => {
               done(null, {
                 email: profile.email,
@@ -184,7 +178,7 @@ module.exports = ({ env }) => ({
             clientID: env('GITHUB_CLIENT_ID'),
             clientSecret: env('GITHUB_CLIENT_SECRET'),
             scope: ['user:email'],
-            callbackURL: strapi.admin.services.passport.getProviderCallbackUrl('github'),
+            callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('github'),
           }, (accessToken, refreshToken, profile, done) => {
             done(null, {
               email: profile.emails[0].value,
@@ -230,7 +224,7 @@ module.exports = ({ env }) => ({
               {
                 clientID: env('DISCORD_CLIENT_ID'),
                 clientSecret: env('DISCORD_SECRET'),
-                callbackURL: strapi.admin.services.passport.getProviderCallbackUrl(
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL(
                   'discord'
                 ),
                 scope: ['identify', 'email'],
@@ -255,16 +249,19 @@ module.exports = ({ env }) => ({
 
 ### Admin Panel URL
 
-If your administration panel lives on a different host/port than your Strapi server, you will need to specify the values in the admin config.
-To do so, heads to your `/config/admin.js` configuration file (create it if it doesn't exist) and tweaks the host and port fields.
+If your administration panel lives on a different host/port than your Strapi server, you will need to modify the admin URL.
+To do so, head to your `/config/server.js` configuration file and tweak the `admin.url` field.
 
-For example, if your admin application has been started on `http://localhost:4000`, your admin configuration will look like the following:
+For example, if your admin application has been started on `localhost:4000`, your configuration will look like the following:
 
 ```javascript
-module.exports = {
-  host: 'http://localhost',
-  port: 4000
-};
+{
+  ...
+  admin: {
+    url: 'http://localhost:4000/admin',
+    ...
+  }
+}
 ```
 
 ### Custom Logic
@@ -290,4 +287,34 @@ const strategyInstance = new Strategy(
     done(null, { email });
   },
 );
+```
+
+### Authentication Events
+
+The SSO feature adds a new [authentication event](configurations.html#available-options): `onSSOAutoRegistration`.
+
+This event is triggered whenever a user is created using the auto-register feature added by SSO.
+It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
+
+Example:
+
+```javascript
+module.exports = () => ({
+  admin: {
+    auth: {
+      events: {
+        onConnectionSuccess(e) {},
+        onConnectionError(e) {},
+        // ...
+        onSSOAutoRegistration(e) {
+          const { user, provider } = e;
+
+          console.log(
+            `A new user (${user.id}) has been automatically registered using ${provider}`
+          );
+        },
+      },
+    },
+  },
+});
 ```
