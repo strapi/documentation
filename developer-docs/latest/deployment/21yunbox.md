@@ -39,6 +39,8 @@ Follow the procedure below to set up a Strapi CMS on 21YunBox:
    | **DATABASE_FILENAME**     | If you use SQLite database, use `/data/strapi.db`|
    | **DATABASE_URL**     | If you use Postgres database, paste the database URL here (we have demo video below if you are unsure)|
 
+5. Click the "Deploy" button.
+
 That's it! Your site will be live on your 21YunBox URL (e.g. `yoursite.21yunbox.com`) as soon as the build is done.
 
 
