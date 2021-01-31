@@ -1,19 +1,8 @@
 # 21YunBox
 
-[21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, continuous deployment, one-click HTTPS and [other services like managed databases and backend web services](https://www.21yunbox.com/docs/#/), providing an avenue to launch web projects in China.
-
-21YunBox includes the following features:
-
-- Continuous, automatic builds & deploys from GitHub and Gitee
-- Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org)
-- Instant cache invalidation with a blazing fast, Chinese CDN
-- Unlimited [custom domains](https://www.21yunbox.com/docs/#/custom-domains)
-- Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites
-- Native HTTP/2 support
-- Automatic HTTP → HTTPS redirects
-- Custom URL redirects and rewrites
-
 This guide explains how to update an existing Strapi project so it can be deployed on [21YunBox](https://www.21yunbox.com).
+
+21YunBox provides a Chinese CDN, continuous deployment, one-click HTTPS and [other services such as managed databases and backend web services](https://www.21yunbox.com/docs/#/), allowing to launch web projects in China.
 
 With persistent disks and managed PostgreSQL databases, 21YunBox gives you multiple different ways to store your content. 21YunBox services come with fully managed SSL, so it's no longer necessary to set up a proxy server to secure your Strapi app. Since 21YunBox services are automatically restarted if they become unresponsive, you don't need to use a process manager like `pm2` either.
 
