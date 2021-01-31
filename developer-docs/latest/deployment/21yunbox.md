@@ -31,7 +31,7 @@ Follow the procedure below to set up a Strapi CMS on 21YunBox:
    | **Build Command**     | `yarn && yarn build` (or your own build command) |
    | **Publish Directory** | `rsync -a public/ /data/public/ && yarn start` (or your own output directory)        |
 
-4. Add the following environment variables, then press the "Deploy" button.
+4. Add the following environment variables:
 
    | Setting               | Value                                                 |
    | --------------------- | ------------------------------------------------ |
