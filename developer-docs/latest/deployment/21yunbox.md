@@ -41,10 +41,15 @@ Follow the procedure below to set up a Strapi CMS on 21YunBox:
 
 That's it! Your site will be live on your 21YunBox URL (e.g. `yoursite.21yunbox.com`) as soon as the build is done.
 
-If you are unsure the steps above, we have created few webcast for the steps above, you can view them at:
+
+::: tip TIP
+If you are unsure the steps above, 21YunBox has created a webcast for each of them:
+
 - Part 1: [Demo how to deploy Strapi with SQLite in production](https://www.bilibili.com/video/BV1fK4y1j7U8?zw)
 - Part 2: [Demo how to get in the development mode and create content on Strapi](https://www.bilibili.com/video/BV1Ta4y1W7bD?zw)
 - Part 3: [Demo how to deploy Strapi with database in production](https://www.bilibili.com/video/BV1Nf4y1k7ZP/)
+
+:::
 
 ## Continuous deploys
 
