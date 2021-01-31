@@ -19,7 +19,7 @@ This guide assumes you already have a Strapi project to deploy. If you need a pr
 
 ## Setup
 
-You can set up a Strapi CMS on 21YunBox in four quick steps:
+Follow the procedure below to set up a Strapi CMS on 21YunBox:
 
 1. Create a 21YunBox account. If you don't already have one, visit [21YunBox dashboard](https://https://www.21yunbox.com/u/signup/).
 2. Create a new web service on 21YunBox, and give 21YunBox permission to access your GitHub or Gitee repo.
