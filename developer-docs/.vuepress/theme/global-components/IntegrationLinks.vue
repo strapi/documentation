@@ -185,9 +185,9 @@
       </InstallLink>
     </div>
 
-    <!-- Grindsome -->
+    <!-- Gridsome -->
     <div>
-      <InstallLink link="/latest/developer-resources/content-api/integrations/grindsome.html">
+      <InstallLink link="/latest/developer-resources/content-api/integrations/gridsome.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
             <rect width="512" height="512" rx="256" fill="white"/>
