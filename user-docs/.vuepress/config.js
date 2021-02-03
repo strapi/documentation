@@ -1,17 +1,22 @@
 module.exports = {
-  title: null,
+  title: 'Strapi User Guide',
+  port: 8080,
   description: 'The headless CMS developers love.',
-  base: '/user-docs/',
-  plugins: [
-    '@vuepress/medium-zoom',
-    'vuepress-plugin-element-tabs',
-    [
-      '@vuepress/google-analytics',
-      {
-        ga: 'UA-54313258-1',
-      },
-    ],
-  ],
+  base: '/documentation/user-docs/',
+  plugins: {
+    '@vuepress/medium-zoom': {},
+    'vuepress-plugin-element-tabs': {},
+    '@vuepress/google-analytics': {
+      ga: 'UA-54313258-1',
+    },
+    'check-md': {
+      ignore: ['**/node_modules', '**/_old/*']
+    },
+    seo: {
+      siteTitle: (_, $site) => $site.title,
+      title: ($page) => $page.title,
+    },
+  },
   head: [
     [
       'link',
@@ -25,7 +30,7 @@ module.exports = {
       'meta',
       {
         property: 'og:title',
-        content: 'Strapi User Documentation',
+        content: 'Strapi User Guide',
       },
     ],
     [
@@ -39,7 +44,7 @@ module.exports = {
       'meta',
       {
         property: 'og:url',
-        content: 'https://strapi.io/user-docs/',
+        content: 'https://strapi.io/documentation/user-docs/',
       },
     ],
     [
@@ -53,7 +58,7 @@ module.exports = {
       'meta',
       {
         property: 'og:image',
-        content: 'https://strapi.io/user-docs/assets/meta.png',
+        content: 'https://strapi.io/documentation/user-docs/assets/meta.png',
       },
     ],
     [
@@ -75,7 +80,7 @@ module.exports = {
       'meta',
       {
         property: 'twitter:url',
-        content: 'https://strapi.io/user-docs/',
+        content: 'https://strapi.io/documentation/user-docs/',
       },
     ],
     [
@@ -111,33 +116,128 @@ module.exports = {
     logo: '/assets/logo.png',
     nav: [
       {
-        text: 'Versions',
+        text: 'Strapi Version',
         items: [
           {
-            text: 'Version Latest',
+            text: 'Latest - 3.x.x',
             link: '/latest/',
           },
         ],
       },
       {
-        text: 'Website',
-        link: 'https://strapi.io',
+        text: 'Documentation',
+        items: [
+          {
+            text: 'Developer Docs',
+            items: [
+              {
+                text: 'Getting Started',
+                link:
+                  'https://strapi.io/documentation/developer-docs/latest/getting-started/introduction.html',
+              },
+              {
+                text: 'Content API',
+                link:
+                  'https://strapi.io/documentation/developer-docs/latest/content-api/parameters.html',
+              },
+              {
+                text: 'Configuration',
+                link:
+                  'https://strapi.io/documentation/developer-docs/latest/concepts/configurations.html',
+              },
+              {
+                text: 'Installation',
+                link: 'https://strapi.io/documentation/developer-docs/latest/getting-started/installation.html',
+              },
+              {
+                text: 'Deployment',
+                link: 'https://strapi.io/documentation/developer-docs/latest/getting-started/deployment.html',
+              },
+              {
+                text: 'Migration',
+                link: 'https://strapi.io/documentation/developer-docs/latest/migration-guide/',
+              },
+            ],
+          },
+          {
+            text: 'User Guide',
+            items: [
+              {
+                text: 'Getting Started',
+                link: '/latest/getting-started/introduction.html',
+              },
+              {
+                text: 'Content Manager',
+                link: '/latest/content-manager/introduction-to-content-manager.html',
+              },
+              {
+                text: 'Content-Types Builder',
+                link: '/latest/content-types-builder/introduction-to-content-types-builder.html',
+              },
+              {
+                text: 'Users, Roles, and Permissions',
+                link:
+                  '/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+              },
+              {
+                text: 'Plugins',
+                link: '/latest/plugins/introduction-to-plugins.html',
+              },
+            ],
+          },
+        ],
       },
       {
-        text: 'Forum',
-        link: 'https://forum.strapi.io',
-      },
-      {
-        text: 'Slack',
-        link: 'https://slack.strapi.io',
-      },
-      {
-        text: 'Blog',
-        link: 'https://strapi.io/blog',
-      },
-      {
-        text: 'Tutorials',
-        link: 'https://strapi.io/tutorials',
+        text: 'Ecosystem',
+        items: [
+          {
+            text: 'Strapi',
+            items: [
+              {
+                text: 'Website',
+                link: 'https://strapi.io',
+              },
+              {
+                text: 'Blog',
+                link: 'https://strapi.io/blog',
+              },
+              {
+                text: 'StrapiConf 2021',
+                link: 'https://www.strapi.io/strapi-conf-2021'
+              },
+            ],
+          },
+          {
+            text: 'Community',
+            items: [
+              {
+                text: 'Forum',
+                link: 'https://forum.strapi.io',
+              },
+              {
+                text: 'Slack',
+                link: 'https://slack.strapi.io',
+              },
+              {
+                text: 'Awesome-Strapi',
+                link: 'https://github.com/strapi/awesome-strapi',
+              },
+            ],
+          },
+          {
+            text: 'Resources',
+            items: [
+              {
+                text: 'Tutorials',
+                link: 'https://strapi.io/tutorials',
+              },
+              {
+                text: 'Academy',
+                link: 'https://academy.strapi.io/',
+              },
+            ],
+          },
+        ],
       },
     ],
     repo: 'strapi/documentation',
@@ -150,17 +250,60 @@ module.exports = {
     editLinks: true,
     editLinkText: 'Improve this page',
     serviceWorker: true,
-    sidebarDepth: 1,
+    sidebarDepth: 2,
     sidebar: {
       '/latest/': [
         {
           collapsable: false,
-          title: '🚀 Getting Started',
+          title: '',
+          children: [['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!']],
+        },
+        {
+          collapsable: false,
+          title: 'Content Manager',
           children: [
-            ['/v3.x/getting-started/introduction', 'Introduction'],
+            [
+              '/latest/content-manager/introduction-to-content-manager',
+              'Introduction to the Content Manager',
+            ],
+            [
+              '/latest/content-manager/configuring-view-of-content-type',
+              'Configuring the views of a content type',
+            ],
+            ['/latest/content-manager/writing-content', 'Writing content'],
+            ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
+            [
+              '/latest/content-manager/saving-and-publishing-content',
+              'Saving, publishing and deleting content',
+            ],
           ],
         },
+        {
+          collapsable: false,
+          title: 'Content-Type Builder',
+          children: [
+            [
+              '/latest/content-types-builder/introduction-to-content-types-builder',
+              'Introduction to the Content-Types Builder',
+            ],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Users, Roles & Permissions',
+          children: [
+            [
+              '/latest/users-roles-permissions/introduction-to-users-roles-permissions',
+              'Introduction to users, roles & permissions',
+            ],
+          ],
+        },
+        {
+          collapsable: false,
+          title: 'Plugins',
+          children: [['/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
+        },
       ],
-    }
+    },
   },
 };
