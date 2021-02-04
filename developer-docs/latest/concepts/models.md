@@ -183,6 +183,36 @@ The options key on the model-json states.
 }
 ```
 
+## Model options for plugins
+
+Inside the key `pluginsOptions` you can specify options used by a plugin.
+
+- `content-manager`:
+  - `visible`: The content-type is visible on the left menu of the content-manager. Default: `true`.
+- `content-type-builder`:
+  - `visible`: The content-type is visible in the content-type-builder. Default: `true`.
+
+**Example**
+
+**Path —** `Restaurant.settings.json`.
+
+```json
+{
+  "pluginsOptions": {
+    "content-manager": {
+      "visible": false,
+    },
+    "content-type-builder": {
+      "visible": false,
+    },
+  }
+}
+```
+
+::: tip
+To know the options' list used by a plugin, refer to this plugin documentation.
+:::
+
 ## Define the attributes
 
 The following types are currently available:
