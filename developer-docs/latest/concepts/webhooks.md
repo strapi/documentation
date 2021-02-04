@@ -299,6 +299,10 @@ This event is triggered only when you delete a media through the media interface
 
 ## Developer documentation
 
+### User content type webhooks
+To prevent from unintentionally sending any user's information to other applications, Webhooks will not work for the User content type.
+If you need to notify other applications about changes in the Users collection, you can do so by creating [Lifecycle hooks](https://strapi.io/documentation/developer-docs/latest/concepts/models.html#lifecycle-hooks) inside the file `./extensions/users-permissions/models/User.js`.
+
 ### Available configurations
 
 You can set webhook configurations inside the file `./config/server.js`.
