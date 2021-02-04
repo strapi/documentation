@@ -100,7 +100,7 @@ const Initializer = ({ updatePlugin }) => {
 
   useEffect(() => {
     // Register the new field
-    strapi.fieldApi.registerField({ type: 'media', Component: InputMedia });
+    fieldApi.registerField({ type: 'media', Component: InputMedia });
 
     ref.current(pluginId, 'isReady', true);
   }, []);
