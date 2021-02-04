@@ -1,4 +1,4 @@
-# Single Sign On
+# Single Sign On [<Badge text="Gold" type="warning" vertical="middle"/>](https://strapi.io/pricing)
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
