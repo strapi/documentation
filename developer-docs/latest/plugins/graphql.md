@@ -48,7 +48,7 @@ mutation {
 }
 ```
 
-Then on each request, send along an `Authorization` header in the form of `{ Authorization: "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
+Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
 
 ## Configurations
 
@@ -57,6 +57,8 @@ By default, the [Shadow CRUD](#shadow-crud) feature is enabled and the GraphQL i
 Security limits on maximum number of items in your response by default is limited to 100, however you can change this on the following config option `amountLimit`. This should only be changed after careful consideration of the drawbacks of a large query which can cause what would basically be a DDoS (Distributed Denial of Service). And may cause abnormal load on your Strapi server, as well as your database server.
 
 You can also setup any [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) with the `apolloServer` option. For example, you can enable the tracing feature, which is supported by the playground to track the response time of each part of your query. To enable this feature just change/add the `"tracing": true` option in the GraphQL settings file. You can read more about the tracing feature from Apollo [here](https://www.apollographql.com/docs/apollo-server/federation/metrics/).
+
+To prevent plugins or extensions from being added to the graphl schema, simply add the plugin-name to the configuration. For example, to disable the upload and users-permissions plugin, set `disabledPlugins: ['upload','users-permissions']`.
 
 You can edit these configurations by creating following file.
 
@@ -75,6 +77,8 @@ module.exports = {
     playgroundAlways: false,
     depthLimit: 7,
     amountLimit: 100,
+    disabledPlugins: [],
+    disabledExtensions: [],
     apolloServer: {
       tracing: false,
     },
