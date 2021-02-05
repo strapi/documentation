@@ -185,7 +185,7 @@ The options key on the model-json states.
 
 ## Model options for plugins
 
-Inside the key `pluginsOptions` you can specify options used by a plugin.
+Inside the key `pluginOptions` you can specify options used by a plugin.
 
 - `content-manager`:
   - `visible`: The content-type is visible on the left menu of the content-manager. Default: `true`.
@@ -198,7 +198,7 @@ Inside the key `pluginsOptions` you can specify options used by a plugin.
 
 ```json
 {
-  "pluginsOptions": {
+  "pluginOptions": {
     "content-manager": {
       "visible": false,
     },
