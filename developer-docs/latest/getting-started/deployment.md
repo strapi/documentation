@@ -1,6 +1,6 @@
 # Deployment
 
-Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
+Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as 21YunBox, Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
 
 ::: tip
 Deploying **databases** along with Strapi is covered in the [Databases Guide](../guides/databases.md).
@@ -9,6 +9,38 @@ Deploying **databases** along with Strapi is covered in the [Databases Guide](..
 ## Hosting Provider Guides
 
 Manual guides for deployment on various platforms, for One-click and docker please see the [installation](../getting-started/installation.md) guides.
+
+<div>
+    <InstallLink link="../deployment/21yunbox.html">
+    <template #icon>
+    <svg width="64px" height="55px" viewBox="0 0 64 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Group</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Artboard" transform="translate(0.000000, -5.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                <g id="Group" transform="translate(0.000000, 5.211429)">
+                    <rect id="Rectangle" x="45.8057143" y="0" width="7.86285714" height="53.4857143"></rect>
+                    <rect id="Rectangle" x="0" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="10.3314286" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="20.9371429" y="0" width="7.86285714" height="18.1942857"></rect>
+                    <rect id="Rectangle" x="0" y="22.1257143" width="28.8" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="0" y="33.92" width="7.86285714" height="19.5657143"></rect>
+                    <rect id="Rectangle" x="10.3314286" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="20.9371429" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="35.2" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="45.8057143" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="56.1371429" y="45.7142857" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="35.2" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                </g>
+            </g>
+        </g>
+    </svg>
+    </template>
+        <template #title>21YunBox</template>
+        <template #description>
+            Step by step guide for deploying on 21YunBox
+        </template>
+    </InstallLink>
+</div>
 
 <div>
 	<InstallLink link="../deployment/amazon-aws.html">
