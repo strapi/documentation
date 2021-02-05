@@ -399,6 +399,20 @@ git commit -m "Update database config"
 git push heroku master
 ```
 
+::: notice
+If you receive an error like below:
+error: src refspec main does not match any
+error: failed to push some refs to 'https://git.heroku.com/mighty-taiga-80884.git'
+
+Simply Run the below commands
+```bash
+yarn install
+git add yarn.lock
+git commit -m "Updated Yarn lockfile"
+git push heroku master
+```
+:::
+
 The deployment may take a few minutes. At the end, logs will display the url of your project (e.g. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
 
 `Path: ./my-project/`
