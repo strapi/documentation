@@ -866,7 +866,7 @@ xhr.send(
 
 The lifecycle hooks are functions that get triggered when the Strapi [`queries`](../concepts/queries.md) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
 
-To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `{modelName}.js` file located at `./api/{apiName}/models/` folder.
+To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `{modelName}.js` file located in the `./api/{apiName}/models` folder.
 
 ### Available Lifecycle hooks
 
