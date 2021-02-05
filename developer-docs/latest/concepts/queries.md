@@ -235,7 +235,7 @@ strapi.query('restaurant').update(
 
 ### `delete`
 
-Deletes and entry and return its value before deletion.
+Deletes an entry and returns its value before deletion.
 You can delete multiple entries at once with the passed params.
 
 #### Examples
