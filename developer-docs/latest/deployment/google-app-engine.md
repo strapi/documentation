@@ -127,7 +127,7 @@ beta_settings:
 ::: tab Flexible Environment
 
 ```yaml
-runtime: nodejs10
+runtime: nodejs
 
 env: flex
 
@@ -147,7 +147,7 @@ beta_settings:
 
 ::::
 
-Create `.gcloudignore` in the project root, include `app.yaml` here as well.
+Create `.gcloudignore` in the project root.
 
 ```
 app.yaml

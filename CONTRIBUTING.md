@@ -20,7 +20,7 @@ This project and everyone participating in it are governed by the [Strapi Code o
 
 ## Documentation
 
-Pull requests relating to fixing documentation for the latest release should be directed towards the [documentation branch](https://github.com/strapi/documentation/tree/documentation) **not** towards the main branch. Any PRs made towards the main branch will not be released until the next Strapi version release.
+Pull requests relating to fixing documentation for the latest release should be directed towards the main branch.
 
 ## Bugs
 
@@ -34,7 +34,7 @@ The core team will review your pull request and will either merge it, request ch
 
 **Before submitting your pull request** make sure the following requirements are fulfilled:
 
-- Fork the repository and create your branch from `documentation`.
+- Fork the repository and create your branch from `main`.
 - Run `yarn` and `yarn dev` in the specific documentation root. (Please use yarn, not npm as we maintain a yarn.lock file instead of a package-lock.json)
 
 ## Contribution Prerequisites
@@ -65,10 +65,10 @@ We have a few primary branches that are used for different purposes:
 
 - **main**
   - This branch is used by the Strapi to push documentation on new features before they are released, it should not be used for PRs by the community unless instructed to do so by a Strapi team member
-- **documentation**
-  - This branch is for the current released version of Strapi, all documentation requests, updates, and removals should be pointed here
-- **docs/***
+- **docs/\***
   - This collection of branches is for current work in progress changes, Strapi team members push our changes here to make PRs against the documentation branch
+- **feature/\***
+  - This is a collection of branches used as documentation for features currently in development in the main [strapi/strapi](https://github.com/strapi/strapi) repo
 
 ### Reporting an issue
 
