@@ -168,14 +168,17 @@ The options key on the model-json states.
 
 - `populateCreatorFields`: Configure whether the API response should include `created_by` and `updated_by` fields or not. Accepts a `boolean`. The default value is `false`.
 
-**Path —** `User.settings.json`.
+- `draftAndPublish`: Enable the draft and publish feature. Accepts a `boolean`. The default value is `false`.
+
+**Path —** `Restaurant.settings.json`.
 
 ```json
 {
   "options": {
     "timestamps": true,
     "privateAttributes": ["id", "created_at"],
-    "populateCreatorFields": true
+    "populateCreatorFields": true,
+    "draftAndPublish": false
   }
 }
 ```
