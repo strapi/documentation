@@ -21,7 +21,7 @@ In the following example your controller, service and model are named `restauran
 
 #### Utils
 
-If you're extending the `create` of `update` service, first require the following utility function:
+If you're extending the `create` or `update` service, first require the following utility function:
 
 ```js
 const { isDraft } = require('strapi-utils').contentTypes;
