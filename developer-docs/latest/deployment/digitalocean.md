@@ -221,7 +221,8 @@ Next, navigate to the `my-project` folder, the root for Strapi. You will now nee
 ```bash
 cd ./my-project/
 npm install
-NODE_ENV=production npm run build
+NODE_ENV=production 
+npm run build
 ```
 
 Strapi uses `Port: 1337` by default. You will need to configure your `ufw firewall` to allow access to this port, for testing and installation purposes. After you have installed and [configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04), you need to `sudo ufw deny 1337`, to close the port to outside traffic.
