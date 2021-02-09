@@ -20,7 +20,7 @@ This project and everyone participating in it are governed by the [Strapi Code o
 
 ## Documentation
 
-Pull requests relating to fixing documentation for the latest release should be directed towards the main branch.
+Pull requests relating to fixing documentation for the latest release should be directed towards the `main` branch.
 
 ## Bugs
 
