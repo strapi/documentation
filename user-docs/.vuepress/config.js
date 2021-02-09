@@ -293,6 +293,14 @@ module.exports = {
               '/latest/users-roles-permissions/introduction-to-users-roles-permissions',
               'Introduction to users, roles & permissions',
             ],
+            [
+              '/latest/users-roles-permissions/configuring-administrator-roles',
+              'Configuring administrator roles',
+            ],
+            [
+              '/latest/users-roles-permissions/managing-administrators',
+              'Managing administrator accounts',
+            ],
           ],
         },
         {
