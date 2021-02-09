@@ -36,7 +36,7 @@ The core team will review your pull request and will either merge it, request ch
 
 <!-- TODO Update warning about using yarn when npm v7 is out since it will support yarn.lock files — see https://blog.npmjs.org/post/621733939456933888/npm-v7-series-why-keep-package-lockjson.html -->
 - You installed the following softwares:
-  - [Node](https://nodejs.org/en/) at v14 only (Node v15+ are not supported)
+  - [Node](https://nodejs.org/en/) at v12 only (Node v13+ are not supported)
   - [Yarn](https://yarnpkg.com/en/) at v1.2.0+. **Please use yarn**, not npm, as we maintain a `yarn.lock` file instead of `package-lock.json`
 - You are familiar with Git.
 
