@@ -42,14 +42,73 @@ The core team will review your pull request and will either merge it, request ch
 - You have [Node](https://nodejs.org/en/) at v12 only (Node v13+ are not supported) and [Yarn](https://yarnpkg.com/en/) at v1.2.0+.
 - You are familiar with Git.
 
-## Development Workflow
+## Contribution Workflow
 
 <!-- TODO add contrib-docs and link here -->
 
-**Currently WIP**
+### Setting up
 
-At the moment we are under a contribution freeze from the community, we will update this guide once we lift the freeze.
+1. Fork the `documentation` repository.
+2. Clone your forked `documentation` repository.
 
+    ```bash
+    # HTTPS
+    git clone https://github.com/yourgithubname/documentation.git
+
+    # SSH
+    git clone git@github.com:yourgithubname/documentation.git
+    ```
+
+3. Enter in the folder which contains either the user documentation or developer documentation (depending on what you want to contribute to).
+
+    ```bash
+    #user documentation
+    cd documentation/user-docs
+
+    #developer documentation
+    cd documentation/developer-docs
+    ```
+
+4. From the `main` branch, retrieve the latest modifications to work on an up-to-date branch.
+
+    ```bash
+    git checkout main
+    git pull
+    ```
+
+5. Create your own branch on which you will work on your documentation contribution. Make sure the name of your branch indicates both the type of documentation and the topic.
+
+    ```bash
+    #user documentation
+    git checkout -b <user/branch-name>
+
+    #developer documentation
+    git checkout -b <dev/branch-name>
+    ```
+
+### Writing
+
+We can't provide you specific procedures with step-by-step instructions to write technical documentation. But here are a few pieces of advice and tips that should help you!
+
+- List of the basics of technical writing, to help you write proper technical documentation:
+
+    [Writing technical documentation](https://www.notion.so/Writing-technical-documentation-d0e6b6b3d7294bf5953808646221e116)
+
+- Style guide to apply when contributing to Strapi's documentation, to make sure your contributing matches the rest of the documentation:
+
+    [Documentation style guide (WIP)](https://www.notion.so/Documentation-style-guide-WIP-2d9786b4546946c1aec8be533cfb862b)
+
+If you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
+
+### Sharing & reviewing
+
+1. Create a pull request from your forked `documentation` repository to the original `documentation` repository, to share your contribution to the documentation.
+2. Wait for your pull request to be reviewed by a Strapi team member.
+You do not need to assign anyone. Your pull request will be handled by our team in the next 48 hours (business days).
+3. *(optional)* Once the PR has been reviewed, you may have additional fixes to make before it's validated.
+
+Congratulations, and thank you for your contribution!
+Once your PR is validated, the Strapi team takes over and make sure your new content will soon be deployed!
 ## Miscellaneous
 
 ### Repository Organization
