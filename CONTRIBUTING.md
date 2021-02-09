@@ -28,25 +28,23 @@ We are using [GitHub Issues](https://github.com/strapi/documentation/issues) to 
 
 ---
 
-## Before Submitting a Pull Request
+## Submitting a Pull Request
 
 The core team will review your pull request and will either merge it, request changes to it, or close it.
 
-**Before submitting your pull request** make sure the following requirements are fulfilled:
+### Contribution Prerequisites
 
-- Fork the repository and create your branch from `main`.
-- Run `yarn` and `yarn dev` in the specific documentation root. (Please use yarn, not npm as we maintain a yarn.lock file instead of a package-lock.json)
-
-## Contribution Prerequisites
-
-- You have [Node](https://nodejs.org/en/) at v12 only (Node v13+ are not supported) and [Yarn](https://yarnpkg.com/en/) at v1.2.0+.
+<!-- TODO Update warning about using yarn when npm v7 is out since it will support yarn.lock files — see https://blog.npmjs.org/post/621733939456933888/npm-v7-series-why-keep-package-lockjson.html -->
+- You installed the following softwares:
+  - [Node](https://nodejs.org/en/) at v12 only (Node v13+ are not supported)
+  - [Yarn](https://yarnpkg.com/en/) at v1.2.0+. **Please use yarn**, not npm, as we maintain a `yarn.lock` file instead of `package-lock.json`
 - You are familiar with Git.
 
-## Contribution Workflow
+### Contribution Workflow
 
 <!-- TODO add contrib-docs and link here -->
 
-### Setting up
+#### Setting up
 
 1. Fork the `documentation` repository.
 2. Clone your forked `documentation` repository.
@@ -86,8 +84,13 @@ The core team will review your pull request and will either merge it, request ch
     git checkout -b <dev/branch-name>
     ```
 
-### Writing
+6. Make sure all dependencies are installed, then run the server:
 
+    ```bash
+    yarn && yarn dev
+    ```
+
+#### Writing
 We can't provide you specific procedures with step-by-step instructions to write technical documentation. But here are a few pieces of advice and tips that should help you!
 
 - List of the basics of technical writing, to help you write proper technical documentation:
@@ -100,7 +103,7 @@ We can't provide you specific procedures with step-by-step instructions to write
 
 If you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
 
-### Sharing & reviewing
+#### Sharing & reviewing
 
 1. Create a pull request from your forked `documentation` repository to the original `documentation` repository, to share your contribution to the documentation.
 2. Wait for your pull request to be reviewed by a Strapi team member.
@@ -109,6 +112,8 @@ You do not need to assign anyone. Your pull request will be handled by our team 
 
 Congratulations, and thank you for your contribution!
 Once your PR is validated, the Strapi team takes over and make sure your new content will soon be deployed!
+
+---
 ## Miscellaneous
 
 ### Repository Organization
