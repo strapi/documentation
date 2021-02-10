@@ -18,7 +18,7 @@ Feel free to [join us on Slack](http://slack.strapi.io) and ask questions about 
 
 The best way to migrate your project is to generate a new empty project using the v3. Then, copy and paste your `v1-app/api` folder to the new app `v3-app/api`. The next step is to follow the categories one by one in order and you will be able to migrate your project without issues.
 
-See the [Quick start](../getting-started/quick-start.md) section to install the latest version of Strapi.
+See the [Quick start](/developer-docs/latest/getting-started/quick-start.md) section to install the latest version of Strapi.
 
 ## Configurations
 

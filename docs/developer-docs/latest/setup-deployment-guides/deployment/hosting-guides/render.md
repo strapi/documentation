@@ -145,7 +145,7 @@ If you attach a [custom domain](https://render.com/docs/custom-domains) to your 
 For PostgreSQL, install the `pg` package from npm. If you're using Cloudinary, install `strapi-provider-upload-cloudinary`.
 
 ::: tip
-The [Configuration doc](../concepts/configurations.html) has more info on configuring Strapi
+The [Configuration doc](../concepts/configurations.md) has more info on configuring Strapi
 :::
 
 ### Step 5: Deploy

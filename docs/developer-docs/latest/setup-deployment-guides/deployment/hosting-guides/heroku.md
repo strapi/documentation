@@ -56,7 +56,7 @@ Follow the instructions and return to your command line.
 
 #### 3. Create a new project (or use an existing one)
 
-Create a [new Strapi project](../getting-started/quick-start.md) (if you want to deploy an existing project go to step 4).
+Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start.md) (if you want to deploy an existing project go to step 4).
 
 ::: tip NOTE
 
@@ -221,8 +221,8 @@ module.exports = ({ env }) => ({
         username: config.user,
         password: config.password,
         ssl: {
-          rejectUnauthorized: false
-        }
+          rejectUnauthorized: false,
+        },
       },
       options: {
         ssl: true,

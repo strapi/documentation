@@ -1,6 +1,6 @@
 # SQLite Installation
 
-SQLite is the default ([Quick Start](../getting-started/quick-start.md)) and recommended database to quickly create an app locally.
+SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quick-start.md)) and recommended database to quickly create an app locally.
 
 ## Install SQLite locally
 
@@ -29,10 +29,11 @@ npx create-strapi-app my-project --quickstart
 This will create a new project and launch it in the browser.
 
 ::: tip
-The [Quick Start Guide](../getting-started/quick-start.md) is a complete step-by-step tutorial
+The [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) is a complete step-by-step tutorial
 :::
 
 ## Other SQL Databases (PostgreSQL, MySQL)
+
 Refer to the [configuration section](../concepts/configurations.md#database) for all supported options to setup Strapi with your SQL database.
 
 ::: tip

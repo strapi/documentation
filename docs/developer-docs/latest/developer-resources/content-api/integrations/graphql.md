@@ -1,6 +1,6 @@
 # Getting Started with GraphQL
 
-This integration guide is following the [Getting started guide](../getting-started/quick-start.html). We assume that you have completed [Step 8](../getting-started/quick-start.html#_8-consume-the-content-type-s-api) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-consume-the-content-type-s-api) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [GraphQL](https://graphql.org/) remains the same except that you will not fetch the same content.
 
@@ -84,7 +84,7 @@ These examples do not guide you to configure your client with Apollo for your [G
 
 ::: tab React
 
-Using [React](../getting-started/react.html) and [Apollo](https://www.apollographql.com/)
+Using [React](../getting-started/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -120,7 +120,7 @@ function Restaurants() {
 
 ::: tab Vue.js
 
-Using [Vue.js](../getting-started/vue-js.html) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](../getting-started/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -207,7 +207,7 @@ _Response_
 
 ::: tab React
 
-Using [React](../getting-started/react.html) and [Apollo](https://www.apollographql.com/)
+Using [React](../getting-started/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -250,7 +250,7 @@ function Category({ id }) {
 
 ::: tab Vue.js
 
-Using [Vue.js](../getting-started/vue-js.html) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](../getting-started/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -308,4 +308,4 @@ export default {
 
 This is how you request your Collection Types in Strapi using GraphQL.
 
-Feel free to explore more about [GraphQL](../plugins/graphql.html).
+Feel free to explore more about [GraphQL](../plugins/graphql.md).

@@ -1,6 +1,6 @@
 # Getting Started with Gatsby
 
-This integration guide is following the [Getting started guide](../getting-started/quick-start.html). We assume that you have completed [Step 8](../getting-started/quick-start.html#_8-consume-the-content-type-s-api) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-consume-the-content-type-s-api) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Gatsby](https://www.gatsbyjs.org/) remains the same except that you will not fetch the same content.
 
@@ -289,4 +289,4 @@ Feel free to do the same for your restaurants!
 ## Conclusion
 
 Here is how to request your Collection Types in Strapi using Gatsby.
-Learn more about [GraphQL](../plugins/graphql.html).
+Learn more about [GraphQL](../plugins/graphql.md).
