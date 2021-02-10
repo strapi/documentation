@@ -138,7 +138,7 @@ const sidebar = {
 };
 
 module.exports = {
-  title: 'Strapi Documentation',
+  title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/documentation/',
@@ -265,23 +265,28 @@ module.exports = {
               },
               {
                 text: 'Content API',
-                link: '/developer-docs/latest/content-api/parameters.html',
+                link:
+                  '/developer-docs/latest/developer-resources/content-api/content-api.html#api-parameters',
               },
               {
                 text: 'Configuration',
-                link: '/developer-docs/latest/concepts/configurations.html',
+                link: '/developer-docs/latest/setup-deployment-guides/configurations.html',
               },
               {
                 text: 'Installation',
-                link: '/developer-docs/latest/getting-started/installation.html',
+                link: '/developer-docs/latest/setup-deployment-guides/installation.html',
               },
               {
                 text: 'Deployment',
-                link: '/developer-docs/latest/getting-started/deployment.html',
+                link: '/developer-docs/latest/setup-deployment-guides/deployment.html',
+              },
+              {
+                text: 'Update',
+                link: '/developer-docs/latest/update-migration-guides/update-version.html',
               },
               {
                 text: 'Migration',
-                link: '/developer-docs/latest/migration-guide/',
+                link: '/developer-docs/latest/update-migration-guides/migration-guides.html',
               },
             ],
           },
