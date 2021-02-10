@@ -4,74 +4,77 @@ const sidebar = {
       collapsable: false,
       title: '🚀 Getting Started',
       children: [
-        ['/latest/getting-started/introduction', 'Introduction'],
-        ['/latest/getting-started/quick-start', 'Quick Start Guide'],
-        ['/latest/getting-started/troubleshooting', 'Frequently Asked Questions'],
-        ['/latest/getting-started/usage-information', 'Usage Information'],
+        ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
+        ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
+        ['/developer-docs/latest/getting-started/troubleshooting', 'Frequently Asked Questions'],
+        ['/developer-docs/latest/getting-started/usage-information', 'Usage Information'],
       ],
     },
     {
       collapsable: false,
       title: '⚙️ Setup & Deployment',
       children: [
-        ['/latest/setup-deployment-guides/installation.md', 'Installation'],
-        ['/latest/setup-deployment-guides/configurations.md', 'Configurations'],
-        ['/latest/setup-deployment-guides/deployment.md', 'Deployment'],
+        ['/developer-docs/latest/setup-deployment-guides/installation.md', 'Installation'],
+        ['/developer-docs/latest/setup-deployment-guides/configurations.md', 'Configurations'],
+        ['/developer-docs/latest/setup-deployment-guides/deployment.md', 'Deployment'],
       ],
     },
     {
       collapsable: false,
       title: '🔧 Development',
       children: [
-        ['/latest/development/backend-customization.md', 'Backend customization'],
-        ['/latest/development/admin-customization.md', 'Admin panel customization'],
-        ['/latest/development/plugin-customization.md', 'Strapi plugins'],
-        ['/latest/development/local-plugins-customization.md', 'Local plugins'],
+        ['/developer-docs/latest/development/backend-customization.md', 'Backend customization'],
+        ['/developer-docs/latest/development/admin-customization.md', 'Admin panel customization'],
+        ['/developer-docs/latest/development/plugin-customization.md', 'Strapi plugins'],
+        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
       ],
     },
     {
       collapsable: false,
       title: '♻️ Update & Migration',
       children: [
-        ['/latest/update-migration-guides/update-version.md', 'Update'],
-        ['/latest/update-migration-guides/migration-guides.md', 'Migration'],
+        ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
+        ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
       collapsable: false,
       title: '💻 Developer Resources',
       children: [
-        ['/latest/developer-resources/content-api/content-api.md', 'Content API'],
-        ['/latest/developer-resources/content-api/integrations.md', 'Integrations'],
-        ['/latest/developer-resources/cli/CLI', 'Command Line Interface'],
-        ['/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference'],
+        ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
+        ['/developer-docs/latest/developer-resources/content-api/integrations.md', 'Integrations'],
+        ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+        [
+          '/developer-docs/latest/developer-resources/global-strapi/api-reference',
+          'Global Strapi API Reference',
+        ],
       ],
     },
     {
       collapsable: true,
       title: '📚 Guides',
       children: [
-        ['/latest/guides/api-token', 'API tokens'],
-        ['/latest/guides/auth-request', 'Authenticated request'],
-        ['/latest/guides/count-graphql', 'Count with GraphQL'],
-        ['/latest/guides/slug', 'Create a slug system'],
-        ['/latest/guides/is-owner', 'Create is owner policy'],
-        ['/latest/guides/custom-admin', 'Custom admin'],
-        ['/latest/guides/custom-data-response', 'Custom data response'],
-        ['/latest/guides/draft', 'Draft system'],
-        ['/latest/guides/error-catching', 'Error catching'],
-        ['/latest/guides/external-data', 'Fetching external data'],
-        ['/latest/guides/jwt-validation', 'JWT validation'],
-        ['/latest/guides/process-manager', 'Process manager'],
-        ['/latest/guides/scheduled-publication', 'Scheduled publication'],
-        ['/latest/guides/secure-your-app', 'Secure your application'],
-        ['/latest/guides/send-email', 'Send email programmatically'],
+        ['/developer-docs/latest/guides/api-token', 'API tokens'],
+        ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
+        ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
+        ['/developer-docs/latest/guides/slug', 'Create a slug system'],
+        ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
+        ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
+        ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
+        ['/developer-docs/latest/guides/draft', 'Draft system'],
+        ['/developer-docs/latest/guides/error-catching', 'Error catching'],
+        ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
+        ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
+        ['/developer-docs/latest/guides/process-manager', 'Process manager'],
+        ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
+        ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
+        ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
         [
-          '/latest/guides/registering-a-field-in-admin',
+          '/developer-docs/latest/guides/registering-a-field-in-admin',
           'Registering a new field in the admin panel',
         ],
-        ['/latest/guides/client', 'Setup a third party cliend'],
-        ['/latest/guides/unit-testing', 'Unit testing'],
+        ['/developer-docs/latest/guides/client', 'Setup a third party cliend'],
+        ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
     },
   ],
@@ -79,24 +82,29 @@ const sidebar = {
     {
       collapsable: false,
       title: '',
-      children: [['/latest/getting-started/introduction', 'Welcome to the Strapi user guide!']],
+      children: [
+        ['/user-docs/latest/getting-started/introduction', 'Welcome to the Strapi user guide!'],
+      ],
     },
     {
       collapsable: false,
       title: 'Content Manager',
       children: [
         [
-          '/latest/content-manager/introduction-to-content-manager',
+          '/user-docs/latest/content-manager/introduction-to-content-manager',
           'Introduction to the Content Manager',
         ],
         [
-          '/latest/content-manager/configuring-view-of-content-type',
+          '/user-docs/latest/content-manager/configuring-view-of-content-type',
           'Configuring the view of a content type',
         ],
-        ['/latest/content-manager/writing-content', 'Writing content'],
-        ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
+        ['/user-docs/latest/content-manager/writing-content', 'Writing content'],
         [
-          '/latest/content-manager/saving-and-publishing-content',
+          '/user-docs/latest/content-manager/managing-relational-fields',
+          'Managing relational fields',
+        ],
+        [
+          '/user-docs/latest/content-manager/saving-and-publishing-content',
           'Saving, publishing and deleting content',
         ],
       ],
@@ -106,7 +114,7 @@ const sidebar = {
       title: 'Content-Type Builder',
       children: [
         [
-          '/latest/content-types-builder/introduction-to-content-types-builder',
+          '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
           'Introduction to the Content-Types Builder',
         ],
       ],
@@ -116,7 +124,7 @@ const sidebar = {
       title: 'Users, Roles & Permissions',
       children: [
         [
-          '/latest/users-roles-permissions/introduction-to-users-roles-permissions',
+          '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions',
           'Introduction to users, roles & permissions',
         ],
       ],
@@ -124,7 +132,7 @@ const sidebar = {
     {
       collapsable: false,
       title: 'Plugins',
-      children: [['/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
+      children: [['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
     },
   ],
 };
@@ -139,6 +147,9 @@ module.exports = {
     'vuepress-plugin-element-tabs': {},
     '@vuepress/google-analytics': {
       ga: 'UA-54313258-1',
+    },
+    'check-md': {
+      ignore: ['**/node_modules', '**/_old/*'],
     },
     seo: {
       siteTitle: (_, $site) => $site.title,
@@ -242,15 +253,15 @@ module.exports = {
   themeConfig: {
     logo: '/assets/logo.png',
     nav: [
-      {
-        text: 'Strapi Version',
-        items: [
-          {
-            text: 'Latest - 3.x.x',
-            link: '/latest/',
-          },
-        ],
-      },
+      // {
+      //   text: 'Strapi Version',
+      //   items: [
+      //     {
+      //       text: 'Latest - 3.x.x',
+      //       link: '/latest/',
+      //     },
+      //   ],
+      // },
       {
         text: 'Documentation',
         items: [
@@ -369,7 +380,7 @@ module.exports = {
       },
     ],
     repo: 'strapi/documentation',
-    docsDir: 'src',
+    docsDir: 'docs',
     docsBranch: 'main',
     algolia: {
       apiKey: 'a93451de224096fb34471c8b8b049de7',
@@ -381,8 +392,8 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: false,
     sidebar: {
-      '/developer-docs/latest/': sidebar.developer,
-      '/user-docs/latest/': sidebar.user,
+      '/documentation/developer-docs/latest/': sidebar.developer,
+      '/documentation/user-docs/latest/': sidebar.user,
     },
   },
 };
