@@ -89,7 +89,8 @@ Additional guides for optional software additions that compliment or improve the
 <div>
 	<InstallLink link="deployment/optional-software/caddy-proxy.html">
     <template #icon>
-    <img src="../assets/deployment/caddy-monotone.svg"/>
+    <!-- <img src="assets/deployment/caddy-monotone.svg"/> -->
+    CAD
     </template>
 		<template #title>Caddy</template>
 		<template #description>
