@@ -253,15 +253,6 @@ module.exports = {
   themeConfig: {
     logo: '/assets/logo.png',
     nav: [
-      // {
-      //   text: 'Strapi Version',
-      //   items: [
-      //     {
-      //       text: 'Latest - 3.x.x',
-      //       link: '/latest/',
-      //     },
-      //   ],
-      // },
       {
         text: 'Documentation',
         items: [
@@ -270,27 +261,27 @@ module.exports = {
             items: [
               {
                 text: 'Getting Started',
-                link: '/latest/getting-started/introduction.html',
+                link: '/developer-docs/latest/getting-started/introduction.html',
               },
               {
                 text: 'Content API',
-                link: '/latest/content-api/parameters.html',
+                link: '/developer-docs/latest/content-api/parameters.html',
               },
               {
                 text: 'Configuration',
-                link: '/latest/concepts/configurations.html',
+                link: '/developer-docs/latest/concepts/configurations.html',
               },
               {
                 text: 'Installation',
-                link: '/latest/getting-started/installation.html',
+                link: '/developer-docs/latest/getting-started/installation.html',
               },
               {
                 text: 'Deployment',
-                link: '/latest/getting-started/deployment.html',
+                link: '/developer-docs/latest/getting-started/deployment.html',
               },
               {
                 text: 'Migration',
-                link: '/latest/migration-guide/',
+                link: '/developer-docs/latest/migration-guide/',
               },
             ],
           },
@@ -299,28 +290,25 @@ module.exports = {
             items: [
               {
                 text: 'Getting Started',
-                link:
-                  'https://strapi.io/documentation/user-docs/latest/getting-started/introduction.html',
+                link: '/user-docs/latest/getting-started/introduction.html',
               },
               {
                 text: 'Content Manager',
-                link:
-                  'https://strapi.io/documentation/user-docs/latest/content-manager/introduction-to-content-manager.html',
+                link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
                 text: 'Content-Types Builder',
                 link:
-                  'https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
                 link:
-                  'https://strapi.io/documentation/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
-                link:
-                  'https://strapi.io/documentation/user-docs/latest/plugins/introduction-to-plugins.html',
+                link: '/user-docs/latest/plugins/introduction-to-plugins.html',
               },
             ],
           },
@@ -392,8 +380,8 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: false,
     sidebar: {
-      '/documentation/developer-docs/latest/': sidebar.developer,
-      '/documentation/user-docs/latest/': sidebar.user,
+      '/developer-docs/latest/': sidebar.developer,
+      '/user-docs/latest/': sidebar.user,
     },
   },
 };
