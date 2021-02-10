@@ -85,7 +85,11 @@ To edit an administrator account:
 | Confirmation password | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **ON** to activate the administrator's account.                                    |
 
-3. (optional) In the *Attributed roles* area, change role of the administrator by clicking on the drop-down list and choosing a new role.
+3. (optional) In the *Attributed roles* area, edit the role of the administrator:
+
+  - Click on the drop-down list to choose a new role, and/or add it to the already attributed one.
+  - Click on the X to delete an already attributed role.
+
 4. Click on the **Save** button in the top right corner.
 
 ::: tip 💡 TIP
