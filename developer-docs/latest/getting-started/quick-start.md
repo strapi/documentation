@@ -93,7 +93,7 @@ Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/
 
 You will see the **French Food** category listed in the entries.
 
-- Click on **+ Add New Category** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` menu on the right.
+- Click on **+ Add New Category** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
 - Click **Save**.
 
 You will see the **Brunch** category listed in the entries.
