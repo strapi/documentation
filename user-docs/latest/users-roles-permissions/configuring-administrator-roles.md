@@ -128,5 +128,22 @@ Settings permissions can be configured for all settings accessible from *General
 
 ### Settings custom conditions for permissions
 
-For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining conditions.
+For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 possible additional conditions:
 
+- the administrator must be the creator,
+- the administrator must have the same role as the creator.
+
+::: warning ATTENTION
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+:::
+
+![Custom conditions for administrator role permissions](../assets/users-permissions/administrator_custom-conditions.png)
+
+To set custom conditions:
+
+1. Click on the **Settings** button of the permission already granted for the role.
+2. In the *Define conditions* window that opens, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
+3. Define de custom condition for the chosen permission. You can either:
+   - Tick the Default option for the 2 possible additional conditions to be applied.
+   - Click on the arrown icon to see the 2 possible additional conditions and tick only the chosen one.
+4. Click on the **Apply** button.
