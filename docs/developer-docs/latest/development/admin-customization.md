@@ -19,7 +19,7 @@ To apply your changes you need to [rebuild](#build) your admin panel
 
 ### Change access URL
 
-By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). However, for security reasons, you can easily update this path. For more advanced settings please see the [server config](../concepts/configurations.md#server) documentation.
+By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). However, for security reasons, you can easily update this path. For more advanced settings please see the [server config](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
 
 **Path —** `./config/server.js`.
 
@@ -272,7 +272,7 @@ After running `yarn build` with this configuration, the folder `build` will be c
 The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
 
 ::: tip NOTE
-If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx. More [here](../getting-started/deployment.md#optional-software-guides).
+If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx. More [here](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides).
 :::
 
 
