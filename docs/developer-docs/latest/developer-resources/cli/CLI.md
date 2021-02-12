@@ -337,7 +337,7 @@ strapi generate:plugin <name>
 
   Example: `strapi generate:plugin user` will create the plugin at `./plugins/user`.
 
-Please refer to the [local plugins](../plugin-development/quick-start.md) section to know more.
+Please refer to the [local plugins](/developer-docs/latest/development/local-plugins-customization.md) section to know more.
 
 ## strapi install
 
