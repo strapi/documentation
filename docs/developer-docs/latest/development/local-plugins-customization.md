@@ -61,7 +61,7 @@ This section explains how the 'back-end part' of your plugin works.
 The plugin API routes are defined in the `./plugins/**/config/routes.json` file.
 
 ::: tip
-Please refer to [router documentation](../concepts/routing.md) for information.
+Please refer to [router documentation](/developer-docs/latest/development/backend-customization.md#routing) for information.
 :::
 
 **Route prefix**
@@ -86,13 +86,13 @@ To disable the prefix, add the `prefix` attribute to each concerned route, like 
 
 The CLI can be used to generate files in the plugins folders.
 
-Please refer to the [CLI documentation](../cli/CLI.md) for more information.
+Please refer to the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 
 ### Controllers
 
 Controllers contain functions executed according to the requested route.
 
-Please refer to the [Controllers documentation](../concepts/controllers.md) for more information.
+Please refer to the [Controllers documentation](/developer-docs/latest/development/backend-customization.md#controllers) for more information.
 
 ### Models
 
@@ -115,7 +115,7 @@ module.exports = {
 
 Also, the table/collection name won't be `users` because you already have a `User` model. That's why, the framework will automatically prefix the table/collection name for this model with the name of the plugin. Which means in our example, the table/collection name of the `User` model of our plugin `Users & Permissions` will be `users-permissions_users`. If you want to force the table/collection name of the plugin's model, you can add the `collectionName` attribute in your model.
 
-Please refer to the [Models documentation](../concepts/models.md) for more information.
+Please refer to the [Models documentation](/developer-docs/latest/development/backend-customization.md#models) for more information.
 
 ### Policies
 
@@ -157,7 +157,7 @@ A plugin can have its own policies, such as adding security rules. For instance,
 }
 ```
 
-Please refer to the [Policies documentation](../concepts/policies.md) for more information.
+Please refer to the [Policies documentation](/developer-docs/latest/development/backend-customization.md#policies) for more information.
 
 
 ## Front-end Development
@@ -271,7 +271,7 @@ Here are its properties:
 | name                      | string  | The plugin's name retrieved from the package.json                                                                                                                                                                       |
 | pluginLogo                | file    | The plugin's logo                                                                                                                                                                                                       |
 | preventComponentRendering | boolean | Whether or not display the plugin's blockerComponent instead of the main component                                                                                                                                      |
-| settings                  | object  | Refer to the [Plugins settings API](./frontend-settings-api.md)                                                                                                                                                         |
+| settings                  | object  | Refer to the [Plugins settings API](/developer-docs/latest/development/local-plugins-customization.md#plugin-s-front-end-settings-api)                                                                                                                                                         |
 | reducers                  | object  | The plugin's redux reducers                                                                                                                                                                                             |
 | trads                     | object  | The plugin's translation files                                                                                                                                                                                          |
 
