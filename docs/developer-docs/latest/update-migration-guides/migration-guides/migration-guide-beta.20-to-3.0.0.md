@@ -46,7 +46,7 @@ Before migrating, you should first read the new [configuration documentation](..
 
 #### Server
 
-Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](../concepts/configurations.md#server).
+Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
 
 #### Database configuration
 

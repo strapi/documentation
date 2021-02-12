@@ -89,12 +89,12 @@ npm run build -- --clean
 
 ## Extensions
 
-If you are using [extensions](../concepts/customization.md) to create custom code or modify existing code, you will need to update your code and compare your version to the new changes on the repository. Not updating your extensions can **break your app** in unexpected ways we cannot predict.
+If you are using [extensions](/developer-docs/latest/development/plugin-customization.md) to create custom code or modify existing code, you will need to update your code and compare your version to the new changes on the repository. Not updating your extensions can **break your app** in unexpected ways we cannot predict.
 
 ## Migration guides
 
 Sometimes Strapi introduces **breaking changes** that need more than just the previous steps.
-That is the reason for the [Migration guides](README.md) page.
+That is the reason for the [Migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md) page.
 Just make sure when you update your version that a migration guide exists or not.
 
 ## Start your application
