@@ -295,7 +295,7 @@ Here are some Content Type examples
 
 ### Get entries
 
-Returns entries matching the query filters. You can read more about parameters [here](parameters.md).
+Returns entries matching the query filters. You can read more about parameters [here](#api-parameters).
 
 :::: tabs
 
@@ -459,7 +459,7 @@ GET http://localhost:1337/restaurants/1
 
 ### Count entries
 
-Returns the count of entries matching the query filters. You can read more about parameters [here](parameters.md).
+Returns the count of entries matching the query filters. You can read more about parameters [here](#api-parameters).
 
 :::: tabs
 
@@ -1018,7 +1018,7 @@ To achieve this, there are three options:
 
 - Build a custom route.
 - Modify your services.
-- Use [GraphQL](../setup-deployment-guides/customization/admin/plugins/graphql.md#query-api).
+- Use [GraphQL](/developer-docs/latest/development/plugins/graphql.md#query-api).
   :::
 
 ::: warning
