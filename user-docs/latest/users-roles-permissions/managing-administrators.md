@@ -1,10 +1,10 @@
 # Managing administrator accounts
 
-Administrators are the users of the admin panel of a Strapi application. They are managed through the Role-Based Access Control (RBAC) feature, which settings are in the *Administration panel* area of the settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of the admin panel of a Strapi application. They are managed through the Role-Based Access Control (RBAC) feature, which settings are in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
 ![Edit an administrator account](../assets/users-permissions/administrator_list-view.png)
 
-The *Administration panel > Users* part of the settings interface displays a table listing all the administrators of your Strapi application.
+The *Users* part of the *Administration panel* settings category displays a table listing all the administrators of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -53,7 +53,7 @@ To create a new administrator account:
 
 3. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
 4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy icon to copy the URL.
-5. Click on the **Continue** button in the bottom right corner to finilise the new administrator account creation. The new administrator should now be listed in the table.
+5. Click on the **Continue** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
 ## Deleting an account
 
@@ -62,7 +62,7 @@ Administrator accounts can be deleted from the *Administration panel > Users* in
 To delete an administrator:
 
 1. Click on the delete icon on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the **Delete** button in the top right corner.
-2. In the window that pops up, click on the **Yes, confirm** button to confirm the deletion.
+2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ## Editing an account
 

@@ -4,6 +4,14 @@ Administrators are the users of an admin panel of a Strapi application. They adm
 
 ![Administrator roles interface](../assets/users-permissions/administrator_roles.png)
 
+The *Roles* part of the *Administration panel* settings category displays all created roles for the administrators of your Strapi application.
+
+From this interface, it is possible to:
+
+- create a new administrator role (see [Creating a new role](#creating-a-new-role)),
+- delete an administrator role (see [Deleting a role](#deleting-a-role)),
+- or access information regarding an administrator role, and edit it (see [Editing a role](#editing-a-role)).
+
 By default, 3 administrator roles are defined for any Strapi application:
 
 - Author: to be able to create, manage and publish their own content.
@@ -37,7 +45,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 To delete a role:
 
 1. Click on the delete icon on the right side of the role's record.
-2. In the window that pops up, click on the **Yes, confirm** button to confirm the deletion.
+2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ::: tip 💡 TIP
 You also have the possibility to delete multiple roles at the same time. To do so, select the roles by ticking the box on the left side of the roles' record. Then, click on the **Delete** button in the top right corner of the table.
@@ -142,7 +150,7 @@ Custom conditions can only be set for permissions that have been ticked to be gr
 To set custom conditions:
 
 1. Click on the **Settings** button of the permission already granted for the role.
-2. In the *Define conditions* window that opens, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
+2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define de custom condition for the chosen permission. You can either:
    - Tick the Default option for the 2 possible additional conditions to be applied.
    - Click on the arrown icon to see the 2 possible additional conditions and tick only the chosen one.
