@@ -60,7 +60,7 @@ If you want to use specific database, you don't have to use the `--quickstart` f
 :::
 
 :::tip
-By default, `create-strapi-app` will generate an empty Strapi project. If you want an application that is pre-configured for a specific use case, see the [Templates section](../concepts/templates.md).
+By default, `create-strapi-app` will generate an empty Strapi project. If you want an application that is pre-configured for a specific use case, see the [Templates section](/developer-docs/latest/setup-deployment-guides/installation/templates.md).
 :::
 
 ::: warning
