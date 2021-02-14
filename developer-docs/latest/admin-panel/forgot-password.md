@@ -9,7 +9,7 @@ The template will be compiled with the following variables: `url`, `user.email`,
 
 ### Example
 
-**Path -** `./config/servers.js`
+**Path -** `./config/server.js`
 
 ```js
 const forgotPasswordTemplate = require('./email-templates/forgot-password');
