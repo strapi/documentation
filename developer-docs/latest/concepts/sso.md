@@ -298,13 +298,13 @@ module.exports = ({ env }) => ({
 If your administration panel lives on a different host/port than your Strapi server, you will need to modify the admin URL.
 To do so, head to your `/config/server.js` configuration file and tweak the `admin.url` field.
 
-For example, if your admin application has been started on `localhost:4000`, your configuration will look like the following:
+For example, if your admin application has been started on `https://api.example.com`, your configuration will look like the following:
 
 ```javascript
 {
   ...
   admin: {
-    url: 'http://localhost:4000/admin',
+    url: 'https://api.example.com/admin',
     ...
   }
 }
