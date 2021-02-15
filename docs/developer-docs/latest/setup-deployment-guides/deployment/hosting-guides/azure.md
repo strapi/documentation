@@ -395,7 +395,7 @@ pm2 start ecosystem.config.js
 
 The Strapi PM2 service is now set-up to use an `ecosystem.config.js` to manage your application.
 
-**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](../getting-started/quick-start.md#_3-create-an-admin-user).
+**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
 
 #### 4. Starting Strapi on boot and persisting service between reboots
 
@@ -462,4 +462,4 @@ There are many different types of proxy services you could use, anything from lo
 
 #### 3. File upload providers
 
-There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](../plugins/upload.md#install-providers) on searching for options as well as installing them.
+There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/development/plugins/upload.md#create-providers) on searching for options as well as installing them.
