@@ -53,10 +53,12 @@ A passport strategy is usually built by instantiating it using 2 parameters: the
 
 The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
 
-You can generate a specific callback URL for your provider using the `getStrategyCallbackURL` method.
+You can generate a specific callback URL for your provider using the `getStrategyCallbackURL` method. This URL also needs to be written on the provider side in order to allow redirection from it.
+
+The format of the callback URL is the following: `/admin/connect/<provider_uid>`.
 
 ::: tip
-`strapi.admin.services.passport.getStrategyCallbackURL` is a Strapi helper you can use to get a callback URL for a specific provider. It takes a provider name as a parameter and returns a URL as a string.
+`strapi.admin.services.passport.getStrategyCallbackURL` is a Strapi helper you can use to get a callback URL for a specific provider. It takes a provider name as a parameter and returns a URL.
 :::
 
 If needed, this is also where you will put your client ID and secret key for your OAuth2 application.
@@ -326,13 +328,15 @@ For example, if you want to allow only people with an official strapi.io email a
 ```javascript
 const strategyInstance = new Strategy(
   configuration,
-  (email, done) => {
-    if (!email.endsWith('@strapi.io')) {
-      done(new Error('Forbidden email address'));
-      return;
+  ({ email, username }, done) => {
+    // If the email ends with @strapi.io
+    if (email.endsWith('@strapi.io')) {
+      // Then we continue with the data given by the provider
+      return done(null, { email, username });
     }
     
-    done(null, { email });
+    // Otherwise, we continue by sending an error to the done function
+    done(new Error('Forbidden email address'));
   },
 );
 ```
