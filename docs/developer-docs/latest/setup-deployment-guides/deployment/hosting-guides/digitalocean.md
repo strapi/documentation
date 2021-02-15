@@ -1,9 +1,9 @@
 # DigitalOcean
 
-This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/). Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service. Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](../getting-started/deployment.md#configuration) section.
+This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/). Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service. Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
 ::: tip
-Strapi does have a [One-Click](../installation/digitalocean-one-click.md) deployment option for DigitalOcean
+Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md) deployment option for DigitalOcean
 :::
 
 ### DigitalOcean Install Requirements
@@ -235,7 +235,7 @@ Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
 ```
 
-Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [create your first user](../getting-started/quick-start.md#_3-create-an-admin-user).
+Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [create your first user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
 
 You will next need to [install and configure PM2 Runtime](#install-and-configure-pm2-runtime).
 
