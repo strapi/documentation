@@ -4,24 +4,6 @@ Thanks to the plugin `Upload`, you can upload any kind of file on your server or
 
 ## Configuration
 
-### Local server
-
-This plugin accepts `localServer` configurations as the options for [koa-static](https://github.com/koajs/static).
-
-You can pass them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header for locally uploaded assets.
-
-```js
-module.exports = ({ env })=>({
-  upload: {
-    localServer: {
-      maxage: 300000
-    }
-  }
-});
-```
-
-### File size
-
 Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of **200MB**.
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
@@ -341,6 +323,24 @@ npm install strapi-provider-upload-aws-s3 --save
 :::
 
 ::::
+
+### Local server
+
+By default Strapi accepts `localServer` configurations for locally uploaded files. They will be passed as the options for [koa-static](https://github.com/koajs/static).
+
+You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
+
+```js
+module.exports = ({ env })=>({
+  upload: {
+    providerOptions: {
+      localServer: {
+        maxage: 300000
+      }
+    }
+  }
+});
+```
 
 ### Using scoped packages as providers
 
