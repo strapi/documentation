@@ -416,9 +416,9 @@
             </defs>
           </svg>
         </template>
-        <template #title>Grisdome</template>
+        <template #title>Gridsome</template>
         <template #description>
-          Consume your API with Grisdome
+          Consume your API with Gridsome
         </template>
       </InstallLink>
     </div>
