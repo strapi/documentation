@@ -723,4 +723,4 @@ _Response_
 
 Here is how to request your Collection Types in Strapi using React. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](../content-api/api-endpoints.md#get-an-entry), [get how much entry you have](../content-api/api-endpoints.md#count-entries) and [delete](../content-api/api-endpoints.md#delete-an-entry) an entry too. Learn more about [API Endpoints](../content-api/api-endpoints.md#api-endpoints)/
+We just used the GET, POST and PUT methods here but you can [get one entry](../content-api/api-endpoints.md#get-an-entry), [get how much entry you have](../content-api/api-endpoints.md#count-entries) and [delete](../content-api/api-endpoints.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).

@@ -6,7 +6,7 @@
 
 `./api/**/config/routes.json` files define all available endpoints for the clients.
 
-By default, Strapi generates endpoints for all your Content Types. More information is in the [Content API](../content-api/api-endpoints.md) documentation.
+By default, Strapi generates endpoints for all your Content Types. More information is in the [Content API](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) documentation.
 
 ### How to create a route?
 
@@ -49,10 +49,10 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
 - `path` (string): URL starting with `/` (e.g. `/restaurants`).
 - `handler` (string): Action to execute when the route is hit following this syntax `<Controller>.<action>`.
 - `config`
-  - `policies` (array): Array of policy names or paths ([see more](./policies.md))
+  - `policies` (array): Array of policy names or paths ([see more](#policies))
 
 ::: tip
-You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](../plugins/users-permissions.md).
+You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](/developer-docs/latest/development/plugins/users-permissions.md).
 :::
 
 ### Dynamic parameters
@@ -126,7 +126,7 @@ The policies are defined in each `./api/**/config/policies/` folders and plugins
 
 There are several ways to create a policy.
 
-- Using the CLI `strapi generate:policy isAuthenticated`.<br>Read the [CLI documentation](../cli/CLI.md) for more information.
+- Using the CLI `strapi generate:policy isAuthenticated`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 - Manually create a JavaScript file named `isAuthenticated.js` in `./config/policies/`.
 
 **Path —** `./config/policies/isAuthenticated.js`.
@@ -149,7 +149,7 @@ In this example, we are verifying that a session is open. If it is the case, we 
 To apply policies to a route, you need to associate an array of policies to it. There are two kinds of policies: global and scoped.
 
 ::: warning
-To apply policies with GraphQL please see the [following guide](../plugins/graphql.md#execute-a-policy-before-a-resolver).
+To apply policies with GraphQL please see the [following guide](/developer-docs/latest/development/plugins/graphql.md#execute-a-policy-before-a-resolver).
 :::
 
 #### Global policies
@@ -582,17 +582,17 @@ You can also create custom controllers to build your own business logic and API 
 
 There are two ways to create a controller:
 
-- Using the CLI `strapi generate:controller restaurant`.<br>Read the [CLI documentation](../cli/CLI.md#strapi-generatecontroller) for more information.
+- Using the CLI `strapi generate:controller restaurant`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-controller) for more information.
 - Manually create a JavaScript file in `./api/**/controllers`.
 
 #### Adding Endpoints
 
 Each controller’s action must be an `async` function.
-Every action receives a `context` (`ctx`) object as first parameter containing the [request context](./requests-responses.md) and the [response context](./requests-responses.md).
+Every action receives a `context` (`ctx`) object as first parameter containing the [request context](/developer-docs/latest/concepts/requests-responses.md#request) and the [response context](/developer-docs/latest/concepts/requests-responses.md#responses).
 
 #### Example
 
-In this example, we are defining a specific route in `./api/hello/config/routes.json` that takes `Hello.index` as handler. For more information on routing, please see the [Routing documentation](./routing.md)
+In this example, we are defining a specific route in `./api/hello/config/routes.json` that takes `Hello.index` as handler. For more information on routing, please see the [Routing documentation](#routing)
 
 It means that every time a request `GET /hello` is sent to the server, Strapi will call the `index` action in the `Hello.js` controller.
 Our `index` action will return `Hello World!`. You can also return a JSON object.
@@ -633,7 +633,7 @@ A route handler can only access the controllers defined in the `./api/**/control
 
 ## Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](./controllers.md) logic.
+Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](#controllers) logic.
 
 ### Core services
 
@@ -644,7 +644,7 @@ When you create a new `Content Type` or a new model, you will see a new empty se
 Here are the core methods (and their current implementation).
 You can simply copy and paste this code to your own service file to customize the methods.
 
-You can read about `strapi.query` calls [here](./queries.md).
+You can read about `strapi.query` calls [here](#queries).
 
 ::: tip
 In the following example your controller, service and model are named `restaurant`.
@@ -672,7 +672,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](../content-api/parameters.md).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 
 ```json
 {
@@ -708,7 +708,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](../content-api/parameters.md).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 
 ```json
 {
@@ -743,7 +743,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](../content-api/parameters.md).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 
 ```json
 {
@@ -867,7 +867,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](../content-api/parameters.md).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 
 ```json
 {
@@ -899,7 +899,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](../content-api/parameters.md).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 
 ```json
 {
@@ -1017,7 +1017,7 @@ You can also create custom services to build your own business logic.
 
 There are two ways to create a service.
 
-- Using the CLI `strapi generate:service restaurant`.<br>Read the [CLI documentation](../cli/CLI.md) for more information.
+- Using the CLI `strapi generate:service restaurant`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 - Manually create a JavaScript file named in `./api/**/services/`.
 
 #### Example
@@ -1451,7 +1451,7 @@ const knex = strapi.connections.default;
 
 You can then use Knex to build your own custom queries. You will lose all the functionalities of the model, 
 but this could come handy if you are building a more custom schema.
-Please note that if you are using the [draft system](draft-and-publish.md), Strapi nullyfies all the Draft columns util they are published.
+Please note that if you are using the [draft system](/Users/piwi/code/documentation/docs/developer-docs/latest/concepts/draft-and-publish.md), Strapi nullyfies all the Draft columns util they are published.
 
 **Example**
 
@@ -1592,7 +1592,7 @@ If you are just starting out it is very convenient to generate some models with 
 
 #### For Content Types models
 
-Use the CLI and run the following command `strapi generate:model restaurant name:string description:text`.<br>Read the [CLI documentation](../cli/CLI.md) for more information.
+Use the CLI and run the following command `strapi generate:model restaurant name:string description:text`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 
 This will create two files located at `./api/restaurant/models`:
 
