@@ -52,7 +52,7 @@ To create a new administrator account:
 | User's role       | (mandatory) Choose from the drop-down list the role to attribute to the new administrator.              |
 
 3. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
-4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy icon to copy the URL.
+4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![icon copy](../assets/users-permissions/icon_duplicate.png) to copy the URL.
 5. Click on the **Continue** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
 ## Deleting an account
@@ -61,7 +61,7 @@ Administrator accounts can be deleted from the *Administration panel > Users* in
 
 To delete an administrator:
 
-1. Click on the delete icon on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the **Delete** button in the top right corner.
+1. Click on the trash button ![icon delete](../assets/users-permissions/icon_delete.png) on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the **Delete** button in the top right corner.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ## Editing an account

@@ -35,7 +35,7 @@ To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
 ::: tip 💡 TIP
-In the *Roles* interface, from the table, you can click on the duplicate icon to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button ![icon duplicate](../assets/users-permissions/icon_duplicate.png) to create a new role by duplicating an existing one.
 :::
 
 ## Deleting a role
@@ -44,7 +44,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 To delete a role:
 
-1. Click on the delete icon on the right side of the role's record.
+1. Click on the trash button ![icon delete](../assets/users-permissions/icon_delete.png) on the right side of the role's record.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ::: tip 💡 TIP
@@ -55,7 +55,7 @@ You also have the possibility to delete multiple roles at the same time. To do s
 
 ![Administrator roles edition interface](../assets/users-permissions/administrator_roles-edition.png)
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit icon on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![icon edit](../assets/users-permissions/icon_edit.png) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ::: warning ATTENTION
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
@@ -153,5 +153,5 @@ To set custom conditions:
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define de custom condition for the chosen permission. You can either:
    - Tick the Default option for the 2 possible additional conditions to be applied.
-   - Click on the arrown icon to see the 2 possible additional conditions and tick only the chosen one.
+   - Click on the arrow icon ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the 2 possible additional conditions and tick only the chosen one.
 4. Click on the **Apply** button.
