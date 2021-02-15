@@ -60,7 +60,7 @@ Example Domain: `example.com/api`
 **Path —** `/etc/caddy/Caddyfile`
 
 ```
-http://api.example.com {
+http://example.com {
   root * /var/www
   file_server
   route /api* {
@@ -93,7 +93,7 @@ Example Admin Domain: `example.com/dashboard`
 **Path —** `/etc/caddy/Caddyfile`
 
 ```
-http://api.example.com {
+http://example.com {
   root * /var/www
   file_server
   route /api* {
