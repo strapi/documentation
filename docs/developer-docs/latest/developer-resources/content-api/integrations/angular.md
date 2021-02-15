@@ -6,7 +6,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a Angular app
 
-Create a basic Angular application using [angular CLI](https://angular.io/guide/setup-locall).
+Create a basic Angular application using [angular CLI](https://angular.io/guide/setup-local).
 
 ```bash
 npx -p @angular/cli ng new angular-app

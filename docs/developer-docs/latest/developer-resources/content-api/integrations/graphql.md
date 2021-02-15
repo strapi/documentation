@@ -84,7 +84,7 @@ These examples do not guide you to configure your client with Apollo for your [G
 
 ::: tab React
 
-Using [React](../getting-started/react.md) and [Apollo](https://www.apollographql.com/)
+Using [React](/developer-docs/latest/developer-resources/content-api/integrations/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -120,7 +120,7 @@ function Restaurants() {
 
 ::: tab Vue.js
 
-Using [Vue.js](../getting-started/vue-js.md) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](/developer-docs/latest/developer-resources/content-api/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -207,7 +207,7 @@ _Response_
 
 ::: tab React
 
-Using [React](../getting-started/react.md) and [Apollo](https://www.apollographql.com/)
+Using [React](/developer-docs/latest/developer-resources/content-api/integrations/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -250,7 +250,7 @@ function Category({ id }) {
 
 ::: tab Vue.js
 
-Using [Vue.js](../getting-started/vue-js.md) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](/developer-docs/latest/developer-resources/content-api/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -308,4 +308,4 @@ export default {
 
 This is how you request your Collection Types in Strapi using GraphQL.
 
-Feel free to explore more about [GraphQL](../plugins/graphql.md).
+Feel free to explore more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md).
