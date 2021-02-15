@@ -95,15 +95,29 @@ To configure a provider, follow the procedure below:
 
 ## Examples
 
-:::: tabs
+:::::: tabs
 
-::: tab Google
+::::: tab Google
 
 Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
+
+:::: tabs
+
+::: tab yarn
 
 ```bash
 yarn add passport-google-oauth2
 ```
+
+:::
+
+::: tab npm
+
+```bash
+npm install --save passport-google-oauth2
+```
+
+::::
 
 `/config/server.js`
 
@@ -146,15 +160,31 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+:::::
 
-::: tab Github
+::::: tab Github
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
+
+:::: tabs
+
+::: tab yarn
 
 ```bash
 yarn add passport-github2
 ```
+
+:::
+
+::: tab npm
+
+```bash
+npm install --save passport-github2
+```
+
+:::
+
+::::
 
 `/config/server.js`
 
@@ -191,15 +221,31 @@ module.exports = ({ env }) => ({
   },
 });
 ```
-:::
+:::::
 
-::: tab Discord
+::::: tab Discord
 
 Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
+
+:::: tabs
+
+::: tab yarn
 
 ```bash
 yarn add passport-discord
 ```
+
+:::
+
+::: tab npm
+
+```bash
+npm install --save passport-discord
+```
+
+:::
+
+::::
 
 `/config/server.js`
 
@@ -242,8 +288,8 @@ module.exports = ({ env }) => ({
   },
 });
 ```
-:::
-::::
+:::::
+::::::
 
 ## Advanced Customization
 
