@@ -2,7 +2,7 @@
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
-Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md), to use for deploying on AWS. And have read through the [configuration](../getting-started/deployment.md#configuration) section.
+Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md), to use for deploying on AWS. And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
 ### Amazon AWS Install Requirements and creating an IAM non-root user
 
@@ -349,7 +349,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Checkout the documentation about using an upload provider [here](../plugins/upload.md#using-a-provider).
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/plugins/upload.md#using-a-provider).
 
 #### 4. Push your local changes to your project's GitHub repository.
 

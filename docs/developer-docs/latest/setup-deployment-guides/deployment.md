@@ -3,7 +3,7 @@
 Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
 
 ::: tip
-Deploying **databases** along with Strapi is covered in the [Databases Guide](../guides/databases.md).
+Deploying **databases** along with Strapi is covered in the [Databases Guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides).
 :::
 
 ## Hosting Provider Guides
