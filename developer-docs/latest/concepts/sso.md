@@ -300,14 +300,16 @@ To do so, head to your `/config/server.js` configuration file and tweak the `adm
 
 For example, if your admin application has been started on `https://api.example.com`, your configuration will look like the following:
 
+`/config/server.js`
+
 ```javascript
-{
-  ...
+module.exports = () => ({
+  // ...
   admin: {
+    // ...
     url: 'https://api.example.com/admin',
-    ...
-  }
-}
+  },
+});
 ```
 
 ### Custom Logic
@@ -344,10 +346,14 @@ It contains the created user (`event.user`), and the provider used to make the r
 
 Example:
 
+`/config/server.js`
 ```javascript
 module.exports = () => ({
+  // ...
   admin: {
+    // ...
     auth: {
+      // ...
       events: {
         onConnectionSuccess(e) {},
         onConnectionError(e) {},
