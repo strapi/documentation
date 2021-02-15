@@ -195,7 +195,7 @@ $ strapi develop
 
 ```
 
-You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](../getting-started/quick-start.md#_3-create-an-admin-user).
+You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
 
 ---
 
@@ -203,7 +203,7 @@ You have successfully installed Strapi with MongoDB on your local development en
 
 Follow these steps to configure a local Strapi project to use a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) free 512 MB account in production. (Please see [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/getting-started/) if you have any questions.)
 
-- You must have already [created your Strapi project using MongoDB](databases.md#install-strapi-locally-with-mongodb).
+- You must have already [created your Strapi project using MongoDB](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#_2-install-strapi-locally-with-mongodb).
 - You must have already created a [free MongoDB Atlas account](https://www.mongodb.com/cloud/atlas).
 
 ### 1. Log in to your account to create a **Project** and a **Cluster**
@@ -312,7 +312,7 @@ The above configuration will create a database called `strapi`, the _default dat
 :::
 
 ::: danger WARNING
-We recommend replacing sensitive (eg. "URI string" above) information in your database configuration files before uploading your project to a public repository such as GitHub. For more information about using environment variables, please read [configurations](../concepts/configurations.md).
+We recommend replacing sensitive (eg. "URI string" above) information in your database configuration files before uploading your project to a public repository such as GitHub. For more information about using environment variables, please read [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md).
 
 :::
 

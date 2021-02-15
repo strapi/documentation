@@ -33,7 +33,7 @@ Notice that the filename is used as a prefix to access the configurations.
 This file lets you define database connections that will be used to store your application content.
 
 ::: tip NOTE
-You can find [supported database and versions](../installation/cli.md#databases) in the local installation process.
+You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#databases) in the local installation process.
 :::
 
 **Path —** `./config/database.js`.
@@ -225,7 +225,7 @@ module.exports = ({ env }) => ({
 ::::
 
 ::: tip
-Take a look at the [database's guide](../guides/databases.md) for more details.
+Take a look at the [database's guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides) for more details.
 :::
 
 #### Configuration in database
@@ -274,13 +274,13 @@ await pluginStore.set({
 });
 ```
 
-#### Databases intallation guides
+#### Databases installation guides
 
 Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **MongoDB**, **SQLite**, **MySQL** and
 **MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
 ::: tip
-Deploying **Strapi** itself is covered in the [Deployment Guide](../getting-started/deployment.md).
+Deploying **Strapi** itself is covered in the [Deployment Guide](/developer-docs/latest/setup-deployment-guides/deployment.md).
 :::
 
 <DatabasesLinks>
@@ -377,11 +377,11 @@ module.exports = ({ env }) => ({
 | `admin.watchIgnoreFiles` | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`). | Array(string) | `[]` |
 | `admin.host` | Use a different host for the admin panel. Only used along with `strapi develop --watch-admin` | string | `localhost` |
 | `admin.port` | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin` | string | `8000` |
-| `admin.serveAdminPanel` | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](./middlewares.md#global-middlewares) | boolean | `true` |
-| `admin.forgotPassword` | Settings to customize the forgot password email (see more here: [Forgot Password Email](../admin-panel/forgot-password.md)) | Object | {} |
-| `admin.forgotPassword.emailTemplate` | Email template as defined in [email plugin](../plugins/email.md#programmatic-usage) | Object | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
-| `admin.forgotPassword.from` | Sender mail address | string | Default value defined in your [provider configuration](../plugins/email.md#configure-the-plugin) |
-| `admin.forgotPassword.replyTo` | Default address or addresses the receiver is asked to reply to | string | Default value defined in your [provider configuration](../plugins/email.md#configure-the-plugin) |
+| `admin.serveAdminPanel` | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/developer-docs/latest/setup-deployment-guides/configurations.md#global-middlewares) | boolean | `true` |
+| `admin.forgotPassword` | Settings to customize the forgot password email (see more here: [Forgot Password Email](/developer-docs/latest/development/admin-customization.md#forgot-password-email)) | Object | {} |
+| `admin.forgotPassword.emailTemplate` | Email template as defined in [email plugin](/developer-docs/latest/development/plugins/email.md#programmatic-usage) | Object | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
+| `admin.forgotPassword.from` | Sender mail address | string | Default value defined in your [provider configuration](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) |
+| `admin.forgotPassword.replyTo` | Default address or addresses the receiver is asked to reply to | string | Default value defined in your [provider configuration](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) |
 
 
 ### Formats
@@ -563,7 +563,7 @@ module.exports = ({ env }) => ({
 A plugin is like a small independent sub-application. It has its own business logic with dedicated models, controllers, services, middlewares or hooks. It can also have its own UI integrated in the admin panel.
 
 ::: tip
-Please refer to the [plugins documentation](customization.md) for more information.
+Please refer to the [plugins documentation](/developer-docs/latest/development/local-plugins-customization.md) for more information.
 :::
 
 ### Hooks
