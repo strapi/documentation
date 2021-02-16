@@ -16,4 +16,4 @@ An image named `company-logo.png` in `./public/` is accessible through `/company
 The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
 :::
 
-Refer to the [public assets configurations](./configurations.md#Application) for more information.
+Refer to the [public assets configurations](/developer-docs/latest/setup-deployment-guides/configurations.md) for more information.
