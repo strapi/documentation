@@ -9,6 +9,9 @@ module.exports = {
     '@vuepress/google-analytics': {
       ga: 'UA-54313258-1',
     },
+    'check-md': {
+      ignore: ['**/node_modules', '**/_old/*']
+    },
     seo: {
       siteTitle: (_, $site) => $site.title,
       title: ($page) => $page.title,
@@ -265,7 +268,7 @@ module.exports = {
             ],
             [
               '/latest/content-manager/configuring-view-of-content-type',
-              'Configuring the view of a content type',
+              'Configuring the views of a content type',
             ],
             ['/latest/content-manager/writing-content', 'Writing content'],
             ['/latest/content-manager/managing-relational-fields', 'Managing relational fields'],
