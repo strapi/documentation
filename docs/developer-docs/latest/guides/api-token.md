@@ -9,7 +9,7 @@ This guide is a workaround to achieve this feature before we support it natively
 
 The goal is to be able to request API endpoints with a query parameter `token` that authenticates as a user. `eg. /restaurants?token=my-secret-token`.
 
-To achieve this feature in development, we will have to customize the `users-permissions` plugin. To do so we will use the [customization concept](../concepts/customization.md), this documentation will help you understand how to customize all your applications
+To achieve this feature in development, we will have to customize the `users-permissions` plugin. This guide will help you understand how to customize all your applications. You can read more about [Strapi plugins and customization](/developer-docs/latest/development/plugin-customization.md).
 
 ## Create the Token Content Type
 
