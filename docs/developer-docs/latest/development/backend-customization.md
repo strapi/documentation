@@ -1451,7 +1451,7 @@ const knex = strapi.connections.default;
 
 You can then use Knex to build your own custom queries. You will lose all the functionalities of the model, 
 but this could come handy if you are building a more custom schema.
-Please note that if you are using the [draft system](/Users/piwi/code/documentation/docs/developer-docs/latest/concepts/draft-and-publish.md), Strapi nullyfies all the Draft columns util they are published.
+Please note that if you are using the [draft system](/developer-docs/latest/concepts/draft-and-publish.md), Strapi nullyfies all the Draft columns util they are published.
 
 **Example**
 
@@ -2368,7 +2368,7 @@ xhr.send(
 
 ### Lifecycle hooks
 
-The lifecycle hooks are functions that get triggered when the Strapi [`queries`](../concepts/queries.md) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
+The lifecycle hooks are functions that get triggered when the Strapi [`queries`](/developer-docs/latest/development/backend-customization.md#queries) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
 
 To configure a `ContentType` lifecycle hooks you can set a `lifecycles` key in the `{modelName}.js` file located at `./api/{apiName}/models/{modelName}.js` folder.
 
