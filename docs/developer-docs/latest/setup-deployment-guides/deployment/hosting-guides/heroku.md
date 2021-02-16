@@ -60,7 +60,7 @@ Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start
 
 ::: tip NOTE
 
-If you plan to use **MongoDB** with your project, [refer to the create a Strapi project with MongoDB section of the documentation](../guides/databases.md#install-mongodb-locally) then, jump to step 4.
+If you plan to use **MongoDB** with your project, [refer to the create a Strapi project with MongoDB section of the documentation](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-mongodb-locally) then, jump to step 4.
 
 :::
 
@@ -200,7 +200,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create a new `database.js` in a new [env](../concepts/configurations.md#environments) folder. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](../concepts/configurations.md#database).
+Create a new `database.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations.md#environment) folder. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
 
 `Path: ./config/env/production/database.js`
 
@@ -240,7 +240,7 @@ heroku config:set NODE_ENV=production
 
 #### 5. Create your Strapi server config for production
 
-Create a new `server.js` in a new [env](../concepts/configurations.md#environments) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations.md#environment) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
 
 `Path: ./config/env/production/server.js`
 
@@ -276,11 +276,11 @@ npm install pg --save
 
 Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
 
-You must have completed the [steps to use Strapi with MongoDB Atlas](../guides/databases.md#install-on-atlas-mongodb-atlas) - through **4. Retrieve database credentials**.
+You must have completed the [steps to use Strapi with MongoDB Atlas](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-on-atlas-mongodb-atlas) - through **4. Retrieve database credentials**.
 
 #### 1. Set environment variables
 
-When you [set-up your MongoDB Atlas database](../guides/databases.md#install-on-atlas-mongodb-atlas) you noted a connection string. Similar to this:
+When you [set-up your MongoDB Atlas database](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-on-atlas-mongodb-atlas) you noted a connection string. Similar to this:
 
 ```bash
 mongodb://paulbocuse:<password>@strapidatabase-shard-00-00-fxxx6c.mongodb.net:27017,strapidatabase-shard-00-01-fxxxc.mongodb.net:27017,strapidatabase-shard-00-02-fxxxc.mongodb.net:27017/test?ssl=true&replicaSet=strapidatabase-shard-0&authSource=admin&retryWrites=true&w=majority
@@ -436,11 +436,11 @@ heroku open
 
 Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "Cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
 
-Due to Heroku's filesystem you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](../plugins/upload.md#install-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
+Due to Heroku's filesystem you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](/developer-docs/latest/development/plugins/upload.md#create-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
 
 ### Gzip
 
-As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](../concepts/middlewares.md#core-middleware-configurations), it is recommended that you disable Brotli or define better configuration params.
+As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations.md#core-middleware-configurations), it is recommended that you disable Brotli or define better configuration params.
 
 To disable Brotli, provide the following configuration in `config/middleware.js`.
 
