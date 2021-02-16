@@ -24,7 +24,7 @@ First you will have to install the client package in your application by running
 
 ## Create a hook
 
-To init the client, we will use the [hooks system](../concepts/hooks.md). Hooks let you add new features in your Strapi application.
+To init the client, we will use the [hooks system](/developer-docs/latest/setup-deployment-guides/configurations.md#hooks). Hooks let you add new features in your Strapi application.
 
 Hooks are loaded once at server start.
 
