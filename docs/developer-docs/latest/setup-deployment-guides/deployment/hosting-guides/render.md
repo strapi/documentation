@@ -145,7 +145,7 @@ If you attach a [custom domain](https://render.com/docs/custom-domains) to your 
 For PostgreSQL, install the `pg` package from npm. If you're using Cloudinary, install `strapi-provider-upload-cloudinary`.
 
 ::: tip
-The [Configuration doc](../concepts/configurations.md) has more info on configuring Strapi
+The [Configuration doc](/developer-docs/latest/setup-deployment-guides/configurations.md) has more info on configuring Strapi
 :::
 
 ### Step 5: Deploy
@@ -157,7 +157,7 @@ The [Configuration doc](../concepts/configurations.md) has more info on configur
 
 ### Step 6: Scale
 
-For vertical scaling, upgrade your service to a plan with more CPU and RAM per instance. If you're using a managed database you can upgrade its plan as well. Visit [Render's pricing page](https://render.com/pricing) and consider the [recommended requirements](../getting-started/deployment.md#recommended-requirements) in choosing the best plan for your needs. To upgrade, change [the `plan` field(s)](https://render.com/docs/yaml-spec#plans) in your `render.yaml` file.
+For vertical scaling, upgrade your service to a plan with more CPU and RAM per instance. If you're using a managed database you can upgrade its plan as well. Visit [Render's pricing page](https://render.com/pricing) and consider the [recommended requirements](/developer-docs/latest/setup-deployment-guides/deployment.md#recommended-requirements) in choosing the best plan for your needs. To upgrade, change [the `plan` field(s)](https://render.com/docs/yaml-spec#plans) in your `render.yaml` file.
 
 Render services without attached disks can be horizontally scaled. Add [a `numInstances` field](https://render.com/docs/yaml-spec#number-of-instances) in your `render.yaml` file to get multiple instances of your Strapi application running in parallel. Render automatically load balances requests among your instances.
 
