@@ -937,6 +937,7 @@ module.exports = {
 The `./config/functions/` folder contains a set of JavaScript files in order to add dynamic and logic based configurations.
 
 All functions that are exposed in this folder are accessible via `strapi.config.functions['fileName']();`
+<!-- The text above will be identified as a broken link by the check-links VuePress plugin, because its syntax looks like an empty link. You can safely ignore the error. -->
 
 #### Bootstrap
 
