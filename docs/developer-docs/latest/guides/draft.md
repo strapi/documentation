@@ -12,7 +12,7 @@ This guide is still useful if you want to see the concept of "force filtering" i
 
 What we want here is to fetch only data that has a `published` status.
 
-But we don't want to use [parameters](../content-api/parameters.md) (eg. /articles?status=published) because you can easily fake the params.
+But we don't want to use [parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters) (eg. /articles?status=published) because you can easily fake the params.
 
 To be able to do that, you have first to understand some concepts.
 
@@ -62,7 +62,7 @@ After saving the new function, let's restart the `GET /articles` request. We wil
 
 We now know the function we have to update, but we just want to customize the returned article values.
 
-In the [controller documentation](../concepts/controllers.md#extending-a-model-controller) you will find the default implementation of every action. It will help you overwrite the fetch logic.
+In the [controller documentation](/developer-docs/latest/development/backend-customization.md#controllers) you will find the default implementation of every action. It will help you overwrite the fetch logic.
 
 **Path —** `./api/article/controller/Article.js`
 
