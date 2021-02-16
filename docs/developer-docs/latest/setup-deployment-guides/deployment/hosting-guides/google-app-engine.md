@@ -245,7 +245,7 @@ Follow the [documentation of the plugin](https://github.com/Lith/strapi-provider
 
 CORS is enabled by default, allowing `*` origin. You may want to limit the allowed origins.
 
-Read the documentation [here](../concepts/middlewares.md)
+Read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares).
 
 **Changing the admin url**
 
