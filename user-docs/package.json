@@ -4,12 +4,10 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "vuepress dev",
-		"build": "vuepress build"
+		"build": "vuepress build",
+		"check-links": "vuepress check-md"
 	},
 	"license": "SEE LICENSE IN LICENSE",
-	"devDependencies": {
-		"vuepress": "^1.5.3"
-	},
 	"dependencies": {
 		"@vuepress/plugin-google-analytics": "^1.7.1",
 		"@vuepress/plugin-medium-zoom": "^1.7.1",
@@ -29,5 +27,8 @@
 			"email": "hi@strapi.io",
 			"url": "http://strapi.io"
 		}
-	]
+	],
+	"devDependencies": {
+		"vuepress-plugin-check-md": "^0.0.2"
+	}
 }

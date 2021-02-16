@@ -284,6 +284,10 @@ module.exports = ({ env }) => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
   },
+  rest: {
+    defaultLimit: 100,
+    maxLimit: 250,
+  },
 });
 ```
 
@@ -293,6 +297,9 @@ module.exports = ({ env }) => ({
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
 | `responses`                   | Global API response configuration                                                                                                                                 | Object       |         |
 | `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
+| `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
+| `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
+| `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                         | Integer      | `null`    |
 
 ## Functions
 
@@ -500,6 +507,7 @@ You can find [supported database and versions](../installation/cli.md#databases)
       - `uri` (string): This can overide all previous configurations - _optional_
     - `options` Options used for database connection.
       - `ssl` (boolean): For ssl database connection.
+      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
       - `debug` (boolean): Show database exchanges and errors.
       - `authenticationDatabase` (string): Connect with authentication.
 

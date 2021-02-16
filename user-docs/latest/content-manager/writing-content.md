@@ -27,7 +27,7 @@ To write or edit content:
 
 ### Components
 
-Components are a combination of several fields, which are displayed grouped together in the edit view. Writing their content works exactly like for independent fields, but there are some specificities to components.
+Components are a combination of several fields, which are grouped together in the edit view. Writing their content works exactly like for independent fields, but there are some specificities to components.
 
 There are 2 types of components: non-repeatable and repeatable components.
 
