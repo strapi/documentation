@@ -172,7 +172,7 @@ NODE_PORT=1338
 ```
 
 ::: tip
-To learn more about configuration you can read the documentation [here](../concepts/configurations.md)
+To learn more about configuration you can read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md)
 :::
 
 ### 2. Launch the server
@@ -263,4 +263,4 @@ strapi(/* {...} */).start();
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](../admin-panel/deploy.md).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deployment).
