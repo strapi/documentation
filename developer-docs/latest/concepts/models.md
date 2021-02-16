@@ -168,14 +168,17 @@ The options key on the model-json states.
 
 - `populateCreatorFields`: Configure whether the API response should include `created_by` and `updated_by` fields or not. Accepts a `boolean`. The default value is `false`.
 
-**Path —** `User.settings.json`.
+- `draftAndPublish`: Enable the draft and publish feature. Accepts a `boolean`. The default value is `false`.
+
+**Path —** `Restaurant.settings.json`.
 
 ```json
 {
   "options": {
     "timestamps": true,
     "privateAttributes": ["id", "created_at"],
-    "populateCreatorFields": true
+    "populateCreatorFields": true,
+    "draftAndPublish": false
   }
 }
 ```
@@ -866,7 +869,7 @@ xhr.send(
 
 The lifecycle hooks are functions that get triggered when the Strapi [`queries`](../concepts/queries.md) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
 
-To configure a `ContentType` lifecycle hooks you can set a `lifecycles` key in the `{modelName}.js` file located at `./api/{apiName}/models/{modelName}.js` folder.
+To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `{modelName}.js` file located in the `./api/{apiName}/models` folder.
 
 ### Available Lifecycle hooks
 
