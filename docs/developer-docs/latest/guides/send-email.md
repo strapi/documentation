@@ -12,7 +12,7 @@ To be able to do that, you have first to understand some concepts.
 
 When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization.md#controllers that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization.md#controllers) that exist by default when a content type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
