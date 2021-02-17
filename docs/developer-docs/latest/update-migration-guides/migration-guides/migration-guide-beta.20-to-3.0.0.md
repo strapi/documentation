@@ -40,7 +40,7 @@ Some of the improvements are:
 - Less files.
 - Environment overwrites.
 
-Before migrating, you should first read the new [configuration documentation](../concepts/configurations.md) to fully understand the changes.
+Before migrating, you should first read the new [configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations.md) to fully understand the changes.
 
 ### Migrating
 
@@ -50,7 +50,7 @@ Your server configuration should move from `./config/environments/{env}/server.j
 
 #### Database configuration
 
-Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](../concepts/configurations.md#database).
+Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
 
 #### Middlewares
 
@@ -89,7 +89,7 @@ module.exports = {
 
 You can now move the middleware configurations from `application.json`, `language.json`, `security.json`, `request.json` and `response.json` files directly into the `settings` property.
 
-You can review all possible options in the [middleware documentation](../concepts/middlewares.md#configuration-and-activation).
+You can review all possible options in the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#configuration-and-activation-2).
 
 ::: tip
 If you never configured any middlewares you can delete this file all together. You can also only set the configurations you want to customize and leave the others out.
@@ -140,7 +140,7 @@ You can leave your policies as is, we didn't change how they work.
 
 #### Custom
 
-Any custom configuration you have can still be used. You can read the [configuration documentation](../concepts/configurations.md) to know more.
+Any custom configuration you have can still be used. You can read the [configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations.md) to know more.
 
 #### Plugin
 
@@ -229,13 +229,13 @@ config
 
 We have replaced the old lifecycles that had a lot of issues with a new simpler lifecycle layer.
 
-You can read more [here](../concepts/models.md#lifecycle-hooks).
+You can read more [here](/developer-docs/latest/development/backend-customization.md#lifecycle-hooks).
 
 ## Email plugin settings
 
 Email plugin settings have been moved to files. Now you can configure your email provider directly in files.
 
-You can read the documentation [here](../plugins/email.md#configure-the-plugin) to update.
+You can read the documentation [here](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) to update.
 
 Once you have setup your configuration, you can cleanup your database by deleting in the `core_store` model the data with the `key` equal to `plugin_email_provider`.
 
@@ -302,7 +302,7 @@ module.exports = {
 Adding a sub path to the url doesn't mean your api is going to be prefixed. You will need to host your app behind a proxy and remove the prefix so strapi receives request like if they where made on the root `/` path.
 :::
 
-You can see this option in action in the following [deployment guides](../getting-started/deployment.md#optional-software-guides).
+You can see this option in action in the following [deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides).
 
 ### Admin path
 
@@ -335,7 +335,7 @@ module.exports = {
 };
 ```
 
-You can see this option in action in the following [deployment guides](../getting-started/deployment.md#optional-software-guides).
+You can see this option in action in the following [deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides).
 
 ## Rebuilding your administration panel
 
