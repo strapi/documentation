@@ -90,6 +90,7 @@ module.exports = {
 You can now move the middleware configurations from `application.json`, `language.json`, `security.json`, `request.json` and `response.json` files directly into the `settings` property.
 
 You can review all possible options in the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#configuration-and-activation-2).
+<!-- This hash link above generates an error with the check-links plugins but everything seems to be fine 🤷  So it's been added to the files to ignore, see config.js. -->
 
 ::: tip
 If you never configured any middlewares you can delete this file all together. You can also only set the configurations you want to customize and leave the others out.
