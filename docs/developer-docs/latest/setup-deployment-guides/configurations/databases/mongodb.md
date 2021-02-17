@@ -4,7 +4,7 @@
 
 ### 1. Install MongoDB on your development environment
 
-If you already have MongoDB installed locally and running as a background service, you may skip to [Install Strapi locally with MongoDB](#install-strapi-locally-with-mongodb). (If you have additional questions, please see the official [MongoDB documentation](https://docs.mongodb.com/manual/installation/#tutorial-installation). )
+If you already have MongoDB installed locally and running as a background service, you may skip to [Install Strapi locally with MongoDB](#_2-install-strapi-locally-with-mongodb). (If you have additional questions, please see the official [MongoDB documentation](https://docs.mongodb.com/manual/installation/#tutorial-installation). )
 
 Please complete the installation steps appropriate to your operating system.
 
@@ -26,7 +26,7 @@ Follow these steps to [install MongoDB onto your Windows 10](https://docs.mongod
 
 You can exit the MongoDB shell with `CTRL + C`.
 
-You have now installed MongoDB for _Windows 10_. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
+You have now installed MongoDB for _Windows 10_. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
 
 :::
 
@@ -54,7 +54,7 @@ brew install mongodb-community@4.0
 mongod --config /usr/local/etc/mongod.conf
 ```
 
-You have now installed MongoDB for _Mac_. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
+You have now installed MongoDB for _Mac_. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
 
 :::
 
@@ -106,7 +106,7 @@ service mongod status
 sudo systemctl enable mongod
 ```
 
-You have now installed MongoDB for _Linux_. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
+You have now installed MongoDB for _Linux_. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
 
 :::
 

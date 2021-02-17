@@ -305,7 +305,7 @@ pm2 start ecosystem.config.js
 
 `pm2` is now set-up to use an `ecosystem.config.js` to manage restarting your application upon changes. This is a recommended best practice.
 
-**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](../getting-started/quick-start.md#_3-create-an-admin-user).
+**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
 
 ::: tip
 Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
