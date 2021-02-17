@@ -91,17 +91,7 @@ The core team will review your pull request and will either merge it, request ch
     ```
 
 #### Writing
-We can't provide you specific procedures with step-by-step instructions to write technical documentation. But here are a few pieces of advice and tips that should help you!
-
-- List of the basics of technical writing, to help you write proper technical documentation:
-
-    [Writing technical documentation](https://www.notion.so/Writing-technical-documentation-d0e6b6b3d7294bf5953808646221e116)
-
-- Style guide to apply when contributing to Strapi's documentation, to make sure your contributing matches the rest of the documentation:
-
-    [Documentation style guide (WIP)](https://www.notion.so/Documentation-style-guide-WIP-2d9786b4546946c1aec8be533cfb862b)
-
-If you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
+We can't provide you specific procedures with step-by-step instructions to write technical documentation. But if you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
 
 #### Sharing & reviewing
 
