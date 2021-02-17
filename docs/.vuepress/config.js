@@ -137,6 +137,25 @@ const sidebar = {
   ],
 };
 
+const checklinksIgnoredFiles = [
+  '**/node_modules', // please never remove this one
+  /**
+   * Caution: Adding an individual file to this section
+   * will prevent the _whole_ file from being scanned for broken links.
+   *
+   * Currently, there is no easy way to ignore a specific link inside a file.
+   */
+
+  /**
+   * Files below give false positives
+   */
+  './developer-docs/latest/concepts/file-structure.md', // contains .md links that should not be treated as links
+  './developer-docs/latest/guides/unit-testing.md', // line 190
+  './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
+  './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
+  './developer-docs/latest/development/plugins/documentation.md' // missing GIF asset at line 45
+]
+
 module.exports = {
   title: '',
   port: 8080,
@@ -149,7 +168,7 @@ module.exports = {
       ga: 'UA-54313258-1',
     },
     'check-md': {
-      ignore: ['**/node_modules', '**/_old/*'],
+      ignore: checklinksIgnoredFiles
     },
     seo: {
       siteTitle: (_, $site) => $site.title,
