@@ -62,7 +62,7 @@ After saving the new function, let's restart the `GET /articles` request. We wil
 
 We now know the function we have to update, but we just want to customize the returned article values.
 
-In the [controller documentation](/developer-docs/latest/development/backend-customization.md#controllers) you will find the default implementation of every action. It will help you overwrite the fetch logic.
+In the [controller documentation](/developer-docs/latest/development/backend-customization.md#extending-a-model-controller) you will find the default implementation of every action. It will help you overwrite the fetch logic.
 
 **Path —** `./api/article/controller/Article.js`
 
