@@ -3,7 +3,7 @@
 - strapi
   - [.admin](#strapi-admin)
   - [.api](#strapi-api)
-  - [.app](#strapiapp)
+  - [.app](#strapi-app)
   - [.config](#strapi-config)
   - [.controllers](#strapi-controllers)
   - [.hook](#strapi-hook)
