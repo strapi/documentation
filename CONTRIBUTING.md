@@ -64,7 +64,7 @@ We have various types of documentation that are maintained on their own:
 We have a few primary branches that are used for different purposes:
 
 - **main**
-  - This branch is used by the Strapi to push documentation on new features before they are released, it should not be used for PRs by the community unless instructed to do so by a Strapi team member
+  - This branch is used to store the current version of the documentation, all PRs should target this branch
 - **docs/\***
   - This collection of branches is for current work in progress changes, Strapi team members push our changes here to make PRs against the documentation branch
 - **feature/\***
