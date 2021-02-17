@@ -21,7 +21,7 @@ We can now imagine you have a `JWT` that comes from [Auth0](https://auth0.com) a
 
 ## Customize the JWT validation function
 
-We have to use the [customization concept](../concepts/customization.md) to update the function that validates the `JWT`. This feature is powered by the **Users & Permissions** plugin.
+We will update the function that validates the `JWT`. This feature is powered by the **Users & Permissions** [plugin](/developer-docs/latest/development/plugin-customization.md).
 
 Here is the file we will have to customize: [permission.js](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-users-permissions/config/policies/permissions.js)
 
