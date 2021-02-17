@@ -13,9 +13,9 @@ Not updating your **extensions** can break your app in unexpected ways that we c
 This version requires some migration in the following cases:
 
 - You are using a `published_at` field in some of your models.
-- You followed the [Scheduled publication guide](../guides/scheduled-publication.md) and used a `published_at` field.
+- You followed the [Scheduled publication guide](/developer-docs/latest/guides/scheduled-publication.md) and used a `published_at` field.
 
-Otherwise you can follow the basic [version update guide](../guides/update-version.md).
+Otherwise you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).
 
 ## Migration
 

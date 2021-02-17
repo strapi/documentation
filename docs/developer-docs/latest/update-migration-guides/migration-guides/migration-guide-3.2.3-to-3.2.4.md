@@ -14,7 +14,7 @@ This version requires a migration in the following cases:
 
 - You have extended the **Users-Permissions** **User** model and have the file `./extensions/users-permissions/models/User.settings.json`.
 
-Otherwise you can follow the basic [version update guide](../guides/update-version.md).
+Otherwise you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).
 
 ## Migration
 
@@ -46,4 +46,4 @@ If you have extended the model in any way, you will need to add the new attribut
 }
 ```
 
-That's it, now you can follow the basic [version update guide](../guides/update-version.md).
+That's it, now you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).

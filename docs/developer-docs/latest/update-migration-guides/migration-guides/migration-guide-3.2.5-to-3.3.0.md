@@ -14,7 +14,7 @@ This version requires a migration in the following cases:
 
 - You have extended the **Strapi-admin** **admin/src/config.js** file, so you have `./admin/src/config.js`.
 
-Otherwise you can follow the basic [version update guide](../guides/update-version.md).
+Otherwise you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).
 
 ## Migration
 
@@ -56,6 +56,6 @@ _After_
 strapi.notification.toggle(config);
 ```
 
-Here is a link to the [new notification API](../plugin-development/frontend-development.md).
+Here is a link to the [new notification API](/developer-docs/latest/development/local-plugins-customization.md#front-end-development).
 
-That's it, now you can follow the basic [version update guide](../guides/update-version.md).
+That's it, now you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).
