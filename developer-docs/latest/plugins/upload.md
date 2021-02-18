@@ -351,6 +351,24 @@ npm install strapi-provider-upload-aws-s3 --save
 
 ::::
 
+### Local server
+
+By default Strapi accepts `localServer` configurations for locally uploaded files. They will be passed as the options for [koa-static](https://github.com/koajs/static).
+
+You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
+
+```js
+module.exports = ({ env })=>({
+  upload: {
+    providerOptions: {
+      localServer: {
+        maxage: 300000
+      }
+    }
+  }
+});
+```
+
 ### Using scoped packages as providers
 
 If your package name is [scoped](https://docs.npmjs.com/about-scopes) (for example `@username/strapi-provider-upload-aws2`) you need to take an extra step by aliasing it in `package.json`. Go to the `dependencies` section and change the provider line to look like this:
