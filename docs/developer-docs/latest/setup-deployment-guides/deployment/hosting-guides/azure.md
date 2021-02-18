@@ -458,7 +458,7 @@ See the following [DigitalOcean guide](https://www.digitalocean.com/community/tu
 
 #### 2. Installing a proxy for SSL
 
-There are many different types of proxy services you could use, anything from load balancing, offloading SSL, to fault tolerance. You can view a few [examples](./proxy) based around Strapi and basic SSL offloading.
+There are many different types of proxy services you could use, anything from load balancing, offloading SSL, to fault tolerance. You can view a few [examples](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides) based around Strapi and basic SSL offloading.
 
 #### 3. File upload providers
 
