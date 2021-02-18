@@ -14,3 +14,7 @@ Create a development project
 In a new terminal window:
 
 1. Generate a new plugin: `cd /path/to/myDevelopmentProject && strapi generate:plugin my-plugin`
+
+::: tip NOTE
+After you have successfully generated a plugin, you need to run `strapi build` which adds the new plugin to the admin panel. 
+:::
