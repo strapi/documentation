@@ -241,7 +241,7 @@ module.exports = () => {};
 
 One of our main objectives for the `beta` is to make it easier and quicker to upgrade to more recent versions of Strapi. This is why moving forward, plugins will be located in the `node_modules` folder.
 
-[Read more](/developer-docs/latest/concepts/file-structure.md)
+[Read more](/developer-docs/latest/setup-deployment-guides/file-structure.md)
 
 Let's start by creating a new folder called `./extensions`. This folder needs to exist even if it's empty. You may use a `.gitkeep` file to ensure the folder isn't deleted from the repository (if it's empty) when cloning. [More details](https://davidwalsh.name/git-empty-directory).
 
