@@ -42,8 +42,7 @@ When your plugin is installed, you just have to start your application and it wi
 
 The administration panel lets you configure the basic settings of this plugin.
 
-![Accessing the documentation](/latest/assets/plugins/documentation/open-doc.gif 'Accessing the documentation')
-<!-- Missing asset. What should we do with this one? -->
+![Accessing the documentation](../../assets/plugins/documentation/open-doc.gif 'Accessing the documentation')
 
 ## Administration panel
 

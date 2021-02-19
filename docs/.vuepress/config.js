@@ -155,11 +155,6 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
   './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
-  /**
-   * Need to find a solution for these two files below, temporarily ignoring them
-   */
-  './developer-docs/latest/development/plugins/documentation.md', // missing GIF asset at line 45
-  './developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.md' // line 461, don't know where the link should redirect to 🤷
 ]
 
 module.exports = {
