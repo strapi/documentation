@@ -15,6 +15,7 @@ const sidebar = {
       title: '⚙️ Setup & Deployment',
       children: [
         ['/developer-docs/latest/setup-deployment-guides/installation.md', 'Installation'],
+        ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
         ['/developer-docs/latest/setup-deployment-guides/configurations.md', 'Configurations'],
         ['/developer-docs/latest/setup-deployment-guides/deployment.md', 'Deployment'],
       ],
