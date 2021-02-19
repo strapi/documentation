@@ -588,7 +588,7 @@ There are two ways to create a controller:
 #### Adding Endpoints
 
 Each controller’s action must be an `async` function.
-Every action receives a `context` (`ctx`) object as first parameter containing the [request context](/developer-docs/latest/concepts/requests-responses.md#request) and the [response context](/developer-docs/latest/concepts/requests-responses.md#responses).
+Every action receives a `context` (`ctx`) object as first parameter containing the [request context](/developer-docs/latest/development/backend-customization.md#responses) and the [response context](/developer-docs/latest/development/backend-customization.md#responses).
 
 #### Example
 
