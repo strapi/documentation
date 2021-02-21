@@ -71,7 +71,7 @@ The properties of the config object are as follows:
 | type            | string        | success                  | `success`, `warning` or `info`                                                                                               |
 | message         | object/string | app.notification.success | The main message to display (works with i18n message object, `{ id: 'app.notification.success', defaultMessage: 'Saved!' }`) |
 | title           | object/string | null                     | Add a title to the notification                                                                                              |
-| link            | object        | null                     | Add a link to the notification message `{ url: String, label: String                                                         | Object, target: String }` |
+| link            | object        | null                     | Add a link to the notification message `{ url: String, label: String|Object, target: String }`                                               |
 | timeout         | number        | 2500                     | Time in ms before the notification is closed                                                                                 |
 | blockTransition | boolean       | false                    | Block the notification transitions to remove the timeout                                                                     |
 | uid             | string        | null                     | Custom the notification uid                                                                                                  |
