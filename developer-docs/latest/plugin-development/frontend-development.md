@@ -127,7 +127,7 @@ import lifecycles from './lifecycles';
 import trads from './translations';
 import pluginId from './pluginId';
 
-export default (strapi) => {
+export default strapi => {
   const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
   const icon = pluginPkg.strapi.icon;
   const name = pluginPkg.strapi.name;
@@ -327,7 +327,7 @@ The example below shows how to use i18n inside your plugin.
 import { FormattedMessage } from 'react-intl';
 import SomeOtherComponent from 'components/SomeOtherComponent';
 
-const Foo = (props) => (
+const Foo = props => (
   <div className={styles.foo}>
     <FormattedMessage id="my-plugin.notification.error.message" />
     <SomeOtherComponent {...props} />
