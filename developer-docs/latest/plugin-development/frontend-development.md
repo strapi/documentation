@@ -67,7 +67,7 @@ strapi.notification.toggle(config);
 The properties of the config object are as follows:
 
 | key             | type          | default                  | Description                                                                                                                  |
-| --------------- | ------------- | ------------------------ | :--------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| --------------- | ------------- | ------------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
 | type            | string        | success                  | `success`, `warning` or `info`                                                                                               |
 | message         | object/string | app.notification.success | The main message to display (works with i18n message object, `{ id: 'app.notification.success', defaultMessage: 'Saved!' }`) |
 | title           | object/string | null                     | Add a title to the notification                                                                                              |
