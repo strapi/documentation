@@ -12,7 +12,7 @@ Not updating your **extensions** can break your app in unexpected ways that we c
 
 ### 1. Update the application dependencies
 
-First, update the application dependencies as usual by following the basic [version update guide](../guides/update-version.md).
+First, update the application dependencies as usual by following the basic [version update guide](../update-version.md).
 
 ### 2. Migrate Instagram Login Config
 
