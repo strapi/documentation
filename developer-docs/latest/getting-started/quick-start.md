@@ -88,12 +88,12 @@ You will see your restaurant listed in the entries.
 
 Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager).
 
-- Click on **+ Add New Category** button. Type `French Food` in the **Category** field. Select `Biscotte Restaurant`, on the right from **Restaurant (0)**.
+- Click on **+ Add New Category** button. Type `French Food` in the **Category** field. Select `Biscotte Restaurant`, on the right in the **Restaurant (0)** dropdown.
 - Click **Save**.
 
 You will see the **French Food** category listed in the entries.
 
-- Click on **+ Add New Category** button. Type `Brunch` in the **Category** field. **DO NOT ADD IT HERE** to `Biscotte Restaurant`.
+- Click on **+ Add New Category** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
 - Click **Save**.
 
 You will see the **Brunch** category listed in the entries.
@@ -107,7 +107,7 @@ You have now seen **two different ways** to use the **relation** field type to a
 
 ## 7. Set Roles and Permissions
 
-Navigate to [**SETTINGS** - **User's roles**](http://localhost:1337/admin/settings/users-permissions/roles).
+Navigate to [**SETTINGS** - **USERS & PERMISSIONS PLUGIN** - **Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
 
 - Click the **Public** Role.
 - Scroll down under **Permissions**, open the **Application** tab and find **Restaurant**. Click the checkbox next to **find** and **findone**.
