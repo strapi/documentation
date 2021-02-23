@@ -64,7 +64,7 @@ By default, `create-strapi-app` will generate an empty Strapi project. If you wa
 :::
 
 ::: warning
-If you use a custom database, this one has to be up and running before creating your Strapi project
+If you use a custom database, it has to be up and running before creating your Strapi project
 :::
 
 ## Step 3: Start the project
