@@ -25,7 +25,7 @@ You can use a template when creating a project with `create-strapi-app`.
 ::: tab yarn
 
 ```bash
-yarn create strapi-app my-project --template <template-github-url>
+yarn create strapi-app my-project --template <template-github-name>
 ```
 
 :::
@@ -33,7 +33,7 @@ yarn create strapi-app my-project --template <template-github-url>
 ::: tab npx
 
 ```bash
-npx create-strapi-app my-project --template <template-github-url>
+npx create-strapi-app my-project --template <template-github-name>
 ```
 
 :::
@@ -75,7 +75,7 @@ Second, a template must follow the following file structure.
 
 ### File structure
 
-You can add as many files as you want to the root of your template repository. But it must at least have a `template.json` file and a `template` directory.
+You can add as many files as you want to the root of your template repository. But it must at least have `template` directory, and either a `template.json` or a `template.js` file.
 
 The `template.json` is used to extend the Strapi app's default `package.json`. You can put all the properties that should overwrite the default `package.json` in a root `package` property. For example, a `template.json` might look like this:
 

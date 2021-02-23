@@ -48,7 +48,7 @@ mutation {
 }
 ```
 
-Then on each request, send along an `Authorization` header in the form of `{ Authorization: "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
+Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
 
 ## Configurations
 
