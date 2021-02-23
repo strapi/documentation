@@ -47,8 +47,7 @@ Complete the form to create the first **Administrator** user.
 Navigate to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
 
 - Click the **"+ Create new collection type"** link
-- Enter `restaurant`, and click `Continue`
-- Click the **"+ Add another Field"** button
+- Type `restaurant`, and click `Continue`
 - Click the **Text** field
 - Type `name` in the **Name** field
 - Click over to the **ADVANCED SETTINGS** tab, and check the `Required field` and the `Unique field`
@@ -63,8 +62,7 @@ Navigate to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin
 Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
 
 - Click the **"+ Create new collection type"** link
-- Enter `category`, and click `Continue`
-- Click the **"+ Add another Field"** button
+- Type `category`, and click `Continue`
 - Click the **Text** field
 - Type `name` under the **BASE SETTINGS** tab, in the **Name** field
 - Click over to the **ADVANCED SETTINGS** tab, and check the `Required field` and the `Unique field`
@@ -79,21 +77,21 @@ Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/
 
 Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), in the left-hand menu.
 
-- Click on **+ Add New Restaurant** button. Type `Biscotte Restaurant` in the **Restaurant** field. Type `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.` into the **Description** field.
+- Click on **+ Add New Restaurants** button. Type `Biscotte Restaurant` in the **Name** field. Type `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.` into the **Description** field.
 - Click **Save**.
 
-You will see your restaurant listed in the entries.
+If you navigate back [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), you will see your restaurant listed in the entries.
 
 ## 6. Add categories to the "Category" Content Type
 
 Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager).
 
-- Click on **+ Add New Category** button. Type `French Food` in the **Category** field. Select `Biscotte Restaurant`, on the right in the **Restaurant (0)** dropdown.
+- Click on **+ Add New Categories** button. Type `French Food` in the **Name** field. Select `Biscotte Restaurant`, on the right in the **Restaurant (0)** dropdown.
 - Click **Save**.
 
-You will see the **French Food** category listed in the entries.
+Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager). You will see the **French Food** category listed in the entries.
 
-- Click on **+ Add New Category** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
+- Click on **+ Add New Categories** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
 - Click **Save**.
 
 You will see the **Brunch** category listed in the entries.
@@ -107,7 +105,7 @@ You have now seen **two different ways** to use the **relation** field type to a
 
 ## 7. Set Roles and Permissions
 
-Navigate to [**SETTINGS** - **USERS & PERMISSIONS PLUGIN** - **Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
+Navigate to [**GENERAL** > **Settings** > **USERS & PERMISSIONS PLUGIN** > **Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
 
 - Click the **Public** Role.
 - Scroll down under **Permissions**, open the **Application** tab and find **Restaurant**. Click the checkbox next to **find** and **findone**.
