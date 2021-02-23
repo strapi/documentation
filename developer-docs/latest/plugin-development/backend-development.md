@@ -12,7 +12,7 @@ Please refer to [router documentation](../concepts/routing.md) for information.
 
 **Route prefix**
 
-Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`). Using the `prefix` key you can change this option to something custom. Currently it is not possible to disable the prefix, see the following [GitHub issue](https://github.com/strapi/strapi/issues/9232) for this.
+Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`). Using the `prefix` key you can change this option to something custom. You can disable the prefix, by setting the `config.prefix` key to an empty string.
 
 ```json
 {
