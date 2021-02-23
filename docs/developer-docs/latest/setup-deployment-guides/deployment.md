@@ -11,7 +11,7 @@ Deploying **databases** along with Strapi is covered in the [Databases Guide](/d
 Manual guides for deployment on various platforms, for One-click and docker please see the [installation](/developer-docs/latest/setup-deployment-guides/installation.md) guides.
 
 <div>
-    <InstallLink link="../deployment/21yunbox.html">
+    <InstallLink link="deployment/hosting-guides/21yunbox.html">
     <template #icon>
     <svg width="64px" height="55px" viewBox="0 0 64 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <title>Group</title>
@@ -43,7 +43,7 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 </div>
 
 <div>
-	<InstallLink link="../deployment/amazon-aws.html">
+	<InstallLink link="deployment/hosting-guides/amazon-aws.html">
     <template #icon>
     <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M15.63 31.388l-7.135-2.56V18.373l7.135 2.43zm1.3 0l7.135-2.56V18.373l-7.135 2.432zm-7.7-13.8l7.2-2.033 6.696 2.16-6.696 2.273zm-2.092-.8L0 14.22V3.75l7.135 2.43zm1.307 0l7.135-2.56V3.75L8.443 6.192zm-7.7-13.8l7.2-2.043 6.696 2.16-6.696 2.273zm23.052 13.8l-7.135-2.56V3.75l7.135 2.43zm1.3 0l7.135-2.56V3.75l-7.135 2.43zm-7.7-13.8l7.2-2.033 6.696 2.16-6.696 2.273z" fill-rule="nonzero"></path></g></svg>
     </template>
