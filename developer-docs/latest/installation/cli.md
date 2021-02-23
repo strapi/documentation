@@ -8,7 +8,7 @@ Fast-track local install for getting Strapi running on your computer.
 
 #### Node.js
 
-Strapi only requires [Node.js](https://nodejs.org). The current recommended version to run Strapi is **Node v14**.
+Strapi only requires [Node.js](https://nodejs.org). Strapi only supports **LTS versions** of Node.js, the current recommended version to run Strapi is **Node LTS v14**. Other versions of of Node.js may not be compatible with the latest release of Strapi.
 
 This is everything you need to run Strapi on your local environment.
 
@@ -64,7 +64,7 @@ By default, `create-strapi-app` will generate an empty Strapi project. If you wa
 :::
 
 ::: warning
-If you use a custom database, this one has to be up and running before creating your Strapi project
+If you use a custom database, it has to be up and running before creating your Strapi project
 :::
 
 ## Step 3: Start the project

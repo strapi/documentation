@@ -9,6 +9,9 @@ module.exports = {
     '@vuepress/google-analytics': {
       ga: 'UA-54313258-1',
     },
+    'check-md': {
+      ignore: ['**/node_modules', '**/_old/*']
+    },
     seo: {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
@@ -289,6 +292,7 @@ module.exports = {
             '/latest/concepts/requests-responses',
             '/latest/concepts/routing',
             '/latest/concepts/services',
+            '/latest/concepts/sso',
             '/latest/concepts/templates',
             '/latest/concepts/webhooks',
           ],

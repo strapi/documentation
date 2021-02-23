@@ -9,6 +9,9 @@ module.exports = {
     '@vuepress/google-analytics': {
       ga: 'UA-54313258-1',
     },
+    'check-md': {
+      ignore: ['**/node_modules', '**/_old/*']
+    },
     seo: {
       siteTitle: (_, $site) => $site.title,
       title: ($page) => $page.title,
@@ -299,6 +302,15 @@ module.exports = {
           collapsable: false,
           title: 'Plugins',
           children: [['/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
+        },
+        {
+          collapsable: false,
+          title: 'General settings',
+          children: [
+            [
+              '/latest/settings/managing-global-settings', 'Managing global settings',
+            ],
+          ],
         },
       ],
     },
