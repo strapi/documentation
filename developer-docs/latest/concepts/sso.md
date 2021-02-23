@@ -3,7 +3,7 @@
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
 ::: warning CAUTION
-It is currently not possible to associate a unique SSO provider to an email address used for a specific Strapi account. For more information, and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
+It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
 ## Prerequisites
