@@ -644,7 +644,7 @@ Now you can make authenticated requests 🎉 More info here: [token usage](#toke
 :::warning Troubleshooting
 
 - **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
-- **Grant: missing session or misconfigured provider**: It may be du to many things.
+- **Grant: missing session or misconfigured provider**: It may be due to many things.
   - **The redirect url can't be built**: Make sure you have set the backend url in `config/server.js`: [Setting up the server url](#setting-up-the-server-url)
   - **A session/cookie/cache problem**: You can try again in a private tab.
   - **The incorrect use of a domain with ngrok**: Check your urls and make sure that you use the ngrok url instead of `http://localhost:1337`. Don't forget to check the backend url set in the example app at `src/config.js`.

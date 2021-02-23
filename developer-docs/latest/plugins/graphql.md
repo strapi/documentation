@@ -58,8 +58,6 @@ Security limits on maximum number of items in your response by default is limite
 
 You can also setup any [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) with the `apolloServer` option. For example, you can enable the tracing feature, which is supported by the playground to track the response time of each part of your query. To enable this feature just change/add the `"tracing": true` option in the GraphQL settings file. You can read more about the tracing feature from Apollo [here](https://www.apollographql.com/docs/apollo-server/federation/metrics/).
 
-To prevent plugins or extensions from being added to the graphl schema, simply add the plugin-name to the configuration. For example, to disable the upload and users-permissions plugin, set `disabledPlugins: ['upload','users-permissions']`.
-
 You can edit these configurations by creating following file.
 
 ::: warning
@@ -77,8 +75,6 @@ module.exports = {
     playgroundAlways: false,
     depthLimit: 7,
     amountLimit: 100,
-    disabledPlugins: [],
-    disabledExtensions: [],
     apolloServer: {
       tracing: false,
     },
