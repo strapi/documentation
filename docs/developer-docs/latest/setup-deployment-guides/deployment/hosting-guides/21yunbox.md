@@ -13,7 +13,7 @@ For more information consult [21YunBox's Deploy Strapi guide](https://www.21yunb
 
 ## Prerequisites
 
-This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](../getting-started/quick-start.md) to get started or fork 21YunBox's Strapi Examples:
+This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](/developer-docs/latest/getting-started/quick-start.md) to get started or fork 21YunBox's Strapi Examples:
 - [Strapi with SQLite Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-sqlite)
 - [Strapi with Postgres Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-postgres)
 
