@@ -410,7 +410,7 @@ const strategyInstance = new Strategy(
 
 ### Authentication Events
 
-The SSO feature adds a new [authentication event](configurations.html#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](configurations.md#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
