@@ -38,11 +38,11 @@ module.exports = ({ env }) => ({
 
 A provider's configuration is a Javascript object built with the following properties:
 
-| Name             | Required | Type     | Description                                                                    |
-|----------------- |----------|----------|--------------------------------------------------------------------------------|
-| `uid`            | true     | string   | The UID of the strategy. It must match the strategy's name                     |
-| `displayName`    | true     | string   | The name that will be used on the login page to reference the provider        |
-| `icon`           | false    | string   | An image URL. If specified, it will replace the displayName on the login page  |
+| Name             | Required | Type     | Description                                                                                                            |
+| ---------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `uid`            | true     | string   | The UID of the strategy. It must match the strategy's name                                                             |
+| `displayName`    | true     | string   | The name that will be used on the login page to reference the provider                                                 |
+| `icon`           | false    | string   | An image URL. If specified, it will replace the displayName on the login page                                          |
 | `createStrategy` | true     | function | A factory that will build and return a new passport strategy for your provider. Takes the strapi instance as parameter |
 
 ::: tip
@@ -142,23 +142,26 @@ module.exports = ({ env }) => ({
         {
           uid: 'google',
           displayName: 'Google',
-          icon: 'https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png' ,
-          createStrategy: strapi => new GoogleStrategy({
-              clientID: env('GOOGLE_CLIENT_ID'),
-              clientSecret: env('GOOGLE_CLIENT_SECRET'),
-              scope: [
-                'https://www.googleapis.com/auth/userinfo.email',
-                'https://www.googleapis.com/auth/userinfo.profile'
-              ],
-              callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('google')
-            }, (request, accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                firstname: profile.given_name,
-                lastname: profile.family_name,
-              });
-            }
-          ),
+          icon: 'https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png',
+          createStrategy: strapi =>
+            new GoogleStrategy(
+              {
+                clientID: env('GOOGLE_CLIENT_ID'),
+                clientSecret: env('GOOGLE_CLIENT_SECRET'),
+                scope: [
+                  'https://www.googleapis.com/auth/userinfo.email',
+                  'https://www.googleapis.com/auth/userinfo.profile',
+                ],
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('google'),
+              },
+              (request, accessToken, refreshToken, profile, done) => {
+                done(null, {
+                  email: profile.email,
+                  firstname: profile.given_name,
+                  lastname: profile.family_name,
+                });
+              }
+            ),
         },
       ],
     },
@@ -210,23 +213,28 @@ module.exports = ({ env }) => ({
           uid: 'github',
           displayName: 'Github',
           icon: 'https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png',
-          createStrategy: strapi => new GithubStrategy({
-            clientID: env('GITHUB_CLIENT_ID'),
-            clientSecret: env('GITHUB_CLIENT_SECRET'),
-            scope: ['user:email'],
-            callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('github'),
-          }, (accessToken, refreshToken, profile, done) => {
-            done(null, {
-              email: profile.emails[0].value,
-              username: profile.username,
-            });
-          }),
+          createStrategy: strapi =>
+            new GithubStrategy(
+              {
+                clientID: env('GITHUB_CLIENT_ID'),
+                clientSecret: env('GITHUB_CLIENT_SECRET'),
+                scope: ['user:email'],
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('github'),
+              },
+              (accessToken, refreshToken, profile, done) => {
+                done(null, {
+                  email: profile.emails[0].value,
+                  username: profile.username,
+                });
+              }
+            ),
         },
       ],
     },
   },
 });
 ```
+
 :::::
 
 ::::: tab Discord
@@ -256,9 +264,9 @@ npm install --save passport-discord
 `/config/server.js`
 
 ```jsx
-"use strict";
+'use strict';
 
-const DiscordStrategy = require("passport-discord");
+const DiscordStrategy = require('passport-discord');
 
 module.exports = ({ env }) => ({
   // ...
@@ -276,9 +284,7 @@ module.exports = ({ env }) => ({
               {
                 clientID: env('DISCORD_CLIENT_ID'),
                 clientSecret: env('DISCORD_SECRET'),
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL(
-                  'discord'
-                ),
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('discord'),
                 scope: ['identify', 'email'],
               },
               (accessToken, refreshToken, profile, done) => {
@@ -294,6 +300,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
 :::::
 ::::: tab Microsoft
 
@@ -322,7 +329,7 @@ npm install --save passport-azure-ad-oauth2 jsonwebtoken
 `/config/server.js`
 
 ```jsx
-"use strict";
+'use strict';
 
 const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2');
 const jwt = require('jsonwebtoken');
@@ -337,26 +344,34 @@ module.exports = ({ env }) => ({
         {
           uid: 'azure_ad_oauth2',
           displayName: 'Microsoft',
-          icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png',
-          createStrategy: strapi => new AzureAdOAuth2Strategy({
-            clientID: env('MICROSOFT_CLIENT_ID', ''),
-            clientSecret: env('MICROSOFT_CLIENT_SECRET', ''),
-            scope: ['user:email'],
-            tenant: env('MICROSOFT_TENANT_ID', ''),
-            callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('azure_ad_oauth2'),
-          }, (accessToken, refreshToken, params, profile, done) => {
-            var waadProfile = jwt.decode(params.id_token, '', true);
-            done(null, {
-              email: waadProfile.upn,
-              username: waadProfile.upn
-            });
-          }),
+          icon:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png',
+          createStrategy: strapi =>
+            new AzureAdOAuth2Strategy(
+              {
+                clientID: env('MICROSOFT_CLIENT_ID', ''),
+                clientSecret: env('MICROSOFT_CLIENT_SECRET', ''),
+                scope: ['user:email'],
+                tenant: env('MICROSOFT_TENANT_ID', ''),
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL(
+                  'azure_ad_oauth2'
+                ),
+              },
+              (accessToken, refreshToken, params, profile, done) => {
+                var waadProfile = jwt.decode(params.id_token, '', true);
+                done(null, {
+                  email: waadProfile.upn,
+                  username: waadProfile.upn,
+                });
+              }
+            ),
         },
       ],
     },
   },
 });
 ```
+
 :::::
 ::::::
 
@@ -384,6 +399,7 @@ module.exports = () => ({
 ### Custom Logic
 
 In some scenarios, you will want to write additional logic for your connection workflow such as:
+
 - Restricting connection and registration for a specific domain
 - Triggering actions on connection attempt
 - Analytics
@@ -393,24 +409,21 @@ The easiest way to do so is to plug into the verify function of your strategy an
 For example, if you want to allow only people with an official strapi.io email address, you can instantiate your strategy like this:
 
 ```javascript
-const strategyInstance = new Strategy(
-  configuration,
-  ({ email, username }, done) => {
-    // If the email ends with @strapi.io
-    if (email.endsWith('@strapi.io')) {
-      // Then we continue with the data given by the provider
-      return done(null, { email, username });
-    }
-    
-    // Otherwise, we continue by sending an error to the done function
-    done(new Error('Forbidden email address'));
-  },
-);
+const strategyInstance = new Strategy(configuration, ({ email, username }, done) => {
+  // If the email ends with @strapi.io
+  if (email.endsWith('@strapi.io')) {
+    // Then we continue with the data given by the provider
+    return done(null, { email, username });
+  }
+
+  // Otherwise, we continue by sending an error to the done function
+  done(new Error('Forbidden email address'));
+});
 ```
 
 ### Authentication Events
 
-The SSO feature adds a new [authentication event](configurations.html#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations.md#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
@@ -418,6 +431,7 @@ It contains the created user (`event.user`), and the provider used to make the r
 Example:
 
 `/config/server.js`
+
 ```javascript
 module.exports = () => ({
   // ...

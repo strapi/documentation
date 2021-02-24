@@ -10,10 +10,10 @@ With persistent disks and managed PostgreSQL databases, 21YunBox gives you multi
 For more information consult [21YunBox's Deploy Strapi guide](https://www.21yunbox.com/docs/#/deploy-strapi)
 :::
 
-
 ## Prerequisites
 
-This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](../getting-started/quick-start.md) to get started or fork 21YunBox's Strapi Examples:
+This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](/developer-docs/latest/getting-started/quick-start.md) to get started or fork 21YunBox's Strapi Examples:
+
 - [Strapi with SQLite Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-sqlite)
 - [Strapi with Postgres Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-postgres)
 
@@ -25,24 +25,23 @@ Follow the procedure below to set up a Strapi CMS on 21YunBox:
 2. Create a new web service on 21YunBox, and give 21YunBox permission to access your GitHub or Gitee repo.
 3. Use the following values during creation:
 
-   | Setting               | Value                                                 |
-   | --------------------- | ------------------------------------------------ |
-   | **Environment**       | `Node 12.19`                                    |
-   | **Build Command**     | `yarn && yarn build` (or your own build command) |
-   | **Publish Directory** | `rsync -a public/ /data/public/ && yarn start` (or your own output directory)        |
+   | Setting               | Value                                                                         |
+   | --------------------- | ----------------------------------------------------------------------------- |
+   | **Environment**       | `Node 12.19`                                                                  |
+   | **Build Command**     | `yarn && yarn build` (or your own build command)                              |
+   | **Publish Directory** | `rsync -a public/ /data/public/ && yarn start` (or your own output directory) |
 
 4. Add the following environment variables:
 
-   | Setting               | Value                                                 |
-   | --------------------- | ------------------------------------------------ |
-   | **NODE_ENV**       | `production`                                    |
-   | **DATABASE_FILENAME**     | If you use SQLite database, use `/data/strapi.db`|
-   | **DATABASE_URL**     | If you use Postgres database, paste the database URL here (we have demo video below if you are unsure)|
+   | Setting               | Value                                                                                                  |
+   | --------------------- | ------------------------------------------------------------------------------------------------------ |
+   | **NODE_ENV**          | `production`                                                                                           |
+   | **DATABASE_FILENAME** | If you use SQLite database, use `/data/strapi.db`                                                      |
+   | **DATABASE_URL**      | If you use Postgres database, paste the database URL here (we have demo video below if you are unsure) |
 
 5. Click the "Deploy" button.
 
 That's it! Your site will be live on your 21YunBox URL (e.g. `yoursite.21yunbox.com`) as soon as the build is done.
-
 
 ::: tip TIP
 If you are unsure the steps above, 21YunBox has created a webcast for each of them:

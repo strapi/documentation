@@ -11,6 +11,38 @@ Deploying **databases** along with Strapi is covered in the [Databases Guide](/d
 Manual guides for deployment on various platforms, for One-click and docker please see the [installation](/developer-docs/latest/setup-deployment-guides/installation.md) guides.
 
 <div>
+    <InstallLink link="deployment/hosting-guides/21yunbox.html">
+    <template #icon>
+    <svg width="64px" height="55px" viewBox="0 0 64 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Group</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Artboard" transform="translate(0.000000, -5.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                <g id="Group" transform="translate(0.000000, 5.211429)">
+                    <rect id="Rectangle" x="45.8057143" y="0" width="7.86285714" height="53.4857143"></rect>
+                    <rect id="Rectangle" x="0" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="10.3314286" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="20.9371429" y="0" width="7.86285714" height="18.1942857"></rect>
+                    <rect id="Rectangle" x="0" y="22.1257143" width="28.8" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="0" y="33.92" width="7.86285714" height="19.5657143"></rect>
+                    <rect id="Rectangle" x="10.3314286" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="20.9371429" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="35.2" y="0" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="45.8057143" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="56.1371429" y="45.7142857" width="7.86285714" height="7.86285714"></rect>
+                    <rect id="Rectangle" x="35.2" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
+                </g>
+            </g>
+        </g>
+    </svg>
+    </template>
+        <template #title>21YunBox</template>
+        <template #description>
+            Step by step guide for deploying on 21YunBox
+        </template>
+    </InstallLink>
+</div>
+
+<div>
 	<InstallLink link="deployment/hosting-guides/amazon-aws.html">
     <template #icon>
     <svg width="64" height="64" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M15.63 31.388l-7.135-2.56V18.373l7.135 2.43zm1.3 0l7.135-2.56V18.373l-7.135 2.432zm-7.7-13.8l7.2-2.033 6.696 2.16-6.696 2.273zm-2.092-.8L0 14.22V3.75l7.135 2.43zm1.307 0l7.135-2.56V3.75L8.443 6.192zm-7.7-13.8l7.2-2.043 6.696 2.16-6.696 2.273zm23.052 13.8l-7.135-2.56V3.75l7.135 2.43zm1.3 0l7.135-2.56V3.75l-7.135 2.43zm-7.7-13.8l7.2-2.033 6.696 2.16-6.696 2.273z" fill-rule="nonzero"></path></g></svg>
