@@ -396,7 +396,7 @@ git commit -m "Update database config"
 `Path: ./my-project/`
 
 ```bash
-git push heroku main
+git push heroku HEAD:main
 ```
 
 The deployment may take a few minutes. At the end, logs will display the url of your project (e.g. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
@@ -421,14 +421,14 @@ When Strapi is deployed to Heroku, Heroku sets the environment variable to `NODE
 
 Therefore, modifications that require writing to model creation or other json files, e.g. creating or changing content-types, require that you make those changes on your dev environment and then push the changes to Heroku.
 
-As you continue developing your application with Strapi, you may want to use [version control](https://devcenter.heroku.com/articles/github-integration), or you can continue to use `git push heroku main` to commit and push changes to Heroku directly.
+As you continue developing your application with Strapi, you may want to use [version control](https://devcenter.heroku.com/articles/github-integration), or you can continue to use `git push heroku HEAD:main` to commit and push changes to Heroku directly.
 
 `Path: ./my-project/`
 
 ```bash
 git add .
 git commit -am "Changes to my-project noted"
-git push heroku main
+git push heroku HEAD:main
 heroku open
 ```
 
