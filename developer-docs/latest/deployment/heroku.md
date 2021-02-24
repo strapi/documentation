@@ -200,7 +200,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create a new `database.js` in a new [env](../concepts/configurations.html#environments) folder. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](../concepts/configurations.md#database).
+Create new subfolders in `./config` like so: `/[env](../concepts/configurations.html#environments)/production`, then create a new `database.js` in it. Your path should look like this: `./config/env/production/database.js` . When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however, it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](../concepts/configurations.md#database).
 
 `Path: ./config/env/production/database.js`
 
