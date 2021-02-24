@@ -17,6 +17,9 @@ In a new terminal window:
 
 Generate a new plugin: `cd /path/to/myDevelopmentProject && strapi generate:plugin my-plugin`
 
+::: tip NOTE
+After you have successfully generated a plugin, you need to run `strapi build` which adds the new plugin to the admin panel. 
+:::
 
 ## Plugin Folders and Files Architecture
 
@@ -66,9 +69,7 @@ Please refer to [router documentation](/developer-docs/latest/development/backen
 
 **Route prefix**
 
-Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`).
-
-To disable the prefix, add the `prefix` attribute to each concerned route, like below:
+Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`). Using the `prefix` key you can change this option to something custom. You can disable the prefix, by setting the `config.prefix` key to an empty string.
 
 ```json
 {
@@ -77,7 +78,7 @@ To disable the prefix, add the `prefix` attribute to each concerned route, like 
   "handler": "MyPlugin.action",
   "config": {
     "policies": [],
-    "prefix": false
+    "prefix": "my-custom-prefix"
   }
 }
 ```
