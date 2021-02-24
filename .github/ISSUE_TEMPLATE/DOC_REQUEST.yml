@@ -3,28 +3,24 @@ about: Suggest a new part of the documentation we are missing!
 title: "[Request]: "
 labels: "type: doc request"
 issue_body: false
-body:
+inputs:
 - type: textarea
   attributes:
     label: Summary
-    placeholder: Quick summary what's this documentation request about.
-  validations:
     required: true
+    placeholder: Quick summary what's this documentation request about.
 - type: textarea
   attributes:
     label: Why is it needed?
-    placeholder: "A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]"
-  validations:
     required: true
+    placeholder: "A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]"
 - type: textarea
   attributes:
     label: Suggested solution(s)
-    placeholder: "A clear and concise description of what you want to happen."
-  validations:
     required: false
+    placeholder: "A clear and concise description of what you want to happen."
 - type: textarea
   attributes:
     label: Related issue(s)/PR(s)
-    placeholder: "Let us know if this is related to any issue/pull request."
-  validations:
     required: false
+    placeholder: "Let us know if this is related to any issue/pull request."

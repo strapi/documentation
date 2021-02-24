@@ -37,25 +37,6 @@ To follow the example you will have to create a content type `articles` and add 
 - `text` attribute named `content`
 - `enumeration` attribute named `status` with `draft`, `published`, `archive`
 
-```js
-"attributes": {
-    "title": {
-      "type": "string"
-    },
-    "content": {
-      "type": "text"
-    },
-    "status": {
-      "type": "enumeration",
-      "enum": [
-        "archive",
-        "draft",
-        "published"
-      ]
-    }
-  }
-```
-
 Then add some data with different `status`.
 
 ## Override controller action

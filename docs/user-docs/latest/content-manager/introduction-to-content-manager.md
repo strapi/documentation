@@ -25,7 +25,7 @@ From the list view, it is possible to:
 - configure the fields displayed in the table of the list view (4).
 
 ::: tip 💡 TIP
-Sorting can be enabled for any field displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
+Sorting can be enabled for any field displayed in the list view table (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
 ### Filtering entries
@@ -59,10 +59,10 @@ New entries are only considered created once some of their content has been writ
 
 ### Configuring the table fields
 
-Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
+Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring view of content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
 ::: tip NOTE
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md).
 :::
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
@@ -74,7 +74,7 @@ To temporarily configure the fields displayed in the table:
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
 ::: tip NOTE
-Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
+Relational fields can also be displayed in the list view. Please refer to [Configuring view of content type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 
 :::
 

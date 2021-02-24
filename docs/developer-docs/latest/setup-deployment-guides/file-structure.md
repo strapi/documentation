@@ -3,7 +3,7 @@
 By default, the structure of your Strapi project looks as shown below:
 
 - `/.cache`: contains files used to build your admin panel.
-- [`/admin`](/developer-docs/latest/development/admin-customization.md): _(optional)_ contains your admin customization files.
+- [`/admin`](/developer-docs/latest/development/admin-customization.md): contains your admin customization files.
 - `/api`: contains the business logic of your project split into sub-folders per API.
   - `**`
     - `/config`: contains the API's configurations ([`routes`](/developer-docs/latest/development/backend-customization.md#routing), [`policies`](/developer-docs/latest/development/backend-customization.md#policies), etc.).

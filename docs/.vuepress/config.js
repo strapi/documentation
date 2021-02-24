@@ -135,11 +135,6 @@ const sidebar = {
       title: 'Plugins',
       children: [['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
     },
-    {
-      collapsable: false,
-      title: 'General settings',
-      children: [['/latest/settings/managing-global-settings', 'Managing global settings']],
-    },
   ],
 };
 
@@ -160,7 +155,7 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
   './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
-];
+]
 
 module.exports = {
   title: '',
@@ -174,11 +169,11 @@ module.exports = {
       ga: 'UA-54313258-1',
     },
     'check-md': {
-      ignore: checklinksIgnoredFiles,
+      ignore: checklinksIgnoredFiles
     },
     seo: {
       siteTitle: (_, $site) => $site.title,
-      title: $page => $page.title,
+      title: ($page) => $page.title,
     },
   },
   head: [

@@ -26,33 +26,6 @@ module.exports = {
 };
 ```
 
-#### Responsive Images
-
-When the `Enable responsive friendly upload` setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
-| Name    | Largest Dimension |
-| :------ | :--------- |
-| large   | 1000px     |
-| medium  | 750px      |
-| small   | 500px      |
-
-These sizes can be overridden in `config/plugins.js`:
-```javascript
-module.exports = {
-  upload: {
-    breakpoints: {
-      xlarge: 1920,
-      large: 1000,
-      medium: 750,
-      small: 500,
-      xsmall: 64
-    }
-  }
-}
-```
-::: warning
-  Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
-:::
-
 ## Endpoints
 
 <style lang="stylus">
@@ -350,24 +323,6 @@ npm install strapi-provider-upload-aws-s3 --save
 :::
 
 ::::
-
-### Local server
-
-By default Strapi accepts `localServer` configurations for locally uploaded files. They will be passed as the options for [koa-static](https://github.com/koajs/static).
-
-You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
-
-```js
-module.exports = ({ env })=>({
-  upload: {
-    providerOptions: {
-      localServer: {
-        maxage: 300000
-      }
-    }
-  }
-});
-```
 
 ### Using scoped packages as providers
 

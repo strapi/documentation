@@ -207,7 +207,7 @@ export default {
         headers: this.headers,
       }).then(this.checkStatus)
         .then(this.parseJSON);
-      this.restaurants = response
+        this.restaurants = response
     } catch (error) {
       this.error = error
     }

@@ -647,6 +647,7 @@ The context object (`ctx`) contains a list of values and functions useful to man
 
 For more information, please refer to the [Koa response documentation](http://koajs.com/#response).
 
+
 <!--- BEGINNING OF SERVICES --->
 
 ## Services
@@ -780,8 +781,6 @@ module.exports = {
 ##### `create`
 
 ```js
-const { isDraft } = require('strapi-utils').contentTypes;
-
 module.exports = {
   /**
    * Promise to add record
@@ -790,13 +789,7 @@ module.exports = {
    */
 
   async create(data, { files } = {}) {
-    const isDraft = isDraft(data, strapi.models.restaurant);
-    const validData = await strapi.entityValidator.validateEntityCreation(
-      strapi.models.restaurant,
-      data,
-      { isDraft }
-    );
-
+    const validData = await strapi.entityValidator.validateEntity(strapi.models.restaurant, data);
     const entry = await strapi.query('restaurant').create(validData);
 
     if (files) {
@@ -820,8 +813,6 @@ module.exports = {
 ##### `update`
 
 ```js
-const { isDraft } = require('strapi-utils').contentTypes;
-
 module.exports = {
   /**
    * Promise to edit record
@@ -830,15 +821,10 @@ module.exports = {
    */
 
   async update(params, data, { files } = {}) {
-    const existingEntry = await db.query('restaurant').findOne(params);
-
-    const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
       strapi.models.restaurant,
-      data,
-      { isDraft }
+      data
     );
-
     const entry = await strapi.query('restaurant').update(params, validData);
 
     if (files) {
@@ -1482,7 +1468,7 @@ You can access the Knex instance with:
 const knex = strapi.connections.default;
 ```
 
-You can then use Knex to build your own custom queries. You will lose all the functionalities of the model,
+You can then use Knex to build your own custom queries. You will lose all the functionalities of the model, 
 but this could come handy if you are building a more custom schema.
 Please note that if you are using the [draft system](/developer-docs/latest/concepts/draft-and-publish.md), Strapi nullyfies all the Draft columns util they are published.
 
@@ -1499,8 +1485,8 @@ const result = await knex('restaurants')
   .select('restaurants.name as restaurant')
   .select('chef.name as chef')
 
-// Loadsh's groupBy method can be used to
-// return a grouped key-value object generated from
+// Loadsh's groupBy method can be used to 
+// return a grouped key-value object generated from 
 // the response
 
 return (_.groupBy(result, 'chef');
@@ -1705,8 +1691,6 @@ The options key on the model-json states.
 
 - `populateCreatorFields`: Configure whether the API response should include `created_by` and `updated_by` fields or not. Accepts a `boolean`. The default value is `false`.
 
-- `draftAndPublish`: Enable the draft and publish feature. Accepts a `boolean`. The default value is `false`.
-
 **Path —** `User.settings.json`.
 
 ```json
@@ -1714,8 +1698,7 @@ The options key on the model-json states.
   "options": {
     "timestamps": true,
     "privateAttributes": ["id", "created_at"],
-    "populateCreatorFields": true,
-    "draftAndPublish": false
+    "populateCreatorFields": true
   }
 }
 ```
@@ -2679,6 +2662,7 @@ module.exports = {
 When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
 :::
 
+
 <!--- BEGINNING OF WEBHOOKS --->
 
 ## Webhooks
@@ -3037,3 +3021,4 @@ This event is triggered only when you delete a media through the media interface
   }
 }
 ```
+

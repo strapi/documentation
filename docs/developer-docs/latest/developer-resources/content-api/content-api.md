@@ -140,7 +140,7 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 | Method | Path              | Description                       |
 | :----- | :---------------- | :-------------------------------- |
-| GET    | `/{content-type}` | Get the {content-type} content  |
+| GET    | `/{content-type}` | Get a the {content-type} content  |
 | PUT    | `/{content-type}` | Update the {content-type} content |
 | DELETE | `/{content-type}` | Delete the {content-type} content |
 
