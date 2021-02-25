@@ -86,6 +86,7 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
       - `uri` (string): This can overide all previous configurations - _optional_
     - `options` Options used for database connection.
       - `ssl` (boolean): For ssl database connection.
+      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
       - `debug` (boolean): Show database exchanges and errors.
       - `authenticationDatabase` (string): Connect with authentication.
 
