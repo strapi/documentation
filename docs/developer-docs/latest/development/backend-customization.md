@@ -668,6 +668,17 @@ You can read about `strapi.query` calls [here](#queries).
 In the following example your controller, service and model are named `restaurant`.
 :::
 
+#### Utils
+
+If you're extending the `create` or `update` service, first require the following utility function:
+
+```js
+const { isDraft } = require('strapi-utils').contentTypes;
+```
+
+- `isDraft`: This function checks if the entry is a draft.
+
+
 ##### Collection Type
 
 :::: tabs
