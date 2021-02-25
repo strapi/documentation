@@ -18,7 +18,6 @@ First, update the application dependencies as usual by following the basic [vers
 
 If you use or plan to use the **Instagram login**, this migration is **required**. Otherwise it is just recommended to do it (in case you use it one day).
 
-
 Recently Instagram shutdown their API in favor of a new one (see [https://www.instagram.com/developer/](https://www.instagram.com/developer/)). As a result, the scope Strapi uses for the instagram API has to be updated.
 
 #### For SQL databases:
@@ -27,6 +26,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
 - In that table, find the row with the key `plugin_users-permissions_grant`
 - In that row, find the `value` column (it's JSON)
 - In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ becareful to respect the JSON format)
+
 ```diff
 ...
   "instagram": {
@@ -41,6 +41,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
   },
 ...
 ```
+
 - Save it
 
 #### For mongoDB:
@@ -49,6 +50,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
 - In that collection, find the document with the key `plugin_users-permissions_grant`
 - In that document, find the `value` field (it's JSON)
 - In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ becareful to respect the JSON format)
+
 ```diff
 ...
   "instagram": {
@@ -63,6 +65,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
   },
 ...
 ```
+
 - Save it
 
 
