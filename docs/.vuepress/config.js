@@ -138,7 +138,7 @@ const sidebar = {
     {
       collapsable: false,
       title: 'General settings',
-      children: [['/latest/settings/managing-global-settings', 'Managing global settings']],
+      children: [['/user-docs/latest/settings/managing-global-settings', 'Managing global settings']],
     },
   ],
 };
