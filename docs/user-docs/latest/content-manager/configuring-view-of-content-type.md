@@ -83,7 +83,7 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 2. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
    - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
-   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed amond the other fields.
+   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed among the other fields.
 3. Click the name of a field to access its available own settings:
 
 | Setting name    | Instructions                                                                              |
