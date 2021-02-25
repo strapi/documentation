@@ -97,7 +97,7 @@ const sidebar = {
         ],
         [
           '/user-docs/latest/content-manager/configuring-view-of-content-type',
-          'Configuring the view of a content type',
+          'Configuring the views of a content type',
         ],
         ['/user-docs/latest/content-manager/writing-content', 'Writing content'],
         [
