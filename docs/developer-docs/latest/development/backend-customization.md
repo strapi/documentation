@@ -1718,7 +1718,7 @@ The options key on the model-json states.
 
 - `draftAndPublish`: Enable the draft and publish feature. Accepts a `boolean`. The default value is `false`.
 
-**Path —** `User.settings.json`.
+**Path —** `Restaurant.settings.json`.
 
 ```json
 {
