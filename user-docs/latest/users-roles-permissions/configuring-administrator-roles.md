@@ -1,10 +1,12 @@
 # Configuring administrator roles
 
-Administrators are the users of an admin panel of a Strapi application. They administrator accounts as well as the roles they are attributed are managed through the Role-Based Access Control (RBAC) feature, which settings are in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+
+The *Administration panel* category is divided into 2 sub-categories: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
 
 ![Administrator roles interface](../assets/users-permissions/administrator_roles.png)
 
-The *Roles* part of the *Administration panel* settings category displays all created roles for the administrators of your Strapi application.
+The *Roles* sub-category of *Administration panel* displays all created roles for the administrators of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -19,7 +21,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
 ::: warning ATTENTION
-If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will contain some limitations. Only the 3 default role are indeed available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, to an extent:
+If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will be limited. Only the 3 default roles are indeed available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - Configuring permissions in detail is only available for the Enterprise Edition: with the Community Edition, if you have access to a content type, it is automatically a full access with all permissions.
 - You can only configure permissions for the content types, but not for the plugins and settings of the Strapi application.
@@ -96,6 +98,7 @@ To configure Collection or Single Types permissions for a role:
 #### Plugins and Settings
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
+
 To configure plugins or settings permissions for a role:
 
 1. Go to the Plugins or Settings category of the permissions table.
@@ -134,7 +137,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
-### Settings custom conditions for permissions
+### Setting custom conditions for permissions
 
 For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 possible additional conditions:
 
@@ -151,7 +154,7 @@ To set custom conditions:
 
 1. Click on the **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
-3. Define de custom condition for the chosen permission. You can either:
+3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for the 2 possible additional conditions to be applied.
    - Click on the arrow icon ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the 2 possible additional conditions and tick only the chosen one.
 4. Click on the **Apply** button.

@@ -1,10 +1,12 @@
 # Managing administrator accounts
 
-Administrators are the users of the admin panel of a Strapi application. They are managed through the Role-Based Access Control (RBAC) feature, which settings are in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+
+The *Administration panel* category is divided into 2 sub-categories: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.
 
 ![Edit an administrator account](../assets/users-permissions/administrator_list-view.png)
 
-The *Users* part of the *Administration panel* settings category displays a table listing all the administrators of your Strapi application.
+The *Users* sub-category of *Administration panel* displays a table listing all the administrators of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -15,7 +17,7 @@ From this interface, it is possible to:
 - delete an administrator account (see [Deleting an account](#deleting-an-account)),
 - or access information regarding an administrator account, and edit it (see [Editing an account](#editing-an-account)).
 
-For each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to active the account or not.
+For each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to activate the account or not.
 
 <!---
 ### Filtering accounts
@@ -68,7 +70,7 @@ To delete an administrator:
 
 ![Edit an administrator account](../assets/users-permissions/administrator_edit-info.png)
 
-The table displayed in the *Administration panel > Users* interface allows to access all information regarding each administrator, where it is also possible to edit this information.
+The table displayed in the *Administration panel > Users* interface allows to access all information regarding each administrator, where it is also possible to edit that information.
 
 To edit an administrator account:
 
