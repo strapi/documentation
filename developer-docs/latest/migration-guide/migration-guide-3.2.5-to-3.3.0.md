@@ -18,6 +18,8 @@ Otherwise you can follow the basic [version update guide](../guides/update-versi
 
 ## Migration
 
+Add `.strapi-updater.json` to your .gitignore file.
+
 **Config file**
 
 To invite users upgrading their application, we have introduced an application details page.

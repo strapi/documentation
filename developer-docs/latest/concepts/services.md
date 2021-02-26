@@ -19,6 +19,17 @@ You can read about `strapi.query` calls [here](./queries.md).
 In the following example your controller, service and model are named `restaurant`.
 :::
 
+#### Utils
+
+If you're extending the `create` or `update` service, first require the following utility function:
+
+```js
+const { isDraft } = require('strapi-utils').contentTypes;
+```
+
+- `isDraft`: This function checks if the entry is a draft.
+
+
 #### Collection Type
 
 :::: tabs
@@ -131,6 +142,8 @@ module.exports = {
 #### `create`
 
 ```js
+const { isDraft } = require('strapi-utils').contentTypes;
+
 module.exports = {
   /**
    * Promise to add record
@@ -139,7 +152,13 @@ module.exports = {
    */
 
   async create(data, { files } = {}) {
-    const validData = await strapi.entityValidator.validateEntity(strapi.models.restaurant, data);
+    const isDraft = isDraft(data, strapi.models.restaurant);
+    const validData = await strapi.entityValidator.validateEntityCreation(
+      strapi.models.restaurant, 
+      data, 
+      { isDraft }
+    );
+    
     const entry = await strapi.query('restaurant').create(validData);
 
     if (files) {
@@ -163,6 +182,8 @@ module.exports = {
 #### `update`
 
 ```js
+const { isDraft } = require('strapi-utils').contentTypes;
+
 module.exports = {
   /**
    * Promise to edit record
@@ -171,10 +192,15 @@ module.exports = {
    */
 
   async update(params, data, { files } = {}) {
+    const existingEntry = await db.query('restaurant').findOne(params);
+    
+    const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
-      strapi.models.restaurant,
-      data
+      strapi.models.restaurant, 
+      data, 
+      { isDraft }
     );
+    
     const entry = await strapi.query('restaurant').update(params, validData);
 
     if (files) {

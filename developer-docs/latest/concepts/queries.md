@@ -235,7 +235,7 @@ strapi.query('restaurant').update(
 
 ### `delete`
 
-Deletes and entry and return its value before deletion.
+Deletes an entry and returns its value before deletion.
 You can delete multiple entries at once with the passed params.
 
 #### Examples
@@ -372,7 +372,7 @@ Please note that if you are using the [draft system](draft-and-publish.md), Stra
 **Example**
 
 ```js
-const _ = require('loadsh');
+const _ = require('lodash');
 
 const knex = strapi.connections.default;
 const result = await knex('restaurants')
@@ -382,7 +382,7 @@ const result = await knex('restaurants')
   .select('restaurants.name as restaurant')
   .select('chef.name as chef')
 
-// Loadsh's groupBy method can be used to 
+// Lodash's groupBy method can be used to 
 // return a grouped key-value object generated from 
 // the response
 

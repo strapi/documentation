@@ -104,6 +104,7 @@ strapi configuration:dump
 
 Options:
   -f, --file <file>  Output file, default output is stdout
+  -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
 ```
 
 **Examples**
@@ -191,7 +192,7 @@ options: [--plugin <name>]
 - **strapi generate:api &#60;name&#62;**<br/>
   Generates an API called **&#60;name&#62;** in the `./api` folder at the root of your project.
 
-- **strapi generate:api --draft-and-publish=true**<br/>
+- **strapi generate:api &#60;name&#62; --draft-and-publish=true**<br/>
   Generates an API called **&#60;name&#62;** in the `./api` folder at the root of your project and enabled the draft/publish feature.
 
 - **strapi generate:api &#60;name&#62; &#60;attribute:type&#62;**<br/>

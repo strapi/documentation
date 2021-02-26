@@ -12,9 +12,7 @@ Please refer to [router documentation](../concepts/routing.md) for information.
 
 **Route prefix**
 
-Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`).
-
-To disable the prefix, add the `prefix` attribute to each concerned route, like below:
+Each route of a plugin is prefixed by the name of the plugin (eg: `/my-plugin/my-plugin-route`). Using the `prefix` key you can change this option to something custom. You can disable the prefix, by setting the `config.prefix` key to an empty string.
 
 ```json
 {
@@ -23,7 +21,7 @@ To disable the prefix, add the `prefix` attribute to each concerned route, like 
   "handler": "MyPlugin.action",
   "config": {
     "policies": [],
-    "prefix": false
+    "prefix": "my-custom-prefix"
   }
 }
 ```
@@ -52,7 +50,7 @@ You already have `User` model defining in your `./api/user/models/User.settings.
 
 ```js
 module.exports = {
-  findUser: async function(params) {
+  findUser: async function (params) {
     // This `User` global variable will always make a reference the User model defining in your `./api/xxx/models/User.settings.json`.
     return await User.find();
   },

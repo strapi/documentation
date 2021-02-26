@@ -213,7 +213,7 @@ This is an example of a full configuration, typically certain keys do not need t
 
 **Path —** `./config/server.js`.
 
-```js
+```javascript
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -226,6 +226,14 @@ module.exports = ({ env }) => ({
   },
   admin: {
     auth: {
+      events: {
+        onConnectionSuccess(e) {
+          console.log(e.user, e.provider);
+        },
+        onConnectionError(e) {
+          console.error(e.error, e.provider);
+        },
+      },
       secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     },
     url: env('PUBLIC_ADMIN_URL', '/dashboard'),
@@ -264,6 +272,9 @@ module.exports = ({ env }) => ({
 | `admin` | Admin panel configuration | Object | |
 | `admin.auth` | Authentication configuration | Object | |
 | `admin.auth.secret`| Secret used to encode JWT tokens | string| `undefined` |
+| `admin.auth.events`| Record of all the events subscribers registered for the authentication | object| `{}` |
+| `admin.auth.events.onConnectionSuccess`| Function called when an admin user log in successfully to the administration panel | function | `undefined` |
+| `admin.auth.events.onConnectionError`| Function called when an admin user fails to log in to the administration panel | function| `undefined` |
 | `admin.url` | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`. | string | `/admin` |
 | `admin.autoOpen` | Enable or disabled administration opening on start. | boolean | `true` |
 | `admin.watchIgnoreFiles` | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`). | Array(string) | `[]` |
@@ -284,6 +295,10 @@ module.exports = ({ env }) => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
   },
+  rest: {
+    defaultLimit: 100,
+    maxLimit: 250,
+  },
 });
 ```
 
@@ -293,6 +308,9 @@ module.exports = ({ env }) => ({
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
 | `responses`                   | Global API response configuration                                                                                                                                 | Object       |         |
 | `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
+| `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
+| `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
+| `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                         | Integer      | `null`    |
 
 ## Functions
 
@@ -500,6 +518,7 @@ You can find [supported database and versions](../installation/cli.md#databases)
       - `uri` (string): This can overide all previous configurations - _optional_
     - `options` Options used for database connection.
       - `ssl` (boolean): For ssl database connection.
+      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
       - `debug` (boolean): Show database exchanges and errors.
       - `authenticationDatabase` (string): Connect with authentication.
 
