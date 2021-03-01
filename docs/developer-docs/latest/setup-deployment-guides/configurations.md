@@ -1115,7 +1115,7 @@ An image named `company-logo.png` in `./public/` is accessible through `/company
 The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
 :::
 
-### Single Sign On <a href="https://strapi.io/pricing"><Badge text="Gold" type="warning" vertical="middle"/></a>
+### Single Sign On <a href="https://strapi.io/pricing"><Badge text="Gold" type="warning" vertical="middle"/><OutboundLink /></a>
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
