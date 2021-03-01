@@ -289,29 +289,20 @@ module.exports = {
                 link: '/developer-docs/latest/getting-started/introduction.html',
               },
               {
-                text: 'Content API',
-                link:
-                  '/developer-docs/latest/developer-resources/content-api/content-api.html#api-parameters',
-              },
-              {
-                text: 'Configuration',
-                link: '/developer-docs/latest/setup-deployment-guides/configurations.html',
-              },
-              {
-                text: 'Installation',
+                text: 'Setup & Deployment',
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
               },
               {
-                text: 'Deployment',
-                link: '/developer-docs/latest/setup-deployment-guides/deployment.html',
+                text: 'Development',
+                link: '/developer-docs/latest/development/backend-customization.html',
               },
               {
-                text: 'Update',
+                text: 'Update & Migration',
                 link: '/developer-docs/latest/update-migration-guides/update-version.html',
               },
               {
-                text: 'Migration',
-                link: '/developer-docs/latest/update-migration-guides/migration-guides.html',
+                text: 'Developer Resources',
+                link: '/developer-docs/latest/developer-resources/content-api/content-api.html',
               },
             ],
           },
@@ -340,6 +331,10 @@ module.exports = {
                 text: 'Plugins',
                 link: '/user-docs/latest/plugins/introduction-to-plugins.html',
               },
+              {
+                text: 'General Settings',
+                link: '/user-docs/latest/settings/managing-global-settings.html'
+              }
             ],
           },
         ],
