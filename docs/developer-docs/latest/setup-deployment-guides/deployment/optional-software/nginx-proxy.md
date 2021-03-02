@@ -127,7 +127,7 @@ server {
 
     # Strapi API and Admin
     location /api/ {
-        rewrite ^/api/(.*)$ /$1 break;
+        rewrite ^/api/?(.*)$ /$1 break;
         proxy_pass http://strapi;
         proxy_http_version 1.1;
         proxy_set_header X-Forwarded-Host $host;
@@ -191,7 +191,7 @@ server {
 
     # Strapi API
     location /api/ {
-        rewrite ^/api/(.*)$ /$1 break;
+        rewrite ^/api/?(.*)$ /$1 break;
         proxy_pass http://strapi;
         proxy_http_version 1.1;
         proxy_set_header X-Forwarded-Host $host;

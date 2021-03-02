@@ -148,7 +148,7 @@ backend default-backend
         server somewebserver 127.0.0.1:8080
 
 backend strapi-backend
-        http-request set-path "%[path,regsub(^/api/,/)]"
+        http-request set-path "%[path,regsub(^/api/?,/)]"
         server local 127.0.0.1:1337
 
 ```
@@ -227,7 +227,7 @@ backend default-backend
         server somewebserver 127.0.0.1:8080
 
 backend strapi-api-backend
-        http-request set-path "%[path,regsub(^/api/,/)]"
+        http-request set-path "%[path,regsub(^/api/?,/)]"
         server local 127.0.0.1:1337
 
 backend strapi-dashboard-backend
