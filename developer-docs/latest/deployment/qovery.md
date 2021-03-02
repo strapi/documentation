@@ -2,8 +2,7 @@
 
 This is a step-by-step guide for deploying a Strapi project on [Qovery](https://www.qovery.com). 
 
-Qovery is a CaaS for developer and the simplest way to deploy your full-stack apps on AWS, GCP, Azure and Digital Ocean. Qovery provides access to managed PostgreSQL and free SSL. 
-Bring your Strapi project and Qovery takes care of the deployment and hosting for you.
+Qovery is a CaaS for developers to deploy their full-stack applications on AWS, GCP, Azure and Digital Ocean. Qovery provides access to managed PostgreSQL and free SSL. 
 
 ::: tip
 Qovery provides free hosting for individual developers.
