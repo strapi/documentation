@@ -1337,7 +1337,6 @@
         </template>
       </InstallLink>
     </div>
-
   </div>
 </template>
 
