@@ -8,7 +8,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: "Gold",
+      default: 'Gold',
       required: true
     },
     withLinkIcon: {

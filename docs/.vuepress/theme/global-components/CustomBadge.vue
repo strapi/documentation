@@ -1,7 +1,7 @@
 <template>
- <a :href="link" v-if="link"><Badge :type=thisType :text=text vertical="middle"/><OutboundLink  v-if="withLinkIcon"/></a>
+ <a :href="link" v-if="link"><Badge :type=type :text=text vertical="middle"/><OutboundLink v-if="withLinkIcon"/></a>
  <span v-else>
-  <Badge :type=thisType :text=text vertical="middle"/><OutboundLink  v-if="withLinkIcon"/>
+  <Badge :type=type :text=text vertical="middle"/><OutboundLink v-if="withLinkIcon"/>
  </span>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: "Badge",
+      default: 'Badge',
       required: true
     },
     withLinkIcon: {
@@ -24,21 +24,16 @@ export default {
       type: String,
     }
   },
-  computed: {
-    thisType() {
-      /** Eventually we could extend this to override badge background color.
-       * Currently the built-in VuePress badge only accepts three types,
-       * each of them being associated with a color:
-       *   - type: tip     => green badge
-       *   - type: warning => yellow badge
-       *   - type: error   => red badge
-       */
-
-      if (this.type === 'gold') {
-        return "warning"
-      }
-      return this.type
-    }
-  },
 }
 </script>
+
+<style lang="stylus" scoped>
+>>> .badge
+  &.gold
+    background-color #f7b73e
+  &.silver
+    background-color #00b6c8
+  &.bronze
+    background-color #15bb70
+</style>
+
