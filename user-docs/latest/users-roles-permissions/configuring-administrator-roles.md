@@ -16,20 +16,20 @@ From this interface, it is possible to:
 
 By default, 3 administrator roles are defined for any Strapi application:
 
-- Author: to be able to create, manage and publish their own content.
+- Author: to be able to create and manage their own content.
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
 ::: warning ATTENTION
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will be limited. Only the 3 default roles are indeed available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
-- Configuring permissions in detail is only available for the Enterprise Edition: with the Community Edition, if you have access to a content type, it is automatically a full access with all permissions.
 - You can only configure permissions for the content types, but not for the plugins and settings of the Strapi application.
+- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content type are accessible, these fields are automatically fully accessible with all permissions.
 - Custom conditions defined for a specific permission are also only available for the Enterprise Edition.
 
 :::
 
-## Creating a new role
+## Creating a new role [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
 
@@ -40,7 +40,7 @@ Clicking on the **Add new role** button will redirect you to the roles edition i
 In the *Roles* interface, from the table, you can click on the duplicate button ![icon duplicate](../assets/users-permissions/icon_duplicate.png) to create a new role by duplicating an existing one.
 :::
 
-## Deleting a role
+## Deleting a role [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
@@ -90,12 +90,12 @@ To configure Collection or Single Types permissions for a role:
 
 1. Go to the Collection Types or Single Types category of the permissions table.
 2. Tick the box on the left of the name of the content type to give access to. By default, all actions can be performed for all fields of the content type.
-3. (optional) Untick the action-related boxes to prevent actions of your choice.
+3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
 4. (optional) Click the name of the content type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice.
 5. Repeat steps 2 to 4 for each content type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
-#### Plugins and Settings
+#### Plugins and Settings [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
 
@@ -137,15 +137,15 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
-### Setting custom conditions for permissions
+### Setting custom conditions for permissions [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
 
-For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 possible additional conditions:
+For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
 
-::: warning ATTENTION
-Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+::: tip NOTE
+Other custom conditions can be available if they have been created beforehand for your Strapi application (see Configuring RBAC conditions).
 :::
 
 ![Custom conditions for administrator role permissions](../assets/users-permissions/administrator_custom-conditions.png)
@@ -155,6 +155,10 @@ To set custom conditions:
 1. Click on the **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define the custom condition for the chosen permission. You can either:
-   - Tick the Default option for the 2 possible additional conditions to be applied.
-   - Click on the arrow icon ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the 2 possible additional conditions and tick only the chosen one.
+   - Tick the Default option for all available additional conditions to be applied.
+   - Click on the arrow icon ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
+
+::: warning ATTENTION
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+:::

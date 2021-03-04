@@ -10,7 +10,7 @@ The *Users* sub-category of *Administration panel* displays a table listing all 
 
 From this interface, it is possible to:
 
-- make a textual search (1),
+- make a textual search (1) to find specific administrators,
 - sort the administrator accounts (2) to make it easier to view the list of administrator accounts,
 - set filters (2) to find specific administrators,
 - create a new administrator account (see [Creating a new account](#creating-a-new-account)),
@@ -56,6 +56,10 @@ To create a new administrator account:
 3. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
 4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![icon copy](../assets/users-permissions/icon_duplicate.png) to copy the URL.
 5. Click on the **Continue** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
+
+::: tip NOTE
+The administrator invitation URL is accessible from the administrator's account until it has been activated.
+:::
 
 ## Deleting an account
 
