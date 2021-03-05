@@ -1,0 +1,34 @@
+{
+  "name": "developer-docs",
+  "version": "3.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev",
+    "build": "vuepress build",
+    "check-links": "vuepress check-md"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "@vuepress/plugin-google-analytics": "^1.7.1",
+    "@vuepress/plugin-medium-zoom": "^1.7.1",
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-element-tabs": "^0.2.8",
+    "vuepress-plugin-font-awesome": "1.90.6",
+    "vuepress-plugin-seo": "^0.1.4"
+  },
+  "devDependencies": {
+    "vuepress-plugin-check-md": "^0.0.2"
+  },
+  "author": {
+    "email": "hi@strapi.io",
+    "name": "Strapi Solutions",
+    "url": "http://strapi.io"
+  },
+  "maintainers": [
+    {
+      "name": "Strapi Solutions",
+      "email": "hi@strapi.io",
+      "url": "http://strapi.io"
+    }
+  ]
+}
