@@ -1,14 +1,14 @@
 <template>
- <CustomBadge text="Gold" type="gold" :withLinkIcon=withLinkIcon :link="link"/>
+ <CustomBadge text="Bronze" type="bronze" :withLinkIcon=withLinkIcon :link="link"/>
 </template>
 
 <script>
 export default {
-  name: 'GoldBadge',
+  name: 'BronzeBadge',
   props: {
     text: {
       type: String,
-      default: 'Gold',
+      default: 'Bronze',
       required: true
     },
     withLinkIcon: {
