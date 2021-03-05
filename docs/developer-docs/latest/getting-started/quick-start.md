@@ -36,13 +36,39 @@ npx create-strapi-app my-project --quickstart
 
 ::::
 
-## 2. Create an Administrator user
+## 2. Start Strapi
+
+Start the development server
+
+:::: tabs
+
+::: tab yarn
+
+```bash
+cd my-project
+yarn develop
+```
+
+:::
+
+::: tab npx
+
+```bash
+cd my-project
+npm run develop
+```
+
+:::
+
+::::
+
+## 3. Create an Administrator user
 
 Navigate to [**http://localhost:1337/admin**](http://localhost:1337/admin).
 
 Complete the form to create the first **Administrator** user.
 
-## 3. Create a Restaurant Content Type
+## 4. Create a Restaurant Content Type
 
 Navigate to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
 
@@ -57,7 +83,7 @@ Navigate to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin
 - Click `Finish`
 - Click the **Save** button and wait for Strapi to restart
 
-## 4. Create a Category Content type
+## 5. Create a Category Content type
 
 Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
 
@@ -73,7 +99,7 @@ Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/
 - Click `Finish`
 - Click the **Save** button and wait for Strapi to restart
 
-## 5. Add content to "Restaurant" Content Type
+## 6. Add content to "Restaurant" Content Type
 
 Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), in the left-hand menu.
 
@@ -82,7 +108,7 @@ Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin
 
 If you navigate back [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), you will see your restaurant listed in the entries.
 
-## 6. Add categories to the "Category" Content Type
+## 7. Add categories to the "Category" Content Type
 
 Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager).
 
@@ -103,7 +129,7 @@ Navigate back to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/
 
 You have now seen **two different ways** to use the **relation** field type to add and connect relations between Content Types.
 
-## 7. Set Roles and Permissions
+## 8. Set Roles and Permissions
 
 Navigate to [**GENERAL** > **Settings** > **USERS & PERMISSIONS PLUGIN** > **Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
 
@@ -112,7 +138,7 @@ Navigate to [**GENERAL** > **Settings** > **USERS & PERMISSIONS PLUGIN** > **Rol
 - Repeat and find **Category**. Click the checkbox next to **find** and **findone**.
 - Click **Save**.
 
-## 8. Publish the content
+## 9. Publish the content
 
 By default, any content you create is saved as a draft. To publish your content:
 
@@ -123,7 +149,7 @@ Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/a
 - In the **Please confirm** dialog, click **Yes, publish** button.
 - Repeat for the **French food** category and **Biscotte Restaurant**.
 
-## 9. Consume the Content Type's API
+## 10. Consume the Content Type's API
 
 Here we are! The list of **restaurants** is accessible at [`http://localhost:1337/restaurants`](http://localhost:1337/restaurants).
 
