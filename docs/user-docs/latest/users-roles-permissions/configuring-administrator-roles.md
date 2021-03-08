@@ -29,7 +29,7 @@ If you use your Strapi application with the Community Edition (see [Pricing and 
 
 :::
 
-## Creating a new role [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
+## Creating a new role <BronzeBadge link="[https://strapi.io/pricing]" withLinkIcon/>
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
 
@@ -40,7 +40,7 @@ Clicking on the **Add new role** button will redirect you to the roles edition i
 In the *Roles* interface, from the table, you can click on the duplicate button <Fa-Copy /> to create a new role by duplicating an existing one.
 :::
 
-## Deleting a role [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
+## Deleting a role <BronzeBadge link="[https://strapi.io/pricing]" withLinkIcon/>
 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
@@ -95,7 +95,7 @@ To configure Collection or Single Types permissions for a role:
 5. Repeat steps 2 to 4 for each content type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
-#### Plugins and Settings [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
+#### Plugins and Settings <BronzeBadge link="[https://strapi.io/pricing]" withLinkIcon/>
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
 
