@@ -32,7 +32,7 @@ To access the admin panel:
 2. Enter your credentials to log in.
 3. Click on the **Log in** button. You should be redirected to the homepage of the admin panel.
 
-### Using SSO for authentication [<Badge text="Gold" type="warning" vertical="middle"/>](https://strapi.io/pricing)
+### Using SSO for authentication <GoldBadge withLinkIcon link="https://strapi.io/pricing" />
 
 If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](../settings/managing-global-settings.md)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
 
