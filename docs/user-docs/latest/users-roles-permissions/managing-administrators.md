@@ -1,12 +1,12 @@
 # Managing administrator accounts
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
-The *Administration panel* category is divided into 2 sub-categories: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.
+The *Administration panel* section is divided into 2 sub-sections: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.
 
 ![Edit an administrator account](../assets/users-permissions/administrator_list-view.png)
 
-The *Users* sub-category of *Administration panel* displays a table listing all the administrators of your Strapi application.
+The *Users* sub-section of *Administration panel* displays a table listing all the administrators of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -54,7 +54,7 @@ To create a new administrator account:
 | User's role       | (mandatory) Choose from the drop-down list the role to attribute to the new administrator.              |
 
 3. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
-4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![icon copy](../assets/users-permissions/icon_duplicate.png) to copy the URL.
+4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button <Fa-Copy /> to copy the URL.
 5. Click on the **Continue** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
 ::: tip NOTE
@@ -67,7 +67,7 @@ Administrator accounts can be deleted from the *Administration panel > Users* in
 
 To delete an administrator:
 
-1. Click on the trash button ![icon delete](../assets/users-permissions/icon_delete.png) on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the **Delete** button in the top right corner.
+1. Click on the trash button <Fa-TrashAlt /> on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the **Delete** button in the top right corner.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ## Editing an account
@@ -94,7 +94,7 @@ To edit an administrator account:
 3. (optional) In the *Attributed roles* area, edit the role of the administrator:
 
   - Click on the drop-down list to choose a new role, and/or add it to the already attributed one.
-  - Click on the X to delete an already attributed role.
+  - Click on the ![icon x](../assets/users-permissions/icon_delete2.png) to delete an already attributed role.
 
 4. Click on the **Save** button in the top right corner.
 

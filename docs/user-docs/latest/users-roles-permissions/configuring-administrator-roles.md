@@ -1,12 +1,12 @@
 # Configuring administrator roles
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* category of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
-The *Administration panel* category is divided into 2 sub-categories: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
+The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
 
 ![Administrator roles interface](../assets/users-permissions/administrator_roles.png)
 
-The *Roles* sub-category of *Administration panel* displays all created roles for the administrators of your Strapi application.
+The *Roles* sub-section of *Administration panel* displays all created roles for the administrators of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -37,7 +37,7 @@ To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
 ::: tip 💡 TIP
-In the *Roles* interface, from the table, you can click on the duplicate button ![icon duplicate](../assets/users-permissions/icon_duplicate.png) to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button <Fa-Copy /> to create a new role by duplicating an existing one.
 :::
 
 ## Deleting a role [<Badge text="Bronze" type="tip" vertical="middle"/>](https://strapi.io/pricing)
@@ -46,7 +46,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 To delete a role:
 
-1. Click on the trash button ![icon delete](../assets/users-permissions/icon_delete.png) on the right side of the role's record.
+1. Click on the trash button <Fa-TrashAlt /> on the right side of the role's record.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ::: tip 💡 TIP
@@ -57,7 +57,7 @@ You also have the possibility to delete multiple roles at the same time. To do s
 
 ![Administrator roles edition interface](../assets/users-permissions/administrator_roles-edition.png)
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![icon edit](../assets/users-permissions/icon_edit.png) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ::: warning ATTENTION
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
@@ -122,7 +122,7 @@ By default, plugins permissions can be configured for the Content-Type Builder, 
 
 ::: tab Settings
 
-Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel: Media Library and Webhooks (*Global settings* category) and Users & Roles (*Administration panel* category, to configure the settings of the RBAC feature). Settings permissions also allow to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
+Settings permissions can be configured for all settings accessible from *General > Settings* from the main navigation of the admin panel: Media Library and Webhooks (*Global settings* section) and Users & Roles (*Administration panel* section, to configure the settings of the RBAC feature). Settings permissions also allow to configure access to the Plugins and Marketplace sections of the admin panel. Each setting has its own specific set of permissions.
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
@@ -156,7 +156,7 @@ To set custom conditions:
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
-   - Click on the arrow icon ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
+   - Click on the arrow button ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
 ::: warning ATTENTION
