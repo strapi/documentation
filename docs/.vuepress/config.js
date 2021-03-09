@@ -112,11 +112,19 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Type Builder',
+      title: 'Content-Types Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
           'Introduction to the Content-Types Builder',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/creating-new-content-type',
+          'Creating content types',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/saving-editing-deleting-content-type',
+          'Saving, editing and deleting content types',
         ],
       ],
     },
