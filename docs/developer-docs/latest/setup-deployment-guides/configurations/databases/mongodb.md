@@ -254,25 +254,19 @@ Follow these steps to configure a local Strapi project to use a [MongoDB Atlas](
 MongoDB Atlas automatically exposes the database credentials into a single environment variable accessible by your app. To locate it, follow these steps:
 
 - Under `Atlas` in the left-hand, click on `Clusters`. This should take you to your `cluster`. Next, click `CONNECT` and then `Connect Your Application`.
-- Under `1. Choose your driver version`, select **DRIVER** as `Node.js` and **VERSION** as `2.2.12 or later`.
+- Under `1. Choose your driver version`, select **DRIVER** as `Node.js` and **VERSION** as `3.6 or later`.
   ::: warning
-  You **must** use `Version: 2.2.12 or later`.
+  You **must** use `Version: 3.6 or later`.
   :::
 - This should show a **Connection String Only** similar to this:
 
-`mongodb://paulbocuse:<password>@strapi-heroku-shard-00-00-oxxxo.mongodb.net:27017,strapi-heroku-shard-00-01-oxxxo.mongodb.net:27017,strapi-heroku-shard-00-02-oxxxo.mongodb.net:27017/test?ssl=true&replicaSet=Strapi-Heroku-shard-0&authSource=admin&retryWrites=true&w=majority`
-
-
-You must use remove some string and it has to look like so:
-
-`mongodb://paulbocuse:<password>@strapi-heroku-shard-00-00-oxxxo.mongodb.net:27017,strapi-heroku-shard-00-01-oxxxo.mongodb.net:27017,strapi-heroku-shard-00-02-oxxxo.mongodb.net:27017/test?ssl=true`
-
+`mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 
 
 
 ::: warning
-Please note the `<password>` after your `username`. In this example, after `mongodb://paulbocuse:`. You will need to replace the `<password>` with the password you created earlier for this user in your **MongoDB Atlas** account.
+Please note the `<password>` after your `username`. In this example, after `mongodb+srv://username:`. You will need to replace the `<password>` with the password you created earlier for this user in your **MongoDB Atlas** account.
 :::
 
 ### 5. Update and replace your existing `/database.js` config file for the appropriate environment (development | production).
@@ -288,10 +282,16 @@ module.exports = ({ env }) => ({
     default: {
       connector: 'mongoose',
       settings: {
-        uri: env('DATABASE_URI'),
+        host: env('DATABASE_HOST'),
+        srv: env.bool('DATABASE_SRV', true),
+        port: env.int('DATABASE_PORT', 27017),
+        database: env('DATABASE_NAME'),
+        username: env('DATABASE_USERNAME'),
+        password: env('DATABASE_PASSWORD'),
       },
       options: {
-        ssl: true,
+        authenticationDatabase: env('AUTHENTICATION_DATABASE', null),
+        ssl: env.bool('DATABASE_SSL', true),
       },
     },
   },
@@ -301,13 +301,11 @@ module.exports = ({ env }) => ({
 `Path: .env`
 
 ```
-DATABASE_URI=mongodb://paulbocuse:<password>@strapidatabase-shard-00-00-fxxx6c.mongodb.net:27017,strapidatabase-shard-00-01-fxxxc.mongodb.net:27017,strapidatabase-shard-00-02-fxxxc.mongodb.net:27017/test?ssl=true&replicaSet=strapidatabase-shard-0&authSource=admin&retryWrites=true&w=majority
+DATABASE_HOST=cluster0.blah.mongodb.net
+DATABASE_NAME=myFirstDatabase
+DATABASE_USERNAME=admin
+DATABASE_PASSWORD=yourpassword
 ```
-
-::: warning NOTE
-The above configuration will create a database called `strapi`, the _default database_ Strapi sets for any **MongoDB** database. If you would like to name your database something else, add the following **key:value pair** into your **settings:** located in your `database.js` file.
-
-`database: 'my-database-name'`
 
 :::
 
