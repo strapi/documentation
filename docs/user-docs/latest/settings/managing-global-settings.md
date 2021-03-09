@@ -2,7 +2,7 @@
 
 Global settings for plugins and features are managed from *General > Settings* in the main navigation of the admin panel.
 
-## Configuring Single Sign-On <a href="https://strapi.io/pricing"><Badge text="Gold" type="warning" vertical="middle"/><OutboundLink /></a>
+## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing" />
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
