@@ -1575,3 +1575,112 @@ module.exports = () => ({
   },
 });
 ```
+
+### Role-Based Access Control (RBAC) <BronzeBadge withLinkIcon link="https://strapi.io/pricing" />
+
+Administrators are the users of an admin panel of a Strapi application. Administrators accounts and roles are managed with the [Role-Based Access Control (RBAC)](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md) feature. You can create custom conditions to match specific needs
+of roles and permissions management. This requires an EE license with a Bronze plan.
+
+::: warning 🚧 This API is considered unstable for now.
+<br>
+:::
+#### Adding a new condition
+
+In your [`bootstrap`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file located in `./config/functions/bootstrap.js` you can do the following:
+
+```js
+const conditions = [
+  {
+    displayName: "Entity has same name as user",
+    name: "same-name-as-user",
+    plugin: "name of a plugin if created in a plugin"
+    handler: (user) => {
+      return { name: user.name };
+    },
+  },
+];
+
+module.exports = () => {
+  // do your boostrap
+
+  strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+};
+```
+
+##### Condition
+
+A condition can have possible properties:
+
+- `displayName`: name showed in the UI
+- `name`: technical name. Should be kebab-cased
+- `plugin`: If you create a plugin condition add the plugin name. e.g `content-manager`
+- `handler`: A function (sync or async) that returns a `condition object` (see [handler](#handler))
+
+##### Handler
+
+The condition `handler` receives the authenticated user making the request.
+
+It should return either:
+
+- `true`:
+
+  Returning `true` means the condition will always match.
+  It is useful if you want to verify an external condition or a condition on the authenticated user only.
+
+  ```js
+  const condition = {
+    displayName: "Can drink",
+    name: "can-drink",
+    async handler(user) {
+      if (user.age > 21) return true;
+      return false;
+    },
+  };
+  ```
+
+- `false`:
+
+  Returning `false` means the condition will never match.
+  It is useful if you want to verify an external condition or a condition on the authenticated user only.
+
+  ```js
+  const condition = {
+    displayName: "Can drink",
+    name: "can-drink",
+    async handler(user) {
+      if (user.age < 21) return false;
+      return true;
+    },
+  };
+  ```
+
+- `Condition object`:
+
+  A condition object is a matcher object that will allow verifying conditions on the entities you `read`, `create`, `update` or `delete`.
+
+  We use [sift.js](https://github.com/crcn/sift.js) behind the scenes to match conditions. Here is the list of allowed operators:
+
+  - `$or`
+  - `$eq`
+  - `$ne`
+  - `$in`
+  - `$nin`
+  - `$lt`
+  - `$lte`
+  - `$gt`
+  - `$gte`
+  - `$exists`
+  - `$elemMatch`
+
+  **Examples**
+
+  ```js
+  const condition = {
+    displayName: "price greater than 50",
+    name: "pricate-gt-50",
+    async handler(user) {
+      return { price: { $gt: 50 } };
+    },
+  };
+  ```
+
