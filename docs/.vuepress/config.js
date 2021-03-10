@@ -124,7 +124,7 @@ const sidebar = {
         ],
         [
           '/user-docs/latest/content-types-builder/saving-editing-deleting-content-type',
-          'Saving, editing and deleting content types',
+          'Saving and deleting content types',
         ],
       ],
     },
