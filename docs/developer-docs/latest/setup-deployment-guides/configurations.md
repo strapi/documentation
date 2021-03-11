@@ -1576,7 +1576,7 @@ module.exports = () => ({
 });
 ```
 
-### Role-Based Access Control <BronzeBadge withLinkIcon link="https://strapi.io/pricing" />
+### Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing"/> <SilverBadge link="https://strapi.io/pricing"/> <GoldBadge link="https://strapi.io/pricing" withLinkIcon/>
 
 ::: warning 🚧 This API is considered unstable for now.
 <br>
