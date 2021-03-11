@@ -123,6 +123,10 @@ const sidebar = {
           'Creating content types',
         ],
         [
+          '/user-docs/latest/content-types-builder/configuring-fields-content-type',
+          'Configuring fields for content types',
+        ],
+        [
           '/user-docs/latest/content-types-builder/saving-editing-deleting-content-type',
           'Saving and deleting content types',
         ],
