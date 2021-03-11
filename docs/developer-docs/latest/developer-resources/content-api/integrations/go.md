@@ -97,7 +97,7 @@ _Request_
 ```go
 postRest, _ := json.Marshal(map[string]string{
   "name":  "Nwanyi Igbo",
-  "description": "This is a very nice place to eat naive soup",
+  "description": "This is a very nice place to eat native soup",
 })
 responseBody := bytes.NewBuffer(postRest)
 resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
@@ -109,7 +109,7 @@ _Response_
 {
   "id": 2,
   "name": "Nwanyi Igbo",
-  "description": "This is a very nice place to eat naive soup",
+  "description": "This is a very nice place to eat native soup",
   "created_at": "2021-03-04T09:57:11.669Z",
   "updated_at": "2021-04-04T09:57:11.669Z",
   "categories": []
