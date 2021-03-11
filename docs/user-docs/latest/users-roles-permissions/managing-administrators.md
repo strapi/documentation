@@ -19,24 +19,6 @@ From this interface, it is possible to:
 
 For each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to activate the account or not.
 
-<!---
-### Filtering accounts
-
-Right above the table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the administrator accounts that match all the conditions will be displayed).
-
-To set a new filter:
-
-1. Click on the **Filters** button.
-2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
-3. Click on the 2nd drop-down list to choose the type of condition to apply.
-4. Enter the value of the condition in the 3rd box.
-5. Click on the **Add filter** button.
-
-::: tip NOTE
-When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon.
-:::
---->
-
 ## Creating a new account
 
 On the top right side of the *Administration panel > Users* interface, a **Create new User** button is displayed. It allows to create a new administrator account for your Strapi application.
