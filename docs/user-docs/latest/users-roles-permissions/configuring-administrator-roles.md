@@ -21,7 +21,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
 ::: warning ATTENTION
-If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will be limited. Only the 3 default roles are indeed available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
+If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - You can only configure permissions for the content types, but not for the plugins and settings of the Strapi application.
 - Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content type are accessible, these fields are automatically fully accessible with all permissions.
