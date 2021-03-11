@@ -1588,10 +1588,10 @@ Role-Based Access Control (RBAC) is an approach to restricting access to some us
 
 Conditions are defined as an array of objects. Each condition object can have 4 possible properties:
 
-- `displayName`: the user name displayed in a friendly format, as showed in the admin panel
-- `name`: the condition name, kebab-cased
-- `plugin`: the plugin name, kebab-cased, if your condition is based on a plugin (e.g `content-manager`)
-- `handler`: a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
+- `displayName` (string): the condition name as showed in the admin panel
+- `name` (string): the condition name, kebab-cased
+- `plugin` (string, optional): the plugin name, kebab-cased, if your condition is based on a plugin (e.g `content-manager`)
+- `handler` (function): a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
 
 You declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
 
