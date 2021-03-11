@@ -36,6 +36,24 @@ strapi install graphql
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
 
+## Registration
+
+Usually you need to sign up or register before being recognized as a user then perform authorized requests.
+
+```graphql
+mutation {
+  register(input: { username: "username", email: "email", password: "password" }) {
+    jwt
+    user {
+      username
+      email
+    }
+  }
+}
+```
+
+You should see a new user is created in `Users` collection type in your Strapi admin panel.
+
 ## Authentication
 
 To perform authorized requests, you must first get a JWT:
