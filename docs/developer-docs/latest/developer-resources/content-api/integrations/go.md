@@ -74,16 +74,17 @@ _Response_
         )
         func main() {
             getD()
-        }
+           }
         func getD() {
             fmt.Println("Getting data...")
             res, error := http.Get("http://localhost:1337/restaurants")
             if error != nil {
                 fmt.Printf("The HTTP request failed with error %s\n", error)
-            } else {
+                } 
+            else {
                 data, _ := ioutil.ReadAll(res.Body)
                 fmt.Println(string(data))
-            }
+                }
          }
 ```
 ### POST Request your collection type
@@ -135,42 +136,43 @@ _Response_
            postD()
              }
     func getD() {
-            fmt.Println("Getting data...")
-            resp, error := http.Get("http://localhost:1337/restaurants")
-            if error != nil {
-                fmt.Printf("The HTTP request failed with error %s\n", error)
-            } else {
-                data, _ := ioutil.ReadAll(resp.Body)
-                fmt.Println(string(data))
+        fmt.Println("Getting data...")
+        resp, error := http.Get("http://localhost:1337/restaurants")
+        if error != nil {
+           fmt.Printf("The HTTP request failed with error %s\n", error)
+            } 
+        else {
+            data, _ := ioutil.ReadAll(resp.Body)
+            fmt.Println(string(data))
             }
-            }
+        }
     func postD() {
-            fmt.Println("Posting  data...")
+    fmt.Println("Posting  data...")
 
-            //Encode the data
+        //Encode the data
 
-            postRest, _ := json.Marshal(map[string]string{
-                "name":  "Nwanyi Igbo",
-                "description": "This is a very nice place to eat native soup",    
-            })
-	        responseBody := bytes.NewBuffer(postRest)
-            resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
+        postRest, _ := json.Marshal(map[string]string{
+        "name":  "Nwanyi Igbo",
+        "description": "This is a very nice place to eat native soup",    
+          })
+        responseBody := bytes.NewBuffer(postRest)
+        resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
 
-	        //Handle Error
+        //Handle Error
 
-            if error != nil {
-                log.Fatalf("An Error Occured %v", error)
-            }
-            defer resp.Body.Close()
+        if error != nil {
+           log.Fatalf("An Error Occured %v", error)
+        }
+        defer resp.Body.Close()
 
-	        //Read the response body
+        //Read the response body
 
-            body, error := ioutil.ReadAll(resp.Body)
-            if error != nil {
-                log.Fatalln(error)
-            }
-            fmt.Println(string(body))
-             }
+        body, error := ioutil.ReadAll(resp.Body)
+        if error != nil {
+            log.Fatalln(error)
+           }
+        fmt.Println(string(body))
+    }
 
 ```	  
 
@@ -248,11 +250,12 @@ _Response_
         fmt.Println("Getting data...")
         resp, error := http.Get("http://localhost:1337/restaurants")
         if error != nil {
-        fmt.Printf("The HTTP request failed with error %s\n", error)
-        } else {
-        data, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println(string(data))
-        }
+             fmt.Printf("The HTTP request failed with error %s\n", error)
+        } 
+        else {
+            data, _ := ioutil.ReadAll(resp.Body)
+            fmt.Println(string(data))
+            }
         }
 
     func postD() {
@@ -287,28 +290,26 @@ _Response_
             }
     func putD() {
         putRest, _ := json.Marshal(map[string]string {
-            "name": "Resturant Homes",    
+         "name": "Resturant Homes",    
         })
-            client := &http.Client{}
-            url := "http://localhost:1337/restaurants/1"
-            req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
-            req.Header.Set("Content-Type", "application/json")
-            if error != nil {
-                log.Fatal(error)
+        client := &http.Client{}
+        url := "http://localhost:1337/restaurants/1"
+        req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
+        req.Header.Set("Content-Type", "application/json")
+        if error != nil {
+            log.Fatal(error)
         }
             resp, error := client.Do(req)
             if error != nil {
                 log.Fatal(error)
         }
-             defer resp.Body.Close()
-    
-        
-            body, error := ioutil.ReadAll(resp.Body)
+        defer resp.Body.Close()
+        body, error := ioutil.ReadAll(resp.Body)
             if error != nil {
                 log.Fatal(error)
-        }
+           }
             fmt.Println(string(body))
-    }
+       }
   ```
 
   ## Conclusion
