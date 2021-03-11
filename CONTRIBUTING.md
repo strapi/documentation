@@ -61,10 +61,10 @@ The core team will review your pull request and will either merge it, request ch
 
     ```bash
     #user documentation
-    cd documentation/user-docs
+    cd documentation/docs/user-docs
 
     #developer documentation
-    cd documentation/developer-docs
+    cd documentation/docs/developer-docs
     ```
 
 4. From the `main` branch, retrieve the latest modifications to work on an up-to-date branch.
