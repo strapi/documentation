@@ -1,8 +1,18 @@
-# Saving and deleting content types
+# Editing content types
 
-Content types or components must be saved to be available in the Content Manager after creation, or updated after later modifications. Saving a content type or component is however only possible if at least one field has been added and configured: content types and components cannont be saved if they are empty.
+The Content-Types Builder allows to edit any existing content type or component, even if it is already being used in the Content Manager. Editing a content type or component can include editing settings, but also adding, editing or deleting fields.
 
-To save a content type or a component with the Content-Types Builder, click on the **Save** button in the top right corner of the edition interface of your chosen content type or component.
+![Content-Types Builder's edition interface](../assets/content-types-builder/content-types-builder_edition.png)
+
+The right side of the Content-Types Builder interface, for any chosen content type or component, displays:
+
+- the name, and optionally the description of the content type or component (1),
+- buttons to cancel or save any ongoing modification (2),
+- a table listing all the fields created and configured for the content type or component. From the fields table, it is possible to:
+  - edit a field, by clicking on the edit button <Fa-PencilAlt />
+  - delete a field, by clicking on the trash button <Fa-TrashAlt />
+  - add another field to the content type or component, by clicking on the **Add another field** button
+  - access the view configuration interface, by clicking on the **Configure the view** button (see Configuring content types views)
 
 ## Deleting a content type
 
@@ -14,3 +24,5 @@ To delete a content type or component:
 2. In the edition interface of the chosen content type or component, click on the edit button <Fa-PencilAlt /> on the right side of the content type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
+
+
