@@ -34,32 +34,31 @@ _Response_
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-   
-    "created_at": "2021-03-31T11:37:16.964Z",
-    "updated_at": "2021-03-31T11:37:16.975Z",
-    "categories": [
-      {
+   {
         "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2021-03-31T11:36:23.164Z",
-        "updated_at": "2021-03-31T11:36:23.172Z"
-      },
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "created_at": "2021-03-31T11:37:16.964Z",
+        "updated_at": "2021-03-31T11:37:16.975Z",
+        "categories": [
+            {
+            "id": 1,
+            "name": "French Food",
+            "created_by": 1,
+            "updated_by": 1,
+            "created_at": "2021-03-31T11:36:23.164Z",
+            "updated_at": "2021-03-31T11:36:23.172Z"
+          },
 
-      {
-        "id": 2,
-        "name": "Brunch ",
-        "published_at": "2021-03-07T10:10:19.608Z",
-        "created_at": "2021-03-07T10:10:14.477Z",
-        "updated_at": "2021-03-07T10:10:19.649Z"
-}
-    ]
-  }
+            {
+            "id": 2,
+            "name": "Brunch ",
+            "published_at": "2021-03-07T10:10:19.608Z",
+            "created_at": "2021-03-07T10:10:14.477Z",
+            "updated_at": "2021-03-07T10:10:19.649Z"
+            }
+        ]
+    }
 ]
 ```
 
@@ -85,7 +84,7 @@ _Response_
                 data, _ := ioutil.ReadAll(res.Body)
                 fmt.Println(string(data))
             }
-}
+         }
 ```
 ### POST Request your collection type
 
@@ -201,27 +200,27 @@ _Response_
 
 ```json
 {
-    "id":1,
-    "name":"Resturant Homes",
-    "description":"Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.","published_at":"2021-03-07T10:10:46.949Z",
-    "created_at":"2021-03-07T10:08:53.929Z",
-    "updated_at":"2021-03-07T14:06:01.567Z",
-    "categories":[
-    {
         "id":1,
-        "name":"French Food",
-        "published_at":"2021-03-07T10:09:43.232Z",
-        "created_at":"2021-03-07T10:09:34.135Z",
-        "updated_at":"2021-03-07T10:09:43.280Z"
-    },
-    {
-        "id":2,
-        "name":"Brunch ",
-        "published_at":"2021-03-07T10:10:19.608Z",
-        "created_at":"2021-03-07T10:10:14.477Z",
-        "updated_at":"2021-03-07T10:10:19.649Z"
-    }
-      ]
+        "name":"Resturant Homes",
+        "description":"Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.","published_at":"2021-03-07T10:10:46.949Z",
+        "created_at":"2021-03-07T10:08:53.929Z",
+        "updated_at":"2021-03-07T14:06:01.567Z",
+        "categories":[
+            {
+            "id":1,
+            "name":"French Food",
+            "published_at":"2021-03-07T10:09:43.232Z",
+            "created_at":"2021-03-07T10:09:34.135Z",
+            "updated_at":"2021-03-07T10:09:43.280Z"
+            },
+            {
+            "id":2,
+            "name":"Brunch ",
+            "published_at":"2021-03-07T10:10:19.608Z",
+            "created_at":"2021-03-07T10:10:14.477Z",
+            "updated_at":"2021-03-07T10:10:19.649Z"
+        }
+     ]
 }
 ```
 
