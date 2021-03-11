@@ -1593,7 +1593,7 @@ Conditions are defined as an array of objects. Each condition object can have 4 
 - `plugin` (string, optional): the plugin name, kebab-cased, if your condition is based on a plugin (e.g `content-manager`)
 - `handler` (function): a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
 
-You declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
+Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
 
 #### Using the handler function
 
@@ -1628,7 +1628,7 @@ Returning `false` means the condition will never match:
   };
   ```
 
-Returning `true` or `false` is useful if you want to verify an external condition or a condition on the authenticated user only. For more granular control, you can return a condition object.
+Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user only. For more granular control, return a condition object.
 
 A condition object is a matcher object used to verify conditions on the entities you `read`, `create`, `update` or `delete`.
 For instance, this custom condition uses an async handler that returns a condition object using the greater than (`$gt`) operator:
@@ -1643,7 +1643,7 @@ For instance, this custom condition uses an async handler that returns a conditi
  };
 ```
 
-We use [sift.js](https://github.com/crcn/sift.js) behind the scenes to match conditions. Here is the list of allowed operators:
+The [sift.js](https://github.com/crcn/sift.js) library is used to match conditions. Here is the list of allowed operators:
 
 - `$or`
 - `$eq`
@@ -1659,7 +1659,7 @@ We use [sift.js](https://github.com/crcn/sift.js) behind the scenes to match con
 
 #### Adding conditions
 
-In your [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file, you need to declare conditions and register them, so they are available in the admin panel:
+To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file:
 
 ```js
 const conditions = [
