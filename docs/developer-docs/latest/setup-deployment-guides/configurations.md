@@ -1588,7 +1588,7 @@ Role-Based Access Control (RBAC) is an approach to restricting access to some us
 
 Conditions are defined as an array of objects. Each condition object can have 4 possible properties:
 
-- `displayName` (string): the condition name as showed in the admin panel
+- `displayName` (string): the condition name as shown in the admin panel
 - `name` (string): the condition name, kebab-cased
 - `plugin` (string, optional): the plugin name, kebab-cased, if your condition is based on a plugin (e.g `content-manager`)
 - `handler` (function): a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
