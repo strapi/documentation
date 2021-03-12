@@ -1590,7 +1590,7 @@ Conditions are defined as an array of objects. Each condition object can have 4 
 
 - `displayName` (string): the condition name as shown in the admin panel
 - `name` (string): the condition name, kebab-cased
-- `plugin` (string, optional): the plugin name, kebab-cased, if your condition is based on a plugin (e.g `content-manager`)
+- `plugin` (string, optional): if the condition is created by a plugin name, should be the plugin's name, kebab-cased (e.g `content-manager`)
 - `handler` (function): a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
 
 Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
