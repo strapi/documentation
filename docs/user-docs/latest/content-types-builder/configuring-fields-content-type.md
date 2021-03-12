@@ -1,6 +1,12 @@
 # Configuring fields for content types
 
-Content types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see Writing content).
+Content types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/latest/content-manager/writing-content)).
+
+In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also specific fields: components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, but also instructions to configure them.
+
+::: warning IMPORTANT
+Depending on what content-type or component is being created or edited, not all fields, including components and dynamic zones, are always available. 
+:::
 
 ![Select a field](../assets/content-types-builder/fields-selection.png)
 
@@ -40,7 +46,7 @@ The Text field displays a textbox that can contain small or longer text. This fi
 
 ### Rich Text
 
-The Rich Text field displays an editor for rich text which contains formatting options.
+The Rich Text field displays an editor for rich text which contains formatting options. This field can be used for long written content.
 
 :::: tabs
 
@@ -68,7 +74,7 @@ The Rich Text field displays an editor for rich text which contains formatting o
 
 ### Number
 
-The Number field displays a field for any kind of number: integers, decimals, floats etc.
+The Number field displays a field for any kind of number: integer, decimal and float.
 
 :::: tabs
 
@@ -98,7 +104,7 @@ The Number field displays a field for any kind of number: integers, decimals, fl
 
 ### Date
 
-The Date field can display a date, datetime or time picker. This field has the following level of granularity: year, month, day, hour, minute and second.
+The Date field can display a date (year, month, day), time (hour, minute, second) or datetime picker.
 
 :::: tabs
 
@@ -153,19 +159,37 @@ The Boolean field displays a toggle button for boolean values (e.g. Yes or No, 1
 
 ### Relation
 
-...
+The Relation field allows to establish a relation with another content-type, that is always a collection type.
+
+There are 6 different types of relations:
+
+- Content-type A *has one* Content-type B
+- Content-type A *has and belong to one* Content-type B
+- Content-type A *belongs to many* Content-type B
+- Content-type B *has many* Content-type A
+- Content-type A *has and belongs to many* Content-type B
+- Content-type A *has many* Content-type B
 
 :::: tabs
 
 ::: tab Base settings
 
-text
+Configuring the base settings of the Relation field consists in choosing with what existing content-type the relation should be established, and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. In the middle, between the grey boxes are displayed all possible relation types.
+
+1. (optional) Choose the *Field name* of the content-type A.
+2. Click on the icon representing the relation to establish between the content-types.
+3. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
+4. (optional) Choose de *Field name* of the content-type B.
 
 :::
 
 ::: tab Advanced settings
 
-text
+| Setting name   | Instructions                                                                |
+|----------------|-----------------------------------------------------------------------------|
+| Private field  | Tick to make the field private and prevent it from being found via the API. |
+| Unique field   | Tick to prevent another field to be identical to this one.                  |
+| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive API-wise. |
 
 :::
 
@@ -316,7 +340,7 @@ The JSON field allows to configure data in a JSON format.
 
 ### UID
 
-The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content type.
+The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
 :::: tabs
 
@@ -343,6 +367,8 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
-## Components & Dynamic zones
+## Components
 
 ...
+
+## Dynamic zones
