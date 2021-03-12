@@ -1,15 +1,14 @@
 # Creating content types
 
-Strapi allows to create 2 main content types using the Content-Types Builder: collection types and single types.
+Strapi allows to create 2 main content types using the Content-Types Builder: collection types and single types. Although they are not proper content types as they cannot exist indepentely, components can also be created through the Content-Types Builder, in the same way as collection and single types.
 
 - Collection types are content types that can be reused several times.
 - Single types are content types that are created for one purpose and are meant to be used once.
-
-Through the Content-Types Builder, it is also possible to create components, although they are not proper content types as they cannot exist indepentely. Components are a combination of fields that can be used as a group when configuring the fields of a content type.
+- Components are a combination of fields that can be used as a group when configuring the fields of a content type.
 
 ## Creating a new content type
 
-Content types are created from the Collection types and Single types categories of the Content-Types Builder navigation.
+Content types are created from the Collection types and Single types categories of the Content-Types Builder.
 
 To create a new content type:
 
@@ -24,12 +23,16 @@ To create a new content type:
 | Collection name | Write a collection name for your content type.                                                                                                   |
 
 5. Click on the **Continue** button.
+6. Add and configure chosen fields for your content type (see [Configuring fields for content types](/user-docs/latest/content-manager/configuring-fields-content-type)).
+7. Click on the **Save** button.
 
-After these steps, your new content type is created and should be displayed in the list of collection or single types, in the Content-Types Builder. It however needs to be configured with fields to be saved and made ready for use (see Adding and configuring fields).
+::: warning IMPORTANT
+New content types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content type cannot be created, listed in its category in the Content-Types Builder, and cannont be used in the Content Manager.
+:::
 
 ## Creating a new component
 
-Components are created from the same-named category of the Content-Types Builder navigation.
+Components are created from the same-named category of the Content-Types Builder.
 
 To create a new component:
 
@@ -39,5 +42,5 @@ To create a new component:
    - Select an available category, or enter in the textbox a new category name to create one.
    - Choose an icon to represent the new component.
 3. Click on the **Continue** button.
-
-As for the regular content types, your new component should be configured with fields to be of use (see Adding and configuring fields), but it is already created and should be displayed in the list of components in the Content-Types Builder.
+4. Add and configure chosen fields for your component (see [Configuring fields for content types](/user-docs/latest/content-manager/configuring-fields-content-type)).
+5. Click on the **Save** button.
