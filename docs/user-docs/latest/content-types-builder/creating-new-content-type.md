@@ -4,7 +4,7 @@ Strapi allows to create 2 main content-types using the Content-Types Builder: co
 
 - Collection types are content-types that can be reused several times.
 - Single types are content-types that are created for one purpose and are meant to be used once.
-- Components are a combination of fields that can be used as a group when configuring the fields of a content-type.
+- Components are a combination of fields handled as a group when configuring the fields of a content-type, and when writing the content of that content-type with the Content Manager.
 
 ## Creating a new content-type
 

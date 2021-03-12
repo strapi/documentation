@@ -367,8 +367,40 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
-## Components
+## Dynamic zones & Components
 
-...
+Dynamic zones are a combination of components, which themselves are composed of several fields. Dynamic zones can only be added to content-types whereas components can be added to content-types but also nested into another component.
 
-## Dynamic zones
+When adding a dynamic zone to a content-type through the Content-Types Builder, the configuration requires:
+
+1. Writing the name of the dynamic zone.
+2. Configuring the components of the dynamic zone.
+
+When configuring a component through the Content-Types Builder, it is possible to either:
+
+- create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/latest/content-types-builder/creating-new-content-type.html#creating-a-new-component)),
+- or use an existing one by clicking on *Use an existing component*. 
+
+:::: tabs
+
+::: tab Base settings
+
+| Setting name       | Instructions                                                    |
+|--------------------|-----------------------------------------------------------------|
+| Name               | Write the name of the component for the content-type.           |
+| Select a component | When using an existing component only - Select from the drop-down list an existing component. |
+| Type               | Choose between *Repeatable component* to be able to use several times the component for the content-type, or *Single component* to limit to only one time the use of the component. |
+
+:::
+
+::: tab Advanced settings
+
+| Setting name   | Instructions                                                                            |
+|----------------|-----------------------------------------------------------------------------------------|
+| Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
+| Maximum length | For repeatable components only - Tick to define a maximum number of characters allowed. |
+| Minimum length | For repeatable components only - Tick to define a minimum number of characters allowed. |
+
+:::
+
+::::
