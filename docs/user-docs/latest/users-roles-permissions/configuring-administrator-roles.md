@@ -20,10 +20,10 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
-::: warning ATTENTION
+::: warning IMPORTANT
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
-- You can only configure permissions for the content types, but not for the plugins and settings of the Strapi application.
+- You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
 - Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content type are accessible, these fields are automatically fully accessible with all permissions.
 - Custom conditions defined for a specific permission are also only available for the Enterprise Edition.
 
@@ -59,7 +59,7 @@ You also have the possibility to delete multiple roles at the same time. To do s
 
 The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
-::: warning ATTENTION
+::: warning IMPORTANT
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
 :::
 
@@ -159,6 +159,6 @@ To set custom conditions:
    - Click on the arrow button ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
-::: warning ATTENTION
+::: warning IMPORTANT
 Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::
