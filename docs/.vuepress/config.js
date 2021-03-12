@@ -120,7 +120,7 @@ const sidebar = {
         ],
         [
           '/user-docs/latest/content-types-builder/saving-editing-deleting-content-type',
-          'Editing content types',
+          'Managing content types',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
