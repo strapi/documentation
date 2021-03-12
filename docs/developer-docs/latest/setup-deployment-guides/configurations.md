@@ -1606,10 +1606,10 @@ Returning `true` means the condition will always match:
 
 ```js
   const condition = {
-    displayName: "Can drink",
-    name: "can-drink",
+    displayName: "Email address from strapi.io",
+    name: "email-strapi-dot-io",
     async handler(user) {
-      if (user.age > 21) return true;
+      if (user.email.includes('@strapi.io')) return true;
       return false;
     },
   };
@@ -1619,10 +1619,10 @@ Returning `false` means the condition will never match:
 
   ```js
   const condition = {
-    displayName: "Can drink",
-    name: "can-drink",
+    displayName: "Email address from strapi.io",
+    name: "email-strapi-dot-io",
     async handler(user) {
-      if (user.age < 21) return false;
+      if (!user.email.includes('@strapi.io')) return false;
       return true;
     },
   };
