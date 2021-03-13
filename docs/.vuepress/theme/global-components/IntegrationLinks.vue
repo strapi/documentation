@@ -1360,7 +1360,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import InstallLink from './InstallLink.vue';
 
