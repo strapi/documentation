@@ -1595,6 +1595,10 @@ Conditions are defined as an array of objects. Each condition object can have 4 
 
 Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
 
+:::tip NOTE
+The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
+:::
+
 #### Using the handler function
 
 The condition `handler` is a synchronous or asynchronous function that:
