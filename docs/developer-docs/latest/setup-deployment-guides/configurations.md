@@ -1603,7 +1603,7 @@ The condition `name` property acts as a unique id within its namespace, that is 
 
 The condition `handler` can take the shape of an object.
 
-For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap):
+For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap):
 
 ```js
 module.exports = () => {
