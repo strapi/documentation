@@ -1655,7 +1655,7 @@ For instance, this custom condition uses an async handler that returns a conditi
 ```js
   const condition = {
     displayName: "price greater than 50",
-    name: "pricate-gt-50",
+    name: "price-gt-50",
     async handler(user) {
       return { price: { $gt: 50 } };
     },
