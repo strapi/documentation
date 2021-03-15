@@ -1591,7 +1591,7 @@ Conditions are defined as an array of objects. Each condition object can have 4 
 - `displayName` (string): the condition name as shown in the admin panel
 - `name` (string): the condition name, kebab-cased
 - `plugin` (string, optional): if the condition is created by a plugin name, should be the plugin's name, kebab-cased (e.g `content-manager`)
-- `handler` (function): a function to handle the user and possibly return a `condition object` (see [using the handler function](#using-the-handler-function))
+- `handler`: can either be an object or a function, possibly returning another condition object (see [using the handler](#using-the-handler))
 
 Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
 
@@ -1599,9 +1599,24 @@ Declare and register conditions in your [`bootstrap`](/developer-docs/latest/set
 The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 
-#### Using the handler function
+#### Using the handler
 
-The condition `handler` is a synchronous or asynchronous function that:
+The condition `handler` can take the shape of an object.
+
+For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap):
+
+```js
+module.exports = () => {
+  strapi.admin.services.permission.conditionProvider.register({
+    displayName: 'Billing amount under 10K',
+    name: 'billing-amount-under-10k',
+    plugin: 'admin',
+    handler: { amount: { $lt: 10000 }},
+  });
+};
+```
+
+The condition `handler` can also be a synchronous or asynchronous function that:
 
 * receives the authenticated user making the request,
 * and returns `true`, `false`, or another condition object.
@@ -1609,14 +1624,14 @@ The condition `handler` is a synchronous or asynchronous function that:
 Returning `true` means the condition will always match:
 
 ```js
-  const condition = {
-    displayName: "Email address from strapi.io",
-    name: "email-strapi-dot-io",
-    async handler(user) {
-      if (user.email.includes('@strapi.io')) return true;
-      return false;
-    },
-  };
+const condition = {
+  displayName: "Email address from strapi.io",
+  name: "email-strapi-dot-io",
+  async handler(user) {
+    if (user.email.includes('@strapi.io')) return true;
+    return false;
+  },
+};
 ```
 
 Returning `false` means the condition will never match:
