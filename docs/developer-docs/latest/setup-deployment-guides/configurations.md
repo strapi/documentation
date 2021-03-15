@@ -1596,7 +1596,7 @@ A single condition is declared as an object, and multiple conditions are declare
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
 :::tip NOTE
-The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
+The condition `name` property acts as a [unique id](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/services/permission/condition-provider.js#L22) within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 
 #### Using the condition handler
