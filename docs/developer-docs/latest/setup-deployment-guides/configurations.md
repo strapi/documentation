@@ -1584,22 +1584,22 @@ module.exports = () => ({
 
 Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for permissions applicable to any user is also possible. This requires an Enterprise Edition with at minimum a Bronze licence plan.
 
-#### Defining a new condition
+#### Declaring new conditions
 
 Conditions are defined as an array of objects. Each condition object can have 4 possible properties:
 
 - `displayName` (string): the condition name as shown in the admin panel
 - `name` (string): the condition name, kebab-cased
 - `plugin` (string, optional): if the condition is created by a plugin name, should be the plugin's name, kebab-cased (e.g `content-manager`)
-- `handler`: can either be an object or a function, possibly returning another condition object (see [using the handler](#using-the-handler))
+- `handler`: can either be an object or a function, possibly returning another condition object (see [using the handler](#using-the-condition-handler))
 
-Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Adding conditions](#adding-conditions)).
+Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Registering conditions](#registering-conditions)).
 
 :::tip NOTE
 The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 
-#### Using the handler
+#### Using the condition handler
 
 The condition `handler` can take the shape of an object.
 
@@ -1676,7 +1676,7 @@ The [sift.js](https://github.com/crcn/sift.js) library is used to match conditio
 - `$exists`
 - `$elemMatch`
 
-#### Adding conditions
+#### Registering conditions
 
 To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file:
 
