@@ -1676,7 +1676,7 @@ The [sift.js](https://github.com/crcn/sift.js) library is used to match conditio
 
 #### Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file. To register a single condition, use the `conditionProvider.register()` method, and use `conditionProvider.registerMany()` to register multiple conditions, defined as an array of [condition objects](#declaring-new-conditions):
+To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file. To register a single condition, use the `conditionProvider.register()` method, and use `conditionProvider.registerMany()` to register multiple conditions, defined as an array of [condition objects](#declaring-new-conditions):
 
 ```js
 const conditions = [
