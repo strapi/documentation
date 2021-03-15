@@ -1586,7 +1586,7 @@ Role-Based Access Control (RBAC) is an approach to restricting access to some us
 
 #### Declaring new conditions
 
-Conditions are defined as an array of objects. Each condition object can have 4 possible properties:
+A single condition is declared as an object, and multiple conditions are declared as an array of objects. Each condition object can have 4 possible properties:
 
 - `displayName` (string): the condition name as shown in the admin panel
 - `name` (string): the condition name, kebab-cased
@@ -1678,7 +1678,7 @@ The [sift.js](https://github.com/crcn/sift.js) library is used to match conditio
 
 #### Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file:
+To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest.setup-deployment-guides/configurations.md#bootstrap) file. To register a single condition, use the `conditionProvider.register()` method, and use `conditionProvider.registerMany()` to register multiple conditions, defined as an array of [condition objects](#declaring-new-conditions):
 
 ```js
 const conditions = [
@@ -1690,6 +1690,14 @@ const conditions = [
       return { name: user.name };
     },
   },
+  {
+    displayName: "Email address from strapi.io",
+    name: "email-strapi-dot-io",
+    async handler(user) {
+      if (user.email.includes('@strapi.io')) return true;
+      return false;
+    },
+  }
 ];
 
 module.exports = () => {
