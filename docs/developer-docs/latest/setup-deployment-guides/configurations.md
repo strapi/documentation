@@ -1588,12 +1588,12 @@ Role-Based Access Control (RBAC) is an approach to restricting access to some us
 
 A single condition is declared as an object, and multiple conditions are declared as an array of objects. Each condition object can have 4 possible properties:
 
-- `displayName` (string): the condition name as shown in the admin panel
-- `name` (string): the condition name, kebab-cased
-- `plugin` (string, optional): if the condition is created by a plugin name, should be the plugin's name, kebab-cased (e.g `content-manager`)
-- `handler`: can either be an object or a function, possibly returning another condition object (see [using the handler](#using-the-condition-handler))
+- `displayName` (string): the condition name as shown in the admin panel,
+- `name` (string): the condition name, kebab-cased,
+- `plugin` (string, optional): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
+- `handler`: can either be an object or a function, possibly returning another condition object (see [using the condition handler](#using-the-condition-handler))
 
-Declare and register conditions in your [`bootstrap`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file located at `./config/functions/bootstrap.js` (see [Registering conditions](#registering-conditions)).
+Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
 :::tip NOTE
 The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
@@ -1601,9 +1601,7 @@ The condition `name` property acts as a unique id within its namespace, that is 
 
 #### Using the condition handler
 
-The condition `handler` can take the shape of an object.
-
-For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap):
+The condition `handler` can take the shape of an object. For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap):
 
 ```js
 module.exports = () => {
