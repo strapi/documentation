@@ -391,7 +391,24 @@ git add .
 git commit -m "Update database config"
 ```
 
-#### 9. Deploy
+#### 9. Update Yarn lockfile
+
+`Path: ./my-project/`
+
+```bash
+yarn install
+```
+
+#### 10. Commit your changes
+
+`Path: ./my-project/`
+
+```bash
+git add yarn.lock
+git commit -m "Updated Yarn lockfile"
+```
+
+#### 11. Deploy
 
 `Path: ./my-project/`
 
