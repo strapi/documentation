@@ -8,18 +8,20 @@ Strapi allows to create 2 main content-types using the Content-Types Builder: co
 
 ## Creating a new content-type
 
+![Content-type creation](../assets/content-types-builder/content-type-creation.png)
+
 Content types are created from the Collection types and Single types categories of the Content-Types Builder.
 
 To create a new content-type:
 
 1. Choose whether you want to create a collection type or a single type.
 2. Click on the **Create a new collection/single type** button in the category of the content-type you want to create.
-3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox. In creating a collection type, opt for a singular name, as collection type names are automatically pluralised when displayed in the Content Manager.
+3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox. When creating a collection type, opt for a singular name, as collection type names are automatically pluralised when displayed in the Content Manager.
 4. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
 
 | Setting name    | Instructions                                                                                                                                     |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see Draft & Publish). Click on **OFF** to deactivate the feature. |
+| Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/latest/content-manager/saving-and-publishing-content#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
 | Collection name | Write a collection name for your content-type.                                                                                                   |
 
 5. Click on the **Continue** button.
@@ -27,10 +29,12 @@ To create a new content-type:
 7. Click on the **Save** button.
 
 ::: warning IMPORTANT
-New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-Types Builder, and cannont be used in the Content Manager.
+New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-Types Builder, and cannot be used in the Content Manager.
 :::
 
 ## Creating a new component
+
+![Component creation](../assets/content-types-builder/component-creation.png)
 
 Components are created from the same-named category of the Content-Types Builder.
 

@@ -1,12 +1,12 @@
 # Managing content-types
 
-The Content-Types Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager.
+The Content-Types Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
 
-Content types and components can only be managed one at a time. To manage a content-type or a component, click on its name in the Collection Types, Single Types or Components category.
+To manage a content-type or a component, click on its name in the Collection Types, Single Types or Components category.
 
 ## Editing content-types
 
-Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type of component, the right side of the Content-Types interface displays all available editing options.
+Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type of component, the right side of the Content-Types Builder interface displays all available editing options.
 
 ![Content-Types Builder's edition interface](../assets/content-types-builder/content-types-builder_edition.png)
 

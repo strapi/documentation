@@ -1,11 +1,11 @@
 # Configuring fields for content types
 
-Content types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/latest/content-manager/writing-content)).
+Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/latest/content-manager/writing-content)).
 
-In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also specific fields: components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, but also instructions to configure them.
+In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: warning IMPORTANT
-Depending on what content-type or component is being created or edited, not all fields, including components and dynamic zones, are always available. 
+Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available. 
 :::
 
 ![Select a field](../assets/content-types-builder/fields-selection.png)
@@ -14,7 +14,7 @@ Depending on what content-type or component is being created or edited, not all 
 
 ### Text
 
-The Text field displays a textbox that can contain small or longer text. This field can be used for titles, descriptions, etc.
+The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
 :::: tabs
 
@@ -32,7 +32,7 @@ The Text field displays a textbox that can contain small or longer text. This fi
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Text field.                                  |
-| RegExp pattern | Write a regular expression to format the Text field.                        |
+| RegExp pattern | Write a regular expression to format the Text field. <!--- More info needed on this setting --->                        |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
@@ -46,7 +46,7 @@ The Text field displays a textbox that can contain small or longer text. This fi
 
 ### Rich Text
 
-The Rich Text field displays an editor for rich text which contains formatting options. This field can be used for long written content.
+The Rich Text field displays an editor with formatting options to manage rich text. This field can be used for long written content.
 
 :::: tabs
 
@@ -132,7 +132,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 ### Boolean
 
-The Boolean field displays a toggle button for boolean values (e.g. Yes or No, 1 or 0, True or False).
+The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).
 
 :::: tabs
 
@@ -159,7 +159,7 @@ The Boolean field displays a toggle button for boolean values (e.g. Yes or No, 1
 
 ### Relation
 
-The Relation field allows to establish a relation with another content-type, that is always a collection type.
+The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
 There are 6 different types of relations:
 
@@ -174,12 +174,12 @@ There are 6 different types of relations:
 
 ::: tab Base settings
 
-Configuring the base settings of the Relation field consists in choosing with what existing content-type the relation should be established, and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. In the middle, between the grey boxes are displayed all possible relation types.
+Configuring the base settings of the Relation field consists in choosing with which existing content-type the relation should be established and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. Between the grey boxes are displayed all possible relation types.
 
-1. (optional) Choose the *Field name* of the content-type A.
+1. (optional) Choose the *Field name* of the content-type A. <!--- More info needed on that --->
 2. Click on the icon representing the relation to establish between the content-types.
 3. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
-4. (optional) Choose de *Field name* of the content-type B.
+4. (optional) Choose de *Field name* of the content-type B. <!--- More info needed on that --->
 
 :::
 
@@ -189,7 +189,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive API-wise. |
+| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive API-wise. <!--- Confirmation needed on this setting ---> |
 
 :::
 
@@ -273,7 +273,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Enumeration field.                           |
-| Name override for GraphQL  |                                                                 |
+| Name override for GraphQL  |  <!--- Info needed on this setting --->                                                               |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
@@ -312,7 +312,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 ### JSON
 
-The JSON field allows to configure data in a JSON format.
+The JSON field allows to configure data in a JSON format. <!--- More info needed for this field --->
 
 :::: tabs
 
@@ -369,7 +369,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ## Dynamic zones & Components
 
-Dynamic zones are a combination of components, which themselves are composed of several fields. Dynamic zones can only be added to content-types whereas components can be added to content-types but also nested into another component.
+Dynamic zones are a combination of components, while the latter are a combination of several fields. Dynamic zones can only be added to content-types whereas components can be added to content-types but also nested into another component.
 
 When adding a dynamic zone to a content-type through the Content-Types Builder, the configuration requires:
 
