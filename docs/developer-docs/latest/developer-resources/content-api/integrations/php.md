@@ -11,7 +11,7 @@ Be sure to have PHP installed on your computer. One of the quick ways to do this
 ```bash
 touch strapi.php
 ```
-We will cURL, a built-in PHP extension that allows us to receive and send information via the URL syntax.
+We will use cURL, a built-in PHP extension that allows us to receive and send information via the URL syntax.
 
 ### GET Request your collection type
 
@@ -59,7 +59,7 @@ _Response_
 
 ```php
 <?php
-function getR(){
+function getRestaurants(){
     $curl = curl_init(); //Initializes curl
     curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -72,7 +72,7 @@ function getR(){
     print_r($res);
 }
 
-getR();
+getRestaurants();
 
 ```
 
@@ -85,7 +85,7 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 _Request_
 
 ```php
-$restuarants = array(
+$restaurants = array(
   'name' => 'Calabar Kitchen',
   'description' => 'Omo, this is a place varieties soup with catfish🦈',
    'categories' => [2]
@@ -130,7 +130,7 @@ _Response_
 ```php
 
 <?php
-function getR(){
+function getRestaurants(){
     $curl = curl_init(); //Initializes curl
     curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -144,8 +144,8 @@ function getR(){
     print_r($res);
 }
 
-function postR(){
-    $restuarants = array(
+function postRestaurant(){
+    $restaurants = array(
         'name' => 'Calabar Kitchen',
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
@@ -171,7 +171,7 @@ function postR(){
 
 }
 
-postR();
+postRestaurant();
 
 ```
 
@@ -185,7 +185,7 @@ PUT Request is sligtly different as we need to target the particular thing we wa
 _Request_
 
 ```php
-$restuarants = array(
+$restaurants = array(
     'name' => 'Femoni Kitchen'
   );
 
@@ -223,7 +223,7 @@ _Response_
 
 ```php
 <?php
-function getR(){
+function getRestaurants(){
     $curl = curl_init(); //Initializes curl
     curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -237,8 +237,8 @@ function getR(){
     print_r($res);
 }
 
-function postR(){
-    $restuarants = array(
+function postRestaurant(){
+    $restaurants = array(
         'name' => 'Calabar Kitchen',
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
@@ -253,7 +253,7 @@ function postR(){
       
       // Set the CURLOPT_POST for POST request
       curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restuarants));
+      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
       curl_setopt($curl, CURLOPT_HTTPHEADER, [
           'Content-Type: application/json'
       ]);
@@ -263,9 +263,9 @@ function postR(){
 
 }
 
-function putR(){
+function putRestaurant(){
 
-$restuarants = array(
+$restaurants = array(
     'name' => 'Femoni Kitchen'
   );
 
@@ -273,7 +273,7 @@ $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants/1');
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
-curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restuarants));
+curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
 curl_setopt($curl, CURLOPT_HTTPHEADER, [
   'Content-Type: application/json'
 ]);
@@ -284,12 +284,12 @@ curl_close($curl);
 print_r($res);
 }
 
-putR();
+putRestaurant();
 
 ```
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Go. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
 We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/content-api/content-api.md#get-an-entry), [get how much entry you have](/developer-docs/latest/developer-resources/content-api/content-api.md#count-entries) and [delete](/developer-docs/latest/developer-resources/content-api/content-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
