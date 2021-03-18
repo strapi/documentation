@@ -1592,6 +1592,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 - `name` (string): the condition name, kebab-cased,
 - `category` (string, _optional_): in the admin panel, conditions can be grouped into categories; if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
+- `handler`: a query object or a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
@@ -1601,66 +1602,9 @@ The condition `name` property acts as a [unique id](https://github.com/strapi/st
 
 #### Using the condition handler
 
-The condition `handler` can take the shape of an object. For instance, registering a condition allowing access only to billings with an amount lower than 10k would be achieved with this code, in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap):
+The condition `handler` is used to verify the condition on the entities you read, create, update or delete. It can be a query object or a function.
 
-```js
-module.exports = () => {
-  strapi.admin.services.permission.conditionProvider.register({
-    displayName: 'Billing amount under 10K',
-    name: 'billing-amount-under-10k',
-    plugin: 'admin',
-    handler: { amount: { $lt: 10000 }},
-  });
-};
-```
-
-The condition `handler` can also be a synchronous or asynchronous function that:
-
-* receives the authenticated user making the request,
-* and returns `true`, `false`, or another condition object.
-
-Returning `true` means the condition will always match:
-
-```js
-const condition = {
-  displayName: "Email address from strapi.io",
-  name: "email-strapi-dot-io",
-  async handler(user) {
-    if (user.email.includes('@strapi.io')) return true;
-    return false;
-  },
-};
-```
-
-Returning `false` means the condition will never match:
-
-  ```js
-  const condition = {
-    displayName: "Email address from strapi.io",
-    name: "email-strapi-dot-io",
-    async handler(user) {
-      if (!user.email.includes('@strapi.io')) return false;
-      return true;
-    },
-  };
-  ```
-
-Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user only. For more granular control, return a condition object.
-
-A condition object is a matcher object used to verify conditions on the entities you `read`, `create`, `update` or `delete`.
-For instance, this custom condition uses an async handler that returns a condition object using the greater than (`$gt`) operator:
-
-```js
-  const condition = {
-    displayName: "price greater than 50",
-    name: "price-gt-50",
-    async handler(user) {
-      return { price: { $gt: 50 } };
-    },
- };
-```
-
-The [sift.js](https://github.com/crcn/sift.js) library is used to match conditions. Here is the list of allowed operators:
+Query objects use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
 
 - `$or`
 - `$eq`
@@ -1673,6 +1617,42 @@ The [sift.js](https://github.com/crcn/sift.js) library is used to match conditio
 - `$gte`
 - `$exists`
 - `$elemMatch`
+
+For instance, this `handler` uses a query object to match entities with an `amount` lower than 10,000:
+
+```js
+  handler: { amount: { $lt: 10000 } }
+```
+
+The condition `handler` can also be a synchronous or asynchronous function that:
+
+* receives the authenticated user making the request,
+* and returns `true`, `false`, or a query object.
+
+Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user only:
+
+```js
+const condition = {
+  displayName: "Email address from strapi.io",
+  name: "email-strapi-dot-io",
+  async handler(user) {
+    return user.email.includes('@strapi.io');
+  },
+};
+```
+
+For more granular control, the `handler` function can also return a query object:
+
+```js
+  const condition = {
+    displayName: "price greater than 50",
+    name: "price-gt-50",
+    async handler(user) {
+      return { price: { $gt: 50 } };
+    },
+ };
+```
+
 
 #### Registering conditions
 
@@ -1692,8 +1672,7 @@ const conditions = [
     displayName: "Email address from strapi.io",
     name: "email-strapi-dot-io",
     async handler(user) {
-      if (user.email.includes('@strapi.io')) return true;
-      return false;
+      return user.email.includes('@strapi.io');
     },
   }
 ];
