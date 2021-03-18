@@ -1590,7 +1590,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 
 - `displayName` (string): the condition name as shown in the admin panel,
 - `name` (string): the condition name, kebab-cased,
-- `category` (string, _optional_): in the admin panel, conditions can be grouped into categories; if undefined, the condition will appear under the "Default" category,
+- `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a query object or a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
