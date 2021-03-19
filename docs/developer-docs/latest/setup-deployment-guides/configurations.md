@@ -1582,7 +1582,7 @@ module.exports = () => ({
 <br>
 :::
 
-Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for permissions applicable to any user is also possible. This requires an Enterprise Edition with at minimum a Bronze licence plan.
+Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for any type of permission is also possible. This requires an Enterprise Edition with at minimum a Bronze licence plan.
 
 #### Declaring new conditions
 
@@ -1602,9 +1602,9 @@ The condition `name` property acts as a [unique id](https://github.com/strapi/st
 
 #### Using the condition handler
 
-The condition `handler` is used to verify the condition on the entities you read, create, update or delete. It can be a query object or a function.
+A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` can be a query object or a function.
 
-Query objects use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
+Query objects are useful to verify conditions on the entities you read, create, update or delete. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
 
 - `$or`
 - `$eq`
@@ -1629,7 +1629,14 @@ The condition `handler` can also be a synchronous or asynchronous function that:
 * receives the authenticated user making the request,
 * and returns `true`, `false`, or a query object.
 
-Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user only:
+Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user.
+For instance, a condition that allows access to a page in the admin panel only if server time is 5pm could use this handler:
+
+```js
+  handler: () => new Date().getHours() === 17
+```
+
+The `handler` function receives the authenticated user, so it can verify conditions on the user:
 
 ```js
 const condition = {
