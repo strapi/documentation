@@ -160,7 +160,7 @@ function postRestaurant(){
       
       // Set the CURLOPT_POST for POST request
       curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($data));
+      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
       
       curl_setopt($curl, CURLOPT_HTTPHEADER, [
           'Content-Type: application/json'
@@ -180,7 +180,7 @@ postRestaurant();
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 
 Be sure that you activated the `update` permission for the `restaurant` Collection Type.
-PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
+PUT Request is sligtly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
 _Request_
 
