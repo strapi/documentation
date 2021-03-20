@@ -6,7 +6,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a Ruby file
 
-Be sure to have Ruby installed on your computer.
+Be sure to have [Ruby installed](https://www.ruby-lang.org/en/documentation/installation/) on your computer.
 
 ```bash
 mkdir ruby-app && cd ruby-app

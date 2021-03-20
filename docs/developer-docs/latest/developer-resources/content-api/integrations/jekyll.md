@@ -6,7 +6,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a Jekyll app
 
-Create a basic Jekyll application. [Installation](https://jekyllrb.com/).
+Be sure to have [Jekyll installed](https://jekyllrb.com/) on your computer.
 
 ```bash
 jekyll new jekyll-app
