@@ -271,6 +271,8 @@ You can also apply different parameters to the query to make more complex querie
   - `<field>_gte`: Greater than or equal to.
   - `<field>_contains`: Contains.
   - `<field>_containss`: Contains sensitive.
+  - `<field>_ncontains`: Doesn't contain.
+  - `<field>_ncontainss`: Doesn't contain, case sensitive
   - `<field>_in`: Matches any value in the array of values.
   - `<field>_nin`: Doesn't match any value in the array of values.
   - `<field>_null`: Equals null/Not equals null
