@@ -7,7 +7,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a Go file
 
-Be sure to have Go installed on your computer.
+Be sure to have [Go installed](https://golang.org/doc/install) on your computer.
 
 ```bash
 touch strapi.go

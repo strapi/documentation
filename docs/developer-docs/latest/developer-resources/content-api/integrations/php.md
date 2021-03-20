@@ -6,7 +6,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a PHP file
 
-Be sure to have PHP installed on your computer.
+Be sure to have [PHP installed](https://www.php.net/manual/en/install.php) on your computer.
 
 ```bash
 touch strapi.php
