@@ -1604,7 +1604,7 @@ The condition `name` property acts as a [unique id](https://github.com/strapi/st
 
 A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` can be a query object or a function.
 
-Query objects are useful to verify conditions on the entities you read, create, update or delete. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
+Query objects are useful to verify conditions on the entities you read, create, update, delete or publish. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
 
 - `$or`
 - `$eq`
