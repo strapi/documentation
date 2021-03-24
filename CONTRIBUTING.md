@@ -57,24 +57,14 @@ The core team will review your pull request and will either merge it, request ch
     git clone git@github.com:yourgithubname/documentation.git
     ```
 
-3. Enter in the folder which contains either the user documentation or developer documentation (depending on what you want to contribute to).
-
-    ```bash
-    #user documentation
-    cd documentation/user-docs
-
-    #developer documentation
-    cd documentation/developer-docs
-    ```
-
-4. From the `main` branch, retrieve the latest modifications to work on an up-to-date branch.
+3. From the `main` branch, retrieve the latest modifications to work on an up-to-date branch.
 
     ```bash
     git checkout main
     git pull
     ```
 
-5. Create your own branch on which you will work on your documentation contribution. Make sure the name of your branch indicates both the type of documentation and the topic.
+4. Create your own branch. Make sure the name of your branch indicates both the type of documentation and the topic.
 
     ```bash
     #user documentation
@@ -82,6 +72,12 @@ The core team will review your pull request and will either merge it, request ch
 
     #developer documentation
     git checkout -b <dev/branch-name>
+    ```
+
+5. Enter in the folder which contains the whole VuePress documentation project.
+
+    ```bash
+    cd docs
     ```
 
 6. Make sure all dependencies are installed, then run the server:

@@ -2617,7 +2617,7 @@ _Parameters:_
 
 #### Example
 
-**Path —** `./api/user/models/User.js`.
+**Path —** `./api/restaurant/models/Restaurant.js`.
 
 ```js
 module.exports = {
@@ -2626,8 +2626,7 @@ module.exports = {
    */
   lifecycles: {
     async beforeCreate(data) {
-      const passwordHashed = await strapi.api.user.services.user.hashPassword(data.password);
-      data.password = passwordHashed;
+      data.isTableFull = data.numOfPeople === 4;
     },
   },
 };
