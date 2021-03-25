@@ -64,7 +64,7 @@ npx create-strapi-app my-project --quickstart
 Alternatively, to use one of our [starters](https://strapi.io/starters), run this command instead:
 
 ```bash
-npx create strapi-starter my-project <starter-url>
+npx create-strapi-starter my-project <starter-url>
 ```
 
 :::
@@ -80,7 +80,7 @@ By default, `create-strapi-app` will generate an empty Strapi project. If you wa
 :::
 
 :::tip
-When using the `create strapi-starter` command, the project can be created from a specific branch, for example with a url like this: `https://github.com/strapi/strapi-starter-gatsby-blog/tree/<my-branch>`.
+When using a starter, the project can be created from a specific branch, for example with a url like this: `https://github.com/strapi/strapi-starter-gatsby-blog/tree/<my-branch>`.
 :::
 
 ::: warning
