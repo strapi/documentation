@@ -16,7 +16,7 @@ Depending on what content-type or component is being created or edited, not all 
 
 ## Regular fields
 
-### Text
+### <img width="28" src="../assets/content-types-builder/field-icon_text.png"> Text
 
 The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
@@ -48,7 +48,7 @@ The Text field displays a textbox that can contain small text. This field can be
 
 ::::
 
-### Rich Text
+### <img width="28" src="../assets/content-types-builder/field-icon_richtext.png"> Rich Text
 
 The Rich Text field displays an editor with formatting options to manage rich text. This field can be used for long written content.
 
@@ -76,7 +76,7 @@ The Rich Text field displays an editor with formatting options to manage rich te
 
 ::::
 
-### Number
+### <img width="28" src="../assets/content-types-builder/field-icon_number.png"> Number
 
 The Number field displays a field for any kind of number: integer, decimal and float.
 
@@ -106,7 +106,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 ::::
 
-### Date
+### <img width="28" src="../assets/content-types-builder/field-icon_date.png"> Date
 
 The Date field can display a date (year, month, day), time (hour, minute, second) or datetime picker.
 
@@ -134,7 +134,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 ::::
 
-### Boolean
+### <img width="28" src="../assets/content-types-builder/field-icon_boolean.png"> Boolean
 
 The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).
 
@@ -161,7 +161,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 ::::
 
-### Relation
+### <img width="28" src="../assets/content-types-builder/field-icon_relation.png"> Relation
 
 The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
@@ -199,7 +199,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 :::: 
 
-### Email
+### <img width="28" src="../assets/content-types-builder/field-icon_email.png"> Email
 
 The Email field displays an email address field with format validation to ensure the email address is valid.
 
@@ -228,7 +228,7 @@ The Email field displays an email address field with format validation to ensure
 
 ::::
 
-### Password
+### <img width="28" src="../assets/content-types-builder/field-icon_password.png"> Password
 
 The Password field displays a password field that is encrypted.
 
@@ -257,7 +257,7 @@ The Password field displays a password field that is encrypted.
 
 ::::
 
-### Enumeration
+### <img width="28" src="../assets/content-types-builder/field-icon_enum.png"> Enumeration
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
@@ -286,7 +286,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 ::::
 
-### Media
+### <img width="28" src="../assets/content-types-builder/field-icon_media.png"> Media
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
 
@@ -314,7 +314,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 ::::
 
-### JSON
+### <img width="28" src="../assets/content-types-builder/field-icon_json.png"> JSON
 
 The JSON field allows to configure data in a JSON format. <!--- More info needed for this field --->
 
@@ -342,7 +342,7 @@ The JSON field allows to configure data in a JSON format. <!--- More info needed
 
 ::::
 
-### UID
+### <img width="28" src="../assets/content-types-builder/field-icon_uid.png"> UID
 
 The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
