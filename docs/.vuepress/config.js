@@ -119,12 +119,12 @@ const sidebar = {
           'Introduction to the Content-Types Builder',
         ],
         [
-          '/user-docs/latest/content-types-builder/managing-content-types',
-          'Managing content types',
-        ],
-        [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
           'Creating content types',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/managing-content-types',
+          'Managing content types',
         ],
         [
           '/user-docs/latest/content-types-builder/configuring-fields-content-type',

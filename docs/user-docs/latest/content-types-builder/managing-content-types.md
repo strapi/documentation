@@ -1,5 +1,9 @@
 # Managing content-types
 
+::: warning IMPORTANT
+The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+:::
+
 The Content-Types Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
 
 To manage a content-type or a component, click on its name in the Collection Types, Single Types or Components category.
@@ -15,7 +19,7 @@ Managing a content-type or component can include editing the general settings an
 - Below the previous editing options, a table (3) lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
   - Click on the edit button <Fa-PencilAlt /> to edit a field
   - Click on the trash button <Fa-TrashAlt /> to delete a field
-  - Click on the **Add another field** button to add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/latest/content-manager/configuring-fields-content-type))
+  - Click on the **Add another field** button to add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type))
   - Click on the **Configure the view** button to access the view configuration interface (see [Configuring the edit view](/user-docs/latest/content-manager/configuring-view-of-content-type#configuring-the-edit-view))
 
 

@@ -1,10 +1,10 @@
 # Creating content-types
 
-Strapi allows to create 2 main content-types using the Content-Types Builder: collection types and single types. Although they are not proper content-types as they cannot exist indepentely, components can also be created through the Content-Types Builder, in the same way as collection and single types.
+::: warning IMPORTANT
+The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+:::
 
-- Collection types are content-types that can be reused several times.
-- Single types are content-types that are created for one purpose and are meant to be used once.
-- Components are a combination of fields handled as a group when configuring the fields of a content-type, and when writing the content of that content-type with the Content Manager.
+The Content-Types Builder allows to create new content-types: single and collection types. Although they are not proper content-types as they cannot exist independently, components can also be created through the Content-Types Builder, in the same way as collection and single types.
 
 ## Creating a new content-type
 
@@ -46,5 +46,5 @@ To create a new component:
    - Select an available category, or enter in the textbox a new category name to create one.
    - Choose an icon to represent the new component.
 3. Click on the **Continue** button.
-4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/latest/content-manager/configuring-fields-content-type)).
+4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type)).
 5. Click on the **Save** button.
