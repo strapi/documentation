@@ -8,9 +8,9 @@ Administrators can access the Content-Types Builder from _Plugins > Content-Type
 
 From the Content-Types Builder, administrators can create and manage content-types: collection types and single types but also components.
 
-- Collection types are content-types that can be reused several times.
-- Single types are content-types that are created for one purpose and are meant to be used once.
-- Components are a combination of fields handled as a group when configuring the fields of a content-type, and when writing the content of that content-type with the Content Manager.
+- Collection types are content-types that can manage several entries.
+- Single types are content-types that can only manage one entry.
+- Components are a data structure that can be used in multiple collection types and single types.
 
 All 3 are displayed as categories in the left side of the Content-Types Builder interface. In each category are listed all content-types and components that have already been created.
 
