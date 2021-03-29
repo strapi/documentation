@@ -33,15 +33,15 @@ The Text field displays a textbox that can contain small text. This field can be
 
 ::: tab Advanced settings
 
-| Setting name   | Instructions                                                                |
-|----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Text field.                                  |
-| RegExp pattern | Write a regular expression to format the Text field. <!--- More info needed on this setting --->                        |
-| Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
+| Setting name   | Instructions                                                                  |
+|----------------|-------------------------------------------------------------------------------|
+| Default value  | Write the default value of the Text field.                                    |
+| RegExp pattern | Write a regular expression to make sure the value of the Text field matches a specific format. |
+| Private field  | Tick to make the field private and prevent it from being found via the API.   |
+| Required field | Tick to prevent creating or saving an entry if the field is not filled in.    |
+| Unique field   | Tick to prevent another field to be identical to this one.                    |
+| Maximum length | Tick to define a maximum number of characters allowed.                        |
+| Minimum length | Tick to define a minimum number of characters allowed.                        |
 
 
 :::
@@ -316,7 +316,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 ### <img width="28" src="../assets/content-types-builder/field-icon_json.png"> JSON
 
-The JSON field allows to configure data in a JSON format. <!--- More info needed for this field --->
+The JSON field allows to configure data in a JSON format, to store JSON objects or arrays.
 
 :::: tabs
 
@@ -352,7 +352,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 | Setting name   | Instructions                                                    |
 |----------------|-----------------------------------------------------------------|
-| Name           | Write the name of the UID field.                                |
+| Name           | Write the name of the UID field. It must not contain special characters or spaces.                     |
 | Attached field | Choose what existing field to attach to the UID field. Choose *None* to not attach any specific field. |
 
 :::

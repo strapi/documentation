@@ -22,7 +22,7 @@ To create a new content-type:
 | Setting name    | Instructions                                                                                                                                     |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/latest/content-manager/saving-and-publishing-content#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
-| Collection name | Write a collection name for your content-type.                                                                                                   |
+| Collection name | Write a database collection/table name that will be used for your content-type.                                                                  |
 
 5. Click on the **Continue** button.
 6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-manager/configuring-fields-content-type)).
