@@ -1,7 +1,7 @@
 # Configuring fields for content types
 
-::: warning IMPORTANT
-The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+::: warning The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+<br>
 :::
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/latest/content-manager/writing-content)).

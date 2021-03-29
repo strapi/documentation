@@ -1,7 +1,7 @@
 # Creating content-types
 
-::: warning IMPORTANT
-The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+::: warning The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+<br>
 :::
 
 The Content-Types Builder allows to create new content-types: single and collection types. Although they are not proper content-types as they cannot exist independently, components can also be created through the Content-Types Builder, in the same way as collection and single types.

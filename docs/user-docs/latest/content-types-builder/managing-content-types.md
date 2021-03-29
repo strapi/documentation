@@ -1,7 +1,7 @@
 # Managing content-types
 
-::: warning IMPORTANT
-The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+::: warning The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+<br>
 :::
 
 The Content-Types Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
