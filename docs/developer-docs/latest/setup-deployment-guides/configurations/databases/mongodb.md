@@ -275,6 +275,48 @@ Replace the contents of `/database.js` with the following and replace **< passwo
 
 `Path: ./config/database.js`.
 
+:::: tabs
+
+::: tab Uri Method
+
+This method uses the URI string aqcuired from Atlas in step 4.
+
+```js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'mongoose',
+      settings: {
+        uri: env('DATABASE_URI'),
+        srv: env.bool('DATABASE_SRV', true),
+        port: env.int('DATABASE_PORT', 27017),
+        database: env('DATABASE_NAME'),
+      },
+      options: {
+        authenticationDatabase: env('AUTHENTICATION_DATABASE', null),
+        ssl: env.bool('DATABASE_SSL', true),
+      },
+    },
+  },
+})
+
+```
+
+`Path: .env`
+
+```
+DATABASE_URI=mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+DATABASE_NAME=myFirstDatabase
+```
+
+
+::: 
+
+::: tab Combined Method
+
+This method connects via passing individual connection settings.
+
 ```js
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
@@ -295,7 +337,8 @@ module.exports = ({ env }) => ({
       },
     },
   },
-});
+})
+
 ```
 
 `Path: .env`
@@ -306,6 +349,11 @@ DATABASE_NAME=myFirstDatabase
 DATABASE_USERNAME=admin
 DATABASE_PASSWORD=yourpassword
 ```
+
+
+:::
+
+::::
 
 :::
 
