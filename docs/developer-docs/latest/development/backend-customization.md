@@ -38,7 +38,7 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
       "path": "/restaurants/:id/reservation",
       "handler": "Restaurant.reservation",
       "config": {
-        "policies": ["is-authenticated", "hasCreditCard"]
+        "policies": ["is-authenticated", "has-credit-card"]
       }
     }
   ]
