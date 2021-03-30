@@ -193,7 +193,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive API-wise. <!--- Confirmation needed on this setting ---> |
+| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive in the database. |
 
 :::
 
@@ -277,7 +277,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Enumeration field.                           |
-| Name override for GraphQL  |  <!--- Info needed on this setting --->                                                               |
+| Name override for GraphQL | Write a custom GraphQL name to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
