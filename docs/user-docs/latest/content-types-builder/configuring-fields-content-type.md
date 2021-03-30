@@ -1,6 +1,6 @@
 # Configuring fields for content types
 
-::: warning The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
@@ -108,7 +108,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 ### <img width="28" src="../assets/content-types-builder/field-icon_date.png"> Date
 
-The Date field can display a date (year, month, day), time (hour, minute, second) or datetime picker.
+The Date field can display a date (year, month, day), time (hour, minute, second) or datetime (year, month, day, hour, minute, and second) picker.
 
 :::: tabs
 
@@ -167,12 +167,12 @@ The Relation field allows to establish a relation with another content-type, tha
 
 There are 6 different types of relations:
 
-- Content-type A *has one* Content-type B
-- Content-type A *has and belong to one* Content-type B
-- Content-type A *belongs to many* Content-type B
-- Content-type B *has many* Content-type A
-- Content-type A *has and belongs to many* Content-type B
-- Content-type A *has many* Content-type B
+- <img width="28" src="../assets/content-types-builder/icon_oneway.png"> One way: Content-type A *has one* Content-type B
+- <img width="28" src="../assets/content-types-builder/icon_1to1.png"> One-to-one: Content-type A *has and belong to one* Content-type B
+- <img width="28" src="../assets/content-types-builder/icon_1tomany.png"> One-to-many: Content-type A *belongs to many* Content-type B
+- <img width="28" src="../assets/content-types-builder/icon_manyto1.png"> Many-to-one: Content-type B *has many* Content-type A
+- <img width="28" src="../assets/content-types-builder/icon_manytomany.png"> Many-to-many: Content-type A *has and belongs to many* Content-type B
+- <img width="28" src="../assets/content-types-builder/icon_manyway.png"> Many way: Content-type A *has many* Content-type B
 
 :::: tabs
 
@@ -180,10 +180,10 @@ There are 6 different types of relations:
 
 Configuring the base settings of the Relation field consists in choosing with which existing content-type the relation should be established and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. Between the grey boxes are displayed all possible relation types.
 
-1. (optional) Choose the *Field name* of the content-type A. <!--- More info needed on that --->
+1. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
 2. Click on the icon representing the relation to establish between the content-types.
-3. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
-4. (optional) Choose de *Field name* of the content-type B. <!--- More info needed on that --->
+3. Choose the *Field name* of the content-type A, meaning the name that will be used for the field in the content-type A. 
+4. (optional if disabled by the relation type) Choose de *Field name* of the content-type B. 
 
 :::
 
@@ -371,14 +371,9 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
-## Dynamic zones & Components
+## <img width="28" src="../assets/content-types-builder/icon_component.png"> Components
 
-Dynamic zones are a combination of components, while the latter are a combination of several fields. Dynamic zones can only be added to content-types whereas components can be added to content-types but also nested into another component.
-
-When adding a dynamic zone to a content-type through the Content-Types Builder, the configuration requires:
-
-1. Writing the name of the dynamic zone.
-2. Configuring the components of the dynamic zone.
+Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
 When configuring a component through the Content-Types Builder, it is possible to either:
 
@@ -408,3 +403,31 @@ When configuring a component through the Content-Types Builder, it is possible t
 :::
 
 ::::
+
+## <img width="28" src="../assets/content-types-builder/icon_dynamiczone.png"> Dynamic zones
+
+Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrator have the choice of composing and rearranging the components of the dynamic zone how they want.
+
+:::: tabs
+
+::: tab Base settings
+
+| Setting name       | Instructions                                                    |
+|--------------------|-----------------------------------------------------------------|
+| Name               | Write the name of the dynamic zone for the content-type.        |
+
+:::
+
+::: tab Advanced settings
+
+| Setting name   | Instructions                                                                            |
+|----------------|-----------------------------------------------------------------------------------------|
+| Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
+| Maximum value  | Tick to define a maximum number of characters allowed.                                  |
+| Minimum value  | Tick to define a minimum number of characters allowed.                                  |
+
+:::
+
+::::
+
+After configuring the settings of the dynamic zone, its components must be configured as well. It is possible to either choose an existing component or create a new one.

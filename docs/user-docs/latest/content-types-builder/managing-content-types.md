@@ -1,6 +1,6 @@
 # Managing content-types
 
-::: warning The Content-Types Builder is only accessible when your Strapi application is in a development environment.
+::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
@@ -39,5 +39,5 @@ To delete a content-type or component:
 4. In the confirmation window, confirm the deletion.
 
 ::: warning IMPORTANT
-Deleting a content-type only deletes what was created and available from the Content-Types Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database.
+Deleting a content-type only deletes what was created and available from the Content-Types Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related [GitHub issue](https://github.com/strapi/strapi/issues/1114).
 :::
