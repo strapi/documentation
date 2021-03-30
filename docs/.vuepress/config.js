@@ -74,7 +74,7 @@ const sidebar = {
           '/developer-docs/latest/guides/registering-a-field-in-admin',
           'Registering a new field in the admin panel',
         ],
-        ['/developer-docs/latest/guides/client', 'Setup a third party cliend'],
+        ['/developer-docs/latest/guides/client', 'Setup a third party client'],
         ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
     },
@@ -127,6 +127,14 @@ const sidebar = {
         [
           '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions',
           'Introduction to users, roles & permissions',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/configuring-administrator-roles',
+          'Configuring administrator roles',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/managing-administrators',
+          'Managing administrator accounts',
         ],
       ],
     },

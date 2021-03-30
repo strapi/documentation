@@ -101,28 +101,28 @@ Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/
 
 ## 6. Add content to "Restaurant" Content Type
 
-Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), in the left-hand menu.
+Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), in the left-hand menu.
 
 - Click on **+ Add New Restaurants** button. Type `Biscotte Restaurant` in the **Name** field. Type `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.` into the **Description** field.
 - Click **Save**.
 
-If you navigate back [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager), you will see your restaurant listed in the entries.
+If you navigate back [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), you will see your restaurant listed in the entries.
 
 ## 7. Add categories to the "Category" Content Type
 
-Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager).
+Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category).
 
 - Click on **+ Add New Categories** button. Type `French Food` in the **Name** field. Select `Biscotte Restaurant`, on the right in the **Restaurant (0)** dropdown.
 - Click **Save**.
 
-Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/category?source=content-manager). You will see the **French Food** category listed in the entries.
+Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). You will see the **French Food** category listed in the entries.
 
 - Click on **+ Add New Categories** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
 - Click **Save**.
 
 You will see the **Brunch** category listed in the entries.
 
-Navigate back to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/restaurant?source=content-manager).
+Navigate back to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant).
 
 - Click on `Biscotte Restaurant`.
 - On the right, under **Categories(1)**, `select` the `Add an item...`, and add **Brunch** as a category for this restaurant, and click the **Save** button.

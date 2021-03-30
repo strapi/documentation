@@ -200,7 +200,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create a new `database.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations.md#environment) folder. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
+Create new subfolders in `./config` like so: `/[env]/production`, then create a new `database.js` in iti (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
 
 `Path: ./config/env/production/database.js`
 
@@ -391,12 +391,29 @@ git add .
 git commit -m "Update database config"
 ```
 
-#### 9. Deploy
+#### 9. Update Yarn lockfile
 
 `Path: ./my-project/`
 
 ```bash
-git push heroku main
+yarn install
+```
+
+#### 10. Commit your changes
+
+`Path: ./my-project/`
+
+```bash
+git add yarn.lock
+git commit -m "Updated Yarn lockfile"
+```
+
+#### 11. Deploy
+
+`Path: ./my-project/`
+
+```bash
+git push heroku HEAD:main
 ```
 
 The deployment may take a few minutes. At the end, logs will display the url of your project (e.g. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
@@ -421,14 +438,14 @@ When Strapi is deployed to Heroku, Heroku sets the environment variable to `NODE
 
 Therefore, modifications that require writing to model creation or other json files, e.g. creating or changing content-types, require that you make those changes on your dev environment and then push the changes to Heroku.
 
-As you continue developing your application with Strapi, you may want to use [version control](https://devcenter.heroku.com/articles/github-integration), or you can continue to use `git push heroku main` to commit and push changes to Heroku directly.
+As you continue developing your application with Strapi, you may want to use [version control](https://devcenter.heroku.com/articles/github-integration), or you can continue to use `git push heroku HEAD:main` to commit and push changes to Heroku directly.
 
 `Path: ./my-project/`
 
 ```bash
 git add .
 git commit -am "Changes to my-project noted"
-git push heroku main
+git push heroku HEAD:main
 heroku open
 ```
 
