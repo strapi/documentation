@@ -6,7 +6,7 @@ If you haven't gone through the getting started guide, the way you request a Str
 
 ### Create a Python file
 
-Be sure to have Python installed on your computer.s
+Be sure to have [Python installed](https://wiki.python.org/moin/BeginnersGuide/Download) on your computer.
 
 ```bash
 touch script.py
