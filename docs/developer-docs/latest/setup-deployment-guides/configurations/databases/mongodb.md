@@ -355,8 +355,6 @@ DATABASE_PASSWORD=yourpassword
 
 ::::
 
-:::
-
 ::: danger WARNING
 We recommend replacing sensitive (eg. "URI string" above) information in your database configuration files before uploading your project to a public repository such as GitHub. For more information about using environment variables, please read [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md).
 
