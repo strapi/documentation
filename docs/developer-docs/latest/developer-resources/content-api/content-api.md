@@ -593,6 +593,100 @@ POST http://localhost:1337/restaurants
 
 ::::
 
+#### Create a localized entry
+
+<!-- ? is it possible to create a localized entry from scratch? -->
+<!-- ? is this what JS meant with the following sentences? 👇 -->
+
+When creating a localized entry (`POST /{localized-content-type}`), you can specify its locale with the `locale` attribute (in the request body).
+
+<!-- ? not sure about using bold in the next sentence, let's double-check with our styleguide. Usually, we reserve bold in the text to indicate UI elements. -->
+
+**If no locale** has been defined, it will be created **using the default locale** for the application
+
+<!-- TODO provide an example of creating a localized entry, like we did for other subsections. It should include: first, a "Request" tab with the request, with this format: 1st code-block: POST <url> then another code block for the request body, then a "Response" tab with a code block with the reponse in JSON format -->
+
+#### Create a localization from an existing entry
+
+<!-- ? better title: Create another localization from an existing localized entry ? -->
+
+<!-- ? is it possible to create a localized entry for a non-localized one ? If yes, will it automatically set the base entry to the default language? -->
+
+To create another localization for an existing localized entry, send a POST request to the properly formatted URL:
+
+- for a Single Type: `/{content-type-name}/{id}/localizations`
+- for a Collection Type: `/{content-type-name}/localizations`
+
+The body of the request can only accept localized fields.
+
+When sending the request, Strapi will:
+
+1. use the `:id` as base entity for the non-localized fields and copy them in the new entity
+2. then create a new entity for the given locale and link it with the base entity.
+<!-- TODO merge these lines with text from lines 666-668 because it seems to describe the same thing -->
+
+
+**Example:**
+
+Given an article with `id=2` with the following shape:
+<!-- TODO adapt example to match restaurants example that we have throughout this doc -->
+
+```json
+{
+	"id": "2",
+	"locale": "en-UK",
+	"non_localized_field_A": "foo",
+	"non_localized_field_B": "bar",
+	"localized_field": "something"
+}
+```
+
+:::: tabs
+
+::: tab Request
+
+**Example request**
+
+```js
+POST http://localhost:1337/articles/2/localizations
+```
+
+**body**
+<!-- * We never used "body" before but I think it's a good idea! We should probably update all existing examples in this page to use this format — so it's even more explicit that this code block is the body of the request -->
+
+```json
+{
+	"locale": "en-US",
+	"localized_field": "foobar"
+}
+```
+
+This query will:
+<!-- TODO merge this text with the description at lines 615-616, because it seems like we are talking about the same thing, but in greater details. -->
+
+1. create a new entry in `en-US`
+2. link the created entry with `article:2` (they will share the same localizations object)
+3. copy every non-localized fields from `article:2` into the new entry and keep the localized fields from the request's body
+
+:::
+
+::: tab Response
+
+**Example reponse**
+
+```json
+{
+	"id": "3",
+	"locale": "en-US",
+	"non_localized_field_A": "foo",
+	"non_localized_field_B": "bar",
+	"localized_field": "something",
+	"localized_field": "foobar"
+}
+```
+:::
+
+:::: 
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
