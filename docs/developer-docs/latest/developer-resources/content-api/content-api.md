@@ -595,8 +595,8 @@ POST http://localhost:1337/restaurants
 
 ### Update an entry
 
-Partially updates an entry by id and returns its value.
-Fields that aren't sent in the query are not changed in the db. Send a `null` value if you want to clear them.
+Partially updates an entry by `id` and returns its value.
+Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
 :::: tabs
 
@@ -716,6 +716,13 @@ PUT http://localhost:1337/restaurants/1
 :::
 
 ::::
+
+<!-- TODO maybe create another section "Update a localized entry" and follow the same format: "Request" tab with example PUT request and body, and "Response" tab with example response -->
+
+::: warning CAUTION
+When updating a localized entry (with `PUT /{localized-content-type}/:id`), you cannot change its locale (if you set a `locale` attribute in the request body, it will be ignored).
+:::
+<!-- ? is there another way to change the locale of an existing entry? -->
 
 ### Delete an entry
 
