@@ -104,6 +104,7 @@ const sidebar = {
           '/user-docs/latest/content-manager/managing-relational-fields',
           'Managing relational fields',
         ],
+        ['/user-docs/latest/content-manager/translating-content', 'Translating content'],
         [
           '/user-docs/latest/content-manager/saving-and-publishing-content',
           'Saving, publishing and deleting content',
