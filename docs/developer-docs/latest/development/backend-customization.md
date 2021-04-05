@@ -841,7 +841,7 @@ module.exports = {
    */
 
   async update(params, data, { files } = {}) {
-    const existingEntry = await db.query('restaurant').findOne(params);
+    const existingEntry = await strapi.query('restaurant').findOne(params);
 
     const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
