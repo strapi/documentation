@@ -4,7 +4,7 @@
 <br>
 :::
 
-Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/latest/content-manager/writing-content)).
+Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content)).
 
 In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
@@ -183,7 +183,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 1. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
 2. Click on the icon representing the relation to establish between the content-types.
 3. Choose the *Field name* of the content-type A, meaning the name that will be used for the field in the content-type A. 
-4. (optional if disabled by the relation type) Choose de *Field name* of the content-type B. 
+4. (optional if disabled by the relation type) Choose the *Field name* of the content-type B. 
 
 :::
 
@@ -406,7 +406,7 @@ When configuring a component through the Content-Types Builder, it is possible t
 
 ## <img width="28" src="../assets/content-types-builder/icon_dynamiczone.png"> Dynamic zones
 
-Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrator have the choice of composing and rearranging the components of the dynamic zone how they want.
+Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrators have the choice of composing and rearranging the components of the dynamic zone how they want.
 
 :::: tabs
 

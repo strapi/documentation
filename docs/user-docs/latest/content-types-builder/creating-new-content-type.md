@@ -25,7 +25,7 @@ To create a new content-type:
 | Collection name | Write a database collection/table name that will be used for your content-type.                                                                  |
 
 5. Click on the **Continue** button.
-6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-manager/configuring-fields-content-type)).
+6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type)).
 7. Click on the **Save** button.
 
 ::: warning IMPORTANT
