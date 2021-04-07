@@ -142,7 +142,16 @@ const sidebar = {
     {
       collapsable: false,
       title: 'Plugins',
-      children: [['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
+      children: [
+        [
+          '/user-docs/latest/plugins/introduction-to-plugins',
+          'Introduction to plugins',
+        ],
+        [
+          '/user-docs/latest/plugins/installing-plugins-via-marketplace',
+          'Installing plugins via the Marketplace',
+        ],
+      ],
     },
     {
       collapsable: false,
