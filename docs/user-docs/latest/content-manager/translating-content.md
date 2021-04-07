@@ -8,7 +8,7 @@ In the Content Manager, when the Internationalization plugin is installed, some 
 - [] and [] icons, displayed next to every field, to respectively specify whether the field can be translated or not
 
 ::: warning IMPORTANT
-Content can only be handled one locale at the time. It is not possible to edit or publish content several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).
+Content can only be managed one locale at the time. It is not possible to edit or publish content several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).
 :::
 
 To translate content in another locale:
