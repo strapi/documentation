@@ -1211,6 +1211,7 @@ It takes a locale code as value.
 
 <!-- ? be more explicit about what a locale code is. What are the available locales? Is there a list? -->
 <!-- TODO maybe add a link to user guide here if Mégane describes the list of available locales -->
+<!-- only activated locales are available through the API -->
 
 If the parameter isn't defined, it will be set to the default locale.
 
@@ -1222,7 +1223,7 @@ If the parameter isn't defined, it will be set to the default locale.
 
 `GET /articles?_locale=en`
 
-<!-- TODO provide example for multiple locales -->
-<!-- TODO check if this would be correct `GET /articles?_locale=en,fr` -->
-<!-- ? how do you get all articles for all existing locales? (not filtering with any locale) -->
+<!-- TODO provide example for multiple locales --> -> not possible
+<!-- TODO check if this would be correct `GET /articles?_locale=en,fr` -->   -> not possible
+<!-- ? how do you get all articles for all existing locales? (not filtering with any locale) --> -> not possible
 
