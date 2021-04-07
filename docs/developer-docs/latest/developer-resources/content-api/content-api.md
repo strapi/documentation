@@ -920,14 +920,13 @@ By default, the filters can only be used from `find` and `count` endpoints gener
 
 ### Available operators
 
-The available operators are separated in 6 different categories:
+The available operators are separated in five different categories:
 
 - [Filters](#filters)
 - [Sort](#sort)
 - [Limit](#limit)
 - [Start](#start)
 - [Publication State](#publication-state)
-- [Locale](#locale)
 
 ### Filters
 
@@ -1197,33 +1196,3 @@ OR
 If you only want to retrieve your draft entries, you can combine the `preview` mode and the `published_at` field.
 `GET /articles?_publicationState=preview&published_at_null=true`
 :::
-
-### Locale
-
-::: tip NOTE
-This parameter can only be used if the [i18n plugin]() is installed and activated.
-<!--TODO insert link to Strapi plugins i18n above -->
-:::
-
-The `_locale` parameter allows to fetch entries only for the given locales.
-
-It takes a locale code as value.
-
-<!-- ? be more explicit about what a locale code is. What are the available locales? Is there a list? -->
-<!-- TODO maybe add a link to user guide here if Mégane describes the list of available locales -->
-<!-- only activated locales are available through the API -->
-
-If the parameter isn't defined, it will be set to the default locale.
-
-<!-- ? what happens if there are no locales defined ?-->
-
-#### Example
-
-##### Get only articles created with the `en` locale.
-
-`GET /articles?_locale=en`
-
-<!-- TODO provide example for multiple locales --> -> not possible
-<!-- TODO check if this would be correct `GET /articles?_locale=en,fr` -->   -> not possible
-<!-- ? how do you get all articles for all existing locales? (not filtering with any locale) --> -> not possible
-
