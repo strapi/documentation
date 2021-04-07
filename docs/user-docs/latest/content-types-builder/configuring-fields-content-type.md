@@ -4,7 +4,7 @@
 <br>
 :::
 
-Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content)).
+Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content.md)).
 
 In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
@@ -379,8 +379,8 @@ Components are a combination of several fields. Components allow to create reusa
 
 When configuring a component through the Content-Types Builder, it is possible to either:
 
-- create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/latest/content-types-builder/creating-new-content-type.html#creating-a-new-component)),
-- or use an existing one by clicking on *Use an existing component*. 
+- create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-component)),
+- or use an existing one by clicking on *Use an existing component*.
 
 :::: tabs
 
