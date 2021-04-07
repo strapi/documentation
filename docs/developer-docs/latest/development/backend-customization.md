@@ -38,7 +38,7 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
       "path": "/restaurants/:id/reservation",
       "handler": "Restaurant.reservation",
       "config": {
-        "policies": ["isAuthenticated", "hasCreditCard"]
+        "policies": ["is-authenticated", "has-credit-card"]
       }
     }
   ]
@@ -126,10 +126,10 @@ The policies are defined in each `./api/**/config/policies/` folders and plugins
 
 There are several ways to create a policy.
 
-- Using the CLI `strapi generate:policy isAuthenticated`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
-- Manually create a JavaScript file named `isAuthenticated.js` in `./config/policies/`.
+- Using the CLI `strapi generate:policy is-authenticated`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
+- Manually create a JavaScript file named `is-authenticated.js` in `./config/policies/`.
 
-**Path —** `./config/policies/isAuthenticated.js`.
+**Path —** `./config/policies/is-authenticated.js`.
 
 ```js
 module.exports = async (ctx, next) => {
@@ -166,14 +166,14 @@ The global policies can be associated to any route in your project.
       "path": "/restaurants",
       "handler": "Restaurant.find",
       "config": {
-        "policies": ["global::isAuthenticated"]
+        "policies": ["global::is-authenticated"]
       }
     }
   ]
 }
 ```
 
-Before executing the `find` action in the `Restaurant.js` controller, the global policy `isAuthenticated` located in `./config/policies/isAuthenticated.js` will be called.
+Before executing the `find` action in the `Restaurant.js` controller, the global policy `is-authenticated` located in `./config/policies/is-authenticated.js` will be called.
 
 ::: tip
 You can put as much policy as you want in this array. However be careful about the performance impact.
@@ -193,14 +193,14 @@ Plugins can add and expose policies into your app. For example, the plugin **Use
       "path": "/restaurants",
       "handler": "Restaurant.find",
       "config": {
-        "policies": ["plugins::users-permissions.isAuthenticated"]
+        "policies": ["plugins::users-permissions.is-authenticated"]
       }
     }
   ]
 }
 ```
 
-The policy `isAuthenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
+The policy `is-authenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
 
 #### API policies
 
@@ -2617,7 +2617,7 @@ _Parameters:_
 
 #### Example
 
-**Path —** `./api/user/models/User.js`.
+**Path —** `./api/restaurant/models/Restaurant.js`.
 
 ```js
 module.exports = {
@@ -2626,8 +2626,7 @@ module.exports = {
    */
   lifecycles: {
     async beforeCreate(data) {
-      const passwordHashed = await strapi.api.user.services.user.hashPassword(data.password);
-      data.password = passwordHashed;
+      data.isTableFull = data.numOfPeople === 4;
     },
   },
 };

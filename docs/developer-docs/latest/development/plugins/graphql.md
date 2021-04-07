@@ -36,6 +36,24 @@ strapi install graphql
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
 
+## Registration
+
+Usually you need to sign up or register before being recognized as a user then perform authorized requests.
+
+```graphql
+mutation {
+  register(input: { username: "username", email: "email", password: "password" }) {
+    jwt
+    user {
+      username
+      email
+    }
+  }
+}
+```
+
+You should see a new user is created in `Users` collection type in your Strapi admin panel.
+
 ## Authentication
 
 To perform authorized requests, you must first get a JWT:
@@ -253,6 +271,8 @@ You can also apply different parameters to the query to make more complex querie
   - `<field>_gte`: Greater than or equal to.
   - `<field>_contains`: Contains.
   - `<field>_containss`: Contains sensitive.
+  - `<field>_ncontains`: Doesn't contain.
+  - `<field>_ncontainss`: Doesn't contain, case sensitive
   - `<field>_in`: Matches any value in the array of values.
   - `<field>_nin`: Doesn't match any value in the array of values.
   - `<field>_null`: Equals null/Not equals null
@@ -762,7 +782,7 @@ There is no custom resolver in that case, so it will execute the default resolve
 
 ### Link a query or mutation to a controller action
 
-By default, the plugin will execute the actions located in the controllers that has been generated via the Content-Type Builder plugin or the CLI. For example, the query `restaurants` is going to execute the logic inside the `find` action in the `Restaurant.js` controller. It might happen that you want to execute another action or a custom logic for one of your query.
+By default, the plugin will execute the actions located in the controllers that have been generated via the Content-Type Builder plugin or the CLI. For example, the query `restaurants` is going to execute the logic inside the `find` action in the `Restaurant.js` controller. It might happen that you want to execute another action or a custom logic for one of your queries.
 
 ```js
 module.exports = {
