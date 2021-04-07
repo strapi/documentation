@@ -261,6 +261,8 @@ The Password field displays a password field that is encrypted.
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
+<!--- Add note about Enumeration fields known issues (i.e. recommending a relation using either oneWay or manyWay for some use-cases instead of enum) --->
+
 :::: tabs
 
 ::: tab Base settings
