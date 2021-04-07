@@ -16,8 +16,8 @@ All 3 are displayed as categories in the left side of the Content-Types Builder 
 
 From each category of the Content-Types Builder, it is possible to:
 
-- click on an existing content-type or component to access it and edit it (see [Managing content-types](managing-content-types)),
-- or create a new content-type or component (see [Creating content-types](creating-new-content-type)).
+- click on an existing content-type or component to access it and edit it (see [Managing content-types](/user-docs/latest/content-types-builder/managing-content-types.md)),
+- or create a new content-type or component (see [Creating content-types](/user-docs/latest/content-types-builder/creating-new-content-type.md)).
 
 ::: tip TIP
 Click the search icon <Fa-Search /> of any category to find a specific collection type, single type, or component.

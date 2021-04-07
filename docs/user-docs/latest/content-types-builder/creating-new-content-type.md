@@ -21,11 +21,11 @@ To create a new content-type:
 
 | Setting name    | Instructions                                                                                                                                     |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/latest/content-manager/saving-and-publishing-content#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
+| Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/latest/content-manager/saving-and-publishing-content.md#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
 | Collection name | Write a database collection/table name that will be used for your content-type.                                                                  |
 
 5. Click on the **Continue** button.
-6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type)).
+6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md)).
 7. Click on the **Save** button.
 
 ::: warning IMPORTANT
@@ -46,5 +46,5 @@ To create a new component:
    - Select an available category, or enter in the textbox a new category name to create one.
    - Choose an icon to represent the new component.
 3. Click on the **Continue** button.
-4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type)).
+4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md)).
 5. Click on the **Save** button.
