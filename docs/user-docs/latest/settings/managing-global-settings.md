@@ -20,7 +20,7 @@ To configure the SSO feature settings:
 
 ## Configuring Internationalization locales
 
-The Internalization plugin is a feature that allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application, administrators can manage locales from the *Global settings > Internationalization* sub-section of the settings interface.
+The Internalization plugin is a feature that allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](../plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from the *Global settings > Internationalization* sub-section of the settings interface.
 
 The *Internationalization* settings sub-section displays a table listing all locales available for the Strapi application. By default, only the English locale is configured and set as the default locale. 
 

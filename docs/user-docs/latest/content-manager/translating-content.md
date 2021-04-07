@@ -1,6 +1,6 @@
 # Translating content
 
-With the Internationalization plugin installed, it is possible to manage content in more than one language. To manage content in a specific language, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)).
+With the Internationalization plugin installed (see [Installing plugins via the Marketplace](../plugins/installing-plugins-via-marketplace.md)), it is possible to manage content in more than one language. To manage content in a specific language, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)).
 
 In the Content Manager, when the Internationalization plugin is installed, some options are added to the edit view:
 
