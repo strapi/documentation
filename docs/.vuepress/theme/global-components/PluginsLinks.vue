@@ -183,7 +183,7 @@
       </InstallLink>
     </div>
 
-    <!-- Upload -->
+    <!-- i18n -->
     <div>
       <InstallLink link="/developer-docs/latest/development/plugins/i18n.html">
         <template #icon>
