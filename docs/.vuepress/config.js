@@ -38,7 +38,7 @@ const sidebar = {
             ['/developer-docs/latest/development/plugins/upload.md', 'Upload'],
             ['/developer-docs/latest/development/plugins/users-permissions.md', 'Users & Permissions']
           ],
-          sidebarDepth: 0,
+          sidebarDepth: 1,
         },
         ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
       ],

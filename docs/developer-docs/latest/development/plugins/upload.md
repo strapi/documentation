@@ -1,6 +1,3 @@
----
-sidebarDepth: 1
----
 
 # Upload
 
