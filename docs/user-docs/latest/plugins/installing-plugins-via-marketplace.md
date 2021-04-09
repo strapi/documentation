@@ -10,8 +10,8 @@ The Marketplace displays each available plugin in a box, which contains:
 - the name of the plugin,
 - the description of the plugin,
 - indications on the current status of the plugin:
-   - *Compatible with your app*: indicates that the plugin is not installed yet but can be installed on your Strapi application
-   - **Already installed**: indicates that the plugin is already installed and available in your Strapi application
+   - "Compatible with your app": indicates that the plugin is not installed yet but can be installed on your Strapi application
+   - "Already installed": indicates that the plugin is already installed and available in your Strapi application
 
 ::: tip 💡 TIP
 Click on the <Fa-ExternalLinkAlt /> icon next to the name of a plugin to be redirected to the plugin package in the Strapi GitHub repository.
