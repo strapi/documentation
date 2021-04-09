@@ -1,3 +1,7 @@
+---
+sidebarDepth: 1
+---
+
 # Upload
 
 Thanks to the plugin `Upload`, you can upload any kind of file on your server or external providers such as **AWS S3**.

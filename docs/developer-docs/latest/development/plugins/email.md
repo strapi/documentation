@@ -1,3 +1,7 @@
+---
+sidebarDepth: 1
+---
+
 # Email
 
 Thanks to the plugin `Email`, you can send email from your server or externals providers such as **Sendgrid**.
