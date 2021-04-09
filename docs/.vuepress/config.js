@@ -113,11 +113,23 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Type Builder',
+      title: 'Content-Types Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
           'Introduction to the Content-Types Builder',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/creating-new-content-type',
+          'Creating content types',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/managing-content-types',
+          'Managing content types',
+        ],
+        [
+          '/user-docs/latest/content-types-builder/configuring-fields-content-type',
+          'Configuring fields for content types',
         ],
       ],
     },
