@@ -175,6 +175,14 @@ docker-compose pull
 
 ## Step 3: Run the stack
 
-```
+Executes Docker image detaching the terminal:
+```bash
 docker-compose up -d
+```
+
+or
+
+Executes Docker image without detaching the terminal:
+```bash
+docker-compose up
 ```
