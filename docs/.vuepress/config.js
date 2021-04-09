@@ -163,6 +163,10 @@ const sidebar = {
           '/user-docs/latest/plugins/installing-plugins-via-marketplace',
           'Installing plugins via the Marketplace',
         ],
+        [
+          '/user-docs/latest/plugins/strapi-plugins',
+          'List of Strapi plugins',
+        ],
       ],
     },
     {
