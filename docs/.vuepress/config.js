@@ -26,7 +26,20 @@ const sidebar = {
       children: [
         ['/developer-docs/latest/development/backend-customization.md', 'Backend customization'],
         ['/developer-docs/latest/development/admin-customization.md', 'Admin panel customization'],
-        ['/developer-docs/latest/development/plugin-customization.md', 'Strapi plugins'],
+        {
+          title: 'Strapi plugins',
+          path: '/developer-docs/latest/development/plugin-customization.html',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/development/plugins/documentation.md', 'API Documentation'],
+            ['/developer-docs/latest/development/plugins/email.md', 'Email'],
+            ['/developer-docs/latest/development/plugins/graphql.md', 'GraphQL'],
+            ['/developer-docs/latest/development/plugins/i18n.md', 'i18n'],
+            ['/developer-docs/latest/development/plugins/upload.md', 'Upload'],
+            ['/developer-docs/latest/development/plugins/users-permissions.md', 'Users & Permissions']
+          ],
+          sidebarDepth: 0,
+        },
         ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
       ],
     },
