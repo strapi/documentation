@@ -489,7 +489,7 @@ GET http://localhost:1337/restaurants/count
 
 Creates an entry and returns its value.
 
-If the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: tabs
 
@@ -1104,4 +1104,4 @@ If you only want to retrieve your draft entries, you can combine the `preview` m
 
 ### Locale
 
-If the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
