@@ -22,7 +22,7 @@ From the list view, it is possible to:
 
 - make a textual search (1) or set filters (2) to find specific entries,
 - create a new entry (3),
-- (if the Internationalization plugin is installed) filter by locale to display only the entries translated in a chosen language (4),
+- if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
 - duplicate <Fa-Copy />, edit <Fa-PencilAlt /> (see [Writing content](../content-manager/writing-content.md)) or delete <Fa-TrashAlt /> (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
 

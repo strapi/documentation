@@ -44,5 +44,5 @@ You can delete entries from the list view of a collection type, by clicking on t
 :::
 
 ::: warning IMPORTANT
-If the Internationalization plugin is installed, entries can only be deleted one locale at the time.
+If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, entries can only be deleted one locale at the time.
 :::
