@@ -489,6 +489,8 @@ GET http://localhost:1337/restaurants/count
 
 Creates an entry and returns its value.
 
+If the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
+
 :::: tabs
 
 ::: tab Request
@@ -593,10 +595,15 @@ POST http://localhost:1337/restaurants
 
 ::::
 
+
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
+
+::: tip NOTE
+It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+:::
 
 :::: tabs
 
@@ -824,7 +831,7 @@ Queries to Strapi Content API can use several API parameters:
 - [Limit](#limit)
 - [Start](#start)
 - [Publication State](#publication-state)
-- (if the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed) [Locale](#locale)
+- [Locale](#locale) (if the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed)
 
 ### Filters
 
