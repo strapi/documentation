@@ -1153,7 +1153,7 @@ You can also pass a populate option to specify which relations you want to be po
 strapi.query('restaurant').find({ id: 1 });
 ```
 
-**Find by in IN, with a limit**:
+**Find by id IN, with a limit**:
 
 ```js
 strapi.query('restaurant').find({ _limit: 10, id_in: [1, 2] });
