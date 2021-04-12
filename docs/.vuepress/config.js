@@ -34,7 +34,7 @@ const sidebar = {
             ['/developer-docs/latest/development/plugins/documentation.md', 'API Documentation'],
             ['/developer-docs/latest/development/plugins/email.md', 'Email'],
             ['/developer-docs/latest/development/plugins/graphql.md', 'GraphQL'],
-            ['/developer-docs/latest/development/plugins/i18n.md', 'i18n'],
+['/developer-docs/latest/development/plugins/i18n.md', 'Internationalization (I18N)'],
             ['/developer-docs/latest/development/plugins/upload.md', 'Upload'],
             ['/developer-docs/latest/development/plugins/users-permissions.md', 'Users & Permissions']
           ],
