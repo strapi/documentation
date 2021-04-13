@@ -1,3 +1,8 @@
+---
+title: Creating content-types - Strapi User Guide
+description: Instructions to create new content-types with the Content-Types Builder
+---
+
 # Creating content-types
 
 ::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.

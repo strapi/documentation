@@ -1,3 +1,8 @@
+---
+title: Introduction to the Content Manager - Strapi User Guide
+description: Introduction to managing collection types and single types with the Content Manager
+---
+
 # Introduction to the Content Manager
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.

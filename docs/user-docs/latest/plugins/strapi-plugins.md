@@ -1,3 +1,8 @@
+---
+title: List of Strapi plugins - Strapi User Guide
+description: Reference guide to Strapi plugins explaining how they work and how they expand a Strapi application
+---
+
 # List of Strapi plugins
 
 ::: warning 🚧 This section of the user guide is a work in progress. Stay tuned!

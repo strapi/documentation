@@ -1,3 +1,8 @@
+---
+title: Installing plugins via the Marketplace - Strapi User Guide
+description: Instructions to install new plugins in a Strapi application via the Marketplace
+---
+
 # Installing plugins via the Marketplace
 
 The Marketplace is a section of the admin panel that lists all plugins that can be installed in a Strapi application. The Marketplace is accessible from _General > Marketplace_ in the main navigation of the admin panel.

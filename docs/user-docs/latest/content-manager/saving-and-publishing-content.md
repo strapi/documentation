@@ -1,3 +1,8 @@
+---
+title: Saving, publishing and deleting content - Strapi User Guide
+description: Instructions to save, publish and delete content (Draft & Publish, i18n)
+---
+
 # Saving, publishing and deleting content
 
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.

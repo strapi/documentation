@@ -1,8 +1,10 @@
 ---
+title: Configuring fields for content-types - Strapi User Guide
+description: Instructions to configure content-types fields with the Content-Types Builder
 sidebarDepth: 3
 ---
 
-# Configuring fields for content types
+# Configuring fields for content-types
 
 ::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>

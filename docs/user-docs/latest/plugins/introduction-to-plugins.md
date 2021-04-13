@@ -1,3 +1,8 @@
+---
+title: Introduction to plugins - Strapi User Guide
+description: Introduction on the Strapi plugins types and from which sections of the admin panel they are managed
+---
+
 # Introduction to plugins
 
 Strapi is built around plugins of different kinds. There are the core plugins which are essential for your Strapi application to function, and therefore cannot be deactivated. But there are also other plugins, that can either be installed by default or not, to add more options and possibilities to your Strapi application.
