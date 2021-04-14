@@ -11,6 +11,8 @@ The Marketplace is a section of the admin panel that lists all plugins that can 
 Plugins can also be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
 :::
 
+![Interface of the Marketplace](../assets/plugins/marketplace.png)
+
 The Marketplace displays each available plugin in a box, which contains:
 - the name of the plugin,
 - the description of the plugin,

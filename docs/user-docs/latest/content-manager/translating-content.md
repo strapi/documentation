@@ -7,6 +7,8 @@ description: Instructions to translate content in various locales with i18n plug
 
 With the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) installed, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)).
 
+![Edit view of a localizable content-type](../assets/content-manager/content-manager_translate.png)
+
 In the Content Manager, when the Internationalization plugin is installed, some options are added to the edit view:
 
 - an Internationalization box, displayed in the right side of the interface, from where it is possible to switch locales
