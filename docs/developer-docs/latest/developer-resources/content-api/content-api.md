@@ -831,7 +831,7 @@ Queries to Strapi Content API can use several API parameters:
 - [Limit](#limit)
 - [Start](#start)
 - [Publication State](#publication-state)
-- [Locale](#locale) (if the [Internationalization plugin](/developer-docs/latest/development/plugins/i18n.md) is installed)
+- [Locale](#locale)
 
 ### Filters
 
