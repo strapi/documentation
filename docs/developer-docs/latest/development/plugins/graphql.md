@@ -24,14 +24,6 @@ npm run strapi install graphql
 
 :::
 
-::: tab strapi
-
-```
-strapi install graphql
-```
-
-:::
-
 ::::
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
