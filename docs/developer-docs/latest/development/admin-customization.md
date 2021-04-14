@@ -129,13 +129,14 @@ mkdir -p ./admin/src/components/LeftMenu/LeftMenuHeader
 cp ./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js ./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js
 ```
 
-2. modify style within that copy (i.e. `background-color: #007eff;`, also see [sourcecode online](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js#L7)):
+2. modify style within that copy (see also [sourcecode online](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js#L7)):
 
-```
-vi ./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js
+**Path:** `./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js`
+```js
+  background-color: #007eff;
 ```
 
-Thus, files in `admin/src/some/file/path` take precendence over `node_modules/strapi-admin/admin/src/file/path`.
+Thus, files in `admin/src/some/file/path` take precedence over `node_modules/strapi-admin/admin/src/file/path`.
 
 ::: warning
 To apply your changes you need to [rebuild](#build) your admin panel
