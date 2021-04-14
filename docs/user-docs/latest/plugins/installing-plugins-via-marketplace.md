@@ -8,7 +8,7 @@ description: Instructions to install new plugins in a Strapi application via the
 The Marketplace is a section of the admin panel that lists all plugins that can be installed in a Strapi application. The Marketplace is accessible from _General > Marketplace_ in the main navigation of the admin panel.
 
 ::: warning IMPORTANT
-Plugins can also be installed via the Command Line Interface (see Developer Documentation).
+Plugins can also be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
 :::
 
 The Marketplace displays each available plugin in a box, which contains:
