@@ -1125,11 +1125,11 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-#### Prerequisites
-
+::: warning PREREQUISITES
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
+:::
 
 #### Usage
 
