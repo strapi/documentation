@@ -14,7 +14,9 @@ In the Content Manager, when the Internationalization plugin is installed, some 
 - an Internationalization box, displayed in the right side of the interface, from where it is possible to switch locales
 - icons displayed next to every field to indicate whether the field can be translated or not:
   - <img width="16" src="../assets/content-manager/icon_localizable.png"> indicates that the field can be translated,
-  - <img width="18" src="../assets/content-manager/icon_non-localizable.png"> indicates that the field cannot be translated: its content is the same for every locale.
+  - <img width="18" src="../assets/content-manager/icon_non-localizable.png"> indicates that the field cannot be translated: its content is the same for every locale (i.e. changing the value of a non-localizable field changes it for all other locales).
+
+The Internationalization plugin also allows components and dynamic zones to have a different structure from one locale to another. In other words: the order of the fields and components of an entry, as well as the number of times repeatable components are used, do not have to be the same for all locales.
 
 ::: warning IMPORTANT
 Content can only be managed one locale at the time. It is not possible to edit or publish content for several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).

@@ -24,8 +24,6 @@ The Marketplace displays each available plugin in a box, which contains:
 Click on the <Fa-ExternalLinkAlt /> icon next to the name of a plugin to be redirected to the plugin package in the Strapi GitHub repository.
 :::
 
-<!--- Screenshot of Marketplace with i18n plugin --->
-
 To install a new plugin via the Marketplace:
 
 1. Go to *General > Marketplace*.

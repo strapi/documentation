@@ -381,7 +381,6 @@ The UID field displays a field that sets a unique identifier, optionally based o
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the UID field.                                   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |

@@ -32,7 +32,7 @@ From the list view, it is possible to:
 - duplicate <Fa-Copy />, edit <Fa-PencilAlt /> (see [Writing content](../content-manager/writing-content.md)) or delete <Fa-TrashAlt /> (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
 
 ::: tip 💡 TIP
-Sorting can be enabled for any field displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
+Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
 ### Filtering entries
