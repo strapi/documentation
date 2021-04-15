@@ -5,7 +5,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 If you haven't gone through the getting started guide, the way you request a Strapi API with [GO](https://golang.org/) remains the same except that you will not fetch the same content.
 
 
-### Create a Go file
+## Create a Go file
 
 Be sure to have [Go installed](https://golang.org/doc/install) on your computer.
 
@@ -17,7 +17,7 @@ Go has inbuilt module/package needed to make HTTP Requests like GET, POST PUT, D
 We will use it("net/http") along with other modules/packages.
 
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -85,7 +85,7 @@ func getD() {
 	}
 }
 ```
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -169,7 +169,7 @@ func postD() {
 ```	  
 
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

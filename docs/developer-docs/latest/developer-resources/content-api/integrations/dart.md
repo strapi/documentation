@@ -4,7 +4,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Dart](https://dart.dev/) remains the same except that you will not fetch the same content.
 
-### Create a Dart file
+## Create a Dart file
 
 Be sure to have [Dart installed](https://dart.dev/get-dart) on your computer.
 
@@ -13,7 +13,7 @@ take dart-app
 touch main.dart
 ```
 
-### Use an HTTP client
+## Use an HTTP client
 
 We'll use [http](https://pub.dev/packages/http) for making HTTP requests.
 
@@ -31,7 +31,7 @@ dependencies:
 dart pub get
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -114,7 +114,7 @@ void main() {
 }
 ```
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -204,7 +204,7 @@ void main() {
 }
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

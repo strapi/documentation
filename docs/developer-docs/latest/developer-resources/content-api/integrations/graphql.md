@@ -4,7 +4,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [GraphQL](https://graphql.org/) remains the same except that you will not fetch the same content.
 
-### Install the GraphQL plugin
+## Install the GraphQL plugin
 
 Install the graphql plugin in your Strapi project.
 
@@ -36,7 +36,7 @@ strapi install graphql
 
 ::::
 
-### Fetch your Restaurant collection type
+## Fetch your Restaurant collection type
 
 Play with the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
 
@@ -163,7 +163,7 @@ export default {
 
 ::::
 
-### Fetch your Category collection type
+## Fetch your Category collection type
 
 _Request_
 
@@ -201,7 +201,7 @@ _Response_
 }
 ```
 
-### Examples
+## Examples
 
 :::: tabs
 
