@@ -1,6 +1,6 @@
 ---
 title: Install from Docker - Strapi Developer Documentation
-description: Quickly create a Strapi application using our officials Strapi Docker images.
+description: Quickly create a Strapi application using our official Strapi Docker images.
 ---
 
 # Installing using Docker
