@@ -1,3 +1,8 @@
+---
+title: Strapi Developer Documentation
+description: This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
+---
+
 # Welcome to the Strapi developer documentation!
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
@@ -37,4 +42,3 @@ You can join [GitHub](https://github.com/strapi/strapi) and the [forum](https://
 Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
 
 For enterprise support, please fill in the form on the [Support page](https://strapi.io/support) of the Strapi website.
-

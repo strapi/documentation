@@ -1,3 +1,8 @@
+---
+title: Content Manager - Strapi User Guide
+description: Divided in 2 categories, the Content Manager contains the available collection and single content-types, which were created beforehand using the Content-Types Builder.
+---
+
 # Introduction to the Content Manager
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.

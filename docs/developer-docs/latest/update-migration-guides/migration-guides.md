@@ -1,6 +1,11 @@
+---
+title: Migrate Guides - Strapi Developer Documentation
+description: The following documentation includes all the migration guides for a Strapi application.
+---
+
 # Migrations guides
 
-Please also refer to the following [update guide](update-version.md) for a better understanding of how to update your project. 
+Please also refer to the following [update guide](update-version.md) for a better understanding of how to update your project.
 
 **Pay special attention to the [note](update-version.md#extensions) about upgrading if you are using the extensions system.**
 

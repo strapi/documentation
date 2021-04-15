@@ -1,3 +1,8 @@
+---
+title: Migrate from beta.19.x to beta.19.4 - Strapi Developer Documentation
+description: The following documentation covers how you can migrate your Strapi application from beta.19.x to beta.19.4.
+---
+
 # Migration guide from beta.19.x to beta.19.4
 
 Upgrading your Strapi application to `v3.0.0-beta.19.4`.

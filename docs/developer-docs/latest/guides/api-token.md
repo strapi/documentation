@@ -1,3 +1,8 @@
+---
+title: API Tokens - Strapi Developer Documentation
+description: Learn in this guide how to create an API token system in your Strapi project to execute request as an authenticated use.
+---
+
 # API tokens
 
 In this guide we will see how you can create an API token system to execute request as an authenticated user.

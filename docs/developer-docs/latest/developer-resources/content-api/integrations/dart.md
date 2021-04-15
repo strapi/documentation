@@ -1,3 +1,8 @@
+---
+title: Get started with Dart - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Dart.
+---
+
 # Getting Started with Dart
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.html). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.html#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).

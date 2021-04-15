@@ -1,3 +1,8 @@
+---
+title: Configuring views of a content type - Strapi User Guide
+description: The following documentation covers how you can configure the view of a content type in your Strapi application.
+---
+
 # Configuring the views of a content type
 
 Depending on their type, content types can be divided into 2 interfaces: the list view and the edit view. Both interfaces can be configured.
@@ -98,7 +103,7 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 ::: warning IMPORTANT
 The settings and display of a component's fields cannot be managed and reordered through the entry's edit view configuration page. Click on the **Set the component's layout** button of a component to access the component's own configuration page. You will find the exact same settings and display options as for the entry, but that will specifically apply to your component.
 
-Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content type where the component is used. 
+Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content type where the component is used.
 :::
 
 #### Relational fields

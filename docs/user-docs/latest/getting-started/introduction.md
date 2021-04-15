@@ -1,3 +1,8 @@
+---
+title: Strapi User Guide
+description: This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
+---
+
 # Welcome to the Strapi user guide!
 
 This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.

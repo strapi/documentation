@@ -1,3 +1,8 @@
+---
+title: Migrate from beta.15 to beta.16 - Strapi Developer Documentation
+description: The following documentation covers how you can migrate your Strapi application from beta.15 to beta.16.
+---
+
 # Migration guide from beta.15 to beta.16
 
 Upgrading your Strapi application to `v3.0.0-beta.16`.

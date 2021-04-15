@@ -1,3 +1,8 @@
+---
+title: DigitalOcean Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on DigitalOcean.
+---
+
 # DigitalOcean
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/). Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service. Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.

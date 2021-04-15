@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.11 to alpha.12 - Strapi Developer Documentation
+description: The following documentation covers how you can migrate your Strapi application from alpha.11 to alpha.12.
+---
+
 # Migration guide from alpha.11 to alpha.12
 
 This migration guide is a mix of migrations from 3.0.0-alpha.11.1 to 3.0.0-alpha.11.2, 3.0.0-alpha.11.2 to 3.0.0-alpha.11.3 and from 3.0.0-alpha.11.3 to 3.0.0-alpha.12.1.3.

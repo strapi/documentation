@@ -1,3 +1,8 @@
+---
+title: Admin panel customization - Strapi Developer Documentation
+description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
+---
+
 # Admin panel customization
 
 ## Admin extension

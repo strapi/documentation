@@ -1,3 +1,8 @@
+---
+title: Heroku Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on Heroku.
+---
+
 # Heroku
 
 This is a step-by-step guide for deploying a Strapi project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are provided instructions on how to get started.

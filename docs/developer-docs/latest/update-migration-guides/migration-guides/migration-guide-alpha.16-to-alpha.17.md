@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.16 to alpha.17 - Strapi Developer Documentation
+description: The following documentation covers how you can migrate your Strapi application from alpha.16 to alpha.17.
+---
+
 # Migration guide from alpha.16 to alpha.17
 
 **Here are the major changes:**
