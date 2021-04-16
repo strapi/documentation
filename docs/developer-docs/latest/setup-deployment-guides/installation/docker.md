@@ -101,6 +101,7 @@ version: '3'
 services:
   strapi:
     image: strapi/strapi
+    command: bash -c "npm install"
     environment:
       DATABASE_CLIENT: mysql
       DATABASE_HOST: mysql
