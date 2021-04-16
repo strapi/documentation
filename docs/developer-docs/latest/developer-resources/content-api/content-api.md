@@ -1104,4 +1104,4 @@ If you only want to retrieve your draft entries, you can combine the `preview` m
 
 ### Locale
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, and the [appropriate permission has been set](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#collection-and-single-types) for the content-type, the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
