@@ -7,7 +7,7 @@ Databases can be created using DigitalOcean's [Managed Databases](https://www.di
 Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
 ::: tip
-Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md) deployment option for DigitalOcean and can also be deployed to DigitalOcean Droplets.
+Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md) deployment option for DigitalOcean and can also be deployed to [DigitalOcean Droplets](/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.md).
 :::
 
 ### DigitalOcean Install Requirements
