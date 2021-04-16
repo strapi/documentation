@@ -11,11 +11,11 @@ description: Reference guide to Strapi plugins explaining how they work and how 
 
 No matter if they are installed by default, or additional, Strapi plugins allow to expand your application by adding more options and possibilities. All options are documented in their right places throughout the user guide. However, you can use the following documentation as a reference guide to know which Strapi plugins are available, how they work and which options they add to your Strapi application.
 
-## Additional plugins
+## Default plugins
 
 ### <img width="28" src="../assets/plugins/icon_i18n-plugin.png"> Internationalization plugin
 
-The Internationalization plugin is an additional plugin that is not installed by default. It can be installed through the Marketplace (see [Installing plugins via the Marketplace](installing-plugins-via-marketplace.md)).
+The Internationalization plugin is a default plugin for all Strapi applications running on version 3.6.0 or higher. For lower versions, a migration is needed, as well as a manual installation of the plugin (see [Installing plugins via the Marketplace](installing-plugins-via-marketplace.md)).
 
 This plugin allows to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
 
