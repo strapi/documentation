@@ -199,7 +199,7 @@
             </g>
           </svg>
         </template>
-        <template #title>i18n</template>
+        <template #title>Internationalization (i18n)</template>
         <template #description>
           Plugin to manage internationalization of content
         </template>
