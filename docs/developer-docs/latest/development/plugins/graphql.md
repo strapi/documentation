@@ -247,7 +247,7 @@ You can also apply different parameters to the query to make more complex querie
 - `start` (integer): Define the amount of entries to skip.
 - `sort` (string): Define how the data should be sorted.
 - `publicationState` (PublicationState): Only select entries matching the publication state provided.
-- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and the [appropriate permission has been set](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#collection-and-single-types) for the content-type
+- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and the [appropriate permission has been set](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#collection-and-single-types) for the content-type.
 
   Handled states are:
 
