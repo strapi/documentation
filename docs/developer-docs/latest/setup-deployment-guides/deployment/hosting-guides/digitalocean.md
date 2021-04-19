@@ -1,8 +1,8 @@
-# DigitalOcean
+# DigitalOcean Droplets
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md).
 
-Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/). 
+Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
 
 Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
@@ -406,14 +406,9 @@ const exec = require('child_process').exec;
 const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
 
 http
-  .createServer(function(req, res) {
-    req.on('data', function(chunk) {
-      let sig =
-        'sha1=' +
-        crypto
-          .createHmac('sha1', secret)
-          .update(chunk.toString())
-          .digest('hex');
+  .createServer(function (req, res) {
+    req.on('data', function (chunk) {
+      let sig = 'sha1=' + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
 
       if (req.headers['x-hub-signature'] == sig) {
         exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
