@@ -88,7 +88,7 @@ Select the region closest to you and your users. Static components are served on
 
 For prototype applications, you can choose the Basic plan. For applications that are expecting production traffic, you can choose the Pro plan. You will also see the pricing for your database that you have chosen.
 
-Choose your container size based on how much traffic you believe your app will have. It is a good practice to start on the smaller sizes, monitor the metrics of your app, and scale up as your app grows. App Platform allows us to scale vertically or horizontally with the click of a button.
+Choose your container size based on how much traffic you believe your app will have. It is a good practice to start on the smaller sizes, monitor the metrics of your app, and scale up as your app grows. App Platform allows DigitalOcean to scale vertically or horizontally with the click of a button.
 
 ### Step 9. Launch!
 
