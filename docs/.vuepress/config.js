@@ -63,8 +63,6 @@ const sidebar = {
               ],
               sidebarDepth: 2
             },
-            ['/developer-docs/latest/setup-deployment-guides/deployment.html#recommended-requirements', 'Recommended Requirements'],
-            ['/developer-docs/latest/setup-deployment-guides/deployment.html#application-configuration','Application Configuration']
           ],
           sidebarDepth: 0,
         },
