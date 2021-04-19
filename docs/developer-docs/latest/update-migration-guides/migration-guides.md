@@ -1,6 +1,6 @@
 ---
 title: Migrate Guides - Strapi Developer Documentation
-description: The following documentation includes all the migration guides for a Strapi application.
+description: All the migration guides for a Strapi application.
 ---
 
 # Migrations guides

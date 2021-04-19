@@ -1,6 +1,6 @@
 ---
 title: Installation - Strapi Developer Documentation
-description: The following documentation covers many different options to install Strapi and getting started on using it.
+description: Learn many different options to install Strapi and getting started on using it.
 ---
 
 # Installation

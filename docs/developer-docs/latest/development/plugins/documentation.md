@@ -1,6 +1,6 @@
 ---
 title: API Documentation - Strapi Developer Documentation
-description: By using SWAGGER UI, the API documentation plugin takes out most of your pain to generate your documentation.
+description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 ---
 
 # API Documentation

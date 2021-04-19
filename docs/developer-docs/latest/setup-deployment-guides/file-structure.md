@@ -1,6 +1,6 @@
 ---
 title: Project Structure - Strapi Developer Documentation
-description: The following documentation covers the project structure of any default Strapi application.
+description: Discover the project structure of any default Strapi application.
 ---
 
 # Project structure

@@ -1,6 +1,6 @@
 ---
 title: Migrate from alpha.8 to alpha.9 - Strapi Developer Documentation
-description: The following documentation covers how you can migrate your Strapi application from alpha.8 to alpha.9.
+description: Learn how you can migrate your Strapi application from alpha.8 to alpha.9.
 ---
 
 # Migration guide from alpha.8 to alpha.9

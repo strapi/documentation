@@ -1,6 +1,6 @@
 ---
 title: Migrate from alpha.24 to alpha.25.2 - Strapi Developer Documentation
-description: The following documentation covers how you can migrate your Strapi application from alpha.24 to alpha.25.2.
+description: Learn how you can migrate your Strapi application from alpha.24 to alpha.25.2.
 ---
 
 # Migration guide from alpha.24 to alpha.25.2

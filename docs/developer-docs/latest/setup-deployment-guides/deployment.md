@@ -1,6 +1,6 @@
 ---
 title: Deployment - Strapi Developer Documentation
-description: The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
+description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
 ---
 
 # Deployment

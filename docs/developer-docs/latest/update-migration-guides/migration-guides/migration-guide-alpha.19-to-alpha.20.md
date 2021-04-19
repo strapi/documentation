@@ -1,6 +1,6 @@
 ---
 title: Migrate from alpha.19 to alpha.20 - Strapi Developer Documentation
-description: The following documentation covers how you can migrate your Strapi application from alpha.19 to alpha.20.
+description: Learn how you can migrate your Strapi application from alpha.19 to alpha.20.
 ---
 
 # Migration guide from alpha.19 to alpha.20
