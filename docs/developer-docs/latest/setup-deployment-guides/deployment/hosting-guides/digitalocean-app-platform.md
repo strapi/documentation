@@ -1,3 +1,8 @@
+---
+title: DigitalOcean App Platform Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on DigitalOcean App Platform.
+---
+
 # DigitalOcean App Platform
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean's App Platform](https://digitalocean.com). App Platform is DigitalOcean's Platform as a Service (PaaS) that will handle deploying, networking, SSL, and more for your app. It is the easiest way to deploy Strapi to DigitalOcean.

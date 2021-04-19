@@ -1,6 +1,6 @@
 ---
-title: DigitalOcean Deployment - Strapi Developer Documentation
-description: Learn in this guide how to deploy your Strapi application on DigitalOcean.
+title: DigitalOcean Droplet Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
 ---
 
 # DigitalOcean Droplets
@@ -411,9 +411,14 @@ const exec = require('child_process').exec;
 const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
 
 http
-  .createServer(function (req, res) {
-    req.on('data', function (chunk) {
-      let sig = 'sha1=' + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
+  .createServer(function(req, res) {
+    req.on('data', function(chunk) {
+      let sig =
+        'sha1=' +
+        crypto
+          .createHmac('sha1', secret)
+          .update(chunk.toString())
+          .digest('hex');
 
       if (req.headers['x-hub-signature'] == sig) {
         exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
