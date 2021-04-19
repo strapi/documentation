@@ -90,6 +90,7 @@ module.exports = {
 You can now move the middleware configurations from `application.json`, `language.json`, `security.json`, `request.json` and `response.json` files directly into the `settings` property.
 
 You can review all possible options in the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#configuration-and-activation-2).
+
 <!-- This hash link above generates an error with the check-links plugins but everything seems to be fine 🤷  So it's been added to the files to ignore, see config.js. -->
 
 ::: tip
@@ -145,7 +146,7 @@ Any custom configuration you have can still be used. You can read the [configura
 
 #### Plugin
 
-From now on, you will set your plugin configurations in `./config/plugins.js` or `./config/env/{env}/plugin.js`. Instead of using the extensions system to directly modify the plugin configuration.
+From now on, you will set your plugin configurations in `./config/plugins.js` or `./config/env/{env}/plugins.js`. Instead of using the extensions system to directly modify the plugin configuration.
 
 **Example**
 
