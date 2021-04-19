@@ -23,9 +23,18 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
             ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
-            ['/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md', 'DigitalOcean One-Click'],
-            ['/developer-docs/latest/setup-deployment-guides/installation/platformsh.md', 'Platform.sh One-Click'],
-            ['/developer-docs/latest/setup-deployment-guides/installation/render.md', 'Render One-Click'],
+            [
+              '/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md',
+              'DigitalOcean One-Click',
+            ],
+            [
+              '/developer-docs/latest/setup-deployment-guides/installation/platformsh.md',
+              'Platform.sh One-Click',
+            ],
+            [
+              '/developer-docs/latest/setup-deployment-guides/installation/render.md',
+              'Render One-Click',
+            ],
           ],
         },
         ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
@@ -38,30 +47,69 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path:
+                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.md', '21YunBox'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.md', 'Amazon AWS'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.md', 'Azure'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.md', 'DigitalOcean'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.md', 'Google App Engine'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.md', 'Heroku'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.md', 'Qovery'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md', 'Render'],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.md',
+                  '21YunBox',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.md',
+                  'Amazon AWS',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.md',
+                  'Azure',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md',
+                  'DigitalOcean App Platform',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.md',
+                  'DigitalOcean Droplets',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.md',
+                  'Google App Engine',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.md',
+                  'Heroku',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.md',
+                  'Qovery',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
+                  'Render',
+                ],
               ],
-              sidebarDepth: 2
+              sidebarDepth: 2,
             },
             {
               title: 'Optional Software Guides',
-              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path:
+                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md', 'Caddy'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md', 'HAProxy'],
-                ['/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md', 'Nginx']
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md',
+                  'Caddy',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md',
+                  'HAProxy',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md',
+                  'Nginx',
+                ],
               ],
-              sidebarDepth: 2
+              sidebarDepth: 2,
             },
           ],
           sidebarDepth: 0,
@@ -99,24 +147,60 @@ const sidebar = {
           sidebarDepth: 1,
           children: [
             ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/vue-js', 'Vue.js'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/angular', 'Angular'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/next-js', 'Next.js'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js', 'Nuxt.js'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/graphql', 'GraphQL'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/gatsby', 'Gatsby'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/gridsome', 'Gridsome'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/jekyll', 'Jekyll'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
+              'Vue.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/angular',
+              'Angular',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/next-js',
+              'Next.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js',
+              'Nuxt.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/graphql',
+              'GraphQL',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gatsby',
+              'Gatsby',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gridsome',
+              'Gridsome',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/jekyll',
+              'Jekyll',
+            ],
             ['/developer-docs/latest/developer-resources/content-api/integrations/11ty', '11ty'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/svelte', 'Svelte'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/sapper', 'Sapper'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/svelte',
+              'Svelte',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/sapper',
+              'Sapper',
+            ],
             ['/developer-docs/latest/developer-resources/content-api/integrations/ruby', 'Ruby'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/python', 'Python'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/python',
+              'Python',
+            ],
             ['/developer-docs/latest/developer-resources/content-api/integrations/dart', 'Dart'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/flutter', 'Flutter'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
+              'Flutter',
+            ],
             ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
             ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
-          ]
+          ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
@@ -232,7 +316,9 @@ const sidebar = {
     {
       collapsable: false,
       title: 'General settings',
-      children: [['/user-docs/latest/settings/managing-global-settings', 'Managing global settings']],
+      children: [
+        ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
+      ],
     },
   ],
 };
@@ -427,8 +513,8 @@ module.exports = {
               },
               {
                 text: 'General Settings',
-                link: '/user-docs/latest/settings/managing-global-settings.html'
-              }
+                link: '/user-docs/latest/settings/managing-global-settings.html',
+              },
             ],
           },
         ],
