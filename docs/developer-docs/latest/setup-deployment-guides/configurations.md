@@ -1115,7 +1115,7 @@ An image named `company-logo.png` in `./public/` is accessible through `/company
 The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
 :::
 
-### Single Sign On <GoldBadge link="https://strapi.io/pricing/" withLinkIcon />
+### Single Sign On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
 ***
 
@@ -1576,7 +1576,7 @@ module.exports = () => ({
 });
 ```
 
-### Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing"/> <SilverBadge link="https://strapi.io/pricing"/> <GoldBadge link="https://strapi.io/pricing" withLinkIcon/>
+### Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
 ::: warning 🚧 This API is considered unstable for now.
 <br>
