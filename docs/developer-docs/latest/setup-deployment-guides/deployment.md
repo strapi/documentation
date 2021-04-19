@@ -83,7 +83,7 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 		<template #icon>
 			<svg width="178" height="177" viewBox="0 0 178 177" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M89 176.5v-34.2c36.2 0 64.3-35.9 50.4-74-5.1-14-16.4-25.3-30.5-30.4-38.1-13.8-74 14.2-74 50.4H.8C.8 30.6 56.6-14.4 117.1 4.5c26.4 8.3 47.5 29.3 55.7 55.7 18.9 60.5-26.1 116.3-83.8 116.3z" fill-rule="nonzero"></path><path d="M89.1 142.5H55v-34.1h34.1zM55 168.6H28.9v-26.1H55zM28.9 142.5H7v-21.9h21.9v21.9z"></path></g></svg>
 		</template>
-		<template #title>DigitalOcean</template>
+		<template #title>DigitalOcean Droplets</template>
 		<template #description>
 			Manual step by step guide for deploying on DigitalOcean droplets
 		</template>
