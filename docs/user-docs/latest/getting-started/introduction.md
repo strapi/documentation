@@ -15,7 +15,7 @@ Before going any further into this user guide, we recommend you to acknowledge t
 
 - **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version, especially since our documentation including this user guide, are only aligned with the latest version<!-- (see Update Strapi version or refer to our migration guides to update your Strapi application) -->. If you are on an older version of Strapi, some information in this documentation may not apply to your application.
 
-- **License and Pricing Plans** <br> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or one of the 3 paid plans of the Enterprise Edition: Bronze, Silver, and Gold (see [Pricing and Plans](https://strapi.io/pricing)). In this user guide if a feature is only available for the Enterprise Edition, a badge is displayed beside the section's title to indicate which plans allow access to that feature (e.g. <BronzeBadge link="https://strapi.io/pricing"/> <SilverBadge link="https://strapi.io/pricing"/> <GoldBadge link="https://strapi.io/pricing"/>).
+- **License and Pricing Plans** <br> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or one of the 3 paid plans of the Enterprise Edition: Bronze, Silver, and Gold (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)). In this user guide if a feature is only available for the Enterprise Edition, a badge is displayed beside the section's title to indicate which plans allow access to that feature (e.g. <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/>).
 
 - **Roles and Permissions** <br> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end-users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
 
@@ -37,7 +37,7 @@ To access the admin panel:
 2. Enter your credentials to log in.
 3. Click on the **Log in** button. You should be redirected to the homepage of the admin panel.
 
-### Using SSO for authentication <GoldBadge withLinkIcon link="https://strapi.io/pricing" />
+### Using SSO for authentication <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](../settings/managing-global-settings.md)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
 

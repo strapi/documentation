@@ -121,18 +121,31 @@ export default WysiwygWithErrors;
 
 #### Styles
 
-The AdminUI package source can be easily found in `./node_modules/strapi-admin/src/`.
+The AdminUI package source is located in `./node_modules/strapi-admin/admin/src/`.
 
-For example, to change the top-left displayed admin panel's color, copy the `./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader` folder to `./admin/src/components/LeftMenu/LeftMenuHeader` (create these folders if they don't exist) and change the styles inside `./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js`.
+For example, to change the top-left admin panel's color:
 
-
-Thus, you are replacing the files that would normally be in `node_modules/strapi-admin/admin/src` and directing them to `admin/src/some/file/path`.
-
-To apply your changes you need to rebuild your admin panel
+1. create a copy of the 
+- `./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader` folder to 
+- `./admin/src/components/LeftMenu/LeftMenuHeader` (create these folders if they don't exist)
 
 ```
-npm run build
+mkdir -p ./admin/src/components/LeftMenu/LeftMenuHeader
+cp ./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js ./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js
 ```
+
+2. modify style within that copy (see also [sourcecode online](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js#L7)):
+
+**Path:** `./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js`
+```js
+  background-color: #007eff;
+```
+
+Thus, files in `admin/src/some/file/path` take precedence over `node_modules/strapi-admin/admin/src/file/path`.
+
+::: warning
+To apply your changes you need to [rebuild](#build) your admin panel
+:::
 
 #### Logo
 
@@ -253,7 +266,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-**You have to rebuild the administration panel to make this work.** [Build instructions](/developer-docs/latest/development/admin-customization.md#build).
+::: warning
+To apply your changes you need to [rebuild](#build) your admin panel
+:::
 
 ### Deploy the administration panel on another server (AWS S3, Azure, etc) than the API.
 
