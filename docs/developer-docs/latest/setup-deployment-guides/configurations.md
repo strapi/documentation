@@ -482,7 +482,7 @@ Some settings can only be modified through environment variables. Here is a list
 | `NODE_ENV`                           | Type of environment where the app is running                                                                          | string  | `'development'` |
 | `BROWSER`                            | Open the admin panel in the browser after startup                                                                     | boolean | `true`          |
 | `ENV_PATH`                           | Path to the file that contains your environment variables                                                             | string  | `'./.env'`      |
-| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE`| Default locale code for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE`| Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
 
 #### Configuration using environment variables
 
