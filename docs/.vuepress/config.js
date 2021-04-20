@@ -14,6 +14,7 @@ const sidebar = {
       collapsable: false,
       title: '⚙️ Setup & Deployment',
       sidebarDepth: 0,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
         {
           title: 'Installation',
