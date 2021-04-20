@@ -1,6 +1,6 @@
 ---
 title: Fields for Content Types - Strapi User Guide
-description: Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager
+description: Instructions to configure in the Content-Types Builder the fields that compose each content-type.
 ---
 
 # Configuring fields for content types
