@@ -1,6 +1,6 @@
 ---
 title: Users, Roles & Permissions - Strapi User Guide
-description: Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions.
+description: Introduction to the system of permissions of Strapi which gives access to features of the admin panel.
 ---
 
 # Introduction to users, roles & permissions
