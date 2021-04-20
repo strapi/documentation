@@ -1,6 +1,6 @@
 ---
 title: Configuring views of a content type - Strapi User Guide
-description: The following documentation covers how you can configure the view of a content type in your Strapi application.
+description: Instructions to configure the edit view and list view of a content type in a Strapi application.
 ---
 
 # Configuring the views of a content type
