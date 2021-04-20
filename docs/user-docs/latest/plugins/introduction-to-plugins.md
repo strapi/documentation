@@ -1,6 +1,6 @@
 ---
 title: Plugins - Strapi User Guide
-description: Learn how you can use different plugins in your Strapi application in the Admin UI.
+description: Reference guide to all Strapi plugins and instructions to use these plugins.
 ---
 
 # Introduction to plugins
