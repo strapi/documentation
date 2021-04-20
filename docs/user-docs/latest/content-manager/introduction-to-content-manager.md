@@ -1,6 +1,6 @@
 ---
 title: Content Manager - Strapi User Guide
-description: Divided in 2 categories, the Content Manager contains the available collection and single content-types, which were created beforehand using the Content-Types Builder.
+description: Introduction to the Content Manager which allows to write content for collection types and single types.
 ---
 
 # Introduction to the Content Manager
