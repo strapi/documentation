@@ -1,6 +1,6 @@
 ---
 title: Managing Administrators - Strapi User Guide
-description: Administrators are the users of an admin panel of a Strapi project. They can be managed with the Role-Based Access Control (RBAC) feature.
+description: Instructions to manage the administrators of a Strapi application with the Role-Based Access Control (RBAC) feature.
 ---
 
 # Managing administrator accounts
