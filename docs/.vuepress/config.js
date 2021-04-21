@@ -121,19 +121,19 @@ const sidebar = {
       collapsable: false,
       title: '🔧 Development',
       children: [
-        ['/developer-docs/latest/development/backend-customization.md', 'Backend customization'],
-        ['/developer-docs/latest/development/admin-customization.md', 'Admin panel customization'],
+        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
+        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         {
           title: 'Strapi plugins',
           path: '/developer-docs/latest/development/plugin-customization.html',
           collapsable: true,
           children: [
-            ['/developer-docs/latest/development/plugins/documentation.md', 'API Documentation'],
-            ['/developer-docs/latest/development/plugins/email.md', 'Email'],
-            ['/developer-docs/latest/development/plugins/graphql.md', 'GraphQL'],
-['/developer-docs/latest/development/plugins/i18n.md', 'Internationalization (i18n)'],
-            ['/developer-docs/latest/development/plugins/upload.md', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions.md', 'Users & Permissions']
+            ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
+            ['/developer-docs/latest/development/plugins/email', 'Email'],
+            ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
+['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
+            ['/developer-docs/latest/development/plugins/upload', 'Upload'],
+            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions']
           ],
           sidebarDepth: 1,
         },
