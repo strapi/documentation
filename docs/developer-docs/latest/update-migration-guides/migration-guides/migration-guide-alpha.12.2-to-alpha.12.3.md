@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.12.2 to alpha.12.3 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from alpha.12.2 to alpha.12.3.
+---
+
 # Migration guide from alpha.12.2 to alpha.12.3
 
 **Here are the major changes:**

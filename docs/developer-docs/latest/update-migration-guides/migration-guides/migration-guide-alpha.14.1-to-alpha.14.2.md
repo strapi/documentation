@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.14.1 to alpha.14.2 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from alpha.14.1 to alpha.14.2.
+---
+
 # Migration guide from alpha.14.1 to alpha.14.2
 
 **Here are the major changes:**

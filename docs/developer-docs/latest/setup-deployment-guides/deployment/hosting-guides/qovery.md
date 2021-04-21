@@ -1,13 +1,18 @@
+---
+title: Qovery Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on Qovery.
+---
+
 # Qovery
 
-This is a step-by-step guide for deploying a Strapi project on [Qovery](https://www.qovery.com). 
+This is a step-by-step guide for deploying a Strapi project on [Qovery](https://www.qovery.com).
 
-Qovery is a CaaS for developers to deploy their full-stack applications on AWS, GCP, Azure and Digital Ocean. Qovery provides access to managed PostgreSQL and free SSL. 
+Qovery is a CaaS for developers to deploy their full-stack applications on AWS, GCP, Azure and Digital Ocean. Qovery provides access to managed PostgreSQL and free SSL.
 
 ::: tip
 Qovery provides free hosting for individual developers.
 :::
- 
+
 ## Deploying with the web interface
 ### 1. Create a Qovery Account
 Visit [the Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
@@ -65,7 +70,7 @@ routers:
 - name: main
   custom_domains: # optional: only if you want to use your domain
   - branch: master
-    domain: my.domain.tld 
+    domain: my.domain.tld
   routes:
   - application_name: strapi
     paths:

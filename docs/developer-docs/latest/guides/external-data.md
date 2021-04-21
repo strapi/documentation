@@ -1,3 +1,8 @@
+---
+title: External Data - Strapi Developer Documentation
+description: Learn in this guide how to fetch data from an external service to use it in your Strapi project.
+---
+
 # Fetching external data
 
 This guide explains how to fetch data from an external service to use it in your app.

@@ -1,3 +1,8 @@
+---
+title: Managing Relational Fields - Strapi User Guide
+description: Instructions to manage relation-type fields, called "relational fields", which establish a relation between two content-types.
+---
+
 # Managing relational fields
 
 Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".

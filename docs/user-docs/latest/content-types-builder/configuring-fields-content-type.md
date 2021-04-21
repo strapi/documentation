@@ -1,3 +1,8 @@
+---
+title: Fields for Content Types - Strapi User Guide
+description: Instructions to configure in the Content-Types Builder the fields that compose each content-type.
+---
+
 # Configuring fields for content types
 
 ::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
@@ -9,7 +14,7 @@ Content-types are composed of one or several fields. Each field is designed to c
 In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: tip NOTE
-Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available. 
+Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
 ![Select a field](../assets/content-types-builder/fields-selection.png)
@@ -182,8 +187,8 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 1. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
 2. Click on the icon representing the relation to establish between the content-types.
-3. Choose the *Field name* of the content-type A, meaning the name that will be used for the field in the content-type A. 
-4. (optional if disabled by the relation type) Choose the *Field name* of the content-type B. 
+3. Choose the *Field name* of the content-type A, meaning the name that will be used for the field in the content-type A.
+4. (optional if disabled by the relation type) Choose the *Field name* of the content-type B.
 
 :::
 
@@ -197,7 +202,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 :::
 
-:::: 
+::::
 
 ### <img width="28" src="../assets/content-types-builder/field-icon_email.png"> Email
 

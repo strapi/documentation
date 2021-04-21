@@ -1,3 +1,8 @@
+---
+title: Client - Strapi Developer Documentation
+description: Learn in this guide how to setup a connection with a third party client and use it everywhere in your code.
+---
+
 # Setup a third party client
 
 This guide will explain how to setup a connection with a third party client and use it everywhere in your code.

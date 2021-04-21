@@ -1,3 +1,8 @@
+---
+title: MongoDB - Strapi Developer Documentation
+description: Learn how you can use SQLite for your Strapi application.
+---
+
 # SQLite Installation
 
 SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quick-start.md)) and recommended database to quickly create an app locally.
