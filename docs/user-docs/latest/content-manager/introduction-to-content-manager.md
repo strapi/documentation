@@ -1,6 +1,6 @@
 ---
-title: Introduction to the Content Manager - Strapi User Guide
-description: Introduction to managing collection types and single types with the Content Manager
+title: Content Manager - Strapi User Guide
+description: Introduction to the Content Manager which allows to write content for collection types and single types.
 ---
 
 # Introduction to the Content Manager

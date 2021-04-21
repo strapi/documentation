@@ -1,6 +1,6 @@
 ---
-title: Saving, publishing and deleting content - Strapi User Guide
-description: Instructions to save, publish and delete content (Draft & Publish, i18n)
+title: Saving & Publishishing content - Strapi User Guide
+description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
 ---
 
 # Saving, publishing and deleting content

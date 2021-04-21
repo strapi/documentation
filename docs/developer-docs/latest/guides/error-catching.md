@@ -1,3 +1,8 @@
+---
+title: Error Catching - Strapi Developer Documentation
+description: Learn in this guide how you can catch errors and send them to the Application Monitoring / Error Tracking Software you want.
+---
+
 # Error catching
 
 In this guide we will see how you can catch errors and send them to the Application Monitoring / Error Tracking Software you want.

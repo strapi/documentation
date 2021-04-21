@@ -1,3 +1,8 @@
+---
+title: CLI - Strapi Developer Documentation
+description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+---
+
 # Command Line Interface (CLI)
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.

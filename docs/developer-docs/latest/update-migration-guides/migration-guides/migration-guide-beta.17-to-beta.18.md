@@ -1,3 +1,8 @@
+---
+title: Migrate to beta.18 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application to beta.18.
+---
+
 # Migration guide from beta.17.4 through beta.17.8 to beta.18
 
 Upgrading your Strapi application to `v3.0.0-beta.18`.

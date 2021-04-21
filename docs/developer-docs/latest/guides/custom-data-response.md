@@ -1,3 +1,8 @@
+---
+title: Custom Data Response - Strapi Developer Documentation
+description: Learn in this guide how you can customize your Strapi project API's response.
+---
+
 # Custom data response
 
 In this guide we will see how you can customize your API's response.

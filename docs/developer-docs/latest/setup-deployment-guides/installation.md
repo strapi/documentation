@@ -1,3 +1,8 @@
+---
+title: Installation - Strapi Developer Documentation
+description: Learn many different options to install Strapi and getting started on using it.
+---
+
 # Installation
 
 Strapi gives you many possible installation options for your project or application. Strapi can be installed on your computer or services such as Render, DigitalOcean, Amazon AWS, or Platform.sh. The following documentation covers many different options to install Strapi and getting started on using it.

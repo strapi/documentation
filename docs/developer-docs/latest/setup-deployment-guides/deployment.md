@@ -1,3 +1,8 @@
+---
+title: Deployment - Strapi Developer Documentation
+description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
+---
+
 # Deployment
 
 Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as 21YunBox, Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
@@ -5,6 +10,149 @@ Strapi gives you many possible deployment options for your project or applicatio
 ::: tip
 Deploying **databases** along with Strapi is covered in the [Databases Guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides).
 :::
+
+## General guidelines
+
+::: warning PREREQUISITES
+To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
+
+- Node LTS (v12 or V14) **Note that odd-number releases of Node will never be supported (e.g. v13, v15).**
+- NPM v6 or whatever ships with the LTS Node versions
+- Typical standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
+- At least 1 CPU core (Highly recommended at least 2)
+- At least 2 GB of RAM (Moderately recommended 4)
+- Minimum required storage space recommended by your OS or 32 GB of **free** space
+- A supported database version
+  - MySQL >= 5.6
+  - MariaDB >= 10.1
+  - PostgreSQL >= 10
+  - SQLite >= 3
+  - MongoDB >= 3.6
+- A supported operating system
+  - Ubuntu >= 18.04 (LTS-Only)
+  - Debian >= 9.x
+  - CentOS/RHEL >= 8
+  - macOS Mojave or newer (ARM not supported)
+  - Windows 10
+  - Docker - [docker repo](https://github.com/strapi/strapi-docker)
+:::
+### Application Configuration
+
+#### 1. Configure
+
+We always recommend you use environment variables to configure your application based on the environment. Here is an example:
+
+**Path —** `./config/server.js`.
+
+```js
+module.exports = ({ env }) => ({
+  host: env('APP_HOST', '0.0.0.0'),
+  port: env.int('NODE_PORT', 1337),
+});
+```
+
+Then you can create a `.env` file or directly use the deployment platform you use to set environment variables:
+
+**Path —** `.env`.
+
+```
+APP_HOST=10.0.0.1
+NODE_PORT=1338
+```
+
+::: tip
+To learn more about configuration you can read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md)
+:::
+
+#### 2. Launch the server
+
+Before running your server in production you need to build your admin panel for production
+
+:::: tabs
+
+::: tab yarn
+
+```bash
+NODE_ENV=production yarn build
+```
+
+:::
+
+::: tab npm
+
+```bash
+NODE_ENV=production npm run build
+```
+
+:::
+
+::: tab Windows
+
+```bash
+npm install cross-env
+```
+
+Then in your `package.json` scripts section:
+
+```bash
+"production": "cross-env NODE_ENV=production npm run build"
+```
+
+:::
+
+::::
+
+Run the server with the `production` settings.
+
+:::: tabs
+
+::: tab yarn
+
+```bash
+NODE_ENV=production yarn start
+```
+
+:::
+
+::: tab npm
+
+```bash
+NODE_ENV=production npm start
+```
+
+:::
+
+::: tab Windows
+
+```bash
+npm install cross-env
+```
+
+Then in your `package.json` scripts section:
+
+```bash
+"production": "cross-env NODE_ENV=production npm start"
+```
+
+:::
+
+::::
+
+::: warning
+We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your process.
+:::
+
+If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
+
+```js
+const strapi = require('strapi');
+
+strapi(/* {...} */).start();
+```
+
+### Advanced configurations
+
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deployment).
 
 ## Hosting Provider Guides
 
@@ -67,11 +215,23 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 </div>
 
 <div>
+	<InstallLink link="deployment/hosting-guides/digitalocean-app-platform.html">
+		<template #icon>
+			<svg width="178" height="177" viewBox="0 0 178 177" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M89 176.5v-34.2c36.2 0 64.3-35.9 50.4-74-5.1-14-16.4-25.3-30.5-30.4-38.1-13.8-74 14.2-74 50.4H.8C.8 30.6 56.6-14.4 117.1 4.5c26.4 8.3 47.5 29.3 55.7 55.7 18.9 60.5-26.1 116.3-83.8 116.3z" fill-rule="nonzero"></path><path d="M89.1 142.5H55v-34.1h34.1zM55 168.6H28.9v-26.1H55zM28.9 142.5H7v-21.9h21.9v21.9z"></path></g></svg>
+		</template>
+		<template #title>DigitalOcean App Platform</template>
+		<template #description>
+			Manual step by step guide for deploying on DigitalOcean App Platform
+		</template>
+	</InstallLink>
+</div>
+
+<div>
 	<InstallLink link="deployment/hosting-guides/digitalocean.html">
 		<template #icon>
 			<svg width="178" height="177" viewBox="0 0 178 177" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M89 176.5v-34.2c36.2 0 64.3-35.9 50.4-74-5.1-14-16.4-25.3-30.5-30.4-38.1-13.8-74 14.2-74 50.4H.8C.8 30.6 56.6-14.4 117.1 4.5c26.4 8.3 47.5 29.3 55.7 55.7 18.9 60.5-26.1 116.3-83.8 116.3z" fill-rule="nonzero"></path><path d="M89.1 142.5H55v-34.1h34.1zM55 168.6H28.9v-26.1H55zM28.9 142.5H7v-21.9h21.9v21.9z"></path></g></svg>
 		</template>
-		<template #title>DigitalOcean</template>
+		<template #title>DigitalOcean Droplets</template>
 		<template #description>
 			Manual step by step guide for deploying on DigitalOcean droplets
 		</template>
@@ -167,144 +327,3 @@ Additional guides for optional software additions that compliment or improve the
 	</InstallLink>
 </div>
 
-## Recommended requirements
-
-To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
-
-- Node LTS (v12 or V14) **Note that odd-number releases of Node will never be supported (e.g. v13, v15).**
-- NPM v6 or whatever ships with the LTS Node versions
-- Typical standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
-- At least 1 CPU core (Highly recommended at least 2)
-- At least 2 GB of RAM (Moderately recommended 4)
-- Minimum required storage space recommended by your OS or 32 GB of **free** space
-- A supported database version
-  - MySQL >= 5.6
-  - MariaDB >= 10.1
-  - PostgreSQL >= 10
-  - SQLite >= 3
-  - MongoDB >= 3.6
-- A supported operating system
-  - Ubuntu >= 18.04 (LTS-Only)
-  - Debian >= 9.x
-  - CentOS/RHEL >= 8
-  - macOS Mojave or newer (ARM not supported)
-  - Windows 10
-  - Docker - [docker repo](https://github.com/strapi/strapi-docker)
-
-## Application Configuration
-
-### 1. Configure
-
-We always recommend you use environment variables to configure your application based on the environment. Here is an example:
-
-**Path —** `./config/server.js`.
-
-```js
-module.exports = ({ env }) => ({
-  host: env('APP_HOST', '0.0.0.0'),
-  port: env.int('NODE_PORT', 1337),
-});
-```
-
-Then you can create a `.env` file or directly use the deployment platform you use to set environment variables:
-
-**Path —** `.env`.
-
-```
-APP_HOST=10.0.0.1
-NODE_PORT=1338
-```
-
-::: tip
-To learn more about configuration you can read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md)
-:::
-
-### 2. Launch the server
-
-Before running your server in production you need to build your admin panel for production
-
-:::: tabs
-
-::: tab yarn
-
-```bash
-NODE_ENV=production yarn build
-```
-
-:::
-
-::: tab npm
-
-```bash
-NODE_ENV=production npm run build
-```
-
-:::
-
-::: tab Windows
-
-```bash
-npm install cross-env
-```
-
-Then in your `package.json` scripts section:
-
-```bash
-"production": "cross-env NODE_ENV=production npm run build"
-```
-
-:::
-
-::::
-
-Run the server with the `production` settings.
-
-:::: tabs
-
-::: tab yarn
-
-```bash
-NODE_ENV=production yarn start
-```
-
-:::
-
-::: tab npm
-
-```bash
-NODE_ENV=production npm start
-```
-
-:::
-
-::: tab Windows
-
-```bash
-npm install cross-env
-```
-
-Then in your `package.json` scripts section:
-
-```bash
-"production": "cross-env NODE_ENV=production npm start"
-```
-
-:::
-
-::::
-
-::: warning
-We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your process.
-:::
-
-If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
-
-```js
-const strapi = require('strapi');
-
-strapi(/* {...} */).start();
-```
-
-### Advanced configurations
-
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deployment).

@@ -1,3 +1,8 @@
+---
+title: Templates - Strapi Developer Documentation
+description: Quickly create a pre-made Strapi application designed for a specific use case. It allows you to quickly bootstrap a custom Strapi app.
+---
+
 # Templates
 
 A template is a pre-made Strapi configuration designed for a specific use case. It allows you to quickly bootstrap a custom Strapi app.

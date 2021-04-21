@@ -1,3 +1,8 @@
+---
+title: Project Structure - Strapi Developer Documentation
+description: Discover the project structure of any default Strapi application.
+---
+
 # Project structure
 
 By default, the structure of your Strapi project looks as shown below:

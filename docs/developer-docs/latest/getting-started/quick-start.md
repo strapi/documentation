@@ -1,3 +1,8 @@
+---
+title: Quick Start Guide - Strapi Developer Documentation
+description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
+---
+
 # Quick Start Guide
 
 Get ready to get Strapi up and running in **less than 3 minutes** 🚀.

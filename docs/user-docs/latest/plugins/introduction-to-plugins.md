@@ -1,6 +1,6 @@
 ---
-title: Introduction to plugins - Strapi User Guide
-description: Introduction on the Strapi plugins types and from which sections of the admin panel they are managed
+title: Plugins - Strapi User Guide
+description: Reference guide to all Strapi plugins and instructions to use these plugins.
 ---
 
 # Introduction to plugins

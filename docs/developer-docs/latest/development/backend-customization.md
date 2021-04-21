@@ -1,3 +1,8 @@
+---
+title: Backend customization - Strapi Developer Documentation
+description: The backend of Strapi can be customized according to your needs, so you can create your own backend behavior.
+---
+
 # Backend customization
 
 <!--- BEGINNING OF ROUTING --->
@@ -841,7 +846,7 @@ module.exports = {
    */
 
   async update(params, data, { files } = {}) {
-    const existingEntry = await db.query('restaurant').findOne(params);
+    const existingEntry = await strapi.query('restaurant').findOne(params);
 
     const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(

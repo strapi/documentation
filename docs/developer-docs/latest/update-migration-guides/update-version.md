@@ -1,3 +1,8 @@
+---
+title: Update Strapi version - Strapi Developer Documentation
+description: The following documentation covers how to upgrade your application to the latest version of Strapi.
+---
+
 # Update Strapi version
 
 With this guide you will know how to upgrade your application to the latest version of Strapi.

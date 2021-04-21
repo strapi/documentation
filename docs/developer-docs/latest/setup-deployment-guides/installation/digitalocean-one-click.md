@@ -1,3 +1,8 @@
+---
+title: DigitalOcean One-click - Strapi Developer Documentation
+description: Quickly deploy a Strapi application on DigitalOcean by simply using their One-click button.
+---
+
 # DigitalOcean One-click
 
 [DigitalOcean](https://www.digitalocean.com/) provide a simple way to deploy Strapi with an easy click of the mouse.
