@@ -263,6 +263,7 @@ const sidebar = {
           '/user-docs/latest/content-manager/managing-relational-fields',
           'Managing relational fields',
         ],
+        ['/user-docs/latest/content-manager/translating-content', 'Translating content'],
         [
           '/user-docs/latest/content-manager/saving-and-publishing-content',
           'Saving, publishing and deleting content',
@@ -312,7 +313,20 @@ const sidebar = {
     {
       collapsable: false,
       title: 'Plugins',
-      children: [['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins']],
+      children: [
+        [
+          '/user-docs/latest/plugins/introduction-to-plugins',
+          'Introduction to plugins',
+        ],
+        [
+          '/user-docs/latest/plugins/installing-plugins-via-marketplace',
+          'Installing plugins via the Marketplace',
+        ],
+        [
+          '/user-docs/latest/plugins/strapi-plugins',
+          'List of Strapi plugins',
+        ],
+      ],
     },
     {
       collapsable: false,
