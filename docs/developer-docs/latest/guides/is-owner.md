@@ -1,3 +1,8 @@
+---
+title: Is Owner - Strapi Developer Documentation
+description: Learn in this guide how to restrict content editing to content authors only.
+---
+
 # Create is owner policy
 
 This guide will explain how to restrict content editing to content authors only.

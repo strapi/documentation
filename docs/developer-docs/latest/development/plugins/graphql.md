@@ -1,3 +1,8 @@
+---
+title: GraphQL - Strapi Developer Documentation
+description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
+---
+
 # GraphQL
 
 By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.

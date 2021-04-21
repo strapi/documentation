@@ -1,3 +1,8 @@
+---
+title: Content-Types Builder - Strapi User Guide
+description: From the Content-Types Builder, administrators can create and manage content-types: collection types and single types but also components.
+---
+
 # Introduction to the Content-Types Builder
 
 The Content-Types Builder is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. The Content-Types Builder is however only accessible when the application is in a development environment.

@@ -1,3 +1,8 @@
+---
+title: Backend customization - Strapi Developer Documentation
+description: The backend of Strapi can be customized according to your needs, so you can create your own backend behavior.
+---
+
 # Backend customization
 
 <!--- BEGINNING OF ROUTING --->

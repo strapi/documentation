@@ -1,3 +1,8 @@
+---
+title: Plugins - Strapi User Guide
+description: Reference guide to all Strapi plugins and instructions to use these plugins.
+---
+
 # Introduction to plugins
 
 ::: warning 🚧 This section of the user guide is a work in progress. Stay tuned!

@@ -1,3 +1,8 @@
+---
+title: Scheduled Publication - Strapi Developer Documentation
+description: Learn in this guide how to create an article schedule system.
+---
+
 # Scheduled publication
 
 This guide will explain how to create an article schedule system.

@@ -1,3 +1,9 @@
+---
+title: Roles & Permissions - Strapi Developer Documentation
+description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
+sidebarDepth: 2
+---
+
 # Roles & Permissions
 
 This plugin provides a way to protect your API with a full authentication process based on JWT. This plugin comes also with an ACL strategy that allows you to manage the permissions between the groups of users.

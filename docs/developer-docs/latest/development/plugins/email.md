@@ -1,3 +1,8 @@
+---
+title: Email - Strapi Developer Documentation
+description: Send email from your server or externals providers.
+---
+
 # Email
 
 Thanks to the plugin `Email`, you can send email from your server or externals providers such as **Sendgrid**.

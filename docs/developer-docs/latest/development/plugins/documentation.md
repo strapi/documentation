@@ -1,3 +1,8 @@
+---
+title: API Documentation - Strapi Developer Documentation
+description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
+---
+
 # API Documentation
 
 Now that you have created your API it's really important to document its available end-points. The documentation plugin takes out most of your pain to generate your documentation. This plugin uses [SWAGGER UI](https://swagger.io/solutions/api-documentation/) to visualize your API's documentation.

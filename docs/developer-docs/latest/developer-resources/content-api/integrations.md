@@ -1,3 +1,8 @@
+---
+title: Integrations - Strapi Developer Documentation
+description: Integrate Strapi with a multitude of frameworks, frontend or backend programming languages.
+---
+
 # Integrations
 
 Strapi generates an API for you to access your content. But how can you connect a React, Ruby, Gatsby application to it?

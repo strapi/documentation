@@ -1,3 +1,8 @@
+---
+title: API Reference - Strapi Developer Documentation
+description: Discover our concise reference documentation containing all the information to work with your Strapi API
+---
+
 # API reference
 
 - strapi

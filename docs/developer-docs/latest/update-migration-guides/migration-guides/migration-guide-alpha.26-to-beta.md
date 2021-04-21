@@ -1,3 +1,8 @@
+---
+title: Migrate to v3.0.0-beta.x - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application to v3.0.0-beta.x.
+---
+
 # Migration Guide
 
 Upgrading your Strapi application to `v3.0.0-beta.x`.
