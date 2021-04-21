@@ -9,7 +9,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Python](https://www.python.org/) remains the same except that you will not fetch the same content.
 
-### Create a Python file
+## Create a Python file
 
 Be sure to have [Python installed](https://wiki.python.org/moin/BeginnersGuide/Download) on your computer.
 
@@ -17,7 +17,7 @@ Be sure to have [Python installed](https://wiki.python.org/moin/BeginnersGuide/D
 touch script.py
 ```
 
-### Use an HTTP client
+## Use an HTTP client
 
 Many HTTP clients are available but in this documentation we'll use [Requests](https://github.com/psf/requests).
 
@@ -25,7 +25,7 @@ Many HTTP clients are available but in this documentation we'll use [Requests](h
 python -m pip install requests
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -97,7 +97,7 @@ restaurant = Restaurant()
 print(restaurant.all())
 ```
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -177,7 +177,7 @@ print(restaurant.create({
 }))
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

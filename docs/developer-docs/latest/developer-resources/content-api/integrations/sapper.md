@@ -9,7 +9,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Sapper](https://sapper.svelte.dev) remains the same except that you will not fetch the same content.
 
-### Create a Sapper app
+## Create a Sapper app
 
 First, install Degit by running `npm install -g degit` in your command-line interface (CLI).
 
@@ -21,7 +21,7 @@ Create a basic Sapper application using webpack:
 npx degit "sveltejs/sapper-template#webpack" sapper-app
 ```
 
-### Use an HTTP client
+## Use an HTTP client
 
 Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
@@ -43,7 +43,7 @@ No installation needed
 
 ::::
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -219,7 +219,7 @@ onMount(async () => {
 
 ::::
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -455,7 +455,7 @@ onMount(async () => {
 
 ::::
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

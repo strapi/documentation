@@ -9,7 +9,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Flutter](https://flutter.dev/) remains the same except that you will not fetch the same content.
 
-### Create a Flutter application
+## Create a Flutter application
 
 Be sure to have [Flutter installed](https://flutter.dev/docs/get-started/install) on your computer.
 
@@ -18,7 +18,7 @@ flutter create flutterapp
 cd flutterapp
 ```
 
-### Use an HTTP client
+## Use an HTTP client
 
 We'll use [http](https://pub.dev/packages/http) for making HTTP requests.
 
@@ -45,7 +45,7 @@ dependencies:
 flutter pub get
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -103,7 +103,7 @@ _Response_
 ]
 ```
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -154,7 +154,7 @@ _Response_
 }
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

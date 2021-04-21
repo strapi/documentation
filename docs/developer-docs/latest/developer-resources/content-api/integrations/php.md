@@ -9,7 +9,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
-### Create a PHP file
+## Create a PHP file
 
 Be sure to have [PHP installed](https://www.php.net/manual/en/install.php) on your computer.
 
@@ -18,7 +18,7 @@ touch strapi.php
 ```
 We will use cURL, a built-in PHP extension that allows us to receive and send information via the URL syntax.
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -81,7 +81,7 @@ getRestaurants();
 
 ```
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -180,7 +180,7 @@ postRestaurant();
 
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

@@ -9,7 +9,7 @@ This integration guide is following the [Getting started guide](/developer-docs/
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Jekyll](https://jekyllrb.com) remains the same except that you will not fetch the same content.
 
-### Create a Jekyll app
+## Create a Jekyll app
 
 Be sure to have [Jekyll installed](https://jekyllrb.com/docs/installation/) on your computer.
 
@@ -17,7 +17,7 @@ Be sure to have [Jekyll installed](https://jekyllrb.com/docs/installation/) on y
 jekyll new jekyll-app
 ```
 
-### Configure Jekyll
+## Configure Jekyll
 
 Jekyll is a [Static Site Generator](https://www.staticgen.com/) and will fetch your content from Strapi at build time. You need to configure Jekyll to communicate with your Strapi application.
 
@@ -58,7 +58,7 @@ strapi:
 bundle install
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
