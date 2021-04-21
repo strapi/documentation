@@ -28,6 +28,7 @@ To create a new content-type:
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/latest/content-manager/saving-and-publishing-content.md#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
 | Collection name | Write a database collection/table name that will be used for your content-type.                                                                  |
+| Enable localization for this Content-Type | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed) Tick the box to allow the content-type to be managed in various locales. |
 
 5. Click on the **Continue** button.
 6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md)).

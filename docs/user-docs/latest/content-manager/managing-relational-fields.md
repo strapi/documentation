@@ -36,6 +36,10 @@ Instead of choosing an entry by scrolling the list, you can click any drop-down 
 If the Draft & Publish feature (see [Saving, publishing and deleting content](saving-and-publishing-content.md)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
 :::
 
+::: warning IMPORTANT
+If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+:::
+
 ## Managing one-choice relational fields
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
