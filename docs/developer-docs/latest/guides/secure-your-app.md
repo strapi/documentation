@@ -1,3 +1,8 @@
+---
+title: Secure your application - Strapi Developer Documentation
+description: Learn in this guide how you can secure your Strapi application by using a third party provider.
+---
+
 # Secure your application
 
 In this guide we will see how you can secure your Strapi application by using a third party provider.

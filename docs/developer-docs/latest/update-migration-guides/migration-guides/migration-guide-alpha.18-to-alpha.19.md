@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.18 to alpha.19 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from alpha.18 to alpha.19.
+---
+
 # Migration guide from alpha.18 to alpha.19
 
 **Here are the major changes:**

@@ -1,3 +1,8 @@
+---
+title: Render Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on Render.
+---
+
 # Render
 
 This guide explains how to update an existing Strapi project so it can be deployed on [Render](https://render.com).

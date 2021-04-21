@@ -1,3 +1,8 @@
+---
+title: Install from CLI - Strapi Developer Documentation
+description: Fast-track local install for getting Strapi running on your computer in less than a minute.
+---
+
 # Installing from CLI
 
 Fast-track local install for getting Strapi running on your computer.

@@ -1,3 +1,8 @@
+---
+title: Render One-Click - Strapi Developer Documentation
+description: Quickly deploy a Strapi application on Render by simply using their One-click button.
+---
+
 # Render One-Click Deploy
 
 This guide explains how to deploy a new Strapi project on [Render](https://render.com) in one click.

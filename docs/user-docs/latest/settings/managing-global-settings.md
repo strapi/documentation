@@ -1,3 +1,8 @@
+---
+title: Global Settings - Strapi User Guide
+description: Instructions to manage the global settings of a Strapi application in the admin panel.
+---
+
 # Managing global settings
 
 Global settings for plugins and features are managed from *General > Settings* in the main navigation of the admin panel.

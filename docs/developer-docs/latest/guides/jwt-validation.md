@@ -1,3 +1,8 @@
+---
+title: JWT validation - Strapi Developer Documentation
+description: Learn in this guide how to validate a JWT (JSON Web Token) with a third party service.
+---
+
 # JWT validation
 
 In this guide we will see how to validate a `JWT` (JSON Web Token) with a third party service.
