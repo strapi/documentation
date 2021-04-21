@@ -293,6 +293,135 @@ putRestaurant();
 
 ```
 
+Running an authentication request (getting JWT)
+
+_Response_
+
+```json
+
+[{
+    "jwt": "TOKEN",
+    "user": {
+        "confirmed": true,
+        "blocked": false,
+        "_id": "XXXXXXX",
+        "email": "youremail@example.com",
+        "username": "USERNAME",
+        "provider": "local",
+        "createdAt": "2021-03-22T08:03:04.717Z",
+        "updatedAt": "2021-03-22T08:21:09.170Z",
+        "__v": 0,
+        "role": {
+            "_id": "XXXXXXXXX",
+            "name": "Authenticated",
+            "description": "Default role given to authenticated user.",
+            "type": "authenticated",
+            "__v": 0,
+            "id": "XXXXXXXXXX"
+        },
+        "id": "XXXXXXXX"
+    }
+}]
+```
+
+### Example
+```php
+<?php
+$strapi_auth = [
+    "identifier" => STRAPI_USERNAME,
+    "password"  =>  STRAPI_USER_PWD
+];
+
+
+
+
+function strapi_auth_curl($url, $auth){
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url.'/auth/local',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>json_encode($auth),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    return $response;
+}
+$login = strapi_auth_curl(STRAPI_URL, $strapi_auth);
+$strapi_res = json_decode($login);
+
+print_r($strapi_res);
+
+```
+
+Running an authenticated POST request with JWT
+
+_Response_
+```json
+[{
+    "id": 2,
+    "name": "Calabar Kitchen",
+    "description": "Omo, this is a place that varieties of soup with catfish🦈",
+    "published_at": "2021-03-14T11:23:13.251Z",
+    "created_at": "2021-03-14T11:23:13.260Z",
+    "updated_at": "2021-03-14T11:23:13.260Z",
+    "categories": [{
+        "id": 2,
+        "name": "Brunch ",
+        "published_at": "2021-03-14T09:22:58.909Z",
+        "created_at": "2021-03-14T09:22:51.893Z",
+        "updated_at": "2021-03-14T09:22:58.945Z"
+        }
+      ]
+}]
+```
+### Example
+```php
+<?php
+$jwt = $strapi_res->jwt;
+function postRestaurantWithAuth($jwt){
+  $auth = array(
+        'Authorization: Bearer '.$jwt,
+        'Content-Type: application/json'
+    );
+    $restaurants = array(
+        'name' => 'Calabar Kitchen',
+        'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
+         'categories' => [2]
+      );
+      
+      // Initializes a new cURL session
+      $curl = curl_init();
+      
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      
+      // Set the CURLOPT_POST for POST request
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
+      
+      curl_setopt($curl, CURLOPT_HTTPHEADER, $auth);
+      $res = curl_exec($curl);
+      curl_close($curl);
+      print_r($res);
+
+}
+
+postRestaurantWithAuth($jwt);
+```
+
 ## Conclusion
 
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
