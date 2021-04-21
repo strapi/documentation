@@ -1,6 +1,6 @@
 ---
 title: Creating Content-Types - Strapi User Guide
-description: The Content-Types Builder allows to create new content-types: single and collection types.
+description: The Content-Types Builder allows to create new content-types (single and collection types).
 ---
 
 # Creating content-types
