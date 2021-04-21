@@ -1,3 +1,8 @@
+---
+title: Install using Platform.sh - Strapi Developer Documentation
+description: Quickly deploy a Strapi application using the official Platform.sh Strapi template.
+---
+
 # Installing using Platform.sh
 
 [Platform.sh](https://platform.sh/) gives you an easy way to get started and deploy your Strapi application.

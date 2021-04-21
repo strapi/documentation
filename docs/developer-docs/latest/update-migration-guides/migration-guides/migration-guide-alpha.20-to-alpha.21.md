@@ -1,3 +1,8 @@
+---
+title: Migrate from alpha.20 to alpha.21 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from alpha.20 to alpha.21.
+---
+
 # Migration guide from alpha.20 to alpha.21
 
 **Here are the major changes:**

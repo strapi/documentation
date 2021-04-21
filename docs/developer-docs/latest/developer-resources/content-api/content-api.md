@@ -1,4 +1,6 @@
 ---
+title: Content API - Strapi Developer Documentation
+description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 sidebarDepth: 3
 ---
 
@@ -595,8 +597,8 @@ POST http://localhost:1337/restaurants
 
 ### Update an entry
 
-Partially updates an entry by id and returns its value.
-Fields that aren't sent in the query are not changed in the db. Send a `null` value if you want to clear them.
+Partially updates an entry by `id` and returns its value.
+Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
 :::: tabs
 

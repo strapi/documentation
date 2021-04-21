@@ -1,3 +1,8 @@
+---
+title: Migrate from 3.2.5 to 3.3.0 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from 3.2.5 to 3.3.0.
+---
+
 # Migration guide from 3.2.5 to 3.3.0
 
 **Make sure your server is not running until the end of the migration**

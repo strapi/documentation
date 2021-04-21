@@ -1,3 +1,8 @@
+---
+title: Count with GraphQL - Strapi Developer Documentation
+description: Learn in this guide how to count data with a GraphQL query.
+---
+
 # Count with GraphQL
 
 This guide explains how to count data with a GraphQL query.

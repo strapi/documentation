@@ -1,3 +1,8 @@
+---
+title: Migrate from v1 to v3 - Strapi Developer Documentation
+description: Learn how you can migrate your Strapi application from v1 to v3.
+---
+
 # Migrating from v1 to v3
 
 To be honest with all of you, the migration process won't be easy. The new version introduces a lot of breaking changes especially on the query part. Some features are still not available for the moment such as the authentication, users & permissions, email, media upload and GraphQL. **If you're using one of theses features, you shouldn't be able to migrate unless you rewrite these features from scratch.**
@@ -35,7 +40,7 @@ The structure of the configurations has been harmonised and simplified. Files ha
 - `./config/environments/**/response.json` added
 - `./config/environments/**/custom.json` added
 
-Please refer to the [new documentation](https://github.com/strapi/strapi/blob/master/docs/3.0.0-x/en/configurations/configurations.md) to set the correct values in each file.
+Please refer to the [new documentation](/developer-docs/latest/setup-deployment-guides/configurations.md) to set the correct values in each file.
 
 ::: tip
 Don't forget that middlewares has been removed. Please refers to the right section of this document for more details.
