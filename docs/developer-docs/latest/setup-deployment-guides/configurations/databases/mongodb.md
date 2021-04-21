@@ -1,3 +1,8 @@
+---
+title: MongoDB - Strapi Developer Documentation
+description: Learn how to install MongoDB on your computer and using it for your Strapi application.
+---
+
 # MongoDB Installation
 
 ## Install MongoDB locally
@@ -311,7 +316,7 @@ DATABASE_NAME=myFirstDatabase
 ```
 
 
-::: 
+:::
 
 ::: tab Combined Method
 

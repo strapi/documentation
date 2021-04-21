@@ -1,3 +1,8 @@
+---
+title: Get started with PHP - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
+---
+
 # Getting Started with PHP
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.html#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
@@ -150,18 +155,18 @@ function postRestaurant(){
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
       );
-      
+
       // Initializes a new cURL session
       $curl = curl_init();
-      
+
       curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
-      
+
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      
+
       // Set the CURLOPT_POST for POST request
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
-      
+
       curl_setopt($curl, CURLOPT_HTTPHEADER, [
           'Content-Type: application/json'
       ]);
@@ -243,14 +248,14 @@ function postRestaurant(){
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
       );
-      
+
       // Initializes a new cURL session
       $curl = curl_init();
-      
+
       curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
-      
+
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      
+
       // Set the CURLOPT_POST for POST request
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));

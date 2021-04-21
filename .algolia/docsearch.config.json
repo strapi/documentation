@@ -1,0 +1,26 @@
+{
+  "index_name": "documentation",
+  "start_urls": ["https://strapi.io/documentation"],
+  "selectors": {
+    "lvl0": {
+      "selector": "p.sidebar-heading",
+      "global": true,
+      "default_value": "Documentation"
+    },
+    "lvl1": ".content__default h1",
+    "lvl2": ".content__default h2",
+    "lvl3": ".content__default h3",
+    "lvl4": ".content__default h4",
+    "lvl5": ".content__default h5",
+    "text": ".content__default p, .content__default li",
+    "lang": {
+      "selector": "/html/@lang",
+      "type": "xpath",
+      "global": true
+    }
+  },
+  "strip_chars": " .,;:#",
+  "custom_settings": {
+    "attributesForFaceting": ["lang"]
+  }
+}

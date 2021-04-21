@@ -1,4 +1,6 @@
 ---
+title: Content API - Strapi Developer Documentation
+description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 sidebarDepth: 3
 ---
 

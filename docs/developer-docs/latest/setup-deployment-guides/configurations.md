@@ -1,4 +1,6 @@
 ---
+title: Configurations - Strapi Developer Documentation
+description: Learn how you can manage and customize the configuration of your Strapi application.
 sidebarDepth: 3
 ---
 
