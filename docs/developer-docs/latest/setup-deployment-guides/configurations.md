@@ -484,6 +484,7 @@ Some settings can only be modified through environment variables. Here is a list
 | `NODE_ENV`                           | Type of environment where the app is running                                                                          | string  | `'development'` |
 | `BROWSER`                            | Open the admin panel in the browser after startup                                                                     | boolean | `true`          |
 | `ENV_PATH`                           | Path to the file that contains your environment variables                                                             | string  | `'./.env'`      |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE`| Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
 
 #### Configuration using environment variables
 
@@ -1127,11 +1128,11 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-#### Prerequisites
-
+::: warning PREREQUISITES
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
+:::
 
 #### Usage
 

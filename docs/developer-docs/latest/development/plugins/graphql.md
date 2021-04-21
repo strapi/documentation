@@ -29,14 +29,6 @@ npm run strapi install graphql
 
 :::
 
-::: tab strapi
-
-```
-strapi install graphql
-```
-
-:::
-
 ::::
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
@@ -260,6 +252,7 @@ You can also apply different parameters to the query to make more complex querie
 - `start` (integer): Define the amount of entries to skip.
 - `sort` (string): Define how the data should be sorted.
 - `publicationState` (PublicationState): Only select entries matching the publication state provided.
+- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 
   Handled states are:
 
@@ -281,6 +274,8 @@ You can also apply different parameters to the query to make more complex querie
   - `<field>_in`: Matches any value in the array of values.
   - `<field>_nin`: Doesn't match any value in the array of values.
   - `<field>_null`: Equals null/Not equals null
+
+#### Examples
 
 Return the second decade of users which have an email that contains `@strapi.io` ordered by username.
 

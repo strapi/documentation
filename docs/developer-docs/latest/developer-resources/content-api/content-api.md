@@ -491,6 +491,8 @@ GET http://localhost:1337/restaurants/count
 
 Creates an entry and returns its value.
 
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
+
 :::: tabs
 
 ::: tab Request
@@ -595,10 +597,15 @@ POST http://localhost:1337/restaurants
 
 ::::
 
+
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
+
+::: tip NOTE
+It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+:::
 
 :::: tabs
 
@@ -819,15 +826,14 @@ By default, the filters can only be used from `find` and `count` endpoints gener
 <!-- This sentance belongs in the above warning block but was removed and commented until new docs can be written -->
 <!-- If you need to implement a filter system somewhere else, read the [programmatic usage](../concepts/parameters.md) section. -->
 
-### Available operators
-
-The available operators are separated in five different categories:
+Queries to Strapi Content API can use several API parameters:
 
 - [Filters](#filters)
 - [Sort](#sort)
 - [Limit](#limit)
 - [Start](#start)
 - [Publication State](#publication-state)
+- [Locale](#locale)
 
 ### Filters
 
@@ -873,7 +879,7 @@ or
 
 `GET /restaurants?_where[0][price_gte]=3&[0][price_lte]=7`
 
-### Complex queries
+#### Complex queries
 
 ::: tip NOTE
 `OR` and `AND` operations are available starting from v3.1.0
@@ -889,7 +895,7 @@ This will give you full power to create complex queries with logical `AND` and `
 We strongly recommend using `qs` directly to generate complex queries instead of creating them manually.
 :::
 
-#### `AND` operator
+##### `AND` operator
 
 The filtering implicitly supports the `AND` operation when specifying an array of expressions in the filtering.
 
@@ -917,7 +923,7 @@ await request(`/restaurants?${query}`);
 // GET /restaurants?_where[0][pricing_gte]=20&_where[1][pricing_lte]=50
 ```
 
-#### `OR` operator
+##### `OR` operator
 
 To use the `OR` operation, you will need to use the `_or` filter and specify an array of expressions on which to perform the operation.
 
@@ -941,7 +947,7 @@ await request(`/restaurant?${query}`);
 // GET /restaurants?_where[_or][0][pricing_lt]=10&_where[_or][1][pricing_gt]=30
 ```
 
-#### Implicit `OR` operator
+##### Implicit `OR` operator
 
 The query engine implicitly uses the `OR` operation when you pass an array of values in an expression.
 
@@ -964,7 +970,7 @@ await request(`/restaurant?${query}`);
 When using the `in` and `nin` filters the array is not transformed into a OR.
 :::
 
-#### Combining AND and OR operators
+##### Combining AND and OR operators
 
 Restaurants that have (2 `stars` AND a `pricing` less than 80) OR (1 `stars` AND a `pricing` greater than or equal to 50)
 
@@ -1004,7 +1010,7 @@ await request(`/restaurants?${query}`);
 When creating nested queries, make sure the depth is less than 20 or the query string parsing will fail for now.
 :::
 
-### Deep filtering
+#### Deep filtering
 
 Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
 `GET /restaurants?chef.restaurant.star=5`
@@ -1097,3 +1103,7 @@ OR
 If you only want to retrieve your draft entries, you can combine the `preview` mode and the `published_at` field.
 `GET /articles?_publicationState=preview&published_at_null=true`
 :::
+
+### Locale
+
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).

@@ -33,14 +33,6 @@ npm run strapi install documentation
 
 :::
 
-::: tab strapi
-
-```
-strapi install documentation
-```
-
-:::
-
 ::::
 
 When your plugin is installed, you just have to start your application and it will generate your API documentation.
