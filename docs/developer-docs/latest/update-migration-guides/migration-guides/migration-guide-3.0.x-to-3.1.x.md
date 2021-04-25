@@ -107,7 +107,7 @@ All currently logged in administrators will be disconnected from the app and wil
 
 The `username` field is no longer required for administrator users.
 
-You will have to remove the `NOT NULL` constraint for this column in your database.
+You will have to remove the `NOT NULL` constraint for this column in `strapi_administrator` table in your database.
 
 ## 4. Migrate your custom admin panel plugins
 
