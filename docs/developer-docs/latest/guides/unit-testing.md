@@ -196,7 +196,7 @@ Some might say that API tests are not unit but limited integration tests, regard
 
 We'll test if our endpoint works properly and route `/hello` does return `Hello World`
 
-Let's create a separate test file were `supertest` will be used to check if endpoint works as expected.
+Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
 
 **Path —** `./tests/hello/index.js`
 
