@@ -1,5 +1,5 @@
 ---
-title: MongoDB - Strapi Developer Documentation
+title: SQLite - Strapi Developer Documentation
 description: Learn how you can use SQLite for your Strapi application.
 ---
 
