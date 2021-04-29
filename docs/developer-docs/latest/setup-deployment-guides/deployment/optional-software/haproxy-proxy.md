@@ -1,3 +1,8 @@
+---
+title: HAProxy Proxying - Strapi Developer Documentation
+description: Learn how you can use a proxy application like HAProxy to secure your Strapi application.
+---
+
 # HAProxy Proxying
 
 As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. Below you will find some sample configurations for HAProxy, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
