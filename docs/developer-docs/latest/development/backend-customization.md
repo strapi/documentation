@@ -1149,6 +1149,8 @@ These queries handle for you specific Strapi features like `components`, `dynami
 
 This method returns a list of entries matching Strapi filters.
 You can also pass a populate option to specify which relations you want to be populated.
+By default the result will be limited to the first 100 entries.
+To get all entries use `_limit: -1` in the populate options.
 
 ##### Examples
 
