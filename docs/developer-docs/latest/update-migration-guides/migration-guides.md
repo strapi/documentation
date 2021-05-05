@@ -5,22 +5,21 @@ description: All the migration guides for a Strapi application.
 
 # Migrations guides
 
-Please also refer to the following [update guide](update-version.md) for a better understanding of how to update your project.
+## Instructions
+
+When upgrading you application you will need to follow every migration guide between your current version and the one you are upgrading to. If there is no specific migration guide for your version step(s), you should follow the general [Update Strapi guide](update-version.md).
 
 **Pay special attention to the [note](update-version.md#extensions) about upgrading if you are using the extensions system.**
 
-## Instructions
-
-When upgrading you will need to follow every migration guide between your current version and the one you are upgrading to.
-
 **Example**
 
-If you were upgrading from the `3.0.0-beta.19.5` to `3.2.0`, here are the following guides you would have to follow:
+If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to follow the following guides:
 
-- Migration guide from beta.19.4+ to beta.20.
-- Migration guide from beta.20+ to stable.
-- Migration guide from 3.0.x to 3.1.x.
-- Migration guide from 3.1.x to 3.2.3.
+- Migration guide from 3.2.3 to 3.2.4.
+- Migration guide from 3.2.5 to 3.3.0.
+- Migration guide from 3.3.x to 3.4.0.
+- Migration guide from 3.4.x to 3.4.4.
+- [Update Strapi guide.](update-version.md)
 
 ## V3 guides
 
