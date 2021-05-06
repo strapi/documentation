@@ -388,6 +388,7 @@ module.exports = {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
     },
+    'code-switcher': {}
   },
   head: [
     [

@@ -17,7 +17,8 @@
     "vuepress-plugin-seo": "^0.1.4"
   },
   "devDependencies": {
-    "vuepress-plugin-check-md": "^0.0.2"
+    "vuepress-plugin-check-md": "^0.0.2",
+    "vuepress-plugin-code-switcher": "^1.1.0"
   },
   "author": {
     "email": "hi@strapi.io",
