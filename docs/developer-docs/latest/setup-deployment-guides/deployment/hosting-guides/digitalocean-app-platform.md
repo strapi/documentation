@@ -21,10 +21,6 @@ Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/in
 
 ## Configure Your Strapi Project for Deployment
 
-::: warning
-At the moment, DigitalOcean App platform has a small issue parsing the npm engine, you may need to update your package.json with a static npm engine such as `"npm": "6.14.13"`
-:::
-
 To deploy your Strapi app, you will need to create a database configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/configurations.html#database).
 
 You will configure a database for production. With the setup below, you will only need to set **one environment variable** for the `DATABASE_URL` to connect to your PostgreSQL database. Add the following to `config/env/production/database.js`:
