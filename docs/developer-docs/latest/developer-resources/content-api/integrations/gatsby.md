@@ -286,10 +286,11 @@ You can find your restaurant categories by browsing `http://localhost:8000/categ
 
 Feel free to do the same for your restaurants!
 
-## Starter
+## Starters
 
-- [Gatsby Blog starter](https://github.com/strapi/strapi-starter-gatsby-blog)
-- [Gatsby blog starter v2](https://github.com/strapi/strapi-starter-gatsby-blog-v2)
+- [Gatsby blog starter](https://github.com/strapi/strapi-starter-gatsby-blog)
+- [Gatsby corporate starter](https://github.com/strapi/strapi-starter-gatsby-corporate)
+- [Gatsby catalog starter](https://github.com/strapi/strapi-starter-gatsby-catalog)
 
 ## Conclusion
 
