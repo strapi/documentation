@@ -15,11 +15,11 @@ When upgrading you application you will need to follow every migration guide bet
 
 If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to follow the following guides:
 
-- Migration guide from 3.2.3 to 3.2.4.
-- Migration guide from 3.2.5 to 3.3.0.
-- Migration guide from 3.3.x to 3.4.0.
-- Migration guide from 3.4.x to 3.4.4.
-- [Update Strapi guide.](update-version.md)
+1. Migration guide from 3.2.3 to 3.2.4.
+2. Migration guide from 3.2.5 to 3.3.0.
+3. Migration guide from 3.3.x to 3.4.0.
+4. Migration guide from 3.4.x to 3.4.4.
+5. [Update Strapi guide.](update-version.md)
 
 ## V3 guides
 
@@ -29,7 +29,6 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 - [Migration guide from 3.2.3 to 3.2.4](migration-guides/migration-guide-3.2.3-to-3.2.4.md)
 - [Migration guide from 3.1.x to 3.2.3](migration-guides/migration-guide-3.1.x-to-3.2.x.md)
 - [Migration guide from 3.0.x to 3.1.x](migration-guides/migration-guide-3.0.x-to-3.1.x.md)
-
 
 ## Beta guides
 
