@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="integration-links">
     <!-- React -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/react.html"
       >
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Vue -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html"
       >
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Angular -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/angular.html"
       >
@@ -120,7 +120,7 @@
     </div>
 
     <!-- Next.js -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/next-js.html"
       >
@@ -172,7 +172,7 @@
     </div>
 
     <!-- Nuxt.js -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html"
       >
@@ -202,7 +202,7 @@
     </div>
 
     <!-- GraphQL -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/graphql.html"
       >
@@ -341,7 +341,7 @@
     </div>
 
     <!-- Gatsby -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html"
       >
@@ -370,7 +370,7 @@
     </div>
 
     <!-- Gridsome -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html"
       >
@@ -424,7 +424,7 @@
     </div>
 
     <!-- Jekyll -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html"
       >
@@ -497,7 +497,7 @@
     </div>
 
     <!-- 11ty -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/11ty.html"
       >
@@ -532,7 +532,7 @@
     </div>
 
     <!-- Svelte -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/svelte.html"
       >
@@ -574,7 +574,7 @@
     </div>
 
     <!-- Sapper -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/sapper.html"
       >
@@ -616,7 +616,7 @@
     </div>
 
     <!-- Ruby -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/ruby.html"
       >
@@ -1273,7 +1273,7 @@
     </div>
 
     <!-- Python -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink
         link="/developer-docs/latest/developer-resources/content-api/integrations/python.html"
       >
@@ -1313,7 +1313,7 @@
     </div>
 
     <!-- Dart -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink link="/developer-docs/latest/developer-resources/content-api/integrations/dart.html">
         <template #icon>
           <svg width="2500" height="2500" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet"><path d="M70.534 69.696L53.988 53.15l.07 119.6.198 5.59c.082 2.63.57 5.598 1.384 8.674l131.104 46.23 32.772-14.52.012-.04L70.534 69.696" fill="#00D2B8"/><path d="M55.64 187.014l.008.008c-.008-.054-.036-.114-.036-.17 0 .056.008.108.028.162zm163.876 31.71l-32.772 14.52-131.096-46.222c2.504 9.608 8.048 20.408 14.014 26.314l42.784 42.54 95.13.124 11.952-37.316-.012.04z" fill="#55DDCA"/><path d="M3.034 130.116c-4.236 4.522-2.132 13.85 4.688 20.722L37.14 180.5l18.5 6.514c-.814-3.076-1.302-6.044-1.384-8.674l-.198-5.59-.07-119.6-50.954 76.966z" fill="#0081C6"/><path d="M187.82 54.686c-3.076-.786-6.026-1.272-8.7-1.356l-5.908-.204-119.224.016 165.556 165.542h.014l14.54-32.804L187.82 54.686" fill="#0079B3"/><path d="M187.67 54.654c.064.014.114.032.156.038l-.006-.006c-.036-.018-.086-.018-.15-.032zm26.448 14.078c-6.008-6.058-16.666-11.564-26.292-14.04l46.272 131.188-14.54 32.804h-.014l35.532-11.348.076-97.416-41.034-41.188z" fill="#00A4E4"/><path d="M181.338 36.298L151.684 6.862c-6.858-6.794-16.19-8.908-20.7-4.684L53.988 53.142l119.224-.016 5.908.204c2.674.084 5.624.57 8.7 1.356l-6.482-18.388z" fill="#00D2B8"/></svg>
@@ -1326,7 +1326,7 @@
     </div>
 
     <!-- Flutter -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink link="/developer-docs/latest/developer-resources/content-api/integrations/flutter.html">
         <template #icon>
           <svg enable-background="new 0 0 1999 2474.2" viewBox="0 0 1999 2474.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="a" gradientTransform="matrix(380.4042 -380.4175 -53.104 -53.1021 908228.3125 -700059.5)" gradientUnits="userSpaceOnUse" x1="-2115.0029" x2="-2115.0029" y1="1930.7407" y2="1929.7407"><stop offset=".2" stop-opacity=".15"/><stop offset=".85" stop-color="#616161" stop-opacity=".01"/></linearGradient><linearGradient id="b" gradientTransform="matrix(565.291 0 0 -380.9571 1196694.25 743476.5625)" gradientUnits="userSpaceOnUse" x1="-2115.2688" x2="-2114.2688" y1="1946.3563" y2="1946.3563"><stop offset=".2" stop-opacity=".55"/><stop offset=".85" stop-color="#616161" stop-opacity=".01"/></linearGradient><path d="m381 1618-381-381 1237.1-1237h761.9m0 1141.5h-761.9l-285.4 285.4 381 381" fill="#42a5f5" fill-opacity=".8"/><path d="m951.7 2188.8 285.4 285.4h761.9l-666.3-666.3" fill="#0d47a1"/><path d="m571.6 1808.1 380.4-380.5 380.4 380.4-380.4 380.5z" fill="#42a5f5"/><path d="m952 2188.5 380.4-380.4 53.1 53.1-380.4 380.4z" fill="url(#a)"/><path d="m951.7 2188.8 565.3-195.3-184.3-185.7" fill="url(#b)"/></svg>
@@ -1339,7 +1339,7 @@
     </div>
 
      <!-- GO -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink link="/developer-docs/latest/developer-resources/content-api/integrations/go.html">
         <template #icon>
           <svg version="1.1" viewBox="0 0 400 544.43" xmlns="http://www.w3.org/2000/svg">
@@ -1360,7 +1360,7 @@
     </div>
 
     <!-- PHP -->
-    <div>
+    <div class="install-link__wrapper">
       <InstallLink link="/developer-docs/latest/developer-resources/content-api/integrations/php.html">
         <template #icon>
           <svg preserveAspectRatio="xMidYMid" version="1.1" viewBox="0 0 250 135" xmlns="http://www.w3.org/2000/svg">
@@ -1392,6 +1392,20 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.integration-links {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.install-link__wrapper {
+  flex-basis: 30%;
+  margin-right: 20px;
+  max-width: 200px;
+}
+</style>
+
 <script>
 import InstallLink from './InstallLink.vue';
 
