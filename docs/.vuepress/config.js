@@ -388,7 +388,10 @@ module.exports = {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
     },
-    'code-switcher': {}
+    'vuepress-plugin-code-copy': {
+      color: '#ffffff',
+      successText: 'Copied to clipboard!'
+    }
   },
   head: [
     [
