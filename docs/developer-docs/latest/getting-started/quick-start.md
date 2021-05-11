@@ -95,7 +95,7 @@ yarn create strapi-starter my-project gatsby-blog
 </code-block>
 </code-group>
 
-When terminal asks "Choose your installation type", press Enter to select the default "Quickstart (recommended)" option. After a few moments, your web browser opens 2 tabs.
+When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option. After a few moments, your web browser opens 2 tabs.
 
 The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the backend of your app. Complete the form to create the first Administrator user:
 
@@ -107,7 +107,7 @@ The second tab ([http://localhost:8000](http://localhost:8000)) is for the front
 
 
 ::: tip CONGRATULATIONS! 🥳 
-Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html#accessing-the-admin-panel), or proceed to step 2 to continue the guided tour.
+Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to step 2 to continue the guided tour.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
 :::
@@ -120,18 +120,18 @@ Strapi Starters build a full stack app and a data structure for you, so you can 
 
 ### 1. Add yourself as a writer
 
-1. Go to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left sidebar.
+1. Go to [_COLLECTION TYPES > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu.
 2. Click the **+ Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-01-writer.png)
 
 3. Add your **Name** and **Email** in the corresponding fields.
-4. Drag and drop your favorite selfie in the **Picture** field, then click **Upload 1 asset to the library** then **Finish**.
+4. Drag and drop your favorite selfie in the **Picture** field, click **Upload 1 asset to the library** then **Finish**.
 5. Finally, click **Save** and _voilà_! You've just added yourself as a writer! 🤓
 
 ### 2. Write & publish your first article
 
-1. Go to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left sidebar.
+1. Go to [_COLLECTION TYPES > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu.
 2. Click the **+ Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-02-write_article.png)
@@ -144,11 +144,11 @@ Strapi Starters build a full stack app and a data structure for you, so you can 
 
 ### 3. Update the Homepage
 
-1. Go to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left sidebar. 
+1. Go to [_SINGLE TYPES > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. 
 2. Update the **MetaTitle** and **MetaDescription** fields to optimize your blog SEO.
 3. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. Click **Finish** twice.
-4. Update the **Title** to "My Wonderful Strapi blog" in the **Hero** field group, then click **Save**.
-5. In your terminal, press `Ctrl-C` to kill the servers and then restart them by running the `yarn develop` command. After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The article you created a few minutes ago is also visible at the bottom of the page 👀
+4. Update the **Title** to `My Wonderful Strapi blog` in the **Hero** field group, then click **Save**.
+5. In your terminal, press `Ctrl-C` to kill the servers. Restart them by running the `yarn develop` command. After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The article you created a few minutes ago is also visible at the bottom of the page 👀
 
 ![Screenshot: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-starters-step2-04-updated_fe.png)
 
