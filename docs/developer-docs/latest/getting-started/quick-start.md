@@ -10,6 +10,22 @@ sidebarDepth: 0
   h2 {
     padding-top: 2em;
   }
+  h3, h4 {
+    padding-top: 1.5em
+  }
+  h4 {
+    font-size: 115%;
+  }
+  ul li, ol li {
+    padding-bottom: .5em;
+  }
+  blockquote {
+    border-left-color: #42b983;
+
+    p {
+      color: #888;
+    }
+  }
 </style>
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
