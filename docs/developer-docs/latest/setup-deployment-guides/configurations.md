@@ -1595,7 +1595,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 - `name` (string): the condition name, kebab-cased,
 - `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
-- `handler`: a query object or a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
+- `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
@@ -1605,11 +1605,12 @@ The condition `name` property acts as a [unique id](https://github.com/strapi/st
 
 #### Using the condition handler
 
-A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` can be a query object or a function.
+A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` is a function returning a query object or a boolean value.
 
 Query objects are useful to verify conditions on the entities you read, create, update, delete or publish. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
 
 - `$or`
+- `$and`
 - `$eq`
 - `$ne`
 - `$in`
@@ -1621,13 +1622,7 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$exists`
 - `$elemMatch`
 
-For instance, this `handler` uses a query object to match entities with an `amount` lower than 10,000:
-
-```js
-  handler: { amount: { $lt: 10000 } }
-```
-
-The condition `handler` can also be a synchronous or asynchronous function that:
+The condition `handler` can be a synchronous or asynchronous function that:
 
 * receives the authenticated user making the request,
 * and returns `true`, `false`, or a query object.
@@ -1669,8 +1664,8 @@ For more granular control, the `handler` function can also return a query object
 To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file. Register a single condition with the `conditionProvider.register()` method:
 
 ```js
-module.exports = () => {
-  strapi.admin.services.permission.conditionProvider.register({
+module.exports = async () => {
+  await strapi.admin.services.permission.conditionProvider.register({
     displayName: 'Billing amount under 10K',
     name: 'billing-amount-under-10k',
     plugin: 'admin',
@@ -1700,9 +1695,9 @@ const conditions = [
   }
 ];
 
-module.exports = () => {
+module.exports = async () => {
   // do your boostrap
 
-  strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
 };
 ```
