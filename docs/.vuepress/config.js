@@ -5,7 +5,17 @@ const sidebar = {
       title: '🚀 Getting Started',
       children: [
         ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
-        ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
+        {
+          title: 'Quick Start Guide',
+          collapsable: true,
+          initialOpenGroupIndex: -1,
+          path: '/developer-docs/latest/getting-started/quick-start-step1',
+          children: [
+            ['/developer-docs/latest/getting-started/quick-start-step1', 'Step 1: Create a project'],
+            ['/developer-docs/latest/getting-started/quick-start-step2', 'Step 2: Create your content'],
+            ['/developer-docs/latest/getting-started/quick-start-step3', 'Step 3: Use your content'],
+          ]
+        },
         ['/developer-docs/latest/getting-started/troubleshooting', 'Frequently Asked Questions'],
         ['/developer-docs/latest/getting-started/usage-information', 'Usage Information'],
       ],
