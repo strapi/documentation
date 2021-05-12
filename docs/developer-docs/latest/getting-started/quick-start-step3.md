@@ -101,7 +101,7 @@ Once your Strapi backend is deployed, the easiest way to deploy your Gatsby blog
 
 ### Consume your API
 
-You can consume your API with your favorite frameworks, frontend or backend programming languages just below.
+You can learn how to consume your API with your favorite frameworks, frontend or backend programming languages by choosing one in the list below.
 
 <style lang="scss" scoped>
 /* .integration-links {
