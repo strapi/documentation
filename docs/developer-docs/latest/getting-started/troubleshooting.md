@@ -1,5 +1,5 @@
 ---
-title: Troubleshooting - Strapi Developer Documentation
+title: Frequently Asked Questions
 description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
 sidebarDepth: 0
 ---
