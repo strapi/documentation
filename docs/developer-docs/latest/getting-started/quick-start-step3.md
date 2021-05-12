@@ -116,7 +116,10 @@ You can learn how to consume your API with your favorite frameworks, frontend or
 } */
 </style>
 
-<IntegrationLinks></IntegrationLinks>
+<IntegrationLinksAlt>
+<style lang="scss" scoped>
+</style>
+</IntegrationLinksAlt>
 
 ### Deploy your project
 
