@@ -434,7 +434,7 @@ If you see the Strapi Welcome page, you have correctly set-up, configured and de
 You can now continue with the [Tutorial - Creating an Admin User](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user), if you have any questions on how to proceed.
 
 ::: warning
-For security reasons, the Content Type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
+For security reasons, the Content-Types Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
 :::
 
 ### Project updates

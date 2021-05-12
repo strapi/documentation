@@ -21,7 +21,7 @@ We will have one group of users that will be able to only fetch **Articles** and
 
 Lets create a new Content Type **Article**
 
-- Click on `Content Type Builder` in the left menu
+- Click on `Content-Types Builder` in the left menu
 - Then `+ Create new content-type`
 - Fill `Display name` with `article`
 - Create 2 fields
