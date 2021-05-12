@@ -1393,19 +1393,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.integration-links {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
-.install-link__wrapper {
-  flex-basis: 30%;
-  margin-right: 20px;
-  max-width: 200px;
-}
-</style>
-
 <script>
 import InstallLink from './InstallLink.vue';
 
