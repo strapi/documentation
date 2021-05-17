@@ -75,9 +75,11 @@ Then, using the buttons below, please choose between:
 
 </style>
 
-## 🚀 Step 1: Create a new project with Strapi Starters
+## 🚀 Step 1: Create a new project with Strapi starters
 
-To create a Gatsby blog using Strapi, run one of the following commands in a terminal:
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We'll use the Gatsby blog starter as an example.
+
+To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run one of the following commands in a terminal:
 
 <code-group>
 <code-block title="NPX">
@@ -143,5 +145,5 @@ After a few moments, your web browser opens a tab. Complete the form to create t
 ![Admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-step1-01-admin_panel.png)
 
 ::: tip CONGRATULATIONS! 🥳 
-You've just created a Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the guided tour.
+You have just created a Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the guided tour.
 :::
