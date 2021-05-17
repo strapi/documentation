@@ -75,7 +75,7 @@ If you created the app and built the data structure yourself, choose the **Hands
 
 ## 👀 Step 3: Show your content to the world
 
-The beauty of using Strapi starters is that your Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world!
+The beauty of using Strapi [starters](https://strapi.io/starters) is that your Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world!
 
 The next step is then to deploy both your Strapi backend and the frontend on the platforms of your choice.
 We offer various deployment options for your Strapi backend — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
