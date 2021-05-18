@@ -114,7 +114,9 @@ module.exports = ({ env }) => ({
         username: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
         schema: env('DATABASE_SCHEMA', 'public'), // Not Required
-        ssl: env.bool('DATABASE_SSL', false),
+        ssl: {
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        },
       },
     },
   },
@@ -135,9 +137,6 @@ module.exports = ({ env }) => ({
         ssl: {
           ca: fs.readFileSync(`${__dirname}/path/to/your/ca-certificate.crt`).toString(),
         },
-      },
-      options: {
-        ssl: true
       },
     },
   },
