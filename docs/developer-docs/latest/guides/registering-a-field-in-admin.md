@@ -1,3 +1,8 @@
+---
+title: Field Registering - Strapi Developer Documentation
+description: Learn in this guide how you can create a new Field for your administration panel.
+---
+
 # Creating a new Field in the administration panel
 
 In this guide we will see how you can create a new Field for your administration panel.
@@ -363,6 +368,7 @@ const Editor = ({ onChange, name, value }) => {
         editor={ClassicEditor}
         config={configuration}
         data={value}
+        onReady={editor => editor.setData(value)}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange({ target: { name, value: data } });

@@ -1,3 +1,8 @@
+---
+title: Managing Relational Fields - Strapi User Guide
+description: Instructions to manage relation-type fields, called "relational fields", which establish a relation between two content-types.
+---
+
 # Managing relational fields
 
 Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".
@@ -31,11 +36,15 @@ Instead of choosing an entry by scrolling the list, you can click any drop-down 
 If the Draft & Publish feature (see [Saving, publishing and deleting content](saving-and-publishing-content.md)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
 :::
 
+::: warning IMPORTANT
+If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+:::
+
 ## Managing one-choice relational fields
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
-<img src="../assets/content-manager/RF_one-choice.png" width="45%">
+<img src="../assets/content-manager/RF_one-choice.png" alt="One-choice relational fields" width="45%">
 
 To select the only relevant relational field's entry:
 
@@ -52,7 +61,7 @@ To remove the entry selected in the drop-down list, click on the ![icon delete](
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
-<img src="../assets/content-manager/RF_multiple-choices.png" width="40%">
+<img src="../assets/content-manager/RF_multiple-choices.png" alt="Multiple choices relational fields" width="40%">
 
 To select the relevant relational field's entries:
 

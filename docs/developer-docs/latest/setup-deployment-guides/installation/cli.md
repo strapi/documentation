@@ -1,3 +1,8 @@
+---
+title: Install from CLI - Strapi Developer Documentation
+description: Fast-track local install for getting Strapi running on your computer in less than a minute.
+---
+
 # Installing from CLI
 
 Fast-track local install for getting Strapi running on your computer.
@@ -39,16 +44,32 @@ Strapi currently support the following databases.
 
 ::: tab yarn
 
+To quickly create a blank project from scratch, run this command:
+
 ```bash
 yarn create strapi-app my-project --quickstart
+```
+
+Alternatively, to use one of our [starters](https://strapi.io/starters), run this command instead:
+
+```bash
+yarn create strapi-starter my-project <starter-url>
 ```
 
 :::
 
 ::: tab npx
 
+To quickly create a blank project from scratch, run this command:
+
 ```bash
 npx create-strapi-app my-project --quickstart
+```
+
+Alternatively, to use one of our [starters](https://strapi.io/starters), run this command instead:
+
+```bash
+npx create-strapi-starter my-project <starter-url>
 ```
 
 :::
@@ -61,6 +82,10 @@ If you want to use specific database, you don't have to use the `--quickstart` f
 
 :::tip
 By default, `create-strapi-app` will generate an empty Strapi project. If you want an application that is pre-configured for a specific use case, see the [Templates section](/developer-docs/latest/setup-deployment-guides/installation/templates.md).
+:::
+
+:::tip
+When using a starter, the project can be created from a specific branch, for example with a url like this: `https://github.com/strapi/strapi-starter-gatsby-blog/tree/<my-branch>`.
 :::
 
 ::: warning

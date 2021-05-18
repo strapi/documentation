@@ -1,3 +1,8 @@
+---
+title: Slug System - Strapi Developer Documentation
+description: Learn in this guide how to create a slug system for a Post, Article or any Content Type you want in your Strapi project.
+---
+
 # Create a slug system
 
 This guide will explain how to create a slug system for a Post, Article or any Content Type you want.

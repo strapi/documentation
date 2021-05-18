@@ -1,4 +1,6 @@
 ---
+title: Roles & Permissions - Strapi Developer Documentation
+description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 sidebarDepth: 2
 ---
 

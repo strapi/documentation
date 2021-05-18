@@ -1,3 +1,8 @@
+---
+title: Send Email - Strapi Developer Documentation
+description: Learn in this guide how to use the Email plugin to send email where you want in your Strapi app.
+---
+
 # Send email programmatically
 
 In this guide we will see how to use the Email plugin to send email where you want in your app.
@@ -32,7 +37,7 @@ To check if bad words are in the comment we will use `bad-words` [node module](h
 
 To customize the function that creates a comment we will have to override the `create` function.
 
-First, to see the difference, let's request `POST /comment` with `that is fucking good!` for the `content` attribute.
+First, to see the difference, let's request `POST /comment` with `that is awesome!` for the `content` attribute.
 You will see your comment is successfully created.
 
 Now let's start the customization.

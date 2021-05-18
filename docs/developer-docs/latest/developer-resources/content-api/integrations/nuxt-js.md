@@ -1,10 +1,15 @@
+---
+title: Get started with Nuxt.js - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Nuxt.js.
+---
+
 # Getting Started with Nuxt.js
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Nuxt.js](https://nuxtjs.org/) remains the same except that you will not fetch the same content.
 
-### Create a Nuxt.js app
+## Create a Nuxt.js app
 
 Create a basic Nuxt.js application with [create-nuxt-app](https://github.com/nuxt/create-nuxt-app).
 
@@ -28,7 +33,7 @@ npx create-nuxt-app nuxtjs-app
 
 ::::
 
-### Use an HTTP client
+## Use an HTTP client
 
 Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
@@ -70,7 +75,7 @@ No installation needed
 
 ::::
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -310,7 +315,7 @@ export default {
 
 ::::
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -676,7 +681,7 @@ export default {
 
 ::::
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 
