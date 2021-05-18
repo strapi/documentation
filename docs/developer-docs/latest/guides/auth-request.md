@@ -157,18 +157,21 @@ To do so, you will have to request the `/articles` route in **POST**.
 ```js
 import axios from 'axios';
 
-const {data} = await axios
-  .post('http://localhost:1337/articles',  {
-    data: {
-      title: 'my article'
-      content: 'my super article content'
-    },
-    headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU'
-    }
-  });
+const { data } = await axios.post(
+      'http://localhost:1337/articles',
+      {
+        title: 'my article',
+        content: 'my super article content',
+      },
+      {
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU',
+        },
+      }
+    );
 
-console.log(data);
+    console.log(data);
 ```
 
 If you request this as a **Reader user**, you will receive a **403 error**. It's because the **Reader role** does not have access to the create function of the **Article** Content Type.
