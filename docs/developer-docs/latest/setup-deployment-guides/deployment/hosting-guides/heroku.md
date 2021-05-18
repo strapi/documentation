@@ -255,7 +255,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
+You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This will populate the variable with something like `www.your-app.herokuapp.com`.
 
 ```bash
 heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
