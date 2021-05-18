@@ -9,9 +9,9 @@ const sidebar = {
           title: 'Quick Start Guide',
           collapsable: true,
           initialOpenGroupIndex: -1,
-          path: '/developer-docs/latest/getting-started/quick-start-step1',
+          path: '/developer-docs/latest/getting-started/quick-start',
           children: [
-            ['/developer-docs/latest/getting-started/quick-start-step1', 'Step 1: Create a project'],
+            ['/developer-docs/latest/getting-started/quick-start', 'Step 1: Create a project'],
             ['/developer-docs/latest/getting-started/quick-start-step2', 'Step 2: Create your content'],
             ['/developer-docs/latest/getting-started/quick-start-step3', 'Step 3: Use your content'],
           ]
