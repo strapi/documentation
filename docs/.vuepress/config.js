@@ -321,6 +321,14 @@ const sidebar = {
           '/user-docs/latest/users-roles-permissions/managing-administrators',
           'Managing administrator accounts',
         ],
+        [
+          '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
+          'Configuring end-users roles',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/managing-end-users',
+          'Managing end-users accounts',
+        ],
       ],
     },
     {
