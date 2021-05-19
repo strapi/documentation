@@ -7,7 +7,11 @@ description: All the migration guides for a Strapi application.
 
 ## Instructions
 
-When upgrading your application you will need to follow every migration guide between your current version and the one you are upgrading to. If there is no specific migration guide for your version step(s), you should follow the general [Update Strapi guide](update-version.md).
+When upgrading your application you will need to follow every migration guide between your current version and the one you are upgrading to. 
+
+::: tip TIP
+If there is no specific migration guide for your version step(s), you should follow the general [Update Strapi guide](update-version.md).
+:::
 
 **Pay special attention to the [note](update-version.md#extensions) about upgrading if you are using the extensions system.**
 
