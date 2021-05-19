@@ -1,0 +1,58 @@
+# Configuring end-users roles
+
+End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see List of plugins). The Users & Permissions configurations and options are however scattered at various places of the admin panel: end-users roles and permissions are managed in the Settings interface, whereas end-users accounts are managed from the Content Manager (see Managing end-user accounts).
+
+The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+
+The *Roles* sub-section of *Users & Permissions plugin* displays all created roles for the end-users of your Strapi application.
+
+From this interface, it is possible to:
+
+- create a new end-user role (see Creating a new role),
+- delete an end-user role (see Deleting a role),
+- or access information regarding an end-user role, and edit it (see Editing a role).
+
+By default, 2 end-user roles are defined for any Strapi application:
+
+- Authenticated: for end-users to access content only if they are logged in.
+- Public: for end-users to access content without being logged in.
+
+::: tip NOTE
+The end-user role attributed to by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/managing-users-permissions-plugin-settings.md#configuring-advanced-settings)).
+:::
+
+## Creating a new role
+
+On the top right side of the *Users & Permissions plugin > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for end-users of your Strapi application.
+
+To create a new role, click on the **Add new role** button.
+Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
+
+## Deleting a role
+
+Although the 2 default end-users cannot be deleted, the other ones can as long as no end-user still has this role attributed to their account.
+
+To delete a role:
+
+1. Click on the trash button <Fa-TrashAlt /> on the right side of the role's record.
+2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
+
+## Editing a role
+
+The role edition interface allows to edit the details of an end-user role as well as configure in detail the permissions to access the content created and managed with your Strapi application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+
+### Editing role's details
+
+The details area of an end-user role editing interface allow to define the name of the role, and to give it a description that should help administrators understand what the role gives access to.
+
+To edit a role's details, follow the instructions from the table below:
+
+| Role details  | Instructions                                                                                                                     |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Name          | Write the new name of the role in the textbox.                                                                                   |
+| Description   | Write the description of the role in the textbox.          
+
+### Configuring role's permissions
+
+The permissions area of an end-user role editing interface allows to configure all possible actions and accesses for content-types content and available plugins.
+
