@@ -96,9 +96,9 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 ::::
 
-:::: tabs
+::::: tabs
 
-::: tab PostgreSQL
+:::: tab PostgreSQL
 
 ```js
 module.exports = ({ env }) => ({
@@ -118,13 +118,32 @@ module.exports = ({ env }) => ({
           rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
         },
       },
-      options: {
-        ssl: env.bool('DATABASE_SSL', false),
-      },
+      options: {},
     },
   },
 });
 ```
+
+::: warning
+We are aware that there is an issue regarding **SSL support for the server**.
+In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
+```js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+          ...
+        ssl: env('DATABASE_SSL', false)
+      },
+      options: {},
+    },
+  },
+});
+```
+:::
 
 Please note that if you need client side SSL CA verification you will need to use the `ssl:{}` object with the fs module to convert your CA certificate to a string. You can see an example below:
 
@@ -141,17 +160,15 @@ module.exports = ({ env }) => ({
           ca: fs.readFileSync(`${__dirname}/path/to/your/ca-certificate.crt`).toString(),
         },
       },
-      options: {
-        ssl: true
-      },
+      options: {},
     },
   },
 });
 ```
 
-:::
+::::
 
-::: tab MySQL/MariaDB
+:::: tab MySQL/MariaDB
 
 ```js
 module.exports = ({ env }) => ({
@@ -173,9 +190,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+::::
 
-::: tab SQLite
+:::: tab SQLite
 
 ```js
 module.exports = ({ env }) => ({
@@ -195,9 +212,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+::::
 
-::: tab MongoDB
+:::: tab MongoDB
 
 ```js
 module.exports = ({ env }) => ({
@@ -222,9 +239,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
-
 ::::
+
+:::::
 
 ::: tip
 Take a look at the [database's guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides) for more details.
