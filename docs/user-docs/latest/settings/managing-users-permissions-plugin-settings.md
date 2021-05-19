@@ -1,6 +1,6 @@
 # Configuring Users & Permissions plugin
 
-The Users & Permissions plugin is managed from the Users & Permissions plugin settings section, accessible from *General > Settings* in the main navigation of the admin panel. The Users & Permissions plugin settings section allows to configure the available providers and email templates, and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see Configuring Users & Permissions plugin settings in the Users, roles and permissions section of this User Guide).
+The Users & Permissions plugin is managed from the Users & Permissions plugin settings section, accessible from *General > Settings* in the main navigation of the admin panel. The Users & Permissions plugin settings section allows to configure the available providers and email templates, and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see Managing end-users in the Users, roles and permissions section of this User Guide).
 
 ## Configuring providers
 
