@@ -54,5 +54,14 @@ To edit a role's details, follow the instructions from the table below:
 
 ### Configuring role's permissions
 
-The permissions area of an end-user role editing interface allows to configure all possible actions and accesses for content-types content and available plugins.
+The permissions area of an end-user role editing interface allows to configure all possible actions and accesses for content-types and available plugins of the Strapi application.
 
+To configure permissions for an end-user role:
+
+1. Click on the name of the permission category to configure (e.g. Application, Content-Manager, Email etc.).
+2. Tick the boxes of the actions and permissions to grant for the role.
+3. Click on the **Save** button.
+
+::: tip 💡 TIP
+When ticking an action or permission box, related bound routes are displayed in the right side of the interface.
+:::
