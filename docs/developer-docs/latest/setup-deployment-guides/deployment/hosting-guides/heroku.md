@@ -267,9 +267,21 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 
 `Path: ./my-project/`
 
+
+:::: tabs
+::: tab npm
+
 ```bash
 npm install pg --save
 ```
+:::
+
+::: tab yarn
+```bash
+yarn add pg
+```
+:::
+::::
 
 :::
 
