@@ -5,17 +5,18 @@ description: Fast-track local install for getting Strapi running on your compute
 
 # Installing from CLI
 
-Fast-track local install for getting Strapi running on your computer.
+To install Strapi locally, use our CLI tools.
 
 [[toc]]
+<!-- ? should we keep inline TOCs ? -->
 
 ## Step 1: Make sure requirements are met
 
 #### Node.js
 
-Strapi only requires [Node.js](https://nodejs.org). Strapi only supports **LTS versions** of Node.js, the current recommended version to run Strapi is **Node LTS v14**. Other versions of of Node.js may not be compatible with the latest release of Strapi.
+Strapi only requires [Node.js](https://nodejs.org). Strapi only supports **LTS versions** of Node.js, the current recommended version to run Strapi is **Node LTS v14**. Other versions of Node.js may not be compatible with the latest release of Strapi.
 
-This is everything you need to run Strapi on your local environment.
+This is everything Strapi needs to run on a local environment:
 
 | Software | Minimum version | Recommended version |
 | -------- | --------------- | ------------------- |
@@ -24,11 +25,11 @@ This is everything you need to run Strapi on your local environment.
 
 #### Yarn (optional)
 
-You can also use **yarn** if you want [here](https://yarnpkg.com/en/docs/getting-started) are the instructions to get started with it.
+[yarn](https://yarnpkg.com/getting-started/install) can also be used to run Strapi CLI tools.
 
 #### Databases
 
-Strapi currently support the following databases.
+Strapi currently supports the following databases:
 
 | Database   | Minimum version |
 | ---------- | --------------- |
@@ -38,84 +39,91 @@ Strapi currently support the following databases.
 | MariaDB    | 10.1            |
 | MongoDB    | 3.6             |
 
+<!-- TODO: Remove MongoDB for v4 -->
+
 ## Step 2: Create a new project
 
-:::: tabs
+### Creating a project with starters
 
-::: tab yarn
+[Starters](https://strapi.io/starters) are the quickest way to kickstart a fullstack project with Strapi. To use one, run this command:
 
-To quickly create a blank project from scratch, run this command:
+<code-group>
+<code-block title="YARN">
 
-```bash
-yarn create strapi-app my-project --quickstart
-```
-
-Alternatively, to use one of our [starters](https://strapi.io/starters), run this command instead:
-
-```bash
+```sh
 yarn create strapi-starter my-project <starter-url>
 ```
 
-:::
+</code-block>
 
-::: tab npx
-
-To quickly create a blank project from scratch, run this command:
-
-```bash
-npx create-strapi-app my-project --quickstart
-```
-
-Alternatively, to use one of our [starters](https://strapi.io/starters), run this command instead:
+<code-block title="NPX">
 
 ```bash
 npx create-strapi-starter my-project <starter-url>
 ```
 
+</code-block>
+</code-group>
+
+This creates a monorepo, installs dependencies, and runs the project automatically. The project file structure looks similar to this:
+
+```sh
+my-project
+  /frontend // starter folder
+  /backend  // template folder
+```
+
+:::tip
+The project can be created from a specific branch, for example with a url like: `https://github.com/strapi/strapi-starter-gatsby-blog/tree/<my-branch>`.
 :::
 
-::::
+### Creating a project without starters
+
+To quickly create an empty project, run this command:
+
+<code-group>
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
+
+<code-block title="NPX">
+<!-- ? should we call these tabs NPM or NPX? -->
+```sh
+npx create-strapi-app my-project --quickstart
+```
+</code-block>
+</code-group>
 
 ::: tip
-If you want to use specific database, you don't have to use the `--quickstart` flag. The CLI will let you choose the database of your choice. The `--quickstart` flag sets the database to SQLite.
-:::
-
-:::tip
-By default, `create-strapi-app` will generate an empty Strapi project. If you want an application that is pre-configured for a specific use case, see the [Templates section](/developer-docs/latest/setup-deployment-guides/installation/templates.md).
-:::
-
-:::tip
-When using a starter, the project can be created from a specific branch, for example with a url like this: `https://github.com/strapi/strapi-starter-gatsby-blog/tree/<my-branch>`.
+The `--quickstart` flag sets the database to SQLite.  If you need another database, don't use this flag and the CLI will prompt you to choose one.
 :::
 
 ::: warning
-If you use a custom database, it has to be up and running before creating your Strapi project
+If you use a custom database, it has to be up and running before creating your Strapi project.
 :::
+
+If you want an application that is pre-configured for a specific use case, but [starters](#creating-a-project-with-starters) do not suit your use case, see [Templates](/developer-docs/latest/setup-deployment-guides/installation/templates.md) documentation.
 
 ## Step 3: Start the project
 
-To start your Strapi application you will have to run the following command in your application folder.
+To start Strapi, run the following command in the project folder:
 
-:::: tabs
-
-::: tab yarn
-
-```bash
+<code-group>
+<code-block title="YARN">
+```sh
 yarn develop
 ```
+</code-block>
 
-:::
-
-::: tab npm
-
+<code-block title="NPM">
 ```bash
 npm run develop
 ```
-
-:::
-
-::::
+</code-block>
+</code-group>
 
 ::: tip
-If you created your application using `--quickstart` flag, it will automatically run your application.
+Creating a project using the `--quickstart` flag or with a [starter](#creating-a-project-with-starters) should automatically run your application.
 :::
