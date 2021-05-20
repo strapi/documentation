@@ -209,7 +209,7 @@ export class AppComponent implements OnInit {
 </div>
 
 <ul>
-  <li *ngFor="let restaurant of restaurants">{{ restaurant.name }}</li>
+  <li *ngFor="let restaurant of restaurants">{{ restaurant['name'] }}</li>
 </ul>
 ```
 
