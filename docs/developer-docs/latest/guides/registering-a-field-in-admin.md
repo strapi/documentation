@@ -394,7 +394,7 @@ At this point we have simply created a new plugin which is mounted in our projec
 Since the goal of our plugin is to override the current WYSIWYG we don't want it to be displayed in the administration panel but we need it to register our new **Field**.
 In order to do so, we will simply **modify** the front-end entry point of our plugin.
 
-This file is already present. Please replace the content of this file wit the following:
+This file is already present. Please replace the content of this file with the following:
 
 **Path —** `./plugins/wysiwyg/admin/src/index.js`
 
