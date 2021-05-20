@@ -1,6 +1,6 @@
 # Configuring end-users roles
 
-End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see List of plugins). The Users & Permissions configurations and options are however scattered at various places of the admin panel: end-users roles and permissions are managed in the Settings interface, whereas end-users accounts are managed from the Content Manager (see Managing end-user accounts).
+End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). The Users & Permissions configurations and options are however scattered at various places of the admin panel: end-users roles and permissions are managed in the Settings interface, whereas end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)).
 
 The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
@@ -8,9 +8,9 @@ The *Roles* sub-section of *Users & Permissions plugin* displays all created rol
 
 From this interface, it is possible to:
 
-- create a new end-user role (see Creating a new role),
-- delete an end-user role (see Deleting a role),
-- or access information regarding an end-user role, and edit it (see Editing a role).
+- create a new end-user role (see [Creating a new role](#creating-a-new-role)),
+- delete an end-user role (see [Deleting a role](#deleting-a-role)),
+- or access information regarding an end-user role, and edit it (see [Editing a role](#editing-a-role)).
 
 By default, 2 end-user roles are defined for any Strapi application:
 
@@ -18,7 +18,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 - Public: for end-users to access content without being logged in.
 
 ::: tip NOTE
-The end-user role attributed to by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/managing-users-permissions-plugin-settings.md#configuring-advanced-settings)).
+The end-user role attributed to by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
 :::
 
 ## Creating a new role

@@ -354,7 +354,7 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
-        ['/user-docs/latest/settings/managing-users-permissions-plugin-settings', 'Managing Users & Permissions plugin settings'],
+        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
       ],
     },
   ],
