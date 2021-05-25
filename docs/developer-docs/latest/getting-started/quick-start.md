@@ -96,7 +96,7 @@ First, make sure [Node.js and npm are properly installed](/developer-docs/latest
 
 :::: tab Starters
 
-## 🚀 Step 1: Create a new project with Strapi starters
+## 🚀 Part 1: Create a new project with Strapi starters
 
 Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We'll use the Gatsby blog starter as an example.
 
@@ -139,12 +139,12 @@ The second tab ([http://localhost:8000](http://localhost:8000)) is for the front
 
 
 ::: tip CONGRATULATIONS! 🥳 
-Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the Quick Start Guide.
+Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to [part 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the Quick Start Guide.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
 :::
 
-## 🎨 Step 2: Play with your content
+## 🎨 Part 2: Play with your content
 
 Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster. You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
 
@@ -154,7 +154,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 <!-- other considered emojis for this section: 🎠 🎡 🧸  -->
 
-### 1. Add yourself as a writer
+### Step 1: Add yourself as a writer
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
@@ -167,7 +167,7 @@ Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/c
 3. Click **Upload 1 asset to the library** then **Finish** (saying 'Cheese!' during the process is optional 😄).
 4. Finally, click **Save**.
 
-### 2. Write & publish your first article
+### Step 2: Write & publish your first article
 
 Now it's time to write!
 
@@ -199,7 +199,7 @@ Finally, click on **Save** at the top of the window.
 
 ![Animated GIF to create an article](../assets/quick-start-guide/write_publish_article.gif)
 
-### 3. Update the Homepage
+### Step 3: Update the Homepage
 
 It's time to make this blog a bit more yours. Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
 
@@ -219,7 +219,7 @@ After a few moments, you should see your blog with its updated title running at 
 Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content. Proceed to [step 3](/developer-docs/latest/getting-started/quick-start-step3.md) when you're ready to show it to the world!
 :::
 
-## 👀 Step 3: Show your content to the world
+## 👀 Part 3: Show your content to the world
 
 The beauty of using Strapi [starters](https://strapi.io/starters) is that your Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world!
 
@@ -244,7 +244,7 @@ Once your Strapi backend is deployed, the easiest way to deploy your Gatsby blog
 
 :::: tab Hands-on
 
-## 🚀  Step 1: Create a new project with Strapi
+## 🚀  Part 1: Create a new project with Strapi
 
 Run one of the following commands in a terminal:
 
@@ -273,7 +273,7 @@ After a few moments, your web browser opens a tab. Complete the form to create t
 You have just created a Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the guided tour.
 :::
 
-## 🛠  Step 2: Build your content
+## Part 2: Build your content
 
 The admin panel of Strapi runs at [http://localhost:1337](http://localhost:1337). This is where you'll spend most of your time creating and updating content.
 
@@ -370,7 +370,7 @@ To publish your `Biscotte Restaurant`, navigate to [_Collection Types > Restaura
 Now your data structure is created and accessible through the API. You can start consuming your content by yourself, or proceed to [step 3](/developer-docs/latest/getting-started/quick-start-step3.md) to learn how to integrate your content with various frameworks, frontend or backend programming languages, then deploy your content.
 :::
 
-## 👀 Step 3: Show your content to the world
+## 👀 Part 3: Show your content to the world
 
 ### Consume your API
 
