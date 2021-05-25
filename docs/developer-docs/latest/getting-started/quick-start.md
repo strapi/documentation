@@ -201,22 +201,33 @@ Finally, click on **Save** at the top of the window.
 
 ### Step 3: Update the Homepage
 
-It's time to make this blog a bit more yours. Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
+It's time to make this blog a bit more yours.
 
-Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. Click **Finish** twice.
+#### Update the `Homepage` single type
 
-Now, update the **Title** to `My Wonderful Strapi Blog` in the **Hero** field group, then click **Save**.
+Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
 
-Gatsby is a static-site generator. It means that you need to restart the server for changes to appear on the frontend. In your terminal, press `Ctrl-C` to kill the servers. Then restart them by typing `yarn develop` (or `npm run develop`) and press `Enter`.
+1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. 
+2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. 
+3. Click **Finish** twice.
+4. At the bottom of the page, update the **Title** to `My Wonderful Strapi Blog` in the **Hero** field group.
+5. Finally, click **Save**.
+
+#### Restart the server to reflect latest changes
+
+Gatsby is a static-site generator. It means that you need to restart the server for changes to appear on the frontend:
+
+1. In your terminal, press `Ctrl-C` to stop the servers.
+2. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page 👀
 
 
-![Screenshot: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-starters-step2-04-updated_fe.png)
+![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-restart-servers.gif)
 
 
 :::tip CONGRATULATIONS! 🥳
-Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content. Proceed to [step 3](/developer-docs/latest/getting-started/quick-start-step3.md) when you're ready to show it to the world!
+Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content. Proceed to part 3 when you're ready to show it to the world!
 :::
 
 ## 👀 Part 3: Show your content to the world
@@ -270,7 +281,7 @@ After a few moments, your web browser opens a tab. Complete the form to create t
 ![Admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-step1-01-admin_panel.png)
 
 ::: tip CONGRATULATIONS! 🥳 
-You have just created a Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the guided tour.
+You have just created a Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to [Part 2](/developer-docs/latest/getting-started/quick-start.md#🛠-part-2-build-your-content) to continue the guided tour.
 :::
 
 ## Part 2: Build your content
