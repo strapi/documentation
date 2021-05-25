@@ -127,14 +127,14 @@ The second tab ([http://localhost:8000](http://localhost:8000)) is for the front
 
 
 ::: tip CONGRATULATIONS! 🥳 
-Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the guided tour.
+Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to [step 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the Quick Start Guide.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
 :::
 
 ## 🎨 Step 2: Play with your content
 
-Strapi [starters](https://strapi.io/starters) build a full stack app and a data structure for you, so you can start playing with your content faster. You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
+Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster. You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
 
 :::tip TIP
 If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `yarn develop` (or `npm run develop`) to launch it.
@@ -146,7 +146,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Navigate to [_COLLECTION TYPES > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
+Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-01-writer.png)
 
@@ -158,7 +158,7 @@ Finally, click **Save**.
 
 ### 2. Write & publish your first article
 
-Now it's time to write!  Navigate to [_COLLECTION TYPES > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
+Now it's time to write!  Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-02-write_article.png)
 
@@ -175,7 +175,7 @@ Finally, click on **Save** at the top of the window.
 
 ### 3. Update the Homepage
 
-It's time to make this blog a bit more yours. Navigate to [_SINGLE TYPES > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
+It's time to make this blog a bit more yours. Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
 
 Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. Click **Finish** twice.
 
@@ -261,9 +261,9 @@ You can use the Content-Types Builder to create a data structure from scratch.
 
 #### Create a "Restaurant" collection type
 
-Go to [_PLUGINS > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **"+ Create new collection type"**. Type `restaurant` for the **Display name**, and click **Continue**.  
+Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **"+ Create new collection type"**. Type `restaurant` for the **Display name**, and click **Continue**.  
 
-On the next screen, click the **Text** field, and type `name` in the **Name** field.  Then, switch to the **ADVANCED SETTINGS** tab, and check the **Required field** and the **Unique field** settings.
+On the next screen, click the **Text** field, and type `name` in the **Name** field.  Then, switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
 
 Now, click on **"+ Add another Field"**.  Choose the **Rich Text** field, type `description` under the **Name** field, then click **Finish**.
 
@@ -273,9 +273,9 @@ Finally, click the **Save** button and wait for Strapi to restart.
 
 #### Create a "Category" collection type
 
-Navigate to [_PLUGINS > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **"+ Create new collection type"**. Type `category` for the **Display name**, and click **Continue**.
+Navigate to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **"+ Create new collection type"**. Type `category` for the **Display name**, and click **Continue**.
 
-Click the **Text** field, then type `name` in the **Name** field. Switch over to the **ADVANCED SETTINGS** tab, and check the **Required field** and the **Unique field** settings.
+Click the **Text** field, then type `name` in the **Name** field. Switch over to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
 
 Click on **"+ Add another Field"** and choose the **Relation** field. On the right side, click the **Category** dropdown and select **Restaurant**. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
 
@@ -289,38 +289,38 @@ Once your Content-Types are created, you can start creating entries.
 
 #### Create an entry for the "Restaurant" collection type
 
-Navigate to [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on **+ Add New Restaurants** button.
+Navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on **+ Add New Restaurants** button.
 
 Type `Biscotte Restaurant` in the **Name** field. Type `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.` into the **Description** field.
 
-Click **Save**.  If you go back [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), you will see your restaurant listed in the entries.
+Click **Save**.  If you go back [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), you will see your restaurant listed in the entries.
 
 #### Add Categories
 
-Navigate go to [_COLLECTION TYPES > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu, and click on **+ Add New Categories**. 
+Navigate go to [_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu, and click on **+ Add New Categories**. 
 
 Type `French Food` in the **Name** field. Select `Biscotte Restaurant` on the right in the **Restaurant (0)** dropdown.
 
-Click **Save**, go back to _COLLECTION TYPES > Categories_, then click again on **+ Add New Categories**.  Type `Brunch` in the **Category** field, then click **Save**. 
+Click **Save**, go back to _Collection Types > Categories_, then click again on **+ Add New Categories**.  Type `Brunch` in the **Category** field, then click **Save**. 
 
-Go back again to [_COLLECTION TYPES > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). You will see the `French Food` and `Brunch` categories in the list.
+Go back again to [_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). You will see the `French Food` and `Brunch` categories in the list.
 
 ![Screenshot: Categories](../assets/quick-start-guide/qsg-handson-step2-03-categories.png)
 
 #### Add a Category to a Restaurant
 
-Navigate to [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
+Navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
 
 In the right sidebar, click on **Add an item…** under **Categories (1)**, select `Brunch`, then click **Save**.
 
 ### 3. Set Roles & Permissions
 
-Navigate to _GENERAL > Settings_ in the left hand menu, then choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles) under _USERS & PERMISSIONS PLUGIN_.
+Navigate to _General > Settings_ in the left hand menu, then choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles) under _Users & Permissions Plugin_.
 
 Click the **Public** role, scroll down under **Permissions**.
 
-In the **Application** tab, find **RESTAURANT**. Click the checkboxes next to **find** and **findone**.
-Repeat with **CATEGORY**: click the checkboxes next to **find** and **findone**.
+In the **Application** tab, find **Restaurant**. Click the checkboxes next to **find** and **findone**.
+Repeat with **Category**: click the checkboxes next to **find** and **findone**.
 
 Finally, click **Save**.
 
@@ -330,11 +330,11 @@ Finally, click **Save**.
 
 By default, any content you create is saved as a draft.
 
-To publish your categories, navigate to [_COLLECTION TYPES > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category).
+To publish your categories, navigate to [_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category).
 
 From there, click the **Draft** button on the `Brunch` category. On the next screen, click **Publish** and in the **Please confirm** dialog, click **Yes, publish**.  Go back to the Categories list and repeat for the `French food` category.
 
-To publish your `Biscotte Restaurant`, navigate to [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
+To publish your `Biscotte Restaurant`, navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
 
 > 🥳  Since you've setup roles & permissions and published your content, the list of restaurants is now accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
 
