@@ -36,9 +36,9 @@ The Internationalization plugin impacts several parts of the admin panel. The ta
 
 The Users & Permissions plugin is installed by default on all Strapi applications.
 
-This plugin allows to manage the end-users of a Strapi application, which consume the content created and managed with that application. With the Users & Permissions plugin, it is possible to:
+This plugin allows to manage end-users, who consume the content created and managed with a Strapi application. With the Users & Permissions plugin, it is possible to:
 
-- manage end-users accounts, based on a default "User" collection type available through the plugin,
+- manage end-users accounts, based on a "User" collection type available through the plugin,
 - define the available end-users roles and their related permissions,
 - manage available providers to enable end-users to login through third-party providers,
 - configure available email templates aimed at the end-users (e.g. password reset, email address confirmation).
@@ -47,6 +47,6 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 
 | Section impacted | Options and settings                                                                                    |
 |------------------|---------------------------------------------------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles, Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-providers)). <br> 👉 Path reminder: *General > Settings > Users & Permissions plugin* </li></ul> |
-| Content-Types Builder | <ul><li>Addition of default collection types: "User", "Role" and "Permission". These collection types cannot be deleted and their composing fields cannot be edited -but addition of new fields is possible.</li></ul> |
-| Content Manager | <ul><li>Addition of the default "User" collection type that should be used for end-users accounts. <ul><li>By default, the following information can be filled up for an end-user: Username, Email and Password. From the "User" collection type via the Content Manager it is also possible to check if the end-user account is confirmed and/or blocked.</li> <li>All end-user accounts must belong to a role (i.e. the "User" collection type has a relation established with the "Role" collection type). By default, the end-user is attached to the end-user role set as default, but that role can be changed via the "User" collection type in the Content Manager.</li></ul> </li></ul> |
+| Settings         | <ul>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)), Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin](../settings/configuring-users-permissions-plugin-settings.md)). <br> 👉 Path reminder: *General > Settings > Users & Permissions plugin* </ul> |
+| Content-Types Builder | <ul>Creation of 3 default collection types: "User", "Role" and "Permission". They respectively allow to manage the end-users, the end-users roles and their permissions. These collection types cannot be deleted and their composing fields cannot be edited, but addition of new fields is possible. Out of the 3, only the "User" collection type is then available via the Content Manager.</ul> |
+| Content Manager | <ul>Addition of the default "User" collection type that allows to manage end-user accounts (see [Managing end-users accounts](../users-roles-permissions/managing-end-users.md)). <ul><li>By default, the following fields are available: Username, Email, ¨assword, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must indeed be attributed a role: by default, the end-user is attributed the end-user role set as default, but that role can be changed via the end-users entries directly in the Content Manager.</li></ul> </ul> |

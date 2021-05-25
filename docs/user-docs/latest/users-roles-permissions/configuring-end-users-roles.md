@@ -1,6 +1,6 @@
 # Configuring end-users roles
 
-End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). The Users & Permissions configurations and options are however scattered at various places of the admin panel: end-users roles and permissions are managed in the Settings interface, whereas end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)).
+End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). The Users & Permissions plugin is however not entirely managed and configured from one same place of the admin panel: end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-users roles and permissions are managed in the Settings interface.
 
 The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
@@ -18,7 +18,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 - Public: for end-users to access content without being logged in.
 
 ::: tip NOTE
-The end-user role attributed to by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
+The end-user role attributed by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
 :::
 
 ## Creating a new role
@@ -30,7 +30,7 @@ Clicking on the **Add new role** button will redirect you to the roles edition i
 
 ## Deleting a role
 
-Although the 2 default end-users cannot be deleted, the other ones can as long as no end-user still has this role attributed to their account.
+Although the 2 default end-users roles cannot be deleted, the other ones can, as long as no end-user still has this role attributed to their account.
 
 To delete a role:
 
@@ -39,11 +39,11 @@ To delete a role:
 
 ## Editing a role
 
-The role edition interface allows to edit the details of an end-user role as well as configure in detail the permissions to access the content created and managed with your Strapi application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content created and managed with your Strapi application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ### Editing role's details
 
-The details area of an end-user role editing interface allow to define the name of the role, and to give it a description that should help administrators understand what the role gives access to.
+The details area of an end-user role editing interface allows to define the name of the role, and to give it a description that should help administrators understand what the role gives access to.
 
 To edit a role's details, follow the instructions from the table below:
 
@@ -63,5 +63,5 @@ To configure permissions for an end-user role:
 3. Click on the **Save** button.
 
 ::: tip 💡 TIP
-When ticking an action or permission box, related bound routes are displayed in the right side of the interface.
+When ticking an action or permission box, related bound routes of the API are displayed in the right side of the interface.
 :::
