@@ -46,6 +46,10 @@ next: ./troubleshooting
 </style>
 
 <style lang="scss">
+  .el-tabs--card > .el-tabs__header {
+    padding-top: 2em;
+  }
+
   .el-tabs--card > .el-tabs__header,
   .el-tabs--card > .el-tabs__header .el-tabs__nav {
     border: none;
