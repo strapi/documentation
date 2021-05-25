@@ -155,8 +155,6 @@ Then, drag and drop your favorite selfie in the **Picture** field. Click **Uploa
 
 Finally, click **Save**.
 
-> 🥳  _Voilà_! You have just added yourself as a writer.
-
 ### 2. Write & publish your first article
 
 Now it's time to write!  Navigate to [_COLLECTION TYPES > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
@@ -173,8 +171,6 @@ Scroll down, pick a date in the **PublishedAt** field, then add a picture in the
 By default, your new article would be saved as a draft. But let's not be too shy, and publish it right away: from the **Status** dropdown, choose **published**.
 
 Finally, click on **Save** at the top of the window.
-
-> 🥳  You have just created and published your very first article with Strapi.
 
 ### 3. Update the Homepage
 
@@ -272,8 +268,6 @@ Now, click on **"+ Add another Field"**.  Choose the **Rich Text** field, type `
 
 Finally, click the **Save** button and wait for Strapi to restart.
 
-> 🥳  You have just created your first collection type, `Restaurant`.
-
 ![Screenshot: Restaurant Collection Type in Content-Types Builder](../assets/quick-start-guide/qsg-handson-step2-01-restaurant_ct.png)
 
 #### Create a "Category" collection type
@@ -288,8 +282,6 @@ Click on **"+ Add another Field"** and choose the **Relation** field. On the rig
 
 Finally, click **Finish** then the **Save** button and wait for Strapi to restart.
 
-> 🥳  You have just created another collection type, `Categories`, and connected it to the `Restaurant` collection type.
-
 ### 2. Use your Collection Types
 
 Once your Content-Types are created, you can start creating entries.
@@ -302,15 +294,11 @@ Type `Biscotte Restaurant` in the **Name** field. Type `Welcome to Biscotte rest
 
 Click **Save**.  If you go back [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), you will see your restaurant listed in the entries.
 
-> 🥳  You have just created the first content entry with the `Restaurant` collection type you have previously built.
-
 #### Add Categories
 
 Navigate go to [_COLLECTION TYPES > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu, and click on **+ Add New Categories**. 
 
 Type `French Food` in the **Name** field. Select `Biscotte Restaurant` on the right in the **Restaurant (0)** dropdown.
-
-> 🥳 You have just discovered a first way to connect the `Restaurant` and `Category` collection types.
 
 Click **Save**, go back to _COLLECTION TYPES > Categories_, then click again on **+ Add New Categories**.  Type `Brunch` in the **Category** field, then click **Save**. 
 
@@ -323,8 +311,6 @@ Go back again to [_COLLECTION TYPES > Categories_](http://localhost:1337/admin/p
 Navigate to [_COLLECTION TYPES > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
 
 In the right sidebar, click on **Add an item…** under **Categories (1)**, select `Brunch`, then click **Save**.
-
-> 🥳 You have just discovered another way to connect 2 collection types.
 
 ### 3. Set Roles & Permissions
 
@@ -339,7 +325,6 @@ Finally, click **Save**.
 
 ![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-step2-04-roles.png)
 
-> 🥳  You have just learned how to allow the API to access some items in your collection types.
 ### 4. Publish the content
 
 By default, any content you create is saved as a draft.
