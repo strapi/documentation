@@ -33,6 +33,7 @@ next: ./troubleshooting
   .custom-block.warning {
     background-color: #f8f8f8;
     border-left-width: .25rem;
+    margin-bottom: 2em;
 
     .custom-block-title, p {
       color: rgb(44, 62, 80);
