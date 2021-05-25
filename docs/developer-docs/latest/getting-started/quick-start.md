@@ -9,8 +9,8 @@ next: ./troubleshooting
 
 <!-- We use the vuepress-plugin-tabs plugin but customize tabs to look more like buttons -->
 
-<style lang="scss">
-  /* h2 {
+<style lang="scss" scoped>
+  h2 {
     padding-top: 2em;
   }
   h3, h4 {
@@ -28,12 +28,23 @@ next: ./troubleshooting
     p {
       color: #888;
     }
-  } */
-
-  .el-tabs__header .is-top{
-    /* padding-bottom: 2em; */
   }
 
+  .custom-block.warning {
+    background-color: #f8f8f8;
+    border-left-width: .25rem;
+
+    .custom-block-title, p {
+      color: rgb(44, 62, 80);
+    }
+
+    a {
+      color: #007eff
+    }
+  }
+</style>
+
+<style lang="scss">
   .el-tabs--card > .el-tabs__header,
   .el-tabs--card > .el-tabs__header .el-tabs__nav {
     border: none;
@@ -42,12 +53,14 @@ next: ./troubleshooting
   .el-tabs--card > .el-tabs__header .el-tabs__item {
     border-radius: 8px;
     border: solid 1px rgba(129,107,250,.2);
-    font-size: 100%;
+    font-size: 125%;
+    height: 60px;
+    line-height: 60px;
   }
 
   .el-tabs--card > .el-tabs__header .el-tabs__item:first-child {
     border-left: solid 1px rgba(129,107,250,.2);
-    margin-right: 8px;
+    margin-right: 20px;
   }
 
   .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
@@ -56,13 +69,19 @@ next: ./troubleshooting
     font-weight: bold;
     border-color: rgb(129,107,250);
   }
+
+  .el-tabs--card .el-tabs__content {
+      /* padding-top: 2em; */
+  }
 </style>
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
+:::warning REQUIREMENTS
 First, make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine. Optionally, you can also [install the Yarn package here](https://yarnpkg.com/en/).
+:::
 
-Then, using the buttons below, please choose between:
+👇 Using the big buttons below, please choose between:
 
 - the **Starters** path for the quickest way to spin up a fullstack application (blog, e-commerce solution, corporate website, portfolio…) powered by a Strapi backend,
 - or the **Hands-on** path for a more DIY approach to run your project.
