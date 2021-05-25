@@ -100,7 +100,9 @@ First, make sure [Node.js and npm are properly installed](/developer-docs/latest
 
 Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We'll use the Gatsby blog starter as an example.
 
-To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run one of the following commands in a terminal:
+### Run the installation script
+
+To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
 
 <code-group>
 <code-block title="NPM">
@@ -119,9 +121,15 @@ yarn create strapi-starter my-project gatsby-blog
 </code-block>
 </code-group>
 
-When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option. After a few moments, your web browser opens 2 tabs.
+When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option, and let the magic happen 🪄.
 
-The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the backend of your app. Complete the form to create the first Administrator user:
+### Register & have a look at your blog
+
+Once the installation is complete, your browser opens 2 tabs.
+
+The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the backend of your app.
+
+Complete the form to create the first Administrator user:
 
 ![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-step1-01-admin_panel.png)
 
@@ -154,28 +162,42 @@ Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/c
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-01-writer.png)
 
-First, add your **Name** and **Email** in the corresponding fields. 
-
-Then, drag and drop your favorite selfie in the **Picture** field. Click **Upload 1 asset to the library** then **Finish** (saying 'Cheese!' during the process is optional 😄).
-
-Finally, click **Save**.
+1. Add your **Name** and **Email** in the corresponding fields. 
+2. Drag and drop your favorite selfie in the **Picture** field. 
+3. Click **Upload 1 asset to the library** then **Finish** (saying 'Cheese!' during the process is optional 😄).
+4. Finally, click **Save**.
 
 ### 2. Write & publish your first article
 
-Now it's time to write!  Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
+Now it's time to write!
+
+Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-02-write_article.png)
 
-Type `Hello World!` in the **Title** field, then `My very first article with Strapi` in the **Description** field, and write a few lines in the **Content** field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
+#### Give your article a title, a description, and some content
 
-Once done, in the right sidebar, choose your name in the **Author** dropdown.  You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment! While in the right sidebar, 
-you might also want to choose a **Category** for your post (or add your own) from the list.
+1. Type `Hello World!` in the **Title** field.
+2. Type `My very first article with Strapi` in the **Description** field. 
+3. Write a few lines in the **Content** field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
+4. Scroll down, pick a date in the **PublishedAt** field.
+5. Finally, add a picture in the **Image** field, either by drag & drop, or by selecting a file from the Strapi assets library or from your computer.
 
-Scroll down, pick a date in the **PublishedAt** field, then add a picture in the **Image** field, either by drag & drop, or by selecting a file from the Strapi assets library or from your computer.
+#### Choose an author and a category for your article
 
-By default, your new article would be saved as a draft. But let's not be too shy, and publish it right away: from the **Status** dropdown, choose **published**.
+In the sidebar on the right, choose your name in the **Author** dropdown. 
+
+🥳 You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
+
+While there, you might also want to choose a **Category** for your article (or add your own) from the list.
+
+#### Turn your draft into a publication
+
+By default, your new article would be saved as a draft. But let's not be too shy, and publish it right away: from the **Status** dropdown at the bottom of the page, choose **published**.
 
 Finally, click on **Save** at the top of the window.
+
+![Animated GIF to create an article](../assets/quick-start-guide/write_publish_article.gif)
 
 ### 3. Update the Homepage
 
