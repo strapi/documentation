@@ -99,7 +99,7 @@ Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart y
 To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run one of the following commands in a terminal:
 
 <code-group>
-<code-block title="NPX">
+<code-block title="NPM">
 
 ```bash
 npx create-strapi-starter my-project gatsby-blog
@@ -223,7 +223,7 @@ Once your Strapi backend is deployed, the easiest way to deploy your Gatsby blog
 Run one of the following commands in a terminal:
 
 <code-group>
-<code-block title="NPX">
+<code-block title="NPM">
 
 ```bash
 npx create-strapi-app my-project --quickstart
