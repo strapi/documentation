@@ -276,7 +276,7 @@ This is only the beginning of an exciting journey with Strapi! We encourage you 
 - Get help on [our community forum](https://forum.strapi.io).
 - Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
 - Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
-- [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack.
+- [Join the vibrant and active Strapi community](https://discord.strapi.io) on Discord.
 :::
 
 ::::
@@ -445,7 +445,7 @@ We offer various deployment options for your Strapi backend — see our [Deploym
 - Get help on [our community forum](https://forum.strapi.io).
 - Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
 - Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
-- [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack.
+- [Join the vibrant and active Strapi community](https://discord.strapi.io) on Discord.
 
 ::::
 
