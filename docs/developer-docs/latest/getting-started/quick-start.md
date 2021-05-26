@@ -115,7 +115,9 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 ## 🚀 Part 1: Create a new project with Strapi starters
 
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We'll use the Gatsby blog starter as an example.
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We offer starters for various use cases (blog, e-commerce solution, corporate website, portfolio) and technologies (Gatsby, Gridsome, Next, Nuxt).
+
+From now on, in this whole guide, we will use the Gatsby blog starter as an example.
 
 ### Run the installation script
 
@@ -138,11 +140,11 @@ yarn create strapi-starter my-project gatsby-blog
 </code-block>
 </code-group>
 
-When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option, and let the magic happen 🪄.
+When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option, and let the magic happen!
 
 ### Register & have a look at your blog
 
-Once the installation is complete, your browser opens 2 tabs.
+Once the installation is complete, your browser automatically opens 2 tabs.
 
 The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the backend of your app.
 
@@ -155,18 +157,30 @@ The second tab ([http://localhost:8000](http://localhost:8000)) is for the front
 ![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-step1-01-gatsby_fe.png)
 
 
-::: tip CONGRATULATIONS! 🥳 
+<!-- ::: tip CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to [part 2](/developer-docs/latest/getting-started/quick-start-step2.md) to continue the Quick Start Guide.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
-:::
+::: -->
+
+<!-- TODO: convert to VuePress Component -->
+<div class="custom-block tip congrats">
+  <p class="custom-block-title" style="background-color: #f3fbf7;
+    border-left-width: .25rem;">
+    CONGRATULATIONS! 🥳
+  </p>
+  <p>
+    Your blog is ready! You can start playing with Strapi and discover the product by yourself using our <a href="/documentation/user-docs/latest/getting-started/introduction.html">User Guide</a>, or proceed to part 2 below.</p>
+    <p>
+      Writing a blog is not your cup of tea? You can leave this guide and play with other <a  href="https://strapi.io/starters" target="_blank" rel="noopener noreferrer">Starters<span> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> on your own.</p>
+</div>
 
 ## 🎨 Part 2: Play with your content
 
 Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster. You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
 
 :::tip TIP
-If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `yarn develop` (or `npm run develop`) to launch it.
+If the servers are not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
 <!-- other considered emojis for this section: 🎠 🎡 🧸  -->
