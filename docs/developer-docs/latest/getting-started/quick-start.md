@@ -99,12 +99,13 @@ next: ./troubleshooting
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
 :::warning REQUIREMENTS
-First, make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine. Optionally, you can also [install the Yarn package here](https://yarnpkg.com/en/).
+* First, make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine.
+* Optionally, you can also [install the Yarn package](https://yarnpkg.com/en/).
 :::
 
-👇 Using the big buttons below, please choose between:
+👇 Let's get started! Using the big buttons below, please choose between:
 
-- the **Starters** path for the quickest way to spin up a fullstack application (blog, e-commerce solution, corporate website, portfolio…) powered by a Strapi backend,
+- the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi backend,
 - or the **Hands-on** path for a more DIY approach to run your project.
 
 ::::: tabs type:card
