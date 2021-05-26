@@ -212,31 +212,30 @@ Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/
 2. Type `My very first article with Strapi` in the **Description** field. 
 3. Write a few lines in the **Content** field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
 4. Scroll down, pick a date in the **PublishedAt** field.
-5. Finally, add a picture in the **Image** field, either by drag & drop, or by selecting a file from the Strapi assets library or from your computer.
+5. Finally, add a picture in the **Image** field. You can do this either by drag & drop, or by selecting a file from the Strapi assets library.
 
 #### Choose an author and a category for your article
 
-In the sidebar on the right, choose your name in the **Author** dropdown. 
-
-🥳 You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
+In the sidebar on the right, choose your name in the **Author** dropdown. 🥳 You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
 
 While there, you might also want to choose a **Category** for your article (or add your own) from the list.
 
 #### Turn your draft into a publication
 
-By default, your new article would be saved as a draft. But let's not be too shy, and publish it right away: from the **Status** dropdown at the bottom of the page, choose **published**.
+By default, your new article would be saved as a draft. Let's not be too shy and publish it right away:
 
-Finally, click on **Save** at the top of the window.
+1. From the **Status** dropdown at the bottom of the page, choose **published**.
+2. Click on **Save** at the top of the window.
 
 ![Animated GIF to create an article](../assets/quick-start-guide/write_publish_article.gif)
 
-### Step 3: Update the Homepage
+You've just created and published your first article, `Hello World!`. You can find it in the [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) view.
+
+### Step 3: Update the `Homepage` single type
 
 It's time to make this blog a bit more yours.
 
-#### Update the `Homepage` single type
-
-Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu.
+Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
 
 1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. 
 2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. 
@@ -244,21 +243,21 @@ Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/cont
 4. At the bottom of the page, update the **Title** to `My Wonderful Strapi Blog` in the **Hero** field group.
 5. Finally, click **Save**.
 
-#### Restart the server to reflect latest changes
+### Step 4: Restart the server to reflect latest changes
 
 Gatsby is a static-site generator. It means that you need to restart the server for changes to appear on the frontend:
 
 1. In your terminal, press `Ctrl-C` to stop the servers.
 2. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
 
-After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page 👀
+After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
 
 
 ![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-restart-servers.gif)
 
 
 :::tip CONGRATULATIONS! 🥳
-Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content. Proceed to part 3 when you're ready to show it to the world!
+Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content.
 :::
 
 ## 👀 Part 3: Show your content to the world
