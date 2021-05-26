@@ -1,6 +1,6 @@
 # Configuring end-users roles
 
-End-users are the users who consume the content created and managed with a Strapi application. Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). The Users & Permissions plugin is however not entirely managed and configured from one same place of the admin panel: end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-users roles and permissions are managed in the Settings interface.
+End-users are the users who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device etc.). Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). This plugin is however not entirely managed and configured from one same place of the admin panel: end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-users roles and permissions are managed in the Settings interface.
 
 The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
@@ -14,8 +14,8 @@ From this interface, it is possible to:
 
 By default, 2 end-user roles are defined for any Strapi application:
 
-- Authenticated: for end-users to access content only if they are logged in.
-- Public: for end-users to access content without being logged in.
+- Authenticated: for end-users to access content only if they are logged in to the front-end application.
+- Public: for end-users to access content without being logged in to the front-end application.
 
 ::: tip NOTE
 The end-user role attributed by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
@@ -39,7 +39,7 @@ To delete a role:
 
 ## Editing a role
 
-The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content created and managed with your Strapi application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of the front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ### Editing role's details
 
