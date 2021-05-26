@@ -257,7 +257,7 @@ After a few moments, you should see your blog with its updated title running at 
 
 
 :::tip CONGRATULATIONS! 🥳
-Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content.
+Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
 ## ⏩ Where to go next?
