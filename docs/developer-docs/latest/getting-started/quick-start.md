@@ -200,7 +200,7 @@ Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/c
 
 ### Step 2: Write & publish your first article
 
-Now it's time to write!
+#### Create a new entry for the `Articles` collection type
 
 Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
@@ -260,19 +260,16 @@ After a few moments, you should see your blog with its updated title running at 
 Now that you know how to use Strapi to create and update your blog, you can keep on creating amazing content.
 :::
 
-## 👀 Part 3: Show your content to the world
-
-The beauty of using Strapi [starters](https://strapi.io/starters) is that your Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world!
-
-The next step is then to deploy both your Strapi backend and the frontend on the platforms of your choice.
-We offer various deployment options for your Strapi backend — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
-
-:::tip TIP
-Once your Strapi backend is deployed, the easiest way to deploy your Gatsby blog frontend is probably [to deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
-:::
-
 ## ⏩ Where to go next?
 
+The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi backend and the frontend on the platforms of your choice:
+
+👉 For the Strapi backend, we offer various deployment options — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+
+👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably [to deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
+
+:::tip TO GO FURTHER
+This is only the beginning of an exciting journey with Strapi! We encourage you to:
 - Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 - Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
 - Have a look at the [Tutorials](https://strapi.io/tutorials) to deep dive into Strapi.
@@ -280,8 +277,10 @@ Once your Strapi backend is deployed, the easiest way to deploy your Gatsby blog
 - Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
 - Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
 - [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack.
+:::
 
 ::::
+
 
 :::: tab Hands-on
 
