@@ -85,6 +85,10 @@ const sidebar = {
                   'Qovery',
                 ],
                 [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/railway.md',
+                  'Railway',
+                ],
+                [
                   '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                   'Render',
                 ],
@@ -131,9 +135,9 @@ const sidebar = {
             ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
             ['/developer-docs/latest/development/plugins/email', 'Email'],
             ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
+            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
             ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions']
+            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
           ],
           sidebarDepth: 1,
         },
@@ -327,18 +331,12 @@ const sidebar = {
       collapsable: false,
       title: 'Plugins',
       children: [
-        [
-          '/user-docs/latest/plugins/introduction-to-plugins',
-          'Introduction to plugins',
-        ],
+        ['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
         [
           '/user-docs/latest/plugins/installing-plugins-via-marketplace',
           'Installing plugins via the Marketplace',
         ],
-        [
-          '/user-docs/latest/plugins/strapi-plugins',
-          'List of Strapi plugins',
-        ],
+        ['/user-docs/latest/plugins/strapi-plugins', 'List of Strapi plugins'],
       ],
     },
     {
