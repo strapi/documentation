@@ -119,7 +119,7 @@ Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart y
 
 From now on, in this whole guide, we will use the Gatsby blog starter as an example.
 
-### Run the installation script
+### Step 1: Run the installation script
 
 To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
 
@@ -142,7 +142,7 @@ yarn create strapi-starter my-project gatsby-blog
 
 When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option, and let the magic happen!
 
-### Register & have a look at your blog
+### Step 2: Register & have a look at your blog
 
 Once the installation is complete, your browser automatically opens 2 tabs.
 
