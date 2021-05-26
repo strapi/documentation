@@ -30,18 +30,34 @@ next: ./troubleshooting
     }
   }
 
+  ol li {
+    margin-left: 1em;
+    padding-left: .3em;
+
+    &::marker {
+      font-weight: bold;
+    }
+  }
+
   .custom-block.warning {
     background-color: #f8f8f8;
     border-left-width: .25rem;
     margin-bottom: 2em;
 
-    .custom-block-title, p {
+    .custom-block-title, p, li {
       color: rgb(44, 62, 80);
     }
 
     a {
       color: #007eff
     }
+  }
+
+  .custom-block.congrats,
+  .custom-block.tip {
+    /* background-color: #ebf9f2; */
+    background-color: #f3fbf7;
+    border-left-width: .25rem;
   }
 </style>
 
