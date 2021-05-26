@@ -914,6 +914,28 @@ module.exports = {
 };
 ```
 
+### Disable a type attribute
+
+To do that, we need to use the `schema.graphql.js` like below:
+
+```js
+module.exports = {
+  type: {
+    Restaurant: {
+      name: false, // The Restaurant's name won't be "queryable" or "mutable".
+    }
+  },
+  resolver: {
+    Query: {
+      // ...
+    },
+    Mutation: {
+      // ...
+    },
+  },
+};
+```
+
 ## FAQ
 
 **How are the types name defined?**
