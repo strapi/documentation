@@ -209,7 +209,7 @@ If the servers are not already running, in your terminal, `cd` into the `my-proj
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
+Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -222,7 +222,7 @@ click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/cont
 
 #### Create a new entry for the `Articles` collection type
 
-click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
+Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
@@ -255,7 +255,7 @@ You have just created and published your first article, `Hello World!`. You can 
 
 It's time to make this blog a bit more yours.
 
-click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
+Click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
 
 1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. 
 2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. 
