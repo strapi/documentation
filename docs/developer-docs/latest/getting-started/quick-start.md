@@ -338,79 +338,83 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 #### Create a `Restaurant` collection type
 
-Navigate to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **+ Create new collection type**.
+First, click on [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
+From there:
 
-1. Type `restaurant` for the **Display name**, and click **Continue**.  
-2. Click the **Text** field, then type `name` in the **Name** field.
-3. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-4. Click on **+ Add another Field**.
-5. Choose the **Rich Text** field.
-6. Type `description` under the **Name** field, then click **Finish**.
-7. Finally, click **Save** and wait for Strapi to restart.
+1. Click on **+ Create new collection type**.
+2. Type `restaurant` for the **Display name**, and click **Continue**.  
+3. Click the **Text** field, then type `name` in the **Name** field.
+4. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
+5. Click on **+ Add another Field**.
+6. Choose the **Rich Text** field.
+7. Type `description` under the **Name** field, then click **Finish**.
+8. Finally, click **Save** and wait for Strapi to restart.
 
 ![GIF: Create Restaurant collection type in Content-Types Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
 #### Create a `Category` collection type
 
-Navigate to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu, and click on **+ Create new collection type**.
+First, click on [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu. From there:
 
-1. Type `category` for the **Display name**, and click **Continue**.
-2. Click the **Text** field, then type `name` in the **Name** field.
-3. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-4. Click on **+ Add another Field**.
-5. Choose the **Relation** field.
-6. On the right side, click the **Category** dropdown and select **Restaurant**. 
-7. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
+1. Click on **+ Create new collection type**.
+2. Type `category` for the **Display name**, and click **Continue**.
+3. Click the **Text** field, then type `name` in the **Name** field.
+4. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
+5. Click on **+ Add another Field**.
+6. Choose the **Relation** field.
+7. On the right side, click the **Category** dropdown and select **Restaurant**. 
+8. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
 
 ![](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
-8. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
+9. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
 ### Step 2: Use the collection types to create new entries
 
 #### Create an entry for the `Restaurant` collection type
 
-Navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on **+ Add New Restaurants**.
+First, click on [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu. From there:
 
-1. Type `Biscotte Restaurant` in the **Name** field.
+1. Click on **+ Add New Restaurants**.
+2. Type `Biscotte Restaurant` in the **Name** field.
 2. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 3. Click **Save**.  
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
-The restaurant is now listed in the [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
+The restaurant is now listed in the [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
 
 #### Add Categories
 
-Navigate go to [_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu. Let's create 2 categories:
+First, click on [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu. Let's create 2 categories:
 
 1. Click on **+ Add New Categories**.
 2. Type `French Food` in the **Name** field.
-3. Select `Biscotte Restaurant` on the right in the **Restaurant (0)** dropdown.
+3. On the right, in the **Restaurants (0)** dropdown, select `Biscotte Restaurant`.
 4. Click **Save**.
-5. Go back to _Collection Types > Categories_, then click again on **+ Add New Categories**.  
-6. Type `Brunch` in the **Category** field, then click **Save**.
+5. Go back to _Collection types > Categories_, then click again on **+ Add New Categories**.  
+6. Type `Brunch` in the **Name** field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
-The `French Food` and `Brunch` categories are now listed in the[_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) view.
+The `French Food` and `Brunch` categories are now listed in the [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) view.
 
 #### Add a Category to a Restaurant
 
-Navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
+Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
 
 In the right sidebar, under **Categories (1)**, click on **Add an item…** and select `Brunch`.  Click **Save**.
 
 ### Step 3: Set Roles & Permissions
 
-Navigate to _General > Settings_ in the left hand menu. There, under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
+First, click on _General > Settings_ in the left-hand menu. There, under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles). From there:
 
 1. Click the **Public** role.
 2. Scroll down under **Permissions**.
-2. In the **Application** tab, find **Restaurant**. 
-3. Click the checkboxes next to **find** and **findone**.
-4. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
-5. Finally, click **Save**.
+3. In the **Application** tab, find **Restaurant**. 
+4. Click the checkboxes next to **find** and **findone**.
+5. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
+6. Finally, click **Save**.
 
 ![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-part2-04-roles.png)
 
@@ -418,41 +422,60 @@ Navigate to _General > Settings_ in the left hand menu. There, under _Users & Pe
 
 By default, any content you create is saved as a draft. Let's publish our entries in the collection types.
 
-Navigate to [_Collection Types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category).
+First, navigate to [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). From there:
 
-1. From there, click the **Draft** button on the `Brunch` category.
+1. Click the **Draft** button on the `Brunch` category.
 2. On the next screen, click **Publish**.
 3. In the **Please confirm** dialog, click **Yes, publish**.  
 
-Go back to the Categories list and repeat for the `French food` category.
+Then, go back to the Categories list and repeat for the `French food` category.
 
-To publish your `Biscotte Restaurant`, navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
+Finally, to publish your `Biscotte Restaurant`, go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 
-
 :::tip CONGRATULATIONS! 🥳 
-Now your content is created and you can request it through the API. Since you've setup roles & permissions and published your content, the list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
-<!-- ![Screenshot: API Response](../assets/quick-start-guide/qsg-handson-step2-05-api_response.png) -->
+Now your content is created, published, and you have permissions to request it through the API.
+
+The list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
+
+Try it now! The result should be similar to the example response below 👇.
+
+::: details Click me to view an example of API response
+```js
+[
+  {
+    "id":1,
+    "name":"Biscotte Restaurant",
+    "description":"Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+    "published_at":"2021-05-27T15:46:43.097Z",
+    "created_at":"2021-05-27T15:40:01.290Z",
+    "updated_at":"2021-05-27T15:46:43.110Z",
+    "categories":[
+      {
+        "id":1,
+        "name":"French Food",
+        "published_at":"2021-05-27T15:46:14.704Z",
+        "created_at":"2021-05-27T15:41:59.725Z",
+        "updated_at":"2021-05-27T15:46:14.725Z"
+      },
+      {
+        "id":2,
+        "name":"Brunch",
+        "published_at":"2021-05-27T15:46:02.015Z",
+        "created_at":"2021-05-27T15:42:29.201Z",
+        "updated_at":"2021-05-27T15:46:02.035Z"
+      }
+    ]
+  }
+]
+```
 :::
 
-## ⏩ Where to go next?
+## ⏩  What to do next?
 ### Consume your API
 
 You can learn how to consume your API with your favorite frameworks, frontend or backend programming languages by choosing one in the list below.
-
-<style lang="scss" scoped>
-/* .integration-links {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
-.install-link__wrapper {
-  flex-basis: 30%;
-  margin-right: 20px;
-  max-width: 200px;
-} */
-</style>
 
 <IntegrationLinksAlt>
 <style lang="scss" scoped>
@@ -462,7 +485,10 @@ You can learn how to consume your API with your favorite frameworks, frontend or
 ### Deploy your project
 
 The next step is to deploy both your Strapi backend and the frontend on the platforms of your choice.
-We offer various deployment options for your Strapi backend — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+
+👉 We offer various deployment options for your Strapi backend — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+
+<br />
 
 :::tip TO GO FURTHER
 This is only the beginning of an exciting journey with Strapi! We encourage you to:

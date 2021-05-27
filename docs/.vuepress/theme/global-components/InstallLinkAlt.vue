@@ -33,11 +33,11 @@
   flex-direction: column;
 	align-items: center;
   justify-content: center;
-	color: white;
+	color: #2c3e50;
 	padding: 16px;
 	border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 40px;
+  height: 40px;
 	margin: 16px 0; // You'd normally do layout margins etc from the parent, but seeing the parent
 					// is a markdown file, that's a bit annoying
   text-decoration: none !important;
@@ -46,13 +46,13 @@
   &__container {
     display: flex;
     flex-direction: column;
-    height: 60px;
+    height: 40px;
   }
 
 	.icon__wrapper {
 		flex-shrink: 0;
-		width: 60px;
-    height: 60px;
+		width: 40px;
+    height: 40px;
     margin-left: auto;
     margin-right: auto;
     transition: all ease-out .2s;
@@ -64,7 +64,7 @@
 	}
 
 	.title {
-		margin: 0;
+		margin-top: 12px;
     text-align: center;
 
     &__wrapper {
