@@ -177,7 +177,9 @@ Writing a blog is not your cup of tea? You can leave this guide and play with ot
 
 ## 🎨 Part 2: Play with your content
 
-Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster. You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
+Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster.
+
+You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
 
 :::tip TIP
 If the servers are not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
@@ -189,7 +191,7 @@ If the servers are not already running, in your terminal, `cd` into the `my-proj
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
+click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -202,7 +204,7 @@ Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/c
 
 #### Create a new entry for the `Articles` collection type
 
-Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
+click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
@@ -229,13 +231,13 @@ By default, your new article would be saved as a draft. Let's not be too shy and
 
 ![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
-You've just created and published your first article, `Hello World!`. You can find it in the [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) view.
+You have just created and published your first article, `Hello World!`. You can find it in the [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
 
 ### Step 3: Update the `Homepage` single type
 
 It's time to make this blog a bit more yours.
 
-Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
+click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
 
 1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. 
 2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. 
@@ -243,12 +245,13 @@ Navigate to [_Single Types > Homepage_](http://localhost:1337/admin/plugins/cont
 4. At the bottom of the page, update the **Title** to `My Wonderful Strapi Blog` in the **Hero** field group.
 5. Finally, click **Save**.
 
-### Step 4: Restart the server to reflect latest changes
+### Step 4: Restart the servers to reflect latest changes
 
-Gatsby is a static-site generator. It means that you need to restart the server for changes to appear on the frontend:
+Gatsby is a static-site generator. It means that you need to restart the servers for changes to appear on the frontend:
 
 1. In your terminal, press `Ctrl-C` to stop the servers.
-2. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
+2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press `Enter`.
+3. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
 
@@ -259,13 +262,15 @@ After a few moments, you should see your blog with its updated title running at 
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
-## ⏩ Where to go next?
+## ⏩  What to do next?
 
 The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi backend and the frontend on the platforms of your choice:
 
 👉 For the Strapi backend, we offer various deployment options — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
 
-👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably [to deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
+👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
+
+<br />
 
 :::tip TO GO FURTHER
 This is only the beginning of an exciting journey with Strapi! We encourage you to:
