@@ -150,11 +150,11 @@ The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhos
 
 Complete the form to create the first Administrator user:
 
-![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-step1-01-admin_panel.png)
+![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-admin_panel.png)
 
 The second tab ([http://localhost:8000](http://localhost:8000)) is for the frontend of your app, and you can already see the Gatsby blog in action:
 
-![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-step1-01-gatsby_fe.png)
+![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png)
 
 
 <!-- ::: tip CONGRATULATIONS! 🥳 
@@ -191,7 +191,7 @@ You have several ideas for great articles in mind. But first, the world needs to
 
 Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
 
-![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-01-writer.png)
+![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
 1. Add your **Name** and **Email** in the corresponding fields.
 2. Drag and drop your favorite selfie in the **Picture** field.
@@ -204,7 +204,7 @@ Navigate to [_Collection Types > Writers_](http://localhost:1337/admin/plugins/c
 
 Navigate to [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
 
-![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-step2-02-write_article.png)
+![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
 #### Give your article a title, a description, and some content
 
@@ -251,7 +251,6 @@ Gatsby is a static-site generator. It means that you need to restart the server 
 2. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
-
 
 ![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-restart-servers.gif)
 
@@ -358,7 +357,7 @@ Navigate to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plug
 6. On the right side, click the **Category** dropdown and select **Restaurant**. 
 7. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
 
-![](../assets/quick-start-guide/qsg-handson-step2-02-collection_ct.png)
+![](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
 8. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
@@ -372,7 +371,7 @@ Navigate to [_Collection Types > Restaurants_](http://localhost:1337/admin/plugi
 2. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 3. Click **Save**.  
 
-![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-step2-03-restaurant.png)
+![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
 The restaurant is now listed in the [_Collection Types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
 
@@ -408,7 +407,7 @@ Navigate to _General > Settings_ in the left hand menu. There, under _Users & Pe
 4. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
 5. Finally, click **Save**.
 
-![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-step2-04-roles.png)
+![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-part2-04-roles.png)
 
 ### Step 4: Publish the content
 
