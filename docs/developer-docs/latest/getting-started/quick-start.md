@@ -150,7 +150,7 @@ The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhos
 
 Complete the form to create the first Administrator user:
 
-![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-admin_panel.png)
+![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-register.png)
 
 The second tab ([http://localhost:8000](http://localhost:8000)) is for the frontend of your app, and you can already see the Gatsby blog in action:
 
@@ -227,7 +227,7 @@ By default, your new article would be saved as a draft. Let's not be too shy and
 1. From the **Status** dropdown at the bottom of the page, choose **published**.
 2. Click on **Save** at the top of the window.
 
-![Animated GIF to create an article](../assets/quick-start-guide/write_publish_article.gif)
+![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
 You've just created and published your first article, `Hello World!`. You can find it in the [_Collection Types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) view.
 
@@ -252,7 +252,7 @@ Gatsby is a static-site generator. It means that you need to restart the server 
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
 
-![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-restart-servers.gif)
+![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
 
 :::tip CONGRATULATIONS! 🥳
