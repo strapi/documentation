@@ -587,11 +587,11 @@ module.exports = {
       restaurantsByCategories: {
         description: 'Return the restaurants open by the category',
         resolverOf: 'application::restaurant.restaurant.findByCategories', // Will apply the same policy on the custom resolver as the controller's action `findByCategories`.
-        resolver: async (obj, options, ctx) => {
-          // ctx is the context of the Koa request.
-          await strapi.controllers.restaurants.findByCategories(ctx);
+        resolver: async (obj, options, { context }) => {
+          // context is the context of the Koa request.
+          await strapi.controllers.restaurants.findByCategories(context);
 
-          return ctx.body.restaurants || `There is no restaurant.`;
+          return context.body.restaurants || `There is no restaurant.`;
         },
       },
     },
@@ -865,7 +865,7 @@ module.exports = {
       restaurants: {
         description: 'Return a list of restaurants by chef',
         resolverOf: 'application::restaurant.restaurant.find', // Will apply the same policy on the custom resolver as the controller's action `find` located in `Restaurant.js`.
-        resolver: (obj, options, context) => {
+        resolver: (obj, options, { context }) => {
           // You can return a raw JSON object or a promise.
 
           return [
@@ -909,6 +909,28 @@ module.exports = {
     Mutation: {
       createRestaurant: false,
       deletePOst: false,
+    },
+  },
+};
+```
+
+### Disable a type attribute
+
+To do that, we need to use the `schema.graphql.js` like below:
+
+```js
+module.exports = {
+  type: {
+    Restaurant: {
+      name: false, // The Restaurant's name won't be "queryable" or "mutable".
+    }
+  },
+  resolver: {
+    Query: {
+      // ...
+    },
+    Mutation: {
+      // ...
     },
   },
 };
