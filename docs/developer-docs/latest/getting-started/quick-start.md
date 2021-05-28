@@ -345,32 +345,29 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 #### Create a `Restaurant` collection type
 
-First, click on [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
-From there:
-
-1. Click on **+ Create new collection type**.
-2. Type `restaurant` for the **Display name**, and click **Continue**.  
-3. Click the **Text** field, then type `name` in the **Name** field.
-4. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-5. Click on **+ Add another Field**.
-6. Choose the **Rich Text** field.
-7. Type `description` under the **Name** field, then click **Finish**.
-8. Finally, click **Save** and wait for Strapi to restart.
+1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
+2. Click on **+ Create new collection type**.
+3. Type `restaurant` for the **Display name**, and click **Continue**.  
+4. Click the **Text** field, then type `name` in the **Name** field.
+5. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
+6. Click on **+ Add another Field**.
+7. Choose the **Rich Text** field.
+8. Type `description` under the **Name** field, then click **Finish**.
+9. Finally, click **Save** and wait for Strapi to restart.
 
 ![GIF: Create Restaurant collection type in Content-Types Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
 #### Create a `Category` collection type
 
-First, click on [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu. From there:
-
-1. Click on **+ Create new collection type**.
-2. Type `category` for the **Display name**, and click **Continue**.
-3. Click the **Text** field, then type `name` in the **Name** field.
-4. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-5. Click on **+ Add another Field**.
-6. Choose the **Relation** field.
-7. On the right side, click the **Category** dropdown and select **Restaurant**. 
-8. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
+1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
+2. Click on **+ Create new collection type**.
+3. Type `category` for the **Display name**, and click **Continue**.
+4. Click the **Text** field, then type `name` in the **Name** field.
+5. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
+6. Click on **+ Add another Field**.
+7. Choose the **Relation** field.
+8. On the right side, click the **Category** dropdown and select **Restaurant**. 
+9. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
 
 ![](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
@@ -380,12 +377,11 @@ First, click on [_Plugins > Content-Types Builder_](http://localhost:1337/admin/
 
 #### Create an entry for the `Restaurant` collection type
 
-First, click on [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu. From there:
-
-1. Click on **+ Add New Restaurants**.
-2. Type `Biscotte Restaurant` in the **Name** field.
-2. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
-3. Click **Save**.  
+1. Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu.
+2. Click on **+ Add New Restaurants**.
+3. Type `Biscotte Restaurant` in the **Name** field.
+3. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
+4. Click **Save**.  
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
@@ -393,7 +389,7 @@ The restaurant is now listed in the [_Collection types > Restaurants_](http://lo
 
 #### Add Categories
 
-First, click on [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) in the left-hand menu. Let's create 2 categories:
+Let's go [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) and create 2 categories:
 
 1. Click on **+ Add New Categories**.
 2. Type `French Food` in the **Name** field.
@@ -414,14 +410,14 @@ In the right sidebar, under **Categories (1)**, click on **Add an item…** and 
 
 ### Step 3: Set Roles & Permissions
 
-First, click on _General > Settings_ in the left-hand menu. There, under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles). From there:
-
-1. Click the **Public** role.
-2. Scroll down under **Permissions**.
-3. In the **Application** tab, find **Restaurant**. 
-4. Click the checkboxes next to **find** and **findone**.
-5. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
-6. Finally, click **Save**.
+1. Click on _General > Settings_ at the bottom of the left-hand menu.
+2. Under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
+3. Click the **Public** role.
+4. Scroll down under **Permissions**.
+6. In the **Application** tab, find **Restaurant**. 
+7. Click the checkboxes next to **find** and **findone**.
+8. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
+9. Finally, click **Save**.
 
 ![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-part2-04-roles.png)
 
