@@ -4,6 +4,8 @@ End-users are the users who consume the content that is created and managed with
 
 With the Users & Permissions plugin, the end-users and their account information are managed as a content-type. When the plugin is installed on a Strapi application, 3 collection types are automatically created (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)), including "User" which is the only one available directly in the Content Manager.
 
+![Managing end-users via the Content Manager](../assets/users-permissions/end-user_content-manager.png)
+
 Registering new end-users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection-type (see [Introduction to the Content Mananger](../content-manager/introduction-to-content-manager.md) for more information about the Content Manager).
 
 ::: tip IMPORTANT

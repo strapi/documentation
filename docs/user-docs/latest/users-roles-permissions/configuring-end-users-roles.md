@@ -4,6 +4,8 @@ End-users are the users who consume the content that is created and managed with
 
 The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
 
+![End-users roles interface](../assets/users-permissions/end-user_roles.png)
+
 The *Roles* sub-section of *Users & Permissions plugin* displays all created roles for the end-users of your Strapi application.
 
 From this interface, it is possible to:
@@ -38,6 +40,8 @@ To delete a role:
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
 ## Editing a role
+
+![Configuring a role for end-users](../assets/users-permissions/end-user_roles-config.png)
 
 The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of the front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
