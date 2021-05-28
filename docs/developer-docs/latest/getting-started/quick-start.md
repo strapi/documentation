@@ -35,24 +35,24 @@ next: ./troubleshooting
     padding-left: .3em;
 
     &::marker {
-      font-weight: bold;
+      /* font-weight: bold; */
     }
   }
 
   .custom-block.congrats,
-  .custom-block.tip,
   .custom-block.warning,
   .custom-block.danger {
     border-left-width: .25rem;
   }
 
-  .custom-block.warning,
-  .custom-block.tip {
+  .custom-block.warning {
     background-color: #f8f8f8;
+    border-color: #bbbbba;
   }
 
   .custom-block.warning,
   .custom-block.danger {
+    margin-top: 2em;
     margin-bottom: 2em;
 
     .custom-block-title, p, li {
