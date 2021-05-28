@@ -117,17 +117,19 @@ next: ./troubleshooting
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
 :::warning REQUIREMENTS
+
 * First, make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine.
 * Optionally, you can also [install the Yarn package](https://yarnpkg.com/en/).
+
 :::
 
 👇 Let's get started! Using the big buttons below, please choose between:
 
-- the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi backend,
-- or the **Hands-on** path for a more DIY approach to run your project.
+* the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi backend,
+* or the **Hands-on** path for a more DIY approach to run your project.
 
 ::::: tabs type:card
-<!-- we need 5 colons or it will conflict with the tip markup -->
+<!-- we need 5 colons or it will conflict with the callouts markup -->
 
 :::: tab Starters
 
@@ -190,8 +192,6 @@ You already have the admin panel for your blog running at [http://localhost:1337
 If the servers are not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
-<!-- other considered emojis for this section: 🎠 🎡 🧸  -->
-
 ### Step 1: Add yourself as a writer
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
@@ -244,8 +244,8 @@ It's time to make this blog a bit more yours.
 
 Click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
 
-1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />. 
-2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias. 
+1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />.
+2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias.
 3. Click **Finish** twice.
 4. At the bottom of the page, update the **Title** to `My Wonderful Strapi Blog` in the **Hero** field group.
 5. Finally, click **Save**.
@@ -275,8 +275,10 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
 :::danger 🤓 To go further with starters
-- Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
-- Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
+
+* Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
+* Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
+
 ::::
 
 :::: tab Hands-on
@@ -367,8 +369,8 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 1. Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu.
 2. Click on **+ Add New Restaurants**.
 3. Type `Biscotte Restaurant` in the **Name** field.
-3. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
-4. Click **Save**.  
+4. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
+5. Click **Save**.  
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
@@ -401,10 +403,10 @@ In the right sidebar, under **Categories (1)**, click on **Add an item…** and 
 2. Under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
 3. Click the **Public** role.
 4. Scroll down under **Permissions**.
-6. In the **Application** tab, find **Restaurant**. 
-7. Click the checkboxes next to **find** and **findone**.
-8. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
-9. Finally, click **Save**.
+5. In the **Application** tab, find **Restaurant**. 
+6. Click the checkboxes next to **find** and **findone**.
+7. Repeat with **Category**: click the checkboxes next to **find** and **findone**.
+8. Finally, click **Save**.
 
 ![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-part2-04-roles.png)
 
@@ -430,7 +432,8 @@ The list of restaurants is accessible at [http://localhost:1337/restaurants](htt
 Try it now! The result should be similar to the example response below 👇.
 
 ::: details Click me to view an example of API response
-```js
+
+```json
 [
   {
     "id":1,
@@ -458,21 +461,21 @@ Try it now! The result should be similar to the example response below 👇.
   }
 ]
 ```
+
 :::
 
 :::warning 🥳 CONGRATULATIONS!  
 Now your content is created, published, and you have permissions to request it through the API.
+Keep on creating amazing content!
 :::
 
 ## ⏩  What to do next?
+
 ### Consume your API
 
 You can learn how to consume your API with your favorite frameworks, frontend or backend programming languages by choosing one in the list below.
 
-<IntegrationLinksAlt>
-<style lang="scss" scoped>
-</style>
-</IntegrationLinksAlt>
+<IntegrationLinksAlt></IntegrationLinksAlt>
 
 ### Deploy your project
 
