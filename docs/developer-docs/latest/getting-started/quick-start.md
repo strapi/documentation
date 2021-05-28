@@ -187,7 +187,7 @@ The second tab ([http://localhost:8000](http://localhost:8000)) is for the front
 
 ![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png)
 
-::: danger CONGRATULATIONS! 🥳 
+:::warning CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to part 2 below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
@@ -275,7 +275,7 @@ After a few moments, you should see your blog with its updated title running at 
 
 ![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
-:::danger CONGRATULATIONS! 🥳
+:::warning CONGRATULATIONS! 🥳
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
@@ -335,7 +335,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 
 ![Admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
-:::danger CONGRATULATIONS! 🥳 
+:::warning 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part 2 below.
 :::
 
