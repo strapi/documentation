@@ -5,7 +5,7 @@ description: Build powerful applications using Strapi, the leading open-source h
 
 # Getting Started with Vue.js
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Part 2](/developer-docs/latest/getting-started/quick-start.md#🛠-part-2-build-your-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Vue.js](https://vuejs.org/) remains the same except that you will not fetch the same content.
 
