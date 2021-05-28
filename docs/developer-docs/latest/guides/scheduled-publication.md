@@ -66,12 +66,12 @@ module.exports = {
     });
 
     // update published_at of articles
-    draftArticleToPublish.forEach(async article => {
-      await strapi.api.article.services.article.update(
+    await Promise.all(draftArticleToPublish.map(article => {
+      return strapi.api.article.services.article.update(
         { id: article.id },
         { published_at: new Date() }
       );
-    });
+    }));
   },
 };
 ```

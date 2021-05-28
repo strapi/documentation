@@ -32,7 +32,7 @@ yarn add gatsby-source-strapi
   resolve: "gatsby-source-strapi",
   options: {
     apiURL: "http://localhost:1337",
-    contentTypes: [
+    collectionTypes: [
       "restaurant",
       "category",
     ],
