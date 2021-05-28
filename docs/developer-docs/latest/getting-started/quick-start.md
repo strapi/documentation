@@ -448,9 +448,7 @@ Then, go back to the Categories list and repeat for the `French food` category.
 Finally, to publish your `Biscotte Restaurant`, go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
-
-:::danger CONGRATULATIONS! 🥳 
-Now your content is created, published, and you have permissions to request it through the API.
+### Step 5: Use the API
 
 The list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
 
@@ -485,6 +483,10 @@ Try it now! The result should be similar to the example response below 👇.
   }
 ]
 ```
+:::
+
+:::warning 🥳 CONGRATULATIONS!  
+Now your content is created, published, and you have permissions to request it through the API.
 :::
 
 ## ⏩  What to do next?
