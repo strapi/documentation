@@ -7,38 +7,40 @@ next: ./troubleshooting
 
 # Quick Start Guide
 
-<!-- We use the vuepress-plugin-tabs plugin but customize tabs to look more like buttons -->
-
 <style lang="scss" scoped>
+
+  /*
+    Some custom CSS tailored for this Quick Start Guide,
+    so that the text can "breathe" a bit more.
+  */  
   h2 {
     padding-top: 2em;
   }
+
   h3, h4 {
     padding-top: 1.5em
   }
+
   h4 {
     font-size: 115%;
   }
+
   ul li, ol li {
     padding-bottom: .5em;
-  }
-  blockquote {
-    border-left-color: #42b983;
-
-    p {
-      color: #888;
-    }
   }
 
   ol li {
     margin-left: 1em;
     padding-left: .3em;
-
-    &::marker {
-      /* font-weight: bold; */
-    }
   }
 
+  /*
+    We override the :::warning and :::danger callouts for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
+
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
   .custom-block.congrats,
   .custom-block.warning,
   .custom-block.danger {
@@ -58,17 +60,11 @@ next: ./troubleshooting
     .custom-block-title, p, li {
       color: rgb(44, 62, 80);
     }
-
     a {
       color: #007eff;
     }
   }
 
-  .custom-block.details {
-      color: rgb(44, 62, 80);
-  }
-
-  .custom-block.strapi,
   .custom-block.danger {
     background-color: rgba(129,107,250, .05);
     border-color: rgb(129,107,250);
@@ -79,19 +75,14 @@ next: ./troubleshooting
     }
   }
 
-  /* .custom-block.congrats,
-  .custom-block.danger {
-    border-color: #42b983;
-    background-color: #f3fbf7;
-
-    .custom-block-title {
-      color: #30624b;
-      font-weight: bold;
-    }
-  } */
+  .custom-block.details {
+      color: rgb(44, 62, 80);
+  }
 
 </style>
 
+<!-- We use the vuepress-plugin-tabs plugin but customize tabs to look more like buttons -->
+<!-- Not sure why I doesn't work if CSS is scoped 🤷  -->
 <style lang="scss">
   .el-tabs--card > .el-tabs__header {
     padding-top: 2em;
@@ -120,10 +111,6 @@ next: ./troubleshooting
     color: white !important;
     font-weight: bold;
     border-color: rgb(129,107,250);
-  }
-
-  .el-tabs--card .el-tabs__content {
-      /* padding-top: 2em; */
   }
 </style>
 
