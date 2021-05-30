@@ -29,6 +29,9 @@ You can also use **yarn** if you want [here](https://yarnpkg.com/en/docs/getting
 #### Databases
 
 Strapi currently support the following databases.
+::: warning
+dropping MongoDB support in next major version
+:::
 
 | Database   | Minimum version |
 | ---------- | --------------- |
