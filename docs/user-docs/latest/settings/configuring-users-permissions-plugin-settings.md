@@ -1,3 +1,8 @@
+---
+title: Users & Permissions plugin settings - Strapi User Guide
+description: Instructions to configure the Users & Permissions plugin
+---
+
 # Configuring Users & Permissions plugin settings
 
 The Users & Permissions plugin is managed from the *Users & Permissions plugin* settings section, accessible from *General > Settings* in the main navigation of the admin panel. This settings section allows to configure the available providers, email templates and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)).
