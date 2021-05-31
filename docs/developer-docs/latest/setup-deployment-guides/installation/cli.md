@@ -89,7 +89,7 @@ yarn create strapi-app my-project --quickstart
 Running this command creates a monorepo, installs dependencies, and starts the application automatically.
 
 ::: tip
-The `--quickstart` flag sets the database to SQLite. To use another database, just run `npx create-strapi-app my-project` (or `yarn create strapi-app my-project`), and select `Custom (manual settings)` when prompted for installation type.
+The `--quickstart` flag sets the database to SQLite. To use another database, don't use this flag and select `Custom (manual settings)` when prompted for installation type.
 :::
 
 ::: warning
