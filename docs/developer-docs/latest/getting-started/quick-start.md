@@ -137,7 +137,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We offer starters for various use cases (blog, e-commerce solution, corporate website, portfolio) and technologies (Gatsby, Gridsome, Next, Nuxt).
 
-From now on, in this whole guide, we will use the Gatsby blog starter as an example.
+From now on, in this whole guide, we will use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog) as an example.
 
 ### Step 1: Run the installation script
 
