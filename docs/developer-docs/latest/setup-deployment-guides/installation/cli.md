@@ -9,7 +9,7 @@ Strapi CLI installation scripts are the fastest way to get Strapi running locall
 
 ## Step 1: Make sure requirements are met
 
-#### Node.js
+### Node.js
 
 Strapi requires [Node.js](https://nodejs.org) and only supports its LTS versions. Other versions of Node.js may not be compatible with the latest release of Strapi.
 
@@ -20,11 +20,11 @@ This is everything Strapi needs to run on a local environment:
 | Node.js  | 12.x            | 14.x                |
 | npm      | 6.x             | 6.x                 |
 
-#### Yarn (optional)
+### Yarn (optional)
 
 [yarn](https://yarnpkg.com/getting-started/install) can also be used to run Strapi CLI installation scripts.
 
-#### Databases
+### Databases
 
 Strapi currently supports the following databases:
 
