@@ -256,7 +256,7 @@ Gatsby is a static-site generator. It means that you need to restart the servers
 
 1. In your terminal, press `Ctrl-C` to stop the servers.
 2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press `Enter`.
-3. Restart the servers by typing `yarn develop` (or `npm run develop`) and press `Enter`.
+3. Restart the servers by typing `npm run develop` (or `yarn develop`) and press `Enter`.
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
 
