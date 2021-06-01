@@ -189,7 +189,7 @@ Strapi [starters](https://strapi.io/starters) build a full stack application and
 You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
 
 :::tip TIP
-If the servers are not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
 ### Step 1: Add yourself as a writer
