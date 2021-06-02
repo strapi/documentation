@@ -221,7 +221,7 @@ Click on [Collection types > Articles](http://localhost:1337/admin/plugins/conte
 
 #### Choose an author and a category for your article
 
-In the sidebar on the right, choose your name in the _Author_ dropdown. You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
+In the sidebar on the right, choose your name in the _Author_ drop-down list. You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
 
 While there, you might also want to choose a _Category_ for your article from the list.
 
@@ -229,7 +229,7 @@ While there, you might also want to choose a _Category_ for your article from th
 
 By default, your new article would be saved as a draft. Let's not be too shy and publish it right away:
 
-1. From the _Status_ dropdown at the bottom of the page, choose "published".
+1. From the _Status_ drop-down list at the bottom of the page, choose "published".
 2. Click on **Save** at the top of the window.
 
 ![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
@@ -380,7 +380,7 @@ Let's go to [Collection types > Categories](http://localhost:1337/admin/plugins/
 
 1. Click on **Add New Categories**.
 2. Type `French Food` in the _Name_ field.
-3. On the right, in the **Restaurants (0)** dropdown, select "Biscotte Restaurant".
+3. On the right, in the **Restaurants (0)** drop-down list, select "Biscotte Restaurant".
 4. Click **Save**.
 5. Go back to _Collection types > Categories_, then click again on **Add New Categories**.  
 6. Type `Brunch` in the _Name_ field, then click **Save**.
