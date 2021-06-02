@@ -165,9 +165,9 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 Once the installation is complete, your browser automatically opens 2 tabs.
 
-The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the back end of your app.
+The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your app.
 
-Complete the form to create the first Administrator user:
+Complete the form to create the first administrator user:
 
 ![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-register.png)
 
@@ -197,7 +197,7 @@ You have several ideas for great articles in mind. But first, the world needs to
 
 Click on [Collection types > Writers](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the main navigation, and click the **Add New Writers** button.
 
-![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
+![Screenshot: Create a new writer in admin panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
 1. Add your _Name_ and _Email_ in the corresponding fields.
 2. Add your favorite selfie in the _Picture_ field. You can either drag and drop an image or click the field and upload a file. Saying 'Cheese!' during the process is optional 😄.
@@ -209,7 +209,7 @@ Click on [Collection types > Writers](http://localhost:1337/admin/plugins/conten
 
 Click on [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the main navigation, and click the **Add New Articles** button.
 
-![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
+![Screenshot: Create a new article in admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
 #### Give your article a title, a description, and some content
 
@@ -306,11 +306,11 @@ yarn create strapi-app my-project --quickstart
 
 Once the installation is complete, your browser automatically opens a new tab.
 
-Complete the form to create the first Administrator user, then click **Let's start**.
+Complete the form to create the first administrator user, then click **Let's start**.
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![Admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
+![admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
 :::warning 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part 2 below.
