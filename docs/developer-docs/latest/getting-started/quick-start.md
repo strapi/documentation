@@ -195,7 +195,7 @@ If the Strapi server is not already running, in your terminal, `cd` into the `my
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **+ Add New Writers** button.
+Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -208,7 +208,7 @@ Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/cont
 
 #### Create a new entry for the `Articles` collection type
 
-Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **+ Add New Articles** button.
+Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
@@ -334,11 +334,11 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 #### Create a `Restaurant` collection type
 
 1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
-2. Click on **+ Create new collection type**.
+2. Click on **Create new collection type**.
 3. Type `restaurant` for the **Display name**, and click **Continue**.  
 4. Click the **Text** field, then type `name` in the **Name** field.
 5. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-6. Click on **+ Add another Field**.
+6. Click on **Add another Field**.
 7. Choose the **Rich Text** field.
 8. Type `description` under the **Name** field, then click **Finish**.
 9. Finally, click **Save** and wait for Strapi to restart.
@@ -348,11 +348,11 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 #### Create a `Category` collection type
 
 1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
-2. Click on **+ Create new collection type**.
+2. Click on **Create new collection type**.
 3. Type `category` for the **Display name**, and click **Continue**.
 4. Click the **Text** field, then type `name` in the **Name** field.
 5. Switch to the **Advanced Settings** tab, and check the **Required field** and the **Unique field** settings.
-6. Click on **+ Add another Field**.
+6. Click on **Add another Field**.
 7. Choose the **Relation** field.
 8. On the right side, click the **Category** dropdown and select **Restaurant**. 
 9. In the center, select the icon that represents `many-to-many`. The text should read `Categories has and belongs to many Restaurants`.
@@ -366,7 +366,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 #### Create an entry for the `Restaurant` collection type
 
 1. Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu.
-2. Click on **+ Add New Restaurants**.
+2. Click on **Add New Restaurants**.
 3. Type `Biscotte Restaurant` in the **Name** field.
 4. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 5. Click **Save**.  
@@ -379,11 +379,11 @@ The restaurant is now listed in the [_Collection types > Restaurants_](http://lo
 
 Let's go [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) and create 2 categories:
 
-1. Click on **+ Add New Categories**.
+1. Click on **Add New Categories**.
 2. Type `French Food` in the **Name** field.
 3. On the right, in the **Restaurants (0)** dropdown, select `Biscotte Restaurant`.
 4. Click **Save**.
-5. Go back to _Collection types > Categories_, then click again on **+ Add New Categories**.  
+5. Go back to _Collection types > Categories_, then click again on **Add New Categories**.  
 6. Type `Brunch` in the **Name** field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
