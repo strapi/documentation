@@ -417,7 +417,7 @@ First, navigate to [_Collection types > Categories_](http://localhost:1337/admin
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
-3. In the **Please confirm** dialog, click **Yes, publish**.  
+3. In the **Please confirm** window, click **Yes, publish**.  
 
 Then, go back to the Categories list and repeat for the `French food` category.
 
