@@ -132,7 +132,7 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 :::: tab Starters
 
-## 🚀 Part 1: Create a new project with Strapi starters
+## 🚀 Part A: Create a new project with Strapi starters
 
 Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We offer starters for various use cases (blog, e-commerce solution, corporate website, portfolio) and technologies (Gatsby, Gridsome, Next, Nuxt).
 
@@ -181,7 +181,7 @@ Your blog is ready! You can start playing with Strapi and discover the product b
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
 :::
 
-## 🎨 Part 2: Play with your content
+## 🎨 Part B: Play with your content
 
 Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster.
 
@@ -282,7 +282,7 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 :::: tab Hands-on
 
-## 🚀  Part 1: Create a new project with Strapi
+## 🚀  Part A: Create a new project with Strapi
 
 ### Step 1: Run the installation script
 
@@ -319,7 +319,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part 2 below.
 :::
 
-## 🛠 Part 2: Build your content
+## 🛠 Part B: Build your content
 
 The installation script has just created an empty project. We will now guide you through creating a restaurants directory, based on our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
