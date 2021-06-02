@@ -472,7 +472,7 @@ Keep on creating amazing content!
 
 ### Consume your API
 
-You can learn how to consume your API with your favorite frameworks, front end or back end programming languages by choosing one in the list below.
+You can learn how to consume your API with your favorite frameworks, front-end or back-end programming languages by choosing one in the list below.
 
 <IntegrationLinksAlt></IntegrationLinksAlt>
 
