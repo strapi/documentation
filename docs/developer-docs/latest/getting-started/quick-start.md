@@ -124,7 +124,7 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 👇 Let's get started! Using the big buttons below, please choose between:
 
-* the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi backend,
+* the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end,
 * or the **Hands-on** path for a more DIY approach to run your project.
 
 ::::: tabs type:card
@@ -165,13 +165,13 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 Once the installation is complete, your browser automatically opens 2 tabs.
 
-The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the backend of your app.
+The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the Admin Panel, it's for the back end of your app.
 
 Complete the form to create the first Administrator user:
 
 ![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-register.png)
 
-The second tab ([http://localhost:8000](http://localhost:8000)) is for the frontend of your app, and you can already see the Gatsby blog in action:
+The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your app, and you can already see the Gatsby blog in action:
 
 ![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png)
 
@@ -251,7 +251,7 @@ Click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content
 
 ### Step 4: Restart the servers to reflect latest changes
 
-Gatsby is a static-site generator. It means that you need to restart the servers for changes to appear on the frontend:
+Gatsby is a static-site generator. It means that you need to restart the servers for changes to appear on the front end:
 
 1. In your terminal, press `Ctrl-C` to stop the servers.
 2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press `Enter`.
@@ -259,7 +259,7 @@ Gatsby is a static-site generator. It means that you need to restart the servers
 
 After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The `Hello World!` article you have just created is also visible at the bottom of the page.
 
-![GIF: Updated Gatsby blog frontend](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
+![GIF: Updated Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
 :::warning CONGRATULATIONS! 🥳
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
@@ -267,11 +267,11 @@ Now you know how to use Strapi to create and update your blog. Keep on creating 
 
 ## ⏩  What to do next?
 
-The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi backend comes with a frontend ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi backend and the frontend on the platforms of your choice:
+The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi back end comes with a front end ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi back end and the front end on the platforms of your choice:
 
-👉 For the Strapi backend, we offer various deployment options — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+👉 For the Strapi back end, we offer various deployment options — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
 
-👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
+👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
 :::danger 🤓  To go further with starters
 
@@ -472,15 +472,15 @@ Keep on creating amazing content!
 
 ### Consume your API
 
-You can learn how to consume your API with your favorite frameworks, frontend or backend programming languages by choosing one in the list below.
+You can learn how to consume your API with your favorite frameworks, front end or back end programming languages by choosing one in the list below.
 
 <IntegrationLinksAlt></IntegrationLinksAlt>
 
 ### Deploy your project
 
-The next step is to deploy both your Strapi backend and the frontend on the platforms of your choice.
+The next step is to deploy both your Strapi back end and the front end on the platforms of your choice.
 
-👉 We offer various deployment options for your Strapi backend — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+👉 We offer various deployment options for your Strapi back end — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
 
 ::::
 
