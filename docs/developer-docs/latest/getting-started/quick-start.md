@@ -118,8 +118,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 :::warning REQUIREMENTS
 
-* First, make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine.
-* Optionally, you can also [install the Yarn package](https://yarnpkg.com/en/).
+Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine. It is also possible to use Yarn instead of npm (see [install the Yarn package](https://yarnpkg.com/en/)).
 
 :::
 
