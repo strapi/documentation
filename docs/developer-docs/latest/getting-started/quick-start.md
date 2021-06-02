@@ -223,7 +223,7 @@ Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/con
 
 #### Choose an author and a category for your article
 
-In the sidebar on the right, choose your name in the **Author** dropdown. 🥳 You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
+In the sidebar on the right, choose your name in the **Author** dropdown. You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
 
 While there, you might also want to choose a **Category** for your article from the list.
 
