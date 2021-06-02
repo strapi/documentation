@@ -416,13 +416,13 @@ By default, any content you create is saved as a draft. Let's publish our entrie
 
 First, navigate to [_Collection types > Categories_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). From there:
 
-1. Click the **Draft** button on the `Brunch` category.
+1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
 3. In the **Please confirm** dialog, click **Yes, publish**.  
 
 Then, go back to the Categories list and repeat for the `French food` category.
 
-Finally, to publish your `Biscotte Restaurant`, go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the **Draft** button for the entry, and **Publish** the restaurant entry.
+Finally, to publish your `Biscotte Restaurant`, go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the restaurant entry, and **Publish** it.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 ### Step 5: Use the API
