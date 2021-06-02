@@ -136,7 +136,7 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We offer starters for various use cases (blog, e-commerce solution, corporate website, portfolio) and technologies (Gatsby, Gridsome, Next, Nuxt).
 
-From now on, in this whole guide, we will use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog) as an example.
+Throughout the whole quick start guide, we will use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog).
 
 ### Step 1: Run the installation script
 
