@@ -195,7 +195,7 @@ If the Strapi server is not already running, in your terminal, `cd` into the `my
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the left-hand menu, and click the **Add New Writers** button.
+Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the main navigation, and click the **Add New Writers** button.
 
 ![Screenshot: Create a new writer in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -208,7 +208,7 @@ Click on [_Collection types > Writers_](http://localhost:1337/admin/plugins/cont
 
 #### Create a new entry for the `Articles` collection type
 
-Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the left-hand menu, and click the **Add New Articles** button.
+Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the main navigation, and click the **Add New Articles** button.
 
 ![Screenshot: Create a new article in Admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
 
@@ -241,7 +241,7 @@ You have just created and published your first article, `Hello World!`. You can 
 
 It's time to make this blog a bit more yours.
 
-Click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the left-hand menu. Let's edit this homepage:
+Click on [_Single Types > Homepage_](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the main navigation. Let's edit this homepage:
 
 1. Hover the picture in the **ShareImage field** and click the **Edit** icon <Fa-PencilAlt />.
 2. Click on **Replace Media** and upload an image from your computer. This image will represent your blog when sharing an article on social medias.
@@ -333,7 +333,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 #### Create a `Restaurant` collection type
 
-1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
+1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `restaurant` for the **Display name**, and click **Continue**.  
 4. Click the **Text** field, then type `name` in the **Name** field.
@@ -347,7 +347,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 #### Create a `Category` collection type
 
-1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the left-hand menu.
+1. Go to [_Plugins > Content-Types Builder_](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `category` for the **Display name**, and click **Continue**.
 4. Click the **Text** field, then type `name` in the **Name** field.
@@ -365,7 +365,7 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 #### Create an entry for the `Restaurant` collection type
 
-1. Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu.
+1. Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation.
 2. Click on **Add New Restaurants**.
 3. Type `Biscotte Restaurant` in the **Name** field.
 4. In the **Description** field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
@@ -392,13 +392,13 @@ The `French Food` and `Brunch` categories are now listed in the [_Collection typ
 
 #### Add a Category to a Restaurant
 
-Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the left-hand menu, and click on `Biscotte Restaurant`.
+Go to [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation, and click on `Biscotte Restaurant`.
 
 In the right sidebar, under **Categories (1)**, click on **Add an item…** and select `Brunch`.  Click **Save**.
 
 ### Step 3: Set Roles & Permissions
 
-1. Click on _General > Settings_ at the bottom of the left-hand menu.
+1. Click on _General > Settings_ at the bottom of the main navigation.
 2. Under _Users & Permissions Plugin_, choose [**Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
 3. Click the **Public** role.
 4. Scroll down under **Permissions**.
