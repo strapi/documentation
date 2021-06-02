@@ -159,7 +159,7 @@ yarn create strapi-starter my-project gatsby-blog
 </code-block>
 </code-group>
 
-When terminal asks `Choose your installation type`, press Enter to select the default `Quickstart (recommended)` option, and let the magic happen!
+During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation will resume, just let the magic happen!
 
 ### Step 2: Register & have a look at your blog
 
