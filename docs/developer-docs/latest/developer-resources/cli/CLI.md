@@ -345,6 +345,20 @@ strapi generate:plugin <name>
 
 Please refer to the [local plugins](/developer-docs/latest/development/local-plugins-customization.md) section to know more.
 
+## strapi generate:template
+
+Create a template from the current strapi project
+
+```bash
+strapi generate:template <path>
+```
+
+- **strapi generate:template &#60;path&#62;**<br/>
+  Generates a Strapi template at `<path>`
+
+  Example: `strapi generate:template ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+
+
 ## strapi install
 
 Install a plugin in the project.
