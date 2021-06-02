@@ -225,7 +225,7 @@ Click on [_Collection types > Articles_](http://localhost:1337/admin/plugins/con
 
 In the sidebar on the right, choose your name in the **Author** dropdown. 🥳 You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
 
-While there, you might also want to choose a **Category** for your article (or add your own) from the list.
+While there, you might also want to choose a **Category** for your article from the list.
 
 #### Turn your draft into a publication
 
@@ -274,7 +274,7 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 👉 Deploying the frontend mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog frontend is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
-:::danger 🤓 To go further with starters
+:::danger 🤓  To go further with starters
 
 * Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 * Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
