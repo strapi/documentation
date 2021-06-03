@@ -391,7 +391,8 @@ module.exports = {
     'vuepress-plugin-code-copy': {
       color: '#ffffff',
       successText: 'Copied to clipboard!'
-    }
+    },
+    '@vuepress/back-to-top': {},
   },
   head: [
     [
