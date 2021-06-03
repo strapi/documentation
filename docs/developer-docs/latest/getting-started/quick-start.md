@@ -112,6 +112,13 @@ next: ./troubleshooting
     font-weight: bold;
     border-color: rgb(129,107,250);
   }
+
+  .image--50 {
+    width: 50%;
+  }
+  .image--right {
+    float: right;
+  }
 </style>
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
@@ -134,9 +141,9 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 ## 🚀 Part A: Create a new project with Strapi starters
 
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. We offer starters for various use cases (blog, e-commerce solution, corporate website, portfolio) and technologies (Gatsby, Gridsome, Next, Nuxt).
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Gatsby, Gridsome, Next, Nuxt).
 
-Throughout the whole quick start guide, we will use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog).
+This quick start guide has been specifically tailored to use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
 
 ### Step 1: Run the installation script
 
@@ -159,21 +166,19 @@ yarn create strapi-starter my-project gatsby-blog
 </code-block>
 </code-group>
 
-During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation will resume, just let the magic happen!
+During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
 
 ### Step 2: Register & have a look at your blog
 
-Once the installation is complete, your browser automatically opens 2 tabs.
+Once the installation is complete, your browser automatically opens 2 tabs:
 
-The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your app.
+* The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your application.
+* The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your application, and you can already see the Gatsby blog in action.
 
-Complete the form to create the first administrator user:
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="" class="image--50" />
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png" alt="" class="image--50 image--right" />
 
-![Registration screen in admin panel](../assets/quick-start-guide/qsg-starters-part1-01-register.png)
-
-The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your app, and you can already see the Gatsby blog in action:
-
-![Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png)
+By completing the form in the first tab, you create your own account. Once done, you are the first administator user of this Strapi application. Welcome aboard, commander!
 
 :::warning CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to part 2 below.
@@ -185,7 +190,7 @@ Writing a blog is not your cup of tea? You can leave this guide and play with ot
 
 Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster.
 
-You already have the admin panel for your blog running at [http://localhost:1337/admin](http://localhost:1337/admin). Now what?
+We are about to contribute to the blog we have just created. Let's play with your application, by adding yourself as a writer and creating your own article, updating the homepage, and restarting the servers to look at the final result.
 
 :::tip TIP
 If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
@@ -205,13 +210,13 @@ Click on [Collection types > Writers](http://localhost:1337/admin/plugins/conten
 
 ### Step 2: Write & publish your first article
 
-#### Create a new entry for the `Articles` collection type
+To write an article, we just need to add a new entry to the "Articles" collection type and fill in a few fields.
+
+![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
 Click on [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the main navigation, and click the **Add New Articles** button.
 
-![Screenshot: Create a new article in admin Panel](../assets/quick-start-guide/qsg-starters-part2-02-write_article.png)
-
-#### Give your article a title, a description, and some content
+#### Give your article a title, a description, and add some content
 
 1. Type `Hello World!` in the _Title_ field.
 2. Type `My very first article with Strapi` in the _Description_ field.
@@ -231,8 +236,6 @@ By default, your new article would be saved as a draft. Let's not be too shy and
 
 1. From the _Status_ drop-down list at the bottom of the page, choose "published".
 2. Click on **Save** at the top of the window.
-
-![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
 You have just created and published your first article, `Hello World!`. You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
 
@@ -266,7 +269,7 @@ Now you know how to use Strapi to create and update your blog. Keep on creating 
 
 The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi back end comes with a front end ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi back end and the front end on the platforms of your choice:
 
-👉 For the Strapi back end, we offer various deployment options — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
 
 👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
@@ -380,7 +383,6 @@ Let's go to [Collection types > Categories](http://localhost:1337/admin/plugins/
 
 1. Click on **Add New Categories**.
 2. Type `French Food` in the _Name_ field.
-3. On the right, in the **Restaurants (0)** drop-down list, select "Biscotte Restaurant".
 4. Click **Save**.
 5. Go back to _Collection types > Categories_, then click again on **Add New Categories**.  
 6. Type `Brunch` in the _Name_ field, then click **Save**.
