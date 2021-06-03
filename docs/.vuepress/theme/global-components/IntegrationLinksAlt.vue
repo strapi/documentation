@@ -1400,7 +1400,7 @@
   flex-direction: row;
 }
 .install-link__wrapper {
-  margin-right: 25px;
+  margin-right: 24px;
   margin-bottom: 5px;
 }
 

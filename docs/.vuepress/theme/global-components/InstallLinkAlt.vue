@@ -27,8 +27,7 @@
 
 <style lang="scss" scoped>
 .install-link {
-  // background-color: rgba(56,66,78,.6);
-  background-color: rgba(56,66,78, .2);
+  background-color: #f8f8f8;
 	display: flex;
   flex-direction: column;
 	align-items: center;
@@ -36,12 +35,14 @@
 	color: #2c3e50;
 	padding: 16px;
 	border-radius: 50%;
+  border: solid 2px;
+  border-color: #bbbbba;
   width: 40px;
   height: 40px;
 	margin: 16px 0; // You'd normally do layout margins etc from the parent, but seeing the parent
 					// is a markdown file, that's a bit annoying
   text-decoration: none !important;
-  transition: background-color ease-out .2s;
+  transition: border-color ease-out .2s;
 
   &__container {
     display: flex;
@@ -79,7 +80,7 @@
 	}
 
   &:hover {
-    background-color: rgb(129,107,250);
+    border-color: #007EFF;
 
     .title__wrapper {
       opacity: 1;
@@ -96,5 +97,3 @@
   }
 }
 </style>
-
-<!-- Copyrigth Directus - https://github.com/directus/docs/blob/master/.vuepress/theme/global-components/InstallLink.vue -->
