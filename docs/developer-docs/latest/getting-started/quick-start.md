@@ -13,7 +13,7 @@ next: ./troubleshooting
     Some custom CSS tailored for this Quick Start Guide,
     so that the text can "breathe" a bit more.
   */  
-  h2 {
+  h2:not(:first-child) {
     padding-top: 2em;
   }
 
@@ -84,33 +84,44 @@ next: ./troubleshooting
 <!-- We use the vuepress-plugin-tabs plugin but customize tabs to look more like buttons -->
 <!-- Not sure why I doesn't work if CSS is scoped 🤷  -->
 <style lang="scss">
-  .el-tabs--card > .el-tabs__header {
-    padding-top: 2em;
-  }
+  .el-tabs--card {
+    .el-tabs__nav,
+    .el-tabs__header,
+    .el-tabs__item {
+      border: none !important;
+    }
 
-  .el-tabs--card > .el-tabs__header,
-  .el-tabs--card > .el-tabs__header .el-tabs__nav {
-    border: none;
-  }
+    .el-tabs__header {
+      padding-top: 3em;
+    }
+  
+    .el-tabs__nav {
+      width: 100%;
+    }
 
-  .el-tabs--card > .el-tabs__header .el-tabs__item {
-    border-radius: 8px;
-    border: solid 1px rgba(129,107,250,.2);
-    font-size: 125%;
-    height: 60px;
-    line-height: 60px;
-  }
+    .el-tabs__header .el-tabs__item {
+      height: 60px;
+      text-align: center;
+      line-height: 60px;
+      font-size: 110%;
+      width: 50%;
+      border-radius: 0 8px 8px 0 !important;
+      border: solid 1px #bbbbba !important;
 
-  .el-tabs--card > .el-tabs__header .el-tabs__item:first-child {
-    border-left: solid 1px rgba(129,107,250,.2);
-    margin-right: 20px;
-  }
+      &.is-active {
+        border: none;
+      }
 
-  .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
-    background-color: rgba(129,107,250,0.9);
-    color: white !important;
-    font-weight: bold;
-    border-color: rgb(129,107,250);
+      &:first-child {
+        border-radius: 8px 0 0 8px !important;
+        border-right: none !important;
+      }
+
+      &:not(.is-active) {
+        background-color: #f8f8f8;
+        color: #787878;
+      }
+    }
   }
 
   .image--50 {
@@ -440,7 +451,7 @@ Finally, to publish your favorite restaurant, go to [Collection types > Restaura
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 ### Step 5: Use the API
 
-Ok little gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
+OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
 There you are: the list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
 
