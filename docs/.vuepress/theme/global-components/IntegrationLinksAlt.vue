@@ -1400,6 +1400,7 @@
   flex-direction: row;
 }
 .install-link__wrapper {
+  padding-left: 2px; // optical fix, otherwise border on :after is truncated
   margin-right: 24px;
   margin-bottom: 5px;
 }

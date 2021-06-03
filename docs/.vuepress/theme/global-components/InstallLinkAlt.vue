@@ -35,14 +35,21 @@
 	color: #2c3e50;
 	padding: 16px;
 	border-radius: 50%;
-  border: solid 2px;
-  border-color: #bbbbba;
   width: 40px;
   height: 40px;
 	margin: 16px 0; // You'd normally do layout margins etc from the parent, but seeing the parent
 					// is a markdown file, that's a bit annoying
   text-decoration: none !important;
   transition: border-color ease-out .2s;
+
+  &:after {
+    content:'';
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: solid 1px #bbbbba;
+  }
 
   &__container {
     display: flex;
@@ -80,7 +87,10 @@
 	}
 
   &:hover {
-    border-color: #007EFF;
+    &:after {
+      border-color: #007EFF;
+      border-width: 2px;
+    }
 
     .title__wrapper {
       opacity: 1;
