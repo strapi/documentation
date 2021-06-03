@@ -178,10 +178,10 @@ Once the installation is complete, your browser automatically opens 2 tabs:
 <img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="" class="image--50" />
 <img src="../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png" alt="" class="image--50 image--right" />
 
-By completing the form in the first tab, you create your own account. Once done, you are the first administator user of this Strapi application. Welcome aboard, commander!
+By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
 :::warning CONGRATULATIONS! 🥳 
-Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to part 2 below.
+Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.html), or proceed to part B below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
 :::
@@ -309,19 +309,21 @@ yarn create strapi-app my-project --quickstart
 
 Once the installation is complete, your browser automatically opens a new tab.
 
-Complete the form to create the first administrator user, then click **Let's start**.
+By completing the form, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
 ![admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
 :::warning 🥳 CONGRATULATIONS!
-You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part 2 below.
+You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 :::
 
 ## 🛠 Part B: Build your content
 
-The installation script has just created an empty project. We will now guide you through creating a restaurants directory, based on our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
+The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
+
+In short, we will create a data structure for your content, then add some entries and publish them, so that the API for your content can be consumed.
 
 The admin panel of Strapi runs at [http://localhost:1337/admin](http://localhost:1337/admin). This is where you will spend most of your time creating and updating content.
 
@@ -331,7 +333,11 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 ### Step 1: Create collection types with the Content-Types Builder
 
+The Content-Types Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
+
 #### Create a "Restaurant" collection type
+
+Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
 1. Go to [Plugins > Content-Types Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
@@ -346,7 +352,11 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 ![GIF: Create Restaurant collection type in Content-Types Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
+Once Strapi has restarted, "Restaurants" is listed under Collection Types in the main navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+
 #### Create a "Category" collection type
+
+It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
 1. Go to [Plugins > Content-Types Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
@@ -365,17 +375,18 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 ### Step 2: Use the collection types to create new entries
 
+Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", let's use them to actually add content by creating new entries.
 #### Create an entry for the "Restaurant" collection type
 
 1. Go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation.
 2. Click on **Add New Restaurants**.
-3. Type `Biscotte Restaurant` in the _Name_ field.
-4. In the _Description_ field, write `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
+3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
+4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 5. Click **Save**.  
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
-The restaurant is now listed in the [_Collection types > Restaurants_](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
+The restaurant is now listed in the [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
 
 #### Add Categories
 
@@ -395,9 +406,11 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 Go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
 
-In the right sidebar, under **Categories (1)**, click on **Add an item…** and select "Brunch".  Click **Save**.
+In the right sidebar, in the **Categories** drop-down list, select "Brunch".  Click **Save**.
 
 ### Step 3: Set Roles & Permissions
+
+We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
 1. Click on _General > Settings_ at the bottom of the main navigation.
 2. Under _Users & Permissions Plugin_, choose [Roles](http://localhost:1337/admin/settings/users-permissions/roles).
@@ -412,7 +425,7 @@ In the right sidebar, under **Categories (1)**, click on **Add an item…** and 
 
 ### Step 4: Publish the content
 
-By default, any content you create is saved as a draft. Let's publish our entries in the collection types.
+By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
 First, navigate to [Collection types > Categories](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). From there:
 
@@ -422,12 +435,14 @@ First, navigate to [Collection types > Categories](http://localhost:1337/admin/p
 
 Then, go back to the Categories list and repeat for the "French food" category.
 
-Finally, to publish your "Biscotte Restaurant", go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the restaurant entry, and **Publish** it.
+Finally, to publish your favorite restaurant, go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the restaurant entry, and **Publish** it.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 ### Step 5: Use the API
 
-The list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
+Ok little gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
+
+There you are: the list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
 
 Try it now! The result should be similar to the example response below 👇.
 
@@ -481,7 +496,7 @@ You can learn how to consume your API with your favorite frameworks, front-end o
 
 The next step is to deploy both your Strapi back end and the front end on the platforms of your choice.
 
-👉 We offer various deployment options for your Strapi back end — see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md).
+👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
 
 ::::
 
