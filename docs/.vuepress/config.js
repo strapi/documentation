@@ -489,6 +489,10 @@ module.exports = {
     logo: '/assets/logo.png',
     nav: [
       {
+        text: 'Resource Center',
+        link: 'https://strapi.io/resource-center',
+      },
+      {
         text: 'Documentation',
         items: [
           {
