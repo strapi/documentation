@@ -160,24 +160,26 @@ This quick start guide has been specifically tailored to use the [Gatsby blog st
 
 To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
 
-<code-group>
-<code-block title="NPM">
+<ClientOnly>
+  <code-group>
+  <code-block title="NPM">
 
-```bash
-npx create-strapi-starter my-project gatsby-blog
-```
+  ```bash
+  npx create-strapi-starter my-project gatsby-blog
+  ```
 
-</code-block>
+  </code-block>
 
-<code-block title="YARN">
+  <code-block title="YARN">
 
-```bash
-yarn create strapi-starter my-project gatsby-blog
-```
+  ```bash
+  yarn create strapi-starter my-project gatsby-blog
+  ```
 
-</code-block>
+  </code-block>
 
-</code-group>
+  </code-group>
+</ClientOnly>
 
 During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
 
@@ -301,24 +303,26 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 Run the following command in a terminal:
 
-<code-group>
-<code-block title="NPM">
+<ClientOnly>
+  <code-group>
+  <code-block title="NPM">
 
-```bash
-npx create-strapi-app my-project --quickstart
-```
+  ```bash
+  npx create-strapi-app my-project --quickstart
+  ```
 
-</code-block>
+  </code-block>
 
-<code-block title="YARN">
+  <code-block title="YARN">
 
-```bash
-yarn create strapi-app my-project --quickstart
-```
+  ```bash
+  yarn create strapi-app my-project --quickstart
+  ```
 
-</code-block>
+  </code-block>
 
-</code-group>
+  </code-group>
+</ClientOnly>
 
 ### Step 2: Register the first administrator user
 
