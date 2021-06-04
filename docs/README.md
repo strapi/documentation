@@ -1,5 +1,5 @@
 ---
 meta:
   - http-equiv: refresh
-    content: 0;url=https://strapi.io/resource-center
+    content: 0;url=/developer-docs/latest/getting-started/introduction.html
 ---
