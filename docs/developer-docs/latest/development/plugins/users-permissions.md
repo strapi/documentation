@@ -568,7 +568,8 @@ The use of `ngrok` is not needed.
 
 #### Using ngrok
 
-A remote CAS server can be configured to accept `localhost` urls or you can run your own CAS server locally that accepts them.<br>
+A remote CAS server can be configured to accept `localhost` URLs or you can run your own CAS server locally that accepts them.
+
 The use of `ngrok` is not needed.
 
 #### CAS configuration
