@@ -168,6 +168,7 @@ npx create-strapi-starter my-project gatsby-blog
 ```
 
 </code-block>
+
 <code-block title="YARN">
 
 ```bash
@@ -175,6 +176,7 @@ yarn create strapi-starter my-project gatsby-blog
 ```
 
 </code-block>
+
 </code-group>
 
 During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
@@ -307,6 +309,7 @@ npx create-strapi-app my-project --quickstart
 ```
 
 </code-block>
+
 <code-block title="YARN">
 
 ```bash
@@ -314,6 +317,7 @@ yarn create strapi-app my-project --quickstart
 ```
 
 </code-block>
+
 </code-group>
 
 ### Step 2: Register the first administrator user
