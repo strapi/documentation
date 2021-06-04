@@ -43,7 +43,7 @@ $restaurants = $strapi->collection('restaurants');
 You may now iterate over the $restuarants array which will contain all your restuarants. More options are available as well: 
 
 ```php
-$restuarants = $strapi->collection('restaurants', $sortKey = 'id', $sortOrder = 'DESC', $limit = 20, $start = 0, $fullUrls = true);
+$restaurants = $strapi->collection('restaurants', $sortKey = 'id', $sortOrder = 'DESC', $limit = 20, $start = 0, $fullUrls = true);
 ```
 
 ## Accessing single type items
@@ -80,5 +80,4 @@ $entry = $strapi->entry('restaurants', $id = 5);
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
 There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integrations guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).
-
 
