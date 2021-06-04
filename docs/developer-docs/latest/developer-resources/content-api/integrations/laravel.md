@@ -7,7 +7,7 @@ description: Build powerful applications using Strapi, the leading open-source h
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.html#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
-Should you wish to use standalone PHP you may also be interested in the Get started with PHP guide available in the integrations section of the documentation. 
+Should you wish to use standalone PHP, you may also be interested in the [PHP integration guide](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/integrations/php.html). 
 
 This guide assumes you already have Laravel installed and are familiar with the basics of the framework.
 
