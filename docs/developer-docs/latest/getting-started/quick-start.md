@@ -81,7 +81,7 @@ next: ./troubleshooting
 
 </style>
 
-<!-- We use the vuepress-plugin-tabs plugin but customize tabs to look more like buttons -->
+<!-- We use the vuepress-plugin-tabs plugin but customize tabs. -->
 <!-- Not sure why I doesn't work if CSS is scoped 🤷  -->
 <style lang="scss">
   .el-tabs--card {
@@ -216,7 +216,7 @@ Click on [Collection types > Writers](http://localhost:1337/admin/plugins/conten
 ![Screenshot: Create a new writer in admin panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
 1. Add your _Name_ and _Email_ in the corresponding fields.
-2. Add your favorite selfie in the _Picture_ field. You can either drag and drop an image or click the field and upload a file. Saying 'Cheese!' during the process is optional 😄.
+2. Add your favorite selfie in the _Picture_ field. You can either drag and drop an image or click the field and upload a file. Saying 'Cheese!' during the process is optional. 😄
 3. Click **Save**.
 
 ### Step 2: Write & publish your first article
@@ -248,7 +248,7 @@ By default, your new article would be saved as a draft. Let's not be too shy and
 1. From the _Status_ drop-down list at the bottom of the page, choose "published".
 2. Click on **Save** at the top of the window.
 
-You have just created and published your first article, `Hello World!`. You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
+You have just created and published your first article, "Hello World!". You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
 
 ### Step 3: Update the `Homepage` single type
 
