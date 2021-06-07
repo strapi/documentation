@@ -30,6 +30,10 @@ You can also use **yarn** if you want [here](https://yarnpkg.com/en/docs/getting
 
 Strapi currently support the following databases.
 
+::: warning WARNING
+Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic]().
+:::
+
 | Database   | Minimum version |
 | ---------- | --------------- |
 | SQLite     | 3               |
