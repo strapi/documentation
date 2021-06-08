@@ -1,6 +1,7 @@
 ---
 title: Install using Platform.sh - Strapi Developer Documentation
 description: Quickly deploy a Strapi application using the official Platform.sh Strapi template.
+sidebarDepth: 1
 ---
 
 # Platform.sh One-Click
