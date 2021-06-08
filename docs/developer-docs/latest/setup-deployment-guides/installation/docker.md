@@ -184,10 +184,10 @@ The official Docker image for Strapi is needed for this installation. You will f
 
 To run your Strapi project created with Docker, use one of the following commands:
 
-    ```bash
-    # Execute Docker image detaching the terminal
-    docker-compose up -d
+```bash
+# Execute Docker image detaching the terminal
+docker-compose up -d
 
-    # Execute Docker image without detaching the terminal
-    docker-compose up
-    ```
+# Execute Docker image without detaching the terminal
+docker-compose up
+```
