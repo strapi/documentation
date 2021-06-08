@@ -24,7 +24,7 @@ Render maintains 3 "Strapi on Render" example repositories (see [Render's Deploy
 Once the choice between the 3 repositories is made:
 
 1. Fork the repository on GitHub.
-2. In the README file of yoyr forked repository, click the **Deploy on Render** button.
+2. In the README file of your forked repository, click the **Deploy on Render** button.
 3. Make sure you granted Render the permission to access your forked repository. <!-- Need more info here -->
 
 ::: tip NOTE
@@ -39,6 +39,6 @@ To run Strapi locally:
 
 1. Clone the forked repository to your local machine.
 2. Still in terminal, access the repository using the `cd [repository-name]` command.
-3. Run the `yarn install && yarn develop` command to run your Strapi project..
+3. Run the `yarn install && yarn develop` command to run your Strapi project.
 
 When committing changes and pushing them to your remote repository, Render will automatically deploy these changes to your production application. A [typical workflow](https://render.com/docs/deploy-strapi#development-%E2%86%92-staging-%E2%86%92-production) would also include a staging environment for testing.
