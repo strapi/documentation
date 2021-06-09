@@ -14,7 +14,7 @@ Platform.sh is a Platform-as-a-Service that allows the management of multiple we
 A Platform.sh account is necessary to follow this installation guide. Please visit the [Platform.sh website](https://console.platform.sh/) to create an account if you don't already have one.
 :::
 
-## Creating a Strapi project deployed on Platform.sh
+## Creating a Strapi project
 
 There are 2 ways to create a new project deployed on Platform.sh: either by clicking the **One-Click** button, or following the numbered steps right below the button.
 
@@ -31,7 +31,7 @@ There are 2 ways to create a new project deployed on Platform.sh: either by clic
 7. Select the template.
 8. Click on the **Next** button. After a few seconds, your Strapi application deployed with Platform.sh should be setup with a PostgreSQL database.
 
-## Running the Strapi application
+## Running Strapi
 
 To visit your Strapi application:
 
