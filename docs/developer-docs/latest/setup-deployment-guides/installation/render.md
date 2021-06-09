@@ -13,7 +13,7 @@ Render is a cloud provider with persistent disks and managed PostgreSQL database
 A Render account is necessary to follow this installation guide. Please visit [the Render dashboard](https://dashboard.render.com) to create an account if you do not already have one.
 :::
 
-## Creating a Strapi project deployed on Render
+## Creating a Strapi project
 
 Render maintains 3 "Strapi on Render" example repositories (see [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi) for more information), which differ based on the databased used and the storage location of uploaded media library files:
 
@@ -38,7 +38,7 @@ Your Strapi application on Render will be running in production mode, with `NODE
 To run Strapi locally:
 
 1. Clone the forked repository to your local machine.
-2. Still in terminal, access the repository using the `cd [repository-name]` command.
+2. Still in terminal, access the repository using the `cd <repository-name>` command.
 3. Run the `yarn install && yarn develop` command to run your Strapi project.
 
 When committing changes and pushing them to your remote repository, Render will automatically deploy these changes to your production application. A [typical workflow](https://render.com/docs/deploy-strapi#development-%E2%86%92-staging-%E2%86%92-production) would also include a staging environment for testing.
