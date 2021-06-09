@@ -5,26 +5,22 @@ description: Fast-track local install for getting Strapi running on your compute
 
 # Installing from CLI
 
+## Preparing the installation
+
 Strapi CLI installation scripts are the fastest way to get Strapi running locally on your computer.
 
-## Step 1: Make sure requirements are met
-
-### Node.js
-
 Strapi requires [Node.js](https://nodejs.org) and only supports its LTS versions. Other versions of Node.js may not be compatible with the latest release of Strapi.
-
-This is everything Strapi needs to run on a local environment:
 
 | Software | Minimum version | Recommended version |
 | -------- | --------------- | ------------------- |
 | Node.js  | 12.x            | 14.x                |
 | npm      | 6.x             | 6.x                 |
 
-### Yarn (optional)
-
+:::tip TIP
 [yarn](https://yarnpkg.com/getting-started/install) can also be used to run Strapi CLI installation scripts.
+:::
 
-### Databases
+### Supported databases
 
 Strapi currently supports the following databases:
 
@@ -38,9 +34,40 @@ Strapi currently supports the following databases:
 
 <!-- TODO: Remove MongoDB for v4 -->
 
-## Step 2: Create a new project
+## Creating a Strapi project
 
-### Creating a project with starters
+1. Run the following command:
+
+  <code-group>
+  <code-block title="NPM">
+  ```sh
+  npx create-strapi-app my-project
+  ```
+  </code-block>
+
+  <code-block title="YARN">
+  ```sh
+  yarn create strapi-app my-project
+  ```
+  </code-block>
+  </code-group>
+
+2. Choose installation type:
+   * "Quickstart (recommended)" to use the default database (SQLite)
+   * "Custom (manual settings)" to choose your database type
+  
+   and press Enter.
+
+3. (Custom only):
+
+  a. Choose your default database:
+
+    [ insert database # and table ]
+
+  b. Name your database
+
+
+<!-- ### Creating a project with starters
 
 A [starter](https://strapi.io/starters) is a premade front-end application linked to a [template](/developer-docs/latest/setup-deployment-guides/installation/templates.md) with pre-configured content types, components, dynamic zones or plugins. Using the starter CLI is the quickest way to kickstart a full stack project with Strapi.
 
@@ -95,10 +122,12 @@ The `--quickstart` flag sets the database to SQLite. To use another database, ru
 
 ::: warning
 When using a custom database, it has to be up and running before creating the Strapi project.
-:::
+::: -->
 
 
-## Step 3: Start the application
+## Running Strapi
+
+Creating a project using the [`--quickstart`](/developer-docs/latest/setup-deployment-guides/installation/cli.md#creating-a-project-without-starters) flag should automatically start the application.
 
 To start the Strapi application, run the following command in the project folder:
 
@@ -116,6 +145,3 @@ yarn develop
 </code-block>
 </code-group>
 
-::: tip
-Creating a project using the [`--quickstart`](/developer-docs/latest/setup-deployment-guides/installation/cli.md#creating-a-project-without-starters) flag or with the [starter CLI](#creating-a-project-with-starters) should automatically start the application.
-:::
