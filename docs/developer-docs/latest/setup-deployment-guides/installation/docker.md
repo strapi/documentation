@@ -9,11 +9,11 @@ The following documentation will guide you through the installation of a new Str
 
 Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies).
 
-::: warning PREREQUISITES
-The official Docker image for Strapi is needed for this installation. You will find the image in the [Docker Hub](https://hub.docker.com/r/strapi/strapi).
+::: tip NOTE
+You can find the official Docker image for Strapi in the [Docker Hub](https://hub.docker.com/r/strapi/strapi).
 :::
 
-## Creating a Strapi project with Docker
+## Creating a Strapi project
 
 1. Create an empty folder.
 2. In your empty folder, create a `docker-compose.yaml` file. It is where the new Strapi project will be created, and it defines the database and Strapi service to use.
