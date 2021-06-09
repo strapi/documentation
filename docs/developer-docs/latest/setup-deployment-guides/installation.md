@@ -80,3 +80,22 @@ For a more detailed overview of deployment please see the [related documentation
 		</template>
 	</InstallLink>
 </div>
+
+<div>
+	<InstallLink link="installation/porter.html">
+		<template #icon>
+		<svg width="256" height="254" viewBox="0 0 256 254" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<circle cx="41" cy="41" r="41" fill="white"/>
+		<circle cx="41" cy="127" r="41" fill="white"/>
+		<circle cx="41" cy="213" r="41" fill="white"/>
+		<circle cx="128" cy="41" r="41" fill="white"/>
+		<circle cx="215" cy="41" r="41" fill="white"/>
+		<circle cx="128" cy="127" r="41" fill="white"/>
+		</svg>
+		</template>
+		<template #title>Kubernetes with Porter</template>
+		<template #description>
+			Deploy Strapi to a Kubernetes cluster in a few clicks with Porter.
+		</template>
+	</InstallLink>
+</div>
