@@ -5,7 +5,7 @@ description: Deploy a Strapi application to a Kubernetes cluster in the cloud pr
 
 # Deploying Strapi on Porter 
 
-This guide explains how to deploy a new Strapi project on an Elastic Kubernetes Service (EKS), Google Kubernetes Engine (GKE), Digital Ocean Kubernetes Service (DOKS) cluster via [Porter](https://getporter.dev) in a few clicks.
+This guide explains how to deploy a new Strapi project on an Elastic Kubernetes Service (EKS), Google Kubernetes Engine (GKE), or Digital Ocean Kubernetes Service (DOKS) cluster via [Porter](https://getporter.dev) in a few clicks.
 
 By default, this guide outlines how to deploy Strapi on Kubernetes with PostgresDB as storage option. However, you may customize the sample repository to use a different storage option.
 
@@ -15,14 +15,14 @@ Visit [the Porter dashboard](https://dashboard.getporter.dev) to create an accou
 
 ### Step 2: Provision a Kubernetes Cluster
 
-If you don't already have a Kubernetes cluster you'd like to deploy to, you can provision a Kubernetes cluster in the cloud provider of your choice (AWS, GCP, and Digital Ocean) in one click using Porter. If you already have a cluster, you can connect it to Porter using our CLI. To meet the ideal requirements of Strapi, we recommend you to provision a Kubernetes cluster with machines that have at least 4 vCPU and 4GB RAM.
+If you don't already have a Kubernetes cluster you'd like to deploy to, you can provision a Kubernetes cluster in the cloud provider of your choice with a single click via Porter. If you already have a cluster, you can connect it to Porter using our CLI. To meet the ideal requirements of Strapi, we recommend you to provision a Kubernetes cluster with machines that have at least 4 vCPU and 4GB RAM.
 
 - [Provision a cluster through Porter](https://docs.getporter.dev/docs/getting-started-with-porter-on-aws)
 - [Connect an existing cluster to Porter](https://docs.getporter.dev/docs/cli-documentation#connecting-to-an-existing-cluster)
 
 ### Step 3: Deploy a PostgresDB instance on Porter
 
-With Porter, you can deploy a PostgreSQL database on your Kubernetes cluster with persistent volumes attached to external storage in a single click. From the [Launch tab](https://dashboard.getporter.dev/launch), select the **PostgreSQL** add-on. Input the username and password you'd like to use and hit **Deploy**. In a few minutes, the database will be ready to accept connections!
+On Porter, you can one-click deploy a PostgreSQL database on your Kubernetes cluster with persistence in a single click. From the [Launch tab](https://dashboard.getporter.dev/launch), select the **PostgreSQL** add-on. Input the username and password you'd like to use and hit **Deploy**. In a few minutes, the database will be ready to accept connections!
 
 ### Step 4: Fork the sample Repository
 
