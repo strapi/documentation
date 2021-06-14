@@ -31,7 +31,7 @@ A database is also required for any Strapi project. Strapi currently supports th
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
 - Using the `-- quickstart` flag at the end of the command to directly create the project in quickstart mode.
-- Using starters to create a project with a pre-made frontend application (see [Starters library](https://strapi.io/starters).
+- Using starters to create a project with a pre-made frontend application (see [Starters library](https://strapi.io/starters)).
 - Using templates to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
 :::
 
