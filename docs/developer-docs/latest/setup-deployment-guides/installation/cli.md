@@ -5,24 +5,16 @@ description: Fast-track local install for getting Strapi running on your compute
 
 # Installing from CLI
 
+Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
+
 ## Preparing the installation
 
-Strapi CLI installation scripts are the fastest way to get Strapi running locally on your computer.
+The CLI installation guide requires 2 softwares to be already installed on your computer:
 
-Strapi requires [Node.js](https://nodejs.org) and only supports its LTS versions. Other versions of Node.js may not be compatible with the latest release of Strapi.
+- [Node.js](https://nodejs.org): only LTS versions are supported (version 12.x minimum). Other versions of Node.js may not be compatible with the latest release of Strapi. The 14.x version is most recommended by Strapi.
+- [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (version 6.x minimum) or [yarn](https://yarnpkg.com/getting-started/install) to run the CLI installation scripts.
 
-| Software | Minimum version | Recommended version |
-| -------- | --------------- | ------------------- |
-| Node.js  | 12.x            | 14.x                |
-| npm      | 6.x             | 6.x                 |
-
-:::tip TIP
-[yarn](https://yarnpkg.com/getting-started/install) can also be used to run Strapi CLI installation scripts.
-:::
-
-### Supported databases
-
-Strapi currently supports the following databases:
+A database is also required for any Strapi project. Strapi currently supports the following databases:
 
 | Database   | Minimum version |
 | ---------- | --------------- |
@@ -32,11 +24,18 @@ Strapi currently supports the following databases:
 | MariaDB    | 10.1            |
 | MongoDB    | 3.6             |
 
-<!-- TODO: Remove MongoDB for v4 -->
 
 ## Creating a Strapi project
 
-1. Run the following command:
+::: tip 🤓 CLI installation options
+The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
+
+- Using the `-- quickstart` flag at the end of the command to directly create the project in quickstart mode.
+- Using starters to create a project with a pre-made frontend application (see [Starters library](https://strapi.io/starters).
+- Using templates to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+:::
+
+1. In a terminal, run the following command:
 
   <code-group>
   <code-block title="NPM">
@@ -52,19 +51,32 @@ Strapi currently supports the following databases:
   </code-block>
   </code-group>
 
-2. Choose installation type:
-   * "Quickstart (recommended)" to use the default database (SQLite)
-   * "Custom (manual settings)" to choose your database type
-  
-   and press Enter.
+2. Choose an installation type:
+   * `Quickstart (recommended)`, which uses the default database (SQLite)
+   * `Custom (manual settings)`, which allows to choose your preferred database
 
-3. (Custom only):
+3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project. 
 
-  a. Choose your default database:
+4. (Custom installation type only) Name your project's database.
 
-    [ insert database # and table ]
 
-  b. Name your database
+## Running Strapi
+
+To start the Strapi application, run the following command in the project folder:
+
+<code-group>
+<code-block title="NPM">
+```bash
+npm run develop
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn develop
+```
+</code-block>
+</code-group>
 
 
 <!-- ### Creating a project with starters
@@ -123,25 +135,3 @@ The `--quickstart` flag sets the database to SQLite. To use another database, ru
 ::: warning
 When using a custom database, it has to be up and running before creating the Strapi project.
 ::: -->
-
-
-## Running Strapi
-
-Creating a project using the [`--quickstart`](/developer-docs/latest/setup-deployment-guides/installation/cli.md#creating-a-project-without-starters) flag should automatically start the application.
-
-To start the Strapi application, run the following command in the project folder:
-
-<code-group>
-<code-block title="NPM">
-```bash
-npm run develop
-```
-</code-block>
-
-<code-block title="YARN">
-```sh
-yarn develop
-```
-</code-block>
-</code-group>
-
