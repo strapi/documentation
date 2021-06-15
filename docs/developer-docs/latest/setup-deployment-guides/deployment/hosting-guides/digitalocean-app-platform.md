@@ -72,7 +72,7 @@ Choose your repository, your branch, and keep "Autodeploy code changes" checked 
 Here you will configure how DigitalOcean App Platform deploys your Strapi app. You can leave most things default. The only things you need to change are shown below:
 
 - **Environment Variables**: Add `DATABASE_URL`: `${db.DATABASE_URL}`
-- **Build Command**: `NODE_ENV=production npm run build`
+- **Build Command**: `DATABASE_URL=${DATABASE_URL} NODE_ENV=production npm run build`
 - **Run Command**: `NODE_ENV=production npm start`
 
 ### Step 6. Add a Database
