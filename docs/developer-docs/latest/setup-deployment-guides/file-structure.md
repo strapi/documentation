@@ -35,8 +35,8 @@ If your Strapi project was created with the [starter CLI](/developer-docs/latest
 
 ```sh
 my-project
-  /frontend // starter folder
-  /backend  // template folder
+  /frontend # starter folder
+  /backend  # template folder
   /node_modules
 ```
 
