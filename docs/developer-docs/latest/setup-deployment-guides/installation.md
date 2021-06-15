@@ -5,11 +5,9 @@ description: Learn many different options to install Strapi and getting started 
 
 # Installation
 
-Strapi gives you many possible installation options for your project or application. Strapi can be installed on your computer or services such as Render, DigitalOcean, Amazon AWS, or Platform.sh. The following documentation covers many different options to install Strapi and getting started on using it.
+Strapi projects and applications can be installed either locally on a computer, or on third-party services offering one-click installations options. The following installation guides will guide you step-by-step to create of a new Strapi project and get it started.
 
-::: tip
-For a more detailed overview of deployment please see the [related documentation](./deployment.md).
-:::
+## Local installations
 
 <div>
 	<InstallLink link="installation/cli.html">
@@ -26,7 +24,7 @@ For a more detailed overview of deployment please see the [related documentation
         </g>
       </svg>
 		</template>
-		<template #title>CLI</template>
+		<template #title>CLI (recommended)</template>
 		<template #description>
 			Create a project in your local machine using the CLI.
 		</template>
@@ -44,6 +42,12 @@ For a more detailed overview of deployment please see the [related documentation
 		</template>
 	</InstallLink>
 </div>
+
+## One-Click installations
+
+::: warning WARNING
+One-Click installation guides stop being updated by the Strapi documentation team starting at the release of Strapi v4. Community contributions to keep these guides updates are very welcome.
+:::
 
 <div>
 	<InstallLink link="installation/digitalocean-one-click.html">
