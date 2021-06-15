@@ -236,8 +236,7 @@ Click on [Collection types > Articles](http://localhost:1337/admin/plugins/conte
 1. Type `Hello World!` in the _Title_ field.
 2. Type `My very first article with Strapi` in the _Description_ field.
 3. Write a few lines in the _Content_ field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
-4. Scroll down, pick a date in the _PublishedAt_ field.
-5. Finally, add a picture in the _Image_ field.
+4. Scroll down and add a picture in the _Image_ field.
 
 #### Choose an author and a category for your article
 
@@ -247,10 +246,9 @@ While there, you might also want to choose a _Category_ for your article from th
 
 #### Turn your draft into a publication
 
-By default, your new article would be saved as a draft. Let's not be too shy and publish it right away:
+By default, your new article would be saved as a draft. Let's not be too shy and publish it right away.
 
-1. From the _Status_ drop-down list at the bottom of the page, choose "published".
-2. Click on **Save** at the top of the window.
+To publish an article, just click the **Publish** button at the top of the window.
 
 You have just created and published your first article, "Hello World!". You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
 
