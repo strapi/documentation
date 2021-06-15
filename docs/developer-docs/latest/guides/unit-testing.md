@@ -151,6 +151,9 @@ beforeAll(async done => {
 /** this code is called once before all the tested are finished */
 afterAll(async done => {
   const dbSettings = strapi.config.get('database.connections.default.settings');
+  
+  //close server to release the db-file
+  await strapi.destroy();
 
   //delete test database after all tests
   if (dbSettings && dbSettings.filename) {
