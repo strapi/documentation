@@ -321,6 +321,14 @@ const sidebar = {
           '/user-docs/latest/users-roles-permissions/managing-administrators',
           'Managing administrator accounts',
         ],
+        [
+          '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
+          'Configuring end-users roles',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/managing-end-users',
+          'Managing end-users accounts',
+        ],
       ],
     },
     {
@@ -340,6 +348,7 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
+        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
       ],
     },
   ],
