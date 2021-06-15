@@ -139,7 +139,7 @@ You can use `heroku create custom-project-name`, to have Heroku create a `custom
 ::: tip NOTE
 If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
 
-`Path: ./my-project/`
+`Path: ./my-project/`
 
 ```bash
 heroku git:remote -a your-heroku-app-name
@@ -183,7 +183,7 @@ heroku config
 
 This should print something like this: `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`.
 
-(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** : **DATABASE_NAME\***)
+(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** / **DATABASE_NAME\***)
 
 #### 3. Set Database variables automatically
 
@@ -267,9 +267,21 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 
 `Path: ./my-project/`
 
+
+:::: tabs
+::: tab npm
+
 ```bash
 npm install pg --save
 ```
+:::
+
+::: tab yarn
+```bash
+yarn add pg
+```
+:::
+::::
 
 :::
 
