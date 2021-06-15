@@ -30,3 +30,14 @@ By default, the structure of your Strapi project looks as shown below:
 - [`/plugins`](/developer-docs/latest/setup-deployment-guides/configurations.md#plugins): contains your local plugins.
 - [`/public`](/developer-docs/latest/setup-deployment-guides/configurations.md#public-assets): contains the files accessible to the outside world.
 - `/node_modules`: contains the npm packages used by the project.
+
+If your Strapi project was created with the [starter CLI](/developer-docs/latest/setup-deployment-guides/installation/cli.md#creating-a-project-with-starters), the project structure looks like this:
+
+```sh
+my-project
+  /frontend // starter folder
+  /backend  // template folder
+  /node_modules
+```
+
+and the `backend` folder has the default structure described above.
