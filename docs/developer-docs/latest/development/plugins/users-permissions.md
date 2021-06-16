@@ -96,6 +96,10 @@ Available options:
 }
 ```
 
+:::warning
+Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
+:::
+
 ### Registration
 
 Creates a new user in the database with a default role as 'registered'.
