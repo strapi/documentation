@@ -18,7 +18,7 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
 1. Create an empty folder.
 2. In your empty folder, create a `docker-compose.yaml` file. It is where the new Strapi project will be created, and it defines the database and Strapi service to use.
 
-    :::: tabs
+    :::: tabs card
 
     ::: tab SQLite
 
