@@ -84,44 +84,46 @@ next: ./troubleshooting
 <!-- We use the vuepress-plugin-tabs plugin but customize tabs. -->
 <!-- Not sure why I doesn't work if CSS is scoped 🤷  -->
 <style lang="scss">
-  .el-tabs--card {
-    .el-tabs__nav,
-    .el-tabs__header,
-    .el-tabs__item {
-      border: none !important;
-    }
-
-    .el-tabs__header {
-      padding-top: 3em;
-    }
+  /* I know some selectors are ugly, but I needed to target the proper nav and not conflict with the other "card"-style tabs embedded */
   
-    .el-tabs__nav {
-      width: 100%;
-    }
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav,
+  .el-tabs--card > .el-tabs__header  {
+    border: none !important;
+  }
 
-    .el-tabs__header .el-tabs__item {
-      height: 60px;
-      text-align: center;
-      line-height: 60px;
-      font-size: 110%;
-      width: 50%;
-      border-radius: 0 8px 8px 0 !important;
-      border: solid 1px #bbbbba !important;
+  .el-tabs--card > .el-tabs__header {
+    padding-top: 3em;
+  }
 
-      &.is-active {
-        border: none;
-      }
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav {
+    width: 100%;
+    height: 62px;
+  }
 
-      &:first-child {
-        border-radius: 8px 0 0 8px !important;
-        border-right: none !important;
-      }
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item {
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 110%;
+    width: 50%;
+    border-radius: 0 8px 8px 0 !important;
+    border: solid 1px #bbbbba !important;
+  }
 
-      &:not(.is-active) {
-        background-color: #f8f8f8;
-        color: #787878;
-      }
-    }
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active {
+    /* border: none; */
+    /* height: 62px; */
+    /* border-bottom: solid 1px red !important; */
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
+    border-radius: 8px 0 0 8px !important;
+    border-right: none !important;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active) {
+    background-color: #f8f8f8;
+    color: #787878;
   }
 
   .image--50 {
@@ -145,10 +147,10 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 * the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end,
 * or the **Hands-on** path for a more DIY approach to run your project.
 
-::::: tabs type:card
+:::::: tabs type:card
 <!-- we need 5 colons or it will conflict with the callouts markup -->
 
-:::: tab Starters
+::::: tab Starters
 
 ## 🚀 Part A: Create a new project with Strapi starters
 
@@ -160,26 +162,17 @@ This quick start guide has been specifically tailored to use the [Gatsby blog st
 
 To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
 
-<ClientOnly>
-  <code-group>
-  <code-block title="NPM">
-
-  ```bash
+:::: tabs card
+::: tab npm
+```bash
   npx create-strapi-starter my-project gatsby-blog
-  ```
-
-  </code-block>
-
-  <code-block title="YARN">
-
-  ```bash
+```
+:::
+::: tab yarn
+```bash
   yarn create strapi-starter my-project gatsby-blog
-  ```
-
-  </code-block>
-
-  </code-group>
-</ClientOnly>
+```
+::::
 
 During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
 
@@ -291,9 +284,9 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 * Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 * Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
 
-::::
+:::::
 
-:::: tab Hands-on
+::::: tab Hands-on
 
 ## 🚀  Part A: Create a new project with Strapi
 
@@ -301,26 +294,19 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 Run the following command in a terminal:
 
-<ClientOnly>
-  <code-group>
-  <code-block title="NPM">
-
-  ```bash
+:::: tabs card
+::: tab npm
+```bash
   npx create-strapi-app my-project --quickstart
-  ```
+```
+:::
 
-  </code-block>
-
-  <code-block title="YARN">
-
-  ```bash
+::: tab yarn
+```bash
   yarn create strapi-app my-project --quickstart
-  ```
-
-  </code-block>
-
-  </code-group>
-</ClientOnly>
+```
+:::
+::::
 
 ### Step 2: Register the first administrator user
 
@@ -515,6 +501,6 @@ The next step is to deploy both your Strapi back end and the front end on the pl
 
 👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
 
-::::
-
 :::::
+
+::::::
