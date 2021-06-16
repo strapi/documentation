@@ -3,6 +3,53 @@ title: Installing from CLI - Strapi Developer Documentation
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
 ---
 
+<style lang="scss" scoped>
+/*
+    We override the :::warning and :::danger callouts for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
+
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
+  .custom-block.congrats,
+  .custom-block.warning,
+  .custom-block.danger {
+    border-left-width: .25rem;
+  }
+
+  .custom-block.warning {
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+  }
+
+  .custom-block.warning,
+  .custom-block.danger {
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+
+  .custom-block.danger {
+    background-color: rgba(129,107,250, .05);
+    border-color: rgb(129,107,250);
+
+    .custom-block-title {
+      color: rgb(129,107,250);
+      font-weight: bold;
+    }
+  }
+
+  .custom-block.details {
+      color: rgb(44, 62, 80);
+  }
+</style>
+
 # Installing from CLI
 
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
@@ -26,7 +73,7 @@ A database is also required for any Strapi project. Strapi currently supports th
 
 ## Creating a Strapi project
 
-::: tip 🤓 CLI installation options
+::: danger 🤓 CLI installation options
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
 - Using the `-- quickstart` flag at the end of the command to directly create the project in quickstart mode.
