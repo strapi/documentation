@@ -1,6 +1,8 @@
 # DigitalOcean Virtual Machine Configuration
 
-This DigitalOcean customization documentation is related to the [DigitalOcean One-click installation guide](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md). It should guide you through the optional customization options for your DigitalOcean virtual machine running the Strapi application.
+This DigitalOcean configuration documentation is related to the [DigitalOcean One-click installation guide](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md). It should guide you through the handling of the DigitalOcean virtual machine running the Strapi application.
+
+You can click below for more information about the installed software and the Nginx server configuration.
 
 ::: details Installed software
 The Strapi application running on the droplet has the following softwares installed and configured:
@@ -71,10 +73,13 @@ To learn more about the Nginx proxy options you can view the Nginx proxy [docume
 
 ## Strapi service account
 
-In the DigitalOcean one-click application, a service user is used. Its home directory is located at `/srv/strapi`. The actual Strapi application is located within this home directory at `/srv/strapi/strapi-development`. By default the Strapi application runs under a service account. A service account is extremely limited into what it can do and access. The purpose of using a service account is to help protect your system from security threats.
+For security purposes, the DigitalOcean virtual machine hosting the Strapi application uses a service user. This user is extremely limited into what it can do and access.
 
-Please note that with this application it is initially created and ran in the `development` environment to allow for creating models. **You should not use this directly in production**, it is recommended that you configure a private git repository to commit changes into and create a new application directory within the service user's home (Example: `/srv/strapi/strapi-production`). To run the new `production` or `staging` environments you can refer to the [PM2 Documentation](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes)
+The service user home directory is located at `/srv/strapi`. The actual Strapi application is located within this home directory at `/srv/strapi/strapi-development`.
 
+The Strapi application runs in the `development` environment to allow for creating content types. It is not recommended to use it directly in production. For staging and production environments, it's recommended to configure a private git repository to commit changes into, and create a new application directory within the service user's home (e.g. `/srv/strapi/strapi-production`).
+
+To run the new `production` or `staging` environments you can refer to the [PM2 Documentation](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes)
 
 
 ### Accessing the service account
@@ -84,23 +89,26 @@ To access your service account:
 1. SSH into the `root` user. Depending on your Operating System or your SSH client, there may be multiple ways to do this. You should refer to your SSH client documentation for clarification on using SSH keys.
 2. Run the `sudo su strapi` command. This will take you to the `strapi` user's shell. 
 
-To go back to the `root` user, simply run `exit`.
+To go back to the `root` user, run `exit`.
 
 ::: warning
-Please note that by default the `strapi` user **cannot run sudo commands**. This is intended.
+Please note that by default the strapi user cannot run `sudo` commands. This is intended.
 :::
 
 ### Controlling the Strapi service and viewing logs
 
-While identified as the service account user, [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes) can be used to manage the Strapi process and view the logs:
+While identified as the service user on the DigitalOcean virtual machine, [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes) can be used to control the Strapi process and view logs with the following commands:
 
-* `pm2 list`: Show a list of all running processes.
+* `pm2 list`: Show a list of all running processes. The default service is called "strapi-development" and should be running with an ID of 0.
 * `pm2 restart strapi-development`: Restart the Strapi process manually.
 * `pm2 stop strapi-development`: Stop the Strapi process.
 * `pm2 start strapi-development`:  Start the Strapi process. Strapi will automatically start if the virtual machine is rebooted.
-* `pm2 logs strapi-development`: Show the logs in real time; to exit, use Ctrl+C. You can also manually view the log files under `/srv/strapi/.pm2/logs` if you encounter any errors during the bootup.
+* `pm2 logs strapi-development`: Show the logs in real time; to exit, use Ctrl+C. 
 
-The default service is called `strapi-development` and should be running with an ID of `0`.
+:::tip TIP
+You can also manually view the log files under `/srv/strapi/.pm2/logs` if you encounter any errors during the bootup.
+:::
+
 
 ## Strapi application access with ssh
 
