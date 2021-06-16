@@ -76,26 +76,26 @@ A database is also required for any Strapi project. Strapi currently supports th
 ::: danger 🤓 CLI installation options
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
-- Using the `-- quickstart` flag at the end of the command to directly create the project in quickstart mode.
-- Using starters to create a project with a pre-made frontend application (see [Starters library](https://strapi.io/starters)).
-- Using templates to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+- Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
+- Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+
+Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
+
 
 1. In a terminal, run the following command:
 
-  <code-group>
-  <code-block title="NPM">
-  ```sh
+:::: tabs card
+::: tab npm
+ ```sh
   npx create-strapi-app my-project
   ```
-  </code-block>
-
-  <code-block title="YARN">
-  ```sh
+::: 
+::: tab yarn
+ ```sh
   yarn create strapi-app my-project
-  ```
-  </code-block>
-  </code-group>
+ ```
+:::
 
 2. Choose an installation type:
    * `Quickstart (recommended)`, which uses the default database (SQLite)
@@ -109,19 +109,18 @@ The following installation guide covers the most basic installation option using
 
 To start the Strapi application, run the following command in the project folder:
 
-<code-group>
-<code-block title="NPM">
+:::: tabs card
+::: tab npm
 ```bash
 npm run develop
 ```
-</code-block>
+:::
 
-<code-block title="YARN">
+::: tab yarn
 ```sh
 yarn develop
 ```
-</code-block>
-</code-group>
+:::
 
 <!-- ### Creating a project with starters
 
