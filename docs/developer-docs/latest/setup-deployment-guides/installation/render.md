@@ -5,7 +5,7 @@ description: Quickly deploy a Strapi application on Render by simply using their
 
 # Render One-Click
 
-The following documentation will guide you through the one-click creation of a new Strapi project deployed on [Render](https://render.com).
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Render](https://render.com).
 
 Render is a cloud provider with persistent disks and managed PostgreSQL databases, that offers multiple different ways to store content. Render services come with fully managed SSL, to prevent having to set up a proxy server to secure your Strapi application. Since Render services are automatically restarted if they become unresponsive, there is no use for a process manager such as pm2 either.
 

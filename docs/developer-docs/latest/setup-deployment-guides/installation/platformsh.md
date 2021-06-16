@@ -6,7 +6,7 @@ sidebarDepth: 1
 
 # Platform.sh One-Click
 
-The following documentation will guide you through the one-click creation of a Strapi project deployed on [Platform.sh](https://platform.sh/).
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 
 Platform.sh is a Platform-as-a-Service that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.
 
@@ -16,7 +16,7 @@ A Platform.sh account is necessary to follow this installation guide. Please vis
 
 ## Creating a Strapi project
 
-There are 2 ways to create a new project deployed on Platform.sh: either by clicking the **One-Click** button, or following the numbered steps right below the button.
+There are 2 ways to create a new project hosted on Platform.sh: either by clicking the **One-Click** button, or following the numbered steps right below the button.
 
 <a href="https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/strapi/.platform.template.yaml&utm_content=strapi&utm_source=github&utm_medium=button&utm_campaign=deploy_on_platform">
     <img src="https://platform.sh/images/deploy/lg-blue.svg" alt="Deploy on Platform.sh" width="180px" />
@@ -29,7 +29,7 @@ There are 2 ways to create a new project deployed on Platform.sh: either by clic
 5. Click on the **Next** button.
 6. Using the search bar, search for the `Strapi` template (see [source code](https://github.com/platformsh-templates/strapi#customizations)).
 7. Select the template.
-8. Click on the **Next** button. After a few seconds, your Strapi application deployed with Platform.sh should be setup with a PostgreSQL database.
+8. Click on the **Next** button. After a few seconds, your Strapi application should be setup with a PostgreSQL database.
 
 ## Running Strapi
 

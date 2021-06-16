@@ -5,7 +5,7 @@ description: Quickly deploy a Strapi application on DigitalOcean by simply using
 
 # DigitalOcean One-click
 
-The following documentation will guide you through the one-click creation of a Strapi project deployed on  [DigitalOcean](https://www.digitalocean.com/).
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on  [DigitalOcean](https://www.digitalocean.com/).
 
 DigitalOcean is a cloud platform that helps to deploy and scale applications by offering an Infrastructure as a Service (IaaS) platform for developers.
 
