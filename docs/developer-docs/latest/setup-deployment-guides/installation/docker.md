@@ -16,9 +16,9 @@ A fresh new Strapi application will be created where the `docker-compose.yaml` f
 
 This docker-compose defines our database and Strapi service and links them.
 
-:::: tabs
+::::: tabs
 
-::: tab SQLite
+:::: tab SQLite
 
 ```yaml
 version: '3'
@@ -31,9 +31,9 @@ services:
       - '1337:1337'
 ```
 
-:::
+::::
 
-::: tab PostgreSQL
+:::: tab PostgreSQL
 
 ```yaml
 version: '3'
@@ -64,9 +64,9 @@ services:
       - ./data:/var/lib/postgresql/data
 ```
 
-:::
+::::
 
-::: tab MongoDB
+:::: tab MongoDB
 
 ::: warning WARNING
 Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
@@ -101,9 +101,9 @@ services:
       - ./data:/data/db
 ```
 
-:::
+::::
 
-::: tab MySQL
+:::: tab MySQL
 
 ```yaml
 version: '3'
@@ -137,9 +137,9 @@ services:
       MYSQL_PASSWORD: strapi
 ```
 
-:::
+::::
 
-::: tab MariaDB
+:::: tab MariaDB
 
 ```yaml
 version: '3'
@@ -172,9 +172,9 @@ services:
       MYSQL_PASSWORD: strapi
 ```
 
-:::
-
 ::::
+
+:::::
 
 ## Step 2: Pull the latest images
 
