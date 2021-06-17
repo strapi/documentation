@@ -218,7 +218,7 @@ Click on [Collection types > Writers](http://localhost:1337/admin/plugins/conten
 
 ### Step 2: Write & publish your first article
 
-To write an article, we just need to add a new entry to the "Articles" collection type and fill in a few fields.
+To write an article, we need to add a new entry to the "Articles" collection type and fill in a few fields.
 
 ![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
@@ -241,7 +241,7 @@ While there, you might also want to choose a _Category_ for your article from th
 
 By default, your new article would be saved as a draft. Let's not be too shy and publish it right away.
 
-To publish an article, just click the **Publish** button at the top of the window.
+To publish an article, click the **Publish** button at the top of the window.
 
 You have just created and published your first article, "Hello World!". You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
 
