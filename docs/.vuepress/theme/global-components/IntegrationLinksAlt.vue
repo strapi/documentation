@@ -130,7 +130,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             width="207px"
             height="124px"
-            viewBox="0 0 207 124"
+            viewBox="0 0 207 62"
             version="1.1"
           >
             <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
@@ -1350,7 +1350,11 @@
     <div class="install-link__wrapper">
       <InstallLinkAlt link="/developer-docs/latest/developer-resources/content-api/integrations/php.html">
         <template #icon>
-          <svg preserveAspectRatio="xMidYMid" version="1.1" viewBox="0 0 250 135" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            preserveAspectRatio="xMidYMid"
+            version="1.1"
+            viewBox="0 0 250 135"
+            xmlns="http://www.w3.org/2000/svg">
           <defs>
           <radialGradient id="a" cx=".8366" cy="-125.81" r="363.06" gradientTransform="matrix(.463 0 0 .463 76.464 81.918)" gradientUnits="userSpaceOnUse">
           <stop stop-color="#fff" offset="0"/>
