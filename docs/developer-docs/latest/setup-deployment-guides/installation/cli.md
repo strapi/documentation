@@ -12,17 +12,10 @@ description: Fast-track local install for getting Strapi running on your compute
     once I understand better how markdown-it and markdown-it-custom-block work.
   */
   .custom-block.congrats,
-  .custom-block.warning,
   .custom-block.danger {
     border-left-width: .25rem;
   }
 
-  .custom-block.warning {
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-  }
-
-  .custom-block.warning,
   .custom-block.danger {
     margin-top: 2em;
     margin-bottom: 2em;
@@ -62,6 +55,10 @@ The CLI installation guide requires 2 softwares to be already installed on your 
 - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (version 6.x minimum) or [yarn](https://yarnpkg.com/getting-started/install) to run the CLI installation scripts.
 
 A database is also required for any Strapi project. Strapi currently supports the following databases:
+
+::: warning WARNING
+Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+:::
 
 | Database   | Minimum version |
 | ---------- | --------------- |

@@ -18,9 +18,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
 1. Create an empty folder.
 2. In your empty folder, create a `docker-compose.yaml` file. It is where the new Strapi project will be created, and it defines the database and Strapi service to use.
 
-    :::: tabs card
+    ::::: tabs card
 
-    ::: tab SQLite
+    :::: tab SQLite
 
     ```yaml
     version: '3'
@@ -33,9 +33,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
           - '1337:1337'
     ```
 
-    :::
+    ::::
 
-    ::: tab PostgreSQL
+    :::: tab PostgreSQL
 
     ```yaml
     version: '3'
@@ -66,9 +66,14 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
           - ./data:/var/lib/postgresql/data
     ```
 
-    :::
+    ::::
 
-    ::: tab MongoDB
+    :::: tab MongoDB
+
+
+      ::: warning WARNING
+      Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+      :::
 
     ```yaml
     version: '3'
@@ -99,9 +104,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
           - ./data:/data/db
     ```
 
-    :::
+    ::::
 
-    ::: tab MySQL
+    :::: tab MySQL
 
     ```yaml
     version: '3'
@@ -135,9 +140,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
           MYSQL_PASSWORD: strapi
     ```
 
-    :::
+    ::::
 
-    ::: tab MariaDB
+    :::: tab MariaDB
 
     ```yaml
     version: '3'
@@ -170,9 +175,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
           MYSQL_PASSWORD: strapi
     ```
 
-    :::
-
     ::::
+
+    :::::
 
 3. Pull the latest images using the following command:
 
