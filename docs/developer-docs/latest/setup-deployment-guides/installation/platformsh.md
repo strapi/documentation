@@ -24,12 +24,10 @@ There are 2 ways to create a new project hosted on Platform.sh: either by clicki
 
 1. In the [Platform.sh website](https://console.platform.sh/), click on the **Add project** button.
 2. Select the *Use a template* option.
-3. Click on the **Next** button.
-4. Fill the *Project name* and *Region* fields.
-5. Click on the **Next** button.
-6. Using the search bar, search for the `Strapi` template (see [source code](https://github.com/platformsh-templates/strapi#customizations)).
-7. Select the template.
-8. Click on the **Next** button. After a few seconds, your Strapi application should be setup with a PostgreSQL database.
+3. Fill the *Project name* and *Region* fields.
+4. Click on the **Next** button.
+5. Using the search bar, search for the `Strapi` template (see [source code](https://github.com/platformsh-templates/strapi#customizations)).
+6. Select the template. After a few seconds, your Strapi application should be setup with a PostgreSQL database.
 
 ## Running Strapi
 
