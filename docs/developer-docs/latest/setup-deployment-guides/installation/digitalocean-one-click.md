@@ -31,7 +31,7 @@ A DigitalOcean account is necessary to follow this installation guide. Please vi
 
 ## Running Strapi
 
-Your Strapi application on DigitalOcean will be running in development mode. It is recommended to not use the application directly in production.
+Your Strapi application on DigitalOcean will be running in development mode. It is not recommended to use the application directly in production.
 
 To visit your Strapi application:
 
