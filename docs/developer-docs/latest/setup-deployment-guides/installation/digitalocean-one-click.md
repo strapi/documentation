@@ -24,7 +24,7 @@ A DigitalOcean account is necessary to follow this installation guide. Please vi
 4. Choose "Regular Intel with SSD" as a CPU option.
 5. Select your virtual machine size (minimum of 2 GB/1 CPU).
 6. Choose a datacenter region (closest to you or your target area).
-7. Add a new SSH key. If you are on Windows you can follow [this guide](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/create-with-putty/).
+7. Add a new SSH key. You can follow [this guide](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/).
 <!-- TODO: check with Derrick and JS if instructions are displayed like they were for me. If yes, we can remove the sentence. -->
 8. Give your virtual machine a hostname.
 9. Click **Create Droplet**. It may take from 30 seconds to a few minutes for the droplet to start, and a few minutes more to finish the Strapi installation.
