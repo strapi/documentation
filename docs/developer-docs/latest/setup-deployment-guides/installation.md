@@ -5,7 +5,7 @@ description: Learn many different options to install Strapi and getting started 
 
 # Installation
 
-Strapi projects and applications can be installed either locally on a computer, or on third-party services offering one-click installations options. The following installation guides will guide you step-by-step to create a new Strapi project and get it started.
+Strapi projects and applications can be installed either locally on a computer, manually on a remote server, or on third-party services offering one-click installations options. The following installation guides will guide you step-by-step to create a new Strapi project and get it started.
 
 ## Local installations
 
