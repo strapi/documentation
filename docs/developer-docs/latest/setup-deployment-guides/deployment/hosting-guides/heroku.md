@@ -139,7 +139,7 @@ You can use `heroku create custom-project-name`, to have Heroku create a `custom
 ::: tip NOTE
 If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
 
-`Path: ./my-project/`
+`Path: ./my-project/`
 
 ```bash
 heroku git:remote -a your-heroku-app-name
