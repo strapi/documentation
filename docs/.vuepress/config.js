@@ -377,7 +377,7 @@ module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
-  // base: '/documentation/',
+  base: '/documentation/',
   plugins: {
     '@vuepress/medium-zoom': {},
     'vuepress-plugin-element-tabs': {},
