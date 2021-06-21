@@ -1,3 +1,8 @@
+---
+title: Content Manager - Strapi User Guide
+description: Introduction to the Content Manager which allows to write content for collection types and single types.
+---
+
 # Introduction to the Content Manager
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
@@ -22,10 +27,12 @@ From the list view, it is possible to:
 
 - make a textual search (1) or set filters (2) to find specific entries,
 - create a new entry (3),
-- configure the fields displayed in the table of the list view (4).
+- if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
+- configure the fields displayed in the table of the list view (5),
+- duplicate <Fa-Copy />, edit <Fa-PencilAlt /> (see [Writing content](../content-manager/writing-content.md)) or delete <Fa-TrashAlt /> (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
 
 ::: tip 💡 TIP
-Sorting can be enabled for any field displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
+Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
 ### Filtering entries

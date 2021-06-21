@@ -1,3 +1,8 @@
+---
+title: Draft System - Strapi Developer Documentation
+description: Learn in this guide how to create a draft system that will allow you to manage draft, published, and archive status inside your Strapi project.
+---
+
 # Draft system
 
 This guide will explain how to create a draft system that will allow you to manage draft, published, and archive status.

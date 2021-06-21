@@ -1,3 +1,8 @@
+---
+title: Backend customization - Strapi Developer Documentation
+description: The backend of Strapi can be customized according to your needs, so you can create your own backend behavior.
+---
+
 # Backend customization
 
 <!--- BEGINNING OF ROUTING --->
@@ -38,7 +43,7 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
       "path": "/restaurants/:id/reservation",
       "handler": "Restaurant.reservation",
       "config": {
-        "policies": ["isAuthenticated", "hasCreditCard"]
+        "policies": ["is-authenticated", "has-credit-card"]
       }
     }
   ]
@@ -126,10 +131,10 @@ The policies are defined in each `./api/**/config/policies/` folders and plugins
 
 There are several ways to create a policy.
 
-- Using the CLI `strapi generate:policy isAuthenticated`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
-- Manually create a JavaScript file named `isAuthenticated.js` in `./config/policies/`.
+- Using the CLI `strapi generate:policy is-authenticated`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
+- Manually create a JavaScript file named `is-authenticated.js` in `./config/policies/`.
 
-**Path —** `./config/policies/isAuthenticated.js`.
+**Path —** `./config/policies/is-authenticated.js`.
 
 ```js
 module.exports = async (ctx, next) => {
@@ -166,14 +171,14 @@ The global policies can be associated to any route in your project.
       "path": "/restaurants",
       "handler": "Restaurant.find",
       "config": {
-        "policies": ["global::isAuthenticated"]
+        "policies": ["global::is-authenticated"]
       }
     }
   ]
 }
 ```
 
-Before executing the `find` action in the `Restaurant.js` controller, the global policy `isAuthenticated` located in `./config/policies/isAuthenticated.js` will be called.
+Before executing the `find` action in the `Restaurant.js` controller, the global policy `is-authenticated` located in `./config/policies/is-authenticated.js` will be called.
 
 ::: tip
 You can put as much policy as you want in this array. However be careful about the performance impact.
@@ -193,14 +198,14 @@ Plugins can add and expose policies into your app. For example, the plugin **Use
       "path": "/restaurants",
       "handler": "Restaurant.find",
       "config": {
-        "policies": ["plugins::users-permissions.isAuthenticated"]
+        "policies": ["plugins::users-permissions.is-authenticated"]
       }
     }
   ]
 }
 ```
 
-The policy `isAuthenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
+The policy `is-authenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
 
 #### API policies
 
@@ -282,7 +287,7 @@ module.exports = async (ctx, next) => {
 
 ## Controllers
 
-Controllers are JavaScript files which contain a set of methods called **actions** reached by the client according to the requested route. It means that every time a client requests the route, the action performs the business logic coded and sends back the response. They represent the _C_ in the _MVC_ pattern. In most cases, the controllers will contain the bulk of a project's business logic.
+Controllers are JavaScript files which contain a set of methods called **actions** reached by the client according to the requested route. It means that every time a client requests the route, the action performs the business logic code and sends back the response. They represent the _C_ in the _MVC_ pattern. In most cases, the controllers will contain the bulk of a project's business logic.
 
 ```js
 module.exports = {
@@ -841,7 +846,7 @@ module.exports = {
    */
 
   async update(params, data, { files } = {}) {
-    const existingEntry = await db.query('restaurant').findOne(params);
+    const existingEntry = await strapi.query('restaurant').findOne(params);
 
     const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
@@ -1144,6 +1149,8 @@ These queries handle for you specific Strapi features like `components`, `dynami
 
 This method returns a list of entries matching Strapi filters.
 You can also pass a populate option to specify which relations you want to be populated.
+By default the result will be limited to the first 100 entries.
+To get all entries use `_limit: -1` in the populate options.
 
 ##### Examples
 
@@ -1153,7 +1160,7 @@ You can also pass a populate option to specify which relations you want to be po
 strapi.query('restaurant').find({ id: 1 });
 ```
 
-**Find by in IN, with a limit**:
+**Find by id IN, with a limit**:
 
 ```js
 strapi.query('restaurant').find({ _limit: 10, id_in: [1, 2] });
@@ -2008,8 +2015,8 @@ A `product` can be related to many `categories` and a `category` can have many `
     "categories": {
       "collection": "category",
       "via": "products",
-      "dominant": true,
-      "collectionName": "products_categories__categories_products" // optional
+      "dominant": true, // NoSQL only
+      "collectionName": "products_categories__categories_products" // SQL only, optional
     }
   }
 }
@@ -2019,7 +2026,7 @@ A `product` can be related to many `categories` and a `category` can have many `
 (NoSQL databases only) The `dominant` key defines which table/collection should store the array that defines the relationship. Because there are no join tables in NoSQL, this key is required for NoSQL databases (e.g. MongoDB).
 
 **NOTE**:
-(NoSQL databases only) The `collectionName` key defines the name of the join table. It has to be specified once, in the `dominant` attribute of the relation. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
+(SQL databases only) The `collectionName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
 
 **Path —** `./api/category/models/Category.settings.json`.
 

@@ -1,10 +1,15 @@
+---
+title: Get started with Gridsome - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Gridsome.
+---
+
 # Getting Started with Gridsome
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Gridsome](https://gridsome.org/) remains the same except that you will not fetch the same content.
 
-### Create a Gridsome app
+## Create a Gridsome app
 
 Create a basic Gridsome application using the [Gridsome CLI](https://gridsome.org/docs/gridsome-cli/).
 
@@ -12,7 +17,7 @@ Create a basic Gridsome application using the [Gridsome CLI](https://gridsome.or
 gridsome create gridsome-app
 ```
 
-### Configure Gridsome
+## Configure Gridsome
 
 Gridsome is a [Static Site Generator](https://www.staticgen.com/) and will fetch your content from Strapi at build time. You need to configure Gridsome to communicate with your Strapi application.
 
@@ -38,7 +43,7 @@ module.exports = {
 };
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 

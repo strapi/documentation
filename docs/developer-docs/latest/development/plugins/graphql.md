@@ -1,3 +1,8 @@
+---
+title: GraphQL - Strapi Developer Documentation
+description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
+---
+
 # GraphQL
 
 By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
@@ -20,14 +25,6 @@ yarn strapi install graphql
 
 ```
 npm run strapi install graphql
-```
-
-:::
-
-::: tab strapi
-
-```
-strapi install graphql
 ```
 
 :::
@@ -255,6 +252,7 @@ You can also apply different parameters to the query to make more complex querie
 - `start` (integer): Define the amount of entries to skip.
 - `sort` (string): Define how the data should be sorted.
 - `publicationState` (PublicationState): Only select entries matching the publication state provided.
+- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 
   Handled states are:
 
@@ -276,6 +274,8 @@ You can also apply different parameters to the query to make more complex querie
   - `<field>_in`: Matches any value in the array of values.
   - `<field>_nin`: Doesn't match any value in the array of values.
   - `<field>_null`: Equals null/Not equals null
+
+#### Examples
 
 Return the second decade of users which have an email that contains `@strapi.io` ordered by username.
 
@@ -587,11 +587,11 @@ module.exports = {
       restaurantsByCategories: {
         description: 'Return the restaurants open by the category',
         resolverOf: 'application::restaurant.restaurant.findByCategories', // Will apply the same policy on the custom resolver as the controller's action `findByCategories`.
-        resolver: async (obj, options, ctx) => {
-          // ctx is the context of the Koa request.
-          await strapi.controllers.restaurants.findByCategories(ctx);
+        resolver: async (obj, options, { context }) => {
+          // context is the context of the Koa request.
+          await strapi.controllers.restaurants.findByCategories(context);
 
-          return ctx.body.restaurants || `There is no restaurant.`;
+          return context.body.restaurants || `There is no restaurant.`;
         },
       },
     },
@@ -865,7 +865,7 @@ module.exports = {
       restaurants: {
         description: 'Return a list of restaurants by chef',
         resolverOf: 'application::restaurant.restaurant.find', // Will apply the same policy on the custom resolver as the controller's action `find` located in `Restaurant.js`.
-        resolver: (obj, options, context) => {
+        resolver: (obj, options, { context }) => {
           // You can return a raw JSON object or a promise.
 
           return [
@@ -909,6 +909,28 @@ module.exports = {
     Mutation: {
       createRestaurant: false,
       deletePOst: false,
+    },
+  },
+};
+```
+
+### Disable a type attribute
+
+To do that, we need to use the `schema.graphql.js` like below:
+
+```js
+module.exports = {
+  type: {
+    Restaurant: {
+      name: false, // The Restaurant's name won't be "queryable" or "mutable".
+    }
+  },
+  resolver: {
+    Query: {
+      // ...
+    },
+    Mutation: {
+      // ...
     },
   },
 };

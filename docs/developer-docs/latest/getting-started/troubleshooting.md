@@ -1,4 +1,6 @@
 ---
+title: Troubleshooting - Strapi Developer Documentation
+description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
 sidebarDepth: 0
 ---
 
@@ -34,7 +36,7 @@ When this new plugin release, there is two versions:
 - Community Edition
 - Enterprise Edition
 
-By default, the Community Edition includes 3 pre-defined roles (Administrators, Editor, Author). Upgrading to the Enterprise Edition will unlock an unlimited number of roles. There will be certain other field level permission limitations based on the edition and we will be building a detailed guide as to what is included within the "Basic" vs "Advanced" RBAC features. To learn more about what is included as well as pricing please see our [pricing page](https://strapi.io/pricing).
+By default, the Community Edition includes 3 pre-defined roles (Administrators, Editor, Author). Upgrading to the Enterprise Edition will unlock an unlimited number of roles. There will be certain other field level permission limitations based on the edition and we will be building a detailed guide as to what is included within the "Basic" vs "Advanced" RBAC features. To learn more about what is included as well as pricing please see our [pricing page](https://strapi.io/pricing-self-hosted).
 
 ## Relations aren't maintaining their sort order
 

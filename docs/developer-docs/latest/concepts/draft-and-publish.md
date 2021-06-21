@@ -1,3 +1,8 @@
+---
+title: Draft and publish - Strapi Developer Documentation
+description: The draft and publish feature allows you to save your content as a draft, to publish it later.
+---
+
 # Draft and publish
 
 The draft and publish feature allows you to save your content as a draft, to publish it later.

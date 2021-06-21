@@ -1,3 +1,8 @@
+---
+title: Heroku Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on Heroku.
+---
+
 # Heroku
 
 This is a step-by-step guide for deploying a Strapi project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are provided instructions on how to get started.
@@ -134,7 +139,7 @@ You can use `heroku create custom-project-name`, to have Heroku create a `custom
 ::: tip NOTE
 If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
 
-`Path: ./my-project/`
+`Path: ./my-project/`
 
 ```bash
 heroku git:remote -a your-heroku-app-name
@@ -178,7 +183,7 @@ heroku config
 
 This should print something like this: `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`.
 
-(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** : **DATABASE_NAME\***)
+(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** / **DATABASE_NAME\***)
 
 #### 3. Set Database variables automatically
 
@@ -200,7 +205,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create new subfolders in `./config` like so: `/[env]/production`, then create a new `database.js` in iti (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
+Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
 
 `Path: ./config/env/production/database.js`
 
@@ -246,14 +251,14 @@ Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-
 
 ```js
 module.exports = ({ env }) => ({
-  url: env('HEROKU_URL'),
+  url: env('MY_HEROKU_URL'),
 });
 ```
 
-You will also need to set the environment variable in Heroku for the `HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
+You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
 
 ```bash
-heroku config:set HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
+heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
 ```
 
 #### 6. Install the `pg` node module
@@ -262,9 +267,21 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 
 `Path: ./my-project/`
 
+
+:::: tabs
+::: tab npm
+
 ```bash
 npm install pg --save
 ```
+:::
+
+::: tab yarn
+```bash
+yarn add pg
+```
+:::
+::::
 
 :::
 

@@ -1,0 +1,37 @@
+{
+  "index_name": "documentation",
+  "start_urls": ["https://strapi.io/documentation"],
+  "selectors": {
+    "lvl0": {
+      "selector": "//h1/text()",
+      "type": "xpath",
+      "global": true
+    },
+    "lvl1": {
+      "selector": "//h2/text()",
+      "type": "xpath",
+      "global": true
+    },
+    "lvl2": {
+      "selector": "//h3/text()",
+      "type": "xpath",
+      "global": true
+    },
+    "lvl3": {
+      "selector": "/html/head/meta[@name='description']/@content",
+      "type": "xpath",
+      "global": true
+    },
+    "text": ".content__default p",
+    "lang": {
+      "selector": "/html/@lang",
+      "type": "xpath",
+      "global": true
+    }
+  },
+  "strip_chars": " .,;:#",
+  "stop_urls": ["https://strapi.io/documentation/developer-docs/latest/update-migration-guides/migration-guides"],
+  "custom_settings": {
+    "attributesForFaceting": ["lang"]
+  }
+}

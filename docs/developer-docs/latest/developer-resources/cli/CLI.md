@@ -1,3 +1,8 @@
+---
+title: CLI - Strapi Developer Documentation
+description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+---
+
 # Command Line Interface (CLI)
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
@@ -339,6 +344,20 @@ strapi generate:plugin <name>
   Example: `strapi generate:plugin user` will create the plugin at `./plugins/user`.
 
 Please refer to the [local plugins](/developer-docs/latest/development/local-plugins-customization.md) section to know more.
+
+## strapi generate:template
+
+Create a template from the current strapi project
+
+```bash
+strapi generate:template <path>
+```
+
+- **strapi generate:template &#60;path&#62;**<br/>
+  Generates a Strapi template at `<path>`
+
+  Example: `strapi generate:template ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+
 
 ## strapi install
 

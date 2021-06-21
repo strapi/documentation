@@ -1,6 +1,15 @@
-# DigitalOcean
+---
+title: DigitalOcean Droplet Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
+---
 
-This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/). Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service. Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
+# DigitalOcean Droplets
+
+This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md).
+
+Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
+
+Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
 ::: tip
 Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md) deployment option for DigitalOcean
@@ -369,7 +378,7 @@ Providing that your project is set-up on GitHub, you will need to configure your
 - You will need to access the `Settings` tab for your `Strapi Project Repository`:
 
   1. Navigate and click to `Settings` for your repository.
-  2. Click on `Webhooks`, then click `Add Webhook`.
+  2. Click on `Webhooks`, then click `Add Webhook`.
   3. The fields are filled out like this:
      - Payload URL: Enter `http://your-ip-address:8080`
      - Content type: Select `application/json`
@@ -428,7 +437,7 @@ http
   .listen(8080);
 ```
 
-- Allow the port to communicate with outside web traffic for `port 8080`:
+- Allow the port to communicate with outside web traffic for `port 8080`:
 
 ```bash
 sudo ufw allow 8080/tcp

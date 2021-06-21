@@ -183,6 +183,29 @@
       </InstallLink>
     </div>
 
+    <!-- i18n -->
+    <div>
+      <InstallLink link="/developer-docs/latest/development/plugins/i18n.html">
+        <template #icon>
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32">
+            <g fill="none" fill-rule="evenodd">
+              <text
+                font-family="AppleColorEmoji, Apple Color Emoji"
+                font-size="30"
+                fill="#D3E5FF"
+              >
+                <tspan x="0" y="30.6">🌍</tspan>
+              </text>
+            </g>
+          </svg>
+        </template>
+        <template #title>Internationalization (i18n)</template>
+        <template #description>
+          Plugin to manage internationalization of content
+        </template>
+      </InstallLink>
+    </div>
+
     <!-- Upload -->
     <div>
       <InstallLink link="/developer-docs/latest/development/plugins/upload.html">

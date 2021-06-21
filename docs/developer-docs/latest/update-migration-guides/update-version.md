@@ -1,6 +1,11 @@
+---
+title: Update Strapi version - Strapi Developer Documentation
+description: The following documentation covers how to upgrade your application to the latest version of Strapi.
+---
+
 # Update Strapi version
 
-With this guide you will know how to upgrade your application to the latest version of Strapi.
+In this guide you will learn how to upgrade your application to the latest version of Strapi.
 
 ::: tip NOTE
 When a new version of Strapi is available, you will be notified both in your terminal, and in the admin panel. <br>
@@ -73,7 +78,7 @@ For example upgrading from `3.2.4` to `3.2.5`:
 After editing the file run either `yarn install` or `npm install` to install the specified version.
 
 ::: tip
-If the operation doesn't work, you should probably remove your `yarn.lock` or `package-lock.json`. If it still does not work, try again after also removing the folder `node_modules`.
+If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the  `node_modules` folder as well and try again..
 :::
 
 ## Rebuild your administration panel

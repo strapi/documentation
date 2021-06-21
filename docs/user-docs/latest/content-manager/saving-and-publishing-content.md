@@ -1,3 +1,8 @@
+---
+title: Saving & Publishishing content - Strapi User Guide
+description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
+---
+
 # Saving, publishing and deleting content
 
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
@@ -41,4 +46,8 @@ You can delete content by deleting any entry of a collection type, or the defaul
 
 ::: tip 💡 TIP
 You can delete entries from the list view of a collection type, by clicking on the trash button ![icon delete](../assets/content-manager/icon_delete3.png) on the right side of the entry's record in the table. <br> You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on **Delete selected** ![icon delete](../assets/content-manager/icon_delete4.png) located right below the header of the table.
+:::
+
+::: warning IMPORTANT
+If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, entries can only be deleted one locale at the time.
 :::

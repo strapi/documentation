@@ -1,3 +1,8 @@
+---
+title: Install from Docker - Strapi Developer Documentation
+description: Quickly create a Strapi application using our official Strapi Docker images.
+---
+
 # Installing using Docker
 
 If you're already familiar with Docker, you are probably looking for our official Docker images over [Docker Hub](https://hub.docker.com/r/strapi/strapi).
@@ -62,6 +67,10 @@ services:
 :::
 
 ::: tab MongoDB
+
+::: warning WARNING
+Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+:::
 
 ```yaml
 version: '3'
@@ -175,6 +184,14 @@ docker-compose pull
 
 ## Step 3: Run the stack
 
-```
+Executes Docker image detaching the terminal:
+```bash
 docker-compose up -d
+```
+
+or
+
+Executes Docker image without detaching the terminal:
+```bash
+docker-compose up
 ```

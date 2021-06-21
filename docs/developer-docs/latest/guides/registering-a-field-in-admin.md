@@ -1,3 +1,8 @@
+---
+title: Field Registering - Strapi Developer Documentation
+description: Learn in this guide how you can create a new Field for your administration panel.
+---
+
 # Creating a new Field in the administration panel
 
 In this guide we will see how you can create a new Field for your administration panel.
@@ -363,6 +368,7 @@ const Editor = ({ onChange, name, value }) => {
         editor={ClassicEditor}
         config={configuration}
         data={value}
+        onReady={editor => editor.setData(value)}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange({ target: { name, value: data } });
@@ -388,7 +394,7 @@ At this point we have simply created a new plugin which is mounted in our projec
 Since the goal of our plugin is to override the current WYSIWYG we don't want it to be displayed in the administration panel but we need it to register our new **Field**.
 In order to do so, we will simply **modify** the front-end entry point of our plugin.
 
-This file is already present. Please replace the content of this file wit the following:
+This file is already present. Please replace the content of this file with the following:
 
 **Path —** `./plugins/wysiwyg/admin/src/index.js`
 

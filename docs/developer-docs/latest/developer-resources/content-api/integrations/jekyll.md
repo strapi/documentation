@@ -1,18 +1,23 @@
+---
+title: Get started with Jekyll - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Jekyll.
+---
+
 # Getting Started with Jekyll
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Jekyll](https://jekyllrb.com) remains the same except that you will not fetch the same content.
 
-### Create a Jekyll app
+## Create a Jekyll app
 
-Create a basic Jekyll application. [Installation](https://jekyllrb.com/).
+Be sure to have [Jekyll installed](https://jekyllrb.com/docs/installation/) on your computer.
 
 ```bash
 jekyll new jekyll-app
 ```
 
-### Configure Jekyll
+## Configure Jekyll
 
 Jekyll is a [Static Site Generator](https://www.staticgen.com/) and will fetch your content from Strapi at build time. You need to configure Jekyll to communicate with your Strapi application.
 
@@ -53,7 +58,7 @@ strapi:
 bundle install
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 

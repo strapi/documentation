@@ -1,3 +1,8 @@
+---
+title: Writing Content - Strapi User Guide
+description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
+---
+
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the Content-Types Builder.

@@ -1,10 +1,15 @@
+---
+title: Get started with Gatsby - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Gatsby.
+---
+
 # Getting Started with Gatsby
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Gatsby](https://www.gatsbyjs.org/) remains the same except that you will not fetch the same content.
 
-### Create a Gatsby app
+## Create a Gatsby app
 
 Create a basic Gatsby application using the [Gatsby CLI](https://www.gatsbyjs.org/docs/gatsby-cli/).
 
@@ -12,7 +17,7 @@ Create a basic Gatsby application using the [Gatsby CLI](https://www.gatsbyjs.or
 gatsby new gatsby-app
 ```
 
-### Configure Gatsby
+## Configure Gatsby
 
 Gatsby is a [Static Site Generator](https://www.staticgen.com/) and will fetch your content from Strapi at build time. You need to configure Gatsby to communicate with your Strapi application.
 
@@ -27,7 +32,7 @@ yarn add gatsby-source-strapi
   resolve: "gatsby-source-strapi",
   options: {
     apiURL: "http://localhost:1337",
-    contentTypes: [
+    collectionTypes: [
       "restaurant",
       "category",
     ],
@@ -36,7 +41,7 @@ yarn add gatsby-source-strapi
 },
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -281,10 +286,11 @@ You can find your restaurant categories by browsing `http://localhost:8000/categ
 
 Feel free to do the same for your restaurants!
 
-## Starter
+## Starters
 
-- [Gatsby Blog starter](https://github.com/strapi/strapi-starter-gatsby-blog)
-- [Gatsby blog starter v2](https://github.com/strapi/strapi-starter-gatsby-blog-v2)
+- [Gatsby blog starter](https://github.com/strapi/strapi-starter-gatsby-blog)
+- [Gatsby corporate starter](https://github.com/strapi/strapi-starter-gatsby-corporate)
+- [Gatsby catalog starter](https://github.com/strapi/strapi-starter-gatsby-catalog)
 
 ## Conclusion
 

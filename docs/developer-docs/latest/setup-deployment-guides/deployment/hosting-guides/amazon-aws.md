@@ -1,3 +1,8 @@
+---
+title: AWS Deployment - Strapi Developer Documentation
+description: Learn in this guide how to deploy your Strapi application on AWS EC2, host your database on AWS RDS and upload your assets on AWS S3.
+---
+
 # Amazon AWS
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
@@ -75,7 +80,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
   `t2.small` is the smallest instance type in which Strapi runs. `t2.nano` and `t2.micro` **DO NOT** work. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, **t2.small** or larger instance is needed.
   :::
 - Click the grey `Next: Configure Instance Details` and `Next: Add Storage`
-- In the **Step 4: Add Storage** verify the `General Purpose SSD (gb2)`, then click `Next: Add tags`.
+- In the **Step 4: Add Storage** verify the `General Purpose SSD (gp2)`, then click `Next: Add tags`.
 - In the **Step 5: Add Tags**, add tags to suit your project or leave blank, then click `Next: Configure Security Group`.
 - In the **Step 6: Configure Security Group**, configure the `security settings` as follows:
   - **Assign a security group:** Check as `Create a new security group`
@@ -532,7 +537,7 @@ Providing that your project is set-up on GitHub, you will need to configure your
 - You will need to access the `Settings` tab for your `Strapi Project Repository`:
 
   1. Navigate and click to `Settings` for your repository.
-  2. Click on `Webhooks`, then click `Add Webhook`.
+  2. Click on `Webhooks`, then click `Add Webhook`.
   3. The fields are filled out like this:
      - Payload URL: Enter `http://your-ip-address:8080`
      - Content type: Select `application/json`
@@ -591,7 +596,7 @@ http
   .listen(8080);
 ```
 
-- Allow the port to communicate with outside web traffic for `port 8080`:
+- Allow the port to communicate with outside web traffic for `port 8080`:
   - Within your **AWS EC2** dashboard:
     - In the left hand menu, click on `Security Groups`,
     - Select with the checkbox, the correct `Group Name`, e.g. `strapi`,

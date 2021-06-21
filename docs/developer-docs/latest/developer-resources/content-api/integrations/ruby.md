@@ -1,19 +1,24 @@
+---
+title: Get started with Ruby - Strapi Developer Documentation
+description: Build powerful applications using Strapi, the leading open-source headless cms and Ruby.
+---
+
 # Getting Started with Ruby
 
 This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.md#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the getting started guide, the way you request a Strapi API with [Ruby](https://www.ruby-lang.org/en/) remains the same except that you will not fetch the same content.
 
-### Create a Ruby file
+## Create a Ruby file
 
-Be sure to have Ruby installed on your computer.
+Be sure to have [Ruby installed](https://www.ruby-lang.org/en/documentation/installation/) on your computer.
 
 ```bash
 mkdir ruby-app && cd ruby-app
 touch script.rb
 ```
 
-### Use an HTTP client
+## Use an HTTP client
 
 Many HTTP clients are available but in this documentation we'll use [HTTParty](https://github.com/jnunemaker/httparty).
 
@@ -31,7 +36,7 @@ gem "httparty"
 bundle install
 ```
 
-### GET Request your collection type
+## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -104,7 +109,7 @@ restaurant = Restaurant.new
 puts restaurant.all
 ```
 
-### POST Request your collection type
+## POST Request your collection type
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -190,7 +195,7 @@ puts restaurant.create({
 })
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 

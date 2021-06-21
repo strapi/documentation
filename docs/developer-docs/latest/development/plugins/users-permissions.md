@@ -1,4 +1,6 @@
 ---
+title: Roles & Permissions - Strapi Developer Documentation
+description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 sidebarDepth: 2
 ---
 
@@ -11,9 +13,9 @@ To access the plugin admin panel, click on the **Settings** link in the left men
 ## Concept
 
 When this plugin is installed, it adds an access layer on your application.
-The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
+The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
 
-Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
+Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 To do so, your JWT contains your user ID and we are able to match the group your user is in and at the end to know if the group allows access to the route.
 
