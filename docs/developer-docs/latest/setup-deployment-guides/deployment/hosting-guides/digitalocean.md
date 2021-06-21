@@ -378,7 +378,7 @@ Providing that your project is set-up on GitHub, you will need to configure your
 - You will need to access the `Settings` tab for your `Strapi Project Repository`:
 
   1. Navigate and click to `Settings` for your repository.
-  2. Click on `Webhooks`, then click `Add Webhook`.
+  2. Click on `Webhooks`, then click `Add Webhook`.
   3. The fields are filled out like this:
      - Payload URL: Enter `http://your-ip-address:8080`
      - Content type: Select `application/json`
@@ -437,7 +437,7 @@ http
   .listen(8080);
 ```
 
-- Allow the port to communicate with outside web traffic for `port 8080`:
+- Allow the port to communicate with outside web traffic for `port 8080`:
 
 ```bash
 sudo ufw allow 8080/tcp
