@@ -8,7 +8,7 @@ sidebarDepth: 1
 
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 
-Platform.sh is a Platform-as-a-Service that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.
+Platform.sh is a Platform as a Service (PaaS) that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.
 
 ::: warning PREREQUISITES
 A Platform.sh account is necessary to follow this installation guide. Please visit the [Platform.sh website](https://console.platform.sh/) to create an account if you don't already have one.
