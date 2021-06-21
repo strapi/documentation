@@ -49,7 +49,7 @@ Strapi CLI (Command Line Interface) installation scripts are the fastest way to 
 
 ## Preparing the installation
 
-The CLI installation guide requires 2 softwares to be already installed on your computer:
+The CLI installation guide requires at least two software prerequisites to be already installed on your computer:
 
 - [Node.js](https://nodejs.org): only LTS versions are supported (version 12.x minimum). Other versions of Node.js may not be compatible with the latest release of Strapi. The 14.x version is most recommended by Strapi.
 - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (version 6.x minimum) or [yarn](https://yarnpkg.com/getting-started/install) to run the CLI installation scripts.
