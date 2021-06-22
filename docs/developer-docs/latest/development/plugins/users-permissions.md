@@ -84,7 +84,7 @@ We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to gener
 Available options:
 
 - `expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
-  Eg: 60, "2 days", "10h", "7d". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 **Path —** `extensions/users-permissions/config/security.json`
 
@@ -95,6 +95,10 @@ Available options:
   }
 }
 ```
+
+:::warning
+Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
+:::
 
 ### Registration
 
