@@ -88,7 +88,7 @@ Click "Next".
 yarn add strapi-provider-upload-do
 ```
 
-Follow the documentation of the [plugin](https://github.com/shorwood/strapi-provider-upload-do)for the full configuration.
+Follow the documentation of the [plugin](https://github.com/shorwood/strapi-provider-upload-do) for the full configuration.
 
 ### Step 8. Name your app
 
