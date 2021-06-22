@@ -13,7 +13,7 @@ Fast-track local install for getting Strapi running on your computer.
 
 #### Node.js
 
-Strapi only requires [Node.js](https://nodejs.org). Strapi only supports **LTS versions** of Node.js, the current recommended version to run Strapi is **Node LTS v14**. Other versions of of Node.js may not be compatible with the latest release of Strapi.
+Strapi only requires [Node.js](https://nodejs.org). Strapi only supports **LTS versions** of Node.js, the current recommended version to run Strapi is **Node LTS v14**. Other versions of Node.js may not be compatible with the latest release of Strapi.
 
 This is everything you need to run Strapi on your local environment.
 
@@ -29,6 +29,10 @@ You can also use **yarn** if you want [here](https://yarnpkg.com/en/docs/getting
 #### Databases
 
 Strapi currently support the following databases.
+
+::: warning WARNING
+Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+:::
 
 | Database   | Minimum version |
 | ---------- | --------------- |
