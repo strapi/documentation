@@ -80,7 +80,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
   `t2.small` is the smallest instance type in which Strapi runs. `t2.nano` and `t2.micro` **DO NOT** work. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, **t2.small** or larger instance is needed.
   :::
 - Click the grey `Next: Configure Instance Details` and `Next: Add Storage`
-- In the **Step 4: Add Storage** verify the `General Purpose SSD (gb2)`, then click `Next: Add tags`.
+- In the **Step 4: Add Storage** verify the `General Purpose SSD (gp2)`, then click `Next: Add tags`.
 - In the **Step 5: Add Tags**, add tags to suit your project or leave blank, then click `Next: Configure Security Group`.
 - In the **Step 6: Configure Security Group**, configure the `security settings` as follows:
   - **Assign a security group:** Check as `Create a new security group`
