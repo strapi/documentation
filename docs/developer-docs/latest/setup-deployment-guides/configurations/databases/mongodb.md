@@ -5,6 +5,10 @@ description: Learn how to install MongoDB on your computer and using it for your
 
 # MongoDB Installation
 
+::: warning WARNING
+Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+:::
+
 ## Install MongoDB locally
 
 ### 1. Install MongoDB on your development environment
@@ -50,13 +54,21 @@ brew tap mongodb/brew
 2. Now install MongoDB
 
 ```bash
-brew install mongodb-community@4.0
+brew install mongodb-community@4.4
 ```
 
 3. Get the mongod process running in order to connect and use MongoDB:
 
+For macOS running Intel processors:
+
 ```bash
 mongod --config /usr/local/etc/mongod.conf
+```
+
+For macOS running on Apple M1 processors:
+
+```bash
+mongod --config /opt/homebrew/etc/mongod.conf
 ```
 
 You have now installed MongoDB for _Mac_. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
