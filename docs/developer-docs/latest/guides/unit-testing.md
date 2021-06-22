@@ -151,6 +151,9 @@ beforeAll(async done => {
 /** this code is called once before all the tested are finished */
 afterAll(async done => {
   const dbSettings = strapi.config.get('database.connections.default.settings');
+  
+  //close server to release the db-file
+  await strapi.destroy();
 
   //delete test database after all tests
   if (dbSettings && dbSettings.filename) {
@@ -196,7 +199,7 @@ Some might say that API tests are not unit but limited integration tests, regard
 
 We'll test if our endpoint works properly and route `/hello` does return `Hello World`
 
-Let's create a separate test file were `supertest` will be used to check if endpoint works as expected.
+Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
 
 **Path —** `./tests/hello/index.js`
 
