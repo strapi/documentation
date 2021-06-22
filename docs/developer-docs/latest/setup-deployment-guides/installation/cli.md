@@ -98,9 +98,13 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
    * `Quickstart (recommended)`, which uses the default database (SQLite)
    * `Custom (manual settings)`, which allows to choose your preferred database
 
-3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
+3. When terminal asks `Would you like to use a template?`, type `y` for yes or `n` for no then press Enter.
 
-4. (Custom installation type only) Name your project's database.
+4. (Templates only) Among the list of use cases, choose one for your Strapi project.
+
+5. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
+
+6. (Custom installation type only) Name your project's database.
 
 ## Running Strapi
 
