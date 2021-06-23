@@ -11,6 +11,21 @@ description: Quickly deploy a Strapi application on DigitalOcean by simply using
     Eventually this will be turned into custom blocks or VuePress components,
     once I understand better how markdown-it and markdown-it-custom-block work.
   */
+  .custom-block.warning {
+    border-left-width: .25rem;
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+    /* margin-top: 2em; */
+    /* margin-bottom: 2em; */
+
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+
   .custom-block.danger {
     border-left-width: .25rem;
     background-color: rgba(129,107,250, .05);
@@ -37,9 +52,6 @@ The following documentation will guide you through the one-click creation of a n
 
 DigitalOcean is a cloud platform that helps to deploy and scale applications by offering an Infrastructure as a Service (IaaS) platform for developers.
 
-<!-- TODO: Temporarily commented 👇 Check if we did the same for other 1-clicks, ask Mégane's opinion — remove it for consistency? -->
-
-
 :::warning PREREQUISITES
 A DigitalOcean account is necessary to follow this installation guide. Please visit the [DigitalOcean website](https://try.digitalocean.com/strapi/) to create an account if you don't already have one.
 :::
@@ -53,7 +65,6 @@ A DigitalOcean account is necessary to follow this installation guide. Please vi
 5. Select your virtual machine size (minimum of 2 GB/1 CPU).
 6. Choose a datacenter region (closest to you or your target area).
 7. Add a new SSH key. You can follow [this guide](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/).
-<!-- TODO: check with Derrick and JS if instructions are displayed like they were for me. If yes, we can remove the sentence. -->
 8. Give your virtual machine a hostname.
 9. Click **Create Droplet**. It may take from 30 seconds to a few minutes for the droplet to start, and a few minutes more to finish the Strapi installation.
 
@@ -68,8 +79,6 @@ To visit your Strapi application:
 3. Copy the public ipv4 address of the droplet.
 4. Use this address to access the Strapi application.
 
-
-<!-- TODO: Check this 👇 - We didn't mention this in other guides. Is it specific to DigitalOcean, or should we simply remove it? -->
 Visiting the Strapi application page for the first time will require to create the first administrator user.
 
 ::: danger 🤓 Customization options for the DigitalOcean droplet 
