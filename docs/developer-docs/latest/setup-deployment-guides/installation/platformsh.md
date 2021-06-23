@@ -1,50 +1,38 @@
 ---
 title: Install using Platform.sh - Strapi Developer Documentation
 description: Quickly deploy a Strapi application using the official Platform.sh Strapi template.
+sidebarDepth: 1
 ---
 
-# Installing using Platform.sh
+# Platform.sh One-Click
 
-[Platform.sh](https://platform.sh/) gives you an easy way to get started and deploy your Strapi application.
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 
-You can find the template [source code](https://github.com/platformsh-templates/strapi#customizations) on Platform.sh GitHub for more information.
+Platform.sh is a Platform as a Service (PaaS) that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.
 
-[[toc]]
+::: warning PREREQUISITES
+A Platform.sh account is necessary to follow this installation guide. Please visit the [Platform.sh website](https://console.platform.sh/) to create an account if you don't already have one.
+:::
 
-## Step 1: Create a Platform.sh account
+## Creating a Strapi project
 
-You must have a [Platform.sh](https://console.platform.sh/) account before doing these steps.
-
-## Step 2: Create a project
-
-You can use the **One-Click** button or follow these steps.
+There are 2 ways to create a new project hosted on Platform.sh: either by clicking the **One-Click** button, or following the numbered steps right below the button.
 
 <a href="https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/strapi/.platform.template.yaml&utm_content=strapi&utm_source=github&utm_medium=button&utm_campaign=deploy_on_platform">
     <img src="https://platform.sh/images/deploy/lg-blue.svg" alt="Deploy on Platform.sh" width="180px" />
 </a>
 
-- Click on `+ Add project` button
-- Select `Use a template` option and click `Next`
-- Fill your `Project name` and `Region` then click `Next`
+1. In the [Platform.sh website](https://console.platform.sh/), click on the **Add project** button.
+2. Select the *Use a template* option.
+3. Fill the *Project name* and *Region* fields.
+4. Click on the **Next** button.
+5. Using the search bar, search for the `Strapi` template (see [source code](https://github.com/platformsh-templates/strapi#customizations)).
+6. Select the template. After a few seconds, your Strapi application should be setup with a PostgreSQL database.
 
-**Choose Strapi template.**
+## Running Strapi
 
-Search for the Strapi template using the search bar.
+To visit your Strapi application:
 
-- Click on the search bar
-- Fill `strapi`
-- Select the Strapi template
-- Click `Next`
-
-::: tip INFO
-After few second a Strapi application will be setup with a PostgreSQL database.
-:::
-
-## Step 3: Visit your app
-
-Now to visit your application.
-
-- Click on `Settings`
-- Then `Domains` in the left menu
-
-You will see the Platform.sh domain name that is used for your app.
+1. Go to the [Platform.sh website](https://console.platform.sh/), logged in.
+2. Go to *Settings > Domains*.
+3. Click on the Platform.sh domain name that is used for your Strapi application.
