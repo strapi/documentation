@@ -203,4 +203,4 @@ _Response_
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Dart/Flutter. When you create a Collections Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.html#api-endpoints) available to interact with.
+Here is how to request your Collection Types in Strapi using Dart/Flutter. When you create a Collections Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) available to interact with.
