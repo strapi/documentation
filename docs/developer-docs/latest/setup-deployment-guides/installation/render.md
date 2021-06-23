@@ -3,6 +3,30 @@ title: Render One-Click - Strapi Developer Documentation
 description: Quickly deploy a Strapi application on Render by simply using their One-click button.
 ---
 
+<style lang="scss" scoped>
+  /*
+    We override the :::warning callout for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
+
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
+  .custom-block.warning {
+    border-left-width: .25rem;
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+    /* margin-top: 2em; */
+    /* margin-bottom: 2em; */
+
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+</style>
+
 # Render One-Click
 
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Render](https://render.com).
