@@ -1521,7 +1521,7 @@ const result = await knex('restaurants')
 // return a grouped key-value object generated from
 // the response
 
-return (_.groupBy(result, 'chef');
+return (_.groupBy(result, 'chef'));
 ```
 
 **We strongly suggest to sanitize any strings before making queries to the DB**
