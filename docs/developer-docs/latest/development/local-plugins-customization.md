@@ -409,11 +409,6 @@ Initializer.propTypes = {
 
 export default Initializer;
 ```
-
-#### Injected Components
-
-(Coming soon)
-
 #### Routing
 
 The routing is based on the [React Router V5](https://reacttraining.com/react-router/web/guides/philosophy), due to it's implementation each route is declared in the `containers/App/index.js` file.
