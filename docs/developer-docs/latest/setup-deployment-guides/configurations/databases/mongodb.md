@@ -212,7 +212,7 @@ $ strapi develop
 
 ```
 
-You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
+You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/developer-docs/latest/getting-started/quick-start.md).
 
 ---
 
