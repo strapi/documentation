@@ -33,6 +33,14 @@ npx create-react-app react-app
 
 ::::
 
+## Move into Your Project Folder
+
+Move into the project folder `react-app`.
+
+```bash
+cd react-app
+```
+
 ## Use an HTTP client
 
 Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
