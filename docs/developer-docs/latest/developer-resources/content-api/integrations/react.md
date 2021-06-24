@@ -179,11 +179,15 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <ul>
-          {this.state.restaurants.map(restaurant => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
+        {this.state.restaurants.map((restaurant) => (
+          <ul key={restaurant.id}>
+            <li> {restaurant.name} </li>
+            <li> {restaurant.description} </li>
+            {restaurant.categories.map((category) => (
+              <li key={category.id}>{category.name}</li>
+            ))}
+          </ul>
+        ))}
       </div>
     );
   }
@@ -249,11 +253,15 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <ul>
-          {this.state.restaurants.map(restaurant => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
+        {this.state.restaurants.map((restaurant) => (
+          <ul key={restaurant.id}>
+            <li> {restaurant.name} </li>
+            <li> {restaurant.description} </li>
+            {restaurant.categories.map((category) => (
+              <li key={category.id}>{category.name}</li>
+            ))}
+          </ul>
+        ))}
       </div>
     );
   }
