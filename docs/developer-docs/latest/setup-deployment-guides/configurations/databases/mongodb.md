@@ -54,16 +54,24 @@ brew tap mongodb/brew
 2. Now install MongoDB
 
 ```bash
-brew install mongodb-community@4.0
+brew install mongodb-community@4.4
 ```
 
 3. Get the mongod process running in order to connect and use MongoDB:
+
+For macOS running on Intel processors:
 
 ```bash
 mongod --config /usr/local/etc/mongod.conf
 ```
 
-You have now installed MongoDB for _Mac_. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
+For macOS running on Apple M1 processors:
+
+```bash
+mongod --config /opt/homebrew/etc/mongod.conf
+```
+
+You have now installed MongoDB for macOS. You are now ready to [install Strapi with MongoDB locally](#_2-install-strapi-locally-with-mongodb).
 
 :::
 
@@ -204,7 +212,7 @@ $ strapi develop
 
 ```
 
-You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
+You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/developer-docs/latest/getting-started/quick-start.md).
 
 ---
 

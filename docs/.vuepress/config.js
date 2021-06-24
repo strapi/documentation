@@ -131,9 +131,9 @@ const sidebar = {
             ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
             ['/developer-docs/latest/development/plugins/email', 'Email'],
             ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
+            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
             ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions']
+            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
           ],
           sidebarDepth: 1,
         },
@@ -335,18 +335,12 @@ const sidebar = {
       collapsable: false,
       title: 'Plugins',
       children: [
-        [
-          '/user-docs/latest/plugins/introduction-to-plugins',
-          'Introduction to plugins',
-        ],
+        ['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
         [
           '/user-docs/latest/plugins/installing-plugins-via-marketplace',
           'Installing plugins via the Marketplace',
         ],
-        [
-          '/user-docs/latest/plugins/strapi-plugins',
-          'List of Strapi plugins',
-        ],
+        ['/user-docs/latest/plugins/strapi-plugins', 'List of Strapi plugins'],
       ],
     },
     {
@@ -397,6 +391,11 @@ module.exports = {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
     },
+    'vuepress-plugin-code-copy': {
+      color: '#ffffff',
+      successText: 'Copied to clipboard!',
+    },
+    '@vuepress/back-to-top': {},
   },
   head: [
     [

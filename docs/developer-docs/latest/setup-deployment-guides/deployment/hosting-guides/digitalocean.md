@@ -17,7 +17,7 @@ Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/in
 
 ### DigitalOcean Install Requirements
 
-- If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/) to get \$100 of free credits!
+- If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/).
 
 ### Create a "Droplet"
 
@@ -244,7 +244,7 @@ Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
 ```
 
-Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [create your first user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
+Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [create your first user](/developer-docs/latest/getting-started/quick-start.md).
 
 You will next need to [install and configure PM2 Runtime](#install-and-configure-pm2-runtime).
 
@@ -314,7 +314,7 @@ pm2 start ecosystem.config.js
 
 `pm2` is now set-up to use an `ecosystem.config.js` to manage restarting your application upon changes. This is a recommended best practice.
 
-**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
+**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md).
 
 ::: tip
 Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
