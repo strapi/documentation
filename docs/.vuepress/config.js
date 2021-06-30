@@ -378,25 +378,32 @@ module.exports = {
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/documentation/',
-  plugins: {
-    '@vuepress/medium-zoom': {},
-    'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
+  plugins: [
+    ['vuepress-plugin-element-tabs', {}],
+    ['@vuepress/google-analytics', {
       ga: 'UA-54313258-1',
-    },
-    'check-md': {
+    }],
+    ['check-md', {
       ignore: checklinksIgnoredFiles,
-    },
-    seo: {
+    }],
+    ['seo', {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
-    },
-    'vuepress-plugin-code-copy': {
+    }],
+    ['vuepress-plugin-code-copy', {
       color: '#ffffff',
       successText: 'Copied to clipboard!',
-    },
-    '@vuepress/back-to-top': {},
-  },
+    }],
+    ['@vuepress/back-to-top', {}],
+    ['vuepress-plugin-container', {
+      type: 'strapi',
+      defaultTitle: '🤓 '
+    }],
+    ['vuepress-plugin-container', {
+      type: 'prerequisites',
+      defaultTitle: 'PREREQUISITES'
+    }]
+  ],
   head: [
     [
       'link',
