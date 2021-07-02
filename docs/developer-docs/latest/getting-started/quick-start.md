@@ -135,7 +135,7 @@ Once the installation is complete, your browser automatically opens 2 tabs:
 
 By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-::: prerequisites CONGRATULATIONS! 🥳 
+::: callout CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
@@ -214,7 +214,7 @@ After a few moments, you should see your blog with its updated title running at 
 
 ![GIF: Updated Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
-::: prerequisites CONGRATULATIONS! 🥳
+::: callout CONGRATULATIONS! 🥳
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
@@ -265,7 +265,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 
 ![admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
-::: prerequisites 🥳 CONGRATULATIONS!
+::: callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 :::
 
@@ -429,7 +429,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 :::
 
-::: prerequisites 🥳 CONGRATULATIONS!  
+::: callout 🥳 CONGRATULATIONS!  
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
