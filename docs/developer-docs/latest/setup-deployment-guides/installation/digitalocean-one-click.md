@@ -38,6 +38,6 @@ To visit your Strapi application:
 
 Visiting the Strapi application page for the first time will require to create the first administrator user.
 
-::: strapi 🤓 Customization options for the DigitalOcean droplet 
+::: strapi Customization options for the DigitalOcean droplet 
 The DigitalOcean droplet includes everything you need to run Strapi. However, should you need to access and customize the droplet environment and change some of its settings, you may want to refer to [our dedicated documentation](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-customization.md). You can also find the image generation [source code](https://github.com/strapi/one-click-deploy/tree/master/digital-ocean) on Strapi's GitHub.
 :::

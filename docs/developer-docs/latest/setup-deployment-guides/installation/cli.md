@@ -30,7 +30,7 @@ Starting from the release of Strapi v4, MongoDB is not supported natively anymor
 
 ## Creating a Strapi project
 
-::: strapi 🤓 CLI installation options
+::: strapi CLI installation options
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.

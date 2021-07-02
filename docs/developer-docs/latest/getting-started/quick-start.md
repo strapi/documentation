@@ -226,7 +226,7 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
-:::strapi 🤓 To go further with starters
+:::strapi To go further with starters
 
 * Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 * Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
