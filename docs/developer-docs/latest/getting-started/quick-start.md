@@ -65,12 +65,6 @@ next: ./troubleshooting
     border: solid 1px #bbbbba !important;
   }
 
-  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active {
-    /* border: none; */
-    /* height: 62px; */
-    /* border-bottom: solid 1px red !important; */
-  }
-
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
     border-radius: 8px 0 0 8px !important;
     border-right: none !important;
