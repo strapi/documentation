@@ -85,6 +85,10 @@ const sidebar = {
                   'Qovery',
                 ],
                 [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/railway.md',
+                  'Railway',
+                ],
+                [
                   '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                   'Render',
                 ],
