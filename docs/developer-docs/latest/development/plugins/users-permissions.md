@@ -176,7 +176,7 @@ Let's say that your app frontend is located at: website.com.
 5. The backend uses the given `code` to get from Github an `access_token` that can be used for a period of time to make authorized requests to Github to get the user info (the email of the user of example).
 6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`)
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/auth/github/callback?access_token=eyfvg` that returns the strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address)
-8. The frontend now possesses the user's `jwt`, with means the user is connected and the frontend can make authenticated requests to the backend!
+8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
 
