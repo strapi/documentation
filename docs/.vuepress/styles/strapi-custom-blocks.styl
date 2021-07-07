@@ -37,30 +37,108 @@
    * API CALLS
   */
   &.api-call
-    background-color: rgba(250,250,250,.2)
-    border: solid 1px #eaeaea
+    padding: 0
     border-radius: 12px
-    padding: .75rem 0 0 1.5rem
-    margin: 2rem 0 23rem
+    margin: 2rem 0 2rem
     @media (min-width: 1536px)
       display: flex
-      margin: 3rem -6rem 2rem
-      justify-content: space-between
+      margin: 3rem -12rem 2rem 0
+      align-items: stretch
   .request
-    .extra-class
-      // background-color: #7a7a7a
+    background-color: rgba(62,67,88,.7)
+    padding: 0 1rem 1rem
+    border-radius: 12px
+    font-size: 90%
+    color: rgba(241,251,255,.8)
     @media (min-width: 1536px)
       flex: 0 0 48%
-      max-width: 48%
-  .response
-    margin-top: 2rem
-    @media (min-width: 1536px)
-      margin-top: 0
-      flex: 0 0 48%
-    p, ul
-      padding-right: 1rem
+      border-radius: 12px 0 0 12px
     .custom-block-title
+      text-transform: uppercase
+      margin-left: -1rem
+      margin-right: -1rem
+      margin-top: 0
+      border-radius: 12px 12px 0 0
+      padding: .5rem 1rem
+      font-weight: 400
+      background-color: #373D4F
+      background-color: rgba(55,61,79,1)
+      color: #cacaca;
+      font-size: 90%;
+      @media (min-width: 1536px)
+        border-radius: 12px 0 0 0
+    .custom-block-title+p
+      padding-top: 1rem
+    p, ul, ol
+      color: #2c3e50
+      color: rgba(241,251,255,.8)
+    p
+      padding-left: 1rem
+    ul, ol
+      padding-left: 3rem
+    [class^="language-"]
+      background-color: transparent
+      font-size: 110%
+    pre
+      padding: 1rem 0 0 1rem
+    code
+      color: rgb(241,251,255)
+      background-color: rgba(90,90,90,.5)
+      .token
+        color: rgb(241,251,255)
+        &.punctuation
+        &.operator
+          color: rgba(241,251,255,.6)
+        &.property
+          color: rgb(241,251,255)
+        &.string
+          color: rgba(133, 217, 150, 1)
+        &.number
+          // color: rgb(245,106,11)
+          color: rgb(244,244,0)
+          // color: rgb(164, 205, 254)
+  .response
+    background-color: rgba(220,226,234,.4)
+    margin-top: 2rem
+    padding: 0 1rem 1rem
+    border-radius: 12px
+    font-size: 90%
+    @media (min-width: 1536px)
+      flex: 0 0 45%
+      margin-top: 0
+      border-radius: 0 12px 12px 0
+    .extra-class::before
+      color: rgba(42,64,80,.4)
+    .custom-block-title
+      background-color: rgba(220,226,234,1)
+      border-radius: 12px 12px 0 0
+      margin-left: -1rem
+      margin-right: -1rem
+      text-transform: uppercase
+      padding: .5rem 1rem
+      margin-top: 0
+      font-weight: 400
+      font-size: 90%;
       margin-bottom: .5rem
+      @media (min-width: 1536px)
+        border-radius: 0 12px 0 0
+    [class^="language-"]
+      background-color: transparent
+      font-size: 110%
+    pre
+      padding: 1rem 0 0 1rem
+    code
+      .token
+        color: rgb(241,251,255)
+        &.punctuation
+        &.operator
+          color: rgba(42,64,80,.4)
+        &.property
+          color: rgba(42,64,80,.8)
+        &.string
+          color: rgba(27,137,70,1)
+        &.number
+          color: rgb(245,106,11)
   .request
   .response
     .extra-class
@@ -72,3 +150,34 @@
         margin-bottom: 0
 .custom-block.details
   color rgb(44, 62, 80)
+
+
+/**
+ * Uncomment this alternate style below
+   to highlight non-code text that would be
+   inside a request container
+  */
+// .custom-block
+//   .request
+//     [class^="language-"]
+//       &+p
+//       &~ol
+//       &~ul
+//         background-color: #eeeeee
+//         margin-left: -1rem
+//         margin-right: -1rem
+//         padding: 1rem 2rem
+//         color: #2c3e50
+//         code
+//           color: #2c3e50
+//       &~ol
+//       &~ul
+//         padding: 1rem 4rem
+//       &+p+ol
+//       &+p+ul
+//         margin-top: -1rem
+//       &~ol:last-of-type
+//       &~ul:last-of-type
+//       &~p:last-of-type
+//         margin-bottom: -1.5rem
+//         border-radius: 0 0 12px 12px
