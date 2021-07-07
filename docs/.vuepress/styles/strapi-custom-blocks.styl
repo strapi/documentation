@@ -1,0 +1,74 @@
+.custom-block
+  .custom-block-title
+    font-weight 600
+    margin-bottom -0.4rem
+  /*
+   * CALLOUTS
+   */
+  &.callout
+  &.callout-alt
+  &.strapi
+  &.prerequisites
+    padding .1rem 1.5rem
+    margin-top 2rem
+    margin-bottom 2rem
+    border-left-width: .25rem
+    border-left-style solid
+  &.strapi
+    background-color rgba(129,107,250, .05)
+    border-color rgb(129,107,250)
+    .custom-block-title
+      color #816bfa
+      font-weight 700
+    p, li
+      color #2c3e50
+      a
+        color #007eff
+  &.callout
+  &.callout-alt
+  &.prerequisites
+    background-color #f8f8f8
+    border-color #bbbbba
+  &.callout-alt
+    border-radius: 10px
+    background-color: #eff5f7
+    border: none
+  /*
+   * API CALLS
+  */
+  &.api-call
+    background-color: rgba(250,250,250,.2)
+    border: solid 1px #eaeaea
+    border-radius: 12px
+    padding: .75rem 0 0 1.5rem
+    margin: 2rem 0 23rem
+    @media (min-width: 1536px)
+      display: flex
+      margin: 3rem -6rem 2rem
+      justify-content: space-between
+  .request
+    .extra-class
+      // background-color: #7a7a7a
+    @media (min-width: 1536px)
+      flex: 0 0 48%
+      max-width: 48%
+  .response
+    margin-top: 2rem
+    @media (min-width: 1536px)
+      margin-top: 0
+      flex: 0 0 48%
+    p, ul
+      padding-right: 1rem
+    .custom-block-title
+      margin-bottom: .5rem
+  .request
+  .response
+    .extra-class
+      font-size: 90%
+      border-radius: 6px 0 6px 0
+      pre
+        white-space: pre-wrap
+        word-break: break-word
+        margin-bottom: 0
+.custom-block.details
+  color rgb(44, 62, 80)

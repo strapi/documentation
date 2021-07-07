@@ -373,30 +373,43 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
 ];
 
+const plugins = [
+  ['vuepress-plugin-element-tabs', {}],
+  ['@vuepress/google-analytics', {
+    ga: 'UA-54313258-1',
+  }],
+  ['check-md', {
+    ignore: checklinksIgnoredFiles,
+  }],
+  ['seo', {
+    siteTitle: (_, $site) => $site.title,
+    title: $page => $page.title,
+  }],
+  ['vuepress-plugin-code-copy', {
+    color: '#ffffff',
+    successText: 'Copied to clipboard!',
+  }],
+  ['@vuepress/back-to-top', {}],
+  ['vuepress-plugin-container', {
+    type: 'api-call',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'request',
+    defaultTitle: 'Request'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'response',
+    defaultTitle: 'Response'
+  }]
+];
+
 module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/documentation/',
-  plugins: {
-    '@vuepress/medium-zoom': {},
-    'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
-      ga: 'UA-54313258-1',
-    },
-    'check-md': {
-      ignore: checklinksIgnoredFiles,
-    },
-    seo: {
-      siteTitle: (_, $site) => $site.title,
-      title: $page => $page.title,
-    },
-    'vuepress-plugin-code-copy': {
-      color: '#ffffff',
-      successText: 'Copied to clipboard!',
-    },
-    '@vuepress/back-to-top': {},
-  },
+  plugins: plugins,
   head: [
     [
       'link',
