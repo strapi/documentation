@@ -3,34 +3,66 @@ title: Render One-Click - Strapi Developer Documentation
 description: Quickly deploy a Strapi application on Render by simply using their One-click button.
 ---
 
-# Render One-Click Deploy
+<style lang="scss" scoped>
+  /*
+    We override the :::warning callout for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
 
-This guide explains how to deploy a new Strapi project on [Render](https://render.com) in one click.
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
+  .custom-block.warning {
+    border-left-width: .25rem;
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+    /* margin-top: 2em; */
+    /* margin-bottom: 2em; */
 
-With persistent disks and managed PostgreSQL databases, Render gives you multiple different ways to store your content. Render services come with fully managed SSL, so it's no longer necessary to set up a proxy server to secure your Strapi application. Since Render services are automatically restarted if they become unresponsive, you don't need to use a process manager like `pm2` either.
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+</style>
 
-::: tip
-For more information consult [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi)
+# Render One-Click
+
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Render](https://render.com).
+
+Render is a cloud provider with persistent disks and managed PostgreSQL databases, that offers multiple different ways to store content.
+
+::: warning PREREQUISITES
+A Render account is necessary to follow this installation guide. Please visit [the Render dashboard](https://dashboard.render.com) to create an account if you do not already have one.
 :::
 
-### Step 1: Create a Render Account
+## Creating a Strapi project
 
-Visit [the Render dashboard](https://dashboard.render.com) to create an account if you don't already have one.
+Render maintains 3 "Strapi on Render" example repositories (see [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi) for more information), which differ based on the databased used and the storage location of uploaded media library files:
 
-### Step 2: Fork an Example Repository
+- [Strapi with SQLite and uploads on disk](https://github.com/render-examples/strapi-sqlite)
+- [Strapi with PostgreSQL and uploads on Cloudinary](https://github.com/render-examples/strapi-postgres-cloudinary)
+- [Strapi with PostgreSQL and uploads on disk](https://github.com/render-examples/strapi-postgres)
 
-Render maintains 3 Strapi on Render example repositories, which differ based on which database is used and where uploaded media library files are stored:
+Once the choice between the 3 repositories is made:
 
-1. [Strapi with SQLite and uploads on disk](https://github.com/render-examples/strapi-sqlite)
-2. [Strapi with PostgreSQL and uploads on Cloudinary](https://github.com/render-examples/strapi-postgres-cloudinary)
-3. [Strapi with PostgreSQL and uploads on disk](https://github.com/render-examples/strapi-postgres)
+1. Fork the repository on GitHub.
+2. In the README file of your forked repository, click the **Deploy on Render** button.
+3. Make sure you granted Render the permission to access your forked repository. <!-- Need more info here -->
 
-Read [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi) to get help choosing the best option for your use case. Once you've chosen, fork the repository on GitHub so you have the flexibility to make your own changes.
+::: tip NOTE
+When using Cloudinary, you will be prompted to enter your account credentials as environment variables. Render encrypts environment variables and stores them securely.
+:::
 
-### Step 3: Deploy
+## Running Strapi
 
-Click the **Deploy to Render** button in the forked repository's `README` file. Give Render permission to access your repository if you haven't already. If you're using Cloudinary, you'll be prompted to enter your account credentials as environment variables. Render encrypts environment variables and stores them securely.
+Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. <!-- Need more info here --> However, to add or edit content-types via the admin panel (see [Content-Types Builder](https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html) documentation), Strapi must be running locally in development mode.
 
-### Step 4: Add Content Types
+To run Strapi locally:
 
-Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. To add or edit content types via the admin UI, you need to run Strapi locally in development mode. Clone the forked repository to your local machine, `cd` into it, and run `yarn install && yarn develop`. When you're ready, commit your changes and push them to your remote repository. Render will auto-deploy the changes to your production application. A [typical workflow](https://render.com/docs/deploy-strapi#development-%E2%86%92-staging-%E2%86%92-production) would also include a staging environment for testing.
+1. Clone the forked repository to your local machine.
+2. Still in terminal, access the repository using the `cd <repository-name>` command.
+3. Run the `yarn install && yarn develop` command to run your Strapi project.
+
+When committing changes and pushing them to your remote repository, Render will automatically deploy these changes to your production application. A [typical workflow](https://render.com/docs/deploy-strapi#development-%E2%86%92-staging-%E2%86%92-production) would also include a staging environment for testing.

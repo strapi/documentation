@@ -7,6 +7,10 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean's App Platform](https://digitalocean.com). App Platform is DigitalOcean's Platform as a Service (PaaS) that will handle deploying, networking, SSL, and more for your app. It is the easiest way to deploy Strapi to DigitalOcean.
 
+::: warning
+Please note that as of June 18th, 2021 we were made aware that there is a critical security issue when using DigitalOcean Managed databases with the DigitalOcean App platform. We do not currently recommend using this combination and if you require a managed database, you should use a DigitalOcean Droplet instead. More information can be found on the DigitalOcean [forum thread](https://www.digitalocean.com/community/questions/how-to-add-my-digitalocean-app-as-a-trusted-resource-for-my-managed-database) and [feature request](https://ideas.digitalocean.com/ideas/APPX-I-73) pages.
+:::
+
 Databases can be created using DigitalOcean's [Managed Databases](https://www.digitalocean.com/products/managed-databases/).
 
 Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
@@ -21,7 +25,7 @@ Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/in
 
 ## Configure Your Strapi Project for Deployment
 
-To deploy your Strapi app, you will need to create a database configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/configurations.html#database).
+To deploy your Strapi app, you will need to create a database configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 
 You will configure a database for production. With the setup below, you will only need to set **one environment variable** for the `DATABASE_URL` to connect to your PostgreSQL database. Add the following to `config/env/production/database.js`:
 
