@@ -3,29 +3,6 @@ title: Deployment - Strapi Developer Documentation
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
 ---
 
-<style lang="scss" scoped>
-  /*
-    We override the :::danger callout for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.danger {
-    border-left-width: .25rem;
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-    /* margin-top: 2em; */
-    /* margin-bottom: 2em; */
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-</style>
 # Deployment
 
 Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as 21YunBox, Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
@@ -36,7 +13,7 @@ Deploying **databases** along with Strapi is covered in the [Databases Guide](/d
 
 ## General guidelines
 
-::: danger PREREQUISITES
+::: prerequisites PREREQUISITES
 To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
 
 - Node LTS (v12 or V14) **Note that odd-number releases of Node will never be supported (e.g. v13, v15).**

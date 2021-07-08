@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.8.2",
-    "vuepress-plugin-check-md": "^0.0.2"
+    "vuepress-plugin-check-md": "^0.0.2",
+    "vuepress-plugin-container": "^2.1.5"
   },
   "author": {
     "email": "hi@strapi.io",
