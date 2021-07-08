@@ -24,18 +24,6 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
             ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
-            [
-              '/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md',
-              'DigitalOcean One-Click',
-            ],
-            [
-              '/developer-docs/latest/setup-deployment-guides/installation/platformsh.md',
-              'Platform.sh One-Click',
-            ],
-            [
-              '/developer-docs/latest/setup-deployment-guides/installation/render.md',
-              'Render One-Click',
-            ],
           ],
         },
         ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
@@ -48,8 +36,7 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -93,8 +80,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -348,7 +334,10 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
-        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
+        [
+          '/user-docs/latest/settings/configuring-users-permissions-plugin-settings',
+          'Configuring Users & Permissions plugin settings',
+        ],
       ],
     },
   ],
@@ -389,7 +378,7 @@ module.exports = {
     },
     seo: {
       siteTitle: (_, $site) => $site.title,
-      title: $page => $page.title,
+      title: ($page) => $page.title,
     },
     'vuepress-plugin-code-copy': {
       color: '#ffffff',
@@ -535,13 +524,11 @@ module.exports = {
               },
               {
                 text: 'Content-Types Builder',
-                link:
-                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
