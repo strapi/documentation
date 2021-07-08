@@ -13,9 +13,9 @@ To access the plugin admin panel, click on the **Settings** link in the left men
 ## Concept
 
 When this plugin is installed, it adds an access layer on your application.
-The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
+The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
 
-Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
+Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 To do so, your JWT contains your user ID and we are able to match the group your user is in and at the end to know if the group allows access to the route.
 
@@ -84,7 +84,7 @@ We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to gener
 Available options:
 
 - `expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
-  Eg: 60, "2 days", "10h", "7d". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 **Path —** `extensions/users-permissions/config/security.json`
 
@@ -95,6 +95,10 @@ Available options:
   }
 }
 ```
+
+:::warning
+Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
+:::
 
 ### Registration
 
@@ -172,7 +176,7 @@ Let's say that your app frontend is located at: website.com.
 5. The backend uses the given `code` to get from Github an `access_token` that can be used for a period of time to make authorized requests to Github to get the user info (the email of the user of example).
 6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`)
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/auth/github/callback?access_token=eyfvg` that returns the strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address)
-8. The frontend now possesses the user's `jwt`, with means the user is connected and the frontend can make authenticated requests to the backend!
+8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
 
@@ -564,6 +568,63 @@ The use of `ngrok` is not needed.
   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/linkedin/redirect`
 
 :::
+::: tab CAS
+
+#### Using ngrok
+
+A remote CAS server can be configured to accept `localhost` URLs or you can run your own CAS server locally that accepts them.
+
+The use of `ngrok` is not needed.
+
+#### CAS configuration
+
+- [CAS](https://github.com/apereo/cas) is an SSO server that supports many different methods of verifying a users identity,
+  retrieving attributes out the user and communicating that information to applications via protocols such as SAML, OIDC, and the CAS protocol. Strapi can use a CAS server for authentication if CAS is deployed with support for OIDC.
+- [CAS](https://github.com/apereo/cas) could already be used by your company or organization or you can setup a local CAS server by cloning the [CAS Overlay](https://github.com/apereo/cas-overlay-template) project or using the newer [CAS Initializr](https://github.com/apereo/cas-initializr) to create an overlay project.
+- The CAS server must be configured so it can act as an [OpenID Connect Provider](https://apereo.github.io/cas/6.3.x/installation/OIDC-Authentication.html)
+- CAS version 6.3.x and higher is known to work with Strapi but older versions that support OIDC may work.
+- Define a CAS OIDC service for Strapi and store it in whichever CAS service registry is being used.
+- The CAS service definition might look something like this for a local strapi deployment:
+
+```json
+{
+  "@class": "org.apereo.cas.services.OidcRegisteredService",
+  "clientId": "thestrapiclientid",
+  "clientSecret": "thestrapiclientsecret",
+  "bypassApprovalPrompt": true,
+  "serviceId": "^http(|s)://localhost:1337/.*",
+  "name": "Local Strapi",
+  "id": 20201103,
+  "evaluationOrder": 50,
+  "attributeReleasePolicy": {
+    "@class": "org.apereo.cas.services.ReturnMappedAttributeReleasePolicy",
+    "allowedAttributes": {
+      "@class": "java.util.TreeMap",
+      "strapiemail": "groovy { return attributes['mail'].get(0) }",
+      "strapiusername": "groovy { return attributes['username'].get(0) }"
+    }
+  }
+}
+```
+
+#### Strapi configuration
+
+- Visit the User Permissions provider settings page <br> [http://localhost:1337/admin/plugins/users-permissions/providers](http://localhost:1337/admin/plugins/users-permissions/providers)
+- Click on the **Cas** provider
+- Fill the information:
+  - **Enable**: `ON`
+  - **Client ID**: thestrapiclientid
+  - **Client Secret**: thestrapiclientsecret
+  - **The redirect URL to your front-end app**: `http://localhost:1337/connect/cas/redirect`
+  - **The Provider Subdomain such that the following URLs are correct for the CAS deployment you are targeting:**
+  ```
+    authorize_url: https://[subdomain]/oidc/authorize
+    access_url: https://[subdomain]/oidc/token
+    profile_url: https://[subdomain]/oidc/profile
+  ```
+  For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`.
+
+:::
 
 ::: tab Reddit
 
@@ -622,7 +683,7 @@ The use of `ngrok` is not needed.
 - Fill the information:
   - Enable: `ON`
   - Client ID: `<Your Auth0 Client ID>`
-  - Client ID: `<Your Auth0 Client Secret>`
+  - Client Secret: `<Your Auth0 Client Secret>`
   - Subdomain: `<Your Auth0 tenant url>`, example it is the part in bold in the following url: https://**my-tenant.eu**.auth0.com/
   - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0`
 
