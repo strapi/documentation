@@ -622,13 +622,9 @@ The use of `ngrok` is not needed.
     access_url: https://[subdomain]/oidc/token
     profile_url: https://[subdomain]/oidc/profile
   ```
-  For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`
-  :::
+  For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`.
 
-::::
-
-Your configuration is done.
-Launch the backend and the [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react), go to `http://localhost:3000` and try to connect to the provider your configured. It should work 🎉
+:::
 
 ::: tab Reddit
 
