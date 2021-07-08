@@ -1,36 +1,35 @@
 name: Documentation Bug Report
-about: Create a report to help us improve the Strapi documentation.
+description: Create a report to help us improve the Strapi documentation.
 title: "[Bug]: "
 labels: "type: bug, status: pending reproduction"
-issue_body: true
 body:
-- type: input
-  attributes:
-    label: Link to the documentation page or resource
-    placeholder: https://strapi.io/documentation/developer-docs/latest/somepage.html
-  validations:
-    required: true
-- type: textarea
-  attributes:
-    label: Describe the bug
-    placeholder: "A clear and concise description of what the bug is."
-  validations:
-    required: true
-- type: textarea
-  attributes:
-    label: Additional context
-    placeholder: "Add any other context about the problem here."
-  validations:
-    required: false
-- type: textarea
-  attributes:
-    label: Suggested improvements or fixes
-    placeholder: "A clear and concise description of what you want to happen."
-  validations:
-    required: false
-- type: textarea
-  attributes:
-    label: Related issue(s)/PR(s)
-    placeholder: "Let us know if this is related to any issue/pull request."
-  validations:
-    required: false
+  - type: input
+    attributes:
+      label: Link to the documentation page or resource
+      placeholder: https://strapi.io/documentation/developer-docs/latest/somepage.html
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      placeholder: "A clear and concise description of what the bug is."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      placeholder: "Add any other context about the problem here."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Suggested improvements or fixes
+      placeholder: "A clear and concise description of what you want to happen."
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Related issue(s)/PR(s)
+      placeholder: "Let us know if this is related to any issue/pull request."
+    validations:
+      required: false

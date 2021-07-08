@@ -1521,7 +1521,7 @@ const result = await knex('restaurants')
 // return a grouped key-value object generated from
 // the response
 
-return (_.groupBy(result, 'chef');
+return (_.groupBy(result, 'chef'));
 ```
 
 **We strongly suggest to sanitize any strings before making queries to the DB**
@@ -1638,7 +1638,7 @@ The **Components** models are defined in the `./components` folder. Every compon
 ### How to create a model?
 
 ::: tip
-If you are just starting out it is very convenient to generate some models with the Content Type Builder directly in the admin interface. You can then review the generated model mappings on the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
+If you are just starting out it is very convenient to generate some models with the Content-Types Builder directly in the admin interface. You can then review the generated model mappings on the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
 :::
 
 #### For Content Types models
@@ -1656,7 +1656,7 @@ When you create a new API using the CLI (`strapi generate:api <name>`), a model 
 
 #### For Components models
 
-To create a component you will have to use the Content Type Builder from the Admin panel, there is not a cli generator for components.
+To create a component you will have to use the Content-Types Builder from the Admin panel, there is not a cli generator for components.
 
 Or you can create your component manually by following the file path described previously and by following the file structure described below.
 
@@ -1775,7 +1775,7 @@ If you're using SQL databases, you should use the native SQL constraints to appl
 To improve the Developer Experience when developing or using the administration panel, the framework enhances the attributes with these "security validations":
 
 - `private` (boolean) — If true, the attribute will be removed from the server response. (This is useful to hide sensitive data).
-- `configurable` (boolean) - If false, the attribute isn't configurable from the Content Type Builder plugin.
+- `configurable` (boolean) - If false, the attribute isn't configurable from the Content-Types Builder plugin.
 - `autoPopulate` (boolean) - If false, the related data will not populate within REST responses. (This will not stop querying the relational data on GraphQL)
 
 #### Exceptions

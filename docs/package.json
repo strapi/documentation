@@ -12,11 +12,13 @@
     "@vuepress/plugin-google-analytics": "^1.7.1",
     "@vuepress/plugin-medium-zoom": "^1.7.1",
     "vuepress": "^1.7.1",
+    "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-font-awesome": "1.90.6",
     "vuepress-plugin-seo": "^0.1.4"
   },
   "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.8.2",
     "vuepress-plugin-check-md": "^0.0.2"
   },
   "author": {

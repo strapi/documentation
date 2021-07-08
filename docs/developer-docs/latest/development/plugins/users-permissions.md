@@ -13,9 +13,9 @@ To access the plugin admin panel, click on the **Settings** link in the left men
 ## Concept
 
 When this plugin is installed, it adds an access layer on your application.
-The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
+The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
 
-Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
+Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 To do so, your JWT contains your user ID and we are able to match the group your user is in and at the end to know if the group allows access to the route.
 
@@ -84,7 +84,7 @@ We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to gener
 Available options:
 
 - `expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
-  Eg: 60, "2 days", "10h", "7d". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 **Path —** `extensions/users-permissions/config/security.json`
 
@@ -95,6 +95,10 @@ Available options:
   }
 }
 ```
+
+:::warning
+Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
+:::
 
 ### Registration
 
@@ -172,7 +176,7 @@ Let's say that your app frontend is located at: website.com.
 5. The backend uses the given `code` to get from Github an `access_token` that can be used for a period of time to make authorized requests to Github to get the user info (the email of the user of example).
 6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`)
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/auth/github/callback?access_token=eyfvg` that returns the strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address)
-8. The frontend now possesses the user's `jwt`, with means the user is connected and the frontend can make authenticated requests to the backend!
+8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
 
@@ -683,7 +687,7 @@ The use of `ngrok` is not needed.
 - Fill the information:
   - Enable: `ON`
   - Client ID: `<Your Auth0 Client ID>`
-  - Client ID: `<Your Auth0 Client Secret>`
+  - Client Secret: `<Your Auth0 Client Secret>`
   - Subdomain: `<Your Auth0 tenant url>`, example it is the part in bold in the following url: https://**my-tenant.eu**.auth0.com/
   - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0`
 
