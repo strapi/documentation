@@ -5,11 +5,11 @@ description: Build powerful applications using Strapi, the leading open-source h
 
 # Getting Started with Laravel
 
-This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.html#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
-Should you wish to use standalone PHP, you may also be interested in the [PHP integration guide](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/integrations/php.html). 
+Should you wish to use standalone PHP, you may also be interested in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
 
-This guide assumes you already have Laravel installed and are familiar with the basics of the framework.
+This guide assumes you already have [Laravel installed](https://laravel.com/docs/8.x/installation) and are familiar with the basics of the framework.
 
 ## Install the Laravel-Strapi Laravel Package
 
@@ -19,13 +19,12 @@ composer require dbfx/laravel-strapi
 
 This will install [Laravel-Strapi](https://github.com/dbfx/laravel-strapi), a Laravel specific package for interacting with Strapi.
 
-You will also need to define your STRAPI_URL and STRAPI_CACHE_TIME in .env:
+You will also need to define your `STRAPI_URL` and `STRAPI_CACHE_TIME` in the `.env` file:
 
-```
+``` json
 STRAPI_URL=http://localhost:1337
 STRAPI_CACHE_TIME=3600
 ```
-
 
 ## Get your collection type
 
@@ -79,4 +78,4 @@ $entry = $strapi->entry('restaurants', $id = 5);
 
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integrations guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).
+There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).
