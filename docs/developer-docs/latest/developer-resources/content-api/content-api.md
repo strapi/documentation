@@ -299,21 +299,15 @@ Here are some Content Type examples
 
 Returns entries matching the query filters. You can read more about parameters [here](#api-parameters).
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-GET http://localhost:1337/restaurants
-```
+`GET http://localhost:1337/restaurants`
 
 :::
 
-::: tab Response
-
-**Example response**
+::: response Example response
 
 ```json
 [
@@ -382,21 +376,15 @@ GET http://localhost:1337/restaurants
 
 Returns an entry by id.
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-GET http://localhost:1337/restaurants/1
-```
+`GET http://localhost:1337/restaurants/1`
 
 :::
 
-::: tab Response
-
-**Example response**
+::: response Example response
 
 ```json
 {
@@ -463,25 +451,17 @@ GET http://localhost:1337/restaurants/1
 
 Returns the count of entries matching the query filters. You can read more about parameters [here](#api-parameters).
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-GET http://localhost:1337/restaurants/count
-```
+`GET http://localhost:1337/restaurants/count`
 
 :::
 
-::: tab Response
+::: response Example response
 
-**Example response**
-
-```
-1
-```
+`1`
 
 :::
 
@@ -493,15 +473,11 @@ Creates an entry and returns its value.
 
 If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-POST http://localhost:1337/restaurants
-```
+`POST http://localhost:1337/restaurants`
 
 ```json
 {
@@ -532,9 +508,7 @@ POST http://localhost:1337/restaurants
 
 :::
 
-::: tab Response
-
-**Example response**
+::: response Example response
 
 ```json
 {
@@ -607,15 +581,11 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
 :::
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-PUT http://localhost:1337/restaurants/1
-```
+`PUT http://localhost:1337/restaurants/1`
 
 ```json
 {
@@ -655,9 +625,7 @@ PUT http://localhost:1337/restaurants/1
 
 :::
 
-::: tab Response
-
-**Example response**
+::: response Example response
 
 ```json
 {
@@ -730,21 +698,15 @@ PUT http://localhost:1337/restaurants/1
 
 Deletes an entry by id and returns its value.
 
-:::: tabs
+:::: api-call
 
-::: tab Request
+::: request Example request
 
-**Example request**
-
-```js
-DELETE http://localhost:1337/restaurants/1
-```
+`DELETE http://localhost:1337/restaurants/1`
 
 :::
 
-::: tab Response
-
-**Example response**
+::: response Example response
 
 ```json
 {
