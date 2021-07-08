@@ -70,9 +70,8 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
 
     :::: tab MongoDB
 
-
-      ::: warning WARNING
-      Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+      ::: warning
+      !!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
       :::
 
     ```yaml
