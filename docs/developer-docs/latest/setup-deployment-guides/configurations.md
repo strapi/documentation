@@ -4,6 +4,30 @@ description: Learn how you can manage and customize the configuration of your St
 sidebarDepth: 3
 ---
 
+<style lang="scss" scoped>
+  /*
+    We override the :::danger callout for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
+
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
+  .custom-block.danger {
+    border-left-width: .25rem;
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+    /* margin-top: 2em; */
+    /* margin-bottom: 2em; */
+
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+</style>
+
 # Configurations
 
 Your application configuration lives in the `config` folder. All the configuration files are loaded on startup and can be accessed through the configuration provider.
@@ -35,7 +59,7 @@ Notice that the filename is used as a prefix to access the configurations.
 This file lets you define database connections that will be used to store your application content.
 
 ::: tip NOTE
-You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#databases) in the local installation process.
+You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) in the local installation process.
 :::
 
 **Path —** `./config/database.js`.
@@ -96,9 +120,9 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 ::::
 
-:::: tabs
+::::: tabs
 
-::: tab PostgreSQL
+:::: tab PostgreSQL
 
 ```js
 module.exports = ({ env }) => ({
@@ -118,13 +142,32 @@ module.exports = ({ env }) => ({
           rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
         },
       },
-      options: {
-        ssl: env.bool('DATABASE_SSL', false),
-      },
+      options: {},
     },
   },
 });
 ```
+
+::: warning
+We are aware that there is an issue regarding **SSL support for the server**.
+In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
+```js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+          ...
+        ssl: env('DATABASE_SSL', false)
+      },
+      options: {},
+    },
+  },
+});
+```
+:::
 
 Please note that if you need client side SSL CA verification you will need to use the `ssl:{}` object with the fs module to convert your CA certificate to a string. You can see an example below:
 
@@ -141,17 +184,15 @@ module.exports = ({ env }) => ({
           ca: fs.readFileSync(`${__dirname}/path/to/your/ca-certificate.crt`).toString(),
         },
       },
-      options: {
-        ssl: true
-      },
+      options: {},
     },
   },
 });
 ```
 
-:::
+::::
 
-::: tab MySQL/MariaDB
+:::: tab MySQL/MariaDB
 
 ```js
 module.exports = ({ env }) => ({
@@ -173,9 +214,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+::::
 
-::: tab SQLite
+:::: tab SQLite
 
 ```js
 module.exports = ({ env }) => ({
@@ -195,9 +236,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+::::
 
-::: tab MongoDB
+:::: tab MongoDB
 
 ```js
 module.exports = ({ env }) => ({
@@ -222,9 +263,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
-
 ::::
+
+:::::
 
 ::: tip
 Take a look at the [database's guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides) for more details.
@@ -1124,14 +1165,14 @@ The dotfiles are not exposed. It means that every file name that starts with `.`
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
-::: warning CAUTION
-It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
-:::
-
-::: warning PREREQUISITES
+::: danger PREREQUISITES
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
+:::
+
+::: warning CAUTION
+It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
 #### Usage
@@ -1595,7 +1636,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 - `name` (string): the condition name, kebab-cased,
 - `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
-- `handler`: a query object or a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
+- `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
@@ -1605,11 +1646,12 @@ The condition `name` property acts as a [unique id](https://github.com/strapi/st
 
 #### Using the condition handler
 
-A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` can be a query object or a function.
+A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` is a function returning a query object or a boolean value.
 
 Query objects are useful to verify conditions on the entities you read, create, update, delete or publish. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
 
 - `$or`
+- `$and`
 - `$eq`
 - `$ne`
 - `$in`
@@ -1621,13 +1663,7 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$exists`
 - `$elemMatch`
 
-For instance, this `handler` uses a query object to match entities with an `amount` lower than 10,000:
-
-```js
-  handler: { amount: { $lt: 10000 } }
-```
-
-The condition `handler` can also be a synchronous or asynchronous function that:
+The condition `handler` can be a synchronous or asynchronous function that:
 
 * receives the authenticated user making the request,
 * and returns `true`, `false`, or a query object.
@@ -1669,8 +1705,8 @@ For more granular control, the `handler` function can also return a query object
 To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file. Register a single condition with the `conditionProvider.register()` method:
 
 ```js
-module.exports = () => {
-  strapi.admin.services.permission.conditionProvider.register({
+module.exports = async () => {
+  await strapi.admin.services.permission.conditionProvider.register({
     displayName: 'Billing amount under 10K',
     name: 'billing-amount-under-10k',
     plugin: 'admin',
@@ -1700,9 +1736,9 @@ const conditions = [
   }
 ];
 
-module.exports = () => {
+module.exports = async () => {
   // do your boostrap
 
-  strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
 };
 ```

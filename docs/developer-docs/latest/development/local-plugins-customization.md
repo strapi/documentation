@@ -270,7 +270,6 @@ Here are its properties:
 | description               | string  | Plugin's description retrieved from the package.json                                                                                                                                                                    |
 | id                        | string  | Id of the plugin from the `package.json`                                                                                                                                                                                |
 | initializer               | node    | Refer to the [Initializer documentation](#initializer)                                                                                                                                                                  |
-| injectedComponents        | array   | Refer to the [Injected Component documentation](#injected-components)                                                                                                                                                   |
 | isReady                   | boolean | The app will load until this property is true                                                                                                                                                                           |
 | mainComponent             | node    | The plugin's App container,                                                                                                                                                                                             |
 | menu                      | object  | Define where the link of your plugin will be set. Without this your plugin will not display a link in the left menu                                                                                                     |
@@ -409,11 +408,6 @@ Initializer.propTypes = {
 
 export default Initializer;
 ```
-
-#### Injected Components
-
-(Coming soon)
-
 #### Routing
 
 The routing is based on the [React Router V5](https://reacttraining.com/react-router/web/guides/philosophy), due to it's implementation each route is declared in the `containers/App/index.js` file.

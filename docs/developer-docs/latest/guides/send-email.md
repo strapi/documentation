@@ -37,7 +37,7 @@ To check if bad words are in the comment we will use `bad-words` [node module](h
 
 To customize the function that creates a comment we will have to override the `create` function.
 
-First, to see the difference, let's request `POST /comment` with `that is fucking good!` for the `content` attribute.
+First, to see the difference, let's request `POST /comment` with `that is awesome!` for the `content` attribute.
 You will see your comment is successfully created.
 
 Now let's start the customization.

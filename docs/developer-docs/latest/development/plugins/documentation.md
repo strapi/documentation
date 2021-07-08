@@ -289,6 +289,20 @@ To modify your generated swagger files security on a specific model, for example
 
 As you can see in that example, you are defining "no security" whereas normally you would need a bearer token to access. You will need to do this manually as the documentation plugin rewrites files and cannot pull permissions from the database as this would require a server restart each time the docs are updated.
 
+
+### `swagger.json` and `openapi.json` files
+
+This plugin is able to serve up these files. You need to grant the permission to call the controller action to the roles that can have access.
+
+If the default `/documentation` base URL is used, the endpoints exposed are:
+
+- `/documentation/swagger.json` or `/documentation/openapi.json`: the OpenAPI spec for the latest version of your API. Both endpoints serve the same
+  document.
+- `/documentation/vN.N.N/swagger.json` or `/documentation/vN.N.N/openapi.json`: request the spec for a specific version of your API. For example: `/documentation/v1.0.0/openapi.json`
+
+
+
+
 ## FAQ
 
 ### How does it generate the other plugins' documentation?
