@@ -1,24 +1,37 @@
+<<<<<<< HEAD
+=======
 ---
 title: Get started with PHP - Strapi Developer Documentation
 description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
 ---
 
+>>>>>>> upstream/main
 # Getting Started with PHP
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
+<<<<<<< HEAD
+### Create a PHP file
+
+Be sure to have PHP installed on your computer.
+=======
 ## Create a PHP file
 
 Be sure to have [PHP installed](https://www.php.net/manual/en/install.php) on your computer.
+>>>>>>> upstream/main
 
 ```bash
 touch strapi.php
 ```
 We will use cURL, a built-in PHP extension that allows us to receive and send information via the URL syntax.
 
+<<<<<<< HEAD
+### GET Request your collection type
+=======
 ## GET Request your collection type
+>>>>>>> upstream/main
 
 Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
 
@@ -81,7 +94,11 @@ getRestaurants();
 
 ```
 
+<<<<<<< HEAD
+### POST Request your collection type
+=======
 ## POST Request your collection type
+>>>>>>> upstream/main
 
 Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
 
@@ -155,6 +172,20 @@ function postRestaurant(){
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
       );
+<<<<<<< HEAD
+      
+      // Initializes a new cURL session
+      $curl = curl_init();
+      
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      
+      // Set the CURLOPT_POST for POST request
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
+      
+=======
 
       // Initializes a new cURL session
       $curl = curl_init();
@@ -167,6 +198,7 @@ function postRestaurant(){
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
 
+>>>>>>> upstream/main
       curl_setopt($curl, CURLOPT_HTTPHEADER, [
           'Content-Type: application/json'
       ]);
@@ -180,7 +212,11 @@ postRestaurant();
 
 ```
 
+<<<<<<< HEAD
+### PUT Request your collection type
+=======
 ## PUT Request your collection type
+>>>>>>> upstream/main
 
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 
@@ -248,6 +284,16 @@ function postRestaurant(){
         'description' => 'Omo, this is a place that varieties of soup with catfish🦈',
          'categories' => [2]
       );
+<<<<<<< HEAD
+      
+      // Initializes a new cURL session
+      $curl = curl_init();
+      
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      
+=======
 
       // Initializes a new cURL session
       $curl = curl_init();
@@ -256,6 +302,7 @@ function postRestaurant(){
 
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
+>>>>>>> upstream/main
       // Set the CURLOPT_POST for POST request
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
@@ -293,6 +340,8 @@ putRestaurant();
 
 ```
 
+<<<<<<< HEAD
+=======
 Running an authentication request (getting JWT)
 
 _Response_
@@ -422,6 +471,7 @@ function postRestaurantWithAuth($jwt){
 postRestaurantWithAuth($jwt);
 ```
 
+>>>>>>> upstream/main
 ## Conclusion
 
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
