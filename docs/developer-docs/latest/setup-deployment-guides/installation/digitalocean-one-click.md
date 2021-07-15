@@ -11,7 +11,7 @@ description: Quickly deploy a Strapi application on DigitalOcean by simply using
     Eventually this will be turned into custom blocks or VuePress components,
     once I understand better how markdown-it and markdown-it-custom-block work.
   */
-  .custom-block.warning {
+  .custom-block.tip {
     border-left-width: .25rem;
     background-color: #f8f8f8;
     border-color: #bbbbba;
@@ -48,11 +48,15 @@ description: Quickly deploy a Strapi application on DigitalOcean by simply using
 
 # DigitalOcean One-click
 
+::: warning
+ The one-click install droplet is currently missing from DigitalOcean's marketplace. We are actively working with them on this issue and recommend you to use another installation method in the meantime.
+ :::
+
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on  [DigitalOcean](https://www.digitalocean.com/).
 
 DigitalOcean is a cloud platform that helps to deploy and scale applications by offering an Infrastructure as a Service (IaaS) platform for developers.
 
-:::warning PREREQUISITES
+:::tip PREREQUISITES
 A DigitalOcean account is necessary to follow this installation guide. Please visit the [DigitalOcean website](https://try.digitalocean.com/strapi/) to create an account if you don't already have one.
 :::
 
