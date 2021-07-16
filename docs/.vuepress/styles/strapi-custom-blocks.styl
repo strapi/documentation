@@ -7,6 +7,11 @@
   &.strapi
   &.prerequisites
   &.note
+  &.tip
+  &.important
+  &.warning
+  &.danger
+  &.caution
     padding .1rem 1.5rem
     margin-top 2rem
     margin-bottom 2rem
@@ -32,8 +37,28 @@
     background-color: #eff5f7
     border: none
   &.note
-    background-color #f4fcff
+    // background-color #f4fcff
+    background-color #f3f5f7
     border-color #0193C2
+  &.important
+    border-color #DDA537
+    background-color #F3F5F7
+  &.caution
+    border-color #E7C000
+    background-color rgba(255,229,100,.3)
+    color #6b5900
+    .custom-block-title
+      color #B29400
+    a
+      color #2c3e50
+  &.warning
+    border-color #cc0000
+    background-color rgb(255, 230, 230)
+    color #4d0000
+    .custom-block-title
+      color #900
+    a
+      color #2c3e50
 
 .custom-block.details
   color rgb(44, 62, 80)
