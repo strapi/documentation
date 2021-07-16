@@ -410,6 +410,11 @@ const plugins = [
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
+    type: 'note',
+    before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
     type: 'prerequisites',
     defaultTitle: 'PREREQUISITES'
   }],
