@@ -7,7 +7,7 @@ description: This documentation contains all technical documentation related to 
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
-::: strapi  🤓 Can't wait to start using Strapi?
+::: strapi  Can't wait to start using Strapi?
 You can directly head to the [Quick Start](quick-start.md)! <br> If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
 :::
 
@@ -32,7 +32,7 @@ Strapi is a community-oriented project with an emphasis on transparency. The Str
 
 Community members also take great part in providing the whole community a plethora of resources about Strapi. You can find [tutorials](https://strapi.io/tutorials/) on the Strapi website, where you can also create your own. Also, as an open-source project, the technical documentation of Strapi is open to contributions (see [Open-source & Contribution](#open-source-contribution)).
 
-::: strapi 🤓 Want to join the community?
+::: strapi Want to join the community?
 You can join [GitHub](https://github.com/strapi/strapi) and the [forum](https://forum.strapi.io/) and share your ideas and opinions with other community members and members of the Strapi team. If you're looking for news and updates about Strapi, [Twitter](https://twitter.com/strapijs) and the [blog](https://strapi.io/blog) are pretty good places to start!
 :::
 
