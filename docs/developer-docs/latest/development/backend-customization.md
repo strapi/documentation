@@ -981,13 +981,15 @@ module.exports = {
    *
    * @return {Promise}
    */
-  async find(populate) {
-    const results = await strapi.query('restaurant').find({ _limit: 1 }, populate);
+  async find(params, populate) {
+    const results = await strapi.query('restaurant').find({ ...params, _limit: 1 }, populate);
     return _.first(results) || null;
   },
 };
 ```
 
+- `params` (object): this represent filters for your find request.<br>
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
 - `populate` (array): you have to mention data you want populate `["author", "author.name", "comment", "comment.content"]`
 
 :::
