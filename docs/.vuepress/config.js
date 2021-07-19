@@ -416,22 +416,17 @@ const plugins = [
   }],
   ['vuepress-plugin-container', {
     type: 'caution',
-    before: info => `<div class="custom-block caution"><p class="custom-block-title">⚠️ ${info}</p>`,
+    before: info => `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
     type: 'warning',
-    before: info => `<div class="custom-block warning"><p class="custom-block-title">${info}</p>`,
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">⚠️  ${info}</p>`,
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
     type: 'prerequisites',
     defaultTitle: 'PREREQUISITES'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'important',
-    before: info => `<div class="custom-block important"><p class="custom-block-title">️✋ ${info}</p>`,
-    after: '</div>'
   }],
 ];
 
