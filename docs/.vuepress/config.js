@@ -407,10 +407,6 @@ const plugins = [
     defaultTitle: ''
   }],
   ['vuepress-plugin-container', {
-    type: 'callout-alt',
-    defaultTitle: ''
-  }],
-  ['vuepress-plugin-container', {
     type: 'strapi',
     defaultTitle: '',
     before: info => `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
@@ -440,6 +436,18 @@ const plugins = [
     type: 'prerequisites',
     defaultTitle: 'PREREQUISITES'
   }],
+  ['vuepress-plugin-container', {
+    type: 'api-call',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'request',
+    defaultTitle: 'Request'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'response',
+    defaultTitle: 'Response'
+  }]
 ];
 
 module.exports = {
