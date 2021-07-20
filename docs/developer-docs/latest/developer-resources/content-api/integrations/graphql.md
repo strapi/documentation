@@ -13,7 +13,7 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Install the graphql plugin in your Strapi project.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -85,7 +85,7 @@ _Response_
 
 These examples do not guide you to configure your client with Apollo for your [GraphQL endpoint](http://localhost:1337/graphql). Please follow the associated documentation for each client: ([React](https://www.apollographql.com/docs/react/get-started/) and [Vue.js](https://apollo.vuejs.org/guide/installation.html#_1-apollo-client) here)
 
-:::: tabs
+:::: tabs card
 
 ::: tab React
 
@@ -208,7 +208,7 @@ _Response_
 
 ## Examples
 
-:::: tabs
+:::: tabs card
 
 ::: tab React
 

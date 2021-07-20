@@ -13,7 +13,7 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Create a basic Next.js application.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -23,7 +23,7 @@ yarn create next-app nextjs-app
 
 :::
 
-::: tab npx
+::: tab npm
 
 ```bash
 npx create-next-app nextjs-app
@@ -37,7 +37,7 @@ npx create-next-app nextjs-app
 
 Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
@@ -61,7 +61,7 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
@@ -134,7 +134,7 @@ _Response_
 
 ### Example
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
@@ -235,7 +235,7 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
@@ -307,7 +307,7 @@ _Response_
 
 ### Example
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
@@ -563,7 +563,7 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-:::: tabs
+:::: tabs card
 
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
