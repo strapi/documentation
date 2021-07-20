@@ -143,14 +143,16 @@ const fs = require('fs');
 const { setupStrapi } = require('./helpers/strapi');
 
 /** this code is called once before any test is called */
-beforeAll(async done => {
+beforeAll(async () => {
   await setupStrapi(); // singleton so it can be called many times
-  done();
 });
 
 /** this code is called once before all the tested are finished */
-afterAll(async done => {
+afterAll(async () => {
   const dbSettings = strapi.config.get('database.connections.default.settings');
+  
+  //close server to release the db-file
+  await strapi.destroy();
 
   //delete test database after all tests
   if (dbSettings && dbSettings.filename) {
@@ -159,7 +161,6 @@ afterAll(async done => {
       fs.unlinkSync(tmpDbFile);
     }
   }
-  done();
 });
 
 it('strapi is defined', () => {
@@ -196,21 +197,20 @@ Some might say that API tests are not unit but limited integration tests, regard
 
 We'll test if our endpoint works properly and route `/hello` does return `Hello World`
 
-Let's create a separate test file were `supertest` will be used to check if endpoint works as expected.
+Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
 
 **Path —** `./tests/hello/index.js`
 
 ```js
 const request = require('supertest');
 
-it('should return hello world', async done => {
+it('should return hello world', async () => {
   await request(strapi.server) // app server is an instance of Class: http.Server
     .get('/hello')
     .expect(200) // Expect response http code 200
     .then(data => {
       expect(data.text).toBe('Hello World!'); // expect the response text
     });
-  done();
 });
 ```
 
@@ -239,6 +239,8 @@ Ran all test suites.
 ✨  Done in 9.09s.
 ```
 
+> Note: if you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
+
 ### Testing `auth` endpoint controller.
 
 In this scenario we'll test authentication login endpoint with two tests
@@ -261,7 +263,7 @@ const mockUserData = {
   blocked: null,
 };
 
-it('should login user and return jwt token', async done => {
+it('should login user and return jwt token', async () => {
   /** Creates a new user and save it to the database */
   await strapi.plugins['users-permissions'].services.user.add({
     ...mockUserData,
@@ -280,11 +282,9 @@ it('should login user and return jwt token', async done => {
     .then(data => {
       expect(data.body.jwt).toBeDefined();
     });
-
-  done();
 });
 
-it('should return users data for authenticated user', async done => {
+it('should return users data for authenticated user', async () => {
   /** Gets the default user role */
   const defaultRole = await strapi.query('role', 'users-permissions').findOne({}, []);
 
@@ -315,8 +315,6 @@ it('should return users data for authenticated user', async done => {
       expect(data.body.username).toBe(user.username);
       expect(data.body.email).toBe(user.email);
     });
-
-  done();
 });
 ```
 
