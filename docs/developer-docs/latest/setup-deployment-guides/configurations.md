@@ -4,30 +4,6 @@ description: Learn how you can manage and customize the configuration of your St
 sidebarDepth: 3
 ---
 
-<style lang="scss" scoped>
-  /*
-    We override the :::danger callout for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.danger {
-    border-left-width: .25rem;
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-    /* margin-top: 2em; */
-    /* margin-bottom: 2em; */
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-</style>
-
 # Configurations
 
 Your application configuration lives in the `config` folder. All the configuration files are loaded on startup and can be accessed through the configuration provider.
@@ -1165,7 +1141,7 @@ The dotfiles are not exposed. It means that every file name that starts with `.`
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
-::: danger PREREQUISITES
+::: prerequisites
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.

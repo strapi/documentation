@@ -385,30 +385,69 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
 ];
 
+const plugins = [
+  ['vuepress-plugin-element-tabs', {}],
+  ['@vuepress/google-analytics', {
+    ga: 'UA-54313258-1',
+  }],
+  ['check-md', {
+    ignore: checklinksIgnoredFiles,
+  }],
+  ['seo', {
+    siteTitle: (_, $site) => $site.title,
+    title: $page => $page.title,
+  }],
+  ['vuepress-plugin-code-copy', {
+    color: '#ffffff',
+    successText: 'Copied to clipboard!',
+  }],
+  ['@vuepress/back-to-top', {}],
+  ['vuepress-plugin-container', {
+    type: 'callout',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'callout-alt',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'strapi',
+    defaultTitle: '',
+    before: info => `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'tip',
+    before: info => `<div class="custom-block tip"><p class="custom-block-title">💡 ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'note',
+    before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'caution',
+    before: info => `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'warning',
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">⚠️  ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'prerequisites',
+    defaultTitle: 'PREREQUISITES'
+  }],
+];
+
 module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/documentation/',
-  plugins: {
-    '@vuepress/medium-zoom': {},
-    'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
-      ga: 'UA-54313258-1',
-    },
-    'check-md': {
-      ignore: checklinksIgnoredFiles,
-    },
-    seo: {
-      siteTitle: (_, $site) => $site.title,
-      title: $page => $page.title,
-    },
-    'vuepress-plugin-code-copy': {
-      color: '#ffffff',
-      successText: 'Copied to clipboard!',
-    },
-    '@vuepress/back-to-top': {},
-  },
+  plugins: plugins,
   head: [
     [
       'link',
