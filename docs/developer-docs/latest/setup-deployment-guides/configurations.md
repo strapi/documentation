@@ -24,7 +24,7 @@ strapi.config.get('server.host', 'defaultValueIfUndefined');
 
 Nested keys are accessible with `dot-notation`.
 
-:::tip NOTE
+:::note
 Notice that the filename is used as a prefix to access the configurations.
 :::
 
@@ -34,13 +34,13 @@ Notice that the filename is used as a prefix to access the configurations.
 
 This file lets you define database connections that will be used to store your application content.
 
-::: tip NOTE
+:::note
 You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) in the local installation process.
 :::
 
 **Path —** `./config/database.js`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Bookshelf
 
@@ -96,7 +96,7 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 ::::
 
-::::: tabs
+::::: tabs card
 
 :::: tab PostgreSQL
 
@@ -124,7 +124,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::: warning
+:::caution
 We are aware that there is an issue regarding **SSL support for the server**.
 In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
 ```js
@@ -215,6 +215,11 @@ module.exports = ({ env }) => ({
 ::::
 
 :::: tab MongoDB
+
+:::caution
+!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
+:::
+
 
 ```js
 module.exports = ({ env }) => ({
@@ -307,7 +312,7 @@ Deploying **Strapi** itself is covered in the [Deployment Guide](/developer-docs
 
 ### Server
 
-:::: tabs
+:::: tabs card
 
 ::: tab Minimal
 
@@ -1017,7 +1022,7 @@ CRON tasks allow you to schedule jobs (arbitrary functions) for execution at spe
 
 This feature is powered by [`node-schedule`](https://www.npmjs.com/package/node-schedule) node modules. Check it for more information.
 
-::: warning
+:::caution
 Make sure the `enabled` cron config is set to `true` in `./config/server.js` file.
 :::
 
@@ -1079,7 +1084,7 @@ When present, they are loaded to let you customize your database connection inst
 
 You will need to install the plugin using the normal `npm install the-plugin-name` or any of the other supported package tools such as yarn then follow the below examples to load them.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Mongoose
 
@@ -1131,7 +1136,7 @@ An image named `company-logo.png` in `./public/` is accessible through `/company
 `index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
 :::
 
-::: warning
+:::caution
 The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
 :::
 
@@ -1147,7 +1152,7 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
 :::
 
-::: warning CAUTION
+:::caution
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
@@ -1225,7 +1230,7 @@ Adding a new provider means adding a new way for your administrators to log-in.
 
 To achieve a great flexibility and a large choice of provider, Strapi uses [Passport.js](http://www.passportjs.org/). Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
 
-::: warning
+:::caution
 Strategies such as [ldapauth](https://github.com/vesse/passport-ldapauth) don't work out of the box since they require extra data to be sent from the admin panel.
 If you want to add an LDAP provider to your application, you will need to write a [custom strategy](http://www.passportjs.org/packages/passport-custom/).
 You can also use services such as Okta and Auth0 as bridge services.
@@ -1241,13 +1246,13 @@ To configure a provider, follow the procedure below:
 
 ##### Examples
 
-:::::: tabs
+:::::: tabs card
 
 ::::: tab Google
 
 Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -1315,7 +1320,7 @@ module.exports = ({ env }) => ({
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -1381,7 +1386,7 @@ module.exports = ({ env }) => ({
 
 Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -1446,7 +1451,7 @@ module.exports = ({ env }) => ({
 
 Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -1598,7 +1603,7 @@ module.exports = () => ({
 
 ### Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
-::: warning 🚧 This API is considered unstable for now.
+:::caution 🚧 This API is considered unstable for now.
 <br>
 :::
 
@@ -1616,7 +1621,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
-:::tip NOTE
+:::note
 The condition `name` property acts as a [unique id](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/services/permission/condition-provider.js#L22) within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 

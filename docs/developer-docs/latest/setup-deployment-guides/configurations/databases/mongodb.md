@@ -17,7 +17,7 @@ If you already have MongoDB installed locally and running as a background servic
 
 Please complete the installation steps appropriate to your operating system.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Windows 10
 
@@ -141,7 +141,7 @@ MongoDB must already be running in the background.
 
 `Path: ./`
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -272,17 +272,14 @@ MongoDB Atlas automatically exposes the database credentials into a single envir
 
 - Under `Atlas` in the left-hand, click on `Clusters`. This should take you to your `cluster`. Next, click `CONNECT` and then `Connect Your Application`.
 - Under `1. Choose your driver version`, select **DRIVER** as `Node.js` and **VERSION** as `3.6 or later`.
-  ::: warning
-  You **must** use `Version: 3.6 or later`.
+  :::caution
+  You must use `Version: 3.6 or later`.
   :::
 - This should show a **Connection String Only** similar to this:
 
 `mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
-
-
-
-::: warning
+:::caution
 Please note the `<password>` after your `username`. In this example, after `mongodb+srv://username:`. You will need to replace the `<password>` with the password you created earlier for this user in your **MongoDB Atlas** account.
 :::
 
@@ -292,9 +289,9 @@ Replace the contents of `/database.js` with the following and replace **< passwo
 
 `Path: ./config/database.js`.
 
-:::: tabs
+:::: tabs card
 
-::: tab Uri Method
+::: tab URI Method
 
 This method uses the URI string aqcuired from Atlas in step 4.
 
@@ -326,7 +323,6 @@ module.exports = ({ env }) => ({
 DATABASE_URI=mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 DATABASE_NAME=myFirstDatabase
 ```
-
 
 :::
 
@@ -372,9 +368,8 @@ DATABASE_PASSWORD=yourpassword
 
 ::::
 
-::: danger WARNING
+:::warning
 We recommend replacing sensitive (eg. "URI string" above) information in your database configuration files before uploading your project to a public repository such as GitHub. For more information about using environment variables, please read [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md).
-
 :::
 
 You are now ready use Strapi locally or to deploy your project to an external hosting provider and use MongoDB Atlas as your database server.

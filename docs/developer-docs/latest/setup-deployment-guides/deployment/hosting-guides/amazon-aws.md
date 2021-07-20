@@ -100,7 +100,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 - Review the details, in the **Step 7: Review Instance Launch**, then click the blue `Launch` button. Now, you need to **select an existing key pair** or **create a new key pair**. To create a new key pair, do the following:
   - Select the dropdown option `Create a new key pair`.
   - Name your the key pair name, e.g. `ec2-strapi-key-pair`
-    ::: warning
+    ::: caution
     Download the **private key file** (.pem file). This file is needed, so note where it was downloaded.
     :::
   - After downloading the file, click the blue `Launch Instances` button.

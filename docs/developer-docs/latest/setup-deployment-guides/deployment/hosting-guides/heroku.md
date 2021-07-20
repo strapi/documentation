@@ -18,7 +18,7 @@ If you already have the Heroku CLI installed locally on your computer. Skip to [
 
 Download and install the `Heroku CLI` for your operating system:
 
-:::: tabs
+:::: tabs card
 
 ::: tab Ubuntu
 Run the following from your terminal:
@@ -63,7 +63,7 @@ Follow the instructions and return to your command line.
 
 Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start.md) (if you want to deploy an existing project go to step 4).
 
-::: tip NOTE
+:::note
 
 If you plan to use **MongoDB** with your project, [refer to the create a Strapi project with MongoDB section of the documentation](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-mongodb-locally) then, jump to step 4.
 
@@ -71,7 +71,7 @@ If you plan to use **MongoDB** with your project, [refer to the create a Strapi 
 
 `Path: ./`
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -136,8 +136,8 @@ heroku create
 
 You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL) for you.
 
-::: tip NOTE
-If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
+:::tip
+If you have a Heroku project app already created, you would use the following step to initialize your local project folder:
 
 `Path: ./my-project/`
 
@@ -153,9 +153,9 @@ Your local development environment is now set-up and configured to work with Her
 
 Below you will find database options when working with Heroku. Please choose the correct database (e.g. PostgreSQL, MongoDB, etc.) and follow those instructions.
 
-:::: tabs
+:::::: tabs card
 
-::: tab PostgreSQL
+::::: tab PostgreSQL
 
 ### Heroku Postgres
 
@@ -268,7 +268,7 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 `Path: ./my-project/`
 
 
-:::: tabs
+:::: tabs card
 ::: tab npm
 
 ```bash
@@ -283,9 +283,9 @@ yarn add pg
 :::
 ::::
 
-:::
+:::::
 
-::: tab MongoDB
+::::: tab MongoDB
 
 ### MongoDB Atlas
 
@@ -395,9 +395,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::
+:::::
 
-::::
+::::::
 
 #### 8. Commit your changes
 
@@ -445,7 +445,7 @@ If you see the Strapi Welcome page, you have correctly set-up, configured and de
 
 You can now continue with the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md), if you have any questions on how to proceed.
 
-::: warning
+::: caution
 For security reasons, the Content-Types Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
 :::
 

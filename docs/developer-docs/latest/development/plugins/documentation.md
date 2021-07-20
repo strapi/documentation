@@ -15,7 +15,7 @@ You'll be able to visualize all your end-points directly from the SWAGGER UI.
 
 As usual run the following in your terminal:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -137,13 +137,13 @@ Here are the file that needs to be created in order to change the documentation 
 The `openapi`, `info`, `x-strapi-config`, `servers`, `externalDocs` and `security` fields are located in the `./extensions/documentation/config/settings.json` file. Here you can specify all your environment variables, licenses, external documentation and so on...
 You can add all the entries listed in the [specification](https://swagger.io/specification/).
 
-::: danger
+:::warning
 
 Do not change the `openapi` field of the `settings.json`
 
 :::
 
-::: tip NOTE
+:::note
 
 When you change a field in the settings.json file you need to manually restart your server.
 

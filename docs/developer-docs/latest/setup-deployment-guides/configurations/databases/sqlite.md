@@ -11,7 +11,7 @@ SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quic
 
 Simply use one of the following commands.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

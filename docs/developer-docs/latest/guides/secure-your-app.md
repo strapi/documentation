@@ -19,14 +19,18 @@ Sqreen is an Application Security Management tool that enables protection tailor
 
 You will have to install Sqreen node_module in your application.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
-`yarn add sqreen`
+```sh
+yarn add sqreen
+```
 :::
 
 ::: tab npm
-`npm install sqreen`
+```sh
+npm install sqreen
+```
 :::
 
 ::::

@@ -27,7 +27,7 @@ Once the choice between the 3 repositories is made:
 2. In the README file of your forked repository, click the **Deploy on Render** button.
 3. Make sure you granted Render the permission to access your forked repository. <!-- Need more info here -->
 
-::: tip NOTE
+::: note
 When using Cloudinary, you will be prompted to enter your account credentials as environment variables. Render encrypts environment variables and stores them securely.
 :::
 

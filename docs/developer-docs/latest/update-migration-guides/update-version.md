@@ -7,7 +7,7 @@ description: The following documentation covers how to upgrade your application 
 
 In this guide you will learn how to upgrade your application to the latest version of Strapi.
 
-::: tip NOTE
+:::note
 When a new version of Strapi is available, you will be notified both in your terminal, and in the admin panel. <br>
 Also note that you can check the **Settings > Application** section of the admin panel to have more information on:
 
@@ -16,7 +16,7 @@ Also note that you can check the **Settings > Application** section of the admin
 
 :::
 
-::: warning CAUTION
+:::caution
 Before you start, make sure your server is not running until the end of the guide!
 :::
 
@@ -25,7 +25,7 @@ Before you start, make sure your server is not running until the end of the guid
 Start by upgrading all your Strapi packages in your `package.json`.<br>
 For example upgrading from `3.4.4` to `3.6.1`:
 
-:::: tabs
+:::: tabs card
 
 ::: tab 3.4.4
 

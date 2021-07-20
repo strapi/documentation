@@ -14,7 +14,7 @@ In this guide we are going to:
 
 ### New Strapi project
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -106,7 +106,7 @@ The `myapi-123456` part is the project identifier. (The number is automatically 
 
 The following is an example config for `Standard Environment` or `Flexible Environment`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Standard Environment
 

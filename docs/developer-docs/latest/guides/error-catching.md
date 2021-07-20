@@ -64,7 +64,7 @@ module.exports = strapi => {
 };
 ```
 
-::: warning
+:::caution
 It's important to call `throw(error);` to avoid stopping the middleware stack. If you don't re-throw the error, it won't be handled by the Strapi's error formatter and the api will never respond to the client.
 :::
 

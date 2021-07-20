@@ -71,7 +71,7 @@ You can check all the available providers developed by the community on npmjs.or
 
 To install a new provider run:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

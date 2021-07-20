@@ -15,7 +15,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
 1. Create a new project:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -41,7 +41,7 @@ npx create-strapi-app my-app --quickstart --no-run
 
 2. Generate a plugin:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -74,7 +74,7 @@ strapi generate:plugin wysiwyg
 
 3. Install the needed dependencies:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -98,7 +98,7 @@ npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 
 4. Start your application with the front-end development mode:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -429,9 +429,9 @@ export default strapi => {
 };
 ```
 
-Finally you will have to rebuild strapi so the new plugin is loaded correctly
+Finally you will have to rebuild strapi so the new plugin is loaded correctly:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

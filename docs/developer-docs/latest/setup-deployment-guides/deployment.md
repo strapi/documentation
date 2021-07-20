@@ -68,7 +68,7 @@ To learn more about configuration details, you can read the [configurations](/de
 
 Before running your server in production you need to build your admin panel for production
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -104,7 +104,7 @@ Then in your `package.json` scripts section:
 
 Run the server with the `production` settings.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

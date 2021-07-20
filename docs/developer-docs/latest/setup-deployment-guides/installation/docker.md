@@ -9,7 +9,7 @@ The following documentation will guide you through the installation of a new Str
 
 Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies).
 
-::: tip NOTE
+::: note
 You can find the official Docker image for Strapi in the [Docker Hub](https://hub.docker.com/r/strapi/strapi).
 :::
 

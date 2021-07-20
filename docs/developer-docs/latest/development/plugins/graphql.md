@@ -11,7 +11,7 @@ By default Strapi create [REST endpoints](/developer-docs/latest/developer-resou
 
 To get started with GraphQL in your app, please install the plugin first. To do that, open your terminal and run the following command:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -75,7 +75,7 @@ You can also setup any [Apollo Server options](https://www.apollographql.com/doc
 
 You can edit these configurations by creating following file.
 
-::: warning
+:::caution
 Please note the setting for GraphQL `tracing` as changed and has been moved to `apolloServer.tracing`
 :::
 
@@ -310,7 +310,7 @@ query {
 
 To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definition, queries, mutations and resolvers based on your models. The feature also lets you make complex query with many arguments such as `limit`, `sort`, `start` and `where`.
 
-::: tip NOTE
+:::note
 If you use a local plugin, the controller methods of your plugin are not created by default. In order for the Shadow CRUD to work you have to define them in your controllers for each of your models. You can find examples of controllers `findOne`, `find`, `create`, `update` and `delete` there : [Core controllers](/developer-docs/latest/development/backend-customization.md#controllers).
 :::
 
@@ -371,7 +371,7 @@ The queries and mutations will use the generated controller's actions as resolve
 
 ## Aggregation & Grouping
 
-::: warning
+:::caution
 This feature is only available on Mongoose ORM.
 :::
 
@@ -720,7 +720,7 @@ One of the most powerful features of GraphQL is the auto-documentation of the sc
 
 It might happen that you want to add a description to a query or deprecate it. To do that, you need to use the `schema.graphql.js` file.
 
-::: warning
+:::caution
 The `schema.graphql.js` file has to be placed into the config folder of each API `./api/*/config/schema.graphql.js` or plugin `./extensions/*/config/schema.graphql.js`.
 :::
 
