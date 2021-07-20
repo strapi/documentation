@@ -13,25 +13,22 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Create a basic Nuxt.js application with [create-nuxt-app](https://github.com/nuxt/create-nuxt-app).
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
-```bash
-yarn create nuxt-app nuxtjs-app
-```
-
-:::
-
-::: tab npx
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-nuxt-app nuxtjs-app
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create nuxt-app nuxtjs-app
+```
+</code-block>
 
-::::
+</code-group>
 
 ## Use an HTTP client
 

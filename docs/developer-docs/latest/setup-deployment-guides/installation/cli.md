@@ -42,17 +42,21 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 1. In a terminal, run the following command:
 
-:::: tabs card
-::: tab npm
- ```sh
-  npx create-strapi-app my-project
-  ```
-::: 
-::: tab yarn
- ```sh
-  yarn create strapi-app my-project
- ```
-:::
+<code-group>
+
+<code-block title="NPM">
+```sh
+npx create-strapi-app my-project
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project
+```
+</code-block>
+
+</code-group>
 
 2. Choose an installation type:
    * `Quickstart (recommended)`, which uses the default database (SQLite)
@@ -70,15 +74,19 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 To start the Strapi application, run the following command in the project folder:
 
-:::: tabs card
-::: tab npm
+<code-group>
+
+<code-block title="NPM">
 ```bash
 npm run develop
 ```
-:::
+</code-block>
 
-::: tab yarn
+<code-block title="YARN">
 ```sh
 yarn develop
 ```
-:::
+</code-block>
+
+</code-group>
+

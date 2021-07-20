@@ -13,25 +13,22 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Create a basic React application using [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html).
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
-```bash
-yarn create react-app react-app
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-react-app react-app
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create react-app react-app
+```
+</code-block>
 
-::::
+</code-group>
 
 ## Use an HTTP client
 

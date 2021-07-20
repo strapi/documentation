@@ -628,8 +628,8 @@ sudo nano /etc/systemd/system/webhook.service
 
 - In the `nano` editor, copy/paste the following script, but make sure to replace `ubuntu` **in two places** if you changed the default `ubuntu` user, and `paste the $PATH` from above.
 
-::: warning
-**DELETE THE #COMMENTS BEFORE SAVING**, then save and exit.
+:::caution
+Delete the #comments before saving, then save and exit.
 :::
 
 ```bash

@@ -141,25 +141,21 @@ MongoDB must already be running in the background.
 
 `Path: ./`
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```
-yarn create strapi-app my-project
-```
-
-:::
-
-::: tab npx
-
-```
+<code-block title="NPM">
+```sh
 npx create-strapi-app my-project
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project
+```
+</code-block>
 
-::::
+</code-group>
 
 - Use your `down arrow` key and select `Custom (manual settings)` and press `enter`:
 

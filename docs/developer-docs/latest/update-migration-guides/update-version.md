@@ -86,11 +86,22 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 New releases can introduce changes to the administration panel that require a rebuild.
 Rebuild the admin panel with one of the following commands:
 
-```bash
-yarn build --clean
-# or
+
+<code-group>
+
+<code-block title="NPM">
+```sh
 npm run build -- --clean
 ```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn build --clean
+```
+</code-block>
+
+</code-group>
 
 ## Extensions
 
@@ -106,10 +117,21 @@ Just make sure when you update your version that a migration guide exists or not
 
 If you have followed the information above, you can start your application with:
 
-```bash
-yarn develop
-# or
+
+<code-group>
+
+<code-block title="NPM">
+```sh
 npm run develop
 ```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn develop
+```
+</code-block>
+
+</code-group>
 
 🎉 Congrats, your application has been migrated!

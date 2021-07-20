@@ -11,25 +11,21 @@ By default Strapi create [REST endpoints](/developer-docs/latest/developer-resou
 
 To get started with GraphQL in your app, please install the plugin first. To do that, open your terminal and run the following command:
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```
-yarn strapi install graphql
-```
-
-:::
-
-::: tab npm
-
-```
+<code-block title="NPM">
+```sh
 npm run strapi install graphql
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn strapi install graphql
+```
+</code-block>
 
-::::
+</code-group>
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
 

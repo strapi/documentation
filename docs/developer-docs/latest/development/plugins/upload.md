@@ -336,25 +336,21 @@ You can check all the available providers developed by the community on npmjs.or
 
 To install a new provider run:
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```
-yarn add strapi-provider-upload-aws-s3
-```
-
-:::
-
-::: tab npm
-
-```
+<code-block title="NPM">
+```sh
 npm install strapi-provider-upload-aws-s3 --save
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add strapi-provider-upload-aws-s3
+```
+</code-block>
 
-::::
+</code-group>
 
 ### Local server
 

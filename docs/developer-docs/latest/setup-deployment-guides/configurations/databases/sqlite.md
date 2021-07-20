@@ -11,30 +11,26 @@ SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quic
 
 Simply use one of the following commands.
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn create strapi-app my-project --quickstart
-```
-
-:::
-
-::: tab npx
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-strapi-app my-project --quickstart
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
 
-::::
+</code-group>
 
 This will create a new project and launch it in the browser.
 
 ::: tip
-The [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) is a complete step-by-step tutorial
+The [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) is a complete step-by-step tutorial.
 :::
 
 ## Other SQL Databases (PostgreSQL, MySQL)

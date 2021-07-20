@@ -15,25 +15,22 @@ You'll be able to visualize all your end-points directly from the SWAGGER UI.
 
 As usual run the following in your terminal:
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
-```
-yarn strapi install documentation
-```
-
-:::
-
-::: tab npm
-
-```
+<code-block title="NPM">
+```sh
 npm run strapi install documentation
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn strapi install documentation
+```
+</code-block>
 
-::::
+</code-group>
 
 When your plugin is installed, you just have to start your application and it will generate your API documentation.
 

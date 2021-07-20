@@ -1252,23 +1252,21 @@ To configure a provider, follow the procedure below:
 
 Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-google-oauth2
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-google-oauth2
 ```
+</code-block>
 
-::::
+<code-block title="YARN">
+```sh
+yarn add passport-google-oauth2
+```
+</code-block>
+
+</code-group>
 
 `/config/server.js`
 
@@ -1320,25 +1318,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-github2
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-github2
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-github2
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 
@@ -1386,25 +1380,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-discord
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-discord
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-discord
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 
@@ -1451,25 +1441,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-azure-ad-oauth2 jsonwebtoken
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-azure-ad-oauth2 jsonwebtoken
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-azure-ad-oauth2 jsonwebtoken
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 

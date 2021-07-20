@@ -191,33 +191,28 @@ module.exports = ({ env }) => ({
 
 To build the administration, run the following command from the root directory of your project.
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
+<code-block title="NPM">
+```sh
+npm  build
 ```
+</code-block>
+
+<code-block title="YARN">
+```sh
 yarn build
 ```
+</code-block>
 
-:::
-
-::: tab npm
-
-```
-npm run build
-```
-
-:::
-
-::: tab strapi
-
-```
+<code-block title="STRAPI CLI">
+```sh
 strapi build
 ```
+</code-block>
 
-:::
-
-::::
+</code-group>
 
 This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure your updates have been taken into account.
 

@@ -13,25 +13,22 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Create a basic Next.js application.
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
-```bash
-yarn create next-app nextjs-app
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-next-app nextjs-app
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create next-app nextjs-app
+```
+</code-block>
 
-::::
+</code-group>
 
 ## Use an HTTP client
 

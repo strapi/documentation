@@ -71,29 +71,22 @@ If you plan to use **MongoDB** with your project, [refer to the create a Strapi 
 
 `Path: ./`
 
-:::: tabs card
 
-::: tab yarn
+<code-group>
 
-Use **yarn** to install the Strapi project (**recommended**). [Install yarn with these docs](https://yarnpkg.com/lang/en/docs/install/)
-
-```bash
-yarn create strapi-app my-project --quickstart
-```
-
-:::
-
-::: tab npx
-
-Use **npm/npx** to install the Strapi project
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-strapi-app my-project --quickstart
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
 
-::::
+</code-group>
 
 ::: tip
 When you use `--quickstart` to create a Strapi project locally, a **SQLite database** is used which is not compatible with Heroku. Therefore, another database option [must be chosen](#_7-heroku-database-set-up).
@@ -191,17 +184,21 @@ Strapi expects a variable for each database connection configuration (host, user
 
 Install the package:
 
-With npm:
+<code-group>
 
-```bash
+<code-block title="NPM">
+```sh
 npm install pg-connection-string --save
 ```
+</code-block>
 
-With yarn:
-
-```bash
+<code-block title="YARN">
+```sh
 yarn add pg-connection-string
 ```
+</code-block>
+
+</code-group>
 
 #### 4. Create your Heroku database config file for production
 
@@ -268,20 +265,21 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 `Path: ./my-project/`
 
 
-:::: tabs card
-::: tab npm
+<code-group>
 
-```bash
+<code-block title="NPM">
+```sh
 npm install pg --save
 ```
-:::
+</code-block>
 
-::: tab yarn
-```bash
+<code-block title="YARN">
+```sh
 yarn add pg
 ```
-:::
-::::
+</code-block>
+
+</code-group>
 
 :::::
 

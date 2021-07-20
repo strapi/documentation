@@ -13,33 +13,30 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Install the graphql plugin in your Strapi project.
 
-:::: tabs card
 
-::: tab yarn
 
-```bash
-yarn strapi install graphql
-```
+<code-group>
 
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm run strapi install graphql
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn strapi install graphql
+```
+</code-block>
 
-::: tab strapi
 
-```bash
+<code-block title="STRAPI CLI">
+```sh
 strapi install graphql
 ```
+</code-block>
 
-:::
-
-::::
+</code-group>
 
 ## Fetch your Restaurant collection type
 

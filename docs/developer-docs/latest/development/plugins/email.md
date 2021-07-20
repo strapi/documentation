@@ -71,25 +71,23 @@ You can check all the available providers developed by the community on npmjs.or
 
 To install a new provider run:
 
-:::: tabs card
 
-::: tab yarn
 
-```
-yarn add strapi-provider-email-sendgrid --save
-```
+<code-group>
 
-:::
-
-::: tab npm
-
-```
+<code-block title="NPM">
+```sh
 npm install strapi-provider-email-sendgrid --save
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add strapi-provider-email-sendgrid --save
+```
+</code-block>
 
-::::
+</code-group>
 
 #### Using scoped packages as providers
 
