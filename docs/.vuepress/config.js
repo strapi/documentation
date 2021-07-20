@@ -454,7 +454,7 @@ module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
-  base: '/',
+  base: '/documentation/',
   plugins: plugins,
   head: [
     [
