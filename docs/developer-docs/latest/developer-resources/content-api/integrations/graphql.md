@@ -11,9 +11,7 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 ## Install the GraphQL plugin
 
-Install the graphql plugin in your Strapi project.
-
-
+Install the GraphQL plugin in your Strapi project.
 
 <code-group>
 
@@ -42,8 +40,8 @@ strapi install graphql
 
 Play with the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
 
-_Request_
-
+::::api-call
+:::request Example query
 ```graphql
 query Restaurants {
   restaurants {
@@ -56,9 +54,9 @@ query Restaurants {
   }
 }
 ```
+:::
 
-_Response_
-
+:::response Example response
 ```json
 {
   "data": {
@@ -77,6 +75,8 @@ _Response_
   }
 }
 ```
+:::
+::::
 
 ### Examples
 
@@ -167,7 +167,8 @@ export default {
 
 ## Fetch your Category collection type
 
-_Request_
+:::: api-call
+::: request Example request
 
 ```graphql
 query Category {
@@ -182,8 +183,9 @@ query Category {
   }
 }
 ```
+:::
 
-_Response_
+:::response Example response
 
 ```json
 {
@@ -202,6 +204,8 @@ _Response_
   }
 }
 ```
+:::
+::::
 
 ## Examples
 

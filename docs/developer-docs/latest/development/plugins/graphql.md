@@ -33,6 +33,7 @@ Then, start your app and open your browser at [http://localhost:1337/graphql](ht
 
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
 
+:::request Mutation
 ```graphql
 mutation {
   register(input: { username: "username", email: "email", password: "password" }) {
@@ -44,6 +45,7 @@ mutation {
   }
 }
 ```
+:::
 
 You should see a new user is created in `Users` collection type in your Strapi admin panel.
 
@@ -51,6 +53,7 @@ You should see a new user is created in `Users` collection type in your Strapi a
 
 To perform authorized requests, you must first get a JWT:
 
+:::request Mutation
 ```graphql
 mutation {
   login(input: { identifier: "email", password: "password" }) {
@@ -58,6 +61,7 @@ mutation {
   }
 }
 ```
+:::
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
 
@@ -101,6 +105,7 @@ In the section, we assume that the [Shadow CRUD](#shadow-crud) feature is enable
 
 - `id`: String
 
+:::request Query
 ```graphql
 query {
   user(id: "5aafe871ad624b7380d7a224") {
@@ -109,9 +114,11 @@ query {
   }
 }
 ```
+:::
 
 ### Fetch multiple entries
 
+:::request Query
 ```graphql
 query {
   users {
@@ -120,11 +127,13 @@ query {
   }
 }
 ```
+:::
 
 ### Fetch dynamic zone data
 
 Dynamic zones are union types in graphql so you need to use fragments to query the fields.
 
+:::request Query
 ```graphql
 query {
   restaurants {
@@ -137,12 +146,14 @@ query {
   }
 }
 ```
+:::
 
 ### Create a new entry
 
 - `input`: Object
   - `data`: Object — Values to insert
 
+:::request Mutation
 ```graphql
 mutation {
   createUser(input: { data: { username: "John", email: "john@doe.com" } }) {
@@ -153,9 +164,11 @@ mutation {
   }
 }
 ```
+:::
 
 The implementation of the mutations also supports relational attributes. For example, you can create a new `User` and attach many `Restaurant` to it by writing your query like this:
 
+:::request Mutation
 ```graphql
 mutation {
   createUser(
@@ -179,6 +192,7 @@ mutation {
   }
 }
 ```
+:::
 
 ### Update an existing entry
 
@@ -186,6 +200,7 @@ mutation {
   - `where`: Object - Entry's ID to update
   - `data`: Object — Values to update
 
+:::request Mutation
 ```graphql
 mutation {
   updateUser(
@@ -201,9 +216,11 @@ mutation {
   }
 }
 ```
+:::
 
 You can also update relational attributes by passing an ID or an array of IDs (depending on the relationship).
 
+:::request Mutation
 ```graphql
 mutation {
   updateRestaurant(input: {
@@ -223,12 +240,14 @@ mutation {
   }
 }
 ```
+:::
 
 ### Delete an entry
 
 - `input`: Object
   - `where`: Object - Entry's ID to delete
 
+:::request Mutation
 ```graphql
 mutation {
   deleteUser(input: { where: { id: "5b28f1747c739e4afb48605c" } }) {
@@ -239,6 +258,7 @@ mutation {
   }
 }
 ```
+:::
 
 ### Filters
 
@@ -275,6 +295,7 @@ You can also apply different parameters to the query to make more complex querie
 
 Return the second decade of users which have an email that contains `@strapi.io` ordered by username.
 
+:::request Query
 ```graphql
 query {
   users(limit: 10, start: 10, sort: "username:asc", where: { email_contains: "@strapi.io" }) {
@@ -290,9 +311,11 @@ query {
   }
 }
 ```
+:::
 
 Return the users which have been created after the March, 19th 2018 4:21 pm.
 
+:::request Query
 ```graphql
 query {
   users(where: { createdAt_gt: "2018-03-19 16:21:07.161Z" }) {
@@ -301,6 +324,7 @@ query {
   }
 }
 ```
+:::
 
 ## Shadow CRUD
 
@@ -435,6 +459,7 @@ type Query {
 
 Getting the total count and the average likes of restaurants:
 
+:::request Query
 ```graphql
 query {
   restaurantsConnection {
@@ -447,9 +472,11 @@ query {
   }
 }
 ```
+:::
 
 Let's say we want to do the same query but for only open restaurants
 
+:::request Query
 ```graphql
 query {
   restaurantsConnection(where: { open: true }) {
@@ -462,9 +489,12 @@ query {
   }
 }
 ```
+:::
 
 Getting the average likes of open and non open restaurants
 
+:::: api-call
+:::request Query
 ```graphql
 query {
   restaurantsConnection {
@@ -483,9 +513,9 @@ query {
   }
 }
 ```
+:::
 
-Result
-
+:::response
 ```json
 {
   "data": {
@@ -518,6 +548,8 @@ Result
   }
 }
 ```
+:::
+::::
 
 ## Customize the GraphQL schema
 
@@ -942,7 +974,7 @@ The type name is the global ID of the model. You can find the global ID of a mod
 
 We recommend putting the field description and deprecated reason in the model. Right now, the GraphQL plugin is the only which uses these fields. Another plugin could use this description in the future as well. However, sometimes you don't have the choice, especially when you're defining a custom type.
 
-::: tip
+:::note
 It's not a bad practice to put the description and deprecated attribute in the `schema.graphql.js`, though.
 :::
 

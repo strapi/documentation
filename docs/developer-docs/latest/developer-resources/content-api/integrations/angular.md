@@ -45,11 +45,10 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-:::: tabs card
+::::: tabs card
 
-::: tab axios
-
-_Request_
+:::: tab axios
+::: request Example GET request with axios
 
 ```js
 import axios from 'axios';
@@ -60,11 +59,11 @@ axios.get('http://localhost:1337/restaurants').then(response => {
 ```
 
 :::
+::::
 
-::: tab fetch
+:::: tab fetch
 
-_Request_
-
+::: request Example GET request with fetch
 ```js
 fetch('http://localhost:1337/restaurants', {
   method: 'GET',
@@ -77,9 +76,10 @@ fetch('http://localhost:1337/restaurants', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
-
+:::response Example response
 ```json
 [
   {
@@ -113,8 +113,7 @@ _Response_
   }
 ]
 ```
-
-::::
+:::
 
 ### Example
 
@@ -223,11 +222,10 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-:::: tabs card
+::::: tabs card
 
-::: tab axios
-
-_Request_
+:::: tab axios
+::: request Example POST request with axios
 
 ```js
 import axios from 'axios';
@@ -244,11 +242,11 @@ axios
 ```
 
 :::
+::::
 
-::: tab fetch
+:::: tab fetch
 
-_Request_
-
+::: request Example POST request with fetch
 ```js
 fetch('http://localhost:1337/restaurants', {
   method: 'POST',
@@ -266,9 +264,10 @@ fetch('http://localhost:1337/restaurants', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
-
+:::response Example response
 ```json
 {
   "id": 2,
@@ -290,8 +289,8 @@ _Response_
   ]
 }
 ```
+:::
 
-::::
 
 ### Example
 
@@ -536,14 +535,13 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-:::: tabs card
+::::: tabs card
 
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
 
-::: tab axios
-
-_Request_
+:::: tab axios
+::: request Example PUT request with axios
 
 ```js
 import axios from 'axios';
@@ -558,10 +556,10 @@ axios
 ```
 
 :::
+::::
 
-::: tab fetch
-
-_Request_
+:::: tab fetch
+::: request Example PUT request with fetch
 
 ```js
 fetch('http://localhost:1337/restaurants/2', {
@@ -580,8 +578,10 @@ fetch('http://localhost:1337/restaurants/2', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -605,7 +605,6 @@ _Response_
 }
 ```
 
-::::
 
 ## Starter
 

@@ -823,23 +823,31 @@ Filters are used as a suffix of a field name:
 
 ##### Find users having `John` as first name.
 
+:::request Example requests: Find users having 'John' as first name
 `GET /users?firstName=John`
-or
+<br/>or<br/>
 `GET /users?firstName_eq=John`
+:::
 
-##### Find restaurants having a price equal or greater than `3`.
+##### Find restaurants having a price equal or greater than `3`
 
+:::request Example request: Find restaurants having a price equal or greater than `3`
 `GET /restaurants?price_gte=3`
+:::
 
-##### Find multiple restaurant with id 3, 6, 8.
+##### Find multiple restaurant with id 3, 6, 8
 
+:::request Example request: Find multiple restaurant with id 3, 6, 8
 `GET /restaurants?id_in=3&id_in=6&id_in=8`
+:::
 
 ##### Using `_where`
 
+:::request Example requests: Using the _where filter
 `GET /restaurants?_where[price_gte]=3`
 
 `GET /restaurants?_where[0][price_gte]=3&[0][price_lte]=7`
+:::
 
 #### Complex queries
 
@@ -917,7 +925,9 @@ The query engine implicitly uses the `OR` operation when you pass an array of va
 
 Restaurants that have 1 or 2 `stars`:
 
+:::request Example request: Restaurants that have 1 or 2 `stars`
 `GET /restaurants?stars=1&stars=2`
+:::
 
 or
 
@@ -974,8 +984,10 @@ When creating nested queries, make sure the depth is less than 20 or the query s
 
 #### Deep filtering
 
-Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
+
+:::request Example request: Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
 `GET /restaurants?chef.restaurant.star=5`
+:::
 
 ::: warning
 Querying your API with deep filters may cause performance issues.
@@ -1000,17 +1012,19 @@ This feature isn't available for polymorphic relations. This relation type is us
 
 Sort according to a specific field.
 
-#### Example
+#### Examples
 
-##### Sort users by email.
+:::request Example requests: Sort users by email
+`GET /users?_sort=email:ASC` to sort by ascending order
 
-- ASC: `GET /users?_sort=email:ASC`
-- DESC: `GET /users?_sort=email:DESC`
+`GET /users?_sort=email:DESC` to sort by descending order
+:::
 
-##### Sorting on multiple fields
+:::request Example requests: Sorting on multiple fields
+`GET /users?_sort=email:ASC,dateField:DESC`
 
-- `GET /users?_sort=email:asc,dateField:desc`
-- `GET /users?_sort=email:DESC,username:ASC`
+`GET /users?_sort=email:DESC,username:ASC`
+:::
 
 ### Limit
 
@@ -1022,7 +1036,9 @@ The default limit is `100`
 
 ##### Limit the result length to 30.
 
+:::request Example request: Limit the result length to 30. 
 `GET /users?_limit=30`
+:::
 
 You can require the full data set by passing a limit equal to `-1`.
 
@@ -1032,9 +1048,11 @@ Skip a specific number of entries (especially useful for pagination).
 
 #### Example
 
-##### Get the second page of results.
+##### Get the second page of results
 
+::: request Example request: Get the second page of results
 `GET /users?_start=10&_limit=10`
+:::
 
 ### Publication State
 
@@ -1053,13 +1071,19 @@ Handled states are:
 
 ##### Get published articles
 
+:::request Example requests: Get published articles
 `GET /articles`
-OR
+
+or
+
 `GET /articles?_publicationState=live`
+:::
 
 ##### Get both published and draft articles
 
+:::request Example request: Get both published and draft articles
 `GET /articles?_publicationState=preview`
+:::
 
 :::note
 If you only want to retrieve your draft entries, you can combine the `preview` mode and the `published_at` field.

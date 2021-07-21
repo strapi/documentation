@@ -24,7 +24,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```php
 curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
@@ -32,8 +33,8 @@ curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
 
 Running the PHP file on the browser  will give you this response:
 
-
-_Response_
+:::
+::: response Example response
 
 ```json
 [{
@@ -60,6 +61,8 @@ _Response_
   ]
 }]
 ```
+:::
+::::
 ### Example
 
 ```php
@@ -87,7 +90,8 @@ Execute a `POST` request on the `restaurant` Collection Type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
 
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```php
 $restaurants = array(
@@ -109,7 +113,8 @@ curl_setopt($curl, CURLOPT_POST, true);
 
 Running the PHP file on the browser  will give you this response:
 
-_Response_
+:::
+::: response Example response
 
 ```json
 [{
@@ -129,6 +134,8 @@ _Response_
       ]
 }]
 ```
+:::
+::::
 
 ### Example
 
@@ -187,7 +194,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` Collection Type.
 PUT Request is sligtly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```php
 $restaurants = array(
@@ -200,10 +208,10 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 
 ```
+:::
+::: response Example response
 
 Running the PHP file on the browser  will give you this response:
-
-_Response_
 
 ```json
 [{
@@ -223,6 +231,8 @@ _Response_
   ]
 }]
 ```
+:::
+::::
 
 ### Example
 
@@ -293,9 +303,9 @@ putRestaurant();
 
 ```
 
-Running an authentication request (getting JWT)
+Running an authentication request (getting JWT):
 
-_Response_
+::: response
 
 ```json
 
@@ -323,6 +333,7 @@ _Response_
     }
 }]
 ```
+:::
 
 ### Example
 ```php
@@ -367,7 +378,7 @@ print_r($strapi_res);
 
 Running an authenticated POST request with JWT
 
-_Response_
+::: response Example response
 ```json
 [{
     "id": 2,
@@ -386,6 +397,8 @@ _Response_
       ]
 }]
 ```
+:::
+
 ### Example
 ```php
 <?php

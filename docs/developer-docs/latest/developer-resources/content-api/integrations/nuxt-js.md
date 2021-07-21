@@ -13,7 +13,6 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Create a basic Nuxt.js application with [create-nuxt-app](https://github.com/nuxt/create-nuxt-app).
 
-
 <code-group>
 
 <code-block title="NPM">
@@ -78,12 +77,11 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-:::: tabs card
+::::: tabs card
 
-::: tab @nuxtjs/strapi
+:::: tab @nuxtjs/strapi
 
-_Request_
-
+::: request Example GET request with @nuxtjs/strapi
 ```js
 try {
   await this.$strapi.find('restaurants');
@@ -91,13 +89,13 @@ try {
   console.error(error);
 }
 ```
-
 :::
 
-::: tab axios
+::::
 
-_Request_
+:::: tab axios
 
+::: request Example GET request with axios
 ```js
 import axios from 'axios';
 
@@ -105,13 +103,13 @@ axios.get('http://localhost:1337/restaurants').then(response => {
   console.log(response);
 });
 ```
-
 :::
 
-::: tab fetch
+::::
 
-_Request_
+:::: tab fetch
 
+::: request Example GET request with fetch
 ```js
 fetch('http://localhost:1337/restaurants', {
   method: 'GET',
@@ -124,9 +122,10 @@ fetch('http://localhost:1337/restaurants', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
-
+:::response Example response
 ```json
 [
   {
@@ -160,8 +159,8 @@ _Response_
   }
 ]
 ```
+:::
 
-::::
 
 ### Example
 
@@ -320,9 +319,10 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-:::: tabs card
+::::: tabs card
 
-::: tab @nuxtjs/strapi
+:::: tab @nuxtjs/strapi
+::: request Example POST request with @nuxtjs/strapi
 
 ```js
 try {
@@ -337,11 +337,11 @@ try {
 ```
 
 :::
+::::
 
-::: tab axios
+:::: tab axios
 
-_Request_
-
+::: request Example POST request with axios
 ```js
 import axios from 'axios';
 
@@ -357,11 +357,10 @@ axios
 ```
 
 :::
+::::
 
-::: tab fetch
-
-_Request_
-
+:::: tab fetch
+::: request Example POST request with fetch
 ```js
 fetch('http://localhost:1337/restaurants', {
   method: 'POST',
@@ -379,9 +378,10 @@ fetch('http://localhost:1337/restaurants', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
-
+:::response Example response
 ```json
 {
   "id": 2,
@@ -403,8 +403,8 @@ _Response_
   ]
 }
 ```
+:::
 
-::::
 
 ### Example
 
@@ -684,12 +684,13 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-:::: tabs card
+::::: tabs card
 
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
 
-::: tab @nuxtjs/strapi
+:::: tab @nuxtjs/strapi
+::: request Example PUT request with @nuxtjs/strapi
 
 ```js
 try {
@@ -702,11 +703,10 @@ try {
 ```
 
 :::
+::::
 
-::: tab axios
-
-_Request_
-
+:::: tab axios
+::: request Example PUT request with axios
 ```js
 import axios from 'axios';
 
@@ -718,13 +718,12 @@ axios
     console.log(response);
   });
 ```
-
 :::
 
-::: tab fetch
+::::
 
-_Request_
-
+:::: tab fetch
+::: request Example PUT request with fetch
 ```js
 fetch('http://localhost:1337/restaurants/2', {
   method: 'PUT',
@@ -742,9 +741,10 @@ fetch('http://localhost:1337/restaurants/2', {
 ```
 
 :::
+::::
+:::::
 
-_Response_
-
+:::response Example response
 ```json
 {
   "id": 2,
@@ -766,10 +766,9 @@ _Response_
   ]
 }
 ```
+:::
 
-::::
-
-## Starter
+## Starters
 
 - [Nuxt.js Blog starter](https://github.com/strapi/strapi-starter-nuxt-blog).
 - [Nuxt.js E-commerce starter](https://github.com/strapi/strapi-starter-nuxt-e-commerce).
