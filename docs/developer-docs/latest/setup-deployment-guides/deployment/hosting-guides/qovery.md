@@ -68,7 +68,7 @@ All you have to do now is to navigate to your application and click on **Deploy*
 
 That's it. Watch the status and wait till the app is deployed.
 
-To open the application in your browser, click on **Action** and **Open** in your application overview
+To open the application in your browser, click on **Action** and **Open** in your application overview.
 
 ## Support
 Chat with Qovery developers on [Discord](https://discord.qovery.com) if you need help.
