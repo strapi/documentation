@@ -65,31 +65,29 @@
   &.api-call
     padding: 0
     border-radius: 12px
-    margin: 2rem 0 2rem
+    // margin: 2rem 0 2rem
     @media (min-width: 1536px)
       display: flex
-      margin: 3rem -12rem 2rem 0
+      margin: 0 -12rem 2rem 0
       align-items: stretch
-  .request
-    background-color: rgba(62,67,88,.7)
+  &.request
+    background-color: #666687
     padding: 0 1rem 1rem
     border-radius: 12px
-    font-size: 90%
-    color: rgba(241,251,255,.8)
+    font-size: 100%
+    color:#F6F6F9
     @media (min-width: 1536px)
-      flex: 0 0 48%
+      flex: 0 0 44%
       border-radius: 12px 0 0 12px
     .custom-block-title
-      text-transform: uppercase
       margin-left: -1rem
       margin-right: -1rem
       margin-top: 0
       border-radius: 12px 12px 0 0
       padding: .5rem 1rem
-      font-weight: 400
-      background-color: #373D4F
-      background-color: rgba(55,61,79,1)
-      color: #cacaca;
+      font-weight: 700
+      background-color: #32324D
+      color: #F6F6F9
       font-size: 90%;
       @media (min-width: 1536px)
         border-radius: 12px 0 0 0
@@ -105,45 +103,45 @@
     [class^="language-"]
       background-color: transparent
       font-size: 110%
+      &::before
+        color: #EAEAEF
     pre
       padding: 1rem 0 0 1rem
     code
-      color: rgb(241,251,255)
-      background-color: rgba(90,90,90,.5)
+      color: #F6F6F9
+      background-color: #212134
       .token
-        color: rgb(241,251,255)
+        color: #F6F6F9 // catch-all for undefined colors
         &.punctuation
         &.operator
-          color: rgba(241,251,255,.6)
         &.property
-          color: rgb(241,251,255)
+          color: #F6F6F9
         &.string
-          color: rgba(133, 217, 150, 1)
+          color: #B6FFB5
         &.number
-          // color: rgb(245,106,11)
-          color: rgb(244,244,0)
-          // color: rgb(164, 205, 254)
-  .response
-    background-color: rgba(220,226,234,.4)
+          color: #FDED9B
+  &.response
+    background-color: #DCDCE4
     margin-top: 2rem
     padding: 0 1rem 1rem
     border-radius: 12px
-    font-size: 90%
+    font-size: 100%
+    color: #666687
     @media (min-width: 1536px)
-      flex: 0 0 45%
+      flex: 0 0 44%
       margin-top: 0
       border-radius: 0 12px 12px 0
     .extra-class::before
-      color: rgba(42,64,80,.4)
+      color: #666687
     .custom-block-title
-      background-color: rgba(220,226,234,1)
+      background-color: #C0C0CF
+      color: #32324D
       border-radius: 12px 12px 0 0
       margin-left: -1rem
       margin-right: -1rem
-      text-transform: uppercase
       padding: .5rem 1rem
       margin-top: 0
-      font-weight: 400
+      font-weight: 700
       font-size: 90%;
       margin-bottom: .5rem
       @media (min-width: 1536px)
@@ -151,22 +149,25 @@
     [class^="language-"]
       background-color: transparent
       font-size: 110%
+      &::before
+        color: #666687
     pre
       padding: 1rem 0 0 1rem
     code
+      color: #666687 !important
       .token
-        color: rgb(241,251,255)
+        color: #666687 // catch-all for undefined colors
         &.punctuation
         &.operator
-          color: rgba(42,64,80,.4)
         &.property
-          color: rgba(42,64,80,.8)
+          color: #666687
         &.string
-          color: rgba(27,137,70,1)
+          color: #2B7732
         &.number
-          color: rgb(245,106,11)
-  .request
-  .response
+          color: #B7322A
+  &.request
+  &.response
+    margin-top: 2rem
     .extra-class
       font-size: 90%
       border-radius: 6px 0 6px 0
