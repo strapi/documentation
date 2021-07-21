@@ -35,7 +35,7 @@ One project can have multiple apps running. This is convenient to group your bac
 ![Create a new environment](https://hub.qovery.com/img/heroku/heroku-3.png)
 
 ### 4. Add your Strapi app
-* Click on **Create an application**, give a name and select your GitHub or GitLab repository where your Strapi app is located.
+* Click on **Create an application**, give a name and select your GitHub or GitLab repository where your Strapi application is located.
 * Define the main branch name and the root application path.
 * Click on **Create**.
 
