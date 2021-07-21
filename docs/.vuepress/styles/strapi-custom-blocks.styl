@@ -76,9 +76,6 @@
     border-radius: 12px
     font-size: 100%
     color:#F6F6F9
-    @media (min-width: 1536px)
-      flex: 0 0 44%
-      border-radius: 12px 0 0 12px
     .custom-block-title
       margin-left: -1rem
       margin-right: -1rem
@@ -89,8 +86,6 @@
       background-color: #32324D
       color: #F6F6F9
       font-size: 90%;
-      @media (min-width: 1536px)
-        border-radius: 12px 0 0 0
     .custom-block-title+p
       padding-top: 1rem
     p, ul, ol
@@ -113,13 +108,19 @@
       .token
         color: #F6F6F9 // catch-all for undefined colors
         &.punctuation
+          color: #d3d3d3
         &.operator
         &.property
           color: #F6F6F9
         &.string
+        &.attr-name
+        &.function
           color: #B6FFB5
         &.number
+        &.keyword
           color: #FDED9B
+        &.comment
+          color: #d9d9d9
   &.response
     background-color: #DCDCE4
     margin-top: 2rem
@@ -127,10 +128,6 @@
     border-radius: 12px
     font-size: 100%
     color: #666687
-    @media (min-width: 1536px)
-      flex: 0 0 44%
-      margin-top: 0
-      border-radius: 0 12px 12px 0
     .extra-class::before
       color: #666687
     .custom-block-title
@@ -144,8 +141,6 @@
       font-weight: 700
       font-size: 90%;
       margin-bottom: .5rem
-      @media (min-width: 1536px)
-        border-radius: 0 12px 0 0
     [class^="language-"]
       background-color: transparent
       font-size: 110%
@@ -165,6 +160,8 @@
           color: #2B7732
         &.number
           color: #B7322A
+        &.comment
+          color: #8585b2
   &.request
   &.response
     margin-top: 2rem
@@ -172,9 +169,26 @@
       font-size: 90%
       border-radius: 6px 0 6px 0
       pre
-        white-space: pre-wrap
+        // white-space: pre-wrap
         word-break: break-word
         margin-bottom: 0
+
+  &.api-call
+    > .request
+    > .response
+      @media (min-width: 1536px)
+          flex: 0 0 42%
+          max-width: 42%
+    > .request
+      @media (min-width: 1536px)
+        border-radius: 12px 0 0 12px
+        .custom-block-title
+          border-radius: 12px 0 0 0
+    .response
+      @media (min-width: 1536px)
+        border-radius: 0 12px 12px 0
+        .custom-block-title
+          border-radius: 0 12px 0 0
 
 .custom-block.details
   color rgb(44, 62, 80)
