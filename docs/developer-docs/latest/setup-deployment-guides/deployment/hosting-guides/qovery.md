@@ -5,7 +5,7 @@ description: Learn in this guide how to deploy your Strapi application on Qovery
 
 # Qovery
 
-[Qovery](https://www.qovery.com) is a fully-managed cloud platform that runs on your AWS, Digital Ocean and Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
+The following documentation will guide you through the step-by-step deployment of a Strapi project on  [Qovery](https://www.qovery.com). Qovery is a fully-managed cloud platform that runs on your AWS, DigitalOcean and Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
 Qovery provides **free hosting** for individual developers and include the following features:
 * Continuous, automatic builds & deploys from GitHub and GitLab.
