@@ -12,11 +12,7 @@ This integration guide is following the [Quick Start Guide](/developer-docs/late
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
-<<<<<<< HEAD
-### Create a PHP file
 
-Be sure to have PHP installed on your computer.
-=======
 ## Create a PHP file
 
 Be sure to have [PHP installed](https://www.php.net/manual/en/install.php) on your computer.
