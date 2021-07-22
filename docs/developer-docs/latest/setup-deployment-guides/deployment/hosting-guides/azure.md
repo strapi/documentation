@@ -400,7 +400,7 @@ pm2 start ecosystem.config.js
 
 The Strapi PM2 service is now set-up to use an `ecosystem.config.js` to manage your application.
 
-**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md#_2-create-an-administrator-user).
+**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/developer-docs/latest/getting-started/quick-start.md).
 
 #### 4. Starting Strapi on boot and persisting service between reboots
 

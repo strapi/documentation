@@ -5,9 +5,9 @@ description: Build powerful applications using Strapi, the leading open-source h
 
 # Getting Started with Flutter
 
-This integration guide is following the [Getting started guide](/developer-docs/latest/getting-started/quick-start.html). We assume that you have completed [Step 8](/developer-docs/latest/getting-started/quick-start.html#_8-publish-the-content) and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
-If you haven't gone through the getting started guide, the way you request a Strapi API with [Flutter](https://flutter.dev/) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Flutter](https://flutter.dev/) remains the same except that you will not fetch the same content.
 
 ## Create a Flutter application
 
@@ -203,4 +203,4 @@ _Response_
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Dart/Flutter. When you create a Collections Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.html#api-endpoints) available to interact with.
+Here is how to request your Collection Types in Strapi using Dart/Flutter. When you create a Collections Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) available to interact with.

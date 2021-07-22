@@ -164,7 +164,10 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/react',
+              'React'
+            ],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
               'Vue.js',
@@ -216,8 +219,17 @@ const sidebar = {
               '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
               'Flutter',
             ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/go',
+              'Go'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/php',
+              'PHP'
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
+              'Laravel'
+            ],
           ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
@@ -325,6 +337,14 @@ const sidebar = {
           '/user-docs/latest/users-roles-permissions/managing-administrators',
           'Managing administrator accounts',
         ],
+        [
+          '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
+          'Configuring end-users roles',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/managing-end-users',
+          'Managing end-users accounts',
+        ],
       ],
     },
     {
@@ -344,6 +364,7 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
+        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
       ],
     },
   ],
@@ -386,6 +407,11 @@ module.exports = {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
     },
+    'vuepress-plugin-code-copy': {
+      color: '#ffffff',
+      successText: 'Copied to clipboard!',
+    },
+    '@vuepress/back-to-top': {},
   },
   head: [
     [
