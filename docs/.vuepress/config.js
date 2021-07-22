@@ -88,6 +88,10 @@ const sidebar = {
                   '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                   'Render',
                 ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/porter.md',
+                  'Kubernetes with Porter',
+                ],
               ],
               sidebarDepth: 2,
             },
