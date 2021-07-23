@@ -23,4 +23,4 @@ Railway can also be used to deploy existing Strapi projects with an external upl
 
 ### File uploads
 
-Railway's file system is ephemeral which is why you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](/developer-docs/latest/development/plugins/upload.md#create-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
+Railway's file system is ephemeral which is why you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace (see [documentation for installing providers](/developer-docs/latest/development/plugins/upload.md#create-providers)). A list of providers from both Strapi and the community is available on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
