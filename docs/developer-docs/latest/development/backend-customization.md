@@ -705,8 +705,11 @@ module.exports = {
 };
 ```
 
-- `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
+The `find` function accepts the following arguments:
+
+- `params` (object): the filters for the find request,
+
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
 
 ```json
 {
@@ -719,7 +722,7 @@ module.exports = {
 }
 ```
 
-- `populate` (array): you have to mention data you want populate `["author", "author.name", "comment", "comment.content"]`
+- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
 
 :::
 
@@ -741,8 +744,11 @@ module.exports = {
 };
 ```
 
-- `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
+The `find` function accepts the following arguments:
+
+- `params` (object): the filters for the find request.
+
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
 
 ```json
 {
@@ -754,7 +760,7 @@ module.exports = {
 }
 ```
 
-- `populate` (array): you have to mention data you want populate `["author", "author.name", "comment", "comment.content"]`
+- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
 
 :::
 
@@ -981,14 +987,20 @@ module.exports = {
    *
    * @return {Promise}
    */
-  async find(populate) {
-    const results = await strapi.query('restaurant').find({ _limit: 1 }, populate);
+  async find(params, populate) {
+    const results = await strapi.query('restaurant').find({ ...params, _limit: 1 }, populate);
     return _.first(results) || null;
   },
 };
 ```
 
-- `populate` (array): you have to mention data you want populate `["author", "author.name", "comment", "comment.content"]`
+The `find` function accepts the following arguments:
+
+- `params` (object): the filters for the find request.
+
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
+
+- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
 
 :::
 

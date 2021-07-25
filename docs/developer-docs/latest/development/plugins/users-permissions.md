@@ -176,7 +176,7 @@ Let's say that your app frontend is located at: website.com.
 5. The backend uses the given `code` to get from Github an `access_token` that can be used for a period of time to make authorized requests to Github to get the user info (the email of the user of example).
 6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`)
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/auth/github/callback?access_token=eyfvg` that returns the strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address)
-8. The frontend now possesses the user's `jwt`, with means the user is connected and the frontend can make authenticated requests to the backend!
+8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
 
@@ -566,6 +566,63 @@ The use of `ngrok` is not needed.
   - **Client ID**: 84witsxk641rlv
   - **Client Secret**: HdXO7a7mkrU5a6WN
   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/linkedin/redirect`
+
+:::
+::: tab CAS
+
+#### Using ngrok
+
+A remote CAS server can be configured to accept `localhost` URLs or you can run your own CAS server locally that accepts them.
+
+The use of `ngrok` is not needed.
+
+#### CAS configuration
+
+- [CAS](https://github.com/apereo/cas) is an SSO server that supports many different methods of verifying a users identity,
+  retrieving attributes out the user and communicating that information to applications via protocols such as SAML, OIDC, and the CAS protocol. Strapi can use a CAS server for authentication if CAS is deployed with support for OIDC.
+- [CAS](https://github.com/apereo/cas) could already be used by your company or organization or you can setup a local CAS server by cloning the [CAS Overlay](https://github.com/apereo/cas-overlay-template) project or using the newer [CAS Initializr](https://github.com/apereo/cas-initializr) to create an overlay project.
+- The CAS server must be configured so it can act as an [OpenID Connect Provider](https://apereo.github.io/cas/6.3.x/installation/OIDC-Authentication.html)
+- CAS version 6.3.x and higher is known to work with Strapi but older versions that support OIDC may work.
+- Define a CAS OIDC service for Strapi and store it in whichever CAS service registry is being used.
+- The CAS service definition might look something like this for a local strapi deployment:
+
+```json
+{
+  "@class": "org.apereo.cas.services.OidcRegisteredService",
+  "clientId": "thestrapiclientid",
+  "clientSecret": "thestrapiclientsecret",
+  "bypassApprovalPrompt": true,
+  "serviceId": "^http(|s)://localhost:1337/.*",
+  "name": "Local Strapi",
+  "id": 20201103,
+  "evaluationOrder": 50,
+  "attributeReleasePolicy": {
+    "@class": "org.apereo.cas.services.ReturnMappedAttributeReleasePolicy",
+    "allowedAttributes": {
+      "@class": "java.util.TreeMap",
+      "strapiemail": "groovy { return attributes['mail'].get(0) }",
+      "strapiusername": "groovy { return attributes['username'].get(0) }"
+    }
+  }
+}
+```
+
+#### Strapi configuration
+
+- Visit the User Permissions provider settings page <br> [http://localhost:1337/admin/plugins/users-permissions/providers](http://localhost:1337/admin/plugins/users-permissions/providers)
+- Click on the **Cas** provider
+- Fill the information:
+  - **Enable**: `ON`
+  - **Client ID**: thestrapiclientid
+  - **Client Secret**: thestrapiclientsecret
+  - **The redirect URL to your front-end app**: `http://localhost:1337/connect/cas/redirect`
+  - **The Provider Subdomain such that the following URLs are correct for the CAS deployment you are targeting:**
+  ```
+    authorize_url: https://[subdomain]/oidc/authorize
+    access_url: https://[subdomain]/oidc/token
+    profile_url: https://[subdomain]/oidc/profile
+  ```
+  For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`.
 
 :::
 

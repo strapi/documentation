@@ -160,7 +160,10 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/react',
+              'React'
+            ],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
               'Vue.js',
@@ -212,8 +215,17 @@ const sidebar = {
               '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
               'Flutter',
             ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/go',
+              'Go'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/php',
+              'PHP'
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
+              'Laravel'
+            ],
           ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
