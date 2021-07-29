@@ -81,6 +81,8 @@ strapi generate:plugin wysiwyg
 ```
 cd plugins/wysiwyg
 yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+cd ../
+yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 ```
 
 :::
@@ -89,7 +91,9 @@ yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 
 ```
 cd plugins/wysiwyg
-npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+cd ../
+yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 ```
 
 :::
