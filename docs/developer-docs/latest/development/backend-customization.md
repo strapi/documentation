@@ -802,7 +802,7 @@ module.exports = {
 ##### `create`
 
 ```js
-const { isDraft } = require('strapi-utils').contentTypes;
+const { isDraft: checkIsDraft } = require('strapi-utils').contentTypes;
 
 module.exports = {
   /**
@@ -812,7 +812,7 @@ module.exports = {
    */
 
   async create(data, { files } = {}) {
-    const isDraft = isDraft(data, strapi.models.restaurant);
+    const isDraft = checkIsDraft(data, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityCreation(
       strapi.models.restaurant,
       data,
@@ -842,7 +842,7 @@ module.exports = {
 ##### `update`
 
 ```js
-const { isDraft } = require('strapi-utils').contentTypes;
+const { isDraft: checkIsDraft } = require('strapi-utils').contentTypes;
 
 module.exports = {
   /**
@@ -854,7 +854,7 @@ module.exports = {
   async update(params, data, { files } = {}) {
     const existingEntry = await strapi.query('restaurant').findOne(params);
 
-    const isDraft = isDraft(existingEntry, strapi.models.restaurant);
+    const isDraft = checkIsDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
       strapi.models.restaurant,
       data,
