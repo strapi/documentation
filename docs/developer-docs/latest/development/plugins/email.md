@@ -117,7 +117,7 @@ module.exports = ({ env }) => ({
   email: {
     provider: 'sendgrid',
     providerOptions: {
-      apiKey: env('SENDGRID_API_KEY'),
+      apiKey: env('SENDGRID_API_KEY', 'YOUR_API_KEY_HERE'),
     },
     settings: {
       defaultFrom: 'juliasedefdjian@strapi.io',
@@ -128,6 +128,9 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+::: tip
+You **must** set up **either** Sendgrid [Domain Authentication](https://docs.sendgrid.com/ui/account-and-settings/how-to-set-up-domain-authentication) or [Single Sender Verification ](https://docs.sendgrid.com/ui/sending-email/sender-verification) in [Sendgrid settings](https://app.sendgrid.com/settings/sender_auth).
+:::
 
 ::: tip
 If you're using a different provider depending on your environment, you can specify the correct configuration in `config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)
