@@ -85,7 +85,7 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 :::: tabs card
 ::: tab npm
  ```sh
-  npx create-strapi-app my-project
+  npm create-strapi-app my-project
   ```
 ::: 
 ::: tab yarn
