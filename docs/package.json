@@ -9,7 +9,6 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@vuepress/plugin-google-analytics": "^1.7.1",
     "@vuepress/plugin-medium-zoom": "^1.7.1",
     "vuepress": "^1.7.1",
     "vuepress-plugin-code-copy": "^1.0.6",
