@@ -160,10 +160,7 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/react',
-              'React'
-            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
               'Vue.js',
@@ -215,16 +212,11 @@ const sidebar = {
               '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
               'Flutter',
             ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/go',
-              'Go'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/php',
-              'PHP'
-            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
-              'Laravel'
+              'Laravel',
             ],
           ],
         },
@@ -360,7 +352,10 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
-        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
+        [
+          '/user-docs/latest/settings/configuring-users-permissions-plugin-settings',
+          'Configuring Users & Permissions plugin settings',
+        ],
       ],
     },
   ],
@@ -393,9 +388,6 @@ module.exports = {
   plugins: {
     '@vuepress/medium-zoom': {},
     'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
-      ga: 'UA-54313258-1',
-    },
     'check-md': {
       ignore: checklinksIgnoredFiles,
     },
@@ -501,6 +493,11 @@ module.exports = {
         property: 'twitter:image',
         content: 'http://strapi.io/assets/images/strapi-website-preview.png',
       },
+    ],
+    [
+      'script',
+      {},
+      `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KN9JRWG');`,
     ],
   ],
   themeConfig: {
