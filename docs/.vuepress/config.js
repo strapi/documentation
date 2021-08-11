@@ -381,7 +381,7 @@ const checklinksIgnoredFiles = [
 ];
 
 const checkLegacy = () => {
-  if (process.env.NODE_ENV == 'legacy') {
+  if (process.env.DEPLOY_ENV == 'legacy') {
     return '/documentation/';
   } else {
     return '/';
