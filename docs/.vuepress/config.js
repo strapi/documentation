@@ -380,11 +380,19 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
 ];
 
+const checkLegacy = () => {
+  if (process.env.DEPLOY_ENV == 'legacy') {
+    return '/documentation/';
+  } else {
+    return '/';
+  }
+};
+
 module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
-  base: '/documentation/',
+  base: checkLegacy(),
   plugins: {
     '@vuepress/medium-zoom': {},
     'vuepress-plugin-element-tabs': {},
@@ -503,6 +511,10 @@ module.exports = {
   themeConfig: {
     logo: '/assets/logo.png',
     nav: [
+      {
+        text: 'Resource Center',
+        link: 'https://strapi.io/resource-center',
+      },
       {
         text: 'Documentation',
         items: [
