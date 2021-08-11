@@ -214,6 +214,10 @@ const sidebar = {
             ],
             ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
             ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
+              'Laravel',
+            ],
           ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
@@ -321,6 +325,14 @@ const sidebar = {
           '/user-docs/latest/users-roles-permissions/managing-administrators',
           'Managing administrator accounts',
         ],
+        [
+          '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
+          'Configuring end-users roles',
+        ],
+        [
+          '/user-docs/latest/users-roles-permissions/managing-end-users',
+          'Managing end-users accounts',
+        ],
       ],
     },
     {
@@ -340,6 +352,10 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
+        [
+          '/user-docs/latest/settings/configuring-users-permissions-plugin-settings',
+          'Configuring Users & Permissions plugin settings',
+        ],
       ],
     },
   ],
@@ -380,9 +396,6 @@ module.exports = {
   plugins: {
     '@vuepress/medium-zoom': {},
     'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
-      ga: 'UA-54313258-1',
-    },
     'check-md': {
       ignore: checklinksIgnoredFiles,
     },
@@ -390,6 +403,11 @@ module.exports = {
       siteTitle: (_, $site) => $site.title,
       title: $page => $page.title,
     },
+    'vuepress-plugin-code-copy': {
+      color: '#ffffff',
+      successText: 'Copied to clipboard!',
+    },
+    '@vuepress/back-to-top': {},
   },
   head: [
     [
@@ -483,6 +501,11 @@ module.exports = {
         property: 'twitter:image',
         content: 'http://strapi.io/assets/images/strapi-website-preview.png',
       },
+    ],
+    [
+      'script',
+      {},
+      `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KN9JRWG');`,
     ],
   ],
   themeConfig: {

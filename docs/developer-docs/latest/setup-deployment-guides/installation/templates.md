@@ -76,7 +76,29 @@ To create a Strapi template, you need to publish a public GitHub repository that
 
 First, a template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configs, like databases, or upload and email providers. This is to make sure that templates stay maintainable, and to avoid conflicts with other CLI options like `--quickstart`.
 
-Second, a template must follow the following file structure.
+Second, a template must follow the file structure detailed below.
+
+You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-template).
+
+:::: tabs
+
+::: tab yarn
+
+```bash
+yarn strapi generate:template <path>
+```
+
+:::
+
+::: tab npx
+
+```bash
+npx strapi generate:template <path>
+```
+
+:::
+
+::::
 
 ### File structure
 
@@ -133,9 +155,7 @@ After reading the above rules, follow these steps to create your template:
 
 1. Create a standard Strapi app with `create-strapi-app`, using the `--quickstart` option.
 2. Customize your app to match the needs of your use case.
-3. Outside of Strapi, create a new directory for your template.
-4. Create a `template.json` file in your template directory.
+3. Generate your template using the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-template) by running `strapi generate:template <path>`
+4. Navigate to this path to see your generated template
 5. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. Otherwise, leave it as an empty object.
-6. Create a `/template` subdirectory.
-7. Think of all the files you have modified in your app, and copy them to the `/template` directory
-8. Publish the root template project on GitHub. Make sure that the repository is public, and that the code is on the `master` branch.
+6. Publish the root template project on GitHub. Make sure that the repository is public, and that the code is on the `master` branch.

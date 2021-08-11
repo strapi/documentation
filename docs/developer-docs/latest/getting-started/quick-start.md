@@ -1,150 +1,506 @@
 ---
 title: Quick Start Guide - Strapi Developer Documentation
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
+sidebarDepth: 0
+next: ./troubleshooting
 ---
 
 # Quick Start Guide
 
-Get ready to get Strapi up and running in **less than 3 minutes** 🚀.
+<style lang="scss" scoped>
 
-<div class="video-container">
-  <iframe width="853" height="480" src="https://www.youtube.com/embed/zd0_S_FPzKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+  /*
+    Some custom CSS tailored for this Quick Start Guide,
+    so that the text can "breathe" a bit more.
+  */  
+  h2:not(:first-child) {
+    padding-top: 2em;
+  }
 
-_For a step-by-step guide, please take a look at the following steps. This quickstart is really close to the [FoodAdvisor](https://github.com/strapi/foodadvisor) application._
+  h3, h4 {
+    padding-top: 1.5em
+  }
 
-(Before continuing, please make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met) on your machine. You can [install the Yarn v1.2.0+ package here](https://yarnpkg.com/en/).)
+  h4 {
+    font-size: 115%;
+  }
 
-::: warning
-In the 3.1.5 the **Roles & Permissions** section has been migrated into the **Settings** section.
+  ul li, ol li {
+    padding-bottom: .5em;
+  }
+
+  ol li {
+    margin-left: 1em;
+    padding-left: .3em;
+  }
+
+  /*
+    We override the :::warning and :::danger callouts for specific uses here.
+    The CSS is scoped so this won't affect the rest of the docs.
+
+    Eventually this will be turned into custom blocks or VuePress components,
+    once I understand better how markdown-it and markdown-it-custom-block work.
+  */
+  .custom-block.congrats,
+  .custom-block.warning,
+  .custom-block.danger {
+    border-left-width: .25rem;
+  }
+
+  .custom-block.warning {
+    background-color: #f8f8f8;
+    border-color: #bbbbba;
+  }
+
+  .custom-block.warning,
+  .custom-block.danger {
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    .custom-block-title, p, li {
+      color: rgb(44, 62, 80);
+    }
+    a {
+      color: #007eff;
+    }
+  }
+
+  .custom-block.danger {
+    background-color: rgba(129,107,250, .05);
+    border-color: rgb(129,107,250);
+
+    .custom-block-title {
+      color: rgb(129,107,250);
+      font-weight: bold;
+    }
+  }
+
+  .custom-block.details {
+      color: rgb(44, 62, 80);
+  }
+
+</style>
+
+<!-- We use the vuepress-plugin-tabs plugin but customize tabs. -->
+<!-- Not sure why I doesn't work if CSS is scoped 🤷  -->
+<style lang="scss">
+  /* I know some selectors are ugly, but I needed to target the proper nav and not conflict with the other "card"-style tabs embedded */
+  
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav,
+  .el-tabs--card > .el-tabs__header  {
+    border: none !important;
+  }
+
+  .el-tabs--card > .el-tabs__header {
+    padding-top: 3em;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav {
+    width: 100%;
+    height: 62px;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item {
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 110%;
+    width: 50%;
+    border-radius: 0 8px 8px 0 !important;
+    border: solid 1px #bbbbba !important;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active {
+    /* border: none; */
+    /* height: 62px; */
+    /* border-bottom: solid 1px red !important; */
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
+    border-radius: 8px 0 0 8px !important;
+    border-right: none !important;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active) {
+    background-color: #f8f8f8;
+    color: #787878;
+  }
+
+  .image--50 {
+    width: 50%;
+  }
+  .image--right {
+    float: right;
+  }
+</style>
+
+Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
+
+:::warning PREREQUISITES
+
+Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation) on your machine. It is also possible to use Yarn instead of npm (see [install the Yarn package](https://yarnpkg.com/en/)).
+
 :::
 
-## 1. Install Strapi and Create a new project
+👇 Let's get started! Using the big buttons below, please choose between:
 
-:::: tabs
+* the **Hands-on** path for a DIY approach to run your project
+* or the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end.
+
+:::::: tabs type:card
+<!-- we need 5 colons or it will conflict with the callouts markup -->
+
+::::: tab Hands-on
+
+## 🚀  Part A: Create a new project with Strapi
+
+### Step 1: Run the installation script
+
+Run the following command in a terminal:
+
+:::: tabs card
+::: tab npm
+```bash
+  npx create-strapi-app my-project --quickstart
+```
+:::
 
 ::: tab yarn
-
 ```bash
-yarn create strapi-app my-project --quickstart
+  yarn create strapi-app my-project --quickstart
 ```
-
 :::
-
-::: tab npx
-
-```bash
-npx create-strapi-app my-project --quickstart
-```
-
-:::
-
 ::::
 
-## 2. Create an Administrator user
+### Step 2: Register the first administrator user
 
-Navigate to [**http://localhost:1337/admin**](http://localhost:1337/admin).
+Once the installation is complete, your browser automatically opens a new tab.
 
-Complete the form to create the first **Administrator** user.
+By completing the form, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-## 3. Create a Restaurant Content Type
+You now have access to the [admin panel](http://localhost:1337/admin):
 
-Navigate to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
+![admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
-- Click the **"+ Create new collection type"** link
-- Type `restaurant`, and click `Continue`
-- Click the **Text** field
-- Type `name` in the **Name** field
-- Click over to the **ADVANCED SETTINGS** tab, and check the `Required field` and the `Unique field`
-- Click the **"+ Add another Field"** button
-- Click the **Rich Text** field
-- Type `description` under the **BASE SETTINGS** tab, in the **Name** field
-- Click `Finish`
-- Click the **Save** button and wait for Strapi to restart
+:::warning 🥳 CONGRATULATIONS!
+You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
+:::
 
-## 4. Create a Category Content type
+## 🛠 Part B: Build your content
 
-Navigate back to [**PLUGINS** - **Content Type Builder**](http://localhost:1337/admin/plugins/content-type-builder), in the left-hand menu.
+The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
-- Click the **"+ Create new collection type"** link
-- Type `category`, and click `Continue`
-- Click the **Text** field
-- Type `name` under the **BASE SETTINGS** tab, in the **Name** field
-- Click over to the **ADVANCED SETTINGS** tab, and check the `Required field` and the `Unique field`
-- Click the **"+ Add another field"** button
-- Click the **Relation** field
-- On the right side, click the **Category** dropdown and select, `Restaurant`
-- In the center, select the icon that represents `many-to-many`. The text should read, `Categories has and belongs to many Restaurants`
-- Click `Finish`
-- Click the **Save** button and wait for Strapi to restart
+In short, we will create a data structure for your content, then add some entries and publish them, so that the API for your content can be consumed.
 
-## 5. Add content to "Restaurant" Content Type
+The admin panel of Strapi runs at [http://localhost:1337/admin](http://localhost:1337/admin). This is where you will spend most of your time creating and updating content.
 
-Navigate to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), in the left-hand menu.
+:::tip TIP
+If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+:::
 
-- Click on **+ Add New Restaurants** button. Type `Biscotte Restaurant` in the **Name** field. Type `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.` into the **Description** field.
-- Click **Save**.
+### Step 1: Create collection types with the Content-Types Builder
 
-If you navigate back [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), you will see your restaurant listed in the entries.
+The Content-Types Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
-## 6. Add categories to the "Category" Content Type
+#### Create a "Restaurant" collection type
 
-Navigate to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category).
+Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-- Click on **+ Add New Categories** button. Type `French Food` in the **Name** field. Select `Biscotte Restaurant`, on the right in the **Restaurant (0)** dropdown.
-- Click **Save**.
+1. Go to [Plugins > Content-Types Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+2. Click on **Create new collection type**.
+3. Type `restaurant` for the _Display name_, and click **Continue**.  
+4. Click the Text field.
+5. Type `name` in the _Name_ field.
+6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
+7. Click on **Add another Field**.
+8. Choose the Rich Text field.
+9. Type `description` under the _Name_ field, then click **Finish**.
+10. Finally, click **Save** and wait for Strapi to restart.
 
-Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). You will see the **French Food** category listed in the entries.
+![GIF: Create Restaurant collection type in Content-Types Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
-- Click on **+ Add New Categories** button. Type `Brunch` in the **Category** field. **DO NOT ADD** `Biscotte Restaurant` to the `Restaurants` dropdown on the right.
-- Click **Save**.
+Once Strapi has restarted, "Restaurants" is listed under Collection Types in the main navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
 
-You will see the **Brunch** category listed in the entries.
+#### Create a "Category" collection type
 
-Navigate back to [**COLLECTION TYPES** - **Restaurants**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant).
+It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-- Click on `Biscotte Restaurant`.
-- On the right, under **Categories(1)**, `select` the `Add an item...`, and add **Brunch** as a category for this restaurant, and click the **Save** button.
+1. Go to [Plugins > Content-Types Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+2. Click on **Create new collection type**.
+3. Type `category` for the _Display name_, and click **Continue**.
+4. Click the Text field.
+5. Type `name` in the _Name_ field.
+6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
+7. Click on **Add another Field**.
+8. Choose the Relation field.
+9. On the right side, click the _Category_ relational fields box and select "Restaurant".
+10. In the center, select the icon that represents "many-to-many" ![icon many-to-many](../assets/quick-start-guide/icon_manytomany.png). The text should read `Categories has and belongs to many Restaurants`.
 
-You have now seen **two different ways** to use the **relation** field type to add and connect relations between Content Types.
+![](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
-## 7. Set Roles and Permissions
+9. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
-Navigate to [**GENERAL** > **Settings** > **USERS & PERMISSIONS PLUGIN** > **Roles**](http://localhost:1337/admin/settings/users-permissions/roles).
+### Step 2: Use the collection types to create new entries
 
-- Click the **Public** Role.
-- Scroll down under **Permissions**, open the **Application** tab and find **Restaurant**. Click the checkbox next to **find** and **findone**.
-- Repeat and find **Category**. Click the checkbox next to **find** and **findone**.
-- Click **Save**.
+Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", let's use them to actually add content by creating new entries.
+#### Create an entry for the "Restaurant" collection type
 
-## 8. Publish the content
+1. Go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation.
+2. Click on **Add New Restaurants**.
+3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
+4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
+5. Click **Save**.  
 
-By default, any content you create is saved as a draft. To publish your content:
+![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
-Navigate back to [**COLLECTION TYPES** - **Categories**](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category)
+The restaurant is now listed in the [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) view.
 
-- Click the **Draft** button on the **Brunch** category.
-- Click **Publish** button.
-- In the **Please confirm** dialog, click **Yes, publish** button.
-- Repeat for the **French food** category and **Biscotte Restaurant**.
+#### Add Categories
 
-## 9. Consume the Content Type's API
+Let's go to [Collection types > Categories](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) and create 2 categories:
 
-Here we are! The list of **restaurants** is accessible at [`http://localhost:1337/restaurants`](http://localhost:1337/restaurants).
+1. Click on **Add New Categories**.
+2. Type `French Food` in the _Name_ field.
+4. Click **Save**.
+5. Go back to _Collection types > Categories_, then click again on **Add New Categories**.  
+6. Type `Brunch` in the _Name_ field, then click **Save**.
 
-::: tip CONGRATULATIONS
-👏 Congratulations, you have now completed the **Strapi Quick Start**. Where to go next?
+![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
-- Consume your API with your favorite frameworks, frontend or backend programming languages just below.
-- Learn how to use Strapi with React ([Gatsby](https://strapi.io/blog/build-a-static-blog-with-gatsby-and-strapi) or [Next.js](https://strapi.io/blog/nextjs-react-hooks-strapi-food-app-1)) or Vue.js ([Nuxt.js](https://strapi.io/blog/cooking-a-deliveroo-clone-with-nuxt-vue-js-graphql-strapi-and-stripe-setup-part-1-7/)).
-- Have a look at the [Tutorials](https://strapi.io/tutorials) to deep dive into Strapi.
-- Get help on [our community forum](https://forum.strapi.io).
-- Read the [source code](https://github.com/strapi/strapi), [contribute](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) or [give a star](https://github.com/strapi/strapi) on GitHub.
-- Follow us on [Twitter](https://twitter.com/strapijs) to get the latest news.
-- [Join the vibrant and active Strapi community](https://slack.strapi.io) on Slack.
-  :::
+The "French Food" and "Brunch" categories are now listed in the [Collection types > Categories](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category) view.
 
-### Consume your API using one of these technologies:
+#### Add a Category to a Restaurant
 
-  <IntegrationLinks>
-  </IntegrationLinks>
+Go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
+
+In the right sidebar, in the **Categories** drop-down list, select "Brunch".  Click **Save**.
+
+### Step 3: Set Roles & Permissions
+
+We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
+
+1. Click on _General > Settings_ at the bottom of the main navigation.
+2. Under _Users & Permissions Plugin_, choose [Roles](http://localhost:1337/admin/settings/users-permissions/roles).
+3. Click the **Public** role.
+4. Scroll down under _Permissions_.
+5. In the _Application_ tab, find _Restaurant_.
+6. Click the checkboxes next to **find** and **findone**.
+7. Repeat with _Category_: click the checkboxes next to **find** and **findone**.
+8. Finally, click **Save**.
+
+![Screenshot: Public Role in Users & Permissions plugin](../assets/quick-start-guide/qsg-handson-part2-04-roles.png)
+
+### Step 4: Publish the content
+
+By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
+
+First, navigate to [Collection types > Categories](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). From there:
+
+1. Click the "Brunch" entry.
+2. On the next screen, click **Publish**.
+3. In the _Please confirm_ window, click **Yes, publish**.  
+
+Then, go back to the Categories list and repeat for the "French food" category.
+
+Finally, to publish your favorite restaurant, go to [Collection types > Restaurants](http://localhost:1337/admin/plugins/content-manager/collectionType/application::restaurant.restaurant), click the restaurant entry, and **Publish** it.
+
+![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
+### Step 5: Use the API
+
+OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
+
+There you are: the list of restaurants is accessible at [http://localhost:1337/restaurants](http://localhost:1337/restaurants).
+
+Try it now! The result should be similar to the example response below 👇.
+
+::: details Click me to view an example of API response
+
+```json
+[
+  {
+    "id":1,
+    "name":"Biscotte Restaurant",
+    "description":"Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+    "published_at":"2021-05-27T15:46:43.097Z",
+    "created_at":"2021-05-27T15:40:01.290Z",
+    "updated_at":"2021-05-27T15:46:43.110Z",
+    "categories":[
+      {
+        "id":1,
+        "name":"French Food",
+        "published_at":"2021-05-27T15:46:14.704Z",
+        "created_at":"2021-05-27T15:41:59.725Z",
+        "updated_at":"2021-05-27T15:46:14.725Z"
+      },
+      {
+        "id":2,
+        "name":"Brunch",
+        "published_at":"2021-05-27T15:46:02.015Z",
+        "created_at":"2021-05-27T15:42:29.201Z",
+        "updated_at":"2021-05-27T15:46:02.035Z"
+      }
+    ]
+  }
+]
+```
+
+:::
+
+:::warning 🥳 CONGRATULATIONS!  
+Now your content is created, published, and you have permissions to request it through the API.
+Keep on creating amazing content!
+:::
+
+## ⏩  What to do next?
+
+### Consume your API
+
+You can learn how to consume your API with your favorite frameworks, front-end or back-end programming languages by choosing one in the list below.
+
+<IntegrationLinksAlt></IntegrationLinksAlt>
+
+### Deploy your project
+
+The next step is to deploy both your Strapi back end and the front end on the platforms of your choice.
+
+👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
+
+:::::
+
+::::: tab Starters
+
+## 🚀 Part A: Create a new project with Strapi starters
+
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Gatsby, Gridsome, Next, Nuxt).
+
+This quick start guide has been specifically tailored to use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
+
+### Step 1: Run the installation script
+
+To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
+
+:::: tabs card
+::: tab npm
+```bash
+  npx create-strapi-starter my-project gatsby-blog
+```
+:::
+::: tab yarn
+```bash
+  yarn create strapi-starter my-project gatsby-blog
+```
+::::
+
+During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
+
+### Step 2: Register & have a look at your blog
+
+Once the installation is complete, your browser automatically opens 2 tabs:
+
+* The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your application.
+* The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your application, and you can already see the Gatsby blog in action.
+
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="" class="image--50" />
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png" alt="" class="image--50 image--right" />
+
+By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+
+:::warning CONGRATULATIONS! 🥳 
+Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
+
+Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
+:::
+
+## 🎨 Part B: Play with your content
+
+Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster.
+
+We are about to contribute to the blog we have just created. Let's play with your application, by adding yourself as a writer and creating your own article, updating the homepage, and restarting the servers to look at the final result.
+
+:::tip TIP
+If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+:::
+
+### Step 1: Add yourself as a writer
+
+You have several ideas for great articles in mind. But first, the world needs to know who you are!
+
+Click on [Collection types > Writers](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the main navigation, and click the **Add New Writers** button.
+
+![Screenshot: Create a new writer in admin panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
+
+1. Add your _Name_ and _Email_ in the corresponding fields.
+2. Add your favorite selfie in the _Picture_ field. You can either drag and drop an image or click the field and upload a file. Saying 'Cheese!' during the process is optional. 😄
+3. Click **Save**.
+
+### Step 2: Write & publish your first article
+
+To write an article, we need to add a new entry to the "Articles" collection type and fill in a few fields.
+
+![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
+
+Click on [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the main navigation, and click the **Add New Articles** button.
+
+#### Give your article a title, a description, and add some content
+
+1. Type `Hello World!` in the _Title_ field.
+2. Type `My very first article with Strapi` in the _Description_ field.
+3. Write a few lines in the _Content_ field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
+4. Scroll down and add a picture in the _Image_ field.
+
+#### Choose an author and a category for your article
+
+In the sidebar on the right, choose your name in the _Author_ drop-down list. You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
+
+While there, you might also want to choose a _Category_ for your article from the list.
+
+#### Turn your draft into a publication
+
+By default, your new article would be saved as a draft. Let's not be too shy and publish it right away.
+
+To publish an article, click the **Publish** button at the top of the window.
+
+You have just created and published your first article, "Hello World!". You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
+
+### Step 3: Update the `Homepage` single type
+
+It's time to make this blog a bit more yours.
+
+Click on [Single Types > Homepage](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the main navigation. Let's edit this homepage:
+
+1. Replace the image in the _ShareImage_ field.
+2. At the bottom of the page, update the _Title_ to `My Wonderful Strapi Blog` in the _Hero_ field group.
+3. Click **Save**.
+
+### Step 4: Restart the servers to reflect latest changes
+
+Gatsby is a static-site generator. It means that you need to restart the servers for changes to appear on the front end:
+
+1. In your terminal, press `Ctrl-C` to stop the servers.
+2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press Enter.
+3. Restart the servers by typing `npm run develop` (or `yarn develop`) and press Enter.
+
+After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The "Hello World!" article you have just created is also visible at the bottom of the page.
+
+![GIF: Updated Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
+
+:::warning CONGRATULATIONS! 🥳
+Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
+:::
+
+## ⏩  What to do next?
+
+The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi back end comes with a front end ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi back end and the front end on the platforms of your choice:
+
+👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
+
+👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
+
+:::danger 🤓  To go further with starters
+
+* Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
+* Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
+
+:::::
+
+::::::
