@@ -5,6 +5,8 @@ description: This documentation contains all technical documentation related to 
 
 # Welcome to the Strapi developer documentation!
 
+THIS IS A TEST
+
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
 ::: strapi  Can't wait to start using Strapi?
