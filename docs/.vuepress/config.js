@@ -624,6 +624,10 @@ module.exports = {
           },
         ],
       },
+      {
+        text: "We're hiring!",
+        link: 'https://strapi.io/careers#open-positions',
+      },
     ],
     repo: 'strapi/documentation',
     docsDir: 'docs',
