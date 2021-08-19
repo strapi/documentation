@@ -78,6 +78,9 @@ Then you can create a `.env` file or directly use the deployment platform you us
 
 **Path —** `.env`.
 
+::: danger When deploying to production please ensure you set your JWT secret in your ENV. Read more [here](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#server)
+:::
+
 ```
 APP_HOST=10.0.0.1
 NODE_PORT=1338
