@@ -198,14 +198,14 @@ Plugins can add and expose policies into your app. For example, the plugin **Use
       "path": "/restaurants",
       "handler": "Restaurant.find",
       "config": {
-        "policies": ["plugins::users-permissions.is-authenticated"]
+        "policies": ["plugins::users-permissions.isAuthenticated"]
       }
     }
   ]
 }
 ```
 
-The policy `is-authenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
+The policy `isAuthenticated` located in the `users-permissions` plugin will be executed before the `find` action in the `Restaurant.js` controller.
 
 #### API policies
 
