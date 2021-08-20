@@ -18,8 +18,8 @@ Be sure to have [Go installed](https://golang.org/doc/install) on your computer.
 touch strapi.go
 ```
 
-Go has inbuilt module/package needed to make HTTP Requests like GET, POST PUT, DELETE.
-We will use it("net/http") along with other modules/packages.
+Go has built-in packages to make HTTP Requests like GET, POST, PUT, and DELETE.
+We will use the "net/http" package along with other packages.
 
 
 ## GET Request your collection type
