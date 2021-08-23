@@ -1661,6 +1661,12 @@ Additional settings can be set on models:
 - `kind` (string) - Define if the model is a Collection Type (`collectionType`) of a Single Type (`singleType`) - _only for Content Types_
 - `connection` (string) - Connection name which must be used. Default value: `default`.
 - `collectionName` (string) - Collection name (or table name) in which the data should be stored.
+- name fields for Collection Types:
+<!-- ? are singularName and pluralName only used for collection types? -->
+  - `singularName` (string) - Singular form of the Collection Type name, used to generate the API routes and databases/tables collection
+  - `pluralName` (string) -  Plural form
+<!-- ? when is used displayName ? -->
+  - `displayName` (string) -  Default name to use in the UI
 - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_
 - `attributes` (object) - Define the data structure of your model. Find available options [below](#define-the-attributes).
 
@@ -1671,6 +1677,9 @@ Additional settings can be set on models:
   "kind": "collectionType",
   "connection": "mongo",
   "collectionName": "Restaurants_v1",
+  "displayName": "Restaurants",
+  "singularName": "Restaurant",
+  "pluralName:" "Restaurants",
   "globalId": "Restaurants",
   "attributes": {}
 }
