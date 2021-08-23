@@ -1748,19 +1748,26 @@ The following types are currently available:
 - `string`
 - `text`
 - `richtext`
+- `enum`
 - `email`
 - `password`
-- `integer`
-- `biginteger`
-- `float`
-- `decimal`
+- `uid`
 - `date`
 - `time`
 - `datetime`
-- `boolean`
-- `enumeration`
+- `timestamp`
+- `integer`
+- `float`
+- `biginteger`
+- `double`
 - `json`
-- `uid`
+- `boolean`
+- `array`
+- `locale`
+- `localizations`
+- [`relations`](#relations)
+- [`component`](#components)
+- [`dynamiczone`](#dynamic-zone)
 
 #### Validations
 
