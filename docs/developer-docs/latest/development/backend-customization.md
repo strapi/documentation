@@ -1543,24 +1543,6 @@ of the documentation.
 
 :::
 
-::: tab MongoDB
-
-#### Mongoose
-
-Documentation: [https://mongoosejs.com/](https://mongoosejs.com/)
-
-**Example**
-
-```js
-const result = strapi.query('restaurant').model.find({
-  date: { $gte: '2019-01-01T00.00.00Z' },
-});
-
-const fields = result.map(entry => entry.toObject());
-```
-
-:::
-
 ::::
 
 <!--- BEGINNING OF MODELS --->
@@ -1729,9 +1711,9 @@ The info key on the model-json states information about the model. This informat
 
 The options key on the model-json states.
 
-- `timestamps`: This tells the model which attributes to use for timestamps. Accepts either `boolean` or `Array` of strings where first element is create date and second element is update date. Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]` and for MongoDB is `["createdAt", "updatedAt"]`.
+- `timestamps`: This tells the model which attributes to use for timestamps. Accepts either `boolean` or `Array` of strings where first element is create date and second element is update date. Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.
 
-- `privateAttributes`: This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. Accepts an `Array` of strings. It could be used to remove from API responses timestamps or `_v` when using MongoDB. The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration.
+- `privateAttributes`: This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. Accepts an `Array` of strings. It could be used to remove from API responses timestamps. The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration.
 
 - `populateCreatorFields`: Configure whether the API response should include `created_by` and `updated_by` fields or not. Accepts a `boolean`. The default value is `false`.
 
@@ -1773,22 +1755,7 @@ The following types are currently available:
 
 #### Validations
 
-You can apply basic validations to attributes. The following supported validations are _only supported by MongoDB_ database connections.
-If you're using SQL databases, you should use the native SQL constraints to apply them.
-
-- `required` (boolean) — If true, adds a required validator for this property.
-- `unique` (boolean) — Whether to define a unique index on this property.
-- `index` (boolean) — Adds an index on this property, this will create a [single field index](https://docs.mongodb.com/manual/indexes/#single-field) that will run in the background. _Only supported by MongoDB._
-- `max` (integer) — Checks if the value is greater than or equal to the given maximum.
-- `min` (integer) — Checks if the value is less than or equal to the given minimum.
-
-**Security validations**
-
-To improve the Developer Experience when developing or using the administration panel, the framework enhances the attributes with these "security validations":
-
-- `private` (boolean) — If true, the attribute will be removed from the server response. (This is useful to hide sensitive data).
-- `configurable` (boolean) - If false, the attribute isn't configurable from the Content-Types Builder plugin.
-- `autoPopulate` (boolean) - If false, the related data will not populate within REST responses. (This will not stop querying the relational data on GraphQL)
+If you need validations for SQL databases, you should use the native SQL constraints to apply them.
 
 #### Exceptions
 
@@ -1829,9 +1796,9 @@ To improve the Developer Experience when developing or using the administration 
 
 Relations let you create links (relations) between your Content Types.
 
-:::: tabs card
+::::: tabs card
 
-::: tab One-Way
+:::: tab One-Way
 
 One-way relationships are useful to link one entry to one other entry. However, only one of the models can be queried with its linked item.
 
@@ -1865,9 +1832,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab Many-way
+:::: tab Many-way
 
 Many-way relationships are useful to link one entry to many other entries. However, only one of the models can be queried with its linked items.
 
@@ -1901,9 +1868,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab One-to-One
+:::: tab One-to-One
 
 One-to-One relationships are useful when you have one entity that could be linked to only one other entity. _**And vice versa**_.
 
@@ -1950,9 +1917,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab One-to-Many
+:::: tab One-to-Many
 
 One-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to only one entry.
 
@@ -2009,9 +1976,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab Many-to-Many
+:::: tab Many-to-Many
 
 Many-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to many entries.
 
@@ -2027,18 +1994,15 @@ A `product` can be related to many `categories` and a `category` can have many `
     "categories": {
       "collection": "category",
       "via": "products",
-      "dominant": true, // NoSQL only
       "collectionName": "products_categories__categories_products" // SQL only, optional
     }
   }
 }
 ```
 
-**NOTE**:
-(NoSQL databases only) The `dominant` key defines which table/collection should store the array that defines the relationship. Because there are no join tables in NoSQL, this key is required for NoSQL databases (e.g. MongoDB).
-
-**NOTE**:
-(SQL databases only) The `collectionName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
+:::tip NOTE
+The `collectionName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
+:::
 
 **Path —** `./api/category/models/Category.settings.json`.
 
@@ -2067,9 +2031,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab Polymorphic
+:::: tab Polymorphic
 
 Polymorphic relationships are the solution when you don't know which kind of model will be associated to your entry, or when you want to connect different types of models to a model.
 A common use case is an `Image` model that can be associated to different types of models (Article, Product, User, etc.).
@@ -2167,9 +2131,9 @@ An `Image` model might belong to many `Article` models or `Product` models.
 }
 ```
 
-:::
-
 ::::
+
+:::::
 
 ### Components
 
