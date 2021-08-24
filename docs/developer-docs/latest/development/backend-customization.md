@@ -1838,7 +1838,7 @@ If you need validations for SQL databases, you should use the native SQL constra
 Relations let you create links (relations) between your Content Types.
 They should be explicitly defined in the model's attributes:
 
-- `"type": 'relation'`: defines this field is a relation
+- `type: 'relation'`: defines this field is a relation
 - `relation`: the type of relation among these values:
   - `oneToOne`
   - `oneToMany`
