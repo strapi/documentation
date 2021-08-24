@@ -153,7 +153,6 @@ const sidebar = {
       title: '💻 Developer Resources',
       sidebarDepth: 2,
       children: [
-        ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -219,6 +218,15 @@ const sidebar = {
               'Laravel',
             ],
           ],
+        },
+        {
+          title: 'Database APIs Reference',
+          collapsable: false,
+          sidebarDepth: 1,
+          children: [
+            ['/developer-docs/latest/developer-resources/database-api-guides/query-engine-api.md', 'Query Engine API'],
+            ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
+          ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
@@ -455,7 +463,7 @@ const checkLegacy = () => {
 module.exports = {
   title: '',
   port: 8080,
-  description: 'The headless CMS developers love.',  
+  description: 'The headless CMS developers love.',
   base: checkLegacy(),
   plugins: plugins,
   head: [
