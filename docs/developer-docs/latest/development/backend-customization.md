@@ -1555,7 +1555,7 @@ of the documentation.
 
 Models are a representation of the database's structure. They are split into two separate files. A JavaScript file that contains the model options (e.g: lifecycle hooks), and a JSON file that represents the data structure stored in the database.
 
-<!-- ? will these names change: `/api/restaurant/models/lifecycles.js` and `/api/restaurant/models/schema.json maybe`? -->
+<!-- ? will the paths change: `/api/restaurant/models/lifecycles.js` and `/api/restaurant/models/schema.json maybe`? -->
 
 **Path —** `./api/restaurant/models/Restaurant.js`.
 
@@ -2329,7 +2329,7 @@ Dynamic Zone fields let you create a flexible space in which to compose content,
 
 ##### Example
 
-Lets say we created an `slider` and `content` component in `article` category.
+Lets say we created a `slider` and a `content` component in the `article` category.
 
 **Path —** `./api/article/models/Article.settings.json`.
 
