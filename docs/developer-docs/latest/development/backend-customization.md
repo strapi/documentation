@@ -1751,7 +1751,8 @@ The options key on the model-json states.
 }
 ```
 
-### Define the attributes
+### Model attributes
+<!-- TODO: add this to migration plan as the header title has changed from "Define the attributes" to "Model attributes" for consistency -->
 
 #### Types
 
