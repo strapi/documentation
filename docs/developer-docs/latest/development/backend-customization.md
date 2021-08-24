@@ -1602,15 +1602,14 @@ In this example, there is a `Restaurant` model which contains the attributes `co
 
 Another type of model is named `components`. A component is a data structure that can be used in one or many other API's model. There is no lifecycle related, only a JSON file definition.
 
-**Path —** `./components/default/simple.json`
+**Path —** `./components/default/basic.json`
 
 ```json
 {
-  "connection": "default",
-  "collectionName": "components_default_simples",
+  "collectionName": "components_basic_simples",
   "info": {
     "name": "simple",
-    "icon": "arrow-circle-right"
+    "icon": "address-card"
   },
   "options": {},
   "attributes": {
@@ -1620,6 +1619,8 @@ Another type of model is named `components`. A component is a data structure tha
   }
 }
 ```
+
+<!-- ? why did we rename the component 'basic' (filepath, collectionName) but keep the "simple" name? isn't it easier to set everything either to "simple" or to "basic"? -->
 
 In this example, there is a `Simple` component which contains the attribute `name`. And the component is in the category `default`.
 
