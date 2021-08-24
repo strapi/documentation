@@ -65,7 +65,3 @@ Now that 21YunBox is connected to your repo, it will automatically build and pub
 ## Custom domains
 
 Add your own domains to your site easily using 21YunBox's [custom domains](https://www.21yunbox.com/docs/#/custom-domains) guide.
-
-::: tip NOTE
-If you need customized deployment with Strapi, please contact [21YunBox](https://www.21yunbox.com/docs/#/contact).
-:::
