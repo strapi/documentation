@@ -354,7 +354,7 @@ Once the installation is complete, your browser automatically opens 2 tabs:
 
 By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-:::warning CONGRATULATIONS! 🥳 
+:::callout CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
@@ -366,7 +366,7 @@ Strapi [starters](https://strapi.io/starters) build a full stack application and
 
 We are about to contribute to the blog we have just created. Let's play with your application, by adding yourself as a writer and creating your own article, updating the homepage, and restarting the servers to look at the final result.
 
-:::tip TIP
+:::tip
 If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
@@ -445,7 +445,7 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
-:::strapi 🤓  To go further with starters
+:::strapi  To go further with starters
 
 * Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 * Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
