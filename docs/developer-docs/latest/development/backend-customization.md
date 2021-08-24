@@ -1670,6 +1670,7 @@ Additional settings can be set on models:
 - `connection` (string) - Connection name which must be used. Default value: `default`.
 - `collectionName` (string) - Collection name (or table name) in which the data should be stored.
 - name fields for Collection Types:
+<!-- ? do we define singularName/pluralName/displayName here or in the `info` object? -->
 <!-- ? are singularName and pluralName only used for collection types? -->
   - `singularName` (string) - Singular form of the Collection Type name, used to generate the API routes and databases/tables collection
   - `pluralName` (string) -  Plural form of the Collection Type name
@@ -1696,6 +1697,7 @@ Additional settings can be set on models:
 In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the default (sqlite) connection defined in `./config/database.js` (see [database configuration](/developer-docs/latest/setup-deployment-guides/configurations.html#database) documentation).
 
 :::caution
+<!-- ? is this still the case? -->
 If not set manually in the JSON file, Strapi will adopt the filename as `globalId`.
 The `globalId` serves as a reference to your model within relations and Strapi APIs. If you chose to rename it (either by renaming your file or by changing the value of the `globalId`), you'd have to migrate your tables manually and update the references.
 Please note that you should not alter the Strapi's models `globalId` (plugins and core models) since they are used directly within Strapi APIs and other models' relations.
@@ -1792,6 +1794,8 @@ The following types are currently available:
 If you need validations for SQL databases, you should use the native SQL constraints to apply them.
 
 #### Exceptions
+
+<!-- ? are these validation exceptions? -->
 
 **uid**
 
