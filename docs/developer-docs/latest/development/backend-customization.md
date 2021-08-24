@@ -1650,9 +1650,9 @@ When you create a new API using the CLI (`strapi generate:api <name>`), a model 
 
 #### For Components models
 
-To create a component you will have to use the Content-Types Builder from the Admin panel, there is not a cli generator for components.
+To create a component you will have to use the Content-Types Builder from the Admin panel, there is no CLI generator for components.
 
-Or you can create your component manually by following the file path described previously and by following the file structure described below.
+Or you can create your component manually by following the file path described previously and the file structure described below.
 
 ### Model settings
 
