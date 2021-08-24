@@ -1569,6 +1569,12 @@ module.exports = {
 ```
 
 **Path —** `./api/restaurant/models/Restaurant.settings.json`.
+<!-- ? should we update the code example below to reflect what's currently in examples/getstarted?
+  "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    }, -->
 
 ```json
 {
@@ -1660,6 +1666,7 @@ Or you can create your component manually by following the file path described p
 Additional settings can be set on models:
 
 - `kind` (string) - Define if the model is a Collection Type (`collectionType`) of a Single Type (`singleType`) - _only for Content Types_
+<!-- ? is `default` still the default connection value? or should we explicitly call it `sqlite`? -->
 - `connection` (string) - Connection name which must be used. Default value: `default`.
 - `collectionName` (string) - Collection name (or table name) in which the data should be stored.
 - name fields for Collection Types:
