@@ -1555,6 +1555,8 @@ of the documentation.
 
 Models are a representation of the database's structure. They are split into two separate files. A JavaScript file that contains the model options (e.g: lifecycle hooks), and a JSON file that represents the data structure stored in the database.
 
+<!-- ? will these names change: `/api/restaurant/models/lifecycles.js` and `/api/restaurant/models/schema.json maybe`? -->
+
 **Path —** `./api/restaurant/models/Restaurant.js`.
 
 ```js
