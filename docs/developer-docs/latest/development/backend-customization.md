@@ -1846,6 +1846,7 @@ They should be explicitly defined in the model's attributes:
   - `manyToMany`
   <!-- TODO: describe polymorphic relations once implemented -->
 - `target` (string): the name of the target Content Type
+<!-- ? which attribute exactly is used? is it `info.name` in the schema? -->
 - `mappedBy` and `inversedBy` _(optional)_: strings used to define the owning (`mappedBy`) and inverse (`inversedBy`) sides in bidirectional relations
 
 ::::: tabs card
