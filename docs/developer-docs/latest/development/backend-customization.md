@@ -1676,7 +1676,7 @@ Additional settings can be set on models:
 ```json
 {
   "kind": "collectionType",
-  "connection": "mongo",
+  "connection": "default",
   "collectionName": "Restaurants_v1",
   "displayName": "Restaurants",
   "singularName": "Restaurant",
@@ -1686,7 +1686,7 @@ Additional settings can be set on models:
 }
 ```
 
-In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the `mongo` connection defined in `./config/database.js`
+In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the default (sqlite) connection defined in `./config/database.js` (see [database configuration](/developer-docs/latest/setup-deployment-guides/configurations.html#database) documentation).
 
 :::caution
 If not set manually in the JSON file, Strapi will adopt the filename as `globalId`.
