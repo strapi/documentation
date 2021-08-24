@@ -429,7 +429,7 @@ const plugins = [
   }],
   ['vuepress-plugin-container', {
     type: 'warning',
-    before: info => `<div class="custom-block warning"><p class="custom-block-title">⚠️  ${info}</p>`,
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
