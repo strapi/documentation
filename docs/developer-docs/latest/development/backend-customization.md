@@ -1672,7 +1672,7 @@ Additional settings can be set on models:
 - name fields for Collection Types:
 <!-- ? are singularName and pluralName only used for collection types? -->
   - `singularName` (string) - Singular form of the Collection Type name, used to generate the API routes and databases/tables collection
-  - `pluralName` (string) -  Plural form
+  - `pluralName` (string) -  Plural form of the Collection Type name
 <!-- ? when is used displayName ? -->
   - `displayName` (string) -  Default name to use in the UI
 - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_
