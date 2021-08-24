@@ -1833,6 +1833,17 @@ If you need validations for SQL databases, you should use the native SQL constra
 ### Relations
 
 Relations let you create links (relations) between your Content Types.
+They should be explicitly defined in the model's attributes:
+
+- `"type": 'relation'`: defines this field is a relation
+- `relation`: the type of relation among these values:
+  - `oneToOne`
+  - `oneToMany`
+  - `manyToOne`
+  - `manyToMany`
+  <!-- TODO: describe polymorphic relations once implemented -->
+- `target` (string): the name of the target Content Type
+- `mappedBy` and `inversedBy` _(optional)_: strings used to define the owning (`mappedBy`) and inverse (`inversedBy`) sides in bidirectional relations
 
 ::::: tabs card
 
