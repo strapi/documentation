@@ -1680,7 +1680,7 @@ Additional settings can be set on models:
   "collectionName": "Restaurants_v1",
   "displayName": "Restaurants",
   "singularName": "Restaurant",
-  "pluralName:" "Restaurants",
+  "pluralName": "Restaurants",
   "globalId": "Restaurants",
   "attributes": {}
 }
