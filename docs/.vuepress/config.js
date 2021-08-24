@@ -224,7 +224,34 @@ const sidebar = {
           collapsable: false,
           sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/database-api-guides/query-engine-api.md', 'Query Engine API'],
+            {
+              title: 'Query Engine API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+              collapsable: true,
+              // sidebarDepth: 3,
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+                  'Single Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+                  'Bulk Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+                  'Filtering'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+                  'Populating'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+                  'Ordering & Pagination'
+                ],
+              ]
+            },
             ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
           ]
         },

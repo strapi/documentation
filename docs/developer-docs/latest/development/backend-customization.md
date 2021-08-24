@@ -1167,8 +1167,9 @@ qb.query('article').findMany({
 });
 ```
 
-For more details, see the [Query Engine API](/developer-docs/latest/developer-resources/database-api-guides/query-engine-api.md) documentation.
-
+:::strapi
+For more details, see the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) documentation.
+:::
 
 <!--- BEGINNING OF MODELS --->
 
