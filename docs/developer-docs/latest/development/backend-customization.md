@@ -1751,32 +1751,41 @@ The options key on the model-json states.
 
 ### Define the attributes
 
+#### Types
+
 The following types are currently available:
 
-- `string`
-- `text`
-- `richtext`
-- `enum`
-- `email`
-- `password`
-- `uid`
-- `date`
-- `time`
-- `datetime`
-- `timestamp`
-- `integer`
-- `float`
-- `biginteger`
-- `double`
+- string types:
+  - `string`
+  - `text`
+  - `richtext`
+  - `enum`
+  <!-- ? have we decided yet about how the `enum` will be handled in v4? -->
+  - `email`
+  - `password`
+  - `uid`
+- date types:
+  - `date`
+  - `time`
+  - `datetime`
+  - `timestamp`
+- number types:
+  - `integer`
+  - `float`
+  - `double`
+  - `biginteger`
+  <!-- ? it's actually a string in JS, should I move this to the string types? can we define a type as `biginteger` in Strapi v4 ? I found it in kitchensink.settings.json. -->
 - `json`
 - `boolean`
 - `array`
-- `locale`
 - `media`
-- `localizations`
-- [`relations`](#relations)
-- [`component`](#components)
-- [`dynamiczone`](#dynamic-zone)
+- types related to internationalization (see [i18n plugin](/developer-docs/latest/development/plugins/i18n.md)):
+  - `locale`
+  - `localizations`
+- special types unique to Strapi:
+  - [`relations`](#relations)
+  - [`component`](#components)
+  - [`dynamiczone`](#dynamic-zone)
 
 #### Validations
 
