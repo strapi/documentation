@@ -45,10 +45,10 @@ Non-repeatable components are a combination of fields which can be used only onc
 
 By default, the combination of fields are not directly displayed in the edit view:
 
-1. Click on the ![icon add to content](../assets/content-manager/icon_add3.png) button to add the component.
+1. Click on the add button ![Add icon](../assets/icons/add_circle.svg) to add the component.
 2. Fill in the fields of the component.
 
-To delete the non-repeatable component, click on the trash button ![icon delete](../assets/content-manager/icon_delete3.png), located on the top right corner of the component area.
+To delete the non-repeatable component, click on the trash button ![Delete icon](../assets/icons/delete.svg), located on the top right corner of the component area.
 
 #### Repeatable components
 
@@ -58,13 +58,13 @@ Repeatable components are also a combination of fields, but they allow to create
 
 To add a new entry and display its combination of fields:
 
-1. Click on the ![icon add to content](../assets/content-manager/icon_add4.png) **Add new entry** button.
+1. Click on the **Add new entry** button.
 2. Fill in the fields of the component.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
-- Use the drag & drop button ![icon dragdrop](../assets/content-manager/icon_dragdrop.png) to reorder entries of your repeatable component.
-- Use the trash button ![icon delete](../assets/content-manager/icon_delete3.png) to delete an entry from your repeatable component.
+- Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder entries of your repeatable component.
+- Use the trash button ![Delete icon](../assets/icons/delete.svg) to delete an entry from your repeatable component.
 
 ::: note
 Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end-users will read/see the content.
@@ -77,14 +77,14 @@ Dynamic zones are a combination of components, which themselves are composed of 
 ![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone1.png)
 ![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone3.png)
 
-1. Click on the ![icon add to content](../assets/content-manager/icon_add3.png) **Add to content** button.
+1. Click on the ![Add icon](../assets/icons/add_circle.svg) **Add [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the arrow button ![icon reorder](../assets/content-manager/icon_reorder.png) to reorder components in your dynamic zone.
-- Use the trash button ![icon delete](../assets/content-manager/icon_delete3.png) to delete a component from your dynamic zone.
+- Use the arrow buttons ![Up icon](../assets/icons/up2.svg) ![Down icon](../assets/icons/down2.svg) to reorder components in your dynamic zone.
+- Use the trash button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
 
 ::: note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end-users will read/see the content.
