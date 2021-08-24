@@ -1847,219 +1847,206 @@ They should be explicitly defined in the model's attributes:
   <!-- TODO: describe polymorphic relations once implemented -->
 - `target` (string): the name of the target Content Type
 <!-- ? which attribute exactly is used? is it `info.name` in the schema? -->
-- `mappedBy` and `inversedBy` _(optional)_: strings used to define the owning (`mappedBy`) and inverse (`inversedBy`) sides in bidirectional relations
+- `mappedBy` and `inversedBy` _(optional)_: in bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key
 
 ::::: tabs card
 
-:::: tab One-Way
+:::: tab One-to-one
 
-One-way relationships are useful to link one entry to one other entry. However, only one of the models can be queried with its linked item.
+One-to-one relationships are useful to link one entry to another entry.
 
-##### Example
+They can be unidirectional or bidirectional.
+In unidirectional one-to-one relationships, only one of the models can be queried with its linked item.
 
-A `pet` can be owned by someone (a `user`).
+#### Examples
 
-**Path —** `./api/pet/models/Pet.settings.json`.
+Unidirectional:
 
-```json
-{
-  "attributes": {
-    "owner": {
-      "model": "user"
-    }
-  }
-}
-```
-
-**Example**
+<!-- ? are the new paths correct or do we stick with /api/article/models/article.settings.json ? -->
 
 ```js
-// Create a pet
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/pets', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    owner: '5c151d9d5b1d55194d3209be', // The id of the user you want to link
-  })
-);
+// ./api/article/models/schema.json
+const model = {
+  attributes: {
+    category: {
+      type: 'relation',
+      relation: 'oneToOne',
+      target: 'category',
+    },
+  },
+};
+```
+
+Bidirectional:
+
+```js
+// ./api/article/models/schema.json
+const model = {
+  attributes: {
+    category: {
+      type: 'relation',
+      relation: 'oneToOne',
+      target: 'category',
+      inversedBy: 'article',
+    },
+  },
+};
+
+// ./api/category/models/schema.json
+const model = {
+  attributes: {
+    article: {
+      type: 'relation',
+      relation: 'oneToOne',
+      target: 'article',
+      mappedBy: 'category',
+    },
+  },
+};
+
 ```
 
 ::::
 
-:::: tab Many-way
+:::: tab Many-to-One
 
-Many-way relationships are useful to link one entry to many other entries. However, only one of the models can be queried with its linked items.
+Many-to-One relationships are useful to link one entry to many other entries.
 
-##### Example
+They are always unidirectional, so only one of the models can be queried with its linked items.
 
-A `pet` can be owned by many people (multiple `users`).
+#### Example
 
-**Path —** `./api/pet/models/Pet.settings.json`.
-
-```json
-{
-  "attributes": {
-    "owners": {
-      "collection": "user"
-    }
-  }
-}
-```
-
-**Example**
+A book can be written by many authors.
 
 ```js
-// Create a pet
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/pets', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    owners: ['5c151d9d5b1d55194d3209be', '5fc666a5bf16f48ed050ef5b'], // The id of the users you want to link
-  })
-);
+// .api/book/models/schema.json
+const model = {
+  attributes: {
+    author: {
+      type: 'relation',
+      relation: 'manyToOne',
+      target: 'author',
+    },
+  },
+};
+
 ```
 
 ::::
 
-:::: tab One-to-One
+:::: tab One-to-many
 
-One-to-One relationships are useful when you have one entity that could be linked to only one other entity. _**And vice versa**_.
+One-to-Many relationships are useful when:
 
-##### Example
+- an entry from a Content-Type A is linked to many entries of another Content-Type B,
+- while an entry from Content-Type B is linked to only one entry of Content-Type A.
 
-A `user` can have one `address`. And this address is only related to this `user`.
+One-to-many relationships are always bidirectional.
 
-**Path —** `./api/user/models/User.settings.json`.
-
-```json
-{
-  "attributes": {
-    "address": {
-      "model": "address",
-      "via": "user"
-    }
-  }
-}
-```
-
-**Path —** `./api/address/models/Address.settings.json`.
-
-```json
-{
-  "attributes": {
-    "user": {
-      "model": "user"
-    }
-  }
-}
-```
-
-**Example**
+#### Example
 
 ```js
-// Create an address
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/addresses', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    user: '5c151d9d5b1d55194d3209be', // The id of the user you want to link
-  })
-);
-```
+// ./api/book/models/schema.json
+const model = {
+  attributes: {
+    author: {
+      type: 'relation',
+      relation: 'manyToOne',
+      target: 'author',
+      inversedBy: 'books',
+    },
+  },
+};
 
-::::
-
-:::: tab One-to-Many
-
-One-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to only one entry.
-
-##### Example
-
-A `user` can have many `articles`, and an `article` can be related to only one `user` (author).
-
-**Path —** `./api/user/models/User.settings.json`.
-
-```json
-{
-  "attributes": {
-    "articles": {
-      "collection": "article",
-      "via": "author"
-    }
-  }
-}
-```
-
-**Path —** `./api/article/models/Article.settings.json`.
-
-```json
-{
-  "attributes": {
-    "author": {
-      "model": "user"
-    }
-  }
-}
-```
-
-**Examples**
-
-```js
-// Create an article
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/articles', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    author: '5c151d9d5b1d55194d3209be', // The id of the user you want to link
-  })
-);
-
-// Update an article
-const xhr = new XMLHttpRequest();
-xhr.open('PUT', '/users/5c151d9d5b1d55194d3209be', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    articles: ['5c151d51eb28fd19457189f6', '5c151d51eb28fd19457189f8'], // Set of ALL articles linked to the user (existing articles + new article or - removed article)
-  })
-);
+// ./api/author/models/schema.json
+const model = {
+  attributes: {
+    books: {
+      type: 'relation',
+      relation: 'oneToMany',
+      target: 'book',
+      mappedBy: 'author',
+    },
+  },
+};
 ```
 
 ::::
 
 :::: tab Many-to-Many
 
-Many-to-Many relationships are useful when an entry can be linked to multiple entries of another Content Type. And an entry of the other Content Type can be linked to many entries.
+Many-to-Many relationships are useful when:
 
-##### Example
+- an entry from Content-Type A is linked to many entries of Content-Type B,
+- and an entry from Content-Type B is also linked to many entries from Content-Type A.
 
-A `product` can be related to many `categories` and a `category` can have many `products`.
+Many-to-many relationships can be unidirectional or bidirectional.
+#### Examples
 
-**Path —** `./api/product/models/Product.settings.json`.
+Unidirectional:
 
-```json
-{
-  "attributes": {
-    "categories": {
-      "collection": "category",
-      "via": "products",
-      "collectionName": "products_categories__categories_products" // SQL only, optional
-    }
-  }
-}
+```js
+const model = {
+  attributes: {
+    categories: {
+      type: 'relation',
+      relation: 'manyToMany',
+      target: 'category',
+    },
+  },
+};
 ```
 
-:::tip NOTE
+Bidirectional: An `article` can have many `tags` and a `tag` can be assigned to many `articles`.
+
+```js
+// .api/article/models/schema.json
+const model = {
+  attributes: {
+    tags: {
+      type: 'relation',
+      relation: 'manyToMany',
+      target: 'tag',
+      inversedBy: 'articles',
+    },
+  },
+};
+
+// .api/tag/models/schema.json
+const model = {
+  attributes: {
+    articles: {
+      type: 'relation',
+      relation: 'manyToMany',
+      target: 'article',
+      mappedBy: 'tags',
+    },
+  },
+};
+```
+
+Unidirectional:
+
+```js
+const model = {
+  attributes: {
+    categories: {
+      type: 'relation',
+      relation: 'manyToMany',
+      target: 'category',
+    },
+  },
+};
+```
+
+<!-- ? not sure what to do with this note and the following example, that's why I commented them for now -->
+<!-- :::tip NOTE
 The `collectionName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
 :::
 
 **Path —** `./api/category/models/Category.settings.json`.
 
-```json
+```js
 {
   "attributes": {
     "products": {
@@ -2068,25 +2055,10 @@ The `collectionName` key defines the name of the join table. It has to be specif
     }
   }
 }
-```
+``` -->
 
-**Example**
-
-```js
-// Update a product
-const xhr = new XMLHttpRequest();
-xhr.open('PUT', '/products/5c151d9d5b1d55194d3209be', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    categories: ['5c151d51eb28fd19457189f6', '5c151d51eb28fd19457189f8'], // Set of ALL categories linked to the product (existing categories + new category or - removed category).
-  })
-);
-```
-
-::::
-
-:::: tab Polymorphic
+<!-- TODO: uncomment and update this part once polymorphic relations are implemented -->
+<!-- :::: tab Polymorphic
 
 Polymorphic relationships are the solution when you don't know which kind of model will be associated to your entry, or when you want to connect different types of models to a model.
 A common use case is an `Image` model that can be associated to different types of models (Article, Product, User, etc.).
@@ -2184,7 +2156,7 @@ An `Image` model might belong to many `Article` models or `Product` models.
 }
 ```
 
-::::
+:::: -->
 
 :::::
 
