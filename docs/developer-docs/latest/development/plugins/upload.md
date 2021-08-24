@@ -241,15 +241,9 @@ Code
       if (!['submit', 'file'].includes(currentElement.type)) {
         data[currentElement.name] = currentElement.value;
       } else if (currentElement.type === 'file') {
-        if (currentElement.files.length === 1) {
-          const file = currentElement.files[0];
+        for (let i = 0; i < currentElement.files.length; i++) {
+          const file = currentElement.files[i];
           formData.append(`files.${currentElement.name}`, file, file.name);
-        } else {
-          for (let i = 0; i < currentElement.files.length; i++) {
-            const file = currentElement.files[i];
-
-            formData.append(`files.${currentElement.name}`, file, file.name);
-          }
         }
       }
     }
