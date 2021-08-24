@@ -1764,6 +1764,7 @@ The following types are currently available:
 - `boolean`
 - `array`
 - `locale`
+- `media`
 - `localizations`
 - [`relations`](#relations)
 - [`component`](#components)
