@@ -2062,11 +2062,172 @@ xhr.send(
 
 The lifecycle hooks are functions that get triggered when the Strapi [`queries`](/developer-docs/latest/development/backend-customization.md#queries) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
 
-To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `{modelName}.js` file located in the `./api/{apiName}/models` folder.
 
-#### Available Lifecycle hooks
 
-:::: tabs card
+<!-- TODO: add to migration plan https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#available-lifecycle-hooks → http://localhost:8080/documentation/developer-docs/latest/development/backend-customization.html#available-lifecycle-events -->
+#### Available lifecycle events
+
+The following lifecycle events are available:
+
+- `beforeCreate`
+- `beforeCreateMany`
+- `afterCreate`
+- `afterCreateMany`
+- `beforeUpdate`
+- `beforeUpdateMany`
+- `afterUpdate`
+- `afterUpdateMany`
+- `beforeDelete`
+- `beforeDeleteMany`
+- `afterDelete`
+- `afterDeleteMany`
+- `beforeCount`
+- `afterCount`
+- `beforeFindOne`
+- `afterFindOne`
+- `beforeFindMany`
+- `afterFindMany`
+
+#### Declarative usage
+
+To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `lifecycles.js` file located in the `./api/{apiName}/models` folder.
+
+Each event listener is called sequentially. They can be synchronous or asynchronous.
+
+##### Example
+
+**Path —** `./api/restaurant/models/lifecycles.js`.
+
+```js
+const myContentType = {
+  lifecycles: {
+    beforeCreate(event: Event) {
+      const { data, where, select, populate } = event.params;
+
+      // let's do a 20% discount everytime
+      event.params.data.price = event.params.data.price * 0.8;
+    },
+
+    afterCreate(event: Event) {
+      const { result, params } = event;
+
+      // do something to the result;
+    },
+  },
+};
+```
+
+The hook receives an `event` parameter with the following format:
+
+- `action` (string): the lifecycle event (see [list](#available-lifecycle-events))
+- `model` (string): the model name
+- `em`: the EntityManager
+- `params` (object):
+  - `data`
+  - `select`
+  - `where`
+  - `orderBy`
+  - `limit`
+  - `offset`
+  - `populate`
+- `result` (optional, only available with `afterXXX` events)
+- `state` (object): the query state, can be used to share state between before and after events of a same query
+
+<!-- TODO: update code in TIP below and check if it works:
+beforeCreate(data) → beforeCreate(event)
+data.name → event.params.data.name -->
+
+::: tip
+You can mutate one of the parameters to change its properties. Make sure not to reassign the parameter as it will have no effect:
+
+This will work:
+
+```js
+module.exports = {
+  lifecycles: {
+    beforeCreate(data) {
+      data.name = 'Some fixed name';
+    },
+  },
+};
+```
+
+This will NOT work:
+
+```js
+module.exports = {
+  lifecycles: {
+    beforeCreate(data) {
+      data = {
+        ...data,
+        name: 'Some fixed name',
+      };
+    },
+  },
+};
+```
+
+:::
+
+#### Programmatic usage
+
+You can also register a subscriber and listen to the event by tapping into the database layer API:
+
+```js
+// registering a subscriber
+strapi.db.lifecycles.subscribe({
+  models: [], // optional;
+
+  beforeCreate(event: Event) {
+    const { data, where, select, populate } = event.params;
+
+    event.state = 'doStuffAfterWards';
+  },
+
+  afterCreate(event: Event) {
+    if (event.state === 'doStuffAfterWards') {
+    }
+
+    const { result, params } = event;
+
+    // do something to the result
+  },
+});
+
+// generic subscribe for generic handling
+strapi.db.lifecycles.subscribe((event) => {
+  if (event.action === 'beforeCreate') {
+    // do something
+  }
+});
+```
+
+#### Custom use
+
+When you are building custom ORM specific queries the lifecycles will not be triggered. You can however call a lifecycle function directly if you wish.
+
+**Bookshelf example**
+
+**Path -** `./api/{apiName}/services/{serviceName}.js`
+
+```js
+module.exports = {
+  async createCustomEntry() {
+    const ORMModel = strapi.query(modelName).model;
+
+    const newCustomEntry = await ORMModel.forge().save();
+
+    // trigger manually
+    ORMModel.lifecycles.afterCreate(newCustomEntry.toJSON());
+  },
+};
+```
+
+::: tip
+When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
+:::
+
+<!-- :::: tabs card
 
 ::: tab find
 
@@ -2258,81 +2419,9 @@ _Parameters:_
 
 :::
 
-::::
+:::: -->
 
-#### Example
 
-**Path —** `./api/restaurant/models/Restaurant.js`.
-
-```js
-module.exports = {
-  /**
-   * Triggered before user creation.
-   */
-  lifecycles: {
-    async beforeCreate(data) {
-      data.isTableFull = data.numOfPeople === 4;
-    },
-  },
-};
-```
-
-::: tip
-You can mutate one of the parameters to change its properties. Make sure not to reassign the parameter as it will have no effect:
-
-This will work:
-
-```js
-module.exports = {
-  lifecycles: {
-    beforeCreate(data) {
-      data.name = 'Some fixed name';
-    },
-  },
-};
-```
-
-This will NOT work:
-
-```js
-module.exports = {
-  lifecycles: {
-    beforeCreate(data) {
-      data = {
-        ...data,
-        name: 'Some fixed name',
-      };
-    },
-  },
-};
-```
-
-:::
-
-#### Custom use
-
-When you are building custom ORM specific queries the lifecycles will not be triggered. You can however call a lifecycle function directly if you wish.
-
-**Bookshelf example**
-
-**Path -** `./api/{apiName}/services/{serviceName}.js`
-
-```js
-module.exports = {
-  async createCustomEntry() {
-    const ORMModel = strapi.query(modelName).model;
-
-    const newCustomEntry = await ORMModel.forge().save();
-
-    // trigger manually
-    ORMModel.lifecycles.afterCreate(newCustomEntry.toJSON());
-  },
-};
-```
-
-::: tip
-When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
-:::
 
 <!--- BEGINNING OF WEBHOOKS --->
 
