@@ -151,6 +151,7 @@ const sidebar = {
     {
       collapsable: false,
       title: '💻 Developer Resources',
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       sidebarDepth: 2,
       children: [
         {
