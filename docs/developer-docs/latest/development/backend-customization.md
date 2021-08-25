@@ -1387,7 +1387,7 @@ The options key on the model-json states.
 
 #### Types
 
-The following types are currently available:
+The following types are available:
 
 - string types:
   - `string`
