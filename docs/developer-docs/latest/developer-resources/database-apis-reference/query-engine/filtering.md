@@ -33,7 +33,7 @@ const entries = await db.query('article').findMany({
 });
 ```
 
-`$and` will be used implicitly when passing an object with nested conditions.
+`$and` will be used implicitly when passing an object with nested conditions:
 
 ```js
 const entries = await db.query('article').findMany({

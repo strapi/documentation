@@ -36,7 +36,7 @@ db.query('article').findMany({
 });
 ```
 
-You can also apply where filters and select or populate nested relations:
+Complex populating can also be achieved by applying `where` filters and select or populate nested relations:
 
 ```js
 db.query('article').findMany({
@@ -58,7 +58,7 @@ db.query('article').findMany({
     },
 
     // NOTE: We can't do the same on dynamic zones as their polymorphic nature prevents it for now.
-    // We will explore some concepts like graphQL fragments to allow this later on
+    // We will explore some concepts like GraphQL fragments to allow this later on
     dynamiczoneA: true,
   },
 });

@@ -14,14 +14,14 @@ Syntax: `findOne(parameters) ⇒ Entry`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| where    | [`WhereParam`](#filtering)     | Filter                                     |
-| limit    | `number`                       | Always `1` when used with `findOne`        |
-| offset   | `number`                       | How many entries to skip                   |
-| orderBy  | [`OrderByParam`](#ordering)    | How to order the entries                   |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
+| Parameter    | Type                           | Description                                |
+| ------------ | ------------------------------ | ------------------------------------------ |
+| select       | `string[]`                     | Select some attributes to return           |
+| where        | [`WhereParam`](#filtering)     | Filter                                     |
+| limit        | `number`                       | Always `1` when used with `findOne`        |
+| offset       | `number`                       | How many entries to skip                   |
+| orderBy      | [`OrderByParam`](#ordering)    | How to order the entries                   |
+| populate     | [`PopulateParam`](#populating) | Select which relations should be populated |
 
 ### Example
 
@@ -42,14 +42,14 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| where    | [`WhereParam`](#filtering)     | Filter                                     |
-| limit    | `number`                       | How many entries to return                 |
-| offset   | `number`                       | How many entries to skip                   |
-| orderBy  | [`OrderByParam`](#ordering)    | How to order the entries                   |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
+| Parameter | Type                           | Description                                |
+| --------- | ------------------------------ | ------------------------------------------ |
+| select    | `string[]`                     | Select some attributes to return           |
+| where     | [`WhereParam`](#filtering)     | Filter                                     |
+| limit     | `number`                       | How many entries to return                 |
+| offset    | `number`                       | How many entries to skip                   |
+| orderBy   | [`OrderByParam`](#ordering)    | How to order the entries                   |
+| populate  | [`PopulateParam`](#populating) | Select which relations should be populated |
 
 ### Example
 
@@ -70,14 +70,14 @@ Syntax: `findWithCount(parameters) => [Entry[], number]`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| where    | [`WhereParam`](#filtering)     | Filter                                     |
-| limit    | `number`                       | How many entries to return                 |
-| offset   | `number`                       | How many entries to skip                   |
-| orderBy  | [`OrderByParam`](#ordering)    | How to order the entries                   |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
+| Parameter | Type                           | Description                                |
+| --------- | ------------------------------ | ------------------------------------------ |
+| select    | `string[]`                     | Select some attributes to return           |
+| where     | [`WhereParam`](#filtering)     | Filter                                     |
+| limit     | `number`                       | How many entries to return                 |
+| offset    | `number`                       | How many entries to skip                   |
+| orderBy   | [`OrderByParam`](#ordering)    | How to order the entries                   |
+| populate  | [`PopulateParam`](#populating) | Select which relations should be populated |
 
 ### Example
 
@@ -98,11 +98,11 @@ Syntax: `create(parameters) => Entry`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
-| data     | `object`                       | Input data                                 |
+| Parameter | Type                           | Description                                |
+| --------- | ------------------------------ | ------------------------------------------ |
+| select    | `string[]`                     | Select some attributes to return           |
+| populate  | [`PopulateParam`](#populating) | Select which relations should be populated |
+| data      | `object`                       | Input data                                 |
 
 ### Example
 
@@ -122,12 +122,12 @@ Syntax: `update(parameters) => Entry`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
-| where    | [`WhereParam`](#filtering)     | Filter                                     |
-| data     | `object`                       | Input data                                 |
+| Parameter | Type                           | Description                                |
+| --------- | ------------------------------ | ------------------------------------------ |
+| select    | `string[]`                     | Select some attributes to return           |
+| populate  | [`PopulateParam`](#populating) | Select which relations should be populated |
+| where     | [`WhereParam`](#filtering)     | Filter                                     |
+| data      | `object`                       | Input data                                 |
 
 ### Example
 
@@ -148,11 +148,11 @@ Syntax: `delete(parameters) => Entry`
 
 ### Parameters
 
-| Param    | Type                           | Description                                |
-| -------- | ------------------------------ | ------------------------------------------ |
-| select   | `string[]`                     | Select some attributes to return           |
-| populate | [`PopulateParam`](#populating) | Select which relations should be populated |
-| where    | [`WhereParam`](#filtering)     | Filter                                     |
+| Parameter | Type                           | Description                                |
+| --------- | ------------------------------ | ------------------------------------------ |
+| select    | `string[]`                     | Select some attributes to return           |
+| populate  | [`PopulateParam`](#populating) | Select which relations should be populated |
+| where     | [`WhereParam`](#filtering)     | Filter                                     |
 
 ### Example
 

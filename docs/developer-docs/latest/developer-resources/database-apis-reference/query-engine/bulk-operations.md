@@ -19,9 +19,9 @@ Syntax: `createMany(parameters) => { count: number }`
 
 ### Parameters
 
-| Param | Type       | Description         |
-| ----- | ---------- | ------------------- |
-| data  | `object[]` | Array of input data |
+| Parameter | Type       | Description         |
+| --------- | ---------- | ------------------- |
+| data      | `object[]` | Array of input data |
 
 ### Example
 
@@ -48,10 +48,10 @@ Syntax: `updateMany(parameters) => { count: number }`
 
 ### Parameters
 
-| Param | Type                       | Description         |
-| ----- | -------------------------- | ------------------- |
-| where | [`WhereParam`](#filtering) | Filter              |
-| data  | `object`                   | Array of input data |
+| Parameter | Type                       | Description         |
+| --------- | -------------------------- | ------------------- |
+| where     | [`WhereParam`](#filtering) | Filter              |
+| data      | `object`                   | Array of input data |
 
 ### Example
 
@@ -76,9 +76,9 @@ Syntax: `deleteMany(parameters) => { count: number }`
 
 ### Parameters
 
-| Param | Type                       | Description |
-| ----- | -------------------------- | ----------- |
-| where | [`WhereParam`](#filtering) | Filter      |
+| Parameter | Type                       | Description |
+| --------- | -------------------------- | ----------- |
+| where     | [`WhereParam`](#filtering) | Filter      |
 
 ### Example
 
@@ -104,9 +104,9 @@ Syntax: `count(parameters) => number`
 
 #### Parameters
 
-| Param | Type                       | Description |
-| ----- | -------------------------- | ----------- |
-| where | [`WhereParam`](#filtering) | Filter      |
+| Parameter | Type                       | Description |
+| --------- | -------------------------- | ----------- |
+| where     | [`WhereParam`](#filtering) | Filter      |
 
 ```js
 const count = await db.query('article').count({
