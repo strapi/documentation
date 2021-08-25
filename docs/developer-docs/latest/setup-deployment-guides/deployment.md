@@ -95,7 +95,13 @@ npm install cross-env
 Then in your `package.json` scripts section:
 
 ```bash
-"production": "cross-env NODE_ENV=production npm run build"
+"build:win": "cross-env NODE_ENV=production npm run build",
+```
+
+And run:
+
+```bash
+npm run build:win
 ```
 
 :::
@@ -131,7 +137,13 @@ npm install cross-env
 Then in your `package.json` scripts section:
 
 ```bash
-"production": "cross-env NODE_ENV=production npm start"
+"start:win": "cross-env NODE_ENV=production npm start",
+```
+
+And run:
+
+```bash
+npm run start:win
 ```
 
 :::
