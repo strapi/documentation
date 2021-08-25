@@ -2088,9 +2088,29 @@ The following lifecycle events are available:
 - `beforeFindMany`
 - `afterFindMany`
 
+#### Hook `event` object
+
+Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
+
+<!-- TODO: validate the type and description of every parameter -->
+- `action` (string): the lifecycle event (see [list](#available-lifecycle-events))
+- `model` (string): the model name
+- `em`: the EntityManager
+- `params` (object):
+  - `data`
+  - `select`
+  - `where`
+  - `orderBy`
+  - `limit`
+  - `offset`
+  - `populate`
+- `result` (optional, only available with `afterXXX` events): contains the result of the action
+- `state` (object): the query state, can be used to share state between `beforeXXX` and `afterXXX` events of a same query
+<!-- TODO: `state` has not been implemented yet, ask for more info once done -->
+
 #### Declarative usage
 
-To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in the `lifecycles.js` file located in the `./api/{apiName}/models` folder.
+To configure a `ContentType` lifecycle hook, set a `lifecycles` key in the `lifecycles.js` file located in the `./api/{content-type-name}/models` folder.
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
@@ -2117,21 +2137,6 @@ const myContentType = {
 };
 ```
 
-The hook receives an `event` parameter with the following format:
-
-- `action` (string): the lifecycle event (see [list](#available-lifecycle-events))
-- `model` (string): the model name
-- `em`: the EntityManager
-- `params` (object):
-  - `data`
-  - `select`
-  - `where`
-  - `orderBy`
-  - `limit`
-  - `offset`
-  - `populate`
-- `result` (optional, only available with `afterXXX` events)
-- `state` (object): the query state, can be used to share state between before and after events of a same query
 
 <!-- TODO: update code in TIP below and check if it works:
 beforeCreate(data) → beforeCreate(event)
@@ -2171,7 +2176,7 @@ module.exports = {
 
 #### Programmatic usage
 
-You can also register a subscriber and listen to the event by tapping into the database layer API:
+Using the database layer API, it's possible to register a subscriber and listen to events programmatically:
 
 ```js
 // registering a subscriber
@@ -2203,6 +2208,7 @@ strapi.db.lifecycles.subscribe((event) => {
 ```
 
 #### Custom use
+<!-- ? is this section still relevant ? -->
 
 When you are building custom ORM specific queries the lifecycles will not be triggered. You can however call a lifecycle function directly if you wish.
 
