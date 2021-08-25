@@ -32,12 +32,14 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
 $restaurants = $strapi->collection('restaurants');
 ```
+:::
 
 You may now iterate over the $restaurants array which will contain all your restaurants. More options are available as well: 
 

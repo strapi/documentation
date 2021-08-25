@@ -21,7 +21,7 @@ To enable and configure a provider:
 4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#setting-up-the-provider-examples)).
 5. Click on the **Save** button.
 
-::: tip NOTE
+::: note
 Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#adding-a-new-provider-to-your-project)).
 :::
 

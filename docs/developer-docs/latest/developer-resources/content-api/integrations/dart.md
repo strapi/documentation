@@ -42,7 +42,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```dart
 Map<String,String> headers = {
@@ -57,8 +58,9 @@ var response = await http.get(
 
 print(response.body)
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 [
@@ -93,6 +95,8 @@ _Response_
   }
 ]
 ```
+:::
+::::
 
 ### Example
 
@@ -127,7 +131,8 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```dart
 Map<String,String> headers = {
@@ -145,8 +150,9 @@ var response = await http.post(
   });
 );
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -169,6 +175,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -215,7 +223,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```dart
 Map<String,String> headers = {
@@ -231,8 +240,9 @@ var response = await http.put(
   });
 );
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -255,6 +265,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 

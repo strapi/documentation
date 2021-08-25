@@ -4,37 +4,13 @@ description: Quickly deploy a Strapi application using the official Platform.sh 
 sidebarDepth: 1
 ---
 
-<style lang="scss" scoped>
-  /*
-    We override the :::warning callout for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.warning {
-    border-left-width: .25rem;
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-    /* margin-top: 2em; */
-    /* margin-bottom: 2em; */
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-</style>
-
 # Platform.sh One-Click
 
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 
 Platform.sh is a Platform as a Service (PaaS) that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.
 
-::: warning PREREQUISITES
+::: prerequisites
 A Platform.sh account is necessary to follow this installation guide. Please visit the [Platform.sh website](https://console.platform.sh/) to create an account if you don't already have one.
 :::
 

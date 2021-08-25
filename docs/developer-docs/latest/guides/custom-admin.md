@@ -36,7 +36,7 @@ In this new file, paste the current [HomePage container](https://github.com/stra
 
 To run your application, run the following command:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -114,7 +114,7 @@ In this new file, paste the current [dateFormats](https://github.com/strapi/stra
 
 To run your application, run the following command:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

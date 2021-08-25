@@ -34,51 +34,6 @@ next: ./troubleshooting
     padding-left: .3em;
   }
 
-  /*
-    We override the :::warning and :::danger callouts for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.congrats,
-  .custom-block.warning,
-  .custom-block.danger {
-    border-left-width: .25rem;
-  }
-
-  .custom-block.warning {
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-  }
-
-  .custom-block.warning,
-  .custom-block.danger {
-    margin-top: 2em;
-    margin-bottom: 2em;
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-
-  .custom-block.danger {
-    background-color: rgba(129,107,250, .05);
-    border-color: rgb(129,107,250);
-
-    .custom-block-title {
-      color: rgb(129,107,250);
-      font-weight: bold;
-    }
-  }
-
-  .custom-block.details {
-      color: rgb(44, 62, 80);
-  }
-
 </style>
 
 <!-- We use the vuepress-plugin-tabs plugin but customize tabs. -->
@@ -110,12 +65,6 @@ next: ./troubleshooting
     border: solid 1px #bbbbba !important;
   }
 
-  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active {
-    /* border: none; */
-    /* height: 62px; */
-    /* border-bottom: solid 1px red !important; */
-  }
-
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
     border-radius: 8px 0 0 8px !important;
     border-right: none !important;
@@ -136,10 +85,8 @@ next: ./troubleshooting
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
-:::warning PREREQUISITES
-
+::: prerequisites
 Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation) on your machine. It is also possible to use Yarn instead of npm (see [install the Yarn package](https://yarnpkg.com/en/)).
-
 :::
 
 👇 Let's get started! Using the big buttons below, please choose between:
@@ -158,19 +105,21 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 Run the following command in a terminal:
 
-:::: tabs card
-::: tab npm
-```bash
-  npx create-strapi-app my-project --quickstart
-```
-:::
+<code-group>
 
-::: tab yarn
+<code-block title="NPM">
 ```bash
-  yarn create strapi-app my-project --quickstart
+npx create-strapi-starter my-project gatsby-blog
 ```
-:::
-::::
+</code-block>
+
+<code-block title="YARN">
+```bash
+yarn create strapi-starter my-project gatsby-blog
+```
+</code-block>
+
+</code-group>
 
 ### Step 2: Register the first administrator user
 
@@ -182,7 +131,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 
 ![admin panel screenshot glimpse](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
-:::warning 🥳 CONGRATULATIONS!
+::: callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 :::
 
@@ -346,7 +295,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 :::
 
-:::warning 🥳 CONGRATULATIONS!  
+::: callout 🥳 CONGRATULATIONS!  
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
@@ -405,7 +354,7 @@ Once the installation is complete, your browser automatically opens 2 tabs:
 
 By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-:::warning CONGRATULATIONS! 🥳 
+:::callout CONGRATULATIONS! 🥳 
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
@@ -417,7 +366,7 @@ Strapi [starters](https://strapi.io/starters) build a full stack application and
 
 We are about to contribute to the blog we have just created. Let's play with your application, by adding yourself as a writer and creating your own article, updating the homepage, and restarting the servers to look at the final result.
 
-:::tip TIP
+:::tip
 If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
@@ -484,7 +433,7 @@ After a few moments, you should see your blog with its updated title running at 
 
 ![GIF: Updated Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
-:::warning CONGRATULATIONS! 🥳
+:::callout CONGRATULATIONS! 🥳
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
@@ -496,7 +445,7 @@ The beauty of using Strapi [starters](https://strapi.io/starters) is that the St
 
 👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
 
-:::danger 🤓  To go further with starters
+:::strapi  To go further with starters
 
 * Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 * Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.

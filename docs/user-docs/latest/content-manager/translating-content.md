@@ -18,7 +18,7 @@ In the Content Manager, when the Internationalization plugin is installed, some 
 
 The Internationalization plugin also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organised differently as well.
 
-::: warning IMPORTANT
+::: caution
 Content can only be managed one locale at the time. It is not possible to edit or publish content for several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).
 :::
 
@@ -29,6 +29,6 @@ To translate content in another locale:
 3. Choose the locale in which you want to translate your content.
 4. Translate your content by filling up your content-type's fields (see [Writing content](writing-content.md)). 
 
-::: tip 💡 TIP
+::: tip
 Click on the **Fill in form** button in the Internationalization box for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::

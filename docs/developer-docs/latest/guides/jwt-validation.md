@@ -101,6 +101,6 @@ module.exports = async (ctx, next) => {
     }
 ```
 
-::: warning
+:::caution
 In the code example we use `axios`, so you will have to install the dependency to make it work. You can choose another library if you prefer.
 :::

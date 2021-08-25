@@ -54,7 +54,7 @@ module.exports = {
   }
 }
 ```
-::: warning
+:::caution
   Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
 :::
 
@@ -126,8 +126,8 @@ To upload files into your application.
 </script>
 ```
 
-::: warning
-You have to send FormData in your request body
+:::caution
+You have to send FormData in your request body.
 :::
 
 ## Upload files related to an entry
@@ -187,8 +187,8 @@ Code
 </script>
 ```
 
-::: warning
-You have to send FormData in your request body
+:::caution
+You have to send FormData in your request body.
 :::
 
 ## Upload file during entry creation
@@ -267,8 +267,8 @@ If you want to upload files for a component, you will have to specify the index 
 Example `files.my_component_name[the_index].attribute_name`
 :::
 
-::: warning
-You have to send FormData in your request body
+:::caution
+You have to send FormData in your request body.
 :::
 
 ## Models definition
@@ -330,25 +330,21 @@ You can check all the available providers developed by the community on npmjs.or
 
 To install a new provider run:
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```
-yarn add strapi-provider-upload-aws-s3
-```
-
-:::
-
-::: tab npm
-
-```
+<code-block title="NPM">
+```sh
 npm install strapi-provider-upload-aws-s3 --save
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add strapi-provider-upload-aws-s3
+```
+</code-block>
 
-::::
+</code-group>
 
 ### Local server
 

@@ -9,7 +9,7 @@ The following documentation will guide you through the installation of a new Str
 
 Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies).
 
-::: tip NOTE
+::: note
 You can find the official Docker image for Strapi in the [Docker Hub](https://hub.docker.com/r/strapi/strapi).
 :::
 
@@ -70,8 +70,9 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
 
     :::: tab MongoDB
 
-
-      ::: warning WARNING
+      :::caution
+      <!-- Some rendering issue with the snippet inside a tab… 😅  Copying and pasting content here, waiting for a fix… -->
+      <!-- Original snippet content is in developer-docs/latest/snippets/mongodb-warning.md -->
       Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
       :::
 

@@ -14,29 +14,23 @@ In this guide we are going to:
 
 ### New Strapi project
 
-:::: tabs
 
-::: tab yarn
+<code-group>
 
-Use **yarn** to install the Strapi project (**recommended**). [Install yarn with these docs](https://yarnpkg.com/lang/en/docs/install/)
-
-```bash
-yarn create strapi-app my-project --quickstart
-```
-
-:::
-
-::: tab npx
-
-Use **npm/npx** to install the Strapi project
-
-```bash
+<code-block title="NPM">
+```sh
 npx create-strapi-app my-project --quickstart
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
 
-::::
+</code-group>
+
 
 When the setup completes, register an admin user using the form which opens in the browser. This user will be only relevant in local development.
 
@@ -106,7 +100,7 @@ The `myapi-123456` part is the project identifier. (The number is automatically 
 
 The following is an example config for `Standard Environment` or `Flexible Environment`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Standard Environment
 

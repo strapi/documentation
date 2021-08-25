@@ -46,7 +46,7 @@ Returns an object that represents the configurations of the project. Every JavaS
 
 Returns an object of the controllers which is available in the project. Every JavaScript file located in the `./api/**/controllers` folder will be parsed into the `strapi.controllers` object. Thanks to this object, you can access every controller's actions everywhere in the project.
 
-::: tip
+:::note
 This object doesn't include the admin's controllers and plugin's controllers.
 :::
 

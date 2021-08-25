@@ -13,8 +13,8 @@ In this example we will use [Jest](https://jestjs.io/) Testing Framework with a 
 [Supertest](https://github.com/visionmedia/supertest) Super-agent driven library for testing node.js HTTP servers using a fluent API
 :::
 
-::: warning
-Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file
+:::caution
+Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
 :::
 
 ## Install test tools
@@ -25,7 +25,7 @@ Please note that this guide will not work if you are on Windows using the SQLite
 
 `sqlite3` is used to create an on-disk database that is created and deleted between tests.
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 `yarn add --dev jest supertest sqlite3`
@@ -184,7 +184,10 @@ Ran all test suites.
 ✨  Done in 5.73s.
 ```
 
-> Note: if you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as you need.
+:::tip
+If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as you need.
+:::
+
 
 ### Testing basic endpoint controller.
 
@@ -239,7 +242,9 @@ Ran all test suites.
 ✨  Done in 9.09s.
 ```
 
-> Note: if you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
+:::tip
+If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
+:::
 
 ### Testing `auth` endpoint controller.
 

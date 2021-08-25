@@ -11,7 +11,7 @@ Depending on their type, content types can be divided into 2 interfaces: the lis
 
 On the right side of the list view interface, right above the table, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
-::: tip NOTE
+::: note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
 <br>
 Note also that the explanations below explain how to permanently configure which fields are displayed in the table of the list view of your collection type. It is also possible to configure the displayed fields temporarily (see [Introduction to content manager](../content-manager/introduction-to-content-manager.md)).
@@ -52,7 +52,7 @@ Note also that the explanations below explain how to permanently configure which
 
 5. Click on the **Save** button.
 
-::: tip NOTE
+::: note
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
 
 - Only one field can be displayed per relational field.
@@ -100,7 +100,7 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 
 4. Click on the **Save** button.
 
-::: warning IMPORTANT
+::: caution
 The settings and display of a component's fields cannot be managed and reordered through the entry's edit view configuration page. Click on the **Set the component's layout** button of a component to access the component's own configuration page. You will find the exact same settings and display options as for the entry, but that will specifically apply to your component.
 
 Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content type where the component is used.

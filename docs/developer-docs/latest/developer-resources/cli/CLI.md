@@ -59,7 +59,7 @@ options: [--no-build |--watch-admin |--browser ]
 - **strapi develop --watch-admin --browser 'google chrome'**<br/>
   Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
 
-::: tip
+:::warning
 You should never use this command to run a Strapi application in production.
 :::
 
@@ -120,7 +120,7 @@ Options:
 
 All these examples are equivalent.
 
-::: warning
+:::caution
 When configuring your application you often enter credentials for third party services (e.g authentication providers). Be aware that those credentials will also be dumped into the output of this command.
 In case of doubt, you should avoid committing the dump file into a versioning system. Here are some methods you can explore:
 
@@ -372,7 +372,7 @@ strapi install <name>
 
   Example: `strapi install graphql` will install the plugin `strapi-plugin-graphql`
 
-::: warning
+:::caution
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::
 
@@ -396,7 +396,7 @@ options [--delete-files]
 
   Example: `strapi uninstall graphql --delete-files` will remove the plugin `strapi-plugin-graphql` and all the files in `./extensions/graphql`
 
-::: warning
+:::caution
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::
 
