@@ -1260,22 +1260,24 @@ In this example, there is a `Simple` component which contains the attribute `nam
 
 #### Where are the models defined?
 
-The **Content Types** models are defined in each `./api/**/models/` folder. Every JavaScript or JSON file in these folders will be loaded as a model. They are also available through the `strapi.models` and `strapi.api.**.models` global variables. Usable everywhere in the project, they contain the ORM model object that they refer to. By convention, a model's name should be written in lowercase.
+<!-- ? is highlighting a few words in bold compliant with our style guide ? -->
+The **Content-Types** models are defined in each `./api/**/models/` folder. Every JavaScript or JSON file in these folders will be loaded as a model. They are also available through the `strapi.models` and `strapi.api.**.models` global variables. Usable everywhere in the project, they contain the ORM model object that they refer to. By convention, a model's name should be written in lowercase.
 
 The **Components** models are defined in the `./components` folder. Every component has to be inside a subfolder (the category name of the component).
 
 ### How to create a model?
 
 ::: tip
-If you are just starting out it is very convenient to generate some models with the Content-Types Builder directly in the admin interface. You can then review the generated model mappings on the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
+If you are just starting out, it is very convenient to generate some models with the Content-Types Builder directly in the admin interface. You can then review the generated model mappings on the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
 :::
 
 #### For Content Types models
 
-Use the CLI and run the following command `strapi generate:model restaurant name:string description:text`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
+Use the CLI and run the following command `strapi generate:model restaurant name:string description:text`. <br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 
-This will create two files located at `./api/restaurant/models`:
+This will create 2 files located at `./api/restaurant/models`:
 
+<!-- ? will these filenames change? (to schema.json and lifecycles.js) ? -->
 - `Restaurant.settings.json`: contains the list of attributes and settings. The JSON format makes the file easily editable.
 - `Restaurant.js`: imports `Restaurant.settings.json` and extends it with additional settings and life cycle callbacks.
 
@@ -1287,7 +1289,7 @@ When you create a new API using the CLI (`strapi generate:api <name>`), a model 
 
 To create a component you will have to use the Content-Types Builder from the Admin panel, there is no CLI generator for components.
 
-Or you can create your component manually by following the file path described previously and the file structure described below.
+Or you can create your component manually by following the file path described previously and the file structure described hereafter.
 
 ### Model settings
 
@@ -1305,8 +1307,9 @@ Additional settings can be set on models:
 <!-- ? when is used displayName ? -->
   - `displayName` (string) -  Default name to use in the UI
 - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_
-- `attributes` (object) - Define the data structure of your model. Find available options [below](#define-the-attributes).
+- `attributes` (object) - Define the data structure of your model (see [attributes](#model-attributes)).
 
+<!-- ? maybe update the filename / filepath to api/restaurant/models/schema.json ? -->
 **Path —** `Restaurant.settings.json`.
 
 ```json
@@ -1433,6 +1436,7 @@ If you need validations for SQL databases, you should use the native SQL constra
 
 #### Example
 
+<!-- ? maybe update the filepath to api/restaurant/models/schema.json ? -->
 **Path —** `Restaurant.settings.json`.
 
 ```json
@@ -1607,6 +1611,7 @@ Many-to-Many relationships are useful when:
 - and an entry from Content-Type B is also linked to many entries from Content-Type A.
 
 Many-to-many relationships can be unidirectional or bidirectional.
+
 #### Examples
 
 Unidirectional:
@@ -1792,8 +1797,9 @@ Component fields let your create a relation between your Content Type and a Comp
 
 ##### Example
 
-Lets say we created an `openinghours` component in `restaurant` category.
+Let's say we created an `openinghours` component in `restaurant` category.
 
+<!-- ? maybe update path (./api/restaurant/models/schema.json) -->
 **Path —** `./api/restaurant/models/Restaurant.settings.json`.
 
 ```json
@@ -1905,7 +1911,7 @@ xhr.send(
 ```
 
 :::note
-If you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
+If you don't specify the `id` it will delete and re-create the entry and you will see the `id` value change.
 :::
 
 ::::
@@ -1957,6 +1963,7 @@ Dynamic Zone fields let you create a flexible space in which to compose content,
 
 Lets say we created a `slider` and a `content` component in the `article` category.
 
+<!-- ? maybe update the path (./api/articles/models/schema.json) -->
 **Path —** `./api/article/models/Article.settings.json`.
 
 ```json
@@ -2023,7 +2030,7 @@ xhr.send(
 ```
 
 :::note
-If you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
+If you don't specify the `id` it will delete and re-create the entry and you will see the `id` value change.
 :::
 
 ::::
