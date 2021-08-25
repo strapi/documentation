@@ -54,6 +54,6 @@ If you want know logic applied and plain db queries you can access the underlyin
 const connection = db.getConnection();
 ```
 
-TODO: uncomment and update this part based on video explanations
+<!-- TODO: uncomment and update this part based on video explanations -->
 
 
