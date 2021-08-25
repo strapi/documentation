@@ -6,6 +6,8 @@ description: (add description here)
 
 # Query Engine API: Ordering & Paginating
 
+<!-- TODO: add intro here -->
+
 ## Ordering
 
 ### Single
@@ -47,6 +49,8 @@ db.query('article').findMany({
 ```
 
 ## Pagination
+
+<!-- ? can we use the page-based (page, pageSize) paginiation here? -->
 
 ```js
 db.query('article').findMany({

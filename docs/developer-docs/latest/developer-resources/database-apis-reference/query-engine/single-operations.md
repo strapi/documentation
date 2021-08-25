@@ -6,6 +6,7 @@ description: (add description here)
 
 # Query Engine API: Single Operations
 
+<!-- TODO: add intro here -->
 ## findOne()
 
 Finds the first entry matching the parameters.

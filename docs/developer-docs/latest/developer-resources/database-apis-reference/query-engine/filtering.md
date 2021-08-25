@@ -6,6 +6,8 @@ sidebarDepth: 3
 <!-- TODO: update SEO tags -->
 # Query Engine API: Filtering
 
+<!-- TODO: add intro here -->
+
 Every operator is prefixed with a `$` to make their name explicit.
 
 ## Logical operators

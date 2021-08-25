@@ -6,6 +6,8 @@ description: (add description here)
 
 # Query Engine API: Bulk Operations
 
+<!-- TODO: add intro here -->
+
 <!-- ? not sure we should include this caution, which was [part of the RFC](https://strapi-rfc-v4.netlify.app/database/query-engine.html#bulk-operation) -->
 :::caution
 To avoid performance pitfalls, bulk operations are not allowed on relations (attach/detach…).
