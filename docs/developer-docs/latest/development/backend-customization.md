@@ -1299,14 +1299,8 @@ Additional settings can be set on models:
 <!-- ? is `default` still the default connection value? or should we explicitly call it `sqlite`? -->
 - `connection` (string) - Connection name which must be used. Default value: `default`.
 - `collectionName` (string) - Collection name (or table name) in which the data should be stored.
-- name fields for Collection Types:
-<!-- ? do we define singularName/pluralName/displayName here or in the `info` object? -->
-<!-- ? are singularName and pluralName only used for collection types? -->
-  - `singularName` (string) - Singular form of the Collection Type name, used to generate the API routes and databases/tables collection
-  - `pluralName` (string) -  Plural form of the Collection Type name
-<!-- ? when is used displayName ? -->
-  - `displayName` (string) -  Default name to use in the UI
-- `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_
+<!-- ? do we still use globalId ? -->
+<!-- - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_ -->
 - `attributes` (object) - Define the data structure of your model (see [attributes](#model-attributes)).
 
 <!-- ? maybe update the filename / filepath to api/restaurant/models/schema.json ? -->
@@ -1317,10 +1311,6 @@ Additional settings can be set on models:
   "kind": "collectionType",
   "connection": "default",
   "collectionName": "Restaurants_v1",
-  "displayName": "Restaurants",
-  "singularName": "Restaurant",
-  "pluralName": "Restaurants",
-  "globalId": "Restaurants",
   "attributes": {}
 }
 ```
@@ -1334,33 +1324,42 @@ The `globalId` serves as a reference to your model within relations and Strapi A
 Please note that you should not alter the Strapi's models `globalId` (plugins and core models) since they are used directly within Strapi APIs and other models' relations.
 :::
 
+<!-- ? do we still use the `connection` key? -->
 ::: tip
 The `connection` value can be changed whenever you want, but you should be aware that there is no automatic data migration process. Also if the new connection doesn't use the same ORM you will have to rewrite your queries.
 :::
 
 ### Model information
 
-The info key on the model-json states information about the model. This information is used in the admin interface, when showing the model.
+The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
 
-- `name`: The name of the model, as shown in admin interface.
-- `description`: The description of the model.
-- `icon`: The fontawesome V5 name - _only for Components_
+- name fields for Collection Types:
+<!-- ? are singularName and pluralName only used for collection types? -->
+  - `displayName` (string):  default name to use in the UI
+  - `singularName` (string): singular form of the Collection Type name, used to generate the API routes and databases/tables collection
+  - `pluralName` (string): plural form of the Collection Type name
+<!-- ? when is used displayName ? -->
+- `description`: the description of the model.
+<!-- ? with the new design system, do we still use FontAwesome?  -->
+- `icon`: the fontawesome V5 name _only for Components_
 
 **Path —** `Restaurant.settings.json`.
 
 ```json
-{
   "info": {
-    "name": "restaurant",
+    "displayName": "Restaurant",
+    "singularName": "restaurant",
+    "pluralName": "restaurants",
     "description": ""
-  }
-}
+  },
 ```
 
 ### Model options
 
+<!-- TODO: review this part -->
 The options key on the model-json states.
 
+<!-- ? do we still use privateAttributes, populateCreatorFields and timestamps? -->
 - `timestamps`: This tells the model which attributes to use for timestamps. Accepts either `boolean` or `Array` of strings where first element is create date and second element is update date. Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.
 
 - `privateAttributes`: This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. Accepts an `Array` of strings. It could be used to remove from API responses timestamps. The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration.
@@ -1464,6 +1463,8 @@ If you need validations for SQL databases, you should use the native SQL constra
 ```
 
 ### Relations
+
+<!-- TODO: review this part, simplify, update with better analogies -->
 
 Relations let you create links (relations) between your Content Types.
 They should be explicitly defined in the model's attributes:
@@ -2150,7 +2151,8 @@ This will work:
 ```js
 module.exports = {
   lifecycles: {
-    beforeCreate(data) {
+    beforeCreate(event: Event) {
+      const { data } = event.params;
       data.name = 'Some fixed name';
     },
   },
@@ -2162,7 +2164,8 @@ This will NOT work:
 ```js
 module.exports = {
   lifecycles: {
-    beforeCreate(data) {
+    beforeCreate(event: Event) {
+      const { data } = event.params;
       data = {
         ...data,
         name: 'Some fixed name',
@@ -2229,6 +2232,7 @@ module.exports = {
 };
 ```
 
+<!-- ? is this section still relevant ? -->
 ::: tip
 When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
 :::
