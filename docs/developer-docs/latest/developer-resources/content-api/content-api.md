@@ -809,6 +809,8 @@ Use the following parameters:
   }
 }
 ```
+:::
+::::
 
 ### Fields selection
 
@@ -817,8 +819,6 @@ Use the following parameters:
 
 <!-- TODO: document -->
 
-:::
-::::
 ### Publication State
 
 :::note
