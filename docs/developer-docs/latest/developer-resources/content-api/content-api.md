@@ -8,13 +8,14 @@ sidebarDepth: 3
 
 ## API Endpoints
 
-When you create a `Content Type` you will have a certain number of **REST API endpoints** available to interact with it.
+Creating a Content-Type automatically create some **REST API endpoints** available to interact with it.
 
-:::caution
-Components don't have API endpoints.
+:::note
+[Components](/developer-docs/latest/development/backend-customization.md#component-s-models) don't have API endpoints.
 :::
 
-As an **example**, let's consider the following models:
+<!-- ? is this part still useful? commenting it out because I don't see the point in it 🤷  -->
+<!-- As an **example**, let's consider the following models:
 
 **Content Types**:
 
@@ -86,11 +87,11 @@ As an **example**, let's consider the following models:
 
 :::
 
-::::
+:::: -->
 
 ### Endpoints
 
-Here is the list of endpoints generated for each of your **Content Types**.
+Here is the list of endpoints generated for each of your Content-Types:
 
 <style lang="stylus">
 #endpoint-table
@@ -123,14 +124,19 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 <div id="endpoint-table">
 
-| Method | Path                    | Description                          |
-| :----- | :---------------------- | :----------------------------------- |
-| GET    | `/{content-type}`       | Get a list of {content-type} entries |
-| GET    | `/{content-type}/:id`   | Get a specific {content-type} entry  |
-| GET    | `/{content-type}/count` | Count {content-type} entries         |
-| POST   | `/{content-type}`       | Create a {content-type} entry        |
-| DELETE | `/{content-type}/:id`   | Delete a {content-type} entry        |
-| PUT    | `/{content-type}/:id`   | Update a {content-type} entry        |
+<!-- ? what exactly is a document and what is an entity? because I can see different namings in the tables and the headings -->
+<!-- TODO make sure descriptions in the tables and headings are consistent -->
+
+<!-- TODO: document actions -->
+| Method   | URL                                             | Description                                                           |
+| -------- | ----------------------------------------------- | --------------------------------------------------------------------- |
+| `GET`    | `/api/:pluralApiId`                             | [Find a list of documents](#get-entities)                             |
+| `POST`   | `/api/:pluralApiId`                             | [Create a document](#create-an-entity)                                |
+| `GET`    | `/api/:pluralApiId/:documentId`                 | [Find a document](#get-an-entity)                                     |
+| `PUT`    | `/api/:pluralApiId/:documentId`                 | [Update a document](#update-an-entity)                                |
+| `DELETE` | `/api/:pluralApiId/:documentId`                 | [Delete a document](#delete-an-entity)                                |
+| `POST`   | `/api/:pluralApiId/actions/:action`             | Actions on the collection of documents (bulk actions, custom action…) |
+| `POST`   | `/api/:pluralApiId/:documentId/actions/:action` | Actions on a specific document                                        |
 
 </div>
 
@@ -140,11 +146,13 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 <div id="endpoint-table">
 
-| Method | Path              | Description                       |
-| :----- | :---------------- | :-------------------------------- |
-| GET    | `/{content-type}` | Get the {content-type} content  |
-| PUT    | `/{content-type}` | Update the {content-type} content |
-| DELETE | `/{content-type}` | Delete the {content-type} content |
+<!-- TODO: document actions -->
+| Method   | URL                                 | Description                                 |
+| -------- | ----------------------------------- | ------------------------------------------- |
+| `GET`    | `/api/:pluralApiId`                 | [Find document](#get-an-entity)             |
+| `PUT`    | `/api/:pluralApiId`                 | [Set/Update document](#update-an-entity)    |
+| `DELETE` | `/api/:pluralApiId`                 | [Delete document](#delete-an-entity)        |
+| `POST`   | `/api/:pluralApiId/actions/:action` | Actions on the single type (custom action…) |
 
 </div>
 
@@ -154,233 +162,208 @@ Here is the list of endpoints generated for each of your **Content Types**.
 
 #### Examples
 
-Here are some Content Type examples
-
-##### Single Types
+Here are some example routes:
 
 :::: tabs card
 
-::: tab Homepage
-
-`Homepage` **Content Type**
-
-<div id="endpoint-table">
-
-| Method | Path        | Description                 |
-| :----- | :---------- | :-------------------------- |
-| GET    | `/homepage` | Get the homepage content    |
-| PUT    | `/homepage` | Update the homepage content |
-| DELETE | `/homepage` | Delete the homepage content |
-
-</div>
-
-:::
-
-::: tab Contact
-
-`Contact` **Content Type**
-
-<div id="endpoint-table">
-
-| Method | Path       | Description                |
-| :----- | :--------- | :------------------------- |
-| GET    | `/contact` | Get the contact content    |
-| PUT    | `/contact` | Update the contact content |
-| DELETE | `/contact` | Delete the contact content |
-
-</div>
-
-:::
-
-::::
-
-##### Collection Types
-
-:::: tabs card
-
-::: tab Restaurant
+::: tab Collection Type
 
 `Restaurant` **Content Type**
 
 <div id="endpoint-table">
 
-| Method | Path                 | Description               |
-| :----- | :------------------- | :------------------------ |
-| GET    | `/restaurants`       | Get a list of restaurants |
-| GET    | `/restaurants/:id`   | Get a specific restaurant |
-| GET    | `/restaurants/count` | Count restaurants         |
-| POST   | `/restaurants`       | Create a restaurant       |
-| DELETE | `/restaurants/:id`   | Delete a restaurant       |
-| PUT    | `/restaurants/:id`   | Update a restaurant       |
+| Method | URL                      | Description               |
+| ------ | ------------------------ | ------------------------- |
+| GET    | `/api/restaurants`       | Get a list of restaurants |
+| GET    | `/api/restaurants/:id`   | Get a specific restaurant |
+| POST   | `/api/restaurants`       | Create a restaurant       |
+| DELETE | `/api/restaurants/:id`   | Delete a restaurant       |
+| PUT    | `/api/restaurants/:id`   | Update a restaurant       |
 
 </div>
 
 :::
 
-::: tab Article
+::: tab Single Type
 
-`Article` **Content Type**
+`Homepage` **Content Type**
 
 <div id="endpoint-table">
 
-| Method | Path              | Description            |
-| :----- | :---------------- | :--------------------- |
-| GET    | `/articles`       | Get a list of articles |
-| GET    | `/articles/:id`   | Get a specific article |
-| GET    | `/articles/count` | Count articles         |
-| POST   | `/articles`       | Create a article       |
-| DELETE | `/articles/:id`   | Delete a article       |
-| PUT    | `/articles/:id`   | Update a article       |
+| Method | URL             | Description                 |
+| ------ | --------------- | --------------------------- |
+| GET    | `/api/homepage` | Get the homepage content    |
+| PUT    | `/api/homepage` | Update the homepage content |
+| DELETE | `/api/homepage` | Delete the homepage content |
 
 </div>
 
 :::
-
-::: tab Product
-
-`Product` **Content Type**
-
-<div id="endpoint-table">
-
-| Method | Path              | Description            |
-| :----- | :---------------- | :--------------------- |
-| GET    | `/products`       | Get a list of products |
-| GET    | `/products/:id`   | Get a specific product |
-| GET    | `/products/count` | Count products         |
-| POST   | `/products`       | Create a product       |
-| DELETE | `/products/:id`   | Delete a product       |
-| PUT    | `/products/:id`   | Update a product       |
-
-</div>
-
-:::
-
-::: tab Category
-
-`Category` **Content Type**
-
-<div id="endpoint-table">
-
-| Method | Path                | Description              |
-| :----- | :------------------ | :----------------------- |
-| GET    | `/categories`       | Get a list of categories |
-| GET    | `/categories/:id`   | Get a specific category  |
-| GET    | `/categories/count` | Count categories         |
-| POST   | `/categories`       | Create a category        |
-| DELETE | `/categories/:id`   | Delete a category        |
-| PUT    | `/categories/:id`   | Update a category        |
-
-</div>
-
-:::
-
-::: tab Tag
-
-`Tag` **Content Type**
-
-<div id="endpoint-table">
-
-| Method | Path          | Description        |
-| :----- | :------------ | :----------------- |
-| GET    | `/tags`       | Get a list of tags |
-| GET    | `/tags/:id`   | Get a specific tag |
-| GET    | `/tags/count` | Count tags         |
-| POST   | `/tags`       | Create a tag       |
-| DELETE | `/tags/:id`   | Delete a tag       |
-| PUT    | `/tags/:id`   | Update a tag       |
-
-</div>
-
-:::
-
 ::::
 
-### Get entries
+### Unified response format
 
-Returns entries matching the query filters. You can read more about parameters [here](#api-parameters).
+Whatever the query, the response is always an object with the following keys:
+
+- `data`: the response data itself, which could be:
+  - a single entity, as an object with the following keys:
+    - `id` (number)
+    - `attributes` (object)
+    - `meta` (object)
+  - a list of entities, as an array of objects
+  - a custom response
+
+- `meta`(object): information about pagination, publication state, available locales…
+<!-- TODO: create an entry in the docs to list all errors -->
+
+- `error` (object, _optional_): information about any error thrown by the request
+
+### Get entities
+<!-- TODO add heading to migration plan: entry → entity -->
+
+Returns entities matching the query filters (see [parameters](#api-parameters) documentation).
 
 :::: api-call
 
 ::: request Example request
 
-`GET http://localhost:1337/restaurants`
+`GET http://localhost:1337/api/restaurants`
 
 :::
 
 ::: response Example response
 
+<!-- TODO: update with FoodAdvisor? -->
 ```json
-[
-  {
-    "id": 1,
-    "name": "Restaurant 1",
-    "cover": {
+{
+  "data": [
+    {
       "id": 1,
-      "name": "image.png",
-      "hash": "123456712DHZAUD81UDZQDAZ",
-      "sha256": "v",
-      "ext": ".png",
-      "mime": "image/png",
-      "size": 122.95,
-      "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-      "provider": "local",
-      "provider_metadata": null,
-      "created_at": "2019-12-09T00:00:00.000Z",
-      "updated_at": "2019-12-09T00:00:00.000Z"
-    },
-    "content": [
-      {
-        "__component": "content.title-with-subtitle",
-        "id": 1,
-        "title": "Restaurant 1 title",
-        "subTitle": "Cozy restaurant in the valley"
+      "attributes": {
+        "title": "Restaurant A",
+        "description": "Restaurant A's description",
+        "categories": [
+          {
+            "id": 1,
+            "attributes": {
+              "name": "My category"
+            },
+            "meta": {
+              "availableLocales": []
+            }
+          }
+        ]
       },
-      {
-        "__component": "content.image-with-description",
-        "id": 1,
-        "image": {
+      "meta": {
+        "availableLocales": []
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Restaurant B",
+        "description": "Restaurant B's description",
+        "categories": [
+          {
+            "id": 1,
+            "attributes": {
+              "name": "My category"
+            },
+            "meta": {
+              "availableLocales": []
+            }
+          }
+        ]
+      },
+      "meta": {
+        "availableLocales": []
+      }
+    },
+  ],
+  "meta": {}
+}
+
+```
+
+:::
+
+::::
+
+### Get an entity
+<!-- TODO add heading to migration plan: entry → entity -->
+
+Returns an entity by id.
+
+:::: api-call
+
+::: request Example request
+
+`GET http://localhost:1337/api/restaurants/1`
+
+:::
+
+::: response Example response
+
+<!-- TODO: update with FoodAdvisor? -->
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {
+      "title": "Restaurant A",
+      "description": "Restaurant A's description",
+      "categories": [
+        {
           "id": 1,
-          "name": "image.png",
-          "hash": "123456712DHZAUD81UDZQDAZ",
-          "sha256": "v",
-          "ext": ".png",
-          "mime": "image/png",
-          "size": 122.95,
-          "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-          "provider": "local",
-          "provider_metadata": null,
-          "created_at": "2019-12-09T00:00:00.000Z",
-          "updated_at": "2019-12-09T00:00:00.000Z"
-        },
-        "title": "Amazing photography",
-        "description": "This is an amazing photography taken..."
-      }
-    ],
-    "opening_hours": [
-      {
-        "id": 1,
-        "day_interval": "Tue - Sat",
-        "opening_hour": "7:30 PM",
-        "closing_hour": "10:00 PM"
-      }
-    ]
+          "attributes": {
+            "name": "My category"
+          },
+          "meta": {
+            "availableLocales": []
+          }
+        }
+      ]
+    },
+    "meta": {
+      "availableLocales": []
+    }
+  },
+  "meta": {}
+}
+
+```
+
+:::
+
+::::
+
+### Create an entity
+<!-- TODO add heading to migration plan: entry → entity -->
+
+Creates an entity and returns its value.
+
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entities](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entity).
+
+:::: api-call
+
+::: request Example request
+
+`POST http://localhost:1337/api/restaurants`
+
+<!-- TODO: update with FoodAdvisor? -->
+```json
+{
+  "data" {
+    "title": "Hello",
+    "relation": 2,
+    "relations": [2, 4],
+    "link": {
+      "id": 1,
+      "type": "abc"
+    }
   }
-]
+}
 ```
-
-:::
-
-::::
-
-### Get an entry
-
-Returns an entry by id.
-
-:::: api-call
-
-::: request Example request
-
-`GET http://localhost:1337/restaurants/1`
 
 :::
 
@@ -388,182 +371,12 @@ Returns an entry by id.
 
 ```json
 {
-  "id": 1,
-  "title": "Restaurant 1",
-  "cover": {
+  "data" {
     "id": 1,
-    "name": "image.png",
-    "hash": "123456712DHZAUD81UDZQDAZ",
-    "sha256": "v",
-    "ext": ".png",
-    "mime": "image/png",
-    "size": 122.95,
-    "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-    "provider": "local",
-    "provider_metadata": null,
-    "created_at": "2019-12-09T00:00:00.000Z",
-    "updated_at": "2019-12-09T00:00:00.000Z"
+    "attributes": {},
+    "meta": {}
   },
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      "id": 1,
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "id": 1,
-      "image": {
-        "id": 1,
-        "name": "image.png",
-        "hash": "123456712DHZAUD81UDZQDAZ",
-        "sha256": "v",
-        "ext": ".png",
-        "mime": "image/png",
-        "size": 122.95,
-        "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-        "provider": "local",
-        "provider_metadata": null,
-        "created_at": "2019-12-09T00:00:00.000Z",
-        "updated_at": "2019-12-09T00:00:00.000Z"
-      },
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      "id": 1,
-      "day_interval": "Tue - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
-}
-```
-
-:::
-
-::::
-
-### Count entries
-
-Returns the count of entries matching the query filters. You can read more about parameters [here](#api-parameters).
-
-:::: api-call
-
-::: request Example request
-
-`GET http://localhost:1337/restaurants/count`
-
-:::
-
-::: response Example response
-
-`1`
-
-:::
-
-::::
-
-### Create an entry
-
-Creates an entry and returns its value.
-
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
-
-:::: api-call
-
-::: request Example request
-
-`POST http://localhost:1337/restaurants`
-
-```json
-{
-  "title": "Restaurant 1",
-  "cover": 1,
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "image": 1, // user form data to upload the file or an id to reference an exisiting image
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      "day_interval": "Tue - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
-}
-```
-
-:::
-
-::: response Example response
-
-```json
-{
-  "id": 1,
-  "title": "restaurant 1",
-  "cover": {
-    "id": 1,
-    "name": "image.png",
-    "hash": "123456712DHZAUD81UDZQDAZ",
-    "sha256": "v",
-    "ext": ".png",
-    "mime": "image/png",
-    "size": 122.95,
-    "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-    "provider": "local",
-    "provider_metadata": null,
-    "created_at": "2019-12-09T00:00:00.000Z",
-    "updated_at": "2019-12-09T00:00:00.000Z"
-  },
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      "id": 1,
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "id": 1,
-      "image": {
-        "id": 1,
-        "name": "image.png",
-        "hash": "123456712DHZAUD81UDZQDAZ",
-        "sha256": "v",
-        "ext": ".png",
-        "mime": "image/png",
-        "size": 122.95,
-        "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-        "provider": "local",
-        "provider_metadata": null,
-        "created_at": "2019-12-09T00:00:00.000Z",
-        "updated_at": "2019-12-09T00:00:00.000Z"
-      },
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      "id": 1,
-      "day_interval": "Tue - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
+  "meta": {}
 }
 ```
 
@@ -572,54 +385,30 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 ::::
 
 
-### Update an entry
+### Update an entity
+<!-- TODO add heading to migration plan: entry → entity -->
 
-Partially updates an entry by `id` and returns its value.
+Partially updates an entity by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
 :::note
-It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+It's currently not possible to [update the locale of an entity](/developer-docs/latest/development/plugins/i18n.md#updating-an-entity).
 :::
 
 :::: api-call
 
 ::: request Example request
 
-`PUT http://localhost:1337/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/1`
 
+<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
-  "title": "Restaurant 1",
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      // editing one of the previous item by passing its id
-      "id": 2,
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "image": 1, // user form data to upload the file or an id to reference an exisiting image
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      // adding a new item
-      "day_interval": "Sun",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    },
-    {
-      // editing one of the previous item by passing its id
-      "id": 1,
-      "day_interval": "Mon - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
+  "data" {
+    "title": "Hello",
+    "relation": 2,
+    "relations": [2, 4],
+  }
 }
 ```
 
@@ -629,64 +418,12 @@ It's currently not possible to [update the locale of an entry](/developer-docs/l
 
 ```json
 {
-  "id": 1,
-  "title": "Restaurant 1",
-  "cover": {
+  "data" {
     "id": 1,
-    "name": "image.png",
-    "hash": "123456712DHZAUD81UDZQDAZ",
-    "sha256": "v",
-    "ext": ".png",
-    "mime": "image/png",
-    "size": 122.95,
-    "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-    "provider": "local",
-    "provider_metadata": null,
-    "created_at": "2019-12-09T00:00:00.000Z",
-    "updated_at": "2019-12-09T00:00:00.000Z"
+    "attributes": {},
+    "meta": {}
   },
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      "id": 1,
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "id": 2,
-      "image": {
-        "id": 1,
-        "name": "image.png",
-        "hash": "123456712DHZAUD81UDZQDAZ",
-        "sha256": "v",
-        "ext": ".png",
-        "mime": "image/png",
-        "size": 122.95,
-        "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-        "provider": "local",
-        "provider_metadata": null,
-        "created_at": "2019-12-09T00:00:00.000Z",
-        "updated_at": "2019-12-09T00:00:00.000Z"
-      },
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      "id": 1,
-      "day_interval": "Mon - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    },
-    {
-      "id": 2,
-      "day_interval": "Sun",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
+  "meta": {}
 }
 ```
 
@@ -694,87 +431,35 @@ It's currently not possible to [update the locale of an entry](/developer-docs/l
 
 ::::
 
-### Delete an entry
+### Delete an entity
+<!-- TODO add heading to migration plan: entry → entity -->
 
-Deletes an entry by id and returns its value.
+Deletes an entity by id and returns its value.
 
 :::: api-call
 
 ::: request Example request
 
-`DELETE http://localhost:1337/restaurants/1`
+`DELETE http://localhost:1337/api/restaurants/1`
 
 :::
 
 ::: response Example response
 
+<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
-  "id": 1,
-  "title": "Restaurant 1",
-  "cover": {
+  "data" {
     "id": 1,
-    "name": "image.png",
-    "hash": "123456712DHZAUD81UDZQDAZ",
-    "sha256": "v",
-    "ext": ".png",
-    "mime": "image/png",
-    "size": 122.95,
-    "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-    "provider": "local",
-    "provider_metadata": null,
-    "created_at": "2019-12-09T00:00:00.000Z",
-    "updated_at": "2019-12-09T00:00:00.000Z"
+    "attributes": {},
+    "meta": {}
   },
-  "content": [
-    {
-      "__component": "content.title-with-subtitle",
-      "id": 1,
-      "title": "Restaurant 1 title",
-      "subTitle": "Cozy restaurant in the valley"
-    },
-    {
-      "__component": "content.image-with-description",
-      "id": 2,
-      "image": {
-        "id": 1,
-        "name": "image.png",
-        "hash": "123456712DHZAUD81UDZQDAZ",
-        "sha256": "v",
-        "ext": ".png",
-        "mime": "image/png",
-        "size": 122.95,
-        "url": "http://localhost:1337/uploads/123456712DHZAUD81UDZQDAZ.png",
-        "provider": "local",
-        "provider_metadata": null,
-        "created_at": "2019-12-09T00:00:00.000Z",
-        "updated_at": "2019-12-09T00:00:00.000Z"
-      },
-      "title": "Amazing photography",
-      "description": "This is an amazing photography taken..."
-    }
-  ],
-  "opening_hours": [
-    {
-      "id": 1,
-      "day_interval": "Mon - Sat",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    },
-    {
-      "id": 2,
-      "day_interval": "Sun",
-      "opening_hour": "7:30 PM",
-      "closing_hour": "10:00 PM"
-    }
-  ]
+  "meta": {}
 }
 ```
 
 :::
-
 ::::
-
 
 ## API Parameters
 
