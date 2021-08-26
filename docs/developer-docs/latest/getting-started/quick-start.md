@@ -109,13 +109,13 @@ Run the following command in a terminal:
 
 <code-block title="NPM">
 ```bash
-npx create-strapi-starter my-project gatsby-blog
+npx create-strapi-app my-project --quickstart
 ```
 </code-block>
 
 <code-block title="YARN">
 ```bash
-yarn create strapi-starter my-project gatsby-blog
+yarn create strapi-app my-project --quickstart
 ```
 </code-block>
 
