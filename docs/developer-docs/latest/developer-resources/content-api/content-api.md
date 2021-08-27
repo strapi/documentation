@@ -115,7 +115,6 @@ Here is the list of endpoints generated for each of your Content-Types:
     &:last-child
       border-right none
 
-
 </style>
 
 :::: tabs card
@@ -163,7 +162,7 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 #### Examples
 
-Here are some example routes:
+::::: details Click to display some example routes
 
 :::: tabs card
 
@@ -201,6 +200,7 @@ Here are some example routes:
 
 :::
 ::::
+:::::
 
 ### Unified response format
 
