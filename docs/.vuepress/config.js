@@ -256,6 +256,16 @@ const sidebar = {
             },
           ]
         },
+        {
+          title: 'Advanced Database Usage Guides',
+          collapsable: true,
+          children: [
+            [
+              '/developer-docs/latest/developer-resources/advanced-database-usage/building-complex-queries.md',
+              'Building complex queries'
+            ],
+          ]
+        },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
           '/developer-docs/latest/developer-resources/global-strapi/api-reference',
