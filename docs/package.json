@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.8.2",
+    "markdown-it-multimd-table": "^4.1.0",
     "vuepress-plugin-check-md": "^0.0.2",
     "vuepress-plugin-container": "^2.1.5"
   },
