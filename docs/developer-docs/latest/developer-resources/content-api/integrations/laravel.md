@@ -32,7 +32,6 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-:::: api-call
 ::: request Example GET request
 
 ```php
