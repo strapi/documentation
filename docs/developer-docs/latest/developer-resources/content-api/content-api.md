@@ -385,7 +385,6 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 
 ::::
 
-
 ### Update an entity
 <!-- TODO add heading to migration plan: entry → entity -->
 
@@ -502,20 +501,17 @@ The following operators are available:
 
 #### Examples
 
-##### Find users having `John` as first name.
-
+<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-users-having-john-as-first-name → #examples-2 -->
 :::request Example request: Find users having 'John' as first name
 `GET /api/users?filters[firstName][$eq]=John`
 :::
 
-##### Find restaurants having a price equal or greater than `3`
-
+<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-restaurants-having-a-price-equal-or-greater-than-3 → #examples-2 -->
 :::request Example request: Find restaurants having a price equal or greater than `3`
 `GET /api/restaurants?filters[price][$gte]=3`
 :::
 
-##### Find multiple restaurant with id 3, 6, 8
-
+<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-multiple-restaurant-with-id-3-6-8 → #examples-2 -->
 :::request Example request: Find multiple restaurant with id 3, 6, 8
 <!-- ? is it the correct syntax? this is what qs.stringify() returned but I'd have expected filters[id][$in][3,6,8] -->
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
@@ -669,9 +665,9 @@ When creating nested queries, make sure the depth is less than 20 or the query s
 
 #### Deep filtering
 
-
 :::request Example request: Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
-`GET /restaurants?chef.restaurant.star=5`
+<!-- ? how should I update this request example (filters syntax)? -->
+`GET /api/restaurants?filters[chef.restaurant.star][$eq]=5`
 :::
 
 ::: warning
@@ -680,14 +676,14 @@ If one of your deep filtering queries is too slow, we recommend building a custo
 :::
 
 ::: tip
-This feature doesn't allow you to filter nested models, e.g. `Find users and only return their posts older than yesterday`.
+This feature doesn't allow you to filter nested models (e.g. "Find users and only return their posts older than yesterday").
 
 To achieve this, there are three options:
 
-- Build a custom route.
-- Modify your services.
+- Build a custom route,
+- Modify your services,
 - Use [GraphQL](/developer-docs/latest/development/plugins/graphql.md#query-api).
-  :::
+:::
 
 :::caution
 This feature isn't available for polymorphic relations. This relation type is used in `media`, `component` and `dynamic zone` fields.
@@ -742,20 +738,21 @@ qs.stringify({
 
 ### Pagination
 
-Queries can accept `pagination` parameters.
-
-Pagination can be performed either by page or by offset. 
+Queries can accept `pagination` parameters. Results can be paginated either by page or by offset.
 
 :::note
-Pagination parameters can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
+Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
 #### Pagination by page
 
 Use the following parameters:
 
-  - `pagination[page]`: the page number (default: 1)
-  <!-- ? is it 100 or 10 for default page size -->
-  - `pagination[pageSize]`: the page size (default: 100)
+<!-- ? is it 100 or 10 for default page size -->
+
+| Parameter              | Description | Default |
+| ---------------------- | ----------- | ------- |
+| `pagination[page]`     | Page number | 1       |
+| `pagination[pageSize]` | Page size   | 100     |
 
 :::: api-call
 
@@ -786,8 +783,13 @@ Use the following parameters:
 
 Use the following parameters:
 
-- `pagination[start]`: offset value (default: 0)
-- `pagination[limit]`: number of entities to return (limit: 100)
+<!-- ? is there a default for pagination[limit] ? -->
+<!-- ? is there a max for pagination[start] ? -->
+
+| Parameter           | Description                  | Default | Maximum |
+| ------------------- | ---------------------------- | ------- | ------- |
+| `pagination[start]` | Offset value                 | 0       | -       |
+| `pagination[limit]` | Number of entities to return | -       | 100     |
 
 :::: api-call
 
@@ -814,47 +816,70 @@ Use the following parameters:
 
 ### Fields selection
 
-<!-- TODO: document -->
-### Fields population
+Queries can accept a `fields` parameter to select only some fields. Use one of the following syntaxes:
 
-<!-- TODO: document -->
+<!-- ? what's the point of having several syntaxes (in addition to being able to parse queries with qs)? -->
+`GET /api/:pluralApiId?fields=field1,field2`
+<br>or<br>
+`GET /api/:pluralApiId?fields=field1&fields=field2`
+<br>or<br>
+`GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
+
+#### Example
+
+<!-- TODO: add response example and convert this to an api-call component -->
+::: request Example request: Get only firstName and lastName of all users
+`GET /api/users?fields=firstName,lastName`
+:::
+
+### Relations population
+
+By default, relations are not populated when fetching entities. Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
+
+`GET /api/:pluralApiId?populate=field1,field2`
+<!-- ? should I add these syntaxes and are they correct: `GET /api/:pluralApiId?populate[]=field1,field2` and `GET /api/pluralApiId?populate[0]=field1&populate[1]=field2` -->
+#### Examples
+
+<!-- TODO: add an example response and convert this to an api-call component -->
+::: request Example request: Get books and populate relations with the author's address
+`GET /api/books?populate=author.address`
+:::
 
 ### Publication State
 
+<!-- ? is it still working or should we filter by `meta.publicationState`? -->
 :::note
 This parameter can only be used on models with the **Draft & Publish** feature activated
 :::
 
-Only select entries matching the publication state provided.
+Queries can accept a `publicationState` parameter to fetch entities based on their publication state:
 
-Handled states are:
+- `live`: returns only published entries (default)
+- `preview`: returns both draft entries & published entries
 
-- `live`: Return only published entries (default)
-- `preview`: Return both draft entries & published entries
-
-#### Example
+#### Examples
 
 ##### Get published articles
 
 :::request Example requests: Get published articles
-`GET /articles`
+`GET /api/articles`
 
 or
 
-`GET /articles?_publicationState=live`
+`GET /api/articles?publicationState=live`
 :::
 
 ##### Get both published and draft articles
 
 :::request Example request: Get both published and draft articles
-`GET /articles?_publicationState=preview`
+`GET /api/articles?publicationState=preview`
 :::
 
 :::note
 If you only want to retrieve your draft entries, you can combine the `preview` mode and the `published_at` field.
-`GET /articles?_publicationState=preview&published_at_null=true`
+`GET /api/articles?publicationState=preview&published_at_null=true`
 :::
 
 ### Locale
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entities from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entities-with-the-locale-parameter).
