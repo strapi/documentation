@@ -1295,13 +1295,15 @@ Or you can create your component manually by following the file path described p
 
 Additional settings can be set on models:
 
-- `kind` (string) - Define if the model is a Collection Type (`collectionType`) of a Single Type (`singleType`) - _only for Content Types_
 <!-- ? is `default` still the default connection value? or should we explicitly call it `sqlite`? -->
-- `connection` (string) - Connection name which must be used. Default value: `default`.
-- `collectionName` (string) - Collection name (or table name) in which the data should be stored.
 <!-- ? do we still use globalId ? -->
 <!-- - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_ -->
-- `attributes` (object) - Define the data structure of your model (see [attributes](#model-attributes)).
+| Key              | Type   | Description                                                                                                                        |
+| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`           | String | _Only for Content-Types_<br><br>Defines if the model is:<ul><li>a Collection Type (`collectionType`)</li><li>or a Single Type (`singleType`)</li></ul> |
+| `connection`     | String | Connection name to use. <br><br>Default value: `default`.                                                                  |
+| `collectionName` | String | Collection name (or table name) in which the data should be stored.                                                                |
+| `attributes`     | Object | Defines the data structure of your model (see [attributes](#model-attributes)).                                                     |
 
 <!-- ? maybe update the filename / filepath to api/restaurant/models/schema.json ? -->
 **Path —** `Restaurant.settings.json`.
@@ -1333,15 +1335,16 @@ The `connection` value can be changed whenever you want, but you should be aware
 
 The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
 
-- name fields for Collection Types:
 <!-- ? are singularName and pluralName only used for collection types? -->
-  - `displayName` (string):  default name to use in the UI
-  - `singularName` (string): singular form of the Collection Type name, used to generate the API routes and databases/tables collection
-  - `pluralName` (string): plural form of the Collection Type name
 <!-- ? when is used displayName ? -->
-- `description`: the description of the model.
 <!-- ? with the new design system, do we still use FontAwesome?  -->
-- `icon`: the fontawesome V5 name _only for Components_
+| Key            | Type   | Description                                                                                                |
+| -------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
+| `displayName`  | String | Default name to use in the UI                                                                              |
+| `singularName` | String | Singular form of the Collection Type name, used to generate the API routes and databases/tables collection |
+| `pluralName`   | String | Plural form of the Collection Type name                                                                    |
+| `description`  | String | Description of the model.                                                                                  |
+| `icon`         | ?      | _Only for Components_<br> Fontawesome V5 name                                                              |
 
 **Path —** `Restaurant.settings.json`.
 
@@ -1357,16 +1360,16 @@ The `info` key in the model's schema states information about the model. This in
 ### Model options
 
 <!-- TODO: review this part -->
-The options key on the model-json states.
+The `options` key on the in the model description can use the following keys:
 
 <!-- ? do we still use privateAttributes, populateCreatorFields and timestamps? -->
-- `timestamps`: This tells the model which attributes to use for timestamps. Accepts either `boolean` or `Array` of strings where first element is create date and second element is update date. Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.
 
-- `privateAttributes`: This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. Accepts an `Array` of strings. It could be used to remove from API responses timestamps. The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration.
-
-- `populateCreatorFields`: Configure whether the API response should include `created_by` and `updated_by` fields or not. Accepts a `boolean`. The default value is `false`.
-
-- `draftAndPublish`: Enable the draft and publish feature. Accepts a `boolean`. The default value is `false`.
+| Key                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
+| ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `timestamps`            | Boolean or Array of strings | Defines which attributes to use for timestamps.<br><br>When using an array of strings, the first element is create date and the second element is update date.<br><br>Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.                                                                                          |
+| `privateAttributes`     | Array of strings            | This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
+| `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
+| `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
 **Path —** `Restaurant.settings.json`.
 
@@ -1467,18 +1470,15 @@ If you need validations for SQL databases, you should use the native SQL constra
 <!-- TODO: review this part, simplify, update with better analogies -->
 
 Relations let you create links (relations) between your Content Types.
-They should be explicitly defined in the model's attributes:
+They should be explicitly defined in the model's attributes, using the following keys:
 
-- `type: 'relation'`: defines this field is a relation
-- `relation`: the type of relation among these values:
-  - `oneToOne`
-  - `oneToMany`
-  - `manyToOne`
-  - `manyToMany`
-  <!-- TODO: describe polymorphic relations once implemented -->
-- `target` (string): the name of the target Content Type
-<!-- ? which attribute exactly is used? is it `info.name` in the schema? -->
-- `mappedBy` and `inversedBy` _(optional)_: in bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key
+<!-- TODO: describe polymorphic relations once implemented -->
+| Key | Description |
+|---|----|
+| `type: 'relation'` | _Mandatory_<br><br>Defines this field is a relation |
+| `relation` | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul> |
+| `target` | Accepts a string value as the name of the target Content Type |
+| `mappedBy` and `inversedBy` | _Optional_<br><br>In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
 
 ::::: tabs card
 
@@ -2094,19 +2094,15 @@ The following lifecycle events are available:
 Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
 
 <!-- TODO: validate the type and description of every parameter -->
-- `action` (string): the lifecycle event (see [list](#available-lifecycle-events))
-- `model` (string): the model name
-- `em`: the EntityManager
-- `params` (object):
-  - `data`
-  - `select`
-  - `where`
-  - `orderBy`
-  - `limit`
-  - `offset`
-  - `populate`
-- `result` (optional, only available with `afterXXX` events): contains the result of the action
-- `state` (object): the query state, can be used to share state between `beforeXXX` and `afterXXX` events of a same query
+
+| Key      | Type              | Description                                                                                                                                                     |
+| -------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `action` | string            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                                   |
+| `model`  | string            | Model name                                                                                                                                                  |
+| `em`     | ?           | the EntityManager |                                                                                                                                                                 |
+| `params` | object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
+| `result` | object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                     |
+| `state`  | object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a same query.                                                              |
 <!-- TODO: `state` has not been implemented yet, ask for more info once done -->
 
 #### Declarative usage
@@ -2236,202 +2232,6 @@ module.exports = {
 ::: tip
 When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
 :::
-
-<!-- :::: tabs card
-
-::: tab find
-
-**`beforeFind(params, populate)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                         |
-| ------ | ------ | ----------------------------------- |
-| params | Object | Find params _(e.g: limit, filters)_ |
-
----
-
-**`afterFind(results, params, populate)`**
-
-_Parameters:_
-
-| Name     | Type          | Description                            |
-| -------- | ------------- | -------------------------------------- |
-| results  | Array{Object} | The results found for the `find` query |
-| params   | Object        | Find params _(e.g: limit, filters)_    |
-| populate | Array{string} | Populate specific relations            |
-
-:::
-
-::: tab findOne
-
-**`beforeFindOne(params, populate)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| params | Object | Find params _(e.g: filters)_ |
-
----
-
-**`afterFindOne(result, params, populate)`**
-
-_Parameters:_
-
-| Name     | Type          | Description                               |
-| -------- | ------------- | ----------------------------------------- |
-| result   | Object        | The results found for the `findOne` query |
-| params   | Object        | Find params _(e.g: filters)_              |
-| populate | Array{string} | Populate specific relations               |
-
-:::
-
-::: tab create
-
-**`beforeCreate(data)`**
-
-_Parameters:_
-
-| Name | Type   | Description                              |
-| ---- | ------ | ---------------------------------------- |
-| data | Object | Input data to the entry was created with |
-
----
-
-**`afterCreate(result, data)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                              |
-| ------ | ------ | ---------------------------------------- |
-| result | Object | Created entry                            |
-| data   | Object | Input data to the entry was created with |
-
-:::
-
-::: tab update
-
-**`beforeUpdate(params, data)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                              |
-| ------ | ------ | ---------------------------------------- |
-| params | Object | Find params _(e.g: filters)_             |
-| data   | Object | Input data to the entry was created with |
-
----
-
-**`afterUpdate(result, params, data)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                              |
-| ------ | ------ | ---------------------------------------- |
-| result | Object | Updated entry                            |
-| params | Object | Find params _(e.g: filters)_             |
-| data   | Object | Input data to the entry was created with |
-
-:::
-
-::: tab delete
-
-**`beforeDelete(params)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| params | Object | Find params _(e.g: filters)_ |
-
----
-
-**`afterDelete(result, params)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| result | Object | Deleted entry                |
-| params | Object | Find params _(e.g: filters)_ |
-
-:::
-
-::: tab count
-
-**`beforeCount(params)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| params | Object | Find params _(e.g: filters)_ |
-
----
-
-**`afterCount(result, params)`**
-
-_Parameters:_
-
-| Name   | Type    | Description                  |
-| ------ | ------- | ---------------------------- |
-| result | Integer | The count matching entries   |
-| params | Object  | Find params _(e.g: filters)_ |
-
-:::
-
-::: tab search
-
-**`beforeSearch(params, populate)`**
-
-_Parameters:_
-
-| Name     | Type          | Description                  |
-| -------- | ------------- | ---------------------------- |
-| params   | Object        | Find params _(e.g: filters)_ |
-| populate | Array{string} | Populate specific relations  |
-
----
-
-**`afterSearch(result, params)`**
-
-_Parameters:_
-
-| Name     | Type          | Description                  |
-| -------- | ------------- | ---------------------------- |
-| results  | Array{Object} | The entries found            |
-| params   | Object        | Find params _(e.g: filters)_ |
-| populate | Array{string} | Populate specific relations  |
-
-:::
-
-::: tab countSearch
-
-**`beforeCountSearch(params)`**
-
-_Parameters:_
-
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| params | Object | Find params _(e.g: filters)_ |
-
----
-
-**`afterCountSearch(result, params)`**
-
-_Parameters:_
-
-| Name   | Type    | Description                  |
-| ------ | ------- | ---------------------------- |
-| result | Integer | The count matching entries   |
-| params | Object  | Find params _(e.g: filters)_ |
-
-:::
-
-:::: -->
-
-
 
 <!--- BEGINNING OF WEBHOOKS --->
 
