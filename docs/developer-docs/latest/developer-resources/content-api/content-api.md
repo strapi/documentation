@@ -14,81 +14,6 @@ Creating a Content-Type automatically create some **REST API endpoints** availab
 [Components](/developer-docs/latest/development/backend-customization.md#component-s-models) don't have API endpoints.
 :::
 
-<!-- ? is this part still useful? commenting it out because I don't see the point in it 🤷  -->
-<!-- As an **example**, let's consider the following models:
-
-**Content Types**:
-
-- `Restaurant` (Collection Type)
-- `Homepage` (Single Type)
-
-**Components**:
-
-- `Opening hours` (category: `restaurant`)
-- `Title With Subtitle` (category: `content`)
-- `Image With Description` (category: `content`)
-
----
-
-:::: tabs card
-
-::: tab Content Types
-
-#### `Restaurant` Content Type
-
-| Fields        | Type        | Description                          | Options              |
-| :------------ | :---------- | :----------------------------------- | :------------------- |
-| name          | string      | Restaurant's title                   |                      |
-| slug          | uid         | Restaurant's slug                    | `targetField="name"` |
-| cover         | media       | Restaurant's cover image             |                      |
-| content       | dynamiczone | The restaurant profile content       |                      |
-| opening_hours | component   | Restaurant's opening hours component | `repeatable`         |
-
----
-
-#### `Homepage` Content Type
-
-| Fields   | Type        | Description        | Options |
-| :------- | :---------- | :----------------- | :------ |
-| title    | string      | Homepage title     |         |
-| subTitle | string      | Homepage sub title |         |
-| content  | dynamiczone | Homepage content   |         |
-
-:::
-
-::: tab Components
-
-#### `Opening hours` Component
-
-| Fields       | Type   | Description         |
-| :----------- | :----- | :------------------ |
-| day_interval | string | Meta's day interval |
-| opening_hour | string | Meta's opening hour |
-| closing_hour | string | Meta's closing hour |
-
----
-
-#### `Title With Subtitle` Component
-
-| Fields   | Type   | Description   |
-| :------- | :----- | :------------ |
-| title    | string | The title     |
-| subTitle | string | The sub title |
-
----
-
-#### `Image With Description` Component
-
-| Fields      | Type   | Description           |
-| :---------- | :----- | :-------------------- |
-| image       | media  | The image file        |
-| title       | string | The image title       |
-| description | text   | The image description |
-
-:::
-
-:::: -->
-
 ### Endpoints
 
 Here is the list of endpoints generated for each of your Content-Types:
@@ -146,6 +71,7 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <div id="endpoint-table">
 
+<!-- ? do we use singularApiId for Single Types? -->
 <!-- TODO: document actions -->
 | Method   | URL                                 | Description                                 |
 | -------- | ----------------------------------- | ------------------------------------------- |
@@ -516,15 +442,6 @@ The following operators are available:
 <!-- ? is it the correct syntax? this is what qs.stringify() returned but I'd have expected filters[id][$in][3,6,8] -->
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
 :::
-
-<!-- TODO: check if it's relevant to remove this part commented out below -->
-<!-- ##### Using `_where`
-
-:::request Example requests: Using the _where filter
-`GET /restaurants?filters[price][$gte] = 3'`
-
-`GET /restaurants?_where[0][price_gte]=3&[0][price_lte]=7`
-::: -->
 
 #### Deep filtering
 

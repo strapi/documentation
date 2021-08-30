@@ -1179,12 +1179,47 @@ For more details, see the [Query Engine API](/developer-docs/latest/developer-re
 
 #### Content Type's models
 
-Models are a representation of the database's structure. They are split into two separate files. A JavaScript file that contains the model options (e.g: lifecycle hooks), and a JSON file that represents the data structure stored in the database.
+<!-- ? in Strapi v4, will we load model files automatically or does the user need to explicitly declare items in a .js entry file? -->
+Models are a representation of the database's structure. They are split into 3 separate files that are automatically loaded:
 
-<!-- ? will the paths change: `/api/restaurant/models/lifecycles.js` and `/api/restaurant/models/schema.json maybe`? -->
+- `schema.json`: represents the data structure stored in the database, in JSON format so it's easily editable,
+- `lifecycles.js`: describes [lifecycle hooks](#lifecycle-hooks),
+- `actions.js`: describes actions that can be performed on requests.
+<!-- TODO: document actions once implemented and add like here 👆 -->
 
-**Path —** `./api/restaurant/models/Restaurant.js`.
+**Path —** `./api/restaurant/models/schema.json`.
+```json
+{
+  "kind": "collectionType",
+  "info": {
+    "displayName": "Restaurant",
+    "singularName": "restaurant",
+    "pluralName": "restaurants",
+    "description": ""
+  },
+  "attributes": {
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "name": {
+      "default": "",
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext",
+      "required": true,
+      "minLength": 10,
+  }
+}
+```
 
+In this example, there is a `Restaurant` model which contains the attributes `cover`, `name` and `description`.
+
+**Path —** `./api/restaurant/models/lifecycles.js`.
+
+<!-- TODO : update code content example -->
 ```js
 module.exports = {
   lifecycles: {
@@ -1196,51 +1231,16 @@ module.exports = {
 };
 ```
 
-**Path —** `./api/restaurant/models/Restaurant.settings.json`.
-<!-- ? should we update the code example below to reflect what's currently in examples/getstarted?
-  "cover": {
-      "type": "media",
-      "multiple": false,
-      "required": false
-    }, -->
-
-```json
-{
-  "kind": "collectionType",
-  "connection": "default",
-  "info": {
-    "name": "restaurant",
-    "description": "This represents the Restaurant Model"
-  },
-  "attributes": {
-    "cover": {
-      "collection": "file",
-      "via": "related",
-      "plugin": "upload"
-    },
-    "name": {
-      "default": "",
-      "type": "string"
-    },
-    "description": {
-      "default": "",
-      "type": "text"
-    }
-  }
-}
-```
-
-In this example, there is a `Restaurant` model which contains the attributes `cover`, `name` and `description`.
-
 #### Component's models
+<!-- TODO: check w/ Alex -->
 
 Another type of model is named `components`. A component is a data structure that can be used in one or many other API's model. There is no lifecycle related, only a JSON file definition.
 
-**Path —** `./components/default/basic.json`
+**Path —** `./components/basic/simple.json`
 
 ```json
 {
-  "collectionName": "components_basic_simples",
+  "tableName": "components_basic_simples",
   "info": {
     "name": "simple",
     "icon": "address-card"
@@ -1253,10 +1253,9 @@ Another type of model is named `components`. A component is a data structure tha
   }
 }
 ```
+<!-- TODO: update path and category -->
 
-<!-- ? why did we rename the component 'basic' (filepath, collectionName) but keep the "simple" name? isn't it easier to set everything either to "simple" or to "basic"? -->
-
-In this example, there is a `Simple` component which contains the attribute `name`. And the component is in the category `default`.
+In this example, there is a `simple` component which contains the attribute `name` and belongs to the `basic` category.
 
 #### Where are the models defined?
 
@@ -1275,11 +1274,13 @@ If you are just starting out, it is very convenient to generate some models with
 
 Use the CLI and run the following command `strapi generate:model restaurant name:string description:text`. <br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
 
-This will create 2 files located at `./api/restaurant/models`:
+This will create 3 files located at `./api/restaurant/models`:
 
-<!-- ? will these filenames change? (to schema.json and lifecycles.js) ? -->
-- `Restaurant.settings.json`: contains the list of attributes and settings. The JSON format makes the file easily editable.
-- `Restaurant.js`: imports `Restaurant.settings.json` and extends it with additional settings and life cycle callbacks.
+- `schema.json`: contains the list of attributes and settings. The JSON format makes the file easily editable,
+<!-- ? does lifecycles.js still import schema.json? -->
+- `lifecycles.js`: imports `schema.json` and extends it with additional settings and life cycle callbacks,
+<!-- TODO: document actions once it's implemented -->
+- `actions.js`: contains actions that can be executed on requests.
 
 ::: tip
 When you create a new API using the CLI (`strapi generate:api <name>`), a model is automatically created.
@@ -1295,58 +1296,40 @@ Or you can create your component manually by following the file path described p
 
 Additional settings can be set on models:
 
-<!-- ? is `default` still the default connection value? or should we explicitly call it `sqlite`? -->
-<!-- ? do we still use globalId ? -->
-<!-- - `globalId` (string) - Global variable name for this model (case-sensitive) - _only for Content Types_ -->
-| Key              | Type   | Description                                                                                                                        |
-| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`           | String | _Only for Content-Types_<br><br>Defines if the model is:<ul><li>a Collection Type (`collectionType`)</li><li>or a Single Type (`singleType`)</li></ul> |
-| `connection`     | String | Connection name to use. <br><br>Default value: `default`.                                                                  |
-| `collectionName` | String | Collection name (or table name) in which the data should be stored.                                                                |
-| `attributes`     | Object | Defines the data structure of your model (see [attributes](#model-attributes)).                                                     |
+| Key          | Type   | Description                                                                                                                                            |
+| ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`       | String | _Only for Content-Types_<br><br>Defines if the model is:<ul><li>a Collection Type (`collectionType`)</li><li>or a Single Type (`singleType`)</li></ul> |
+| `tableName`  | String | Collection name (or table name) in which the data should be stored.                                                                                    |
+| `attributes` | Object | Defines the data structure of your model (see [attributes](#model-attributes)).                                                                        |
 
-<!-- ? maybe update the filename / filepath to api/restaurant/models/schema.json ? -->
-**Path —** `Restaurant.settings.json`.
+**Path —** `api/restaurant/models/schema.json`.
 
 ```json
 {
   "kind": "collectionType",
-  "connection": "default",
-  "collectionName": "Restaurants_v1",
+  "tableName": "Restaurants_v1",
   "attributes": {}
 }
 ```
 
 In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the default (sqlite) connection defined in `./config/database.js` (see [database configuration](/developer-docs/latest/setup-deployment-guides/configurations.html#database) documentation).
 
-:::caution
-<!-- ? is this still the case? -->
-If not set manually in the JSON file, Strapi will adopt the filename as `globalId`.
-The `globalId` serves as a reference to your model within relations and Strapi APIs. If you chose to rename it (either by renaming your file or by changing the value of the `globalId`), you'd have to migrate your tables manually and update the references.
-Please note that you should not alter the Strapi's models `globalId` (plugins and core models) since they are used directly within Strapi APIs and other models' relations.
-:::
-
-<!-- ? do we still use the `connection` key? -->
-::: tip
-The `connection` value can be changed whenever you want, but you should be aware that there is no automatic data migration process. Also if the new connection doesn't use the same ORM you will have to rewrite your queries.
-:::
-
 ### Model information
 
 The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
 
 <!-- ? are singularName and pluralName only used for collection types? -->
-<!-- ? when is used displayName ? -->
 <!-- ? with the new design system, do we still use FontAwesome?  -->
-| Key            | Type   | Description                                                                                                |
-| -------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `displayName`  | String | Default name to use in the UI                                                                              |
-| `singularName` | String | Singular form of the Collection Type name, used to generate the API routes and databases/tables collection |
-| `pluralName`   | String | Plural form of the Collection Type name                                                                    |
-| `description`  | String | Description of the model.                                                                                  |
-| `icon`         | ?      | _Only for Components_<br> Fontawesome V5 name                                                              |
+<!-- TODO: singular and plural should be kebab-case -->
+| Key            | Type   | Description                                                                                                                                 |
+| -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `displayName`  | String | Default name to use in the admin panel                                                                                                      |
+| `singularName` | String | Singular form of the Collection Type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
+| `pluralName`   | String | Plural form of the Collection Type name<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
+| `description`  | String | Description of the model.                                                                                                                   |
+| `icon`         | ?      | _Only for Components_<br> Fontawesome V5 name                                                                                               |
 
-**Path —** `Restaurant.settings.json`.
+**Path —** `./api/restaurant/models/schema.json`.
 
 ```json
   "info": {
@@ -1359,11 +1342,11 @@ The `info` key in the model's schema states information about the model. This in
 
 ### Model options
 
-<!-- TODO: review this part -->
 The `options` key on the in the model description can use the following keys:
 
 <!-- ? do we still use privateAttributes, populateCreatorFields and timestamps? -->
 
+<!-- TODO: maybe remove timestamp, privateAttributes and populateCreatofFields : check with  alex -->
 | Key                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `timestamps`            | Boolean or Array of strings | Defines which attributes to use for timestamps.<br><br>When using an array of strings, the first element is create date and the second element is update date.<br><br>Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.                                                                                          |
@@ -1385,7 +1368,6 @@ The `options` key on the in the model description can use the following keys:
 ```
 
 ### Model attributes
-<!-- TODO: add this to migration plan as the header title has changed from "Define the attributes" to "Model attributes" for consistency -->
 
 #### Types
 
@@ -1395,11 +1377,11 @@ The following types are available:
   - `string`
   - `text`
   - `richtext`
-  - `enum`
+  - `enumeration`
   <!-- ? have we decided yet about how the `enum` will be handled in v4? -->
   - `email`
   - `password`
-  - `uid`
+  - [`uid`](#uid-type)
 - date types:
   - `date`
   - `time`
@@ -1408,9 +1390,9 @@ The following types are available:
 - number types:
   - `integer`
   - `float`
-  - `double`
+  - `decimal`
   - `biginteger`
-  <!-- ? it's actually a string in JS, should I move this to the string types? can we define a type as `biginteger` in Strapi v4 ? I found it in kitchensink.settings.json. -->
+  <!-- ? it's actually a string in JS, should I move this to the string types? -->
 - `json`
 - `boolean`
 - `array`
@@ -1425,21 +1407,33 @@ The following types are available:
 
 #### Validations
 
-If you need validations for SQL databases, you should use the native SQL constraints to apply them.
+You can apply basic validations to attributes:
+<!-- ? can we still apply these validations? -->
+<!-- TODO: check with Alex -->
+<!-- The following supported validations are _only supported by MongoDB_ database connections. -->
+<!-- If you're using SQL databases, you should use the native SQL constraints to apply them. -->
 
-#### Exceptions
+- `required` (boolean) — If true, adds a required validator for this property.
+- `unique` (boolean) — Whether to define a unique index on this property.
+- `index` (boolean) — Adds an index on this property, this will create a [single field index](https://docs.mongodb.com/manual/indexes/#single-field) that will run in the background. _Only supported by MongoDB._
+- `max` (integer) — Checks if the value is greater than or equal to the given maximum.
+- `min` (integer) — Checks if the value is less than or equal to the given minimum. -->
 
-<!-- ? are these validation exceptions? -->
+<!-- TODO: ask Alex what these keys are for: minLength? maxLength? seen somewhere in the code for v4 -->
 
-**uid**
+<!-- ? can we still apply security validations? -->
 
-- `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
-- `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
+**Security validations**
+
+To improve the Developer Experience when developing or using the administration panel, the framework enhances the attributes with these "security validations":
+
+- `private` (boolean) — If true, the attribute will be removed from the server response. (This is useful to hide sensitive data).
+- `configurable` (boolean) - If false, the attribute isn't configurable from the Content-Types Builder plugin.
+- `autoPopulate` (boolean) - If false, the related data will not populate within REST responses. (This will not stop querying the relational data on GraphQL)
 
 #### Example
 
-<!-- ? maybe update the filepath to api/restaurant/models/schema.json ? -->
-**Path —** `Restaurant.settings.json`.
+**Path —** `./api/restaurant/models/schema.json`.
 
 ```json
 {
@@ -1447,8 +1441,8 @@ If you need validations for SQL databases, you should use the native SQL constra
   "attributes": {
     "title": {
       "type": "string",
-      "min": 3,
-      "max": 99,
+      "minLength": 3,
+      "maxLength": 99,
       "unique": true
     },
     "description": {
@@ -1465,9 +1459,17 @@ If you need validations for SQL databases, you should use the native SQL constra
 }
 ```
 
+#### `uid` type
+
+The `uid` type is used to automatically generate unique ids (e.g., slugs for articles) based on 2 parameters:
+<!-- TODO: check w/ Alex is options key for uid is still usable -->
+
+- `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
+- `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
+
 ### Relations
 
-<!-- TODO: review this part, simplify, update with better analogies -->
+<!-- TODO: review this part with Alex, simplify, update with better analogies -->
 
 Relations let you create links (relations) between your Content Types.
 They should be explicitly defined in the model's attributes, using the following keys:
@@ -1480,101 +1482,86 @@ They should be explicitly defined in the model's attributes, using the following
 | `target` | Accepts a string value as the name of the target Content Type |
 | `mappedBy` and `inversedBy` | _Optional_<br><br>In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
 
+<!-- TODO: check mappedBy & inversedBy naming with Alex -->
+<!-- TODO remove 'owning' name as there's no dominant name anymore? -->
+
 ::::: tabs card
 
-:::: tab One-to-one
+:::: tab One-to-One
 
-One-to-one relationships are useful to link one entry to another entry.
+One-to-One relationships are useful when one entity can be linked to only one other entity.
 
-They can be unidirectional or bidirectional.
-In unidirectional one-to-one relationships, only one of the models can be queried with its linked item.
+They can be unidirectional or bidirectional. In unidirectional relationships, only one of the models can be queried with its linked item.
 
 #### Examples
 
-Unidirectional:
+- Unidirectional relationship use case example:
 
-<!-- ? are the new paths correct or do we stick with /api/article/models/article.settings.json ? -->
+  - A blog article belongs to a category.
+  - Querying an article retrieves its category,
+  - but querying a category won't retrieve the list of articles.
 
-```js
-// ./api/article/models/schema.json
-const model = {
-  attributes: {
-    category: {
-      type: 'relation',
-      relation: 'oneToOne',
-      target: 'category',
+  ```js
+  // ./api/article/models/schema.json
+  const model = {
+    attributes: {
+      category: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'category',
+      },
     },
-  },
-};
-```
+  };
+  ```
 
-Bidirectional:
+- Bidirectional relationship use case example:
 
-```js
-// ./api/article/models/schema.json
-const model = {
-  attributes: {
-    category: {
-      type: 'relation',
-      relation: 'oneToOne',
-      target: 'category',
-      inversedBy: 'article',
+  - A blog article belongs to a category.
+  - Querying an article retrieves its category,
+  - and querying a category also retrieves its list of articles.
+
+  ```js
+  // ./api/article/models/schema.json
+  const model = {
+    attributes: {
+      category: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'category',
+        inversedBy: 'article',
+      },
     },
-  },
-};
+  };
 
-// ./api/category/models/schema.json
-const model = {
-  attributes: {
-    article: {
-      type: 'relation',
-      relation: 'oneToOne',
-      target: 'article',
-      mappedBy: 'category',
+  // ./api/category/models/schema.json
+  const model = {
+    attributes: {
+      article: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'article',
+        mappedBy: 'category',
+      },
     },
-  },
-};
+  };
 
-```
+  ```
 
 ::::
 
-:::: tab Many-to-One
-
-Many-to-One relationships are useful to link one entry to many other entries.
-
-They are always unidirectional, so only one of the models can be queried with its linked items.
-
-#### Example
-
-A book can be written by many authors.
-
-```js
-// .api/book/models/schema.json
-const model = {
-  attributes: {
-    author: {
-      type: 'relation',
-      relation: 'manyToOne',
-      target: 'author',
-    },
-  },
-};
-
-```
-
-::::
-
-:::: tab One-to-many
+:::: tab One-to-Many
 
 One-to-Many relationships are useful when:
 
-- an entry from a Content-Type A is linked to many entries of another Content-Type B,
-- while an entry from Content-Type B is linked to only one entry of Content-Type A.
+- an entity from a Content-Type A is linked to many entities of another Content-Type B,
+- while an entity from Content-Type B is linked to only one entity of Content-Type A.
 
-One-to-many relationships are always bidirectional.
+One-to-many relationships are always bidirectional, and are usually defined with the corresponding Many-to-One relationship:
 
 #### Example
+
+An author can write many books, but a book has only one author.
+<!-- ? this description seems bad because a book can have multiple authors — how can we improve the description and code? -->
 
 ```js
 // ./api/book/models/schema.json
@@ -1602,6 +1589,63 @@ const model = {
 };
 ```
 
+::::
+
+:::: tab Many-to-One
+
+Many-to-One relationships are useful to link many entries to one entry.
+
+They are always unidirectional, so only one of the models can be queried with its linked items.
+
+#### Examples
+
+Unidirectional:
+
+A book can be written by many authors.
+
+```js
+// .api/book/models/schema.json
+const model = {
+  attributes: {
+    author: {
+      type: 'relation',
+      relation: 'manyToOne',
+      target: 'author',
+    },
+  },
+};
+
+```
+
+Bidirectional:
+
+An article belongs to only one category but a category has many articles.
+
+```js
+// ./api/article/models/schema.json
+const model = {
+  attributes: {
+    author: {
+      type: 'relation',
+      relation: 'manyToOne',
+      target: 'category',
+      inversedBy: 'article',
+    },
+  },
+};
+
+// ./api/category/models/schema.json
+const model = {
+  attributes: {
+    books: {
+      type: 'relation',
+      relation: 'oneToMany',
+      target: 'article',
+      mappedBy: 'category',
+    },
+  },
+};
+```
 ::::
 
 :::: tab Many-to-Many
@@ -1673,7 +1717,7 @@ const model = {
 
 <!-- ? not sure what to do with this note and the following example, that's why I commented them for now -->
 <!-- :::tip NOTE
-The `collectionName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
+The `tableName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
 :::
 
 **Path —** `./api/category/models/Category.settings.json`.
@@ -1793,6 +1837,8 @@ An `Image` model might belong to many `Article` models or `Product` models.
 :::::
 
 ### Components
+
+<!-- TODO: check w/ Alex -->
 
 Component fields let your create a relation between your Content Type and a Component structure.
 
@@ -1957,6 +2003,8 @@ xhr.send(
 :::::
 
 ### Dynamic Zone
+
+<!-- TODO: check w/ Alex -->
 
 Dynamic Zone fields let you create a flexible space in which to compose content, based on a mixed list of components.
 
@@ -2134,44 +2182,9 @@ const myContentType = {
 };
 ```
 
-
 <!-- TODO: update code in TIP below and check if it works:
 beforeCreate(data) → beforeCreate(event)
 data.name → event.params.data.name -->
-
-::: tip
-You can mutate one of the parameters to change its properties. Make sure not to reassign the parameter as it will have no effect:
-
-This will work:
-
-```js
-module.exports = {
-  lifecycles: {
-    beforeCreate(event: Event) {
-      const { data } = event.params;
-      data.name = 'Some fixed name';
-    },
-  },
-};
-```
-
-This will NOT work:
-
-```js
-module.exports = {
-  lifecycles: {
-    beforeCreate(event: Event) {
-      const { data } = event.params;
-      data = {
-        ...data,
-        name: 'Some fixed name',
-      };
-    },
-  },
-};
-```
-
-:::
 
 #### Programmatic usage
 
@@ -2205,33 +2218,6 @@ strapi.db.lifecycles.subscribe((event) => {
   }
 });
 ```
-
-#### Custom use
-<!-- ? is this section still relevant ? -->
-
-When you are building custom ORM specific queries the lifecycles will not be triggered. You can however call a lifecycle function directly if you wish.
-
-**Bookshelf example**
-
-**Path -** `./api/{apiName}/services/{serviceName}.js`
-
-```js
-module.exports = {
-  async createCustomEntry() {
-    const ORMModel = strapi.query(modelName).model;
-
-    const newCustomEntry = await ORMModel.forge().save();
-
-    // trigger manually
-    ORMModel.lifecycles.afterCreate(newCustomEntry.toJSON());
-  },
-};
-```
-
-<!-- ? is this section still relevant ? -->
-::: tip
-When calling a lifecycle function directly, you will need to make sure you call it with the expected parameters.
-:::
 
 <!--- BEGINNING OF WEBHOOKS --->
 
