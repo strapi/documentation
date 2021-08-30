@@ -146,7 +146,6 @@ Whatever the query, the response is always an object with the following keys:
 - `error` (object, _optional_): information about any error thrown by the request
 
 ### Get entities
-<!-- TODO add heading to migration plan: entry → entity -->
 
 Returns entities matching the query filters (see [parameters](#api-parameters) documentation).
 
@@ -217,7 +216,6 @@ Returns entities matching the query filters (see [parameters](#api-parameters) d
 ::::
 
 ### Get an entity
-<!-- TODO add heading to migration plan: entry → entity -->
 
 Returns an entity by id.
 
@@ -265,7 +263,6 @@ Returns an entity by id.
 ::::
 
 ### Create an entity
-<!-- TODO add heading to migration plan: entry → entity -->
 
 Creates an entity and returns its value.
 
@@ -312,7 +309,6 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 ::::
 
 ### Update an entity
-<!-- TODO add heading to migration plan: entry → entity -->
 
 Partially updates an entity by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
@@ -358,7 +354,6 @@ It's currently not possible to [update the locale of an entity](/developer-docs/
 ::::
 
 ### Delete an entity
-<!-- TODO add heading to migration plan: entry → entity -->
 
 Deletes an entity by id and returns its value.
 
@@ -427,17 +422,14 @@ The following operators are available:
 
 #### Examples
 
-<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-users-having-john-as-first-name → #examples-2 -->
 :::request Example request: Find users having 'John' as first name
 `GET /api/users?filters[firstName][$eq]=John`
 :::
 
-<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-restaurants-having-a-price-equal-or-greater-than-3 → #examples-2 -->
 :::request Example request: Find restaurants having a price equal or greater than `3`
 `GET /api/restaurants?filters[price][$gte]=3`
 :::
 
-<!-- TODO: add to migration plan: /developer-docs/latest/developer-resources/content-api/content-api.html#find-multiple-restaurant-with-id-3-6-8 → #examples-2 -->
 :::request Example request: Find multiple restaurant with id 3, 6, 8
 <!-- ? is it the correct syntax? this is what qs.stringify() returned but I'd have expected filters[id][$in][3,6,8] -->
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`

@@ -2111,9 +2111,6 @@ xhr.send(
 
 The lifecycle hooks are functions that get triggered when the Strapi [`queries`](/developer-docs/latest/development/backend-customization.md#queries) are called. They will get triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
 
-
-
-<!-- TODO: add to migration plan https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#available-lifecycle-hooks → http://localhost:8080/documentation/developer-docs/latest/development/backend-customization.html#available-lifecycle-events -->
 #### Available lifecycle events
 
 The following lifecycle events are available:
