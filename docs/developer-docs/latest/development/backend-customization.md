@@ -1354,7 +1354,7 @@ The `options` key on the in the model description can use the following keys:
 | `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
 | `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
-**Path —** `Restaurant.settings.json`.
+**Path —** `.api/restaurant/models/schema.json`.
 
 ```json
 {
