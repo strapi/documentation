@@ -418,7 +418,6 @@ The following operators are available:
 | `$between`    | Is between                       |
 | `$startsWith` | Starts with                      |
 | `$endsWith`   | Ends with                        |
-| `$between`    | Is between                       |
 
 #### Examples
 
@@ -484,6 +483,7 @@ Queries can accept `pagination` parameters. Results can be paginated either by p
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
+
 #### Pagination by page
 
 Use the following parameters:
@@ -529,7 +529,7 @@ Use the following parameters:
 
 | Parameter           | Description                  | Default | Maximum |
 | ------------------- | ---------------------------- | ------- | ------- |
-| `pagination[start]` | Offset value                 | 0       | -       |
+| `pagination[start]` | Start value                  | 0       | -       |
 | `pagination[limit]` | Number of entities to return | -       | 100     |
 
 :::: api-call

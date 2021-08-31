@@ -1277,7 +1277,9 @@ Use the CLI and run the following command `strapi generate:model restaurant name
 This will create 3 files located at `./api/restaurant/models`:
 
 - `schema.json`: contains the list of attributes and settings. The JSON format makes the file easily editable,
+
 <!-- ? does lifecycles.js still import schema.json? -->
+
 - `lifecycles.js`: imports `schema.json` and extends it with additional settings and life cycle callbacks,
 <!-- TODO: document actions once it's implemented -->
 - `actions.js`: contains actions that can be executed on requests.
@@ -1408,8 +1410,10 @@ The following types are available:
 #### Validations
 
 You can apply basic validations to attributes:
+
 <!-- ? can we still apply these validations? -->
 <!-- TODO: check with Alex -->
+
 <!-- The following supported validations are _only supported by MongoDB_ database connections. -->
 <!-- If you're using SQL databases, you should use the native SQL constraints to apply them. -->
 
