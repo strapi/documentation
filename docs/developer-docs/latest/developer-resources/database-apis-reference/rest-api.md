@@ -48,18 +48,16 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <div id="endpoint-table">
 
-<!-- ? what exactly is a document and what is an entity? because I can see different namings in the tables and the headings -->
-<!-- TODO make sure descriptions in the tables and headings are consistent -->
-
 <!-- ? is `pluralApiId` the value declared with `info.pluralName` in the model? -->
 <!-- TODO: document actions -->
+
 | Method   | URL                                             | Description                                                           |
 | -------- | ----------------------------------------------- | --------------------------------------------------------------------- |
-| `GET`    | `/api/:pluralApiId`                             | [Find a list of documents](#get-entities)                             |
-| `POST`   | `/api/:pluralApiId`                             | [Create a document](#create-an-entity)                                |
-| `GET`    | `/api/:pluralApiId/:documentId`                 | [Find a document](#get-an-entity)                                     |
-| `PUT`    | `/api/:pluralApiId/:documentId`                 | [Update a document](#update-an-entity)                                |
-| `DELETE` | `/api/:pluralApiId/:documentId`                 | [Delete a document](#delete-an-entity)                                |
+| `GET`    | `/api/:pluralApiId`                             | [Find a list of documents](#get-entries)                             |
+| `POST`   | `/api/:pluralApiId`                             | [Create an entry](#create-an-entry)                                |
+| `GET`    | `/api/:pluralApiId/:documentId`                 | [Find an entry](#get-an-entry)                                     |
+| `PUT`    | `/api/:pluralApiId/:documentId`                 | [Update an entry](#update-an-entry)                                |
+| `DELETE` | `/api/:pluralApiId/:documentId`                 | [Delete an entry](#delete-an-entry)                                |
 | `POST`   | `/api/:pluralApiId/actions/:action`             | Actions on the collection of documents (bulk actions, custom action…) |
 | `POST`   | `/api/:pluralApiId/:documentId/actions/:action` | Actions on a specific document                                        |
 
@@ -73,11 +71,12 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <!-- ? do we use singularApiId for Single Types? -->
 <!-- TODO: document actions -->
+
 | Method   | URL                                 | Description                                 |
 | -------- | ----------------------------------- | ------------------------------------------- |
-| `GET`    | `/api/:singularApiId`                 | [Find document](#get-an-entity)             |
-| `PUT`    | `/api/:singularApiId`                 | [Set/Update document](#update-an-entity)    |
-| `DELETE` | `/api/:singularApiId`                 | [Delete document](#delete-an-entity)        |
+| `GET`    | `/api/:singularApiId`                 | [Get an entry](#get-an-entry)             |
+| `PUT`    | `/api/:singularApiId`                 | [Update an entry](#update-an-entry)    |
+| `DELETE` | `/api/:singularApiId`                 | [Delete an entry](#delete-an-entry)        |
 | `POST`   | `/api/:singularApiId/actions/:action` | Actions on the single type (custom action…) |
 
 </div>
@@ -133,7 +132,7 @@ Here is the list of endpoints generated for each of your Content-Types:
 Whatever the query, the response is always an object with the following keys:
 
 - `data`: the response data itself, which could be:
-  - a single entity, as an object with the following keys:
+  - a single entry, as an object with the following keys:
     - `id` (number)
     - `attributes` (object)
     - `meta` (object)
@@ -145,7 +144,7 @@ Whatever the query, the response is always an object with the following keys:
 
 - `error` (object, _optional_): information about any error thrown by the request
 
-### Get entities
+### Get entries
 
 Returns entities matching the query filters (see [parameters](#api-parameters) documentation).
 
@@ -215,9 +214,9 @@ Returns entities matching the query filters (see [parameters](#api-parameters) d
 
 ::::
 
-### Get an entity
+### Get an entry
 
-Returns an entity by id.
+Returns an entry by id.
 
 :::: api-call
 
@@ -262,11 +261,11 @@ Returns an entity by id.
 
 ::::
 
-### Create an entity
+### Create an entry
 
-Creates an entity and returns its value.
+Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entities](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entity).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entities](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: api-call
 
@@ -308,13 +307,13 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 
 ::::
 
-### Update an entity
+### Update an entry
 
-Partially updates an entity by `id` and returns its value.
+Partially updates an entry by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
 :::note
-It's currently not possible to [update the locale of an entity](/developer-docs/latest/development/plugins/i18n.md#updating-an-entity).
+It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
 :::
 
 :::: api-call
@@ -353,9 +352,9 @@ It's currently not possible to [update the locale of an entity](/developer-docs/
 
 ::::
 
-### Delete an entity
+### Delete an entry
 
-Deletes an entity by id and returns its value.
+Deletes an entry by id and returns its value.
 
 :::: api-call
 
@@ -572,7 +571,7 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 
 ### Relations population
 
-By default, relations are not populated when fetching entities.
+By default, relations are not populated when fetching entries.
 
 Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
 

@@ -1493,7 +1493,7 @@ They should be explicitly defined in the model's attributes, using the following
 
 :::: tab One-to-One
 
-One-to-One relationships are useful when one entity can be linked to only one other entity.
+One-to-One relationships are useful when one entry can be linked to only one other entry.
 
 They can be unidirectional or bidirectional. In unidirectional relationships, only one of the models can be queried with its linked item.
 
@@ -1502,7 +1502,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
 - Unidirectional relationship use case example:
 
   - A blog article belongs to a category.
-  - Querying an article retrieves its category,
+  - Querying an article can retrieve its category,
   - but querying a category won't retrieve the list of articles.
 
   ```js
@@ -1557,8 +1557,8 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
 
 One-to-Many relationships are useful when:
 
-- an entity from a Content-Type A is linked to many entities of another Content-Type B,
-- while an entity from Content-Type B is linked to only one entity of Content-Type A.
+- an entry from a Content-Type A is linked to many entries of another Content-Type B,
+- while an entry from Content-Type B is linked to only one entry of Content-Type A.
 
 One-to-many relationships are always bidirectional, and are usually defined with the corresponding Many-to-One relationship:
 

@@ -14,11 +14,11 @@ If the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin i
 Whatever the query, the response can contain the following fields:
 
 - `data`: the response data itself, which could be:
-  - a single entity, as an object with the following keys:
+  - a single entry, as an object with the following keys:
     - `id` (number)
     - `attributes` (object)
     - `meta` (object)
-  - a list of entities, as an array of objects
+  - a list of entries, as an array of objects
   - a custom response
 
 - `meta`(object): information about pagination, publication state, available locales…
