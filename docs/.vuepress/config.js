@@ -1,8 +1,8 @@
 const sidebar = {
   developer: [
     {
-      collapsable: false,
       title: '🚀 Getting Started',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
         ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
@@ -11,8 +11,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '⚙️ Setup & Deployment',
+      collapsable: false,
       sidebarDepth: 0,
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
@@ -118,8 +118,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '🔧 Development',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
@@ -141,16 +141,16 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '♻️ Update & Migration',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
         ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
-      collapsable: false,
       title: '💻 Developer Resources',
+      collapsable: false,
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       sidebarDepth: 2,
       children: [
