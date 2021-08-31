@@ -9,7 +9,7 @@ Depending on their type, content types can be divided into 2 interfaces: the lis
 
 ## Configuring the list view
 
-On the right side of the list view interface, right above the table, a settings button ![Settings icon](../assets/icons/settings.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
+On the right side of the list view interface, right above the table, a settings button ![Cog icon](../assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 ::: note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -21,7 +21,7 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view settings
 
-1. In the list view of your collection type, click on the settings button ![Settings icon](../assets/icons/settings.svg).
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg).
 2. Click on the **Configure the view** button.
 3. In the Settings area, define your chosen new settings:
 
@@ -37,7 +37,7 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view display
 
-1. In the list view of your collection type, click on the settings button ![Settings icon](../assets/icons/settings.svg).
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg).
 2. Click on the **Configure the view** button.
 3. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![Add icon](../assets/icons/add_icon.svg) to add a new field.

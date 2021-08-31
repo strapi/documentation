@@ -65,7 +65,7 @@ New entries are only considered created once some of their content has been writ
 
 ### Configuring the table fields
 
-In the header of the list view table, on the right, a settings button ![Settings icon](../assets/icons/settings.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
+In the header of the list view table, on the right, a settings button ![Cog icon](../assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
 ::: note
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md).
@@ -75,7 +75,7 @@ Configuring the displayed field of the table in the way detailed below is only t
 
 To temporarily configure the fields displayed in the table:
 
-1. Click on the settings button ![Settings icon](../assets/icons/settings.svg).
+1. Click on the settings button ![Cog icon](../assets/icons/cog.svg).
 2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
