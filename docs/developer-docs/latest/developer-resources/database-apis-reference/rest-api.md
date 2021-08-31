@@ -1,10 +1,10 @@
 ---
-title: Content API - Strapi Developer Documentation
+title: REST API - Strapi Developer Documentation
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 sidebarDepth: 3
 ---
 
-# Content API
+# REST API
 
 ## API Endpoints
 
@@ -442,19 +442,9 @@ The following operators are available:
 `GET /api/restaurants?filters[chef.restaurant.star][$eq]=5`
 :::
 
-::: warning
+::: caution
 Querying your API with deep filters may cause performance issues.
 If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of your query.
-:::
-
-::: tip
-This feature doesn't allow you to filter nested models (e.g. "Find users and only return their posts older than yesterday").
-
-To achieve this, there are three options:
-
-- Build a custom route,
-- Modify your services,
-- Use [GraphQL](/developer-docs/latest/development/plugins/graphql.md#query-api).
 :::
 
 :::caution
@@ -482,15 +472,9 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 `GET /api/books?sort=title,price:asc`
 
 `GET /api/books?sort=title,author.name`
-:::
 
-:::request Example requests: Sort books using an array format
+`GET /api/books?sort[0]=title&sort[1][author]=name` using an array format
 
-`GET /api/books?sort=title&sort[][author]=name`
-
-`GET /api/books?sort[]=title&sort[][author]=name`
-
-`GET /api/books?sort[0]=title&sort[1][author]=name`
 :::
 
 ### Pagination
@@ -575,10 +559,7 @@ Use the following parameters:
 
 Queries can accept a `fields` parameter to select only some fields. Use one of the following syntaxes:
 
-<!-- ? what's the point of having several syntaxes (in addition to being able to parse queries with qs)? -->
 `GET /api/:pluralApiId?fields=field1,field2`
-<br>or<br>
-`GET /api/:pluralApiId?fields=field1&fields=field2`
 <br>or<br>
 `GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
 
@@ -591,15 +572,18 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 
 ### Relations population
 
-By default, relations are not populated when fetching entities. Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
+By default, relations are not populated when fetching entities.
+
+Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
 
 `GET /api/:pluralApiId?populate=field1,field2`
 <!-- ? should I add these syntaxes and are they correct: `GET /api/:pluralApiId?populate[]=field1,field2` and `GET /api/pluralApiId?populate[0]=field1&populate[1]=field2` -->
-#### Examples
+
+#### Example
 
 <!-- TODO: add an example response and convert this to an api-call component -->
-::: request Example request: Get books and populate relations with the author's address
-`GET /api/books?populate=author.address`
+::: request Example request: Get books and populate relations with the author's name and address
+`GET /api/books?populate=author.name,author.address`
 :::
 
 ### Publication State

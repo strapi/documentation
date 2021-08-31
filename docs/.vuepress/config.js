@@ -225,7 +225,7 @@ const sidebar = {
           collapsable: false,
           sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
             {
               title: 'Query Engine API',
               path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
