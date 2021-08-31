@@ -226,6 +226,7 @@ const sidebar = {
           sidebarDepth: 1,
           children: [
             ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
             {
               title: 'Query Engine API',
               path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
