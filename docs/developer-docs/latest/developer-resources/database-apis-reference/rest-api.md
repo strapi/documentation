@@ -75,10 +75,10 @@ Here is the list of endpoints generated for each of your Content-Types:
 <!-- TODO: document actions -->
 | Method   | URL                                 | Description                                 |
 | -------- | ----------------------------------- | ------------------------------------------- |
-| `GET`    | `/api/:pluralApiId`                 | [Find document](#get-an-entity)             |
-| `PUT`    | `/api/:pluralApiId`                 | [Set/Update document](#update-an-entity)    |
-| `DELETE` | `/api/:pluralApiId`                 | [Delete document](#delete-an-entity)        |
-| `POST`   | `/api/:pluralApiId/actions/:action` | Actions on the single type (custom action…) |
+| `GET`    | `/api/:singularApiId`                 | [Find document](#get-an-entity)             |
+| `PUT`    | `/api/:singularApiId`                 | [Set/Update document](#update-an-entity)    |
+| `DELETE` | `/api/:singularApiId`                 | [Delete document](#delete-an-entity)        |
+| `POST`   | `/api/:singularApiId/actions/:action` | Actions on the single type (custom action…) |
 
 </div>
 
