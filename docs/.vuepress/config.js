@@ -261,8 +261,8 @@ const sidebar = {
           collapsable: true,
           children: [
             [
-              '/developer-docs/latest/developer-resources/advanced-database-usage/building-complex-queries.md',
-              'Building complex queries'
+              '/developer-docs/latest/developer-resources/advanced-database-guides/building-complex-queries-with-qs.md',
+              'Building complex queries with qs'
             ],
           ]
         },

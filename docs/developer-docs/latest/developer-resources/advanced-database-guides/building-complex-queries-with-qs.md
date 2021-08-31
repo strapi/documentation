@@ -2,7 +2,6 @@
 title: Building complex queries with the qs library - Strapi Developer Documentation
 description: 
 ---
-<!-- TODO: update SEO -->
 
 # Building complex queries with `qs`
 <!-- TODO: review this whole part with a dev -->
