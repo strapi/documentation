@@ -5,7 +5,7 @@ description: Instructions to configure the administrator roles of a Strapi appli
 
 # Configuring administrator roles
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ subnavigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
 
@@ -18,6 +18,10 @@ From this interface, it is possible to:
 - create a new administrator role (see [Creating a new role](#creating-a-new-role)),
 - delete an administrator role (see [Deleting a role](#deleting-a-role)),
 - or access information regarding an administrator role, and edit it (see [Editing a role](#editing-a-role)).
+
+::: tip
+Click the search button ![Search icon](../assets/icons/search.svg) above the table to use a text search and find one of your administrator roles more quickly!
+:::
 
 By default, 3 administrator roles are defined for any Strapi application:
 
@@ -42,7 +46,7 @@ To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
 ::: tip
-In the *Roles* interface, from the table, you can click on the duplicate button <Fa-Copy /> to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](../assets/icons/duplicate.svg) to create a new role by duplicating an existing one.
 :::
 
 ## Deleting a role <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
@@ -51,18 +55,14 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 To delete a role:
 
-1. Click on the trash button <Fa-TrashAlt /> on the right side of the role's record.
+1. Click on the delete button ![Delete icon](../assets/icons/delete.svg) on the right side of the role's record.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
-
-::: tip
-You also have the possibility to delete multiple roles at the same time. To do so, select the roles by ticking the box on the left side of the roles' record. Then, click on the **Delete** button in the top right corner of the table.
-:::
 
 ## Editing a role
 
 ![Administrator roles edition interface](../assets/users-permissions/administrator_roles-edition.png)
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](../assets/icons/edit.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ::: caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
@@ -85,15 +85,15 @@ To edit a role's details, follow the instructions from the table below:
 
 ### Configuring role's permissions
 
-The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application. It is displayed as a table, split into 4 categories: Collection Types, Single Types, Plugins and Settings.
+The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application. It is displayed as a table, split into 4 categories: Collection types, Single types, Plugins and Settings.
 
-#### Collection and Single Types
+#### Collection and Single types
 
-The Collection Types and Single Types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
+The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
 
-To configure Collection or Single Types permissions for a role:
+To configure Collection or Single types permissions for a role:
 
-1. Go to the Collection Types or Single Types category of the permissions table.
+1. Go to the Collection types or Single types category of the permissions table.
 2. Tick the box on the left of the name of the content type to give access to. By default, all actions can be performed for all fields of the content type.
 3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
 4. (optional) Click the name of the content type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
@@ -161,7 +161,7 @@ To set custom conditions:
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
-   - Click on the arrow button ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
+   - Click on the arrow button ![Carret icon](../assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
 ::: caution
