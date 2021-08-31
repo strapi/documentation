@@ -5,7 +5,7 @@ description: Instructions to configure the Users & Permissions plugin
 
 # Configuring Users & Permissions plugin settings
 
-The Users & Permissions plugin is managed from the *Users & Permissions plugin* settings section, accessible from *General > Settings* in the main navigation of the admin panel. This settings section allows to configure the available providers, email templates and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)).
+The Users & Permissions plugin is managed from the *Users & Permissions plugin* settings section, accessible from ![Settings icon](../assets/icons/settings.svg) *Settings* in the main navigation of the admin panel. This settings section allows to configure the available providers, email templates and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)).
 
 ## Configuring providers
 
@@ -23,6 +23,10 @@ To enable and configure a provider:
 
 ::: note
 Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#adding-a-new-provider-to-your-project)).
+:::
+
+::: tip
+Click the search button ![Search icon](../assets/icons/search.svg) above the table to use a text search and find one of your providers more quickly!
 :::
 
 ## Configuring email templates
@@ -67,3 +71,5 @@ All settings related to the Users & Permissions plugin are managed from the *Adv
 | Reset password page                  | Indicate the URL of the reset password page for your front-end application(s).                                                                                     |
 | Enable email confirmation            | Click on the **ON** button to enable end-users account confirmation by sending them a confirmation email. Click on **OFF** to disable account confirmation.        |
 | Redirection url                      | Indicate the URL of the page where end-users should be redirected after confirming their Strapi account.                                                           |
+
+3. Click the **Save** button.
