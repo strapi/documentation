@@ -9,15 +9,30 @@ sidebarDepth: 3
 
 If the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin is installed, you can interact with your content using Strapi's GraphQL API.
 
+# Unified response format
+
+Whatever the query, the response can contain the following fields:
+
+- `data`: the response data itself, which could be:
+  - a single entity, as an object with the following keys:
+    - `id` (number)
+    - `attributes` (object)
+    - `meta` (object)
+  - a list of entities, as an array of objects
+  - a custom response
+
+- `meta`(object): information about pagination, publication state, available locales…
+<!-- TODO: create an entry in the docs to list all errors -->
+
 ## Queries
 
 We assume that the [Shadow CRUD](/developer-docs/latest/development/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations which just fit to your needs.
 
 ### Fetch a single entry
 
-- `id`: String
+Single entries can be found by their `id`.
 
-:::request Query
+:::request Example query: Find the entry with id 1, only the French fields
 ```graphql
 query {
   document(id: 1, locale: "fr", publicationState: LIVE) {
@@ -52,7 +67,7 @@ query {
 
 ### Fetch multiple entries
 
-:::request Query
+:::request Example query: Find all documents and populate 'categories' relation with the `name` attribute
 ```graphql
 query {
   documents {
@@ -83,9 +98,11 @@ query {
 }
 
 ```
+
 :::
 
-### Fetch dynamic zone data
+<!-- ? is this part 👇 still relevant? -->
+<!-- ### Fetch dynamic zone data
 
 Dynamic zones are union types in graphql so you need to use fragments to query the fields.
 
@@ -102,7 +119,7 @@ query {
   }
 }
 ```
-:::
+::: -->
 
 ## Mutations
 
