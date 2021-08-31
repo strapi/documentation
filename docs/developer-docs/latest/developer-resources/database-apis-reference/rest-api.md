@@ -441,7 +441,7 @@ The following operators are available:
 `GET /api/restaurants?filters[chef.restaurant.star][$eq]=5`
 :::
 
-::: caution
+::: warning
 Querying your API with deep filters may cause performance issues.
 If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of your query.
 :::
