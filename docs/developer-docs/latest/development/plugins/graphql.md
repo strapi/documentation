@@ -165,7 +165,9 @@ type Mutation {
 The queries and mutations will use the generated controller's actions as resolvers. It means that the `restaurants` query will execute the `Restaurant.find` action, the `restaurant` query will use the `Restaurant.findOne` action and the `createRestaurant` mutation will use the `Restaurant.create` action, etc.
 
 
-## Customize the GraphQL schema
+<!-- ## Customize the GraphQL schema
+
+TODO: update this part — not sure if it's implemented yet / I don't have dev draft
 
 If you want to define a new scalar, input or enum types, this section is for you. To do so, you will have to create a `schema.graphql.js` file. This file has to be placed into the config folder of each API `./api/*/config/schema.graphql.js` or plugin `./extensions/*/config/schema.graphql.js`.
 
@@ -576,7 +578,7 @@ module.exports = {
     },
   },
 };
-```
+``` -->
 
 ## FAQ
 
