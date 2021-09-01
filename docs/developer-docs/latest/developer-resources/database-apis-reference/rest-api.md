@@ -53,9 +53,9 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 | Method   | URL                                             | Description                                                           |
 | -------- | ----------------------------------------------- | --------------------------------------------------------------------- |
-| `GET`    | `/api/:pluralApiId`                             | [Find a list of documents](#get-entries)                             |
+| `GET`    | `/api/:pluralApiId`                             | [Get a list of entries](#get-entries)                             |
 | `POST`   | `/api/:pluralApiId`                             | [Create an entry](#create-an-entry)                                |
-| `GET`    | `/api/:pluralApiId/:documentId`                 | [Find an entry](#get-an-entry)                                     |
+| `GET`    | `/api/:pluralApiId/:documentId`                 | [Get an entry](#get-an-entry)                                     |
 | `PUT`    | `/api/:pluralApiId/:documentId`                 | [Update an entry](#update-an-entry)                                |
 | `DELETE` | `/api/:pluralApiId/:documentId`                 | [Delete an entry](#delete-an-entry)                                |
 | `POST`   | `/api/:pluralApiId/actions/:action`             | Actions on the collection of documents (bulk actions, custom action…) |
@@ -69,7 +69,6 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <div id="endpoint-table">
 
-<!-- ? do we use singularApiId for Single Types? -->
 <!-- TODO: document actions -->
 
 | Method   | URL                                 | Description                                 |
@@ -433,6 +432,46 @@ The following operators are available:
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
 :::
 
+::::tip
+Strapi takes advantage of the capability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
+We strongly recommend using `qs` directly to generate complex queries instead of creating them manually.
+
+:::details Click to see an example
+
+<!-- ? devs, could you please check that the generated URL and object syntax is correct? -->
+```js
+const query = qs.stringify({
+  filters: {
+    $or: [
+      {
+        date: {
+          $eq: '2020-01-01'
+        },
+      },
+      {
+        date: {
+          $eq: '2020-01-02'
+        },
+      }
+    ],
+    title: {
+      $eq: 'hello'
+    },
+    author: {
+      name: {
+        $eq: 'Kai doe'
+      },
+    },
+  },
+});
+
+await request(`/api/books?${query}`);
+// GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe
+```
+
+:::
+::::
+
 #### Deep filtering
 
 :::request Example request: Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
@@ -587,9 +626,8 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 ### Publication State
 
-<!-- ? is it still working or should we filter by `meta.publicationState`? -->
 :::note
-This parameter can only be used on models with the **Draft & Publish** feature activated
+This parameter can only be used on models with the **Draft & Publish** feature activated.
 :::
 
 Queries can accept a `publicationState` parameter to fetch entities based on their publication state:
