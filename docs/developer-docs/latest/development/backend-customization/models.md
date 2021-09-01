@@ -15,7 +15,7 @@ Models are available through the `strapi.models` and `strapi.api.**.models` glob
 ## Model creation
 
 ::: strapi Creating models with the Content-Types Builder
-If you are just starting out, it is very convenient to generate some models with the Content-Types Builder directly in the admin interface. You can then review the generated model mappings on the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
+If you are just starting out, it is very convenient to generate some models with the Content-Types Builder directly in the admin interface. You can then review the generated model mappings at the code level. The UI takes over a lot of validation tasks and gives you a feeling for available features.
 :::
 
 **Content-Type** models can be created:
@@ -25,8 +25,8 @@ If you are just starting out, it is very convenient to generate some models with
 
 Creating a Content-Type generates 2 files:
 
-- `schema.json`: contains the list of attributes and settings in a JSON format that makes it easily editable,
-- `lifecycles.js`: contains [lifecycle hooks](#lifecycle-hooks).
+- `schema.json` for the model's [schema](#model-schema) definition,
+- `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks).
 
 **Component** models can't be created with CLI tools. Use the Content-Type Builder or create them manually.
 
@@ -60,7 +60,7 @@ General settings for the model can be configured with the following keys:
 
 ### Model information
 
-The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
+The `info` key in the model's schema states information about the model. This information is used in the admin interface when showing the model. It includes the following keys:
 
 <!-- ? with the new design system, do we still use FontAwesome?  -->
 <!-- ? if yes, what's the type of icon? a string (filepath?)? -->
@@ -94,12 +94,12 @@ The following types are available:
 
 | Type categories | Available attributes |
 |------|-------|
-| String types | <ul><li>`string`</li> <li>`text`</li> <li>`richtext`</li> <li>`enumeration`</li> <li>`email`</li> <li>`password`</li> <li>[`uid`](#uid-type)</li></ul> |
+| String types | <ul><li>`string`</li> <li>`text`</li> <li>`richtext`</li> <li>`enumeration`</li> <li>`email`</li> <li>`password`</li> <li>[`uid`<Fa-Link color="grey"/>](#uid-type)</li></ul> |
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li> <li>`float`</li> <li>`decimal`</li> <li>`biginteger`</li></ul> |
 | Other generic types |<ul><li>`json`</li> <li>`boolean`</li> <li>`array`</li> <li>`media`</li></ul> |
 | [Internationalization](/developer-docs/latest/development/plugins/i18n.md)-related types |<ul><li>`locale`</li><li>`localizations`</li></ul> |
-| Special types unique to Strapi |<ul><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>`component`<Link />[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
+| Special types unique to Strapi |<ul><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
 
 
 
@@ -155,11 +155,324 @@ The `uid` type is used to automatically generate unique ids (e.g., slugs for art
 - `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
 - `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
 
-##### Relations
+#### Relations
 
-##### Components
+<!-- TODO: review this part with Alex, simplify, update with better analogies -->
 
-#### Dynamic Zones
+Relations let you create links (relations) between your Content Types.
+They should be explicitly defined in the model's attributes, using the following keys:
+
+<!-- TODO: describe polymorphic relations once implemented, or maybe just go with documenting the 'link' type -->
+| Key                         | Description                                                                                                                                     |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type: 'relation'`<br><br>⚠️ _Mandatory_<br><br>  |       Defines this field is a relation                                                                                            |
+| `relation`                  | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul>                   |
+| `target`                    | Accepts a string value as the name of the target Content Type                                                                                   |
+| `mappedBy` and `inversedBy` | _Optional_<br><br>In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
+
+::::: tabs card
+
+:::: tab One-to-One
+
+One-to-One relationships are useful when one entry can be linked to only one other entry.
+
+They can be unidirectional or bidirectional. In unidirectional relationships, only one of the models can be queried with its linked item.
+
+::: details Unidirectional use case example:
+
+  - A blog article belongs to a category.
+  - Querying an article can retrieve its category,
+  - but querying a category won't retrieve the list of articles.
+
+  ```js
+  // ./api/[api-name]/content-types/article/schema.json
+
+  const model = {
+    attributes: {
+      category: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'category',
+      },
+    },
+  };
+  ```
+
+:::
+
+::: details Bidirectional use case example:
+
+  - A blog article belongs to a category.
+  - Querying an article can retrieve its category,
+  - and querying a category also retrieves its list of articles.
+
+  ```js
+  // ./api/[api-name]/content-types/article/schema.json
+
+  const model = {
+    attributes: {
+      category: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'category',
+        inversedBy: 'article',
+      },
+    },
+  };
+
+
+  // ./api/[api-name]/content-types/category/schema.json
+
+  const model = {
+    attributes: {
+      article: {
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'article',
+        mappedBy: 'category',
+      },
+    },
+  };
+
+  ```
+
+:::
+
+::::
+
+:::: tab One-to-Many
+
+One-to-Many relationships are useful when:
+
+- an entry from a Content-Type A is linked to many entries of another Content-Type B,
+- while an entry from Content-Type B is linked to only one entry of Content-Type A.
+
+One-to-many relationships are always bidirectional, and are usually defined with the corresponding Many-to-One relationship:
+
+::: details Example:
+An author can write many books, but a book has only one author.
+<!-- ? this description seems bad because a book can have multiple authors — how can we improve the description and code? -->
+
+```js
+// ./api/[api-name]/content-types/book/schema.json
+
+const model = {
+  attributes: {
+    author: {
+      type: 'relation',
+      relation: 'manyToOne',
+      target: 'author',
+      inversedBy: 'books',
+    },
+  },
+};
+
+// ./api/author/models/schema.json
+
+const model = {
+  attributes: {
+    books: {
+      type: 'relation',
+      relation: 'oneToMany',
+      target: 'book',
+      mappedBy: 'author',
+    },
+  },
+};
+```
+
+:::
+
+::::
+
+:::: tab Many-to-One
+
+Many-to-One relationships are useful to link many entries to one entry.
+
+They can be unidirectional or bidirectional. In unidirectional relationships, only one of the models can be queried with its linked item.
+
+::: details Unidirectional use case example:
+
+  A book can be written by many authors.
+
+  ```js
+  // .api/[api-name]/content-types/book/schema.json
+
+  const model = {
+    attributes: {
+      author: {
+        type: 'relation',
+        relation: 'manyToOne',
+        target: 'author',
+      },
+    },
+  };
+
+  ```
+
+:::
+
+::: details Bidirectional use case example:
+
+  An article belongs to only one category but a category has many articles.
+
+  ```js
+  // .api/[api-name]/content-types/article/schema.json
+
+  const model = {
+    attributes: {
+      author: {
+        type: 'relation',
+        relation: 'manyToOne',
+        target: 'category',
+        inversedBy: 'article',
+      },
+    },
+  };
+
+
+  // .api/[api-name]/content-types/category/schema.json
+
+  const model = {
+    attributes: {
+      books: {
+        type: 'relation',
+        relation: 'oneToMany',
+        target: 'article',
+        mappedBy: 'category',
+      },
+    },
+  };
+  ```
+:::
+
+::::
+
+:::: tab Many-to-Many
+
+Many-to-Many relationships are useful when:
+
+- an entry from Content-Type A is linked to many entries of Content-Type B,
+- and an entry from Content-Type B is also linked to many entries from Content-Type A.
+
+Many-to-many relationships can be unidirectional or bidirectional. In unidirectional relationships, only one of the models can be queried with its linked item.
+
+::: details Unidirectional use case example:
+
+  ```js
+  const model = {
+    attributes: {
+      categories: {
+        type: 'relation',
+        relation: 'manyToMany',
+        target: 'category',
+      },
+    },
+  };
+  ```
+
+:::
+
+::: details Bidirectional use case example:
+
+An article can have many tags and a tag can be assigned to many articles.
+
+  ```js
+  // .api/[api-name]/content-types/article/schema.json
+
+  const model = {
+    attributes: {
+      tags: {
+        type: 'relation',
+        relation: 'manyToMany',
+        target: 'tag',
+        inversedBy: 'articles',
+      },
+    },
+  };
+
+
+  // .api/[api-name]/content-types/tag/schema.json
+
+  const model = {
+    attributes: {
+      articles: {
+        type: 'relation',
+        relation: 'manyToMany',
+        target: 'article',
+        mappedBy: 'tag',
+      },
+    },
+  };
+  ```
+
+:::
+
+<!-- ? not sure what to do with this note and the following example, that's why I commented them for now -->
+<!-- :::tip NOTE
+The `tableName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
+:::
+
+**Path —** `./api/category/models/Category.settings.json`.
+
+```js
+{
+  "attributes": {
+    "products": {
+      "collection": "product",
+      "via": "categories"
+    }
+  }
+}
+``` -->
+::::
+
+:::::
+
+#### Components
+
+Component fields let your create a relation between your Content Type and a Component structure. They accept the following additional parameters:
+
+<!-- ? what does the "that let you create a list of data" mean for the `repeatable` parameter means? -->
+
+| Parameter    | Type    | Description                                                                              |
+| ------------ | ------- | ---------------------------------------------------------------------------------------- |
+| `repeatable` | Boolean | Could be `true` or `false` that let you create a list of data                            |
+| `component`  | String  | Define the corresponding component, following this format: `<category>.<componentName>`. |
+
+```json
+// ./api/[apiName]/restaurant/content-types/schema.json
+
+{
+  "attributes": {
+    "openinghours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "restaurant.openinghours"
+    }
+  }
+}
+```
+
+
+#### Dynamic Zone
+
+Dynamic Zone fields let you create a flexible space in which to compose content, based on a mixed list of components.
+
+They accept a `components` array that follows this format: `<category>.<componentName>`.
+
+```json
+// ./api/[api-name]/content-types/article/schema.json
+
+{
+  "attributes": {
+    "body": {
+      "type": "dynamiczone",
+      "components": ["article.slider", "article.content"]
+    }
+  }
+}
+```
 
 ### Model options
 
