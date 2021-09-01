@@ -262,7 +262,10 @@ data.name → event.params.data.name -->
 
 Using the database layer API, it's possible to register a subscriber and listen to events programmatically:
 
+
 ```js
+// ./api/[api-name]/content-types/restaurant/lifecycles.js
+
 // registering a subscriber
 strapi.db.lifecycles.subscribe({
   models: [], // optional;
