@@ -9,7 +9,7 @@ sidebarDepth: 3
 
 If the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin is installed, you can interact with your content using Strapi's GraphQL API.
 
-# Unified response format
+## Unified response format
 
 Whatever the query, the response can contain the following fields:
 
@@ -351,6 +351,8 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ### Pagination by page
 
+<!-- ? are we using a zero-based or a 1-based index? -->
+
 | Parameter              | Description | Default |
 | ---------------------- | ----------- | ------- |
 | `pagination[page]`     | Page number | 1       |
@@ -360,7 +362,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ```graphql
 {
-  documents(pagination: { page: 0, pageSize: 10 }) {
+  documents(pagination: { page: 1, pageSize: 10 }) {
     data {
       id
     }
