@@ -7,7 +7,9 @@ sidebarDepth: 3
 
 # GraphQL API
 
-If the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin is installed, you can interact with your content using Strapi's GraphQL API.
+::: strapi GraphQL plugin required
+To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
+:::
 
 ## Unified response format
 
