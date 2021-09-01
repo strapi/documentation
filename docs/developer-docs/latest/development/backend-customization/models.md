@@ -119,8 +119,6 @@ You can apply basic validations to attributes, using the following parameters:
 | `private`      | boolean | If true, the attribute will be removed from the server response. (This is useful to hide sensitive data). | `false` |
 | `configurable` | boolean | If false, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
 
-#### Example
-
 
 ```json
 // ./api/[api-name]/content-types/restaurant/schema.json

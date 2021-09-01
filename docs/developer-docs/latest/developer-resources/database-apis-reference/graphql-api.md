@@ -272,8 +272,6 @@ The following operators are available:
 | `and`        | Logical `and`                    |
 | `or`         | Logical `or`                     |
 
-### Example
-
 ::: request Example query with filters
 
 ```graphql
@@ -296,8 +294,6 @@ Queries can accept a `sort` parameter with the following syntax:
 - to sort based on multiple values: `sort: ["value1", "value2"]`
 
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
-
-### Examples
 
 ::: request Example request: Sorting on title by ascending order
 

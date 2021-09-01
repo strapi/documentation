@@ -84,9 +84,7 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 ::::
 
-#### Examples
-
-::::: details Click to display some example routes
+::::: details Examples
 
 :::: tabs card
 
@@ -417,8 +415,6 @@ The following operators are available:
 | `$startsWith` | Starts with                      |
 | `$endsWith`   | Ends with                        |
 
-#### Examples
-
 :::request Example request: Find users having 'John' as first name
 `GET /api/users?filters[firstName][$eq]=John`
 :::
@@ -495,8 +491,6 @@ Queries can accept a `sort` parameter with the following syntax:
 `GET /api/:pluralApiId?sort=field1,field2`
 
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
-
-#### Examples
 
 :::request Example requests: Sort users by email
 `GET /api/users?sort=email` to sort by ascending order (default)
@@ -601,8 +595,6 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 <br>or<br>
 `GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
 
-#### Example
-
 <!-- TODO: add response example and convert this to an api-call component -->
 ::: request Example request: Get only firstName and lastName of all users
 `GET /api/users?fields=firstName,lastName`
@@ -616,8 +608,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 `GET /api/:pluralApiId?populate=field1,field2`
 <!-- ? should I add these syntaxes and are they correct: `GET /api/:pluralApiId?populate[]=field1,field2` and `GET /api/pluralApiId?populate[0]=field1&populate[1]=field2` -->
-
-#### Example
 
 <!-- TODO: add an example response and convert this to an api-call component -->
 ::: request Example request: Get books and populate relations with the author's name and address
@@ -635,10 +625,6 @@ Queries can accept a `publicationState` parameter to fetch entities based on the
 - `live`: returns only published entries (default)
 - `preview`: returns both draft entries & published entries
 
-#### Examples
-
-##### Get published articles
-
 :::request Example requests: Get published articles
 `GET /api/articles`
 
@@ -646,8 +632,6 @@ or
 
 `GET /api/articles?publicationState=live`
 :::
-
-##### Get both published and draft articles
 
 :::request Example request: Get both published and draft articles
 `GET /api/articles?publicationState=preview`
