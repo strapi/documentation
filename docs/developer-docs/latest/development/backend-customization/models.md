@@ -99,7 +99,8 @@ The following types are available:
 | Number types | <ul><li>`integer`</li> <li>`float`</li> <li>`decimal`</li> <li>`biginteger`</li></ul> |
 | Other generic types |<ul><li>`json`</li> <li>`boolean`</li> <li>`array`</li> <li>`media`</li></ul> |
 | [Internationalization](/developer-docs/latest/development/plugins/i18n.md)-related types |<ul><li>`locale`</li><li>`localizations`</li></ul> |
-| Special types unique to Strapi |<ul><li>`relations` (see [relations documentation](#relations))</li><li>`component` (see [components documentation](#components))</li><li>`dynamiczone` (see [dynamic zone documentation](#dynamic-zone))</li></ul> |
+| Special types unique to Strapi |<ul><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>`component`<Link />[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
+
 
 
 #### Validations
