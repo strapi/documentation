@@ -49,9 +49,9 @@ General settings for the model can be configured with the following keys:
 | `tableName`                                  | String | Collection name (or table name) in which the data should be stored.                                                    |
 | `kind`<br><br>_Optional,<br>only for Content-Types_ | String | Defines if the model is:<ul><li>a Collection Type (`collectionType`)</li><li>or a Single Type (`singleType`)</li></ul> |
 
-**Path —** `api/[api-name]/content-types/restaurant/schema.json`.
-
 ```json
+// ./api/[api-name]/content-types/restaurant/schema.json
+
 {
   "kind": "collectionType",
   "tableName": "Restaurants_v1",
@@ -73,9 +73,9 @@ The `info` key in the model's schema states information about the model. This in
 | `description`  | String | Description of the model.                                                                                                                   |
 | `icon`<br><br>_Optional_ <br>_only for Components_       | ?      | Fontawesome V5 name                                                                                               |
 
-**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
-
 ```json
+// ./api/[api-name]/content-types/restaurant/schema.json
+
   "info": {
     "displayName": "Restaurant",
     "singularName": "restaurant",
@@ -121,9 +121,10 @@ You can apply basic validations to attributes, using the following parameters:
 
 #### Example
 
-**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
+// ./api/[api-name]/content-types/restaurant/schema.json
+
 {
   ...
   "attributes": {
@@ -171,9 +172,10 @@ The `options` key on the in the model description can use the following keys:
 | `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
 | `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
-**Path —** `.api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
+// .api/[api-name]/content-types/restaurant/schema.json
+
 {
   "options": {
     "timestamps": true,
@@ -234,9 +236,9 @@ To configure a Content-Type lifecycle hook, create a `lifecycles.js` file locate
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
-**Path —** `./api/restaurant/models/lifecycles.js`.
-
 ```js
+// ./api/[api-name]/content-types/restaurant/lifecycles.js
+
 module.exports = {
   beforeCreate(event: Event) {
     const { data, where, select, populate } = event.params;
