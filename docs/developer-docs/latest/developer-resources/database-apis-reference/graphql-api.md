@@ -149,6 +149,7 @@ mutation createArticle {
 
 :::
 
+<!-- ? is it still relevant 👇 ? -->
 <!-- The implementation of the mutations also supports relational attributes. For example, you can create a new `User` and attach many `Restaurant` to it by writing your query like this:
 
 :::request Mutation
@@ -198,6 +199,7 @@ mutation updateArticle {
 
 :::
 
+<!-- ? is it still relevant? -->
 <!-- You can also update relational attributes by passing an ID or an array of IDs (depending on the relationship).
 
 :::request Mutation
