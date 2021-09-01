@@ -1179,15 +1179,13 @@ For more details, see the [Query Engine API](/developer-docs/latest/developer-re
 
 #### Content Type's models
 
-<!-- ? in Strapi v4, will we load model files automatically or does the user need to explicitly declare items in a .js entry file? -->
 Models are a representation of the database's structure. They are split into 3 separate files that are automatically loaded:
 
 - `schema.json`: represents the data structure stored in the database, in JSON format so it's easily editable,
 - `lifecycles.js`: describes [lifecycle hooks](#lifecycle-hooks),
-- `actions.js`: describes actions that can be performed on requests.
 <!-- TODO: document actions once implemented and add like here 👆 -->
 
-**Path —** `./api/restaurant/models/schema.json`.
+**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
 ```json
 {
   "kind": "collectionType",
@@ -1277,12 +1275,7 @@ Use the CLI and run the following command `strapi generate:model restaurant name
 This will create 3 files located at `./api/restaurant/models`:
 
 - `schema.json`: contains the list of attributes and settings. The JSON format makes the file easily editable,
-
-<!-- ? does lifecycles.js still import schema.json? -->
-
-- `lifecycles.js`: imports `schema.json` and extends it with additional settings and life cycle callbacks,
-<!-- TODO: document actions once it's implemented -->
-- `actions.js`: contains actions that can be executed on requests.
+- `lifecycles.js`: declares lifecycle hooks
 
 ::: tip
 When you create a new API using the CLI (`strapi generate:api <name>`), a model is automatically created.
@@ -1304,7 +1297,7 @@ Additional settings can be set on models:
 | `tableName`  | String | Collection name (or table name) in which the data should be stored.                                                                                    |
 | `attributes` | Object | Defines the data structure of your model (see [attributes](#model-attributes)).                                                                        |
 
-**Path —** `api/restaurant/models/schema.json`.
+**Path —** `api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
 {
@@ -1320,9 +1313,7 @@ In this example, the model `Restaurant` will be accessible through the `Restaura
 
 The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
 
-<!-- ? are singularName and pluralName only used for collection types? -->
 <!-- ? with the new design system, do we still use FontAwesome?  -->
-<!-- TODO: singular and plural should be kebab-case -->
 | Key            | Type   | Description                                                                                                                                 |
 | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `displayName`  | String | Default name to use in the admin panel                                                                                                      |
@@ -1331,7 +1322,7 @@ The `info` key in the model's schema states information about the model. This in
 | `description`  | String | Description of the model.                                                                                                                   |
 | `icon`         | ?      | _Only for Components_<br> Fontawesome V5 name                                                                                               |
 
-**Path —** `./api/restaurant/models/schema.json`.
+**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
   "info": {
@@ -1346,17 +1337,13 @@ The `info` key in the model's schema states information about the model. This in
 
 The `options` key on the in the model description can use the following keys:
 
-<!-- ? do we still use privateAttributes, populateCreatorFields and timestamps? -->
-
-<!-- TODO: maybe remove timestamp, privateAttributes and populateCreatofFields : check with  alex -->
 | Key                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `timestamps`            | Boolean or Array of strings | Defines which attributes to use for timestamps.<br><br>When using an array of strings, the first element is create date and the second element is update date.<br><br>Default value when set to `true` for Bookshelf is `["created_at", "updated_at"]`.                                                                                          |
 | `privateAttributes`     | Array of strings            | This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
 | `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
 | `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
-**Path —** `.api/restaurant/models/schema.json`.
+**Path —** `.api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
 {
@@ -1380,7 +1367,6 @@ The following types are available:
   - `text`
   - `richtext`
   - `enumeration`
-  <!-- ? have we decided yet about how the `enum` will be handled in v4? -->
   - `email`
   - `password`
   - [`uid`](#uid-type)
@@ -1409,35 +1395,24 @@ The following types are available:
 
 #### Validations
 
-You can apply basic validations to attributes:
+<!-- TODO: update this table once fully implemented -->
 
-<!-- ? can we still apply these validations? -->
-<!-- TODO: check with Alex -->
+You can apply basic validations to attributes, using the following parameters:
+<!-- - `unique` (boolean) — Whether to define a unique index on this property. not decided yet -->
 
-<!-- The following supported validations are _only supported by MongoDB_ database connections. -->
-<!-- If you're using SQL databases, you should use the native SQL constraints to apply them. -->
-
-- `required` (boolean) — If true, adds a required validator for this property.
-- `unique` (boolean) — Whether to define a unique index on this property.
-- `index` (boolean) — Adds an index on this property, this will create a [single field index](https://docs.mongodb.com/manual/indexes/#single-field) that will run in the background. _Only supported by MongoDB._
-- `max` (integer) — Checks if the value is greater than or equal to the given maximum.
-- `min` (integer) — Checks if the value is less than or equal to the given minimum. -->
-
-<!-- TODO: ask Alex what these keys are for: minLength? maxLength? seen somewhere in the code for v4 -->
-
-<!-- ? can we still apply security validations? -->
-
-**Security validations**
-
-To improve the Developer Experience when developing or using the administration panel, the framework enhances the attributes with these "security validations":
-
-- `private` (boolean) — If true, the attribute will be removed from the server response. (This is useful to hide sensitive data).
-- `configurable` (boolean) - If false, the attribute isn't configurable from the Content-Types Builder plugin.
-- `autoPopulate` (boolean) - If false, the related data will not populate within REST responses. (This will not stop querying the relational data on GraphQL)
+| Parameter name | Type    | Description                                                                                               | Default |
+| -------------- | ------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| `required`     | Boolean | If true, adds a required validator for this property.                                                     | `false` |
+| `max`          | Integer | Checks if the value is greater than or equal to the given maximum.                                        | -       |
+| `min`          | Integer | Checks if the value is less than or equal to the given minimum.                                           | -       |
+| `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
+| `maxLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
+| `private`      | boolean | If true, the attribute will be removed from the server response. (This is useful to hide sensitive data). | `false` |
+| `configurable` | boolean | If false, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
 
 #### Example
 
-**Path —** `./api/restaurant/models/schema.json`.
+**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
 
 ```json
 {
@@ -1478,16 +1453,13 @@ The `uid` type is used to automatically generate unique ids (e.g., slugs for art
 Relations let you create links (relations) between your Content Types.
 They should be explicitly defined in the model's attributes, using the following keys:
 
-<!-- TODO: describe polymorphic relations once implemented -->
+<!-- TODO: describe polymorphic relations once implemented, or maybe just go with documenting the 'link' type -->
 | Key | Description |
 |---|----|
 | `type: 'relation'` | _Mandatory_<br><br>Defines this field is a relation |
 | `relation` | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul> |
 | `target` | Accepts a string value as the name of the target Content Type |
 | `mappedBy` and `inversedBy` | _Optional_<br><br>In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
-
-<!-- TODO: check mappedBy & inversedBy naming with Alex -->
-<!-- TODO remove 'owning' name as there's no dominant name anymore? -->
 
 ::::: tabs card
 
@@ -1506,7 +1478,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   - but querying a category won't retrieve the list of articles.
 
   ```js
-  // ./api/article/models/schema.json
+  // ./api/[api-name]/content-types/article/schema.json
   const model = {
     attributes: {
       category: {
@@ -1521,11 +1493,11 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
 - Bidirectional relationship use case example:
 
   - A blog article belongs to a category.
-  - Querying an article retrieves its category,
+  - Querying an article can retrieve its category,
   - and querying a category also retrieves its list of articles.
 
   ```js
-  // ./api/article/models/schema.json
+  // ./api/[api-name]/content-types/article/schema.json
   const model = {
     attributes: {
       category: {
@@ -1537,7 +1509,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
     },
   };
 
-  // ./api/category/models/schema.json
+  // ./api/[api-name]/content-types/category/schema.json
   const model = {
     attributes: {
       article: {
@@ -1608,7 +1580,7 @@ Unidirectional:
 A book can be written by many authors.
 
 ```js
-// .api/book/models/schema.json
+// .api/[api-name]/content-types/book/schema.json
 const model = {
   attributes: {
     author: {
@@ -1626,7 +1598,7 @@ Bidirectional:
 An article belongs to only one category but a category has many articles.
 
 ```js
-// ./api/article/models/schema.json
+// .api/[api-name]/content-types/article/schema.json
 const model = {
   attributes: {
     author: {
@@ -1638,7 +1610,7 @@ const model = {
   },
 };
 
-// ./api/category/models/schema.json
+// .api/[api-name]/content-types/category/schema.json
 const model = {
   attributes: {
     books: {
@@ -1680,7 +1652,7 @@ const model = {
 Bidirectional: An `article` can have many `tags` and a `tag` can be assigned to many `articles`.
 
 ```js
-// .api/article/models/schema.json
+// .api/[api-name]/content-types/article/schema.json
 const model = {
   attributes: {
     tags: {
@@ -1692,14 +1664,14 @@ const model = {
   },
 };
 
-// .api/tag/models/schema.json
+// .api/[api-name]/content-types/tag/schema.json
 const model = {
   attributes: {
     articles: {
       type: 'relation',
       relation: 'manyToMany',
       target: 'article',
-      mappedBy: 'tags',
+      mappedBy: 'tag',
     },
   },
 };
@@ -1842,16 +1814,13 @@ An `Image` model might belong to many `Article` models or `Product` models.
 
 ### Components
 
-<!-- TODO: check w/ Alex -->
-
 Component fields let your create a relation between your Content Type and a Component structure.
 
 ##### Example
 
 Let's say we created an `openinghours` component in `restaurant` category.
 
-<!-- ? maybe update path (./api/restaurant/models/schema.json) -->
-**Path —** `./api/restaurant/models/Restaurant.settings.json`.
+**Path —** `./api/[apiName]/restaurant/content-types/schema.json`
 
 ```json
 {
@@ -1868,7 +1837,8 @@ Let's say we created an `openinghours` component in `restaurant` category.
 - `repeatable` (boolean): Could be `true` or `false` that let you create a list of data.
 - `component` (string): It follows this format `<category>.<componentName>`.
 
-::::: tabs card
+<!-- This part should be moved to another section, maybe "database APIs reference" section, and code examples should be replaced with Entity service usage examples -->
+<!-- ::::: tabs card
 
 :::: tab Create
 
@@ -2004,7 +1974,7 @@ xhr.send(
 
 ::::
 
-:::::
+::::: -->
 
 ### Dynamic Zone
 
@@ -2016,7 +1986,7 @@ Dynamic Zone fields let you create a flexible space in which to compose content,
 
 Lets say we created a `slider` and a `content` component in the `article` category.
 
-<!-- ? maybe update the path (./api/articles/models/schema.json) -->
+<!-- TODO: update path -->
 **Path —** `./api/article/models/Article.settings.json`.
 
 ```json
@@ -2032,7 +2002,8 @@ Lets say we created a `slider` and a `content` component in the `article` catego
 
 - `components` (array): Array of components that follows this format `<category>.<componentName>`.
 
-::::: tabs card
+<!-- This part should be moved to another section, maybe "database APIs reference" section, and code examples should be replaced with Entity service usage examples -->
+<!-- ::::: tabs card
 
 :::: tab Create
 
@@ -2109,7 +2080,7 @@ xhr.send(
 
 ::::
 
-:::::
+::::: -->
 
 ### Lifecycle hooks
 
