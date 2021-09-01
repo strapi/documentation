@@ -257,16 +257,6 @@ const sidebar = {
             },
           ]
         },
-        {
-          title: 'Advanced Database Usage Guides',
-          collapsable: true,
-          children: [
-            [
-              '/developer-docs/latest/developer-resources/advanced-database-guides/building-complex-queries-with-qs.md',
-              'Building complex queries with qs'
-            ],
-          ]
-        },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
           '/developer-docs/latest/developer-resources/global-strapi/api-reference',
