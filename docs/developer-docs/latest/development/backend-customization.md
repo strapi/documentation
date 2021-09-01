@@ -1151,10 +1151,7 @@ module.exports = {
 
 #### Content Type's models
 
-Models are a representation of the database's structure. They are split into 3 separate files that are automatically loaded:
 
-- `schema.json`: represents the data structure stored in the database, in JSON format so it's easily editable,
-- `lifecycles.js`: describes [lifecycle hooks](#lifecycle-hooks),
 <!-- TODO: document actions once implemented and add like here 👆 -->
 
 **Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
@@ -1281,142 +1278,9 @@ Additional settings can be set on models:
 
 In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the default (sqlite) connection defined in `./config/database.js` (see [database configuration](/developer-docs/latest/setup-deployment-guides/configurations.html#database) documentation).
 
-### Model information
 
-The `info` key in the model's schema states information about the model. This information is used in the admin interface, when showing the model. It includes the following keys:
 
-<!-- ? with the new design system, do we still use FontAwesome?  -->
-| Key            | Type   | Description                                                                                                                                 |
-| -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `displayName`  | String | Default name to use in the admin panel                                                                                                      |
-| `singularName` | String | Singular form of the Collection Type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
-| `pluralName`   | String | Plural form of the Collection Type name<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
-| `description`  | String | Description of the model.                                                                                                                   |
-| `icon`         | ?      | _Only for Components_<br> Fontawesome V5 name                                                                                               |
 
-**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
-
-```json
-  "info": {
-    "displayName": "Restaurant",
-    "singularName": "restaurant",
-    "pluralName": "restaurants",
-    "description": ""
-  },
-```
-
-### Model options
-
-The `options` key on the in the model description can use the following keys:
-
-| Key                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `privateAttributes`     | Array of strings            | This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
-| `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
-| `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
-
-**Path —** `.api/[api-name]/content-types/restaurant/schema.json`.
-
-```json
-{
-  "options": {
-    "timestamps": true,
-    "privateAttributes": ["id", "created_at"],
-    "populateCreatorFields": true,
-    "draftAndPublish": false
-  }
-}
-```
-
-### Model attributes
-
-#### Types
-
-The following types are available:
-
-- string types:
-  - `string`
-  - `text`
-  - `richtext`
-  - `enumeration`
-  - `email`
-  - `password`
-  - [`uid`](#uid-type)
-- date types:
-  - `date`
-  - `time`
-  - `datetime`
-  - `timestamp`
-- number types:
-  - `integer`
-  - `float`
-  - `decimal`
-  - `biginteger`
-  <!-- ? it's actually a string in JS, should I move this to the string types? -->
-- `json`
-- `boolean`
-- `array`
-- `media`
-- types related to internationalization (see [i18n plugin](/developer-docs/latest/development/plugins/i18n.md)):
-  - `locale`
-  - `localizations`
-- special types unique to Strapi:
-  - [`relations`](#relations)
-  - [`component`](#components)
-  - [`dynamiczone`](#dynamic-zone)
-
-#### Validations
-
-<!-- TODO: update this table once fully implemented -->
-
-You can apply basic validations to attributes, using the following parameters:
-<!-- - `unique` (boolean) — Whether to define a unique index on this property. not decided yet -->
-
-| Parameter name | Type    | Description                                                                                               | Default |
-| -------------- | ------- | --------------------------------------------------------------------------------------------------------- | ------- |
-| `required`     | Boolean | If true, adds a required validator for this property.                                                     | `false` |
-| `max`          | Integer | Checks if the value is greater than or equal to the given maximum.                                        | -       |
-| `min`          | Integer | Checks if the value is less than or equal to the given minimum.                                           | -       |
-| `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
-| `maxLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
-| `private`      | boolean | If true, the attribute will be removed from the server response. (This is useful to hide sensitive data). | `false` |
-| `configurable` | boolean | If false, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
-
-#### Example
-
-**Path —** `./api/[api-name]/content-types/restaurant/schema.json`.
-
-```json
-{
-  ...
-  "attributes": {
-    "title": {
-      "type": "string",
-      "minLength": 3,
-      "maxLength": 99,
-      "unique": true
-    },
-    "description": {
-      "default": "My description",
-      "type": "text",
-      "required": true
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
-    }
-    ...
-  }
-}
-```
-
-#### `uid` type
-
-The `uid` type is used to automatically generate unique ids (e.g., slugs for articles) based on 2 parameters:
-<!-- TODO: check w/ Alex is options key for uid is still usable -->
-
-- `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
-- `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
 
 ### Relations
 

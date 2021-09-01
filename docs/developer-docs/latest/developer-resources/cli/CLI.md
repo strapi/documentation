@@ -210,8 +210,9 @@ options: [--plugin <name>]
 
   Example: `strapi generate:api product --plugin content-manager`
 
-::: tip
-The first letter of the filename will be uppercase.
+::: tip TIPS
+* The first letter of the filename will be uppercase.
+* When you create a new API using the CLI, a model is automatically created.
 :::
 
 ## strapi generate:controller

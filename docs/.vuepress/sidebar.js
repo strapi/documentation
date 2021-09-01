@@ -122,6 +122,7 @@ module.exports = {
       collapsable: false,
       children: [
         ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
+        ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         {
           title: 'Strapi plugins',
