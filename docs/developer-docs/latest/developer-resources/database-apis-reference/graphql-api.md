@@ -63,11 +63,13 @@ query {
 }
 
 ```
+
 :::
 
 ### Fetch multiple entries
 
 :::request Example query: Find all documents and populate 'categories' relation with the `name` attribute
+
 ```graphql
 query {
   documents {
@@ -122,7 +124,6 @@ query {
 ::: -->
 
 ## Mutations
-
 
 | Argument     | Type   | Description      |
 | ------------ | ------ | ---------------- |
