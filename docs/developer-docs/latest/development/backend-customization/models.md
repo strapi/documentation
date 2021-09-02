@@ -150,14 +150,11 @@ You can apply basic validations to attributes, using the following parameters:
 #### `uid` type
 
 The `uid` type is used to automatically generate unique ids (e.g., slugs for articles) based on 2 parameters:
-<!-- TODO: check w/ Alex is options key for uid is still usable -->
 
 - `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
 - `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
 
 #### Relations
-
-<!-- TODO: review this part with Alex, simplify, update with better analogies -->
 
 Relations let you create links (relations) between your Content Types.
 They should be explicitly defined in the model's attributes, using the following keys:
@@ -529,8 +526,6 @@ The following lifecycle events are available:
 
 Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
 
-<!-- TODO: validate the type and description of every parameter -->
-
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | string            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
@@ -566,10 +561,6 @@ module.exports = {
   },
 };
 ```
-
-<!-- TODO: update code in TIP below and check if it works:
-beforeCreate(data) → beforeCreate(event)
-data.name → event.params.data.name -->
 
 ### Programmatic usage
 

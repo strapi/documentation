@@ -6,8 +6,6 @@ description: (add description here)
 
 # Query Engine API: Ordering & Paginating
 
-<!-- TODO: add intro here -->
-
 ## Ordering
 
 ### Single

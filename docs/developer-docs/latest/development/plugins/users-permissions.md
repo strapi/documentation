@@ -954,7 +954,6 @@ discord: {
 ```
 
 <!-- #### Tests -->
-<!-- TODO Add documentation about how to configure unit test for the new provider -->
 
 ## Templating emails
 
