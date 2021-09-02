@@ -50,7 +50,7 @@ Syntax: `updateMany(parameters) => { count: number }`
 
 | Parameter | Type                       | Description         |
 | --------- | -------------------------- | ------------------- |
-| where     | [`WhereParam`](#filtering) | Filter              |
+| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter              |
 | data      | `object`                   | Array of input data |
 
 ### Example
@@ -78,7 +78,7 @@ Syntax: `deleteMany(parameters) => { count: number }`
 
 | Parameter | Type                       | Description |
 | --------- | -------------------------- | ----------- |
-| where     | [`WhereParam`](#filtering) | Filter      |
+| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter      |
 
 ### Example
 
@@ -106,7 +106,7 @@ Syntax: `count(parameters) => number`
 
 | Parameter | Type                       | Description |
 | --------- | -------------------------- | ----------- |
-| where     | [`WhereParam`](#filtering) | Filter      |
+| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter      |
 
 ```js
 const count = await db.query('article').count({

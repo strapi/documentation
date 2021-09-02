@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](#controllers) logic.
+Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
 
 ## Core services
 
@@ -19,7 +19,7 @@ When you create a new `Content Type` or a new model, you will see a new empty se
 Here are the core methods (and their current implementation).
 You can simply copy and paste this code to your own service file to customize the methods.
 
-You can read about `strapi.query` calls [here](#queries).
+For more information, see the [Query Engine API documentation](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md).
 
 ::: tip
 In the following example your controller, service and model are named `restaurant`.
@@ -60,7 +60,7 @@ The `find` function accepts the following arguments:
 
 - `params` (object): the filters for the find request,
 
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
 
 ```json
 {
@@ -99,7 +99,7 @@ The `find` function accepts the following arguments:
 
 - `params` (object): the filters for the find request.
 
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
 
 ```json
 {
@@ -134,7 +134,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
 
 ```json
 {
@@ -273,7 +273,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
 
 ```json
 {
@@ -305,7 +305,7 @@ module.exports = {
 ```
 
 - `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters).
+  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
 
 ```json
 {
@@ -349,7 +349,7 @@ The `find` function accepts the following arguments:
 
 - `params` (object): the filters for the find request.
 
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters)).
+  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
 
 - `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
 

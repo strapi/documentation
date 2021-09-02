@@ -545,7 +545,7 @@ The only difference is that the admin of a local plugin is ignored for the momen
 In the `beta`, we are introducing the `Core API`, which is replacing the templates that were generated before.
 
 Now when you create a new model your `controller` and `service` will be empty modules and will be used to override the default behaviors.
-Read more about [controllers](/developer-docs/latest/development/backend-customization.md#controllers) or [services](/developer-docs/latest/development/backend-customization.md#services)
+Read more about [controllers](/developer-docs/latest/development/backend-customization/controllers.md) or [services](/developer-docs/latest/development/backend-customization/services.md)
 
 To migrate, you will only have to delete the methods you haven't modified or created from your `controllers` and `services`
 

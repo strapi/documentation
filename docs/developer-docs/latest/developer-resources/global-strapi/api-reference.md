@@ -77,7 +77,6 @@ Returns an object of plugins available within the project. Each plugin object co
 ## strapi.query
 
 This utility function allows to bind models with query functions specific to each ORM (e.g: `mongoose` or `bookshelf`).
-For more details, see the [Queries section](/developer-docs/latest/development/backend-customization.md#queries).
 
 ## strapi.reload
 

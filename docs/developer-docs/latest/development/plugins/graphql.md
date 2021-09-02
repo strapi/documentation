@@ -5,7 +5,7 @@ description: Use a GraphQL endpoint in your Strapi project to fetch and mutate y
 
 # GraphQL
 
-By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
 The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries and mutations to interact with Strapi using GraphQL.
@@ -106,7 +106,7 @@ module.exports = {
 To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definition, queries, mutations and resolvers based on your models. The feature also lets you make complex query with many arguments such as `limit`, `sort`, `start` and `where`.
 
 :::note
-If you use a local plugin, the controller methods of your plugin are not created by default. In order for the Shadow CRUD to work you have to define them in your controllers for each of your models. You can find examples of controllers `findOne`, `find`, `create`, `update` and `delete` there : [Core controllers](/developer-docs/latest/development/backend-customization.md#controllers).
+If you use a local plugin, the controller methods of your plugin are not created by default. In order for the Shadow CRUD to work you have to define them in your controllers for each of your models. You can find examples of controllers `findOne`, `find`, `create`, `update` and `delete` there : [Core controllers](/developer-docs/latest/development/backend-customization/controllers.md).
 :::
 
 ### Example

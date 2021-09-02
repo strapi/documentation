@@ -251,7 +251,7 @@ Queries can accept a `filters` parameter with the following syntax:
 
 `filters: { field: { operator: value } }`
 
-Logical operators (`and`, `or`) can also be used and accept arrays of objects (see [example](#example)).
+Logical operators (`and`, `or`) can also be used and accept arrays of objects.
 
 The following operators are available:
 

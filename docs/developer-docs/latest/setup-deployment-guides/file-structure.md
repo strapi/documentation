@@ -11,14 +11,14 @@ By default, the structure of your Strapi project looks as shown below:
 - [`/admin`](/developer-docs/latest/development/admin-customization.md): _(optional)_ contains your admin customization files.
 - `/api`: contains the business logic of your project split into sub-folders per API.
   - `**`
-    - `/config`: contains the API's configurations ([`routes`](/developer-docs/latest/development/backend-customization.md#routing), [`policies`](/developer-docs/latest/development/backend-customization.md#policies), etc.).
-    - [`/controllers`](/developer-docs/latest/development/backend-customization.md#controllers): contains the API's custom controllers.
-    - [`/models`](/developer-docs/latest/development/backend-customization.md#models): contains the API's models.
-    - [`/services`](/developer-docs/latest/development/backend-customization.md#services): contains the API's custom services.
+    - `/config`: contains the API's configurations ([`routes`](/developer-docs/latest/development/backend-customization/routing.md), [`policies`](/developer-docs/latest/development/backend-customization/policies.md), etc.).
+    - [`/controllers`](/developer-docs/latest/development/backend-customization/controllers.md): contains the API's custom controllers.
+    - [`/models`](/developer-docs/latest/development/backend-customization/models.md): contains the API's models.
+    - [`/services`](/developer-docs/latest/development/backend-customization/services.md): contains the API's custom services.
 - `/build`: contains your admin panel UI build.
 - [`/config`](/developer-docs/latest/setup-deployment-guides/configurations.md)
   - [`/functions`](/developer-docs/latest/setup-deployment-guides/configurations.md#functions): contains lifecycle or generic functions of the project.
-    - [`/responses`](/developer-docs/latest/development/backend-customization.md#requests-responses): contains custom responses.
+    - [`/responses`](/developer-docs/latest/development/backend-customization/requests-responses.md): contains custom responses.
       - `404.js`: contains a template for constructing your custom 404 message.
     - [`bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap): contains the code executed at the application start.
     - [`cron.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#cron-tasks): contains the cron tasks.

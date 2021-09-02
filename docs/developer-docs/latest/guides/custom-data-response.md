@@ -11,9 +11,9 @@ In this guide we will see how you can customize your API's response.
 
 To be able to update the default data response you have first to understand how it works.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization.md#controllers) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -57,7 +57,7 @@ After saving the new function, let's restart the `GET /restaurants` request. We 
 
 We now know the function we have to update, but we just want to customize the returned restaurant values.
 
-In the [controller documentation](/developer-docs/latest/development/backend-customization.md#extending-a-model-controller) you will find the default implementation of every actions. It will help you overwrite the fetch logic.
+In the [controller documentation](/developer-docs/latest/development/backend-customization/controllers.md#extending-a-model-controller) you will find the default implementation of every actions. It will help you overwrite the fetch logic.
 
 **Path —** `./api/restaurant/controller/Restaurant.js`
 

@@ -11,7 +11,7 @@ sidebarDepth: 3
 Creating a Content-Type automatically create some **REST API endpoints** available to interact with it.
 
 :::note
-[Components](/developer-docs/latest/development/backend-customization.md#component-s-models) don't have API endpoints.
+[Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
 :::
 
 ### Endpoints
@@ -639,4 +639,4 @@ If you only want to retrieve your draft entries, you can combine the `preview` m
 
 ### Locale
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entities from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entities-with-the-locale-parameter).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).

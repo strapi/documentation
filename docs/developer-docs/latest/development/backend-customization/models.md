@@ -21,7 +21,7 @@ If you are just starting out, it is very convenient to generate some models with
 **Content-Type** models can be created:
 
 - with the [Content-Types Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
-- or with [Strapi's CLI `generate:model`](/developer-docs/latest/developer-resources/cli/CLI.html#strapi-generate-model) command.
+- or with [Strapi's CLI `generate:model`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-model) command.
 
 Creating a Content-Type generates 2 files:
 

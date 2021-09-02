@@ -95,7 +95,7 @@ To make sure a Wysiwyg field stays the same when deploying, we introduced the `r
 
 ### Custom controllers and services
 
-If you are using [core services](/developer-docs/latest/development/backend-customization.md#services), you previously needed to call `result.toJSON()` or `result.toObject()` to get a plain javascript object. This is not the case anymore, you will now receive a simple object directly.
+If you are using [core services](/developer-docs/latest/development/backend-customization/services.md), you previously needed to call `result.toJSON()` or `result.toObject()` to get a plain javascript object. This is not the case anymore, you will now receive a simple object directly.
 
 **Before**:
 
@@ -118,9 +118,9 @@ module.exports = {
 };
 ```
 
-The same modification was made to `strapi.query()`. Read more about **Queries** [here](/developer-docs/latest/development/backend-customization.md#queries).
+The same modification was made to `strapi.query()`.
 
-Keep in mind that if you are running custom ORM queries with Bookshelf or Mongoose you will still have to call `toJSON` or `toObject`. Check out this section about [custom queries](/developer-docs/latest/development/backend-customization.md#api-reference).
+Keep in mind that if you are running custom ORM queries with Bookshelf or Mongoose you will still have to call `toJSON` or `toObject`.
 
 ### Bootstrap function
 
