@@ -234,7 +234,7 @@ const sidebar = {
         },
         {
           title: 'Database APIs Reference',
-          collapsable: false,
+          collapsable: true,
           sidebarDepth: 1,
           children: [
             ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
