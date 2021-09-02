@@ -16,12 +16,12 @@ Syntax: `findOne(parameters) ⇒ Entry`
 
 | Parameter    | Type                           | Description                                |
 | ------------ | ------------------------------ | ------------------------------------------ |
-| select       | `string[]`                     | Select some attributes to return           |
-| where        | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
-| limit        | `number`                       | Always `1` when used with `findOne`        |
-| offset       | `number`                       | How many entries to skip                   |
-| orderBy      | [`OrderByParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
-| populate     | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| `select`       | String, or Array of strings                     | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| `where`       | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
+| `limit`        | Number                       | Always `1` when used with `findOne`        |
+| `offset`       | Number                       | How many entries to skip                   |
+| `orderBy`      | [`OrderByParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
+| `populate`     | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
 
 ### Example
 
@@ -44,12 +44,12 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 
 | Parameter | Type                           | Description                                |
 | --------- | ------------------------------ | ------------------------------------------ |
-| select    | `string[]`                     | Select some attributes to return           |
-| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
-| limit     | `number`                       | How many entries to return                 |
-| offset    | `number`                       | How many entries to skip                   |
-| orderBy   | [`OrderByParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
-| populate  | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| `select`    | String, or Array of strings                    | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| `where`     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
+| `limit`     | Number                       | How many entries to return                 |
+| `offset`    | Number                       | How many entries to skip                   |
+| `orderBy`   | [`OrderByParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
+| `populate`  | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
 
 ### Example
 
@@ -72,12 +72,12 @@ Syntax: `findWithCount(parameters) => [Entry[], number]`
 
 | Parameter | Type                           | Description                                |
 | --------- | ------------------------------ | ------------------------------------------ |
-| select    | `string[]`                     | Select some attributes to return           |
-| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
-| limit     | `number`                       | How many entries to return                 |
-| offset    | `number`                       | How many entries to skip                   |
-| orderBy   | [`OrderByParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
-| populate  | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| `select`    | String, or Array of strings                     | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| `where`     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
+| `limit`     | Number                       | How many entries to return                 |
+| `offset`    | Number                       | How many entries to skip                   |
+| `orderBy`   | [`OrderByParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md)    | How to order the entries                   |
+| `populate`  | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
 
 ### Example
 
@@ -100,9 +100,9 @@ Syntax: `create(parameters) => Entry`
 
 | Parameter | Type                           | Description                                |
 | --------- | ------------------------------ | ------------------------------------------ |
-| select    | `string[]`                     | Select some attributes to return           |
-| populate  | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
-| data      | `object`                       | Input data                                 |
+| select    | String, or Array of strings                    | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| populate  | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| data      | Object                      | Input data                                 |
 
 ### Example
 
@@ -124,10 +124,10 @@ Syntax: `update(parameters) => Entry`
 
 | Parameter | Type                           | Description                                |
 | --------- | ------------------------------ | ------------------------------------------ |
-| select    | `string[]`                     | Select some attributes to return           |
-| populate  | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
-| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
-| data      | `object`                       | Input data                                 |
+| select    | String, or Array of strings                    | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| populate  | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| where     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
+| data      | Object                      | Input data                                 |
 
 ### Example
 
@@ -150,9 +150,9 @@ Syntax: `delete(parameters) => Entry`
 
 | Parameter | Type                           | Description                                |
 | --------- | ------------------------------ | ------------------------------------------ |
-| select    | `string[]`                     | Select some attributes to return           |
-| populate  | [`PopulateParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
-| where     | [`WhereParam`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
+| select    | String, or Array of strings                    | Select some [attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return           |
+| populate  | [`PopulateParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) | Select which relations should be populated |
+| where     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)     | Filter                                     |
 
 ### Example
 
