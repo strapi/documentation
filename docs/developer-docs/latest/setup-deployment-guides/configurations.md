@@ -35,7 +35,7 @@ Notice that the filename is used as a prefix to access the configurations.
 This file lets you define database connections that will be used to store your application content.
 
 :::note
-You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) in the local installation process.
+You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation) in the local installation process.
 :::
 
 **Path —** `./config/database.js`.

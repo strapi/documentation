@@ -422,12 +422,9 @@ const checklinksIgnoredFiles = [
   /**
    * Files below give false positives
    */
-  './developer-docs/latest/concepts/file-structure.md', // contains .md links that should not be treated as links
-  './developer-docs/latest/guides/unit-testing.md', // line 190
-  './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
-  './developer-docs/latest/developer-resources/database-apis-reference/rest-api.mdd', // line 810
-  './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
   './developer-docs/latest/guides/count-graphql.md', // might be removed once GraphQL customization is ready
+  './developer-docs/latest/setup-deployment-guides/configurations.md', // the script thinks filename[]() at line 977 is a real link
+  './developer-docs/latest/development/backend-customization/webhooks.md', // 'missing" links are in commented part of file
 ];
 
 const plugins = [

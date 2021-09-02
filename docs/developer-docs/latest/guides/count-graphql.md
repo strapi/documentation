@@ -38,7 +38,7 @@ module.exports = {
 
 ## Create count query
 
-The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization.md#core-services) service function of the **Restaurant** API.
+The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization/services.md#core-services) service function of the **Restaurant** API.
 
 It needs a JSON object as params, so we will add a `where` options in the GraphQL query.
 
