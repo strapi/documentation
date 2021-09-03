@@ -456,6 +456,8 @@ const query = qs.stringify({
       },
     },
   },
+}, {
+  encodeValuesOnly: true, // prettify url
 });
 
 await request(`/api/books?${query}`);
