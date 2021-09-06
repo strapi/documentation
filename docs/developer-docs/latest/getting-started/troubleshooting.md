@@ -19,7 +19,7 @@ Generally your "flow" of development would follow the following path:
 - Production - If no other changes are needed, deploy into production
 - Repeat as needed, it is recommended that you properly version and test your application as you go
 
-At this time and in the future there is no plan to allow model creating or updating while in a production environment, and there is currently no plans to move model settings into the database. There is no known nor recommended workarounds for this.
+At this time and in the future there is no plan to allow model creating or updating while in a production environment, and there is currently no plans to move model settings into the database. There are no known nor recommended workarounds for this.
 
 ## Does Strapi handle deploying or migrating of content?
 
