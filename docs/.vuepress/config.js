@@ -135,7 +135,16 @@ const sidebar = {
           ],
           sidebarDepth: 1,
         },
-        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
+        {
+          title: 'Local plugins development',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/development/local-plugins/intro.md', 'Introduction'],
+            ['/developer-docs/latest/development/local-plugins/server.md', 'Plugin API: Server'],
+            ['/developer-docs/latest/development/local-plugins/admin-panel.md', 'Plugin API: Admin Panel'],
+            ['/developer-docs/latest/development/local-plugins/extension.md', 'Plugin API: Extension'],
+          ]
+        },
       ],
     },
     {
