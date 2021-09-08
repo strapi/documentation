@@ -3,23 +3,23 @@ title: Strapi User Guide
 description: This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
 ---
 
-# Welcome to the Strapi user guide!
+# Welcome to the Strapi User Guide!
 
-This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
+This user guide contains the functional documentation for all Strapi admin panel features.
 
 ![Homepage of the Admin Panel](../assets/getting-started/admin-panel-homepage.png)
 
-Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
+Keep the following in mind as you explore this guide:
 
-- **Development, Staging or Production Environment** <br> When you start working on your application, it is in a development environment, which is the status for the content structure and application configuration. After deploying your application, it is in production or staging environment. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-Types Builder. In this user guide the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
+- **Feature Availability in Different Environments** <br> Some features can only be used in certain environments – for example, the Content Types Builder is only available in the Development environment. Check the introduction in each feature section for its environment availability.
 
-- **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version, especially since our documentation including this user guide, are only aligned with the latest version<!-- (see Update Strapi version or refer to our migration guides to update your Strapi application) -->. If you are on an older version of Strapi, some information in this documentation may not apply to your application.
+- **Strapi Versions** <br> We recommend always using the latest version of Strapi to get access to updated features and brand new functionality. Since our documentation, including this guide, is updated to support the most recent release<!-- (see Update Strapi version or refer to our migration guides to update your Strapi application) -->, some information may no longer apply if you are using an older version of Strapi.
 
-- **License and Pricing Plans** <br> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or one of the 3 paid plans of the Enterprise Edition: Bronze, Silver, and Gold (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)). In this user guide if a feature is only available for the Enterprise Edition, a badge is displayed beside the section's title to indicate which plans allow access to that feature (e.g. <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/>).
+- **License and Pricing Plans** <br> Four versions of Strapi are available – the Community Edition and three Enterprise Editions: Bronze, Silver, and Gold (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)). Badges next to section titles indicate which plans can access which features  (e.g., <BronzeBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <SilverBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />).
 
-- **Roles and Permissions** <br> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end-users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
+- **Roles and Permissions** <br> Roles and permissions determine who can access what features in Strapi. All features and possible options are documented in this guide but, depending on your role and permissions, you may not have access to them. Please contact your Strapi Super Admin if you can’t access a feature that you think you should be able to use.
 
-With all this in mind, you should be ready to start your Strapi experience!
+Good luck, and welcome!
 
 ## Accessing the admin panel
 
