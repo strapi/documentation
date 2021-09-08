@@ -99,6 +99,6 @@ module.exports = ({ env }) => ({
 Strapi provides a programmatic API for your plugin to hook into some of Strapi's features:
 
 - Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
-  - `strapi-server.js` for the `Server` (see [Server API](./server.md)),
-  - `strapi-admin.js` for the `Admin panel` (see [Admin Panel API](./admin-panel.md)).
-- Plugins can also extend other existing plugins with the [Extension API](./extension.md).
+  - `strapi-server.js` for the `Server` (see [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)),
+  - `strapi-admin.js` for the `Admin panel` (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md)).
+- Plugins can also extend other existing plugins with the [Extension API](/developer-docs/latest/developer-resources/plugin-api-reference/extension.md).

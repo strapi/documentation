@@ -135,16 +135,7 @@ const sidebar = {
           ],
           sidebarDepth: 1,
         },
-        {
-          title: 'Local plugins development',
-          collapsable: true,
-          children: [
-            ['/developer-docs/latest/development/local-plugins/intro.md', 'Introduction'],
-            ['/developer-docs/latest/development/local-plugins/server.md', 'Plugin API: Server'],
-            ['/developer-docs/latest/development/local-plugins/admin-panel.md', 'Plugin API: Admin Panel'],
-            ['/developer-docs/latest/development/local-plugins/extension.md', 'Plugin API: Extension'],
-          ]
-        },
+        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins development'],
       ],
     },
     {
@@ -226,6 +217,15 @@ const sidebar = {
               'Laravel',
             ],
           ],
+        },
+        {
+          title: 'Plugin API Reference',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server Plugin API'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel Plugin API'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/extension.md', 'Plugin Extensions API'],
+          ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
