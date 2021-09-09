@@ -34,6 +34,7 @@ Strapi scans every `package.json` file of the project dependencies. A Strapi plu
   "kind": "plugin"
 }
 ```
+<!-- ? is it still true? because I can't find the `strapi.kind` key in the [package.json](https://github.com/strapi/strapi/blob/releases/v4/examples/getstarted/plugins/myplugin/package.json) in our examples/getstarted folder? -->
 
 Installed plugins can also be manually enabled or disabled.
 
