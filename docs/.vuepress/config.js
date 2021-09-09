@@ -222,9 +222,9 @@ const sidebar = {
           title: 'Plugin API Reference',
           collapsable: true,
           children: [
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server Plugin API'],
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel Plugin API'],
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/extension.md', 'Plugin Extensions API'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/extension.md', 'Extensions API for plugins'],
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
