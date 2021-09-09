@@ -1,33 +1,34 @@
 ---
-title: Server Plugin API - Strapi Developer Documentation
+title: Server API - Strapi Developer Documentation
 description: …
 sidebarDepth: 3
 ---
 <!-- TODO: update SEO -->
 
-# Server Plugin API (`strapi-server.js`)
+# Server API for plugins
 
-<!-- TODO: Add intro here -->
+A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Server API is about the back end part.
+
+Creating and using a plugin interacting with the Server API consists in 2 steps:
+
+1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
+2. [Use the exported interface](#usage)
 
 <!-- TODO: add TIP with path to Github example here? -->
 
 ## Entry file
 
-The Server Plugin API entry file, `./strapi-server.js`, is located at the root of the package and exports the required interface.
+To tap into the Server API, create a `strapi-server.js` file at the root of the plugin package folder. This file exports the required interface, with the following parameters available:
 
-It's a function that exports:
 | Parameter type | Available parameters |
 |---|---|
-| Lifecycle hooks |  <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul> |
+| Lifecycle functions |  <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul> |
 | Configuration | [config](#configuration) object |
-| Backend customizations | <ul><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
-| Content-Types | [`contentTypes` declared by the plugin](#content-types) | 
-| Hooks | [`hooks` declared by the plugin](#content-types) |
+| Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 <!-- TODO: add link to Hook API above -->
 
-**Type**: `Function | AsyncFunction`
-
-**Example**
+<!-- TODO: update or remove the commented example as it's not super useful as-is: either add some example for every parameter (register, boostrap, routes, controllers…) or provide a link to Github (i18n or upload plugin?) -->
+<!-- **Example**
 
 ```js
 // path: `./my-plugin/strapi-server.js`
@@ -58,21 +59,21 @@ module.exports = () => {
     hooks: {},
   };
 };
-```
+``` -->
 
-## Lifecycles
+## Lifecycle functions
 
 ### Register
 
-Exposes the register function. This function will be called before bootstrap in order to register different things such as migrations or permissions.
+This function is called as soon as possible, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/development/plugins/users-permissions.html) or database migrations.
 
 **Type**: `Function`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path ./strapi-server.js
+
 module.exports = () => ({
   register() {
     // execute some register code
@@ -88,9 +89,9 @@ Exposes the [bootstrap](/developer-docs/latest/setup-deployment-guides/configura
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 module.exports = () => ({
   bootstrap() {
     // execute some bootstrap code
@@ -100,15 +101,15 @@ module.exports = () => ({
 
 ### Destroy
 
-Exposes the destroy function. Similar to bootstrap this function will be called to cleanup the plugin (close connections / remove listeners ...) when the Strapi instance is destroyed.
+Exposes the destroy function. This function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
 
 **Type**: `Function`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 module.exports = () => ({
   destroy() {
     // execute some destroy code
@@ -118,58 +119,55 @@ module.exports = () => ({
 
 ## Configuration
 
-Default plugin configuration. A plain `Object`.
+Stores the default plugin configuration.
 
- - `default`: (Object or Function that returns a plain Object),  Default plugin configuration, merged with the user configuration
- - `validator`: a function that checks the results of merging the default plugin configuration to the user configuration is valid, and throws errors when the configuration is invalid
+**Type**: `Object`
 
-**Example**:
+| Parameter   | Type                                           | Description                                                                                                                                              |
+| ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
+| `validator` | Function                                       | Checks the results of merging the default plugin configuration with the user configuration is valid, and throws errors when the configuration is invalid |
 
 <!-- TODO: check if this config object has the same shape in strapi-server.js and in strapi-admin.js 👇 -->
 
-<!-- TODO: merge the 2 examples -->
+**Example**
 
 ```js
 // path: ./strapi-server.js
 
 const config = require('./config');
+
 module.exports = () => ({
   config: {
     default: ({ env }) => { optionA: true },
-    validator: (config) => { /* throws if config is invalid */ }
+    validator: (config) => { 
+      if (typeof config.optionA !== boolean) {
+        throw new Error('optionA has to be a boolean');
+      }
+    },
   },
 });
 ```
-
-```js
-config: {
-      default: ({ env }) => ({ fizz: 'buzz' }),
-      validator: (config) => {
-        if (typeof config.fizz !== string) {
-          throw new Error('fizz has to be a string');
-        }
-      },
-    },
-```
-
-:::note
-If you use a function, it will have the same behavior as the application configuration (see [formats](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations.md#formats) documentation)
-:::
 
 ## Backend customization
 
 ### Content-Types
 
-An array with the [Content-Types]() the plugin provides.
-<!-- TODO: add link to Backend customization > models once merged with database PR -->
+An object with the [Content-Types](/developer-docs/latest/development/backend-customization.html#models) the plugin provides.
+<!-- TODO: update link to Backend customization > models once merged with database PR -->
 
-**Type**: `Object[]`
+**Type**: `Object`
+
+<!-- ! The link to the `info` section below won't work in this PR, but will work once the content is merged with the database PR -->
+:::note
+Content-Types keys in the `contentTypes` object should re-use the `singularName` defined in the [`info`](/developer-docs/latest/development/backend-customization/models.md#model-information) key of the schema.
+:::
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const contentTypes = require('./content-types');
 
 module.exports = () => ({
@@ -177,21 +175,21 @@ module.exports = () => ({
 });
 ```
 
-`./content-types/index.js`
-
 ```js
+// path: ./content-types/index.js
+
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
 module.exports = [
-  contentTypeA,
+  contentTypeA, // should re-use the same
   contentTypeB,
 ];
 ```
 
-`./content-types/content-type-a.js`
-
 ```js
+// path: ./content-types/content-type-a.js
+
 module.exports = {
   info: {
     tableName: 'content-type',
@@ -225,16 +223,18 @@ module.exports = {
 
 ### Routes
 
-An array of [route]() configuration.
-<!-- TODO: add link to Backend customization > Routing once merged with database PR -->
+<!-- ? Have we decided on/implemented routes behavior yet? -->
+
+An array of [route](/developer-docs/latest/development/backend-customization.html#routing) configuration.
+<!-- TODO: update link to Backend customization > Routing once merged with database PR -->
 
 **Type**: `Object[]`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const routes = require('./routes');
 
 module.exports = () => ({
@@ -242,9 +242,9 @@ module.exports = () => ({
 });
 ```
 
-`./routes/index.js`
-
 ```js
+// path: ./routes/index.js
+
 module.exports = [
   {
     method: 'GET',
@@ -259,16 +259,16 @@ module.exports = [
 
 ### Controllers
 
-An object with the [controllers]() the plugin provides.
-<!-- TODO: add link to Backend Customization > Controllers once merged with database PR -->
+An object with the [controllers](/developer-docs/latest/development/backend-customization.html#controllers) the plugin provides.
+<!-- TODO: update link to Backend Customization > Controllers once merged with database PR -->
 
 **Type**: `Object`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const controllers = require('./controllers');
 
 module.exports = () => ({
@@ -276,9 +276,9 @@ module.exports = () => ({
 });
 ```
 
-`./controllers/index.js`
-
 ```js
+// path: ./controllers/index.js
+
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
 
@@ -288,9 +288,9 @@ module.exports = {
 };
 ```
 
-`./controllers/controller-a.js`
-
 ```js
+// path: ./controllers/controller-a.js
+
 module.exports = {
   doSomething(ctx) {
     ctx.body = { message: 'HelloWorld' };
@@ -300,16 +300,18 @@ module.exports = {
 
 ### Services
 
-An object with the [services]() the plugin provides.
-<!-- TODO: add link to Backend Customization > Services once merged with database PR -->
+An object with the [services](/developer-docs/latest/development/backend-customization.html#services) the plugin provides.
+<!-- TODO: update link to Backend Customization > Services once merged with database PR -->
+
+Services should be functions taking `strapi` as a parameter.
 
 **Type**: `Object`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const services = require('./services');
 
 module.exports = () => ({
@@ -317,9 +319,9 @@ module.exports = () => ({
 });
 ```
 
-`./services/index.js`
-
 ```js
+// path: ./services/index.js
+
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
 
@@ -329,9 +331,9 @@ module.exports = {
 };
 ```
 
-`./services/service-a.js`
-
 ```js
+// path: ./services/service-a.js
+
 module.exports = ({ strapi }) => ({
   someFunction() {
     return [1, 2, 3];
@@ -341,16 +343,18 @@ module.exports = ({ strapi }) => ({
 
 ### Policies
 
-An object with the [policies]() the plugin provides.
-<!-- TODO: add link to Backend Customization > Policies once merged with the database PR -->
+<!-- ? are policies still implemented like described in the RFC? -->
+
+An object with the [policies](/developer-docs/latest/development/backend-customization.html#policies) the plugin provides.
+<!-- TODO: update link to Backend Customization > Policies once merged with the database PR -->
 
 **Type**: `Object`
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const policies = require('./policies');
 
 module.exports = () => ({
@@ -358,9 +362,9 @@ module.exports = () => ({
 });
 ```
 
-`./policies/index.js`
-
 ```js
+// path: ./policies/index.js
+
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
 
@@ -370,9 +374,9 @@ module.exports = {
 };
 ```
 
-`./policies/policy-a.js`
-
 ```js
+// path: ./policies/policy-a.js
+
 module.exports = (ctx, next) => {
     if (ctx.state.user && ctx.state.user.isActive) {
       return next();
@@ -391,18 +395,18 @@ An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/
 
 **Example**
 
-`./strapi-server.js`
-
 ```js
+// path: ./strapi-server.js
+
 const middlewares = require('./middlewares');
 module.exports = () => ({
   middlewares,
 });
 ```
 
-`./middlewares/index.js`
-
 ```js
+// path: ./middlewares/index.js
+
 const middlewareA = require('./middleware-a');
 const middlewareB = require('./middleware-b');
 
@@ -412,49 +416,9 @@ module.exports = {
 };
 ```
 
-`./middlewares/middleware-a.js`
-
 ```js
-module.exports = (strapi) => ({
-  defaults: { enabled: true }, // default settings,
-  beforeInitialize() {},
-  initialize() {},
-});
-```
+// path: ./middlewares/middleware-a.js
 
-### Hooks
-
-An `Object` with the [hooks]() the plugin provides.
-<!-- TODO: link to Hook API section once documented -->
-
-**Type**: `Object`
-
-**Example**
-
-`./strapi-server.js`
-
-```js
-const hooks = require('./hooks');
-module.exports = () => ({
-  hooks,
-});
-```
-
-`./hooks/index.js`
-
-```js
-const hookA = require('./hook-a');
-const hookB = require('./hook-b');
-
-module.exports = {
-  hookA,
-  hookB,
-};
-```
-
-`./hooks/hook-a.js`
-
-```js
 module.exports = (strapi) => ({
   defaults: { enabled: true }, // default settings,
   beforeInitialize() {},
@@ -464,121 +428,41 @@ module.exports = (strapi) => ({
 
 ## Usage
 
-The plugin is exported and loaded into Strapi. Now a developper needs to be able to access those features to use them in the code.
+Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and shortcut getters.
 
-### Top level getters
-
-The Strapi instance will expose getters to easily access features in different places.
-
-#### `api`
+While top-level getters imply chaining functions, global getters are syntactic sugar shortcuts that allow direct access using a feature's uid:
 
 ```js
-const api = strapi.api('apiName');
+// Access an API or a plugin controller using a top-level getter 
+strapi.api('apiName').controller('controllerName')
+strapi.plugin('pluginName').controller('controllerName')
+
+// Access an API or a plugin controller using a global getter
+strapi.controller('api::apiName.controllerName')
+strapi.controller('plugin::pluginName.controllerName')
 ```
 
-#### `plugin`
+:::details Top-level getter syntax examples
 
 ```js
-const plugin = strapi.plugin('pluginName');
+strapi.plugin('pluginName').config
+strapi.plugin('pluginName').routes
+strapi.plugin('pluginName').controller('controllerName')
+strapi.plugin('pluginName').service('serviceName')
+strapi.plugin('pluginName').contentType('contentTypeName')
+strapi.plugin('pluginName').policy('policyName')
+strapi.plugin('pluginName').middleware('middlewareName')
 ```
 
-### Plugin or Api getters
+:::
 
-#### `config`
+:::details Global getter syntax examples
 
 ```js
-plugin.config;
+strapi.controller('plugin::pluginName.controllerName');
+strapi.service('plugin::pluginName.serviceName');
+strapi.contentType('plugin::pluginName.contentTypeName');
+strapi.policy('plugin::pluginName.policyName');
+strapi.middleware('plugin::pluginName.middlewareName');
 ```
-
-#### `routes`
-
-```js
-plugin.routes;
-```
-
-#### `controller`
-
-```js
-plugin.controller('controllerName');
-```
-
-#### `service`
-
-```js
-plugin.service('serviceName');
-```
-
-#### `contentType`
-
-```js
-plugin.contentType('contentTypeName');
-```
-
-#### `policy`
-
-```js
-plugin.policy('policyName');
-```
-
-#### `hook`
-
-```js
-plugin.hook('hookName');
-```
-
-#### `middleware`
-
-```js
-plugin.middleware('middlewareName');
-```
-
-### Shortcut getters
-
-Having to call two functions to access a feature is not always the most efficient. To help with this we are going to provide global getters for each features.
-
-> Following the naming convention RFC [here](https://github.com/strapi/rfcs/blob/master/rfcs/0002-global-naming-convention.md). we are going to use it to provide top level getter for plugin or api features.
-
-#### `controller`
-
-```js
-strapi.controller('application::apiName.controllerName');
-strapi.controller('plugins::pluginName.controllerName');
-```
-
-#### `service`
-
-```js
-strapi.service('application::apiName.serviceName');
-strapi.service('plugins::pluginName.serviceName');
-```
-
-#### `contentType`
-
-```js
-strapi.contentType('application::apiName.contentTypeName');
-strapi.contentType('plugins::pluginName.contentTypeName');
-```
-
-#### `policy`
-
-```js
-strapi.policy('application::apiName.policyName');
-strapi.policy('plugins::pluginName.policyName');
-```
-
-#### `hook`
-
-```js
-strapi.hook('application::apiName.hookName');
-strapi.hook('plugins::pluginName.hookName');
-```
-
-#### `middleware`
-
-```js
-strapi.middleware('application::apiName.middlewareName');
-strapi.middleware('plugins::pluginName.middlewareName');
-```
-
-
-
+:::
