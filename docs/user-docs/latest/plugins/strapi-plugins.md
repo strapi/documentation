@@ -5,7 +5,7 @@ description: Reference guide to Strapi plugins explaining how they work and how 
 
 # List of Strapi plugins
 
-::: warning 🚧 This section of the user guide is a work in progress. Stay tuned!
+::: callout 🚧 This section of the user guide is a work in progress. Stay tuned!
 <br>
 :::
 

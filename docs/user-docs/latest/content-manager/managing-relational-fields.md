@@ -28,15 +28,15 @@ The relational fields of a content-type are managed from the Relational fields b
 
 The Relational fields box allows to choose which entries the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
-::: tip 💡 TIP
+::: tip
 Instead of choosing an entry by scrolling the list, you can click any drop-down list from the Relational fields box and type to search a specific entry.
 :::
 
-::: tip NOTE
+::: note
 If the Draft & Publish feature (see [Saving, publishing and deleting content](saving-and-publishing-content.md)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
 :::
 
-::: warning IMPORTANT
+::: caution
 If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
@@ -51,7 +51,7 @@ To select the only relevant relational field's entry:
 1. In the Relational fields box of your content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 
-::: tip 💡 TIP
+::: tip
 Click on **Details** to be redirected to the edit view of the content-type the relational field originally belongs to. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
@@ -69,7 +69,7 @@ To select the relevant relational field's entries:
 2. Among the list of entries, choose one.
 3. Repeat step 2 until all relevant entries have been chosen.
 
-::: tip 💡 TIP
+::: tip
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the content-type the relational field originally belongs to.
 :::
 

@@ -9,7 +9,7 @@ The Content Manager is a core plugin of Strapi. It is a feature that is always a
 
 The Content Manager is divided into 2 categories, both displayed in the main navigation: _Collection types_ and _Single types_. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
 
-::: tip 💡 TIP
+::: tip
 Click the search icon <Fa-Search /> in the main navigation to use a text search and find one of your content types more quickly!
 :::
 
@@ -31,7 +31,7 @@ From the list view, it is possible to:
 - configure the fields displayed in the table of the list view (5),
 - duplicate <Fa-Copy />, edit <Fa-PencilAlt /> (see [Writing content](../content-manager/writing-content.md)) or delete <Fa-TrashAlt /> (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
 
-::: tip 💡 TIP
+::: tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
@@ -50,7 +50,7 @@ To set a new filter:
 5. (optional) Click on the add button ![icon add new](../assets/content-manager/icon_add2.png) to add another condition-based filter.
 6. Click on the **Apply** button.
 
-::: tip NOTE
+::: note
 When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![icon delete](../assets/content-manager/icon_delete2.png).
 :::
 
@@ -60,7 +60,7 @@ On the top right side of the list view interface, an **Add New [collection type 
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
-::: warning IMPORTANT
+::: note
 New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
 :::
 
@@ -68,7 +68,7 @@ New entries are only considered created once some of their content has been writ
 
 Right above the list view table, on the right side of the interface, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
 
-::: tip NOTE
+::: note
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md).
 :::
 
@@ -80,7 +80,7 @@ To temporarily configure the fields displayed in the table:
 2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
-::: tip NOTE
+::: tip
 Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 
 :::

@@ -24,7 +24,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 - Authenticated: for end-users to access content only if they are logged in to a front-end application.
 - Public: for end-users to access content without being logged in to a front-end application.
 
-::: tip NOTE
+::: note
 The end-user role attributed by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
 :::
 
@@ -71,6 +71,6 @@ To configure permissions for an end-user role:
 2. Tick the boxes of the actions and permissions to grant for the role.
 3. Click on the **Save** button.
 
-::: tip 💡 TIP
+::: tip
 When ticking an action or permission box, related bound routes of the API are displayed in the right side of the interface.
 :::

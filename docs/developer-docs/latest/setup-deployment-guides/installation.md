@@ -45,7 +45,7 @@ Strapi projects and applications can be installed either locally on a computer, 
 
 ## One-click installations
 
-::: warning WARNING
+::: caution
 One-click installation guides stop being updated by the Strapi documentation team starting at the release of Strapi v4. Community contributions to keep these guides updates are very welcome.
 :::
 

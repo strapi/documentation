@@ -15,14 +15,18 @@ This guide could also be used to setup an Axios client instance.
 
 First you will have to install the client package in your application by running one of the following commands:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
-`yarn add @octokit/rest`
+```sh
+yarn add @octokit/rest
+```
 :::
 
 ::: tab npm
-`npm install @octokit/rest`
+```sh
+npm install @octokit/rest
+```
 :::
 
 ::::

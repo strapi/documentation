@@ -153,7 +153,7 @@ In this example, we are verifying that a session is open. If it is the case, we 
 
 To apply policies to a route, you need to associate an array of policies to it. There are two kinds of policies: global and scoped.
 
-::: warning
+:::caution
 To apply policies with GraphQL please see the [following guide](/developer-docs/latest/development/plugins/graphql.md#execute-a-policy-before-a-resolver).
 :::
 
@@ -311,8 +311,8 @@ When you create a new `Content Type` you will see a new empty controller has bee
 Here are the core methods (and their current implementation).
 You can simply copy and paste this code in your own controller file to customize the methods.
 
-::: warning
-In the following example we will assume your controller, service and model are named `restaurant`
+:::caution
+In the following example we will assume your controller, service and model are named `restaurant`.
 :::
 
 ##### Utils
@@ -328,7 +328,7 @@ const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
 
 ##### Collection Type
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -499,7 +499,7 @@ module.exports = {
 
 ##### Single Type
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -686,7 +686,7 @@ const { isDraft } = require('strapi-utils').contentTypes;
 
 ##### Collection Type
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -970,7 +970,7 @@ module.exports = {
 
 ##### Single Type
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -1151,7 +1151,7 @@ These queries handle for you specific Strapi features like `components`, `dynami
 
 ### API Reference
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -1477,7 +1477,7 @@ strapi.query(modelName, plugin).model;
 
 Then you can run any queries available on the model. You should refer to the specific ORM documentation for more details:
 
-:::: tabs
+:::: tabs card
 
 ::: tab SQL
 
@@ -1694,7 +1694,7 @@ Additional settings can be set on models:
 
 In this example, the model `Restaurant` will be accessible through the `Restaurants` global variable. The data will be stored in the `Restaurants_v1` collection or table and the model will use the `mongo` connection defined in `./config/database.js`
 
-::: warning
+:::caution
 If not set manually in the JSON file, Strapi will adopt the filename as `globalId`.
 The `globalId` serves as a reference to your model within relations and Strapi APIs. If you chose to rename it (either by renaming your file or by changing the value of the `globalId`), you'd have to migrate your tables manually and update the references.
 Please note that you should not alter the Strapi's models `globalId` (plugins and core models) since they are used directly within Strapi APIs and other models' relations.
@@ -1827,7 +1827,7 @@ To improve the Developer Experience when developing or using the administration 
 
 Relations let you create links (relations) between your Content Types.
 
-:::: tabs
+:::: tabs card
 
 ::: tab One-Way
 
@@ -2194,9 +2194,9 @@ Lets say we created an `openinghours` component in `restaurant` category.
 - `repeatable` (boolean): Could be `true` or `false` that let you create a list of data.
 - `component` (string): It follows this format `<category>.<componentName>`.
 
-:::: tabs
+::::: tabs card
 
-::: tab Create
+:::: tab Create
 
 Create a restaurant with non-repeatable component
 
@@ -2239,9 +2239,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab Update
+:::: tab Update
 
 Update a restaurant with non-repeatable component
 
@@ -2287,11 +2287,13 @@ xhr.send(
 );
 ```
 
-**NOTE** if you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
-
+:::note
+If you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
 :::
 
-::: tab Delete
+::::
+
+:::: tab Delete
 
 Delete a restaurant with non-repeatable component
 
@@ -2326,9 +2328,9 @@ xhr.send(
 );
 ```
 
-:::
-
 ::::
+
+:::::
 
 ### Dynamic Zone
 
@@ -2353,9 +2355,9 @@ Lets say we created an `slider` and `content` component in `article` category.
 
 - `components` (array): Array of components that follows this format `<category>.<componentName>`.
 
-:::: tabs
+::::: tabs card
 
-::: tab Create
+:::: tab Create
 
 ```js
 const xhr = new XMLHttpRequest();
@@ -2377,9 +2379,9 @@ xhr.send(
 );
 ```
 
-:::
+::::
 
-::: tab Update
+:::: tab Update
 
 ```js
 const xhr = new XMLHttpRequest();
@@ -2403,11 +2405,13 @@ xhr.send(
 );
 ```
 
-**NOTE** if you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
-
+:::note
+If you don't specify the `ID` it will delete and re-create the entry and you will see the `ID` value change.
 :::
 
-::: tab Delete
+::::
+
+:::: tab Delete
 
 ```js
 const xhr = new XMLHttpRequest();
@@ -2426,9 +2430,9 @@ xhr.send(
 );
 ```
 
-:::
-
 ::::
+
+:::::
 
 ### Lifecycle hooks
 
@@ -2438,7 +2442,7 @@ To configure a `ContentType` lifecycle hook you can set a `lifecycles` key in th
 
 #### Available Lifecycle hooks
 
-:::: tabs
+:::: tabs card
 
 ::: tab find
 
@@ -2652,7 +2656,7 @@ module.exports = {
 ::: tip
 You can mutate one of the parameters to change its properties. Make sure not to reassign the parameter as it will have no effect:
 
-**This will Work**
+This will work:
 
 ```js
 module.exports = {
@@ -2664,7 +2668,7 @@ module.exports = {
 };
 ```
 
-**This will NOT Work**
+This will NOT work:
 
 ```js
 module.exports = {
@@ -2747,7 +2751,7 @@ Another way is to define `defaultHeaders` to add to every webhook requests.
 
 You can configure these global headers by updating the file at `./config/server.js`:
 
-:::: tabs
+:::: tabs card
 
 ::: tab Simple token
 

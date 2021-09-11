@@ -32,12 +32,13 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+::: request Example GET request
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
 $restaurants = $strapi->collection('restaurants');
 ```
+:::
 
 You may now iterate over the $restaurants array which will contain all your restaurants. More options are available as well: 
 
@@ -76,6 +77,6 @@ $entry = $strapi->entry('restaurants', $id = 5);
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your Collection Types in Strapi using Laravel. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
 There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).

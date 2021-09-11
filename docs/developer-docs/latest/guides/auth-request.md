@@ -70,7 +70,7 @@ Here is the API route for the authentication `/auth/local`.
 
 You have to request it in **POST**.
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 
