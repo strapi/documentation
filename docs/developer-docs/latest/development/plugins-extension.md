@@ -23,11 +23,11 @@ Plugin customizations code sit in the `./extensions` folder. Some plugins automa
 ```
 :::
 
-
 Plugins can be extended in 2 ways:
 
+- extending the plugin Content-Types
 - extending the plugin interface (e.g. to add controllers, services, policies, middlewares and more)
-- extending the plugin Content-Types schemas
+
 
 ## Extending a plugin's Content-Types
 
