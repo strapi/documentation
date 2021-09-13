@@ -135,6 +135,7 @@ const sidebar = {
           ],
           sidebarDepth: 1,
         },
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
         ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins development'],
       ],
     },
@@ -224,7 +225,6 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
             ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/extension.md', 'Extensions API for plugins'],
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
