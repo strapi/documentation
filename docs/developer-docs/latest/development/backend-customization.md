@@ -2171,7 +2171,7 @@ An `Image` model might belong to many `Article` models or `Product` models.
 
 ### Components
 
-Component fields let your create a relation between your Content Type and a Component structure.
+Component fields let you create a relation between your Content Type and a Component structure.
 
 ##### Example
 

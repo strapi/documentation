@@ -105,7 +105,7 @@ The following is an example config for `Standard Environment` or `Flexible Envir
 ::: tab Standard Environment
 
 ```yaml
-runtime: nodejs10
+runtime: nodejs14
 
 instance_class: F2
 
