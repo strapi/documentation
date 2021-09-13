@@ -20,10 +20,10 @@ Creating and using a plugin interacting with the Server API consists in 2 steps:
 
 To tap into the Server API, create a `strapi-server.js` file at the root of the plugin package folder. This file exports the required interface, with the following parameters available:
 
-| Parameter type | Available parameters |
-|---|---|
-| Lifecycle functions |  <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul> |
-| Configuration | [config](#configuration) object |
+| Parameter type         | Available parameters                                                                                                                                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
+| Configuration          | [config](#configuration) object                                                                                                                                                                                |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 <!-- TODO: add link to Hook API above -->
 
