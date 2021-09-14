@@ -126,7 +126,7 @@ Stores the default plugin configuration.
 | Parameter   | Type                                           | Description                                                                                                                                              |
 | ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | Checks the results of merging the default plugin configuration with the user configuration is valid, and throws errors when the configuration is invalid |
+| `validator` | Function                                       | Checks if the results of merging the default plugin configuration with the user configuration is valid, and throws errors when the configuration is invalid |
 
 <!-- TODO: check if this config object has the same shape in strapi-server.js and in strapi-admin.js 👇 -->
 
