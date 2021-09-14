@@ -63,9 +63,9 @@ module.exports = () => {
 
 ## Lifecycle functions
 
-### Register
+### register()
 
-This function is called as soon as possible, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/development/plugins/users-permissions.html) or database migrations.
+This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/development/plugins/users-permissions.html) or database migrations.
 
 **Type**: `Function`
 
@@ -81,7 +81,7 @@ module.exports = () => ({
 });
 ```
 
-### Bootstrap
+### bootstrap()
 
 Exposes the [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap) function.
 
@@ -99,7 +99,7 @@ module.exports = () => ({
 });
 ```
 
-### Destroy
+### destroy()
 
 Exposes the destroy function. This function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
 
