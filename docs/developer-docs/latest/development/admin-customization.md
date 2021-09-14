@@ -13,7 +13,6 @@ To extend this package you will have to create an `admin` folder at the root of 
 
 In this folder you will be able to override admin files and functions.
 
-
 ## Customization options
 
 The administration panel can be customized according to your needs, so you can make it reflect your identity.
@@ -218,7 +217,7 @@ This will replace the folder's content located at `./build`. Visit [http://local
 
 ## Custom Webpack Config
 
-In order to extend the usage of webpack, you can define a function that extends its config inside `admin/admin.config.js`, like so:
+In order to extend the usage of webpack, you can define a function that extends its config inside `./admin/webpack.config.js`, like so:
 
 ```js
 module.exports = {
