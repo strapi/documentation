@@ -10,6 +10,7 @@ Plugin customizations code sit in the `./extensions` folder. Some plugins automa
 <!-- TODO: add link to new project structure when updated -->
 
 :::details Example of extensions folder structure:
+
 ```bash
 /extensions
   /some-plugin-to-extend
@@ -20,7 +21,10 @@ Plugin customizations code sit in the `./extensions` folder. Some plugins automa
         model.json
       /another-content-type-to-extend
         model.json
+  /another-plugin-to-extend
+    strapi-admin.js
 ```
+
 :::
 
 Plugins can be extended in 2 ways:
