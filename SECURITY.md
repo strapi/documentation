@@ -7,9 +7,9 @@ As of May 2020 (and until this document is updated), only the v3.0.0 *stable* re
 ## Reporting a Vulnerability
 
 Please report (suspected) security vulnerabilities to
-**[security@strapi.io](mailto:security@strapi.io)** or via the [Strapi Slack](https://slack.strapi.io).
+**[security@strapi.io](mailto:security@strapi.io)** or via the [Strapi Discord](https://discord.com/invite/WFrDyNzNDU).
 
-When reporting a (suspected) security vulnerability via slack please reach out to any of the following Strapi employees directly:
+When reporting a (suspected) security vulnerability via Discord please reach out to any of the following Strapi employees directly:
 
 - `@dmehaffy`
 - `@aureliengeorget`

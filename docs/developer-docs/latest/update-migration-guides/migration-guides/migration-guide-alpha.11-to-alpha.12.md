@@ -10,7 +10,7 @@ This migration guide is a mix of migrations from 3.0.0-alpha.11.1 to 3.0.0-alpha
 <br>
 
 ::: tip
-Feel free to [join us on Slack](http://slack.strapi.io) and ask questions about the migration process.
+Feel free to [join us on Discord](http://discord.com/invite/WFrDyNzNDU) and ask questions about the migration process.
 :::
 
 <br>

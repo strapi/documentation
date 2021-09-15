@@ -16,7 +16,7 @@ To be honest with all of you, the migration process won't be easy. The new versi
 - Better error handling with Boom.
 
 ::: tip
-Feel free to [join us on Slack](http://slack.strapi.io) and ask questions about the migration process.
+Feel free to [join us on Discord](http://discord.com/invite/WFrDyNzNDU) and ask questions about the migration process.
 :::
 
 ## Getting started

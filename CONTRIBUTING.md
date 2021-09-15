@@ -136,5 +136,5 @@ Before submitting an issue you need to make sure:
 - Do not ask technical questions about how to do something
   - Questions should be directed at the following resources
     - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
-    - Talk with other community members on our [Community Slack](https://slack.strapi.io)
+    - Talk with other community members on our [Discord](https://discord.com/invite/WFrDyNzNDU)
 - Rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed

@@ -20,7 +20,7 @@ description: Learn how you can migrate your Strapi application from alpha.21 to 
 <br>
 
 ::: tip
-Feel free to [join us on Slack](http://slack.strapi.io) and ask questions about the migration process.
+Feel free to [join us on Discord](http://discord.com/invite/WFrDyNzNDU) and ask questions about the migration process.
 :::
 
 <br>
