@@ -9,6 +9,8 @@ sidebarDepth: 3
 
 A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's administration panel.
 
+The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
+
 Creating and using a plugin that interacts with the Admin Panel API consists in 2 steps:
 
 1. Declare and export the plugin interface within the [`strapi-admin.js` entry file](#entry-file)
@@ -131,7 +133,7 @@ module.exports = () => {
 
 **Type**: `Function`
 
-To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register more translations files.
+To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files.
 
 <!-- ? not sure we need to highlight this 🤔 -->
 <!-- :::note
@@ -174,100 +176,20 @@ export default {
 
 Stores the Admin Panel configuration.
 
-| Parameter       | Type             | Description                                                                               |
-| --------------- | ---------------- | ----------------------------------------------------------------------------------------- |
-| `auth`          | Object           | Accepts a `logo` key to change the logo on authenticated views                            |
-| `head`          | Object           | Accepts a `favicon` key                                                                   |
-| `locales`       | Array of Strings | [Add or remove locales](#locales)                                                         |
-| `menu`          | Object           | Accepts the `logo` key to change the logo in the menu                                     |
-| `theme`         | Object           | Override or extend the theme                                                              |
-| `translations`  | Object           | Extend the translation                                                                    |
-| `tutorial`      | Boolean          | Toggles displaying the tutorials                                                          |
-| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle displaying notifications about new releases |
+| Parameter       | Type             | Description                                                                                                                                   |
+| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`          | Object           | Accepts a `logo` key to change the logo on login screen views                                                                                 |
+| `head`          | Object           | Accepts a `favicon` key                                                                                                                       |
+| `locales`       | Array of Strings | List of availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales) documentation) |
+| `menu`          | Object           | Accepts the `logo` key to change the logo in the main navigation                                                                              |
+| `theme`         | Object           | Override or extend the theme                                                                                                                  |
+| `translations`  | Object           | Extend the translations                                                                                                                       |
+| `tutorial`      | Boolean          | Toggles displaying the tutorials                                                                                                              |
+| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle displaying notifications about new releases                                                     |
 
 :::strapi Customizing the admin panel
-For more information about these parameters, see [Admin panel customization](/developer-docs/latest/development/admin-customization.md).
+For more information about updating this configuration, see [Admin panel customization](/developer-docs/latest/development/admin-customization.md#changing-the-configuration).
 :::
-
-<!-- TODO: move this part 👇 to admin panel customization section -->
-<!-- **Example**
-
-```jsx
-import AuthLogo from './extensions/my-logo.png';
-import MenuLogo from './extensions/logo.png';
-import favicon from './extensions/favicon.ico';
-
-export default {
-  config: {
-    // Change the Auth views strapi logo
-    auth: {
-      logo: AuthLogo,
-    },
-   // Change the favicon
-    head: {
-      favicon: favicon,
-    },
-    // Add a new locale other than en
-    locales: ['fr',],
-    // Change the menu logo
-    menu: {
-      logo: MenuLogo,
-    },
-    // Override or extend the theme
-    theme: {},
-    // Extend the translations
-    translations: {
-      fr: {
-        'Auth.form.email.label': 'test',
-      },
-    },
-   // Display the tutorials bow
-    tutorials: false,
-   // Display the release notification
-    notifications: { release: false },
-  },
-  // Connect and interact with other plugins, similar to the plugins's boostrap lifecycle
-  bootstrap() {},
-};
-
-```
-
-Important:
-
-Only the ./admin/app.js and the files under the ./admin/extensions folder are being watched by the webpack dev server
-
-### Locales
-
-**Example: Add/remove a new locale**
-
-```jsx
-// path: ./my-app/strapi-admin.js
-
-module.exports = {
-  // Custom webpack config
-  webpack: (config, webpack) => {
-    // Note: we provide webpack above so you should not `require` it
-    // Perform customizations to webpack config
-    // Important: return the modified config
-    return config;
-  },
-
-  // App customisations
-  app: config => {
-    config.locales = ['ru', 'zh'];
-
-    return config;
-  },
-};
-```
-
-::: note NOTES
-
-* The `en` locale cannot be removed from the build as it is the fallback one.
-* Currently, it is not possible to add a locale that is not already created in the monorepo.
-* Currently, this list of supported locales is not available (maybe we could add a log to display which locales are availables.
-* Currently, the default locale is `en` it will be the langage of the admin panel when the users opens the admin panel for the first time.
-::: -->
 
 ## Available features
 
