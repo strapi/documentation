@@ -116,25 +116,25 @@ const sidebar = {
       ],
     },
     {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+      ],
+      sidebarDepth: 1,
+    },
+    {
       collapsable: false,
       title: '🔧 Development',
       children: [
         ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
-        {
-          title: 'Strapi plugins',
-          path: '/developer-docs/latest/development/plugin-customization.html',
-          collapsable: true,
-          children: [
-            ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
-            ['/developer-docs/latest/development/plugins/email', 'Email'],
-            ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
-            ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
-          ],
-          sidebarDepth: 1,
-        },
         ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
         ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins development'],
       ],
@@ -582,6 +582,10 @@ module.exports = {
               {
                 text: 'Setup & Deployment',
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
+              },
+              {
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
               },
               {
                 text: 'Development',
