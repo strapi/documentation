@@ -18,8 +18,8 @@ Be sure to have [Go installed](https://golang.org/doc/install) on your computer.
 touch strapi.go
 ```
 
-Go has inbuilt module/package needed to make HTTP Requests like GET, POST PUT, DELETE.
-We will use it("net/http") along with other modules/packages.
+Go has built-in packages to make HTTP Requests like GET, POST, PUT, and DELETE.
+We will use the "net/http" package along with other packages.
 
 
 ## GET Request your collection type
@@ -28,14 +28,15 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```go
 response, error := http.Get("http://localhost:1337/restaurants")
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 [{
@@ -62,6 +63,8 @@ _Response_
   ]
 }]
 ```
+:::
+::::
 
 ### Example
 
@@ -96,8 +99,8 @@ Execute a `POST` request on the `restaurant` Collection Type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
 
-
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```go
 postRest, _ := json.Marshal(map[string]string{
@@ -107,8 +110,9 @@ postRest, _ := json.Marshal(map[string]string{
 responseBody := bytes.NewBuffer(postRest)
 resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -120,6 +124,8 @@ _Response_
   "categories": []
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -181,8 +187,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` Collection Type.
 PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
 
-
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```go
 putRest, _ := json.Marshal(map[string]string {
@@ -193,8 +199,9 @@ url := "http://localhost:1337/restaurants/1"
 req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
 req.Header.Set("Content-Type", "application/json")
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -221,6 +228,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 
 ### Example

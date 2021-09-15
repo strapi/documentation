@@ -18,8 +18,8 @@ In this folder you will be able to override admin files and functions.
 
 The administration panel can be customized according to your needs, so you can make it reflect your identity.
 
-::: warning
-To apply your changes you need to [rebuild](#build) your admin panel
+:::caution
+To apply changes you need to [rebuild](#build) the admin panel.
 :::
 
 ### Change access URL
@@ -86,7 +86,7 @@ export default trads;
 ```
 
 ::: tip
-With this modification only English and French will be available in your admin
+With this modification only English and French will be available in your admin.
 :::
 
 #### Customize a plugin
@@ -143,8 +143,8 @@ cp ./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrap
 
 Thus, files in `admin/src/some/file/path` take precedence over `node_modules/strapi-admin/admin/src/file/path`.
 
-::: warning
-To apply your changes you need to [rebuild](#build) your admin panel
+:::caution
+To apply changes you need to [rebuild](#build) the admin panel.
 :::
 
 #### Logo
@@ -154,7 +154,7 @@ To change the top-left displayed admin panel's logo, add your custom image at `.
 To change the login page's logo, add your custom image at `./admin/src/assets/images/logo_strapi.png`.
 
 ::: tip
-make sure the size of your image is the same as the existing one (434px x 120px).
+Make sure the size of your image is the same as the existing one (434px x 120px).
 :::
 
 #### Tutorial videos
@@ -191,33 +191,28 @@ module.exports = ({ env }) => ({
 
 To build the administration, run the following command from the root directory of your project.
 
-:::: tabs
 
-::: tab yarn
+<code-group>
 
+<code-block title="NPM">
+```sh
+npm  build
 ```
+</code-block>
+
+<code-block title="YARN">
+```sh
 yarn build
 ```
+</code-block>
 
-:::
-
-::: tab npm
-
-```
-npm run build
-```
-
-:::
-
-::: tab strapi
-
-```
+<code-block title="STRAPI CLI">
+```sh
 strapi build
 ```
+</code-block>
 
-:::
-
-::::
+</code-group>
 
 This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure your updates have been taken into account.
 
@@ -237,7 +232,6 @@ module.exports = {
   },
 };
 ```
-
 
 ## Deployment
 
@@ -266,7 +260,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::: warning
+:::caution
 To apply your changes you need to [rebuild](#build) your admin panel
 :::
 
@@ -292,8 +286,8 @@ After running `yarn build` with this configuration, the folder `build` will be c
 
 The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
 
-::: tip NOTE
-If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx. More [here](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides).
+:::note
+If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
 :::
 
 

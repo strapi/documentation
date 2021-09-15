@@ -33,7 +33,7 @@ The following data is collected:
 - System information (OS)
 - Build configurations
 
-::: warning GDPR
+::: caution GDPR
 The collected data are of a non-sensitive nature and no personal data is collected. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
 :::
 
@@ -54,6 +54,6 @@ Should you decide to opt-out, you may do so by removing the `uuid` property in t
 }
 ```
 
-::: tip NOTE
+::: note
 Should you have any questions regarding this feature, feel free to email [privacy@strapi.io](mailto:privacy@strapi.io).
 :::

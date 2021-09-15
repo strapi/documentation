@@ -115,6 +115,6 @@ module.exports = {
 
 And tada! The email disappeared.
 
-::: tip
+:::tip
 This guide can be applied to any other controller action.
 :::

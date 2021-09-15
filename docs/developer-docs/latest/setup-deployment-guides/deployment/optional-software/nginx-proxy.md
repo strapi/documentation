@@ -38,7 +38,7 @@ Below are 3 example Nginx configurations:
 - Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/api` and `example.com/api/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
-::::: tabs
+::::: tabs card
 
 :::: tab Sub-Domain
 
@@ -96,7 +96,7 @@ server {
 
 This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the "frontend" files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/api` sub-path.
 
-::: warning
+:::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
 :::
 
@@ -158,7 +158,7 @@ This config is using two sub-folders that are dedicated to Strapi. It will redir
 
 Alternatively for the admin, you can replace the proxy instead with serving the admin `build` folder directly from Nginx, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
 
-::: warning
+:::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
 :::
 
@@ -235,7 +235,7 @@ server {
 
 In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above Nginx configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
 
-::::: tabs
+::::: tabs card
 
 :::: tab Sub-Domain
 

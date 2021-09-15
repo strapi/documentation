@@ -21,7 +21,7 @@ Below are 3 example HAProxy configurations:
 - Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/api` and `example.com/api/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
-::::: tabs
+::::: tabs card
 
 :::: tab Sub-Domain
 
@@ -91,7 +91,7 @@ backend strapi-backend
 
 This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the "frontend" to `localhost:8080`, but proxies all Strapi requests on the `example.com/api` sub-path to the locally running Strapi application.
 
-::: warning
+:::caution
 HAProxy **cannot** serve static content, the below example is proxying frontend traffic to some other web server running on the localhost port 8080
 :::
 
@@ -166,7 +166,7 @@ backend strapi-backend
 
 This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the "frontend" to `localhost:8080`, but proxies all strapi api requests on the `example.com/api` sub-path to the locally running Strapi application. Likewise it will proxy all admin requests on the `example.com/dashboard` sub-path.
 
-::: warning
+:::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
 :::
 
@@ -247,7 +247,7 @@ backend strapi-dashboard-backend
 
 In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above HAProxy configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
 
-::::: tabs
+::::: tabs card
 
 :::: tab Sub-Domain
 

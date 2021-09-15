@@ -48,8 +48,7 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -93,8 +92,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -160,10 +158,7 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/react',
-              'React'
-            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
               'Vue.js',
@@ -215,16 +210,11 @@ const sidebar = {
               '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
               'Flutter',
             ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/go',
-              'Go'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/php',
-              'PHP'
-            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
             [
               '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
-              'Laravel'
+              'Laravel',
             ],
           ],
         },
@@ -360,7 +350,10 @@ const sidebar = {
       title: 'General settings',
       children: [
         ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
-        ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings', 'Configuring Users & Permissions plugin settings'],
+        [
+          '/user-docs/latest/settings/configuring-users-permissions-plugin-settings',
+          'Configuring Users & Permissions plugin settings',
+        ],
       ],
     },
   ],
@@ -385,30 +378,82 @@ const checklinksIgnoredFiles = [
   './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
 ];
 
+const plugins = [
+  ['vuepress-plugin-element-tabs', {}],
+  ['check-md', {
+    ignore: checklinksIgnoredFiles,
+  }],
+  ['seo', {
+    siteTitle: (_, $site) => $site.title,
+    title: $page => $page.title,
+  }],
+  ['vuepress-plugin-code-copy', {
+    color: '#ffffff',
+    successText: 'Copied to clipboard!',
+  }],
+  ['@vuepress/back-to-top', {}],
+  ['vuepress-plugin-container', {
+    type: 'callout',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'strapi',
+    defaultTitle: '',
+    before: info => `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'tip',
+    before: info => `<div class="custom-block tip"><p class="custom-block-title">💡 ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'note',
+    before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'caution',
+    before: info => `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'warning',
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
+    after: '</div>'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'prerequisites',
+    defaultTitle: 'PREREQUISITES'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'api-call',
+    defaultTitle: ''
+  }],
+  ['vuepress-plugin-container', {
+    type: 'request',
+    defaultTitle: 'Request'
+  }],
+  ['vuepress-plugin-container', {
+    type: 'response',
+    defaultTitle: 'Response'
+  }]
+];
+
+const checkLegacy = () => {
+  if (process.env.DEPLOY_ENV == 'legacy') {
+    return '/documentation/';
+  } else {
+    return '/';
+  }
+};
+
 module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
-  base: '/documentation/',
-  plugins: {
-    '@vuepress/medium-zoom': {},
-    'vuepress-plugin-element-tabs': {},
-    '@vuepress/google-analytics': {
-      ga: 'UA-54313258-1',
-    },
-    'check-md': {
-      ignore: checklinksIgnoredFiles,
-    },
-    seo: {
-      siteTitle: (_, $site) => $site.title,
-      title: $page => $page.title,
-    },
-    'vuepress-plugin-code-copy': {
-      color: '#ffffff',
-      successText: 'Copied to clipboard!',
-    },
-    '@vuepress/back-to-top': {},
-  },
+  base: checkLegacy(),
+  plugins: plugins,
   head: [
     [
       'link',
@@ -502,10 +547,19 @@ module.exports = {
         content: 'http://strapi.io/assets/images/strapi-website-preview.png',
       },
     ],
+    [
+      'script',
+      {},
+      `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KN9JRWG');`,
+    ],
   ],
   themeConfig: {
     logo: '/assets/logo.png',
     nav: [
+      {
+        text: 'Resource Center',
+        link: 'https://strapi.io/resource-center',
+      },
       {
         text: 'Documentation',
         items: [
@@ -547,13 +601,11 @@ module.exports = {
               },
               {
                 text: 'Content-Types Builder',
-                link:
-                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -595,8 +647,8 @@ module.exports = {
                 link: 'https://forum.strapi.io',
               },
               {
-                text: 'Slack',
-                link: 'https://slack.strapi.io',
+                text: 'Discord',
+                link: 'https://discord.strapi.io',
               },
               {
                 text: 'Awesome-Strapi',
@@ -619,6 +671,10 @@ module.exports = {
           },
         ],
       },
+      {
+        text: "We're hiring!",
+        link: 'https://strapi.io/careers#open-positions',
+      },
     ],
     repo: 'strapi/documentation',
     docsDir: 'docs',
@@ -637,4 +693,10 @@ module.exports = {
       '/user-docs/latest/': sidebar.user,
     },
   },
+  markdown: {
+    extendMarkdown: md => {
+      // use more markdown-it plugins!
+      md.use(require('markdown-it-include'))
+    }
+  }
 };
