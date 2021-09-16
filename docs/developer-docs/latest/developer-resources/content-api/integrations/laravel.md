@@ -19,6 +19,12 @@ composer require dbfx/laravel-strapi
 
 This will install [Laravel-Strapi](https://github.com/dbfx/laravel-strapi), a Laravel specific package for interacting with Strapi.
 
+You will need to publish a config file:
+
+```bash
+php artisan vendor:publish --provider="Dbfx\LaravelStrapi\LaravelStrapiServiceProvider" --tag="strapi-config"
+```
+
 You will also need to define your `STRAPI_URL` and `STRAPI_CACHE_TIME` in the `.env` file:
 
 ``` json

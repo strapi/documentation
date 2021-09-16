@@ -127,6 +127,7 @@ module.exports = ({ env }) => ({
 :::caution
 We are aware that there is an issue regarding **SSL support for the server**.
 In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
+
 ```js
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
@@ -143,6 +144,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
 :::
 
 Please note that if you need client side SSL CA verification you will need to use the `ssl:{}` object with the fs module to convert your CA certificate to a string. You can see an example below:
@@ -219,7 +221,6 @@ module.exports = ({ env }) => ({
 :::caution
 !!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
 :::
-
 
 ```js
 module.exports = ({ env }) => ({
@@ -1142,7 +1143,7 @@ The dotfiles are not exposed. It means that every file name that starts with `.`
 
 ### Single Sign On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
-***
+---
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
@@ -1150,7 +1151,7 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
-:::
+  :::
 
 :::caution
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
@@ -1198,6 +1199,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
 
 <!-- Title below is supposed to be an h7, so one level deeper than "The `createStrategy` Factory. But h7 is not a thing, so using bold instead. 🤷 -->
+
 **Configuration Object**
 
 The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
@@ -1504,6 +1506,68 @@ module.exports = ({ env }) => ({
 ```
 
 :::::
+::::: tab Okta
+
+Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/blob/main/README.md)
+
+<code-group>
+
+<code-block title="NPM">
+```sh
+npm install --save passport-okta-oauth20
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn add passport-okta-oauth20
+```
+</code-block>
+
+</code-group>
+
+`/config/server.js`
+
+```jsx
+'use strict';
+
+const OktaOAuth2Strategy = require('passport-okta-oauth20').Strategy;
+
+module.exports = ({ env }) => ({
+  // ...
+  admin: {
+    // ...
+    auth: {
+      // ...
+      providers: [
+        {
+          uid: 'okta_oauth2',
+          displayName: 'Okta',
+          icon:
+            'https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png',
+          createStrategy: strapi =>
+            new OktaOAuth2Strategy(
+              {
+                clientID: env('OKTA_CLIENT_ID', ''),
+                clientSecret: env('OKTA_CLIENT_SECRET', ''),
+                scope: ['openid', 'email', 'profile'],
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('okta_oauth2'),
+              },
+              (accessToken, refreshToken, profile, done) => {
+                done(null, {
+                  email: profile.email,
+                  username: profile.username,
+                });
+              }
+            ),
+        },
+      ],
+    },
+  },
+});
+```
+
+:::::
 ::::::
 
 ##### Advanced Customization
@@ -1632,22 +1696,22 @@ Query objects are useful to verify conditions on the entities you read, create, 
 
 The condition `handler` can be a synchronous or asynchronous function that:
 
-* receives the authenticated user making the request,
-* and returns `true`, `false`, or a query object.
+- receives the authenticated user making the request,
+- and returns `true`, `false`, or a query object.
 
 Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user.
 For instance, a condition that allows access to a page in the admin panel only if server time is 5pm could use this handler:
 
 ```js
-  handler: () => new Date().getHours() === 17
+handler: () => new Date().getHours() === 17;
 ```
 
 The `handler` function receives the authenticated user, so it can verify conditions on the user:
 
 ```js
 const condition = {
-  displayName: "Email address from strapi.io",
-  name: "email-strapi-dot-io",
+  displayName: 'Email address from strapi.io',
+  name: 'email-strapi-dot-io',
   async handler(user) {
     return user.email.includes('@strapi.io');
   },
@@ -1657,15 +1721,14 @@ const condition = {
 For more granular control, the `handler` function can also return a query object:
 
 ```js
-  const condition = {
-    displayName: "price greater than 50",
-    name: "price-gt-50",
-    async handler(user) {
-      return { price: { $gt: 50 } };
-    },
- };
+const condition = {
+  displayName: 'price greater than 50',
+  name: 'price-gt-50',
+  async handler(user) {
+    return { price: { $gt: 50 } };
+  },
+};
 ```
-
 
 #### Registering conditions
 
@@ -1677,7 +1740,7 @@ module.exports = async () => {
     displayName: 'Billing amount under 10K',
     name: 'billing-amount-under-10k',
     plugin: 'admin',
-    handler: { amount: { $lt: 10000 }},
+    handler: { amount: { $lt: 10000 } },
   });
 };
 ```
