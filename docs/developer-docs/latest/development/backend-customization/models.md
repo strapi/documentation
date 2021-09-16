@@ -8,9 +8,7 @@ sidebarDepth: 3
 
 # Models
 
-Models are a representation of the database's structure.
-
-Models are available through the `strapi.models` and `strapi.api.**.models` global variables. Usable everywhere in the project, they contain the ORM model object that they refer to.
+Models are a representation of the data structure.
 
 ## Model creation
 
@@ -149,10 +147,11 @@ You can apply basic validations to attributes, using the following parameters:
 
 #### `uid` type
 
-The `uid` type is used to automatically generate unique ids (e.g., slugs for articles) based on 2 parameters:
+<!-- TODO: review explanations -->
+The `uid` type is used to automatically prefill the field value in the admin panel with unique ids (e.g. slugs for articles) based on 2 optional parameters:
 
-- `targetField`(string) — The value is the name of an attribute that has `string` of the `text` type.
-- `options` (string) — The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
+- `targetField`(string): The field to use to auto-generate the uid.
+- `options` (string): The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
 
 #### Relations
 
@@ -247,32 +246,31 @@ One-to-Many relationships are useful when:
 One-to-many relationships are always bidirectional, and are usually defined with the corresponding Many-to-One relationship:
 
 ::: details Example:
-An author can write many books, but a book has only one author.
-<!-- ? this description seems bad because a book can have multiple authors — how can we improve the description and code? -->
+A person can own many plants, but a plant is owned by only one person.
 
 ```js
-// ./api/[api-name]/content-types/book/schema.json
+// ./api/[api-name]/content-types/plant/schema.json
 
 const model = {
   attributes: {
-    author: {
+    owner: {
       type: 'relation',
       relation: 'manyToOne',
-      target: 'author',
-      inversedBy: 'books',
+      target: 'api::person.person',
+      inversedBy: 'plants',
     },
   },
 };
 
-// ./api/author/models/schema.json
+// ./api/person/models/schema.json
 
 const model = {
   attributes: {
-    books: {
+    plants: {
       type: 'relation',
       relation: 'oneToMany',
-      target: 'book',
-      mappedBy: 'author',
+      target: 'api::plant.plant',
+      mappedBy: 'owner',
     },
   },
 };
@@ -434,8 +432,8 @@ Component fields let your create a relation between your Content Type and a Comp
 
 | Parameter    | Type    | Description                                                                              |
 | ------------ | ------- | ---------------------------------------------------------------------------------------- |
-| `repeatable` | Boolean | Could be `true` or `false` that let you create a list of data                            |
-| `component`  | String  | Define the corresponding component, following this format: `<category>.<componentName>`. |
+| `repeatable` | Boolean | Could be `true` or `false` depending on whether the component is repeatable or not       |
+| `component`  | String  | Define the corresponding component, following this format: `<category>.<componentName>`  |
 
 ```json
 // ./api/[apiName]/restaurant/content-types/schema.json
@@ -498,6 +496,10 @@ The `options` key on the in the model description can use the following keys:
 ## Lifecycle hooks
 
 The lifecycle hooks are functions that get triggered when the Strapi queries are called. They are triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
+
+:::caution
+Lifecycles hooks are not triggered when using directly the knex library instead of Strapi functions.
+:::
 
 ### Available lifecycle events
 

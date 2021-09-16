@@ -30,7 +30,7 @@ db.query('article').findMany({
 
 // multiple with direction
 db.query('article').findMany({
-  orderBy: [{ id: 'asc' }, { name: 'desc' }],
+  orderBy: [{ title: 'asc' }, { publishedAt: 'desc' }],
 });
 ```
 
@@ -48,12 +48,9 @@ db.query('article').findMany({
 
 ## Pagination
 
-<!-- ? can we use the page-based (page, pageSize) paginiation here? -->
-
 ```js
 db.query('article').findMany({
   limit: 10,
   offset: 15,
 });
 ```
-

@@ -29,7 +29,6 @@ Syntax: `findOne(parameters) ⇒ Entry`
 const entry = await db.query('article').findOne({
   select: ['title', 'description'],
   where: { title: 'Hello World' },
-  orderBy: { title: 'DESC' },
   populate: { category: true },
 });
 ```
@@ -57,7 +56,7 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 const entries = await db.query('article').findMany({
   select: ['title', 'description'],
   where: { title: 'Hello World' },
-  orderBy: { title: 'DESC' },
+  orderBy: { publishedAt: 'DESC' },
   populate: { category: true },
 });
 ```

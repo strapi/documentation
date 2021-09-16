@@ -109,11 +109,11 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <div id="endpoint-table">
 
-| Method | URL             | Description                 |
-| ------ | --------------- | --------------------------- |
-| GET    | `/api/homepage` | Get the homepage content    |
-| PUT    | `/api/homepage` | Update the homepage content |
-| DELETE | `/api/homepage` | Delete the homepage content |
+| Method | URL             | Description                        |
+| ------ | --------------- | ---------------------------------- |
+| GET    | `/api/homepage` | Get the homepage content           |
+| PUT    | `/api/homepage` | Update/create the homepage content |
+| DELETE | `/api/homepage` | Delete the homepage content        |
 
 </div>
 
@@ -130,7 +130,7 @@ Whatever the query, the response is always an object with the following keys:
     - `id` (number)
     - `attributes` (object)
     - `meta` (object)
-  - a list of entities, as an array of objects
+  - a list of entries, as an array of objects
   - a custom response
 
 - `meta`(object): information about pagination, publication state, available locales…
@@ -140,7 +140,7 @@ Whatever the query, the response is always an object with the following keys:
 
 ### Get entries
 
-Returns entities matching the query filters (see [parameters](#api-parameters) documentation).
+Returns entries matching the query filters (see [parameters](#api-parameters) documentation).
 
 :::: api-call
 
@@ -259,7 +259,7 @@ Returns an entry by id.
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entities](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: api-call
 
@@ -270,7 +270,7 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 <!-- TODO: update with FoodAdvisor? -->
 ```json
 {
-  "data" {
+  "data": {
     "title": "Hello",
     "relation": 2,
     "relations": [2, 4],
@@ -288,9 +288,9 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 
 ```json
 {
-  "data" {
+  "data": {
     "id": 1,
-    "attributes": {},
+    "attributes": { … },
     "meta": {}
   },
   "meta": {}
@@ -319,7 +319,7 @@ It's currently not possible to [update the locale of an entry](/developer-docs/l
 <!-- TODO: update with FoodAdvisor? -->
 ```json
 {
-  "data" {
+  "data": {
     "title": "Hello",
     "relation": 2,
     "relations": [2, 4],
@@ -333,7 +333,7 @@ It's currently not possible to [update the locale of an entry](/developer-docs/l
 
 ```json
 {
-  "data" {
+  "data": {
     "id": 1,
     "attributes": {},
     "meta": {}
@@ -363,7 +363,7 @@ Deletes an entry by id and returns its value.
 <!-- TODO: update with FoodAdvisor? -->
 ```json
 {
-  "data" {
+  "data": {
     "id": 1,
     "attributes": {},
     "meta": {}
@@ -472,7 +472,7 @@ await request(`/api/books?${query}`);
 
 :::request Example request: Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
 <!-- ? how should I update this request example (filters syntax)? -->
-`GET /api/restaurants?filters[chef.restaurant.star][$eq]=5`
+`GET /api/restaurants?filters[chef][restaurant][star][$eq]=5`
 :::
 
 ::: caution
@@ -496,9 +496,8 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 `GET /api/users?sort=email:desc` to sort by descending order
 :::
 
-<!-- ? why do we specify `:asc`? if we write `title,price:desc`, is it equivalent to  `title:asc,price:desc`? -->
 :::request Example requests: Sort books on multiple fields
-`GET /api/books?sort=title,price:asc`
+`GET /api/books?sort=title,price:desc`
 
 `GET /api/books?sort=title,author.name`
 
@@ -520,10 +519,11 @@ Use the following parameters:
 
 <!-- ? is it 100 or 10 for default page size -->
 
-| Parameter              | Description | Default |
-| ---------------------- | ----------- | ------- |
-| `pagination[page]`     | Page number | 1       |
-| `pagination[pageSize]` | Page size   | 100     |
+| Parameter               | Type    | Description                                                               | Default |
+| ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
+| `pagination[page]`      | Integer | Page number                                                               | 1       |
+| `pagination[pageSize]`  | Integer | Page size                                                                 | 100     |
+| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 :::: api-call
 
@@ -535,7 +535,7 @@ Use the following parameters:
 
 ```json
 {
-  "data": [],
+  "data": […],
   "meta": {
     "pagination": {
       "page": 1,
@@ -554,13 +554,16 @@ Use the following parameters:
 
 Use the following parameters:
 
-<!-- ? is there a default for pagination[limit] ? -->
-<!-- ? is there a max for pagination[start] ? -->
+<!-- TODO: add type -->
+| Parameter               | Description                                       | Default | Maximum |
+| ----------------------- | ------------------------------------------------- | ------- | ------- |
+| `pagination[start]`     | Start value                                       | 0       | -       |
+| `pagination[limit]`     | Number of entries to return                      | 25      | 100     |
+| `pagination[withCount]` | Adds the total numbers of entries to the response | True    |         |
 
-| Parameter           | Description                  | Default | Maximum |
-| ------------------- | ---------------------------- | ------- | ------- |
-| `pagination[start]` | Start value                  | 0       | -       |
-| `pagination[limit]` | Number of entities to return | -       | 100     |
+::: tip
+The default and maximum values for `pagination[limit]` can be configured in the `config/api.js` file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+:::
 
 :::: api-call
 
@@ -577,7 +580,8 @@ Use the following parameters:
   "meta": {
     "pagination": {
       "start": 0,
-      "limit": 10
+      "limit": 10,
+      "total": 42,
     }
   }
 }
@@ -592,6 +596,9 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 `GET /api/:pluralApiId?fields=field1,field2`
 <br>or<br>
 `GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
+
+<!-- TODO: explain You can use wildcards… T-->
+<!-- TODO: add fields=* example -->
 
 <!-- TODO: add response example and convert this to an api-call component -->
 ::: request Example request: Get only firstName and lastName of all users
@@ -612,13 +619,22 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 `GET /api/books?populate=author.name,author.address`
 :::
 
+<!-- TODO: explain the use of wildcards
+
+populate=* -> all the 1st level relations
+populate=relationA,relationB -> relationA & B
+populate[]=relationA&populate[]=relationB -> relation A & B
+populate[relationA]=* -> relation A and all its relations
+populate[relation][fields][0]=name&populate[relation][sort]=name%3Adesc&populate[relation][filters][name][$contains]=Hello&populate[relation][populate]=* -->
+
+
 ### Publication State
 
 :::note
 This parameter can only be used on models with the **Draft & Publish** feature activated.
 :::
 
-Queries can accept a `publicationState` parameter to fetch entities based on their publication state:
+Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
 
 - `live`: returns only published entries (default)
 - `preview`: returns both draft entries & published entries

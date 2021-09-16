@@ -21,7 +21,9 @@ const entries = await db.query('article').findMany({
   where: {
     $and: [
       {
-        title: 'Hello World',
+        rating: {
+          $gte: 12,
+        }
       },
       {
         title: {
@@ -77,7 +79,9 @@ Negates the nested conditions.
 const entries = await db.query('article').findMany({
   where: {
     $not: {
-      title: 'Hello World',
+      title: {
+        $contains: 'Hello'
+      },
     },
   },
 });
@@ -85,19 +89,20 @@ const entries = await db.query('article').findMany({
 
 ## Attribute Operators
 
+:::caution
+Using these operators may give different results depending on the database's implementation, as the comparison is handled by the database and not by Strapi.
+:::
+
 ### `$not`
 
 Negates nested condition. The `not` operator can be used in an attribute condition too.
 
 **Example**
-
 ```js
 const entries = await db.query('article').findMany({
   where: {
     title: {
-      $not: {
-        $contains: 'Hello World',
-      },
+      $not: 'Hello World',
     },
   },
 });
@@ -267,6 +272,7 @@ const entries = db.query('article').findMany({
 });
 ```
 
+
 ### `$contains`
 
 Attribute contains the input value.
@@ -325,7 +331,7 @@ Attribute is `null`.
 const entries = db.query('article').findMany({
   where: {
     title: {
-      $null: true,
+      $null: false,
     },
   },
 });
