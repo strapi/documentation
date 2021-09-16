@@ -13,7 +13,7 @@ Here are some things a template may configure for you:
 - Components and dynamic zones
 - Plugins to install, or custom plugins
 
-::: warning
+:::note
 Templates and starters are not the same thing:
 
 - A _template_ is a pre-made Strapi configuration. Note that it's only a configuration, not a configured application. That's because it cannot be run on its own, since it lacks many files, like database configs or the `package.json`. A template is only useful once applied on top of a default Strapi app via the CLI.

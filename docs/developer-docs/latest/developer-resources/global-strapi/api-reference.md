@@ -60,7 +60,7 @@ Returns a function that parses the configurations, hooks, middlewares and APIs o
 
 ## strapi.log
 
-Returns the Logger ([Winston](https://github.com/winstonjs/winston)) instance.
+Returns the Logger (Pino) instance.
 
 ## strapi.middleware
 

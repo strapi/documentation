@@ -9,7 +9,7 @@ export default {
     text: {
       type: String,
       default: 'Silver',
-      required: true
+      // required: true // to suppress Vue warnings
     },
     withLinkIcon: {
       type: Boolean,

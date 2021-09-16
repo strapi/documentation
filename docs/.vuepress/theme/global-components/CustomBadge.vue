@@ -12,7 +12,7 @@ export default {
     text: {
       type: String,
       default: 'Badge',
-      required: true
+      // required: true // to suppress Vue warnings
     },
     withLinkIcon: {
       type: Boolean,

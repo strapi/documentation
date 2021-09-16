@@ -153,7 +153,7 @@ postgres=# \q
 exit
 ```
 
-- **OPTIONAL:** If in **Development**, your Strapi project is uses **SQLite**, you will need to install a dependency package called `pg`:
+- **OPTIONAL:** If in **Development**, your Strapi project uses **SQLite**, you will need to install a dependency package called `pg`:
 
   - On your **Development** computer:
 

@@ -168,6 +168,8 @@ query {
 ```
 :::
 
+::::
+
 ### Example
 
 `./src/pages/Index.vue`
