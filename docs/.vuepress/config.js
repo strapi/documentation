@@ -48,8 +48,7 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -93,8 +92,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -389,9 +387,6 @@ const plugins = [
     siteTitle: (_, $site) => $site.title,
     title: $page => $page.title,
   }],
-  ['script', {},
-    `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-KN9JRWG');`,
-  ],
   ['vuepress-plugin-code-copy', {
     color: '#ffffff',
     successText: 'Copied to clipboard!',
@@ -424,7 +419,7 @@ const plugins = [
   }],
   ['vuepress-plugin-container', {
     type: 'warning',
-    before: info => `<div class="custom-block warning"><p class="custom-block-title">⚠️  ${info}</p>`,
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
@@ -444,6 +439,7 @@ const plugins = [
     defaultTitle: 'Response'
   }]
 ];
+
 const checkLegacy = () => {
   if (process.env.DEPLOY_ENV == 'legacy') {
     return '/documentation/';
@@ -605,13 +601,11 @@ module.exports = {
               },
               {
                 text: 'Content-Types Builder',
-                link:
-                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -653,8 +647,8 @@ module.exports = {
                 link: 'https://forum.strapi.io',
               },
               {
-                text: 'Slack',
-                link: 'https://slack.strapi.io',
+                text: 'Discord',
+                link: 'https://discord.strapi.io',
               },
               {
                 text: 'Awesome-Strapi',
@@ -676,6 +670,10 @@ module.exports = {
             ],
           },
         ],
+      },
+      {
+        text: "We're hiring!",
+        link: 'https://strapi.io/careers#open-positions',
       },
     ],
     repo: 'strapi/documentation',

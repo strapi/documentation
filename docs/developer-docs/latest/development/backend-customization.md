@@ -812,11 +812,10 @@ module.exports = {
    */
 
   async create(data, { files } = {}) {
-    const isDraft = isDraft(data, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityCreation(
       strapi.models.restaurant,
       data,
-      { isDraft }
+      { isDraft: isDraft(data, strapi.models.restaurant) }
     );
 
     const entry = await strapi.query('restaurant').create(validData);
@@ -854,11 +853,10 @@ module.exports = {
   async update(params, data, { files } = {}) {
     const existingEntry = await strapi.query('restaurant').findOne(params);
 
-    const isDraft = isDraft(existingEntry, strapi.models.restaurant);
     const validData = await strapi.entityValidator.validateEntityUpdate(
       strapi.models.restaurant,
       data,
-      { isDraft }
+      { isDraft: isDraft(existingEntry, strapi.models.restaurant) }
     );
 
     const entry = await strapi.query('restaurant').update(params, validData);
@@ -2173,7 +2171,7 @@ An `Image` model might belong to many `Article` models or `Product` models.
 
 ### Components
 
-Component fields let your create a relation between your Content Type and a Component structure.
+Component fields let you create a relation between your Content Type and a Component structure.
 
 ##### Example
 

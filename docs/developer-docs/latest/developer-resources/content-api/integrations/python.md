@@ -122,7 +122,6 @@ data=json_dumps({
   headers={
     'Content-Type': 'application/json'
   })
-)
 ```
 :::
 
