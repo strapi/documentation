@@ -238,6 +238,7 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
             ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+          ],
         },
         {
           title: 'Database APIs Reference',
