@@ -275,7 +275,9 @@ All functions accept links as objects with the following parameters:
 
 **Type**: `Function`
 
-The function requires 2 arguments:
+Create a new settings section.
+
+The function takes 2 arguments:
 
 | Argument        | Type             | Description                                                                                                                                                                                                                                                                                                                   |
 | --------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
