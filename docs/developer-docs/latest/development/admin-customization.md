@@ -59,9 +59,6 @@ strapi build
 
 This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure your updates have been taken into account. 
 
-<!-- ? not sure when we need to rebuild/when hot reload won't work? -->
-
-
 ## Extending the admin panel
 
 To extend the admin panel:
@@ -80,6 +77,7 @@ The admin panel can be customized according to your needs, so you can make it re
 :::caution
 To apply the following customizations you need to [rebuild](#build) the admin panel.
 :::
+
 ### Changing the access URL
 
 By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, this path can be updated.
@@ -186,7 +184,6 @@ export default {
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
 <!-- ? is it the right path? -->
-<!-- ? is it mandatory to include the webpack key to update locales, or was it just for a copy/paste from another example? -->
 ```jsx
 // path: ./my-app/strapi-admin.js
 
@@ -211,9 +208,7 @@ module.exports = {
 ::: note NOTES
 
 * The `en` locale cannot be removed from the build as it is both the fallback (if a translation is not found in a locale, the `en` will be used) and the default locale (used when a user opens the administration panel for the first time).
-* It is not possible to add a locale that is not already created in Strapi's monorepo.
-* The list of supported locales is not available.
-<!-- ? isn't it the same list of locales that we use in i18n? (if yes, we could link to the JSON in our Github) -->
+<!-- TODO: add the list of available locales (Github link) -->
 :::
 
 #### Updating logos
@@ -370,5 +365,3 @@ The administration URL will then be `http://yourfrontend.com` and every request 
 :::note
 If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
 :::
-
-

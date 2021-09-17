@@ -54,16 +54,14 @@ Registers the plugin to make it available in the admin panel.
 This function returns an object with the following parameters:
 
 <!-- TODO: update the table -->
-<!-- ? what are the isRequired and isReady parameters used for? -->
+<!-- ? what is the isReady parameters used for? -->
 
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view. |
-| `icon`           | ?                        | Plugin icon, used in the marketplace of the administration panel.                                  |
+| `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace of the administration panel.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
-| `isRequired`     | Boolean                  | ?                                                                                                  |
-| `isReady`        | Boolean                  | ?                                                                                                  |
 | `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones)                                       |
 
 ::: note
@@ -93,8 +91,6 @@ module.exports = () => {
       description: pluginDescription,
       icon,
       id: pluginId,
-      isReady: true,
-      isRequired: pluginPkg.strapi.required || false,
       name,
     });
   },
@@ -136,9 +132,9 @@ module.exports = () => {
 To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files.
 
 <!-- ? not sure we need to highlight this 🤔 -->
-<!-- :::note
+:::note
 `registerTrads()` is not a lifecycle function.
-::: -->
+:::
 
 **Example: Register a plugin's translation files**
 
@@ -211,14 +207,14 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
 
 <!-- ? what is the Component used for? -->
-<!-- TODO: update table with Component and permissions descriptions -->
+<!-- TODO: update table with permissions descriptions -->
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `icon`        | SVGElement       | Icon to display in the main navigation                                                                                                                                                                                   |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   |  ?               | ?                                                                                                                                                                                                                        |
-| `permissions` | Array of Objects | ?                                                                                                                                                                                                                        |
+| `Component`   | Async function   | Returns a dynamic import of your plugin entry point                                                                                                                                                                      |
+| `permissions` | Array of Objects |  ?                                                                                                                                                                                                                        |
 
 :::note
 `intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
@@ -377,7 +373,8 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 :::
 
 <!-- ? should we use this example or is it an internal API that we should not document for now? -->
-<!-- ```jsx
+// YES
+```jsx
 // path: my-plugin/admin/src/index.js
 
 export default {
@@ -387,7 +384,7 @@ export default {
       Component: () => 'my-compo',
   });
 }
-``` -->
+```
 
 #### Predefined injection zones
 
@@ -500,10 +497,10 @@ const [result] = await app.runHookParallel(args?, asynchronous?);
 :::
 
 <!-- ? not sure what to do with this example 🤔? -->
-<!-- For instance, it can be used to allow people to add new information to the content manager like the following:
+For instance, it can be used to allow people to add new information to the content manager like the following:
 ```jsx
 // somewhere at Strapi's core init
-app.createHook('CM/customized-cell')
+app.createHook('CM/custom-cols')
 
 // somewhere in a plugin definition
 app.registerHook('CM/custom-cols', () => 'intl') 
@@ -524,7 +521,7 @@ const MyCompo = () => {
     return headers;
   }, [runHookWaterfall, displayedHeaders, layout]);
 }
-``` -->
+```
 
 #### Predefined hook
 
