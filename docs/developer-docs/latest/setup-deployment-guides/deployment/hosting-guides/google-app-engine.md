@@ -226,6 +226,57 @@ Open the admin page and register and admin user.
 https://myapp-123456.appspot.com/admin/
 ```
 
+### Keep instance warm
+
+**WARNING** This option is not required and it will generate additional costs
+
+Due to a certain start-up delay during instance initialization, you may need the possibility to keep the gae instance warm.
+
+To achieve that, create a route and a controller for the path `/_ah/warmup`
+see the [google doc](https://cloud.google.com/appengine/docs/standard/nodejs/configuring-warmup-requests) for more informations
+
+```json
+// api/warmup/config/routes.json
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/_ah/warmup",
+      "handler": "warmup.init",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
+
+```
+
+```javascript
+// api/warmup/controllers/warmup.js
+
+'use strict';
+
+module.exports = {
+  init(ctx) {
+    return ctx.send({}, 204);
+  },
+};
+
+```
+
+Than in your app.yaml add the config to activate warmup and to keep at least one active instance
+
+```yaml
+# app.yaml
+# ...
+inbound_services:
+  - warmup
+automatic_scaling:
+  min_instances: 1
+# ...
+```
+
 ### File uploading to Google Cloud Storage
 
 [Lith/strapi-provider-upload-google-cloud-storage](https://github.com/Lith/strapi-provider-upload-google-cloud-storage)
