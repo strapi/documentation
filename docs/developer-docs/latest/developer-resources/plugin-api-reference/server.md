@@ -25,10 +25,9 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
 | Configuration          | [config](#configuration) object                                                                                                                                                                                |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
-<!-- TODO: add link to Hook API above -->
 
 <!-- TODO: update or remove the commented example as it's not super useful as-is: either add some example for every parameter (register, boostrap, routes, controllers…) or provide a link to Github (i18n or upload plugin?) -->
-<!-- **Example**
+<!-- **Example:**
 
 ```js
 // path: `./my-plugin/strapi-server.js`
@@ -83,7 +82,7 @@ module.exports = () => ({
 
 ### bootstrap()
 
-Exposes the [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap) function.
+The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap) function is called right after the plugin has [registered](#register).
 
 **Type**: `Function`
 
@@ -101,7 +100,7 @@ module.exports = () => ({
 
 ### destroy()
 
-Exposes the destroy function. This function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
+This function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
 
 **Type**: `Function`
 
@@ -119,14 +118,14 @@ module.exports = () => ({
 
 ## Configuration
 
-Stores the default plugin configuration.
+`config` stores the default plugin configuration.
 
 **Type**: `Object`
 
 | Parameter   | Type                                           | Description                                                                                                                                              |
 | ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | Checks if the results of merging the default plugin configuration with the user configuration is valid, and throws errors when the configuration is invalid |
+| `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
 
 <!-- TODO: check if this config object has the same shape in strapi-server.js and in strapi-admin.js 👇 -->
 
