@@ -68,7 +68,7 @@ This function returns an object with the following parameters:
 Some parameters can be imported from the `package.json` file.
 :::
 
-**Example**
+**Example:**
 
 ```js
 module.exports = () => {
@@ -109,7 +109,7 @@ Within the bootstrap function, a plugin can:
 * register hooks (see [Hooks API](#hooks-api))
 * [add links to a settings section](#settings-api)
 
-**Example**
+**Example:**
 
 ```js
 module.exports = () => {
@@ -284,7 +284,7 @@ The function takes 2 arguments:
 `intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
 :::
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -311,7 +311,7 @@ export default {
 
 Add a unique link to an existing settings section.
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -339,7 +339,7 @@ export default {
 
 Add multiple links to an existing settings section.
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -456,7 +456,7 @@ Reducers are declared as an object with this syntax:
 
 `['pluginId_reducerName']: function() {}`
 
-**Example**
+**Example:**
 
 ```js
 const reducers = {

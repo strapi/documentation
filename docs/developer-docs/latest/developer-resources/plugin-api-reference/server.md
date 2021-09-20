@@ -69,7 +69,7 @@ This function is called as soon as a plugin is loaded, even before the app is ac
 
 **Type**: `Function`
 
-**Example**
+**Example:**
 
 ```js
 // path ./strapi-server.js
@@ -87,7 +87,7 @@ Exposes the [bootstrap](/developer-docs/latest/setup-deployment-guides/configura
 
 **Type**: `Function`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -105,7 +105,7 @@ Exposes the destroy function. This function is called to cleanup the plugin (clo
 
 **Type**: `Function`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -130,7 +130,7 @@ Stores the default plugin configuration.
 
 <!-- TODO: check if this config object has the same shape in strapi-server.js and in strapi-admin.js 👇 -->
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -163,7 +163,7 @@ An object with the [Content-Types](/developer-docs/latest/development/backend-cu
 Content-Types keys in the `contentTypes` object should re-use the `singularName` defined in the [`info`](/developer-docs/latest/development/backend-customization/models.md#model-information) key of the schema.
 :::
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -230,7 +230,7 @@ An array of [route](/developer-docs/latest/development/backend-customization.htm
 
 **Type**: `Object[]`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -264,7 +264,7 @@ An object with the [controllers](/developer-docs/latest/development/backend-cust
 
 **Type**: `Object`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -307,7 +307,7 @@ Services should be functions taking `strapi` as a parameter.
 
 **Type**: `Object`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -350,7 +350,7 @@ An object with the [policies](/developer-docs/latest/development/backend-customi
 
 **Type**: `Object`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
@@ -393,7 +393,7 @@ An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/
 
 **Type**: `Object`
 
-**Example**
+**Example:**
 
 ```js
 // path: ./strapi-server.js
