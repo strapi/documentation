@@ -127,8 +127,6 @@ module.exports = () => ({
 | `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
 | `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
 
-<!-- TODO: check if this config object has the same shape in strapi-server.js and in strapi-admin.js 👇 -->
-
 **Example:**
 
 ```js

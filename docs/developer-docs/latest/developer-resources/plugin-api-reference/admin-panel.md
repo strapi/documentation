@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Admin Panel API for plugins
 
-A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's administration panel.
+A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
 
@@ -25,8 +25,7 @@ To tap into the Admin Panel API, create a `strapi-admin.js` file at the root of 
 | Parameter type      | Available parameters                                                     |
 | ------------------- | ------------------------------------------------------------------------ |
 | Lifecycle functions | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li></ul> |
-| Async function      | [registerTrads](#register-translations)                                  |
-| Configuration       | [config](#configuration) object                                          |
+| Async function      | [registerTrads](#registertrads)                                  |
 
 ## Lifecycle functions
 
@@ -131,7 +130,6 @@ module.exports = () => {
 
 To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files.
 
-<!-- ? not sure we need to highlight this 🤔 -->
 :::note
 `registerTrads()` is not a lifecycle function.
 :::
@@ -166,27 +164,6 @@ export default {
 };
 ```
 
-## Configuration
-
-**Type**: `Object`
-
-Stores the Admin Panel configuration.
-
-| Parameter       | Type             | Description                                                                                                                                   |
-| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth`          | Object           | Accepts a `logo` key to change the logo on login screen views                                                                                 |
-| `head`          | Object           | Accepts a `favicon` key                                                                                                                       |
-| `locales`       | Array of Strings | List of availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales) documentation) |
-| `menu`          | Object           | Accepts the `logo` key to change the logo in the main navigation                                                                              |
-| `theme`         | Object           | Override or extend the theme                                                                                                                  |
-| `translations`  | Object           | Extend the translations                                                                                                                       |
-| `tutorial`      | Boolean          | Toggles displaying the tutorials                                                                                                              |
-| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle displaying notifications about new releases                                                     |
-
-:::strapi Customizing the admin panel
-For more information about updating this configuration, see [Admin panel customization](/developer-docs/latest/development/admin-customization.md#changing-the-configuration).
-:::
-
 ## Available features
 
 The Admin Panel API allows a plugin to take advantage of several small APIs to perform some actions:
@@ -202,6 +179,11 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones) | [`injectComponent()`](#injection-zones)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
+::: tip
+The admin panel supports dotenv variables.
+
+All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
+:::
 ### Menu API
 
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
@@ -562,75 +544,3 @@ export default {
 ```
 
 :::
-
-<!-- ? should we document the Initializer? -->
-<!-- ### Initializer
-
-The component is generated by default when you create a new plugin. Use this component to execute some logic when the app is loading. When the logic has been executed this component should emit the `isReady` event so the user can interact with the application.
-
-:::note
-Below is the Initializer component of the content-type-builder plugin.
-
-It checks whether or not the auto-reload feature is enabled and depending on this value changes the mainComponent of the plugin.
-:::
-
-```js
-/**
- *
- * Initializer
- *
- */
-
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import pluginId from '../../pluginId';
-
-class Initializer extends React.PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
-    const {
-      admin: { autoReload, currentEnvironment },
-    } = this.props;
-
-    let preventComponentRendering;
-    let blockerComponentProps;
-
-    if (currentEnvironment === 'production') {
-      preventComponentRendering = true;
-      blockerComponentProps = {
-        blockerComponentTitle: 'components.ProductionBlocker.header',
-        blockerComponentDescription: 'components.ProductionBlocker.description',
-        blockerComponentIcon: 'fa-ban',
-        blockerComponentContent: 'renderButton',
-      };
-    } else {
-      // Don't render the plugin if the server autoReload is disabled
-      preventComponentRendering = !autoReload;
-      blockerComponentProps = {
-        blockerComponentTitle: 'components.AutoReloadBlocker.header',
-        blockerComponentDescription: 'components.AutoReloadBlocker.description',
-        blockerComponentIcon: 'fa-refresh',
-        blockerComponentContent: 'renderIde',
-      };
-    }
-
-    // Prevent the plugin from being rendered if currentEnvironment === PRODUCTION
-    this.props.updatePlugin(pluginId, 'preventComponentRendering', preventComponentRendering);
-    this.props.updatePlugin(pluginId, 'blockerComponentProps', blockerComponentProps);
-    // Emit the event plugin ready
-    this.props.updatePlugin(pluginId, 'isReady', true);
-  }
-
-  render() {
-    return null;
-  }
-}
-
-Initializer.propTypes = {
-  admin: PropTypes.object.isRequired,
-  updatePlugin: PropTypes.func.isRequired,
-};
-
-export default Initializer;
-``` -->
