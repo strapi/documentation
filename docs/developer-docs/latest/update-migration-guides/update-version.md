@@ -105,7 +105,7 @@ yarn build --clean
 
 ## Extensions
 
-If you are using [extensions](/developer-docs/latest/development/plugin-customization.md) to create custom code or modify existing code, you will need to update your code and compare your version to the new changes on the repository. Not updating your extensions can **break your app** in unexpected ways we cannot predict.
+If you are using [extensions](/developer-docs/latest/development/plugins-extension.md) to create custom code or modify existing code, you will need to update your code and compare your version to the new changes on the repository. Not updating your extensions can **break your app** in unexpected ways we cannot predict.
 
 ## Migration guides
 

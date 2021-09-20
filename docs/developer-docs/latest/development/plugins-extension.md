@@ -54,7 +54,7 @@ To extend a plugin's interface:
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Depending on what needs to be extended:
     * create a `strapi-server.js` file to extend a plugin's back end using the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)
-    * or create a  `strapi-admin.js` file to extend the admin panel with the [Admin Panel API](/Users/piwi/code/documentation/docs/developer-docs/latest/developer-resources/plugin-api-reference/admin-paenl.md).
+    * or create a  `strapi-admin.js` file to extend the admin panel with the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md).
 4. Within this file, define and export a function.  The function receives the `plugin` interface as an argument so it can be extended.
 
 ::: details Example of backend extension
@@ -84,5 +84,5 @@ The final schema of the Content-Types depends on the following loading order:
 
 1. the Content-Types of the original plugin,
 2. the Content-Types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the Content-Types declarations in the [`content-types` key exported from `.strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#content-types)
+3. the Content-Types declarations in the [`content-types` key exported from `.strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
 <!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->

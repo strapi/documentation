@@ -11,7 +11,7 @@ The count aggregation currently has some issues and this feature is also not ava
 
 With this guide we will code our own count query.
 
-Here is the [GraphQL documentation](/developer-docs/latest/development/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal.
+Here is the [GraphQL documentation](/developer-docs/latest/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal.
 
 ## Setup the application
 

@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Server API for plugins
 
-A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Server API is about the back end part.
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Server API is about the back end part.
 
 Creating and using a plugin interacting with the Server API consists in 2 steps:
 
@@ -64,7 +64,7 @@ module.exports = () => {
 
 ### register()
 
-This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/development/plugins/users-permissions.html) or database migrations.
+This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database mdigrations.
 
 **Type**: `Function`
 
@@ -82,7 +82,7 @@ module.exports = () => ({
 
 ### bootstrap()
 
-The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap) function is called right after the plugin has [registered](#register).
+The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) function is called right after the plugin has [registered](#register).
 
 **Type**: `Function`
 
@@ -150,7 +150,7 @@ module.exports = () => ({
 
 ### Content-Types
 
-An object with the [Content-Types](/developer-docs/latest/development/backend-customization.html#models) the plugin provides.
+An object with the [Content-Types](/developer-docs/latest/development/backend-customization.md#models) the plugin provides.
 <!-- TODO: update link to Backend customization > models once merged with database PR -->
 
 **Type**: `Object`
@@ -222,7 +222,7 @@ module.exports = {
 
 <!-- ? Have we decided on/implemented routes behavior yet? -->
 
-An array of [route](/developer-docs/latest/development/backend-customization.html#routing) configuration.
+An array of [route](/developer-docs/latest/development/backend-customization.md#routing) configuration.
 <!-- TODO: update link to Backend customization > Routing once merged with database PR -->
 
 **Type**: `Object[]`
@@ -256,7 +256,7 @@ module.exports = [
 
 ### Controllers
 
-An object with the [controllers](/developer-docs/latest/development/backend-customization.html#controllers) the plugin provides.
+An object with the [controllers](/developer-docs/latest/development/backend-customization.md#controllers) the plugin provides.
 <!-- TODO: update link to Backend Customization > Controllers once merged with database PR -->
 
 **Type**: `Object`
@@ -297,7 +297,7 @@ module.exports = {
 
 ### Services
 
-An object with the [services](/developer-docs/latest/development/backend-customization.html#services) the plugin provides.
+An object with the [services](/developer-docs/latest/development/backend-customization.md#services) the plugin provides.
 <!-- TODO: update link to Backend Customization > Services once merged with database PR -->
 
 Services should be functions taking `strapi` as a parameter.
@@ -342,7 +342,7 @@ module.exports = ({ strapi }) => ({
 
 <!-- ? are policies still implemented like described in the RFC? -->
 
-An object with the [policies](/developer-docs/latest/development/backend-customization.html#policies) the plugin provides.
+An object with the [policies](/developer-docs/latest/development/backend-customization.md#policies) the plugin provides.
 <!-- TODO: update link to Backend Customization > Policies once merged with the database PR -->
 
 **Type**: `Object`
@@ -386,7 +386,7 @@ module.exports = (ctx, next) => {
 
 ### Middlewares
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations.html#middlewares) the plugin provides.
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares) the plugin provides.
 
 **Type**: `Object`
 

@@ -57,7 +57,7 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
   - `policies` (array): Array of policy names or paths ([see more](#policies))
 
 ::: tip
-You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](/developer-docs/latest/development/plugins/users-permissions.md).
+You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md).
 :::
 
 ### Dynamic parameters
@@ -154,7 +154,7 @@ In this example, we are verifying that a session is open. If it is the case, we 
 To apply policies to a route, you need to associate an array of policies to it. There are two kinds of policies: global and scoped.
 
 :::caution
-To apply policies with GraphQL please see the [following guide](/developer-docs/latest/development/plugins/graphql.md#execute-a-policy-before-a-resolver).
+To apply policies with GraphQL please see the [following guide](/developer-docs/latest/plugins/graphql.md#execute-a-policy-before-a-resolver).
 :::
 
 #### Global policies

@@ -85,7 +85,7 @@ And now the comment creation is back.
 
 We want to check if the content of the comment contains any bad words.
 
-If it does, we want to send an email using the [Email plugin](/developer-docs/latest/development/plugins/email.md)
+If it does, we want to send an email using the [Email plugin](/developer-docs/latest/plugins/email.md)
 
 **Path —** `./api/comment/controller/Comment.js`
 

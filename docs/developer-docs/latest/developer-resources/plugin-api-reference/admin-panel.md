@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Admin Panel API for plugins
 
-A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
 
@@ -230,7 +230,7 @@ export default {
 The Settings API allows:
 
 * [creating a new setting section](#createsettingsection)
-* adding [a single link](#addSettingLink) or [multiple links at once](#addSettingLinks) to existing settings sections
+* adding [a single link](#addsettinglink) or [multiple links at once](#addsettinglinks) to existing settings sections
 
 ::: note
 Adding a new section happens in the [register](#register) lifecycle while adding links happens during the [bootstrap](#bootstrap) lifecycle.

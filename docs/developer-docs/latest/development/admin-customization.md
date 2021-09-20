@@ -63,7 +63,7 @@ By default, the administration panel is exposed via [http://localhost:1337/admin
 
 **Example:**
 
-To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.html#server) file:
+To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) file:
 
 ```js
 //path: ./config/server.js
@@ -234,7 +234,7 @@ The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/develop/p
 
 ### Customizing a plugin
 
-To change the current WYSIWYG, you can either install a plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#bootstrap)).
+To change the current WYSIWYG, you can either install a plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
 
 <!-- TODO: Add Component API -->
 
