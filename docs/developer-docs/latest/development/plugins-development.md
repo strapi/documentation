@@ -1,9 +1,9 @@
 ---
-title: Local plugins development - Strapi Developer Documentation
+title: Plugins development - Strapi Developer Documentation
 description: Strapi allows you to create your own custom local plugins that will work exactly the same as external ones.
 ---
 
-# Local plugins development
+# Plugins development
 
 Strapi allows you to create local plugins that work exactly like the external ones installed with npm or through the Marketplace.
 
