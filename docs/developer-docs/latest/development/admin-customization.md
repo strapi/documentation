@@ -133,17 +133,30 @@ export default {
       favicon: favicon,
     },
     // Add a new locale other than en
-    locales: ['fr',],
+    locales: ['fr', 'de'],
     // Change the menu logo
     menu: {
       logo: MenuLogo,
     },
     // Override or extend the theme
-    theme: {},
+    theme: {
+      colors: {
+        alternative100: '#f6ecfc',
+        alternative200: '#e0c1f4',
+        alternative500: '#ac73e6',
+        alternative600: '#9736e8',
+        alternative700: '#8312d1',
+        danger700: '#b72b1a'
+      },
+    },
     // Extend the translations
     translations: {
       fr: {
         'Auth.form.email.label': 'test',
+        Users: 'Utilisateurs',
+        City: 'CITY FRENCH',
+        // Customize the label of the CM table..
+        Id: 'ID french',
       },
     },
    // Display the tutorials bow
@@ -151,6 +164,8 @@ export default {
    // Display the release notification
     notifications: { release: false },
   },
+
+  bootstrap() {},
 };
 
 ```
