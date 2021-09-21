@@ -430,8 +430,6 @@ export default {
 
 :::
 
-
-
 ### Reducers
 
 Reducers are declared as an object with this syntax:
@@ -445,7 +443,6 @@ const reducers = {
   [`${pluginId}_locales`]: localeReducer
 }
 ```
-
 
 ### Hooks API
 
@@ -479,7 +476,8 @@ const [result] = await app.runHookParallel(args?, asynchronous?);
 :::
 
 <!-- ? not sure what to do with this example 🤔? -->
-For instance, it can be used to allow people to add new information to the content manager like the following:
+<!-- TODO: ask Marvin for a simpler, easier to understand example -->
+<!-- For instance, it can be used to allow people to add new information to the content manager like the following:
 ```jsx
 // somewhere at Strapi's core init
 app.createHook('CM/custom-cols')
@@ -503,7 +501,7 @@ const MyCompo = () => {
     return headers;
   }, [runHookWaterfall, displayedHeaders, layout]);
 }
-```
+``` -->
 
 #### Predefined hooks
 
