@@ -106,9 +106,9 @@ The `config` object found at `./admin/src/app.js` stores the admin panel configu
 | --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#updating-logos) on login screen                                                    |
 | `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#updating-the-favicon)                                                        |
-| `locales`       | Array of Strings | List of availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales)) |
+| `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales)) |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#updating-logos) in the main navigation                                                           |
-| `theme`         | Object           | Override or [extend the theme](#extending-the-theme)                                                                                          |
+| `theme`         | Object           | Overrides or [extends the theme](#extending-the-theme)                                                                                          |
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#toggling-the-display-of-tutorial-videos)                                                            |
 | `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#toggling-strapi-releases-notifications)          |
@@ -132,7 +132,7 @@ export default {
     head: {
       favicon: favicon,
     },
-    // Add a new locale other than en
+    // Add a new locale, other than 'en'
     locales: ['fr', 'de'],
     // Replace the Strapi logo in the main navigation
     menu: {
@@ -154,8 +154,8 @@ export default {
       fr: {
         'Auth.form.email.label': 'test',
         Users: 'Utilisateurs',
-        City: 'CITY FRENCH',
-        // Customize the label of the CM table..
+        City: 'CITY (FRENCH)',
+        // Customize the label of the Content Manager table.
         Id: 'ID french',
       },
     },
