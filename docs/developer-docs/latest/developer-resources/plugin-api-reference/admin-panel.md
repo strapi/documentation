@@ -505,9 +505,12 @@ const MyCompo = () => {
 }
 ```
 
-#### Predefined hook
+#### Predefined hooks
 
-Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Strapi includes 2 predefined hooks that can be used to modify views of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
+
+* the `cm/inject-column-in-table` hook can be used to add or mutate a column of the List View
+* the `cm/useCMEditViewDataManager` hook can be used to inject a component into the Edit View
 
 ::: details Example: 'inject-column-in-table' hook, as used by the Internationalization plugin
 
@@ -540,6 +543,51 @@ export default {
 			];
     };
   },
+}
+```
+
+:::
+
+::: details Example: 'useCMEditViewDataManager' hook, as described in the Storybook
+```js
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+
+const MyCompo = () => {
+  const {
+    createActionAllowedFields: [], // Array of fields that the user is allowed to edit
+    formErrors: {}, // Object errors
+    readActionAllowedFields: [], // Array of field that the user is allowed to edit
+    slug: 'api::address.address', // Slug of the content type
+    updateActionAllowedFields: [],
+    allLayoutData: {
+      components: {}, // components layout
+      contentType: {}, // content type layout
+    },
+    initialData: {},
+    isCreatingEntry: true,
+    isSingleType: true,
+    status: 'resolved',
+    layout: {}, // Current content type layout
+    hasDraftAndPublish: true,
+    modifiedData: {},
+    onPublish: () => {},
+    onUnpublish: () => {},
+    addComponentToDynamicZone: () => {},
+    addNonRepeatableComponentToField: () => {},
+    addRelation: () => {},
+    addRepeatableComponentToField: () => {},
+    moveComponentDown: () => {},
+    moveComponentField: () => {},
+    moveComponentUp: () => {},
+    moveRelation: () => {},
+    onChange: () => {},
+    onRemoveRelation: () => {},
+    removeComponentFromDynamicZone: () => {},
+    removeComponentFromField: () => {},
+    removeRepeatableField: () => {},
+  } = useCMEditViewDataManager()
+
+  return null
 }
 ```
 
