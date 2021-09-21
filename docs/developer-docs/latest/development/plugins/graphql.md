@@ -1,6 +1,7 @@
 ---
 title: GraphQL - Strapi Developer Documentation
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
+sidebarDepth: 3
 ---
 
 # GraphQL
@@ -8,7 +9,7 @@ description: Use a GraphQL endpoint in your Strapi project to fetch and mutate y
 By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
-The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries and mutations to interact with Strapi using GraphQL.
+The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
 :::
 
 ## Usage
@@ -83,9 +84,10 @@ You can edit these configurations by creating following file.
 Please note the setting for GraphQL `tracing` as changed and has been moved to `apolloServer.tracing`
 :::
 
-**Path —** `./config/plugins.js`
-
+<!-- TODO: add link to plugin configuration (in "plugins development") once merged with Plugin API PR -->
 ```js
+// path: ./config/plugins.js
+
 module.exports = {
   //
   graphql: {
@@ -109,13 +111,13 @@ To simplify and automate the build of the GraphQL schema, we introduced the Shad
 If you use a local plugin, the controller methods of your plugin are not created by default. In order for the Shadow CRUD to work you have to define them in your controllers for each of your models. You can find examples of controllers `findOne`, `find`, `create`, `update` and `delete` there : [Core controllers](/developer-docs/latest/development/backend-customization/controllers.md).
 :::
 
-### Example
+**Example:**
 
 If you've generated an API called `Restaurant` using the CLI `strapi generate:api restaurant` or the administration panel, your model looks like this:
 
-**Path —** `./api/restaurant/models/Restaurant.settings.json`
-
 ```json
+// path: ./api/[api-name]/content-types/restaurant/schema.json
+
 {
   "connection": "default",
   "options": {
@@ -164,6 +166,134 @@ type Mutation {
 
 The queries and mutations will use the generated controller's actions as resolvers. It means that the `restaurants` query will execute the `Restaurant.find` action, the `restaurant` query will use the `Restaurant.findOne` action and the `createRestaurant` mutation will use the `Restaurant.create` action, etc.
 
+## Customization
+
+Strapi provides a programmatic API to customize GraphQL, which allows:
+
+* disabling some operations through the [Shadow CRUD](#shadow-crud)
+* registering and using an `extension` object to extend the existing schema (e.g. extend types or  define custom resolvers)
+
+::: details Example of a full GraphQL customization file:
+```js
+// path: /config/functions/register.js
+
+'use strict';
+​
+/**
+ * An asynchronous register function that runs before
+ * your application is loaded.
+ *
+ * This gives you an opportunity to extend code.
+ */
+​
+module.exports = ({ strapi }) => {
+  const extensionService = strapi.plugin('graphql').service('extension');
+​
+  extensionService.shadowCRUD('api::restaurant.restaurant').disable();
+  extensionService.shadowCRUD('api::category.category').disableQueries();
+  extensionService.shadowCRUD('api::address.address').disableMutations();
+  extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
+​
+  const extension = ({ nexus }) => ({
+    // Nexus
+    types: [
+      nexus.objectType({
+        name: 'Book',
+        definition(t) {
+          t.string('title');
+        },
+      }),
+    ],
+    plugins: [
+      nexus.plugin({
+        name: 'MyPlugin',
+​
+        onAfterBuild(schema) {
+          console.log(schema);
+        },
+      }),
+    ],
+​
+    // GraphQL SDL
+    typeDefs: `
+        type Article {
+            name: String
+        }
+    `,
+    resolvers: {
+      Query: {
+        address: {
+          resolve() {
+            return { value: { city: 'Montpellier' } };
+          },
+        },
+      },
+    },
+​
+    resolversConfig: {
+      'Query.address': {
+        auth: false,
+      },
+    },
+  });
+​
+  extensionService.use(extension);
+};
+```
+
+:::
+
+### Disabling operations in the Shadow CRUD
+
+The `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin exposes functions that can be used to disable some actions on Content-Types:
+
+| Function             | Description                                    | Argument type    | Possible argument values |
+| -------------------- | ---------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| `disable()`          | Fully disable the Content-Type                 | -                | -                                                                                                          |
+| `disableQueries()`   | Only disable queries for the Content-Type      | -                | -                                                                                                          |
+| `disableMutations()` | Only disable mutations for the Content-Type    | -                | -                                                                                                          |
+| `disableAction()`    | Disable a specific action for the Content-Type | String           | One value from the list:<ul><li>`create`</li><li>`read`</li><li>`update`</li><li>`delete`</li></ul>   |
+| `disableActions()`    | Disable specific actions for the Content-Type  | Array of Strings | Multiple values from the list: <ul><li>`create`</li><li>`read`</li><li>`update`</li><li>`delete`</li></ul> |
+
+**Example:**
+
+To disable the read operation on the "restaurant" Content-Type in the "restaurant" API, use:
+
+```js
+strapi.plugin('graphql').service('extension').shadowCRUD('api::restaurant.restaurant').disableAction('read')
+```
+
+### Extending the schema
+
+The schema generated by the Content API can be extended by registering an extension. This extension, defined either as an object or a function returning an object, will be used by the `use()` function exposed by the `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin.
+
+The object describing the extension accepts the following parameters:
+
+| Parameter         | Description                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `types`           | Allows extending the schema types using [Nexus](https://nexusjs.org/)-based type definitions |
+| `plugins`         | Allows extending the schema using Nexus [plugins](https://nexusjs.org/docs/plugins)          |
+| `typeDefs`        | Allows extending the schema types using [GraphQL SDL](https://graphql.org/learn/schema/)                  |
+| `resolvers`       | Defines custom resolvers  |
+| `resolversConfig` | Defines configuration options for the resolver                                                       |
+
+:::tip
+The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/). To use them, register the extension as a function returning an object to allow access to the `nexus` library:
+
+```js
+// path: /config/functions/register.js
+
+const extension = ({ nexus }) => ({
+  types: [
+    nexus.objectType({
+      …
+    }),
+  ],
+})
+
+strapi.plugin('graphql').service('extension').use(extension)
+```
+:::
 
 <!-- ## Customize the GraphQL schema
 
