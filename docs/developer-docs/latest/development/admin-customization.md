@@ -124,17 +124,17 @@ import favicon from './extensions/favicon.ico';
 
 export default {
   config: {
-    // Change the Auth views strapi logo
+    // Replace the Strapi logo in auth (login) views
     auth: {
       logo: AuthLogo,
     },
-   // Change the favicon
+   // Replace the favicon
     head: {
       favicon: favicon,
     },
     // Add a new locale other than en
     locales: ['fr', 'de'],
-    // Change the menu logo
+    // Replace the Strapi logo in the main navigation
     menu: {
       logo: MenuLogo,
     },
@@ -159,9 +159,9 @@ export default {
         Id: 'ID french',
       },
     },
-   // Display the tutorials bow
+   // Disable video tutorials
     tutorials: false,
-   // Display the release notification
+   // Disable notifications about new Strapi releases
     notifications: { release: false },
   },
 
