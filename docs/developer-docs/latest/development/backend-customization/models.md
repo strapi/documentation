@@ -58,10 +58,9 @@ General settings for the model can be configured with the following keys:
 
 ### Model information
 
-The `info` key in the model's schema states information about the model. This information is used in the admin interface when showing the model. It includes the following keys:
+The `info` key in the model's schema describes information about the model. This information is used in the adminstration panel when showing the model. It includes the following keys:
 
 <!-- ? with the new design system, do we still use FontAwesome?  -->
-<!-- ? if yes, what's the type of icon? a string (filepath?)? -->
 
 | Key            | Type   | Description                                                                                                                                 |
 | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -69,7 +68,7 @@ The `info` key in the model's schema states information about the model. This in
 | `singularName` | String | Singular form of the Collection Type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
 | `pluralName`   | String | Plural form of the Collection Type name<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
 | `description`  | String | Description of the model.                                                                                                                   |
-| `icon`<br><br>_Optional_ <br>_only for Components_       | ?      | Fontawesome V5 name                                                                                               |
+| `icon`<br><br>_Optional,_<br>_only for Components_       | String      | Fontawesome V5 name                                                                                               |
 
 ```json
 // ./api/[api-name]/content-types/restaurant/schema.json
@@ -84,7 +83,7 @@ The `info` key in the model's schema states information about the model. This in
 
 ### Model attributes
 
-Model attributes defines the data structure of your model.
+Model attributes defines the data structure of a model.
 
 #### Types
 
@@ -99,8 +98,6 @@ The following types are available:
 | [Internationalization](/developer-docs/latest/development/plugins/i18n.md)-related types |<ul><li>`locale`</li><li>`localizations`</li></ul> |
 | Special types unique to Strapi |<ul><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
 
-
-
 #### Validations
 
 <!-- TODO: update this table once fully implemented -->
@@ -110,13 +107,13 @@ You can apply basic validations to attributes, using the following parameters:
 
 | Parameter name | Type    | Description                                                                                               | Default |
 | -------------- | ------- | --------------------------------------------------------------------------------------------------------- | ------- |
-| `required`     | Boolean | If true, adds a required validator for this property.                                                     | `false` |
+| `required`     | Boolean | If `true`, adds a required validator for this property.                                                     | `false` |
 | `max`          | Integer | Checks if the value is greater than or equal to the given maximum.                                        | -       |
 | `min`          | Integer | Checks if the value is less than or equal to the given minimum.                                           | -       |
 | `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
 | `maxLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
-| `private`      | boolean | If true, the attribute will be removed from the server response. (This is useful to hide sensitive data). | `false` |
-| `configurable` | boolean | If false, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
+| `private`      | boolean | If `true`, the attribute will be removed from the server response. (This is useful to hide sensitive data). | `false` |
+| `configurable` | boolean | If `false`, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
 
 
 ```json
@@ -148,22 +145,22 @@ You can apply basic validations to attributes, using the following parameters:
 #### `uid` type
 
 <!-- TODO: review explanations -->
-The `uid` type is used to automatically prefill the field value in the admin panel with unique ids (e.g. slugs for articles) based on 2 optional parameters:
+The `uid` type is used to automatically prefill the field value in the administration panel with unique ids (e.g. slugs for articles) based on 2 optional parameters:
 
-- `targetField`(string): The field to use to auto-generate the uid.
-- `options` (string): The value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following RegEx `/^[A-Za-z0-9-_.~]*$`.
+- `targetField` (string): the field to use to auto-generate the uid.
+- `options` (string): the value is a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). A caveat is that the resulting `uid` must abide to the following regular expression: `/^[A-Za-z0-9-_.~]*$`.
 
 #### Relations
 
-Relations let you create links (relations) between your Content Types.
+Relations create links (relations) between your Content-Types.
 They should be explicitly defined in the model's attributes, using the following keys:
 
 <!-- TODO: describe polymorphic relations once implemented, or maybe just go with documenting the 'link' type -->
 | Key                         | Description                                                                                                                                     |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type: 'relation'`<br><br>⚠️ _Mandatory_<br><br>  |       Defines this field is a relation                                                                                            |
+| `type: 'relation'`<br><br>⚠️ _Mandatory_<br><br>  |       Defines this field as a relation.                                                                                           |
 | `relation`                  | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul>                   |
-| `target`                    | Accepts a string value as the name of the target Content Type                                                                                   |
+| `target`                    | Accepts a string value as the name of the target Content-Type                                                                                   |
 | `mappedBy` and `inversedBy` | _Optional_<br><br>In bidirectional relations, the owning side declares the `inversedBy` key while the inversed side declares the `mappedBy` key |
 
 ::::: tabs card
@@ -426,9 +423,7 @@ The `tableName` key defines the name of the join table. It has to be specified o
 
 #### Components
 
-Component fields let your create a relation between your Content Type and a Component structure. They accept the following additional parameters:
-
-<!-- ? what does the "that let you create a list of data" mean for the `repeatable` parameter means? -->
+Component fields create a relation between a Content-Type and a component structure. They accept the following additional parameters:
 
 | Parameter    | Type    | Description                                                                              |
 | ------------ | ------- | ---------------------------------------------------------------------------------------- |
@@ -452,9 +447,9 @@ Component fields let your create a relation between your Content Type and a Comp
 
 #### Dynamic Zone
 
-Dynamic Zone fields let you create a flexible space in which to compose content, based on a mixed list of components.
+Dynamic Zone fields create a flexible space in which to compose content, based on a mixed list of components.
 
-They accept a `components` array that follows this format: `<category>.<componentName>`.
+They accept a `components` array, where each component should be name following this format: `<category>.<componentName>`.
 
 ```json
 // ./api/[api-name]/content-types/article/schema.json
@@ -471,21 +466,19 @@ They accept a `components` array that follows this format: `<category>.<componen
 
 ### Model options
 
-The `options` key on the in the model description can use the following keys:
+The `options` key is used to define specific behaviors and accepts the following keys:
 
 | Key                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `privateAttributes`     | Array of strings            | This configuration allows to treat a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
-| `populateCreatorFields` | Boolean                     | Configure whether the API response should include `created_by` and `updated_by` fields or not.<br><br>Default value: `false`                                                                                                                                                                                                                 |
-| `draftAndPublish`       | Boolean                     | Enable the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
-
+| `privateAttributes`     | Array of strings            | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
+| `populateCreatorFields` | Boolean                     | Toggles including the `created_by` and `updated_by` fields in the API response.<br><br>Default value: `false`                                                                                                                                                                                                                 |
+| `draftAndPublish`       | Boolean                     | Enables the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
 ```json
 // .api/[api-name]/content-types/restaurant/schema.json
 
 {
   "options": {
-    "timestamps": true,
     "privateAttributes": ["id", "created_at"],
     "populateCreatorFields": true,
     "draftAndPublish": false
@@ -495,7 +488,7 @@ The `options` key on the in the model description can use the following keys:
 
 ## Lifecycle hooks
 
-The lifecycle hooks are functions that get triggered when the Strapi queries are called. They are triggered automatically when you manage your content in the Admin Panel or when you develop custom code using `queries`·
+Lifecycle hooks are functions that get triggered when Strapi queries are called. They are triggered automatically when managing content through the administration panel or when developing custom code using `queries`·
 
 :::caution
 Lifecycles hooks are not triggered when using directly the knex library instead of Strapi functions.
@@ -528,20 +521,22 @@ The following lifecycle events are available:
 
 Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
 
+<!-- TODO: add link to Entity Service API (to the EntityManager entry in the table) once documented -->
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action` | string            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
-| `model`  | string            | Model name                                                                                                                                                       |
-| `em`     | ?           | the EntityManager |                                                                                                                                                    |
-| `params` | object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
-| `result` | object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
-| `state`  | object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a same query.                                                               |
+| `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
+| `model`  | String            | Model name                                                                                                                                                       |
+| `em`     | EntityManagerObject           | EntityManager |                                                                                                                                                    |
+| `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
+| `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
+| `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
 <!-- TODO: `state` has not been implemented yet, ask for more info once done -->
 
-You can customize lifecycle hooks declaratively or programmatically.
+Lifecycle hooks can be customized declaratively or programmatically.
+
 ### Declarative usage
 
-To configure a Content-Type lifecycle hook, create a `lifecycles.js` file located in the `./api/[api-name]/content-types/[content-type-name]/` folder.
+To configure a Content-Type lifecycle hook, create a `lifecycles.js` file in the `./api/[api-name]/content-types/[content-type-name]/` folder.
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
