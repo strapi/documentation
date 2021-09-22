@@ -5,6 +5,8 @@ description: Discover the project structure of any default Strapi application.
 
 # Project structure
 
+<!-- TODO: update this document for v4 -->
+
 By default, the structure of your Strapi project looks as shown below:
 
 - `/.cache`: contains files used to build your admin panel.
