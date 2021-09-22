@@ -599,12 +599,15 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 <br>or<br>
 `GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
 
-<!-- TODO: explain You can use wildcards… T-->
-<!-- TODO: add fields=* example -->
+To get all fields, use the `*` wildcard.
 
 <!-- TODO: add response example and convert this to an api-call component -->
 ::: request Example request: Get only firstName and lastName of all users
 `GET /api/users?fields=firstName,lastName`
+:::
+
+::: request Example request: Get all fields for all users
+`GET /api/users?fields=*`
 :::
 
 ### Relations population
@@ -614,21 +617,21 @@ By default, relations are not populated when fetching entries.
 Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
 
 `GET /api/:pluralApiId?populate=field1,field2`
-<!-- ? should I add these syntaxes and are they correct: `GET /api/:pluralApiId?populate[]=field1,field2` and `GET /api/pluralApiId?populate[0]=field1&populate[1]=field2` -->
 
 <!-- TODO: add an example response and convert this to an api-call component -->
 ::: request Example request: Get books and populate relations with the author's name and address
 `GET /api/books?populate=author.name,author.address`
 :::
 
-<!-- TODO: explain the use of wildcards
+For convenience, the `*` wildcard can be used:
 
-populate=* -> all the 1st level relations
-populate=relationA,relationB -> relationA & B
-populate[]=relationA&populate[]=relationB -> relation A & B
-populate[relationA]=* -> relation A and all its relations
-populate[relation][fields][0]=name&populate[relation][sort]=name%3Adesc&populate[relation][filters][name][$contains]=Hello&populate[relation][populate]=* -->
+::: request Example request: Get all books and populate all their first level relations
+`GET /api/books?populate=*`
+:::
 
+::: request Example request: Get all books and populate with authors and all their relations
+`GET /api/books?populate[author]=*`
+:::
 
 ### Publication State
 
