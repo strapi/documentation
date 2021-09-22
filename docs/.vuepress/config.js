@@ -130,7 +130,6 @@ const sidebar = {
       sidebarDepth: 1,
     },
     {
-      collapsable: false,
       title: '🔧 Development',
       collapsable: false,
       children: [
@@ -233,14 +232,6 @@ const sidebar = {
           ],
         },
         {
-          title: 'Plugin API Reference',
-          collapsable: true,
-          children: [
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
-          ],
-        },
-        {
           title: 'Database APIs Reference',
           collapsable: true,
           sidebarDepth: 1,
@@ -276,6 +267,14 @@ const sidebar = {
               ]
             },
           ]
+        },
+        {
+          title: 'Plugin API Reference',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+          ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
