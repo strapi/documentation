@@ -50,7 +50,7 @@ Syntax: `updateMany(parameters) => { count: number }`
 
 | Parameter | Type                       | Description         |
 | --------- | -------------------------- | ------------------- |
-| `where`     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter              |
+| `where`     | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use             |
 | `data`      | Object                   | Input data |
 
 ### Example
@@ -78,7 +78,7 @@ Syntax: `deleteMany(parameters) => { count: number }`
 
 | Parameter | Type                       | Description |
 | --------- | -------------------------- | ----------- |
-| `where`     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter      |
+| `where`     | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use             |
 
 ### Example
 
@@ -106,7 +106,7 @@ Syntax: `count(parameters) => number`
 
 | Parameter | Type                       | Description |
 | --------- | -------------------------- | ----------- |
-| `where`     | [`WhereParam`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | Filter      |
+| `where`     | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use             |
 
 ```js
 const count = await db.query('article').count({
