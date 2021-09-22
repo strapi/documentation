@@ -20,15 +20,15 @@ Whatever the query, the response can contain the following fields:
     - `id` (number)
     - `attributes` (object)
     - `meta` (object)
-  - a list of entries, as an array of objects
-  - a custom response
+  - a list of entries, as an array of objects,
+  - or a custom response
 
 - `meta`(object): information about pagination, publication state, available locales…
 <!-- TODO: create an entry in the docs to list all errors -->
 
 ## Queries
 
-We assume that the [Shadow CRUD](/developer-docs/latest/development/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations which just fit to your needs.
+We assume that the [Shadow CRUD](/developer-docs/latest/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations.
 
 ### Fetch a single entry
 
