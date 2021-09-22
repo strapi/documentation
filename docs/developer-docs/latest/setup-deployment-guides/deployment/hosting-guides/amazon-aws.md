@@ -354,7 +354,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/plugins/upload.md#using-a-provider).
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
 
 #### 4. Push your local changes to your project's GitHub repository.
 

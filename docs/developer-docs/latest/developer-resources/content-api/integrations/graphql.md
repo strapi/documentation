@@ -314,4 +314,4 @@ export default {
 
 This is how you request your Collection Types in Strapi using GraphQL.
 
-Feel free to explore more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md).
+Feel free to explore more about [GraphQL](/developer-docs/latest/plugins/graphql.md).

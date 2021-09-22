@@ -9,9 +9,9 @@ In this guide you will see how you can request the API as an authenticated user.
 
 ## Introduction
 
-To show you many of the concepts on the [roles and permissions](/developer-docs/latest/development/plugins/users-permissions.md) part, we will use many users and roles.
+To show you many of the concepts on the [roles and permissions](/developer-docs/latest/plugins/users-permissions.md) part, we will use many users and roles.
 
-After that we will see the [authentication workflow](/developer-docs/latest/development/plugins/users-permissions.md#authentication) to get a `JWT` and use it for an API request.
+After that we will see the [authentication workflow](/developer-docs/latest/plugins/users-permissions.md#authentication) to get a `JWT` and use it for an API request.
 
 We will have one group of users that will be able to only fetch **Articles** and an other group that will be able to fetch, create and update **Articles**.
 
@@ -64,7 +64,7 @@ Finally create **2 users** with the following data.
 
 ## Login as a Reader
 
-To login as a user your will have to follow the [login documentation](/developer-docs/latest/development/plugins/users-permissions.md#login).
+To login as a user your will have to follow the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login).
 
 Here is the API route for the authentication `/auth/local`.
 

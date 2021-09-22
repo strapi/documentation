@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Admin Panel API for plugins
 
-A Strapi [plugin](/developer-docs/latest/development/local-plugins-customization.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's administration panel.
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
 
@@ -25,8 +25,7 @@ To tap into the Admin Panel API, create a `strapi-admin.js` file at the root of 
 | Parameter type      | Available parameters                                                     |
 | ------------------- | ------------------------------------------------------------------------ |
 | Lifecycle functions | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li></ul> |
-| Async function      | [registerTrads](#register-translations)                                  |
-| Configuration       | [config](#configuration) object                                          |
+| Async function      | [registerTrads](#registertrads)                                  |
 
 ## Lifecycle functions
 
@@ -54,23 +53,21 @@ Registers the plugin to make it available in the admin panel.
 This function returns an object with the following parameters:
 
 <!-- TODO: update the table -->
-<!-- ? what are the isRequired and isReady parameters used for? -->
+<!-- ? what is the isReady parameters used for? -->
 
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view. |
-| `icon`           | ?                        | Plugin icon, used in the marketplace of the administration panel.                                  |
+| `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace of the administration panel.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
-| `isRequired`     | Boolean                  | ?                                                                                                  |
-| `isReady`        | Boolean                  | ?                                                                                                  |
 | `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones)                                       |
 
 ::: note
 Some parameters can be imported from the `package.json` file.
 :::
 
-**Example**
+**Example:**
 
 ```js
 module.exports = () => {
@@ -93,8 +90,6 @@ module.exports = () => {
       description: pluginDescription,
       icon,
       id: pluginId,
-      isReady: true,
-      isRequired: pluginPkg.strapi.required || false,
       name,
     });
   },
@@ -113,7 +108,7 @@ Within the bootstrap function, a plugin can:
 * register hooks (see [Hooks API](#hooks-api))
 * [add links to a settings section](#settings-api)
 
-**Example**
+**Example:**
 
 ```js
 module.exports = () => {
@@ -135,10 +130,9 @@ module.exports = () => {
 
 To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files.
 
-<!-- ? not sure we need to highlight this 🤔 -->
-<!-- :::note
+:::note
 `registerTrads()` is not a lifecycle function.
-::: -->
+:::
 
 **Example: Register a plugin's translation files**
 
@@ -170,27 +164,6 @@ export default {
 };
 ```
 
-## Configuration
-
-**Type**: `Object`
-
-Stores the Admin Panel configuration.
-
-| Parameter       | Type             | Description                                                                                                                                   |
-| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth`          | Object           | Accepts a `logo` key to change the logo on login screen views                                                                                 |
-| `head`          | Object           | Accepts a `favicon` key                                                                                                                       |
-| `locales`       | Array of Strings | List of availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales) documentation) |
-| `menu`          | Object           | Accepts the `logo` key to change the logo in the main navigation                                                                              |
-| `theme`         | Object           | Override or extend the theme                                                                                                                  |
-| `translations`  | Object           | Extend the translations                                                                                                                       |
-| `tutorial`      | Boolean          | Toggles displaying the tutorials                                                                                                              |
-| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle displaying notifications about new releases                                                     |
-
-:::strapi Customizing the admin panel
-For more information about updating this configuration, see [Admin panel customization](/developer-docs/latest/development/admin-customization.md#changing-the-configuration).
-:::
-
 ## Available features
 
 The Admin Panel API allows a plugin to take advantage of several small APIs to perform some actions:
@@ -206,19 +179,24 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones) | [`injectComponent()`](#injection-zones)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
+::: tip
+The admin panel supports dotenv variables.
+
+All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
+:::
 ### Menu API
 
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
 
 <!-- ? what is the Component used for? -->
-<!-- TODO: update table with Component and permissions descriptions -->
+<!-- TODO: update table with permissions descriptions -->
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `icon`        | SVGElement       | Icon to display in the main navigation                                                                                                                                                                                   |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   |  ?               | ?                                                                                                                                                                                                                        |
-| `permissions` | Array of Objects | ?                                                                                                                                                                                                                        |
+| `Component`   | Async function   | Returns a dynamic import of your plugin entry point                                                                                                                                                                      |
+| `permissions` | Array of Objects |  ?                                                                                                                                                                                                                        |
 
 :::note
 `intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
@@ -252,7 +230,7 @@ export default {
 The Settings API allows:
 
 * [creating a new setting section](#createsettingsection)
-* adding [a single link](#addSettingLink) or [multiple links at once](#addSettingLinks) to existing settings sections
+* adding [a single link](#addsettinglink) or [multiple links at once](#addsettinglinks) to existing settings sections
 
 ::: note
 Adding a new section happens in the [register](#register) lifecycle while adding links happens during the [bootstrap](#bootstrap) lifecycle.
@@ -288,7 +266,7 @@ The function takes 2 arguments:
 `intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
 :::
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -315,7 +293,7 @@ export default {
 
 Add a unique link to an existing settings section.
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -343,7 +321,7 @@ export default {
 
 Add multiple links to an existing settings section.
 
-**Example**
+**Example:**
 
 ```jsx
 // my-plugin/admin/src/index.js
@@ -377,7 +355,8 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 :::
 
 <!-- ? should we use this example or is it an internal API that we should not document for now? -->
-<!-- ```jsx
+// YES
+```jsx
 // path: my-plugin/admin/src/index.js
 
 export default {
@@ -387,7 +366,7 @@ export default {
       Component: () => 'my-compo',
   });
 }
-``` -->
+```
 
 #### Predefined injection zones
 
@@ -451,22 +430,19 @@ export default {
 
 :::
 
-
-
 ### Reducers
 
 Reducers are declared as an object with this syntax:
 
 `['pluginId_reducerName']: function() {}`
 
-**Example**
+**Example:**
 
 ```js
 const reducers = {
   [`${pluginId}_locales`]: localeReducer
 }
 ```
-
 
 ### Hooks API
 
@@ -500,10 +476,11 @@ const [result] = await app.runHookParallel(args?, asynchronous?);
 :::
 
 <!-- ? not sure what to do with this example 🤔? -->
+<!-- TODO: ask Marvin for a simpler, easier to understand example -->
 <!-- For instance, it can be used to allow people to add new information to the content manager like the following:
 ```jsx
 // somewhere at Strapi's core init
-app.createHook('CM/customized-cell')
+app.createHook('CM/custom-cols')
 
 // somewhere in a plugin definition
 app.registerHook('CM/custom-cols', () => 'intl') 
@@ -526,9 +503,12 @@ const MyCompo = () => {
 }
 ``` -->
 
-#### Predefined hook
+#### Predefined hooks
 
-Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Strapi includes 2 predefined hooks that can be used to modify views of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
+
+* the `cm/inject-column-in-table` hook can be used to add or mutate a column of the List View
+* the `cm/useCMEditViewDataManager` hook can be used to inject a component into the Edit View
 
 ::: details Example: 'inject-column-in-table' hook, as used by the Internationalization plugin
 
@@ -566,74 +546,47 @@ export default {
 
 :::
 
-<!-- ? should we document the Initializer? -->
-<!-- ### Initializer
-
-The component is generated by default when you create a new plugin. Use this component to execute some logic when the app is loading. When the logic has been executed this component should emit the `isReady` event so the user can interact with the application.
-
-:::note
-Below is the Initializer component of the content-type-builder plugin.
-
-It checks whether or not the auto-reload feature is enabled and depending on this value changes the mainComponent of the plugin.
-:::
-
+::: details Example: 'useCMEditViewDataManager' hook, as described in the Storybook
 ```js
-/**
- *
- * Initializer
- *
- */
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-import React from 'react';
-import PropTypes from 'prop-types';
+const MyCompo = () => {
+  const {
+    createActionAllowedFields: [], // Array of fields that the user is allowed to edit
+    formErrors: {}, // Object errors
+    readActionAllowedFields: [], // Array of field that the user is allowed to edit
+    slug: 'api::address.address', // Slug of the content type
+    updateActionAllowedFields: [],
+    allLayoutData: {
+      components: {}, // components layout
+      contentType: {}, // content type layout
+    },
+    initialData: {},
+    isCreatingEntry: true,
+    isSingleType: true,
+    status: 'resolved',
+    layout: {}, // Current content type layout
+    hasDraftAndPublish: true,
+    modifiedData: {},
+    onPublish: () => {},
+    onUnpublish: () => {},
+    addComponentToDynamicZone: () => {},
+    addNonRepeatableComponentToField: () => {},
+    addRelation: () => {},
+    addRepeatableComponentToField: () => {},
+    moveComponentDown: () => {},
+    moveComponentField: () => {},
+    moveComponentUp: () => {},
+    moveRelation: () => {},
+    onChange: () => {},
+    onRemoveRelation: () => {},
+    removeComponentFromDynamicZone: () => {},
+    removeComponentFromField: () => {},
+    removeRepeatableField: () => {},
+  } = useCMEditViewDataManager()
 
-import pluginId from '../../pluginId';
-
-class Initializer extends React.PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
-    const {
-      admin: { autoReload, currentEnvironment },
-    } = this.props;
-
-    let preventComponentRendering;
-    let blockerComponentProps;
-
-    if (currentEnvironment === 'production') {
-      preventComponentRendering = true;
-      blockerComponentProps = {
-        blockerComponentTitle: 'components.ProductionBlocker.header',
-        blockerComponentDescription: 'components.ProductionBlocker.description',
-        blockerComponentIcon: 'fa-ban',
-        blockerComponentContent: 'renderButton',
-      };
-    } else {
-      // Don't render the plugin if the server autoReload is disabled
-      preventComponentRendering = !autoReload;
-      blockerComponentProps = {
-        blockerComponentTitle: 'components.AutoReloadBlocker.header',
-        blockerComponentDescription: 'components.AutoReloadBlocker.description',
-        blockerComponentIcon: 'fa-refresh',
-        blockerComponentContent: 'renderIde',
-      };
-    }
-
-    // Prevent the plugin from being rendered if currentEnvironment === PRODUCTION
-    this.props.updatePlugin(pluginId, 'preventComponentRendering', preventComponentRendering);
-    this.props.updatePlugin(pluginId, 'blockerComponentProps', blockerComponentProps);
-    // Emit the event plugin ready
-    this.props.updatePlugin(pluginId, 'isReady', true);
-  }
-
-  render() {
-    return null;
-  }
+  return null
 }
+```
 
-Initializer.propTypes = {
-  admin: PropTypes.object.isRequired,
-  updatePlugin: PropTypes.func.isRequired,
-};
-
-export default Initializer;
-``` -->
+:::

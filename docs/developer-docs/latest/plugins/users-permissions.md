@@ -849,7 +849,7 @@ extensions/users-permissions/services/Providers.js
 extensions/users-permissions/config/functions/bootstrap.js
 ```
 
-If these files don't exist you will need to copy from your `node_modules` or the Strapi mono-repo. You can see [plugin extensions](/developer-docs/latest/development/plugin-customization.md) for more information on how it works.
+If these files don't exist you will need to copy from your `node_modules` or the Strapi mono-repo. You can see [plugin extensions](/developer-docs/latest/development/plugins-extension.md) for more information on how it works.
 
 We will go step by step.
 

@@ -12,5 +12,5 @@ Strapi comes with these officially supported plugins:
 
 ::: strapi To go further
 * To know more about plugins installation, see the [User guide](/user-docs/latest/plugins/introduction-to-plugins.md).
-* Existing plugins can be [extended](/developer-docs/latest/development/plugins-extension.md), or you can even [create your own](/developer-docs/latest/development/local-plugins-customization.md)!
+* Existing plugins can be [extended](/developer-docs/latest/development/plugins-extension.md), or you can even [create your own](/developer-docs/latest/development/plugins-development.md)!
 :::

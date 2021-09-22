@@ -149,7 +149,7 @@ const sidebar = {
         },
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
-        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins development'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ],
     },
     {

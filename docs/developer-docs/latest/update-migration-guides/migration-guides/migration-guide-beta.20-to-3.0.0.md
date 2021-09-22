@@ -240,7 +240,7 @@ You can read more [here](/developer-docs/latest/development/backend-customizatio
 
 Email plugin settings have been moved to files. Now you can configure your email provider directly in files.
 
-You can read the documentation [here](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) to update.
+You can read the documentation [here](/developer-docs/latest/plugins/email.md#configure-the-plugin) to update.
 
 Once you have setup your configuration, you can cleanup your database by deleting in the `core_store` model the data with the `key` equal to `plugin_email_provider`.
 

@@ -64,13 +64,13 @@ For all these reasons, and others, we think it'll be a mistake and might confuse
 
 ## How do I customize a plugin
 
-Strapi uses a system called [extensions](/developer-docs/latest/development/plugin-customization.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`. If you are familiar with React and "ejecting" a file, the concept is similar.
+Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`. If you are familiar with React and "ejecting" a file, the concept is similar.
 
 You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
 
 ## Can I add my own 3rd party auth provider
 
-Yes, you can either follow the following [guide](/developer-docs/latest/development/plugins/users-permissions.md#adding-a-new-provider-to-your-project) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
+Yes, you can either follow the following [guide](/developer-docs/latest/plugins/users-permissions.md#adding-a-new-provider-to-your-project) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 
