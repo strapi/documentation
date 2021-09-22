@@ -40,7 +40,7 @@ To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backe
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Create a `content-types` subfolder.
 4. Inside the `content-types` subfolder, create another subfolder with the same name as the Content-Type to overwrite.
-5. Inside this `content-types/name-of-content-type` subfolder, define the new schema for the Content-Type in a `schema.json` file (see [`schema`](/developer-docs/latest/development/backend-customization/models.md#model-schema) documentation).
+5. Inside this `content-types/name-of-content-type` subfolder, define the new schema for the Content-Type in a `schema.json` file (see [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) documentation).
 6. _(optional)_ Repeat steps 4 and 5 for each Content-Type to overwrite.
 <!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->
 
@@ -59,6 +59,7 @@ To extend a plugin's interface:
 
 ::: details Example of backend extension
 
+<!-- ? is it `pluginConfig` or just `plugin` in the example below? -->
 ```js
 // path: ./extensions/some-plugin-to-extend/strapi-server.js
 
@@ -78,7 +79,7 @@ module.exports = (plugin, strapi) => {
 
 ## Understanding the Content-Types loading order
 
-A plugin's Content-Types can be extended in 2 ways, using the programmatic interface within `.strapi-server.js` and by overriding the Content-Types schemas.
+A plugin's Content-Types can be extended in 2 ways: using the programmatic interface within `.strapi-server.js` and by overriding the Content-Types schemas.
 
 The final schema of the Content-Types depends on the following loading order:
 

@@ -201,8 +201,7 @@ module.exports = {
 ::: note NOTES
 
 * The `en` locale cannot be removed from the build as it is both the fallback (if a translation is not found in a locale, the `en` will be used) and the default locale (used when a user opens the administration panel for the first time).
-* The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-i18n/constants/iso-locales.json)
-<!-- TODO: add the list of available locales (Github link) -->
+* The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-i18n/constants/iso-locales.json).
 :::
 
 ##### Extending translations
@@ -248,9 +247,9 @@ The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/develop/p
 
 <!-- TODO: maybe provide a theme extension example once design system is ready? -->
 
-### Customizing a plugin
+### Customizing the WYSIWYG editor
 
-To change the current WYSIWYG, you can either install a plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
+To change the current WYSIWYG, you can either install a third-party plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
 
 <!-- TODO: Add Component API -->
 
@@ -345,7 +344,9 @@ Build configurations differ for each case.
 
 ### Deploy the entire project on the same server
 
-This is the default behavior and the build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/dashboard`.
+This is the default behavior and the build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/admin`.
+
+<!-- ? is it /admin or /dashboard? -->
 
 :::tip
 You might want to [change the path to access the administration panel](#changing-the-access-url).

@@ -7,7 +7,9 @@ sidebarDepth: 3
 
 # Admin Panel API for plugins
 
-A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
+<!-- ? wording: should we use admin panel or administration panel throughout the docs? -->
+
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
 
@@ -15,6 +17,7 @@ Creating and using a plugin that interacts with the Admin Panel API consists in 
 
 1. Declare and export the plugin interface within the [`strapi-admin.js` entry file](#entry-file)
 <!-- ? is it really the case or should we use `admin/src/index.js`? -->
+
 2. [Use the available features](#available-features)
 
 ## Entry file
@@ -51,9 +54,6 @@ Within the register function, a plugin can:
 Registers the plugin to make it available in the admin panel.
 
 This function returns an object with the following parameters:
-
-<!-- TODO: update the table -->
-<!-- ? what is the isReady parameters used for? -->
 
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
@@ -188,7 +188,6 @@ All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are avail
 
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
 
-<!-- ? what is the Component used for? -->
 <!-- TODO: update table with permissions descriptions -->
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -355,7 +354,6 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 :::
 
 <!-- ? should we use this example or is it an internal API that we should not document for now? -->
-// YES
 ```jsx
 // path: my-plugin/admin/src/index.js
 
@@ -446,7 +444,7 @@ const reducers = {
 
 ### Hooks API
 
-The Hooks API allows a plugin to create and register hooks, i.e places in the application where plugins can add personalized behavior.
+The Hooks API allows a plugin to create and register hooks, i.e. places in the application where plugins can add personalized behavior.
 
 Hooks should be registered during the [bootstrap](#bootstrap) lifecycle of a plugin.
 

@@ -64,7 +64,7 @@ module.exports = () => {
 
 ### register()
 
-This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database mdigrations.
+This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
 
 **Type**: `Function`
 
@@ -222,7 +222,7 @@ module.exports = {
 
 <!-- ? Have we decided on/implemented routes behavior yet? -->
 
-An array of [route](/developer-docs/latest/development/backend-customization/routing.md) configuration.
+An array of [routes](/developer-docs/latest/development/backend-customization/routing.md) configuration.
 
 **Type**: `Object[]`
 
