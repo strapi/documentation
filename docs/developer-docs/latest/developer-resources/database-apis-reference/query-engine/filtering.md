@@ -6,13 +6,13 @@ sidebarDepth: 3
 <!-- TODO: update SEO tags -->
 # Query Engine API: Filtering
 
-Every operator is prefixed with a `$` to make their name explicit.
+Every operator should be prefixed with `$`.
 
 ## Logical operators
 
 ### `$and`
 
-Every nested conditions must be `true`.
+All nested conditions must be `true`.
 
 **Example**
 
@@ -35,7 +35,7 @@ const entries = await db.query('article').findMany({
 });
 ```
 
-`$and` will be used implicitly when passing an object with nested conditions:
+`$and` is used implicitly when passing an object with nested conditions:
 
 ```js
 const entries = await db.query('article').findMany({
@@ -124,7 +124,7 @@ const entries = await db.query('article').findMany({
 });
 ```
 
-`$eq` can be omitted
+`$eq` can be omitted:
 
 ```js
 const entries = await db.query('article').findMany({
@@ -258,7 +258,7 @@ const entries = db.query('article').findMany({
 
 ### `$between`
 
-Attribute is between the two input values.
+Attribute is between the 2 input values.
 
 **Example**
 
