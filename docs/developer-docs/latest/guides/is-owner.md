@@ -33,7 +33,7 @@ To do so we will customize the `create` controller function of the Article API.
 
 **Concepts we will use:**
 Here is the code of [core controllers](/developer-docs/latest/development/backend-customization/controllers.md#core-controllers).
-We will also use this [documentation](/developer-docs/latest/development/plugins/users-permissions.md#user-object-in-strapi-context) to access the current authenticated user information.
+We will also use this [documentation](/developer-docs/latest/plugins/users-permissions.md#user-object-in-strapi-context) to access the current authenticated user information.
 
 **Path —** `./api/article/controllers/Article.js`
 

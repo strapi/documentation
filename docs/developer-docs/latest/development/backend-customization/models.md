@@ -96,7 +96,7 @@ The following types are available:
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li> <li>`float`</li> <li>`decimal`</li> <li>`biginteger`</li></ul> |
 | Other generic types |<ul><li>`json`</li> <li>`boolean`</li> <li>`array`</li> <li>`media`</li></ul> |
-| [Internationalization](/developer-docs/latest/development/plugins/i18n.md)-related types |<ul><li>`locale`</li><li>`localizations`</li></ul> |
+| [Internationalization](/developer-docs/latest/plugins/i18n.md)-related types |<ul><li>`locale`</li><li>`localizations`</li></ul> |
 | Special types unique to Strapi |<ul><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
 
 

@@ -34,7 +34,7 @@ New versions of Strapi are released with [migration guides](/developer-docs/late
 
 ## Extending a plugin's Content-Types
 
-To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backend-customization.md#models):
+To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backend-customization/models.md):
 
 1. _(optional)_ Create the `./extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.

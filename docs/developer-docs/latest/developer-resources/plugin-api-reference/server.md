@@ -150,7 +150,7 @@ module.exports = () => ({
 
 ### Content-Types
 
-An object with the [Content-Types](/developer-docs/latest/development/backend-customization.md#models) the plugin provides.
+An object with the [Content-Types](/developer-docs/latest/development/backend-customization/models.md) the plugin provides.
 <!-- TODO: update link to Backend customization > models once merged with database PR -->
 
 **Type**: `Object`
@@ -222,8 +222,7 @@ module.exports = {
 
 <!-- ? Have we decided on/implemented routes behavior yet? -->
 
-An array of [route](/developer-docs/latest/development/backend-customization.md#routing) configuration.
-<!-- TODO: update link to Backend customization > Routing once merged with database PR -->
+An array of [route](/developer-docs/latest/development/backend-customization/routing.md) configuration.
 
 **Type**: `Object[]`
 
@@ -256,8 +255,7 @@ module.exports = [
 
 ### Controllers
 
-An object with the [controllers](/developer-docs/latest/development/backend-customization.md#controllers) the plugin provides.
-<!-- TODO: update link to Backend Customization > Controllers once merged with database PR -->
+An object with the [controllers](/developer-docs/latest/development/backend-customization/controllers.md) the plugin provides.
 
 **Type**: `Object`
 
@@ -297,8 +295,7 @@ module.exports = {
 
 ### Services
 
-An object with the [services](/developer-docs/latest/development/backend-customization.md#services) the plugin provides.
-<!-- TODO: update link to Backend Customization > Services once merged with database PR -->
+An object with the [services](/developer-docs/latest/development/backend-customization/services.md) the plugin provides.
 
 Services should be functions taking `strapi` as a parameter.
 
@@ -342,8 +339,7 @@ module.exports = ({ strapi }) => ({
 
 <!-- ? are policies still implemented like described in the RFC? -->
 
-An object with the [policies](/developer-docs/latest/development/backend-customization.md#policies) the plugin provides.
-<!-- TODO: update link to Backend Customization > Policies once merged with the database PR -->
+An object with the [policies](/developer-docs/latest/development/backend-customization/policies.md) the plugin provides.
 
 **Type**: `Object`
 

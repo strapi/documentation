@@ -55,7 +55,7 @@ You have to edit the `routes.json` file in one of your APIs folders (`./api/**/c
   - `policies` (array): Array of policy names or paths ([see more](/developer-docs/latest/development/backend-customization/policies.md))
 
 ::: tip
-You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](/developer-docs/latest/development/plugins/users-permissions.md).
+You can exclude the entire `config` object if you do not want the route to be checked by the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md).
 :::
 
 ## Dynamic parameters

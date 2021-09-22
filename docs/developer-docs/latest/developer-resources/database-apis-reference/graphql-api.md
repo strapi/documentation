@@ -8,7 +8,7 @@ sidebarDepth: 3
 # GraphQL API
 
 ::: strapi GraphQL plugin required
-To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
+To use the GraphQL API, install the [GraphQL](/developer-docs/latest/plugins/graphql.md) plugin.
 :::
 
 ## Unified response format
@@ -28,7 +28,7 @@ Whatever the query, the response can contain the following fields:
 
 ## Queries
 
-We assume that the [Shadow CRUD](/developer-docs/latest/development/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations which just fit to your needs.
+We assume that the [Shadow CRUD](/developer-docs/latest/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations which just fit to your needs.
 
 ### Fetch a single entry
 
