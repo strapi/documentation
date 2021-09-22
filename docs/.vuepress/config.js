@@ -48,8 +48,7 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -93,8 +92,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -468,7 +466,7 @@ const plugins = [
   }],
   ['vuepress-plugin-container', {
     type: 'warning',
-    before: info => `<div class="custom-block warning"><p class="custom-block-title">⚠️  ${info}</p>`,
+    before: info => `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
     after: '</div>'
   }],
   ['vuepress-plugin-container', {
@@ -488,6 +486,7 @@ const plugins = [
     defaultTitle: 'Response'
   }]
 ];
+
 const checkLegacy = () => {
   if (process.env.DEPLOY_ENV == 'legacy') {
     return '/documentation/';
@@ -649,13 +648,11 @@ module.exports = {
               },
               {
                 text: 'Content-Types Builder',
-                link:
-                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -697,8 +694,8 @@ module.exports = {
                 link: 'https://forum.strapi.io',
               },
               {
-                text: 'Slack',
-                link: 'https://slack.strapi.io',
+                text: 'Discord',
+                link: 'https://discord.strapi.io',
               },
               {
                 text: 'Awesome-Strapi',
@@ -720,6 +717,10 @@ module.exports = {
             ],
           },
         ],
+      },
+      {
+        text: "We're hiring!",
+        link: 'https://strapi.io/careers#open-positions',
       },
     ],
     repo: 'strapi/documentation',

@@ -605,6 +605,7 @@ fetch('http://localhost:1337/restaurants/2', {
 }
 ```
 
+:::
 
 ## Starter
 
