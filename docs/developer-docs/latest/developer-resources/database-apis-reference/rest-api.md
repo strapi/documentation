@@ -556,15 +556,14 @@ Use the following parameters:
 
 Use the following parameters:
 
-<!-- TODO: add type -->
-| Parameter               | Description                                       | Default | Maximum |
-| ----------------------- | ------------------------------------------------- | ------- | ------- |
-| `pagination[start]`     | Start value                                       | 0       | -       |
-| `pagination[limit]`     | Number of entries to return                      | 25      | 100     |
-| `pagination[withCount]` | Adds the total numbers of entries to the response | True    |         |
+| Parameter               | Type    | Description                                                    | Default |
+| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
+| `pagination[start]`     | Integer | Start value (first entry to return) value                      | 0       |
+| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
+| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
 
 ::: tip
-The default and maximum values for `pagination[limit]` can be configured in the `config/api.js` file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+The default and maximum values for `pagination[limit]` can be configured in the `./config/api.js` file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
 
 :::: api-call
@@ -588,6 +587,7 @@ The default and maximum values for `pagination[limit]` can be configured in the 
   }
 }
 ```
+
 :::
 ::::
 
