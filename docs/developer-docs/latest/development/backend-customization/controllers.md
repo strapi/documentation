@@ -236,8 +236,8 @@ module.exports = {
    */
 
   async find(ctx) {
-    const entity = await strapi.services.restaurant.find();
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    const entity = await strapi.services.homepage.find();
+    return sanitizeEntity(entity, { model: strapi.models.homepage });
   },
 };
 ```
@@ -312,14 +312,14 @@ There are two ways to create a controller:
 
 ### Adding Endpoints
 
-Each controller’s action must be an `async` function.
+Each controller’s action can be an `async` or `sync` function.
 Every action receives a `context` (`ctx`) object as first parameter containing the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
 
 ### Example
 
-In this example, we are defining a specific route in `./api/hello/config/routes.json` that takes `Hello.index` as handler. For more information on routing, please see the [Routing documentation](/developer-docs/latest/development/backend-customization/routing.md)
+In this example, we are defining a specific route in `./api/hello/config/routes.json` that takes `hello.index` as handler. For more information on routing, please see the [Routing documentation](/developer-docs/latest/development/backend-customization/routing.md)
 
-It means that every time a request `GET /hello` is sent to the server, Strapi will call the `index` action in the `Hello.js` controller.
+It means that every time a request `GET /hello` is sent to the server, Strapi will call the `index` action in the `hello.js` controller.
 Our `index` action will return `Hello World!`. You can also return a JSON object.
 
 **Path —** `./api/hello/config/routes.json`.
@@ -330,7 +330,7 @@ Our `index` action will return `Hello World!`. You can also return a JSON object
     {
       "method": "GET",
       "path": "/hello",
-      "handler": "Hello.index",
+      "handler": "hello.index",
       "config": {
         "policies": []
       }
@@ -339,7 +339,7 @@ Our `index` action will return `Hello World!`. You can also return a JSON object
 }
 ```
 
-**Path —** `./api/hello/controllers/Hello.js`.
+**Path —** `./api/hello/controllers/hello.js`.
 
 ```js
 module.exports = {
