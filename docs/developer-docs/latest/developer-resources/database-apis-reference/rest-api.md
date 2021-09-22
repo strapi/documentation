@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 ## API Endpoints
 
-Creating a Content-Type automatically create some **REST API endpoints** available to interact with it.
+Creating a Content-Type automatically creates some REST API endpoints available to interact with it.
 
 :::note
 [Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
@@ -16,7 +16,7 @@ Creating a Content-Type automatically create some **REST API endpoints** availab
 
 ### Endpoints
 
-Here is the list of endpoints generated for each of your Content-Types:
+For each Content-Type, the following endpoints are automatically generated:
 
 <style lang="stylus">
 #endpoint-table
@@ -50,15 +50,18 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <!-- ? is `pluralApiId` the value declared with `info.pluralName` in the model? -->
 
-| Method   | URL                                             | Description                                                           |
-| -------- | ----------------------------------------------- | --------------------------------------------------------------------- |
-| `GET`    | `/api/:pluralApiId`                             | [Get a list of entries](#get-entries)                             |
-| `POST`   | `/api/:pluralApiId`                             | [Create an entry](#create-an-entry)                                |
-| `GET`    | `/api/:pluralApiId/:documentId`                 | [Get an entry](#get-an-entry)                                     |
-| `PUT`    | `/api/:pluralApiId/:documentId`                 | [Update an entry](#update-an-entry)                                |
-| `DELETE` | `/api/:pluralApiId/:documentId`                 | [Delete an entry](#delete-an-entry)                                |
+| Method   | URL                             | Description                           |
+| -------- | ------------------------------- | ------------------------------------- |
+| `GET`    | `/api/:pluralApiId`             | [Get a list of entries](#get-entries) |
+| `POST`   | `/api/:pluralApiId`             | [Create an entry](#create-an-entry)   |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get an entry](#get-an-entry)         |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update an entry](#update-an-entry)   |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete an entry](#delete-an-entry)   |
+<!-- 
 | `POST`   | `/api/:pluralApiId/actions/:action`             | Actions on the collection of documents (bulk actions, custom action…) |
-| `POST`   | `/api/:pluralApiId/:documentId/actions/:action` | Actions on a specific document                                        |
+| `POST`   | `/api/:pluralApiId/:documentId/actions/:action` | Actions on a specific document                                        | -->
+
+<!-- TODO: uncomment & document actions once implemented -->
 
 </div>
 
@@ -68,13 +71,15 @@ Here is the list of endpoints generated for each of your Content-Types:
 
 <div id="endpoint-table">
 
-| Method   | URL                                 | Description                                 |
-| -------- | ----------------------------------- | ------------------------------------------- |
-| `GET`    | `/api/:singularApiId`                 | [Get an entry](#get-an-entry)             |
-| `PUT`    | `/api/:singularApiId`                 | [Update an entry](#update-an-entry)    |
-| `DELETE` | `/api/:singularApiId`                 | [Delete an entry](#delete-an-entry)        |
-| `POST`   | `/api/:singularApiId/actions/:action` | Actions on the single type (custom action…) |
+| Method   | URL                   | Description                         |
+| -------- | --------------------- | ----------------------------------- |
+| `GET`    | `/api/:singularApiId` | [Get an entry](#get-an-entry)       |
+| `PUT`    | `/api/:singularApiId` | [Update/Create an entry](#update-an-entry) |
+| `DELETE` | `/api/:singularApiId` | [Delete an entry](#delete-an-entry) |
 
+<!-- | `POST`   | `/api/:singularApiId/actions/:action` | Actions on the single type (custom action…) | -->
+
+<!-- TODO: uncomment & document actions once implemented -->
 </div>
 
 :::
@@ -409,7 +414,7 @@ The following operators are available:
 | `$containsi`  | Contains, case sensitive         |
 | `$ncontainsi` | Does not contain, case sensitive |
 | `$null`       | Is null                          |
-| `$notNull`    | Is null                          |
+| `$notNull`    | Is not null                      |
 | `$between`    | Is between                       |
 | `$startsWith` | Starts with                      |
 | `$endsWith`   | Ends with                        |
@@ -423,12 +428,11 @@ The following operators are available:
 :::
 
 :::request Example request: Find multiple restaurant with id 3, 6, 8
-<!-- ? is it the correct syntax? this is what qs.stringify() returned but I'd have expected filters[id][$in][3,6,8] -->
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
 :::
 
 ::::tip
-Strapi takes advantage of the capability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
+Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
 Use `qs` directly to generate complex queries instead of creating them manually.
 
 :::details Example
@@ -472,8 +476,7 @@ await request(`/api/books?${query}`);
 
 #### Deep filtering
 
-:::request Example request: Find restaurants owned by a chef who belongs to a restaurant with star equal to 5
-<!-- ? how should I update this request example (filters syntax)? -->
+:::request Example request: Find restaurants owned by a chef who belongs to a 5-star restaurant
 `GET /api/restaurants?filters[chef][restaurant][star][$eq]=5`
 :::
 
@@ -656,8 +659,9 @@ or
 `GET /api/articles?publicationState=preview`
 :::
 
-:::note
-If you only want to retrieve your draft entries, you can combine the `preview` mode and the `published_at` field.
+:::tip
+To retrieve only draft entries, combine the `preview` publication state and the `published_at` fields:
+
 `GET /api/articles?publicationState=preview&published_at_null=true`
 :::
 
