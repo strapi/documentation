@@ -428,6 +428,56 @@ export default {
 
 :::
 
+#### The `useCMEditViewDataManager` React hook
+
+Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useCMEditViewDataManager` React hook.
+
+::: details Example of a basic component using the 'useCMEditViewDataManager' hook
+
+```js
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+
+const MyCompo = () => {
+  const {
+    createActionAllowedFields: [], // Array of fields that the user is allowed to edit
+    formErrors: {}, // Object errors
+    readActionAllowedFields: [], // Array of field that the user is allowed to edit
+    slug: 'api::address.address', // Slug of the content type
+    updateActionAllowedFields: [],
+    allLayoutData: {
+      components: {}, // components layout
+      contentType: {}, // content type layout
+    },
+    initialData: {},
+    isCreatingEntry: true,
+    isSingleType: true,
+    status: 'resolved',
+    layout: {}, // Current content type layout
+    hasDraftAndPublish: true,
+    modifiedData: {},
+    onPublish: () => {},
+    onUnpublish: () => {},
+    addComponentToDynamicZone: () => {},
+    addNonRepeatableComponentToField: () => {},
+    addRelation: () => {},
+    addRepeatableComponentToField: () => {},
+    moveComponentDown: () => {},
+    moveComponentField: () => {},
+    moveComponentUp: () => {},
+    moveRelation: () => {},
+    onChange: () => {},
+    onRemoveRelation: () => {},
+    removeComponentFromDynamicZone: () => {},
+    removeComponentFromField: () => {},
+    removeRepeatableField: () => {},
+  } = useCMEditViewDataManager()
+
+  return null
+}
+```
+
+:::
+
 ### Reducers
 
 Reducers are declared as an object with this syntax:
