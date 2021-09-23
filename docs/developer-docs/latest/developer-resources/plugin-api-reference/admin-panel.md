@@ -188,7 +188,6 @@ All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are avail
 
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
 
-<!-- TODO: update table with permissions descriptions -->
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
@@ -239,16 +238,13 @@ Adding a new section happens in the [register](#register) lifecycle while adding
 
 All functions accept links as objects with the following parameters:
 
-<!-- ? what is the Component used for? -->
-<!-- TODO: update table with Component and permissions descriptions -->
-
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`          | String           | React id
+| `id`          | String           | React id                                                                                                                                                                                                                 |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   |  ?               | ?                                                                                                                                                                                                                        |
-| `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
+| `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                       |
+| `permissions` | Array of Objects | Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                          |
 
 #### createSettingSection()
 
@@ -349,7 +345,7 @@ export default {
 Injection zones refer to areas of a view's layout where a plugin allows another to inject a custom React component (e.g. a UI element like a button).
 
 Plugins can use:
-* Strapi's [predefined injection zones](#predefined-injection-zones) for the Content Manager,
+* Strapi's [predefined injection zones](#using-predefined-injection-zones) for the Content Manager,
 * or custom injection zones, created by a plugin
 
 ::: note
