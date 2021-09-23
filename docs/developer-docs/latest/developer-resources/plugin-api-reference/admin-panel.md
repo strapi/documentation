@@ -58,7 +58,7 @@ This function returns an object with the following parameters:
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view. |
-| `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace of the administration panel.<br><br>Default: `PlugIcon` |
+| `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
 | `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones)                                       |
@@ -194,8 +194,10 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `icon`        | SVGElement       | Icon to display in the main navigation                                                                                                                                                                                   |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   | Async function   | Returns a dynamic import of your plugin entry point                                                                                                                                                                      |
-| `permissions` | Array of Objects |  ?                                                                                                                                                                                                                        |
+| `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
+| `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
+
+<!-- TODO: document permissions.js -->
 
 :::note
 `intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
@@ -246,7 +248,7 @@ All functions accept links as objects with the following parameters:
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   |  ?               | ?                                                                                                                                                                                                                        |
-| `permissions` | Array of Objects | ?                                                                                                                                                                                                                        |
+| `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
 
 #### createSettingSection()
 
