@@ -349,16 +349,14 @@ export default {
 Injection zones refer to areas of a view's layout where a plugin allows another to inject a custom React component (e.g. a UI element like a button).
 
 Plugins can use:
-* Strapi's [predefined injection zones](#predefined-injection-zones) for the Content-Manager,
+* Strapi's [predefined injection zones](#predefined-injection-zones) for the Content Manager,
 * or custom injection zones, created by a plugin
-
-To create a custom injection zone, declare it as a `<InjectionZone />` React component with an `area` prop that takes a string with the following naming convention: `plugin-name.viewName.injectionZoneName`.
 
 ::: note
 Injection zones are defined in the [register()](#register) lifecycle but components are injected in the [bootstrap()](#bootstrap) lifecycle.
 :::
 
-#### Predefined injection zones
+#### Using predefined injection zones
 
 Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
 
@@ -368,6 +366,32 @@ Strapi admin panel comes with predefined injection zones so components can be ad
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | List view | <ul><li>`actions`: sits between Filters and the cogs icon</li><li>`deleteModalAdditionalInfos()`: sits at the bottom of the modal displayed when deleting items</li></ul> |
 | Edit view | <ul><li>`information`: sits at the top right of the edit view</li><li>`right-links`: sits between "Configure the view" and "Edit" buttons</li></ul>                       |
+
+#### Creating a custom injection zone
+
+To create a custom injection zone, declare it as a `<InjectionZone />` React component with an `area` prop that takes a string with the following naming convention: `plugin-name.viewName.injectionZoneName`.
+
+#### Injecting components
+
+A plugin has 2 different ways of injecting a component:
+
+* to inject a component from a plugin into another plugin's injection zones, use the `injectComponent()` function
+* to specifically inject a component into one of the Content Manager's [predefined injection zones](#using-predefined-injection-zones), use the `injectContentManagerComponent()` function instead
+
+::: details Example: Inject a component in the informations box of the Edit View of the Content Manager:
+
+```jsx
+// path: my-plugin/admin/src/index.js
+
+export default {
+  bootstrap(app) {
+    app.injectContentManagerComponent('editView', 'informations', {
+      name: 'my-plugin-my-compo',
+      Component: () => 'my-compo',
+  });
+}
+```
+:::
 
 ::: details Example: Creating a new injection zone and injecting it from a plugin to another one:
 
