@@ -349,7 +349,7 @@ export default {
 Injection zones refer to areas of a view's layout where a plugin allows another to inject a custom React component (e.g. a UI element like a button).
 
 Plugins can use:
-* Strapi's [predefined injection zones](#predefined-injection-zones) for the Content Manager,
+* Strapi's [predefined injection zones](#using-predefined-injection-zones) for the Content Manager,
 * or custom injection zones, created by a plugin
 
 ::: note
