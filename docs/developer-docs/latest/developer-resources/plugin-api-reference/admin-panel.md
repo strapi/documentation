@@ -353,19 +353,6 @@ Injection zones are declared as React components (`<InjectionZone />`) with an `
 Injection zones are defined in the [register()](#register) lifecycle but components are injected in the [bootstrap()](#bootstrap) lifecycle.
 :::
 
-<!-- ? should we use this example or is it an internal API that we should not document for now? -->
-```jsx
-// path: my-plugin/admin/src/index.js
-
-export default {
-  bootstrap(app) {
-    app.injectContentManagerComponent('editView', 'informations', {
-      name: 'my-plugin-my-compo',
-      Component: () => 'my-compo',
-  });
-}
-```
-
 #### Predefined injection zones
 
 Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
@@ -555,7 +542,7 @@ const MyCompo = () => {
 
 Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
 
-::: details Example: 'inject-column-in-table' hook, as used by the Internationalization plugin
+::: details Example: 'cm/inject-column-in-table' hook, as used by the Internationalization plugin
 
 ```jsx
 // ./plugins/my-plugin/admin/src/index.js
