@@ -342,12 +342,15 @@ export default {
 }
 ```
 
-
 ### Injection zones
 
 Injection zones refer to areas of a view's layout where a plugin allows another to inject a custom React component (e.g. a UI element like a button).
 
-Injection zones are declared as React components (`<InjectionZone />`) with an `area` prop that takes a string with the following naming convention: `plugin-name.viewName.injectionZoneName`.
+Plugins can use:
+* Strapi's [predefined injection zones](#predefined-injection-zones) for the Content-Manager,
+* or custom injection zones, created by a plugin
+
+To create a custom injection zone, declare it as a `<InjectionZone />` React component with an `area` prop that takes a string with the following naming convention: `plugin-name.viewName.injectionZoneName`.
 
 ::: note
 Injection zones are defined in the [register()](#register) lifecycle but components are injected in the [bootstrap()](#bootstrap) lifecycle.
@@ -364,7 +367,7 @@ Strapi admin panel comes with predefined injection zones so components can be ad
 | List view | <ul><li>`actions`: sits between Filters and the cogs icon</li><li>`deleteModalAdditionalInfos()`: sits at the bottom of the modal displayed when deleting items</li></ul> |
 | Edit view | <ul><li>`information`: sits at the top right of the edit view</li><li>`right-links`: sits between "Configure the view" and "Edit" buttons</li></ul>                       |
 
-::: details Example: Creating a new injection zone and injecting it from a plugin to another one
+::: details Example: Creating a new injection zone and injecting it from a plugin to another one:
 
 ```jsx
 // Use the injection zone in a view
