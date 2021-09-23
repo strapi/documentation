@@ -178,7 +178,7 @@ To update the list of available locales in the admin panel, use the `config.loca
 
 <!-- ? is it the right path? -->
 ```jsx
-// path: ./my-app/strapi-admin.js
+// path: ./my-app/admin/src/app.js
 
 module.exports = {
   // Custom webpack config
