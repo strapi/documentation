@@ -63,14 +63,7 @@ Follow the instructions and return to your command line.
 
 Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start.md) (if you want to deploy an existing project go to step 4).
 
-:::note
-
-If you plan to use **MongoDB** with your project, [refer to the create a Strapi project with MongoDB section of the documentation](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-mongodb-locally) then, jump to step 4.
-
-:::
-
 `Path: ./`
-
 
 <code-group>
 
@@ -144,7 +137,7 @@ Your local development environment is now set-up and configured to work with Her
 
 #### 7. Heroku Database set-up
 
-Below you will find database options when working with Heroku. Please choose the correct database (e.g. PostgreSQL, MongoDB, etc.) and follow those instructions.
+Below you will find database options when working with Heroku. Please choose the correct database (e.g. PostgreSQL) and follow those instructions.
 
 :::::: tabs card
 
@@ -280,118 +273,6 @@ yarn add pg
 </code-block>
 
 </code-group>
-
-:::::
-
-::::: tab MongoDB
-
-### MongoDB Atlas
-
-(Using Strapi and MongoDB requires different set-up and different configuration steps. You cannot use `--quickstart` to develop a `MongoDB` Strapi project.)
-
-Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
-
-You must have completed the [steps to use Strapi with MongoDB Atlas](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-on-atlas-mongodb-atlas) - through **4. Retrieve database credentials**.
-
-#### 1. Set environment variables
-
-When you [set-up your MongoDB Atlas database](/developer-docs/latest/setup-deployment-guides/configurations/databases/mongodb.md#install-on-atlas-mongodb-atlas) you noted a connection string. Similar to this:
-
-```bash
-mongodb://paulbocuse:<password>@strapidatabase-shard-00-00-fxxx6c.mongodb.net:27017,strapidatabase-shard-00-01-fxxxc.mongodb.net:27017,strapidatabase-shard-00-02-fxxxc.mongodb.net:27017/test?ssl=true&replicaSet=strapidatabase-shard-0&authSource=admin&retryWrites=true&w=majority
-
-```
-
-So, from **MongoDB Atlas**, you have to set two environment variables in the Heroku config (for **DATABASE_URI** and **DATABASE_NAME**). Set the environment variables using the following commands:
-
-```bash
-heroku config:set DATABASE_URI="mongodb://paulbocuse:<password>@strapidatabase-shard-00-00-fxxx6c.mongodb.net:27017,strapidatabase-shard-00-01-fxxxc.mongodb.net:27017,strapidatabase-shard-00-02-fxxxc.mongodb.net:27017/test?ssl=true&replicaSet=strapidatabase-shard-0&authSource=admin&retryWrites=true&w=majority"
-heroku config:set DATABASE_NAME="my-database-name"
-```
-
-Please replace the `<password>` and `my-database-name` values with the your actual values.
-
-#### 2. Update your database config file
-
-`Path: ./config/database.js`.
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        uri: env('DATABASE_URI'),
-      },
-      options: {
-        ssl: true,
-      },
-    },
-  },
-});
-```
-
-If you need to configure the connection differently (e.g using `host`,`port`...) you should set the default database config like so:
-
-`Path: ./config/database.js`.
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {},
-      options: {},
-    },
-  },
-});
-```
-
-Then set the development and the production configurations separately:
-
-`Path: ./config/env/development/database.js`.
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        host: env('DATABASE_HOST'),
-        port: env.int('DATABASE_PORT'),
-        database: env('DATABASE_NAME'),
-        username: env('DATABASE_USERNAME'),
-        password: env('DATABASE_PASSWORD'),
-      },
-      options: {},
-    },
-  },
-});
-```
-
-and finally for the `production` env:
-
-`Path: ./config/env/production/database.js`.
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        uri: env('DATABASE_URI'),
-      },
-      options: {
-        ssl: true,
-      },
-    },
-  },
-});
-```
 
 :::::
 
