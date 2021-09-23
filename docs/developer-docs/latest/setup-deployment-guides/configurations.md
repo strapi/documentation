@@ -248,7 +248,7 @@ await pluginStore.set({
 
 #### Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **MongoDB**, **SQLite**, **MySQL** and
+Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
 **MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
 ::: tip
@@ -540,7 +540,7 @@ module.exports = ({ env }) => ({
 | Property                      | Description                                                                                                                                                       | Type         | Default |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
 | `responses`                   | Global API response configuration                                                                                                                                 | Object       |         |
-| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
+| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
 | `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
 | `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                       | Integer      | `null`  |
@@ -823,10 +823,6 @@ The following middlewares cannot be disabled: responses, router, logger and boom
     - `arrayLimit` (integer): the maximum length of an array in the query string. Any array members with an index of greater than the limit will instead be converted to an object with the index as the key. Default value: `100`.
     - `depth` (integer): maximum parsing depth of nested query string objects. Default value: `20`.
 
-::: tip
-The session doesn't work with `mongo` as a client. The package that we should use is broken for now.
-:::
-
 ##### Response middlewares
 
 - [`gzip`](https://en.wikipedia.org/wiki/Gzip)
@@ -1034,27 +1030,9 @@ You will need to install the plugin using the normal `npm install the-plugin-nam
 
 :::: tabs card
 
-::: tab Mongoose
-
-As an example, for using the `mongoose-simple-random` plugin for MongoDB, you can register it like this:
-
-**Path —** `./config/functions/mongoose.js`.
-
-```js
-'use strict';
-
-const random = require('mongoose-simple-random');
-
-module.exports = (mongoose, connection) => {
-  mongoose.plugin(random);
-};
-```
-
-:::
-
 ::: tab Bookshelf
 
-Another example would be using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
+When using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
 
 **Path —** `./config/functions/bookshelf.js`.
 
