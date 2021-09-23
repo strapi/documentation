@@ -1542,17 +1542,18 @@ module.exports = ({ env }) => ({
       // ...
       providers: [
         {
-          uid: 'okta_oauth2',
+          uid: 'okta',
           displayName: 'Okta',
           icon:
             'https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png',
           createStrategy: strapi =>
             new OktaOAuth2Strategy(
               {
-                clientID: env('OKTA_CLIENT_ID', ''),
-                clientSecret: env('OKTA_CLIENT_SECRET', ''),
+                clientID: env('OKTA_CLIENT_ID'),
+                clientSecret: env('OKTA_CLIENT_SECRET'),
+                audience: env('OKTA_DOMAIN'),
                 scope: ['openid', 'email', 'profile'],
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('okta_oauth2'),
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('okta'),
               },
               (accessToken, refreshToken, profile, done) => {
                 done(null, {
