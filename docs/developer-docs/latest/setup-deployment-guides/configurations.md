@@ -72,28 +72,6 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 :::
 
-::: tab Mongoose
-
-- `defaultConnection` (string): Connection by default for models which are not related to a specific `connection`. Default value: `default`.
-- `connections` List of all available connections.
-  - `default`
-    - `connector` (string): Connector used by the current connection. Will be `mongoose`.
-    - `settings` Useful for external session stores such as Redis.
-      - `client` (string): Database client to create the connection. Will be `mongo`.
-      - `host` (string): Database host name. Default value: `localhost`.
-      - `port` (integer): Database port. Default value: `27017`.
-      - `database` (string): Database name.
-      - `username` (string): Username used to establish the connection.
-      - `password` (string): Password used to establish the connection.
-      - `uri` (string): This can overide all previous configurations - _optional_
-    - `options` Options used for database connection.
-      - `ssl` (boolean): For ssl database connection.
-      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
-      - `debug` (boolean): Show database exchanges and errors.
-      - `authenticationDatabase` (string): Connect with authentication.
-
-:::
-
 ::::
 
 ::::: tabs card
@@ -208,37 +186,6 @@ module.exports = ({ env }) => ({
       },
       options: {
         useNullAsDefault: true,
-      },
-    },
-  },
-});
-```
-
-::::
-
-:::: tab MongoDB
-
-:::caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        client: 'mongo',
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 27017),
-        database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-      },
-      options: {
-        authenticationDatabase: env('AUTHENTICATION_DATABASE'),
-        ssl: env('DATABASE_SSL'),
       },
     },
   },
