@@ -16,10 +16,6 @@ The CLI installation guide requires at least two software prerequisites to be al
 
 A database is also required for any Strapi project. Strapi currently supports the following databases:
 
-::: caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
 | Database   | Minimum version |
 | ---------- | --------------- |
 | SQLite     | 3               |

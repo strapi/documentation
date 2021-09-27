@@ -5,10 +5,6 @@ description: Learn how to install MongoDB on your computer and using it for your
 
 # MongoDB Installation
 
-::: caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
 ## Install MongoDB locally
 
 ### 1. Install MongoDB on your development environment
