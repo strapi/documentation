@@ -860,9 +860,7 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 - `session`
   - `enabled` (boolean): Enable or disable sessions. Default value: `false`.
 - `logger`
-  - `level` (string): Default log level. Default value: `debug`.
-  - `exposeInContext` (boolean): Expose logger in context so it can be used through `strapi.log.info(‘my log’)`. Default value: `true`.
-  - `requests` (boolean): Enable or disable requests logs. Default value: `false`.
+  - `enabled` (boolean): Enable or disable requests logs. Default value: `false`.
 - `parser` (See [koa-body](https://github.com/dlau/koa-body#options) for more information)
   - `enabled`(boolean): Enable or disable parser. Default value: `true`.
   - `multipart` (boolean): Enable or disable multipart bodies parsing. Default value: `true`.
