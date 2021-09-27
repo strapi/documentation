@@ -830,7 +830,7 @@ The core of Strapi embraces a small list of middlewares for performances, securi
 - hsts
 - ip
 - language
-- logger
+- [logger](#custom-configuration-for-the-logger-middleware)
 - p3p
 - parser
 - public
@@ -873,6 +873,37 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 ::: tip
 The session doesn't work with `mongo` as a client. The package that we should use is broken for now.
 :::
+
+###### Custom configuration for the `logger` middleware
+
+To configure the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
+
+::: details Example: Custom configuration for the logger middleware
+
+```js
+'use strict';
+
+const {
+  winston,
+  formats: { prettyPrint, levelFilter },
+} = require('@strapi/logger');
+
+module.exports = {
+  transports: [
+    new winston.transports.Console({
+      level: 'http',
+      format: winston.format.combine(
+        levelFilter('http'),
+        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+      ),
+    }),
+  ],
+};
+
+```
+
+:::
+
 
 ##### Response middlewares
 
