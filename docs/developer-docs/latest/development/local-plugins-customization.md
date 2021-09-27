@@ -41,7 +41,7 @@ plugin/
 |          └─── components/ # Contains the list of React components used by the plugin
 |          └─── containers/
 |          |    └─── App/ # Container used by every others containers
-|          |    └─── Initializer/ # This container is required, it is used to executed logic right after the plugin is mounted.
+|          |    └─── Initializer/ # This container is required to execute the logic soon after the plugin is mounted.
 |          └─── translations/ # Contains the translations to make the plugin internationalized
 |               └─── en.json
 |               └─── index.js # File that exports all the plugin's translations.
