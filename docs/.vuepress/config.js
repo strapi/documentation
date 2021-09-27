@@ -48,6 +48,10 @@ const sidebar = {
               title: 'Required configurations',
               collapsable: true,
               path: '/developer-docs/latest/setup-deployment-guides/configurations.html#required-configurations',
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+              ]
             },
             {
               title: 'Optional configurations',
