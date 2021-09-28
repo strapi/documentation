@@ -176,9 +176,8 @@ export default {
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
-<!-- ? is it the right path? -->
 ```jsx
-// path: ./my-app/admin/src/app.js
+// path: ./my-app/src/admin/app.js
 
 module.exports = {
   // Custom webpack config
