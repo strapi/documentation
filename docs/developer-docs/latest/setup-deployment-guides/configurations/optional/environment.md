@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Environment configuration and variables
 
-## Environment configuration
+## Environment configurations
 
 In case you need specific static configurations for specific environments, and using environment variables becomes tedious, Strapi configurations can be created per environment in `./config/env/{env}/{filename}`.
 
@@ -60,44 +60,42 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 Some settings can only be modified through environment variables. Here is a list of those settings are associated environment variable names:
 
-| name                                  | description                                                                                                                                                                                                                                                                                                                         | type    | default         |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
-| `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                           | boolean | `false`         |
-| `STRAPI_HIDE_STARTUP_MESSAGE`         | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | boolean | `false`         |
-| `STRAPI_TELEMETRY_DISABLED`           | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | boolean | `false`         |
-| `STRAPI_LICENSE`                      | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | string  | `undefined`     |
-| `NODE_ENV`                            | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | string  | `'development'` |
-| `BROWSER`                             | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | boolean | `true`          |
-| `ENV_PATH`                            | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | string  | `'./.env'`      |
-| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` | Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
+| Setting                                  | Type | Description | Default value |
+|---|---|---|---|
+| `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Boolean | Don't show the notification message about updating strapi in the terminal                 |                                                                                                                                                                                                                                           `false`         |
+| `STRAPI_HIDE_STARTUP_MESSAGE`         | Boolean | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | `false`         |
+| `STRAPI_TELEMETRY_DISABLED`           | Boolean | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | `false`         |
+| `STRAPI_LICENSE`                      | String | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | `undefined`     |
+| `NODE_ENV`                            | String | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | `'development'` |
+| `BROWSER`                             | Boolean | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | `true`          |
+| `ENV_PATH`                            | String | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | `'./.env'`      |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` | String | _Optional_<br/><br/>Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | `'en'`          |
 
 ### Configuration using environment variables
 
-In most use cases you will have different configurations between your environments. For example: your database credentials.
+In most use cases there will be different configurations between environments (e.g. database credentials).
 
-Instead of writing those credentials into your configuration files, you can define those variables in a `.env` file at the root of your application.
+Instead of writing those credentials into configuration files, variables can be defined in a `.env` file at the root of the application:
 
-**Example:**
+```sh
+# path: .env
 
-**Path —** `.env`
-
-```
 DATABASE_PASSWORD=acme
 ```
 
-If you want to customize the path of the `.env` file to load you can set an environment variable called `ENV_PATH` before starting your application:
+To customize the path of the `.env` file to load, set an environment variable called `ENV_PATH` before starting the application:
 
 ```sh
 $ ENV_PATH=/absolute/path/to/.env npm run start
 ```
 
-Now you can access those variables in your configuration files and application. You can use `process.env.{varName}` to access those variables anywhere.
+Variables defined in the `.env` file are accessible using `process.env.{variableName}` anywhere in configuration and application files.
 
-In your configuration files you will have access to a `env` utility that allows defining defaults and casting values.
-
-**Path —** `./config/database.js`
+In configuration files, a `env()` utility allows defining defaults and [casting values](#casting-environment-variables):
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connections: {
     default: {
