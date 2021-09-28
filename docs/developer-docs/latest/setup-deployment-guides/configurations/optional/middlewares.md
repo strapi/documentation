@@ -7,7 +7,7 @@ description:
 
 # Middlewares
 
-The middlewares are functions which are composed and executed in a stack-like manner upon request. If you are not familiar with the middleware stack in Koa, we highly recommend you to read the [Koa's documentation introduction](http://koajs.com/#introduction).
+Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They're based on [Koa](http://koajs.com/#introduction)'s middleware stack.
 
 ## Structure
 
@@ -128,27 +128,27 @@ module.exports = {
 
 ## Core middleware configurations
 
-The core of Strapi embraces a small list of middlewares for performances, security and great error handling.
+The core of Strapi embraces a small list of middlewares for performances, security and great error handling:
 
 - boom
-- cors
+- [cors](#cors-configuration)
 - cron
-- csp
-- favicon
-- gzip
-- hsts
-- ip
+- [csp](#csp-configuration)
+- [favicon](#favicon-configuration)
+- [gzip](#gzip-configuration)
+- [hsts](#hsts-configuration)
+- [ip](#ip-configuration)
 - language
-- [logger](#custom-configuration-for-the-logger-middleware)
-- p3p
-- parser
-- public
+- [logger](#logger-configuration)
+- [p3p](#p3p-configuration)
+- [parser](#parser-configuration)
+- [public](#public-configuration)
 - responses
 - responseTime
 - router
-- session
-- xframe
-- xss
+- [session](#session-configuration)
+- [xframe](#xframe-configuration)
+- [xss](#xss-configuration)
 
 ::: tip
 The following middlewares cannot be disabled: responses, router, logger and boom.
@@ -156,45 +156,36 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 
 ### Global middlewares
 
-- `favicon`
-  - `path` (string): Path to the favicon file. Default value: `favicon.ico`.
-  - `maxAge` (integer): Cache-control max-age directive in ms. Default value: `86400000`.
-- `public`
-  - `path` (string): Path to the public folder. Default value: `./public`.
-  - `maxAge` (integer): Cache-control max-age directive in ms. Default value: `60000`.
-  - `defaultIndex` (boolean): Display default index page at `/` and `/index.html`. Default value: `true`.
+#### favicon configuration
+
+| Parameter | Type    | Description                                      | Default value |
+| --------- | ------- | ------------------------------------------------ | ------------- |
+| `path`    | String  | Path to the favicon file                         | `favicon.ico` |
+| `maxAge`  | Integer | Cache-control max-age directive, in milliseconds | `86400000`    |
+
+#### public configuration
+
+| Parameter      | Type    | Description                                         | Default value |
+| -------------- | ------- | --------------------------------------------------- | ------------- |
+| `path`         | String  | Path to the public folder                           | `./public`    |
+| `maxAge`       | Integer | Cache-control max-age directive, in milliseconds    | `60000`       |
+| `defaultIndex` | Boolean | Display default index page at `/` and `/index.html` | `true`        |
 
 ### Request middlewares
 
-- `parser` (See [koa-body](https://github.com/dlau/koa-body#options) for more information)
-  
-::: details session middleware configuration
+#### `session` configuration
 
-| Parameter | Type | Description | Default value |
-|----|-----|---|---|
-| `enabled` | boolean | Enable or disable sessions. | `false`.  |
+| Parameter | Type    | Description     | Default value |
+| --------- | ------- | --------------- | ------------- |
+| `enabled` | Boolean | Enable sessions | `false`      |
 
-**`logger` middleware configuration:**
+#### `logger` configuration
 
-| Parameter | Type | Description | Default value |
-|----|-----|---|---|
-| `enabled` | boolean | Enable or disable requests logs. | `false`.  |
+| Parameter | Type    | Description          | Default value |
+| --------- | ------- | -------------------- | ------------- |
+| `enabled` | Boolean | Enable requests logs | `false`       |
 
-::: details parser middleware configuration:
-
-| Parameter           | Type              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Default value |
-| ------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `enabled`           | Boolean           | Enable or disable parser                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `true`        |
-| `multipart`         | Boolean           | Enable or disable multipart bodies parsing                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `true`       |
-| `jsonLimit`         | String or Integer | The byte (if integer) limit of the JSON body                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `1mb`        |
-| `formLimit`         | String or Integer | The byte (if integer) limit of the form body                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `56k`        |
-| `queryStringParser` | Object            | QueryString parser options<br /><br/>Might contain the following keys (see [qs](https://github.com/ljharb/qs) for a full list of options):<ul><li>`arrayLimit` (integer): the maximum length of an array in the query string. Any array members with an index of greater than the limit will instead be converted to an object with the index as the key. Default value: `100`.</li><li>`depth` (integer): maximum parsing depth of nested query string objects. Default value: `20`.</li></ul> | -             |
-
-:::
-
-#### Custom configuration for the `logger` middleware
-
-To configure the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
+To define a custom configuration for the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
 
 ::: details Example: Custom configuration for the logger middleware
 
@@ -222,52 +213,111 @@ module.exports = {
 
 :::
 
+#### `parser` configuration
+
+(See [koa-body](https://github.com/dlau/koa-body#options) for more information)
+  
+| Parameter | Type    | Description                 | Default value |
+| --------- | ------- | --------------------------- | ------------- |
+| `enabled`           | Boolean           | Enable requests logs                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `false`      |
+| `multipart`         | Boolean           | Enable multipart bodies parsing                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `true`        |
+| `jsonLimit`         | String or Integer | The byte (if integer) limit of the JSON body                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `1mb`         |
+| `formLimit`         | String or Integer | The byte (if integer) limit of the form body                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `56k`         |
+| `queryStringParser` | Object            | QueryString parser options<br /><br/>Might contain the following keys (see [qs](https://github.com/ljharb/qs) for a full list of options):<ul><li>`arrayLimit` (integer): the maximum length of an array in the query string. Any array members with an index of greater than the limit will instead be converted to an object with the index as the key. Default value: `100`</li><li>`depth` (integer): maximum parsing depth of nested query string objects. Default value: `20`</li></ul> | -             |
 
 ### Response middlewares
 
-- [`gzip`](https://en.wikipedia.org/wiki/Gzip)
-  - `enabled` (boolean): Enable or not GZIP response compression.
-  - `options` (Object): Allow passing of options from [koa-compress](https://github.com/koajs/compress#options).
-- `responseTime`
-  - `enabled` (boolean): Enable or not `X-Response-Time header` to response. Default value: `false`.
-- `poweredBy`
-  - `enabled` (boolean): Enable or not `X-Powered-By` header to response. Default value: `true`.
-  - `value` (string): The value of the header. Default value: `Strapi <strapi.io>`
+#### `gzip` configuration
+
+| Parameter | Type    | Description                                                                             |
+| --------- | ------- | --------------------------------------------------------------------------------------- |
+| `enabled` | Boolean | Enable GZIP response compression                                                 |
+| `options` | Object  | Allow passing of options from [koa-compress](https://github.com/koajs/compress#options) |
 
 ::: tip
 `gzip` compression via `koa-compress` uses [Brotli](https://en.wikipedia.org/wiki/Brotli) by default, but is not configured with sensible defaults for most cases. If you experience slow response times with `gzip` enabled, consider disabling Brotli by passing `{br: false}` as an option. You may also pass more sensible params with `{br: { params: { // YOUR PARAMS HERE } }}`
 :::
 
+#### `responseTime` configuration
+
+| Parameter | Type    | Description                                 | Default value |
+| --------- | ------- | ------------------------------------------- | ------------- |
+| `enabled` | Boolean | Enable `X-Response-Time header` to response | `false`       |
+
+#### `poweredBy` configuration
+
+| Parameter | Type    | Description                              | Default value        |
+| --------- | ------- | ---------------------------------------- | -------------------- |
+| `enabled` | Boolean | Enable `X-Powered-By` header to response | `true`               |
+| `value`   | String  | Value of the header                      | `Strapi <strapi.io>` |
+
 ### Security middlewares
 
-- [`csp`](https://en.wikipedia.org/wiki/Content_Security_Policy)
-  - `enabled` (boolean): Enable or disable CSP to avoid Cross Site Scripting (XSS) and data injection attacks.
-  - `policy` (string): Configures the `Content-Security-Policy` header. If not specified uses default value. Default value: `undefined`.
-- [`p3p`](https://en.wikipedia.org/wiki/P3P)
-  - `enabled` (boolean): Enable or disable p3p.
-- [`hsts`](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
-  - `enabled` (boolean): Enable or disable HSTS.
-  - `maxAge` (integer): Number of seconds HSTS is in effect. Default value: `31536000`.
-  - `includeSubDomains` (boolean): Applies HSTS to all subdomains of the host. Default value: `true`.
-- [`xframe`](https://en.wikipedia.org/wiki/Clickjacking)
-  - `enabled` (boolean): Enable or disable `X-FRAME-OPTIONS` headers in response.
-  - `value` (string): The value for the header, e.g. DENY, SAMEORIGIN or ALLOW-FROM uri. Default value: `SAMEORIGIN`.
-- [`xss`](https://en.wikipedia.org/wiki/Cross-site_scripting)
-  - `enabled` (boolean): Enable or disable XSS to prevent Cross Site Scripting (XSS) attacks in older IE browsers (IE8).
-- [`cors`](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-  - `enabled` (boolean): Enable or disable CORS to prevent your server to be requested from another domain.
-  - `origin` (string or array): Allowed URLs (`http://example1.com, http://example2.com`, `['http://www.example1.com', 'http://example1.com']` or allows everyone `*`). Default value: `*`.
-  - `expose` (array): Configures the `Access-Control-Expose-Headers` CORS header. If not specified, no custom headers are exposed. Default value: `["WWW-Authenticate", "Server-Authorization"]`.
-  - `maxAge` (integer): Configures the `Access-Control-Max-Age` CORS header. Default value: `31536000`.
-  - `credentials` (boolean): Configures the `Access-Control-Allow-Credentials` CORS header. Default value: `true`.
-  - `methods` (array)|String - Configures the `Access-Control-Allow-Methods` CORS header. Default value: `["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]`.
-  - `headers` (array): Configures the `Access-Control-Allow-Headers` CORS header. If not specified, defaults to reflecting the headers specified in the request's Access-Control-Request-Headers header. Default value: `["Content-Type", "Authorization", "X-Frame-Options"]`.
-- `ip`
-  - `enabled` (boolean): Enable or disable IP blocker. Default value: `false`.
-  - `whiteList` (array): Whitelisted IPs. Default value: `[]`.
-  - `blackList` (array): Blacklisted IPs. Default value: `[]`.
+#### `csp` configuration
 
-## Example
+This security middleware is about [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy).
+
+| Parameter | Type    | Description                                                                         | Default value |
+| --------- | ------- | ----------------------------------------------------------------------------------- | ------------- |
+| `enabled` | Boolean | Enable to avoid Cross Site Scripting (XSS) and data injection attacks               |               |
+| `policy`  | String  | Configure the `Content-Security-Policy` header. If not specified uses default value | `undefined`   |
+
+#### `p3p` configuration
+
+This security middleware is about [Platform for Privacy Preferences (P3P)](https://en.wikipedia.org/wiki/P3P).
+
+| Parameter | Type    | Description | Default value |
+| --------- | ------- | ----------- | ------------- |
+| `enabled` | Boolean | Enable p3p  |               |
+
+#### `hsts` configuration
+
+This security middleware is about [HTTP Strict Transport Security (HSTS)](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
+
+| Parameter           | Type    | Description                                | Default value |
+| ------------------- | ------- | ------------------------------------------ | ------------- |
+| `enabled`           | Boolean | Enable HSTS.                               | -             |
+| `maxAge`            | Integer | Number of seconds HSTS is in effect        | `31536000`    |
+| `includeSubDomains` | Boolean | Applies HSTS to all subdomains of the host | `true`        |
+#### `xframe` configuration
+
+This security middleware is about [clickjacking](https://en.wikipedia.org/wiki/Clickjacking).
+
+| Parameter | Type    | Description                                                       | Default value |
+| --------- | ------- | ----------------------------------------------------------------- | ------------- |
+| `enabled` | Boolean | Enable `X-FRAME-OPTIONS` headers in response.                     |               |
+| `value`   | String  | The value for the header, e.g. DENY, SAMEORIGIN or ALLOW-FROM uri | `SAMEORIGIN`. |
+
+#### `xss` configuration
+
+This security middleware is about [cross-site scripting](https://en.wikipedia.org/wiki/Cross-site_scripting).
+
+| Parameter | Type    | Description                                                                                     | Default value |
+| --------- | ------- | ----------------------------------------------------------------------------------------------- | ------------- |
+| `enabled` | Boolean | Enable XSS to prevent Cross Site Scripting (XSS) attacks in older IE browsers (IE8). |               |
+
+#### `cors` configuration
+
+This security middleware is about [cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
+
+| Parameter     | Type            | Description                                                                                                                                                                      | Default value                                                                                                            |
+| ------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `enabled`     | Boolean         | Enable CORS to prevent the server to be requested from another domain                                                                                               |                                                                                                                          |                                                                 |
+| `origin`      | String or Array | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `*`                                                            |
+| `expose`      | Array           | Configure the `Access-Control-Expose-Headers` CORS header. <br/><br/>If not specified, no custom headers are exposed                                                                      | `["WWW-Authenticate", "Server-Authorization"]`.                                                                          |                                                                 |
+| `maxAge`      | Integer         | Configure the `Access-Control-Max-Age` CORS header                                                                                                                              | `31536000`.                                                                                                              |                                                                 |
+| `credentials` | Boolean         | Configure the `Access-Control-Allow-Credentials` CORS header                                                                                                                    | `true`.                                                                                                                  |                                                                 |
+| `methods`     | Array or String                                                                                                                                                                           | Configures the `Access-Control-Allow-Methods` CORS header                                                                | `["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]`. |
+| `headers`     | Array           | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's Access-Control-Request-Headers header | `["Content-Type", "Authorization", "X-Frame-Options"]`.                                                                  |                                                                 |
+
+#### `ip` configuration
+
+| Parameter   | Type    | Description       | Default value |
+| ----------- | ------- | ----------------- | ------------- |
+| `enabled`   | Boolean | Enable IP blocker | `false`      |
+| `whiteList` | Array   | Whitelisted IPs   | `[]`         |
+| `blackList` | Array   | Blacklisted IPs   | `[]`         |
+## Custom middlewares
 
 Create your custom middleware.
 
