@@ -1,6 +1,7 @@
 ---
 title: Single Sign On (SSO) - Strapi Developer Documentation
 description: 
+sidebarDepth: 3
 ---
 
 <!-- TODO: update SEO -->
@@ -12,7 +13,7 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 ::: prerequisites
 
 - A Strapi application running on version 3.5.0 or higher is required.
-- To configure SSO on your application, you will need an EE license with a Gold plan.
+- To configure SSO on your application, you will need an EE license with a [Gold plan](https://strapi.io/pricing-self-hosted).
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
   :::
 
@@ -20,11 +21,9 @@ Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-## Usage
+SSO configuration lives in the server configuration of the application, found at `/config/server.js`.
 
-SSO configuration lives in the server configuration of your application found within `/config/server.js`.
-
-### Accessing the configuration
+## Accessing the configuration
 
 The providers' configuration should be written within the `admin.auth.providers` path of the server configuration.
 
@@ -42,9 +41,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-### Provider Configuration
+## Setting up provider configuration
 
-A provider's configuration is a Javascript object built with the following properties:
+A provider's configuration is a JavaScript object built with the following properties:
 
 | Name             | Required | Type     | Description                                                                                                            |
 | ---------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -57,7 +56,7 @@ A provider's configuration is a Javascript object built with the following prope
 The `uid` property is the unique identifier of each strategy and is generally found in the strategy's package. If you are not sure of what it refers to, please contact the maintainer of the strategy.
 :::
 
-#### The `createStrategy` Factory
+### The `createStrategy` Factory
 
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
 
@@ -67,7 +66,7 @@ A passport strategy is usually built by instantiating it using 2 parameters: the
 
 The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
 
-You can generate a specific callback URL for your provider using the `getStrategyCallbackURL` method. This URL also needs to be written on the provider side in order to allow redirection from it.
+A specific callback URL can be generated for your provider using the `getStrategyCallbackURL` method. This URL also needs to be written on the provider side in order to allow redirection from it.
 
 The format of the callback URL is the following: `/admin/connect/<provider_uid>`.
 
@@ -89,7 +88,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 - If the SSO's auto-registration feature is disabled, then the `data` object only need to be composed of an `email` property.
 - If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` oject.
 
-#### Adding a provider
+### Adding a provider
 
 Adding a new provider means adding a new way for your administrators to log-in.
 
@@ -101,7 +100,7 @@ If you want to add an LDAP provider to your application, you will need to write 
 You can also use services such as Okta and Auth0 as bridge services.
 :::
 
-#### Configuring the provider
+### Configuring the provider
 
 To configure a provider, follow the procedure below:
 
@@ -109,11 +108,9 @@ To configure a provider, follow the procedure below:
 2. You'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#provider-configuration)
 3. Restart your application, the provider should appear on your admin login page.
 
-### Examples
+### Configuration providers examples
 
-:::::: tabs card
-
-::::: tab Google
+#### Google
 
 Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
 
@@ -133,9 +130,11 @@ yarn add passport-google-oauth2
 
 </code-group>
 
-`/config/server.js`
+::: details Configuration example for Google:
 
 ```jsx
+// path: ./config/server.js
+
 'use strict';
 
 const GoogleStrategy = require('passport-google-oauth2');
@@ -177,9 +176,10 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::::
+:::
 
-::::: tab Github
+#### Github
+
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
 
@@ -199,9 +199,11 @@ yarn add passport-github2
 
 </code-group>
 
-`/config/server.js`
+::: details Configuration example for Github:
 
 ```jsx
+// path: ./config/server.js
+
 'use strict';
 
 const GithubStrategy = require('passport-github2');
@@ -239,9 +241,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::::
+:::
 
-::::: tab Discord
+#### Discord
 
 Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
 
@@ -261,9 +263,11 @@ yarn add passport-discord
 
 </code-group>
 
-`/config/server.js`
+::: details Configuration example for Discord:
 
 ```jsx
+// path: ./config/server.js
+
 'use strict';
 
 const DiscordStrategy = require('passport-discord');
@@ -301,8 +305,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::::
-::::: tab Microsoft
+:::
+
+#### Microsoft
 
 Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
 
@@ -322,9 +327,11 @@ yarn add passport-azure-ad-oauth2 jsonwebtoken
 
 </code-group>
 
-`/config/server.js`
+::: details Configuration example for Microsoft:
 
 ```jsx
+// path: ./config/server.js
+
 'use strict';
 
 const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2');
@@ -368,8 +375,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::::
-::::: tab Okta
+:::
+
+#### Okta
 
 Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/blob/main/README.md)
 
@@ -389,9 +397,11 @@ yarn add passport-okta-oauth20
 
 </code-group>
 
-`/config/server.js`
+::: details Configuration example for Okta:
 
 ```jsx
+// path: ./config/server.js
+
 'use strict';
 
 const OktaOAuth2Strategy = require('passport-okta-oauth20').Strategy;
@@ -431,37 +441,23 @@ module.exports = ({ env }) => ({
 });
 ```
 
-:::::
-::::::
+:::
 
-### Advanced Customization
+## Performing advanced customization
 
-#### Admin Panel URL
+### Admin panel URL
 
-If your administration panel lives on a different host/port than your Strapi server, you will need to modify the admin URL.
-To do so, head to your `/config/server.js` configuration file and tweak the `admin.url` field.
+If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
+update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.html#changing-the-access-url)).
+<!-- TODO: remove this comment — the link above won't work until merged with the `dev/v4-plugins-api` branch -->
 
-For example, if your admin application has been started on `https://api.example.com`, your configuration will look like the following:
-
-`/config/server.js`
-
-```javascript
-module.exports = () => ({
-  // ...
-  admin: {
-    // ...
-    url: 'https://api.example.com/admin',
-  },
-});
-```
-
-#### Custom Logic
+### Custom Logic
 
 In some scenarios, you will want to write additional logic for your connection workflow such as:
 
-- Restricting connection and registration for a specific domain
-- Triggering actions on connection attempt
-- Analytics
+- restricting connection and registration for a specific domain
+- triggering actions on connection attempt
+- adding analytics
 
 The easiest way to do so is to plug into the verify function of your strategy and write some code.
 
@@ -471,7 +467,7 @@ For example, if you want to allow only people with an official strapi.io email a
 const strategyInstance = new Strategy(configuration, ({ email, username }, done) => {
   // If the email ends with @strapi.io
   if (email.endsWith('@strapi.io')) {
-    // Then we continue with the data given by the provider
+    // then we continue with the data given by the provider
     return done(null, { email, username });
   }
 
@@ -480,7 +476,7 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
-#### Authentication Events
+### Authentication Events
 
 The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations.md#available-options): `onSSOAutoRegistration`.
 
