@@ -7,11 +7,11 @@ description:
 
 # Middlewares
 
-Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They're based on [Koa](http://koajs.com/#introduction)'s middleware stack.
+Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They are based on [Koa](http://koajs.com/#introduction)'s middleware stack.
 
-## Structure
+## General usage
 
-### File structure
+Middleware files are functions that return an object. This object accepts an `initialize` function that is called during the server boot:
 
 ```js
 module.exports = strapi => {
@@ -30,13 +30,11 @@ module.exports = strapi => {
 };
 ```
 
-- `initialize` (function): Called during the server boot.
-
-The middlewares are accessible through the `strapi.middleware` variable.
+Once exported, middlewares are accessible through the [`strapi.middleware` global variable](/developer-docs/latest/developer-resources/global-strapi/api-reference.html#strapi-middleware).
 
 ### Node modules
 
-Every folder that follows this name pattern `strapi-middleware-*` in your `./node_modules` folder will be loaded as a middleware.
+Every folder that follows this name pattern `strapi-middleware-*` in the `./node_modules` folder will be loaded as a middleware.
 
 A middleware needs to follow the structure below:
 
@@ -49,11 +47,11 @@ A middleware needs to follow the structure below:
 - README.md
 ```
 
-The `index.js` is the entry point to your middleware. It should look like the example above.
+The `index.js` is the entry point to the middleware. It should look like the example above.
 
 ### Custom middlewares
 
-The framework allows the application to override the default middlewares and add new ones. You have to create a `./middlewares` folder at the root of your project and put the middlewares into it.
+The framework allows the application to override the default middlewares and [add new ones](#custom-middlewares-usage). To do so, create a `./middlewares` folder at the root of the project and put the middlewares into it.
 
 ```
 /project
@@ -62,7 +60,7 @@ The framework allows the application to override the default middlewares and add
 └─── middlewares
 │   └─── responseTime // It will override the core default responseTime middleware.
 │        - index.js
-│   └─── views // It will be added into the stack of middleware.
+│   └─── views // New custom middleware, will be added to the stack of middlewares.
 │        - index.js
 └─── public
 - favicon.ico
@@ -70,29 +68,25 @@ The framework allows the application to override the default middlewares and add
 - server.js
 ```
 
-Every middleware will be injected into the Koa stack. To manage the load order, please refer to the [Middleware order section](#load-order).
+Every middleware will be injected into the Koa stack, and the [load order](#load-order) can be managed.
 
 ## Configuration and activation
 
-To configure the middlewares of your application, you need to create or edit the `./config/middleware.js` file in your Strapi app.
+To configure the middlewares of an application, create or edit the `./config/middleware.js` file.
 
-By default this file doesn't exist, you will have to create it.
+This configuration file can accept the following parameters:
 
-**Available options**
+| Parameter     | Type    | Description                                                                                                                                                                |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `timeout`  | integer | Maximum allowed time (in milliseconds) to load a middleware                                                                                                              |
+| `load`     | Object  | [Load order](#load-order)                                                                                                                      |
+| `settings` | Object  | Configuration of each middleware<br/><br/>Accepts a list of middlewares with their options, with the format:<br/>`middlewareName`: `{ option1: value, option2: value, … }` |
 
-- `timeout` (integer): Defines the maximum allowed milliseconds to load a middleware.
-- `load` (Object): Configuration middleware loading. See details [here](#load-order)
-- `settings` (Object): Configuration of each middleware
-  - `{middlewareName}` (Object): Configuration of one middleware
-    - `enabled` (boolean): Tells Strapi to run the middleware or not
-
-### Settings
-
-**Example**:
-
-**Path —** `./config/middleware.js`.
+::: details Example of settings definition:
 
 ```js
+// path: ./config/middleware.js
+
 module.exports = {
   //...
   settings: {
@@ -103,13 +97,25 @@ module.exports = {
 };
 ```
 
+:::
+
 ### Load order
 
-The middlewares are injected into the Koa stack asynchronously. Sometimes it happens that some of these middlewares need to be loaded in a specific order. To define a load order, create or edit the file `./config/middleware.js`.
+The middlewares are injected into the Koa stack asynchronously. Sometimes it happens that some of these middlewares need to be loaded in a specific order. To define a load order, create or edit the `./config/middleware.js` file.
 
-**Path —** `./config/middleware.js`.
+The `load` key accepts 3 arrays, in which the order of items matters:
+
+| Parameter | Type  | Description                                 |
+| --------- | ----- | ------------------------------------------- |
+| `before`  | Array | Middlewares to load first                   |
+| `order`   | Array | Middlewares to load in a specific order     |
+| `after`   | Array | Middlewares to load at the end of the stack |
+
+::: details Example of load order definition:
 
 ```js
+// path : ./config/middleware.js
+
 module.exports = {
   load: {
     before: ['responseTime', 'logger', 'cors', 'responses'],
@@ -121,14 +127,11 @@ module.exports = {
 };
 ```
 
-- `load`:
-  - `before`: Array of middlewares that need to be loaded in the first place. The order of this array matters.
-  - `order`: Array of middlewares that need to be loaded in a specific order.
-  - `after`: Array of middlewares that need to be loaded at the end of the stack. The order of this array matters.
+:::
 
-## Core middleware configurations
+## Core middleware configurations reference
 
-The core of Strapi embraces a small list of middlewares for performances, security and great error handling:
+The core of Strapi embraces a small list of middlewares for performances, security and error handling:
 
 - boom
 - [cors](#cors-configuration)
@@ -150,10 +153,11 @@ The core of Strapi embraces a small list of middlewares for performances, securi
 - [xframe](#xframe-configuration)
 - [xss](#xss-configuration)
 
-::: tip
-The following middlewares cannot be disabled: responses, router, logger and boom.
+::: caution
+The following middlewares cannot be disabled: `responses`, `router`, `logger` and `boom`.
 :::
 
+<!-- ? If `logger` can't be disabled, why do we have an `enabled` parameter in its config? -->
 ### Global middlewares
 
 #### favicon configuration
@@ -214,8 +218,6 @@ module.exports = {
 :::
 
 #### `parser` configuration
-
-(See [koa-body](https://github.com/dlau/koa-body#options) for more information)
   
 | Parameter | Type    | Description                 | Default value |
 | --------- | ------- | --------------------------- | ------------- |
@@ -224,6 +226,10 @@ module.exports = {
 | `jsonLimit`         | String or Integer | The byte (if integer) limit of the JSON body                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `1mb`         |
 | `formLimit`         | String or Integer | The byte (if integer) limit of the form body                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `56k`         |
 | `queryStringParser` | Object            | QueryString parser options<br /><br/>Might contain the following keys (see [qs](https://github.com/ljharb/qs) for a full list of options):<ul><li>`arrayLimit` (integer): the maximum length of an array in the query string. Any array members with an index of greater than the limit will instead be converted to an object with the index as the key. Default value: `100`</li><li>`depth` (integer): maximum parsing depth of nested query string objects. Default value: `20`</li></ul> | -             |
+
+::: tip
+See [koa-body](https://github.com/dlau/koa-body#options) for more information.
+:::
 
 ### Response middlewares
 
@@ -257,6 +263,7 @@ module.exports = {
 
 This security middleware is about [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy).
 
+<!-- ? is `csp` enabled by default? -->
 | Parameter | Type    | Description                                                                         | Default value |
 | --------- | ------- | ----------------------------------------------------------------------------------- | ------------- |
 | `enabled` | Boolean | Enable to avoid Cross Site Scripting (XSS) and data injection attacks               |               |
@@ -266,6 +273,7 @@ This security middleware is about [Content Security Policy (CSP)](https://en.wik
 
 This security middleware is about [Platform for Privacy Preferences (P3P)](https://en.wikipedia.org/wiki/P3P).
 
+<!-- ? is `p3p` enabled by default? -->
 | Parameter | Type    | Description | Default value |
 | --------- | ------- | ----------- | ------------- |
 | `enabled` | Boolean | Enable p3p  |               |
@@ -283,21 +291,24 @@ This security middleware is about [HTTP Strict Transport Security (HSTS)](https:
 
 This security middleware is about [clickjacking](https://en.wikipedia.org/wiki/Clickjacking).
 
+<!-- ? is `xframe` enabled by default? -->
 | Parameter | Type    | Description                                                       | Default value |
 | --------- | ------- | ----------------------------------------------------------------- | ------------- |
 | `enabled` | Boolean | Enable `X-FRAME-OPTIONS` headers in response.                     |               |
-| `value`   | String  | The value for the header, e.g. DENY, SAMEORIGIN or ALLOW-FROM uri | `SAMEORIGIN`. |
+| `value`   | String  | The value for the header, e.g. DENY, SAMEORIGIN or ALLOW-FROM uri | `SAMEORIGIN` |
 
 #### `xss` configuration
 
 This security middleware is about [cross-site scripting](https://en.wikipedia.org/wiki/Cross-site_scripting).
 
-| Parameter | Type    | Description                                                                                     | Default value |
-| --------- | ------- | ----------------------------------------------------------------------------------------------- | ------------- |
+<!-- ? is `xss` enabled by default? -->
+| Parameter | Type    | Description                                                                          | Default value |
+| --------- | ------- | ------------------------------------------------------------------------------------ | ------------- |
 | `enabled` | Boolean | Enable XSS to prevent Cross Site Scripting (XSS) attacks in older IE browsers (IE8). |               |
 
 #### `cors` configuration
 
+<!-- ? is `cors` enabled by default? -->
 This security middleware is about [cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
 | Parameter     | Type            | Description                                                                                                                                                                      | Default value                                                                                                            |
@@ -305,10 +316,10 @@ This security middleware is about [cross-origin resource sharing (CORS)](https:/
 | `enabled`     | Boolean         | Enable CORS to prevent the server to be requested from another domain                                                                                               |                                                                                                                          |                                                                 |
 | `origin`      | String or Array | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `*`                                                            |
 | `expose`      | Array           | Configure the `Access-Control-Expose-Headers` CORS header. <br/><br/>If not specified, no custom headers are exposed                                                                      | `["WWW-Authenticate", "Server-Authorization"]`.                                                                          |                                                                 |
-| `maxAge`      | Integer         | Configure the `Access-Control-Max-Age` CORS header                                                                                                                              | `31536000`.                                                                                                              |                                                                 |
-| `credentials` | Boolean         | Configure the `Access-Control-Allow-Credentials` CORS header                                                                                                                    | `true`.                                                                                                                  |                                                                 |
-| `methods`     | Array or String                                                                                                                                                                           | Configures the `Access-Control-Allow-Methods` CORS header                                                                | `["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]`. |
-| `headers`     | Array           | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's Access-Control-Request-Headers header | `["Content-Type", "Authorization", "X-Frame-Options"]`.                                                                  |                                                                 |
+| `maxAge`      | Integer         | Configure the `Access-Control-Max-Age` CORS header                                                                                                                              | `31536000`                                                                                                              |                                                                 |
+| `credentials` | Boolean         | Configure the `Access-Control-Allow-Credentials` CORS header                                                                                                                    | `true`                                                                                                                  |                                                                 |
+| `methods`     | Array or String                                                                                                                                                                           | Configures the `Access-Control-Allow-Methods` CORS header                                                                | `["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"]` |
+| `headers`     | Array           | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's Access-Control-Request-Headers header | `["Content-Type", "Authorization", "X-Frame-Options"]`                                                                  |                                                                 |
 
 #### `ip` configuration
 
@@ -317,13 +328,23 @@ This security middleware is about [cross-origin resource sharing (CORS)](https:/
 | `enabled`   | Boolean | Enable IP blocker | `false`      |
 | `whiteList` | Array   | Whitelisted IPs   | `[]`         |
 | `blackList` | Array   | Blacklisted IPs   | `[]`         |
-## Custom middlewares
 
-Create your custom middleware.
+## Custom middlewares usage
 
-**Path —** `./middlewares/timer/index.js`
+To add a custom middleware to the stack:
+
+1. Create a `./middlewares/your-middleware-name/index.js` file
+2. Enable it and define the loading order, using the `settings` and `load` keys respectively, in the configuration object exported from the `./config/middlewares.js` file
+
+<!-- ? do we really need to have the custom middleware loaded in the first place, or was it just for example purposes? -->
+<!-- Load a middleware at the very first place -->
+
+::: details Example: Create and set up a custom "timer" middleware:
 
 ```js
+
+// path: ./middlewares/timer/index.js
+
 module.exports = strapi => {
   return {
     initialize() {
@@ -339,15 +360,9 @@ module.exports = strapi => {
     },
   };
 };
-```
 
-Enable the middleware in environments settings.
+// path: ./config/middleware.js
 
-Load a middleware at the very first place
-
-**Path —** `./config/middleware.js`
-
-```js
 module.exports = {
   load: {
     before: ['timer', 'responseTime', 'logger', 'cors', 'responses', 'gzip'],
@@ -362,5 +377,7 @@ module.exports = {
     },
   },
 };
+
 ```
 
+:::
