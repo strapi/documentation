@@ -6,9 +6,9 @@ sidebarDepth: auto
 
 # Configurations
 
-Your application configuration lives in the `config` folder. All the configuration files are loaded on startup and can be accessed through the configuration provider.
+The application configuration lives in the `./config` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). All the configuration files are loaded on startup and can be accessed through the configuration provider.
 
-When you have a file `./config/server.js` with the following config:
+If the `./config/server.js` file has the following config:
 
 ```js
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
 };
 ```
 
-You can access it as:
+The `server.host` key can be accessed as:
 
 ```js
 strapi.config.get('server.host', 'defaultValueIfUndefined');
@@ -25,35 +25,37 @@ strapi.config.get('server.host', 'defaultValueIfUndefined');
 Nested keys are accessible with the [dot notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors#dot_notation).
 
 :::note
-Notice that the filename is used as a prefix to access the configurations.
+The filename is used as a prefix to access the configurations.
 :::
 
-You can either use `.js` or `.json` files to configure your application.
+Configuration files can either be `.js` or `.json` files.
 
-When using a `.js` you can either export an object:
+When using a `.js` file, the configuration can be exported:
 
-```js
-module.exports = {
-  mySecret: 'someValue',
-};
-```
+- either as an object:
 
-or a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables):
-
-```js
-module.exports = ({ env }) => {
-  return {
+  ```js
+  module.exports = {
     mySecret: 'someValue',
   };
-};
-```
+  ```
+
+- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables):
+
+  ```js
+  module.exports = ({ env }) => {
+    return {
+      mySecret: 'someValue',
+    };
+  };
+  ```
 
 ## Required configurations
 
 Some parts of Strapi must be configured for the Strapi application to work properly:
 
 - the [database](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md)
-- and the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md)
+- and the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 
 ## Optional configurations
 
