@@ -58,7 +58,7 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 ### List of Strapi's environment variables
 
-Some settings can only be modified through environment variables. Here is a list of those settings are associated environment variable names:
+Some settings can only be modified through environment variables:
 
 | Setting                                  | Type | Description | Default value |
 |---|---|---|---|

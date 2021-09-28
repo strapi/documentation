@@ -64,7 +64,7 @@ Strapi also offers some optional configuration options for specific features, su
 - [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md)
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
 - [public assets](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md)
-- the [API](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)
+- [API calls](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)
 - the [environment and its variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
 - [Single Sign-On](/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md) <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 - [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
