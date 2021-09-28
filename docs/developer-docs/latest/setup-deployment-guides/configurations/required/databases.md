@@ -10,7 +10,7 @@ description:
 The `./config/database.js` file is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
-You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) in the local installation process.
+The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation).
 :::
 
 **Path —** `./config/database.js`.
@@ -172,7 +172,7 @@ module.exports = ({ env }) => ({
 :::::
 
 ::: tip
-Take a look at the [database's guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides) for more details.
+Take a look at the [database's guide](#databases-installation-guides) for more details.
 :::
 
 ## Configuration in database
@@ -226,9 +226,9 @@ await pluginStore.set({
 Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
 **MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
-::: tip
-Deploying **Strapi** itself is covered in the [Deployment Guide](/developer-docs/latest/setup-deployment-guides/deployment.md).
-:::
-
 <DatabasesLinks>
 </DatabasesLinks>
+
+::: strapi Strapi deployment
+Deploying Strapi itself is covered in the [deployment guide](/developer-docs/latest/setup-deployment-guides/deployment.md).
+:::
