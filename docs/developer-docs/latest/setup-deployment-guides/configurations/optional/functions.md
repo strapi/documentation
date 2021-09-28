@@ -55,7 +55,7 @@ module.exports = async () => {
 
 CRON tasks allow you to schedule jobs (arbitrary functions) for execution at specific dates, with optional recurrence rules. It only uses a single timer at any given time (rather than reevaluating upcoming jobs every second/minute).
 
-This feature is powered by [`node-schedule`](https://www.npmjs.com/package/node-schedule) node modules. Check it for more information.
+This feature is powered by the [`node-schedule`](https://www.npmjs.com/package/node-schedule) package.
 
 :::caution
 Make sure the `enabled` cron config is set to `true` in `./config/server.js` file.
@@ -77,9 +77,9 @@ The cron format consists of:
 
 To define a CRON job, add your logic like below:
 
-**Path —** `./config/functions/cron.js`.
-
 ```js
+// path: ./config/functions/cron.js
+
 module.exports = {
   /**
    * Simple example.
@@ -115,7 +115,7 @@ module.exports = {
 
 ## Database ORM customization
 
-When present, they are loaded to let you customize your database connection instance, for example for adding some plugin, customizing parameters, etc.
+When present, database ORM customization functions are loaded to allow customizing the database connection instance (e.g. adding some plugin, customizing parameters, etc.).
 
 You will need to install the plugin using the normal `npm install the-plugin-name` or any of the other supported package tools such as yarn then follow the below examples to load them.
 
