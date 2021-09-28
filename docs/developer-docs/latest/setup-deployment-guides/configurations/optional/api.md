@@ -7,9 +7,21 @@ description:
 
 # API configuration
 
-**Path —** `./config/api.js`.
+General settings for API calls can be set in the `./config/api.js` file:
+
+| Property                      | Description                                                                                                 | Type         | Default |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ | ------- |
+| `responses`                   | Global API response configuration                                                                           | Object       | -       |
+| `responses.privateAttributes` | Set of globally defined attributes to be treated as private.                                                | String array | `[]`    |
+| `rest`                        | REST API configuration                                                                                      | Object       | -       |
+| `rest.defaultLimit`           | Default `limit` parameter used in API calls                                                      | Integer      | `100`   |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit`.<br/><br/>Defaults to `null`, which fetches all results | Integer      | `null`  |
+
+**Example:**
 
 ```js
+// path: ./config/api.js
+
 module.exports = ({ env }) => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
@@ -20,13 +32,3 @@ module.exports = ({ env }) => ({
   },
 });
 ```
-
-## Available options
-
-| Property                      | Description                                                                                                 | Type         | Default |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------ | ------- |
-| `responses`                   | Global API response configuration                                                                           | Object       | -       |
-| `responses.privateAttributes` | Set of globally defined attributes to be treated as private.                                                | String array | `[]`    |
-| `rest`                        | REST API configuration                                                                                      | Object       | -       |
-| `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                      | Integer      | `100`   |
-| `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results | Integer      | `null`  |
