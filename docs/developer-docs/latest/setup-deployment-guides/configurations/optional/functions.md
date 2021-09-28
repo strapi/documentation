@@ -121,24 +121,6 @@ You will need to install the plugin using the normal `npm install the-plugin-nam
 
 :::: tabs card
 
-::: tab Mongoose
-
-As an example, for using the `mongoose-simple-random` plugin for MongoDB, you can register it like this:
-
-**Path —** `./config/functions/mongoose.js`.
-
-```js
-'use strict';
-
-const random = require('mongoose-simple-random');
-
-module.exports = (mongoose, connection) => {
-  mongoose.plugin(random);
-};
-```
-
-:::
-
 ::: tab Bookshelf
 
 Another example would be using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
