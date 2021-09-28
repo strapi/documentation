@@ -1,14 +1,14 @@
 ---
-title: Single Sign On (SSO) - Strapi Developer Documentation
+title: Single Sign-On (SSO) - Strapi Developer Documentation
 description: 
 sidebarDepth: 3
 ---
 
 <!-- TODO: update SEO -->
 
-# Single Sign On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
+# Single Sign-On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
-Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
+Single Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
 ::: prerequisites
 
