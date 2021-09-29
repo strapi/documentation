@@ -48,7 +48,7 @@ For the time being there is no recommended way to handle this automatically and 
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, ect) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
-It is recommended you use a database add-on like Heroku's PostgreSQL or use something like MongoDB's Atlas for your database. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
+It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
 ## Can I store my Content Manager layout configurations in the model settings
 
@@ -76,7 +76,7 @@ There is currently no ETA on this migration however.
 
 ## Does Strapi allow me to change the default ID type or name
 
-No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf and integer on mongoose), support for this is being looked at for Strapi v4.
+No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf), support for this is being looked at for Strapi v4.
 
 ## Can you filter / deep filter on components, dynamic zones, and polymorphic relations
 

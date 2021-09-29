@@ -33,8 +33,7 @@ options: [--no-run|--use-npm|--debug|--quickstart|--dbclient=<dbclient> --dbhost
 
   Generates a new project called **&#60;name&#62;** and skip the interactive database configuration and initialize with these options.
 
-  - **&#60;dbclient&#62;** can be `mongo`, `postgres`, `mysql`.
-  - **&#60;dbssl&#62;** and **&#60;dbauth&#62;** are available only for `mongo` and are optional.
+  - **&#60;dbclient&#62;** can be `postgres`, `mysql`.
   - **--dbforce** Allows you to overwrite content if the provided database is not empty. Only available for `postgres`, `mysql`, and is optional.
 
 ## strapi develop
