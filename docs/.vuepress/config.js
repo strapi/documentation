@@ -39,7 +39,37 @@ const sidebar = {
           ],
         },
         ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
-        ['/developer-docs/latest/setup-deployment-guides/configurations.md', 'Configurations'],
+        {
+          title: 'Configurations',
+          path: '/developer-docs/latest/setup-deployment-guides/configurations.html',
+          collapsable: true,
+          children: [
+            { 
+              title: 'Required configurations',
+              collapsable: true,
+              path: '/developer-docs/latest/setup-deployment-guides/configurations.html#required-configurations',
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+              ]
+            },
+            {
+              title: 'Optional configurations',
+              collapsable: true,
+              path: '/developer-docs/latest/setup-deployment-guides/configurations.html#optional-configurations',
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/hooks.md', 'Hooks'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md', 'Public Assets'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md', 'Single Sign On (SSO)'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md', 'Role-Based Access Control (RBAC)'],
+              ]
+            }
+          ]
+        },
         {
           title: 'Deployment',
           path: '/developer-docs/latest/setup-deployment-guides/deployment',
