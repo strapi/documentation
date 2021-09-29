@@ -172,7 +172,7 @@ module.exports = () => {};
 
 ### Custom hooks
 
-If you have custom [hooks](/developer-docs/latest/setup-deployment-guides/configurations.md#hooks) in your project, the `initialize` function will not receive a callback anymore. You can either use an async function, return a promise or simply run a synchronous function.
+If you have custom [hooks](/developer-docs/latest/setup-deployment-guides/configurations/optional/hooks.md) in your project, the `initialize` function will not receive a callback anymore. You can either use an async function, return a promise or simply run a synchronous function.
 
 **Before**
 

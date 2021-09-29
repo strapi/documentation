@@ -35,7 +35,7 @@ The [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) i
 
 ## Other SQL Databases (PostgreSQL, MySQL)
 
-Refer to the [configuration section](/developer-docs/latest/setup-deployment-guides/configurations.md#database) for all supported options to setup Strapi with your SQL database.
+Refer to the [configuration section](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md) for all supported options to setup Strapi with your SQL database.
 
 ::: tip
 Most cloud service providers offer a managed SQL database service, which is a hassle-free way to get your database up and running. To get up and running locally, you might want to try using a Docker container.

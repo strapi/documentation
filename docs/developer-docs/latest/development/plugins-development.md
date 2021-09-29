@@ -28,7 +28,7 @@ Local plugins are located in the `./plugins` folder of the application.
 
 ### Plugins auto-discovery
 
-<!-- TODO: add here or in Strapi plugins intro (docs/developer-docs/latest/development/plugin-customization.md) that plugins installed via npm also have this strapi.kind: "plugin" declaration -->
+<!-- TODO: add here or in Strapi plugins intro (docs/developer-docs/latest/development/plugins-extension.md) that plugins installed via npm also have this strapi.kind: "plugin" declaration -->
 
 Strapi scans every `package.json` file of the project dependencies. A Strapi plugin is automatically detected and loaded when a `package.json` contains this declaration:
 

@@ -13,7 +13,7 @@ With this guide we will code our own count query.
 
 <!-- TODO: update once GraphQL custom docs are ready -->
 <!-- Commented out as GraphQL customization is not ready yet -->
-<!-- Here is the [GraphQL documentation](/developer-docs/latest/development/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal. -->
+<!-- Here is the [GraphQL documentation](/developer-docs/latest/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal. -->
 
 ## Setup the application
 

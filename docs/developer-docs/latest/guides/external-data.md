@@ -84,7 +84,7 @@ With this code, everytime this function is called it will fetch the docker repo'
 
 Here is how to call the function in your application `strapi.config.functions.docker()`
 
-So let's execute this function everyday at 2am. For this we will use a [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations.md#cron-tasks).
+So let's execute this function everyday at 2am. For this we will use a [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#cron-tasks).
 
 **Path —** `./config/functions/cron.js`
 

@@ -82,7 +82,7 @@ module.exports = () => ({
 
 ### bootstrap()
 
-The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) function is called right after the plugin has [registered](#register).
+The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) function is called right after the plugin has [registered](#register).
 
 **Type**: `Function`
 
@@ -382,7 +382,7 @@ module.exports = (ctx, next) => {
 
 ### Middlewares
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares) the plugin provides.
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) the plugin provides.
 
 **Type**: `Object`
 

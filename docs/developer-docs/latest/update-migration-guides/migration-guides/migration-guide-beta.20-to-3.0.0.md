@@ -51,11 +51,11 @@ Before migrating, you should first read the new [configuration documentation](/d
 
 #### Server
 
-Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
+Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 
 #### Database configuration
 
-Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
+Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
 
 #### Middlewares
 

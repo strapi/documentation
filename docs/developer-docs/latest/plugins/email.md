@@ -128,7 +128,7 @@ module.exports = ({ env }) => ({
 ```
 
 ::: tip
-If you're using a different provider depending on your environment, you can specify the correct configuration in `config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)
+If you're using a different provider depending on your environment, you can specify the correct configuration in `config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
 :::
 
 ::: tip

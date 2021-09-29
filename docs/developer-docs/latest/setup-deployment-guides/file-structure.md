@@ -36,7 +36,7 @@ The folder structure below is interactive. You can click on highlighted elements
 ├──── <a href="/documentation/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
 ├──── config <span class="token comment"># API configurations</span>
 │     ├──── src
-│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
+│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#cron-tasks">cron-tasks.js</a>
 │     │     └ response-handlers.js
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
