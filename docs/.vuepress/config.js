@@ -146,20 +146,6 @@ const sidebar = {
       ],
     },
     {
-      title: '🧩 Strapi plugins',
-      path: '/developer-docs/latest/plugins/plugins-intro.html',
-      collapsable: false,
-      children: [
-        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
-        ['/developer-docs/latest/plugins/email', 'Email'],
-        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
-        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
-        ['/developer-docs/latest/plugins/upload', 'Upload'],
-        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
-      ],
-      sidebarDepth: 1,
-    },
-    {
       title: '🔧 Development',
       collapsable: false,
       children: [
@@ -180,6 +166,20 @@ const sidebar = {
         ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
         ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ],
+    },
+    {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+      ],
+      sidebarDepth: 1,
     },
     {
       title: '♻️ Update & Migration',
