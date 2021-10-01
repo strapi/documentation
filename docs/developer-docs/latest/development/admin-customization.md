@@ -6,13 +6,9 @@ sidebarDepth: 3
 
 # Admin panel customization
 
-The admin panel is a `node_module` that is similar to a plugin, with the slight difference that it encapsulates all the installed plugins of your application. Most of its aspects can be [customized](#customizing-the-admin-panel), and plugins can also [extend](#extending-the-admin-panel) it.
+The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Most of its aspects can be [customized](#customizing-the-admin-panel), and plugins can also [extend](#extending-the-admin-panel) it.
 
 <!-- ? wording: should we use 'admin panel' or 'administration panel' throughout the whole documentation? -->
-
-## Using the development mode and rebuilding the admin panel
-
-### Development mode
 
 To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
 
@@ -21,43 +17,17 @@ cd my-app # cd into the root directory of the Strapi application project
 strapi develop --watch-admin
 ```
 
-### Build
+## Customization options
 
-Once satisfied with the changes, the admin panel needs to be built before deployment, by running the following command from the project's root directory:
+Customizing the admin panel is helpful to better reflect your brand identity or to modify some default Strapi behavior:
 
-<code-group>
+- The [access URL, host and port](#access-url) can be modified through the server configuration.
+- The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
+- The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
+- The [forgotten password email](#forgotten-password-email) can be customized with a template and variables.
+- The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
-<code-block title="NPM">
-```sh
-npm  build
-```
-</code-block>
-
-<code-block title="YARN">
-```sh
-yarn build
-```
-</code-block>
-
-<code-block title="STRAPI CLI">
-```sh
-strapi build
-```
-</code-block>
-
-</code-group>
-
-This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure customizations have been taken into account.
-
-## Customizing the admin panel
-
-Customizing the admin panel is helpful to better reflect your brand identity or to modify some default Strapi behavior.
-
-:::caution
-To apply the following customizations you need to [rebuild](#build) the admin panel.
-:::
-
-### Changing the access URL
+### Access URL
 
 By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, this path can be updated.
 
@@ -81,7 +51,7 @@ module.exports = ({ env }) => ({
 For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
 :::
 
-#### Changing the host and port
+#### Host and port
 
 By default, the front end development server runs on `localhost:8000` but this can be modified:
 
@@ -98,7 +68,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-### Changing the configuration
+### Configuration options
 
 The `config` object found at `./admin/src/app.js` stores the admin panel configuration and accepts the following parameters:
 
@@ -172,7 +142,7 @@ export default {
 
 :::
 
-#### Updating locales
+#### Locales
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
@@ -207,7 +177,7 @@ module.exports = {
 
 Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key.
 
-#### Updating logos
+#### Logos
 
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#changing-the-configuration):
 
@@ -222,19 +192,19 @@ To update the logos, put image files in the `./extensions` folder and update the
 Make sure the size of your image is the same as the existing one (434px x 120px).
 :::
 
-#### Updating the favicon
+#### Favicon
 
 To update the favicon, put a favicon file in the `.extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#changing-the-configuration).
 
-#### Toggling the display of tutorial videos
+#### Tutorial videos
 
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
 
-#### Toggling Strapi releases notifications
+#### Releases notifications
 
 To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
 
-#### Extending the theme
+#### Theme extension
 
 <!-- TODO: complete this section once design system is ready -->
 
@@ -246,13 +216,13 @@ The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/develop/p
 
 <!-- TODO: maybe provide a theme extension example once design system is ready? -->
 
-### Customizing the WYSIWYG editor
+### WYSIWYG editor
 
 To change the current WYSIWYG, you can either install a third-party plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
 
 <!-- TODO: Add Component API -->
 
-### Customizing the 'Forgotten password' email
+### 'Forgotten password' email
 
 To customize the 'Forgotten password' email, provide your own template (formatted as a [lodash template](https://lodash.com/docs/4.17.15#template)).
 
@@ -299,7 +269,7 @@ module.exports = {
 };
 ```
 
-### Customizing the webpack configuration
+### Webpack configuration
 
 In order to extend the usage of webpack v5, define a function that extends its configuration inside `./admin/webpack.config.js`:
 
@@ -321,7 +291,7 @@ module.exports = {
 Only `./admin/app.js` and the files under the `./admin/extensions` folder are being watched by the webpack dev server.
 :::
 
-## Extending the admin panel
+## Extension
 
 The admin panel can also be extended by plugins. To extend the admin panel:
 
@@ -332,7 +302,7 @@ The admin panel can also be extended by plugins. To extend the admin panel:
 To extend the admin panel, you can take advantage of the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md).
 :::
 
-## Deploying the admin panel
+## Deployment
 
 The administration is nothing more than a React front-end application calling an API. The front end and the back end are independent and can be deployed on different servers, which brings us to different scenarios:
 
@@ -341,9 +311,35 @@ The administration is nothing more than a React front-end application calling an
 
 Build configurations differ for each case.
 
-### Deploy the entire project on the same server
+Before deployment, the admin panel needs to be built, by running the following command from the project's root directory:
 
-This is the default behavior and the build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/admin`.
+<code-group>
+
+<code-block title="NPM">
+```sh
+npm  build
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn build
+```
+</code-block>
+
+<code-block title="STRAPI CLI">
+```sh
+strapi build
+```
+</code-block>
+
+</code-group>
+
+This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure customizations have been taken into account.
+
+### Same server
+
+Deploying the admin panel and the API on the same server is the default behavior. The build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/admin`.
 
 <!-- ? is it /admin or /dashboard? -->
 
@@ -351,10 +347,9 @@ This is the default behavior and the build configuration will be automatically s
 You might want to [change the path to access the administration panel](#changing-the-access-url).
 :::
 
-### Deploy the administration panel on a server different from the API server
+### Different servers
 
-It's very common to deploy the front end and the back end on different servers. Here is the required configuration to handle this case:
-
+To deploy the front end and the back end on different servers, use the following configuration:
 
 ```js
 // path: ./config/server.js
@@ -375,5 +370,5 @@ After running `yarn build` with this configuration, the `build` folder will be c
 The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
 
 :::note
-If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
+If you add a path to the `url` option, it won't prefix your app. To do so, use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
 :::
