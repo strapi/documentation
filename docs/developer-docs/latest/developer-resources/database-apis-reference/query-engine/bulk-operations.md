@@ -26,7 +26,7 @@ Syntax: `createMany(parameters) => { count: number }`
 ### Example
 
 ```js
-await db.query('article').createMany({
+await strapi.db.query('article').createMany({
   data: [
     {
       title: 'ABCD',
