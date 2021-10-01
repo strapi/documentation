@@ -99,8 +99,8 @@ For each Content-Type, the following endpoints are automatically generated:
 | Method | URL                      | Description               |
 | ------ | ------------------------ | ------------------------- |
 | GET    | `/api/restaurants`       | Get a list of restaurants |
-| GET    | `/api/restaurants/:id`   | Get a specific restaurant |
 | POST   | `/api/restaurants`       | Create a restaurant       |
+| GET    | `/api/restaurants/:id`   | Get a specific restaurant |
 | DELETE | `/api/restaurants/:id`   | Delete a restaurant       |
 | PUT    | `/api/restaurants/:id`   | Update a restaurant       |
 
@@ -138,7 +138,7 @@ Whatever the query, the response is always an object with the following keys:
   - a list of entries, as an array of objects
   - a custom response
 
-- `meta`(object): information about pagination, publication state, available locales…
+- `meta`(object): information about pagination, publication state, available locales, etc.
 <!-- TODO: create an entry in the docs to list all errors -->
 
 - `error` (object, _optional_): information about any error thrown by the request
@@ -311,10 +311,6 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/development/p
 Partially updates an entry by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
-:::note
-It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
-:::
-
 :::: api-call
 
 ::: request Example request
@@ -350,6 +346,10 @@ It's currently not possible to [update the locale of an entry](/developer-docs/l
 :::
 
 ::::
+
+:::note
+If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+:::
 
 ### Delete an entry
 
@@ -512,7 +512,10 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 
 ### Pagination
 
-Queries can accept `pagination` parameters. Results can be paginated either by page or by offset.
+Queries can accept `pagination` parameters. Results can be paginated:
+
+- either by page (i.e. specifying a page number and the number of entries per page)
+- or by offset (i.e. specifying how many entries to skip and to return)
 
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
