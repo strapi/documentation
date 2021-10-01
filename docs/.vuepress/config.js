@@ -148,6 +148,7 @@ const sidebar = {
     {
       title: '🔧 Development',
       collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
         {
           title: 'Backend customization',
