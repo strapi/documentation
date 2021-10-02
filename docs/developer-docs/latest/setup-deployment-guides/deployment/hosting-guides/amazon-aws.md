@@ -105,7 +105,14 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
     :::
   - After downloading the file, click the blue `Launch Instances` button.
 
-Your instance is now running. Continue to the next steps.
+Your instance is now running. 
+
+Before we continue, we need to add `default` security group to the EC2 instance we've just created.
+- Click on **Instances** in the left hand pane.
+- Select your new instance in the list and click on the **Actions** dropdown in the top right corner > **Security** > **Change security groups**.
+- Under **Associated security groups** search for "default" and click `Add security group` and then `Save`
+
+Continue to the next steps.
 
 ### Install a PostgreSQL database on AWS RDS
 
@@ -641,7 +648,7 @@ After=network.target
 Environment=PATH=/PASTE-PATH_HERE #path from echo $PATH (as above)
 Type=simple
 User=ubuntu #replace with your name, if changed from default ubuntu user
-ExecStart=/usr/bin/nodejs /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
+ExecStart=/usr/bin/node /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
 Restart=on-failure
 
 [Install]
