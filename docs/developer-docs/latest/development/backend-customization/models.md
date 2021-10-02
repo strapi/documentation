@@ -52,9 +52,9 @@ The `schema.json` file of a model consists of:
 
 ### Model settings
 
-General settings for the model can be configured with the following keys:
+General settings for the model can be configured with the following parameters:
 
-| Key                                          | Type   | Description                                                                                                            |
+| Parameter                                          | Type   | Description                                                                                                            |
 | -------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
 | `tableName`                                  | String | Database table name in which the data should be stored                                                    |
 | `kind`<br><br>_Optional,<br>only for content-types_ | String | Defines if the content-type is:<ul><li>a collection type (`collectionType`)</li><li>or a single type (`singleType`)</li></ul> |
@@ -70,11 +70,11 @@ General settings for the model can be configured with the following keys:
 
 ### Model information
 
-The `info` key in the model's schema describes information used to display the model in the admin panel and access it through the Content API. It includes the following keys:
+The `info` key in the model's schema describes information used to display the model in the admin panel and access it through the Content API. It includes the following parameters:
 
 <!-- ? with the new design system, do we still use FontAwesome?  -->
 
-| Key            | Type   | Description                                                                                                                                 |
+| Parameter            | Type   | Description                                                                                                                                 |
 | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `displayName`  | String | Default name to use in the admin panel                                                                                                      |
 | `singularName` | String | Singular form of the collection type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
