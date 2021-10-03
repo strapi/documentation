@@ -678,6 +678,6 @@ sudo systemctl status webhook
   :::
 - To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://certbot.eff.org/docs/using.html).
 
-- Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04) for Ubuntu 18.04.
+- Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04) for Ubuntu 20.04.
 
-Your `Strapi` project has been installed on an **AWS EC2 instance** using **Ubuntu 18.04**.
+Your `Strapi` project has been installed on an **AWS EC2 instance** using **Ubuntu 20.04**.
