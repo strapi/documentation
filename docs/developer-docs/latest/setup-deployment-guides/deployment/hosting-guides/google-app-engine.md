@@ -175,6 +175,10 @@ Edit `database.js`, and use the socket path as `socketPath`.
 
 `Path: ./config/env/production/database.js`.
 
+:::: tabs card
+
+::: tab PostgreSQL
+
 ```js
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
@@ -183,6 +187,27 @@ module.exports = ({ env }) => ({
       connector: 'bookshelf',
       settings: {
         client: 'postgres',
+        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+        database: env('DATABASE_NAME'),
+        username: env('DATABASE_USERNAME'),
+        password: env('DATABASE_PASSWORD'),
+      },
+      options: {},
+    },
+  },
+});
+```
+:::
+
+::: tab MySQL/MariaDB
+```js
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'mysql',
         socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
         database: env('DATABASE_NAME'),
         username: env('DATABASE_USERNAME'),
@@ -193,6 +218,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+::::
 
 ### Auto-build after deploy
 
