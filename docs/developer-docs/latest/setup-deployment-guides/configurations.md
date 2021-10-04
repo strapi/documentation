@@ -59,7 +59,7 @@ Some parts of Strapi must be configured for the Strapi application to work prope
 
 ## Optional configurations
 
-Strapi also offers some optional configuration options for specific features, such as:
+Strapi also offers the following optional configuration options for specific features:
 
 - [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md)
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
