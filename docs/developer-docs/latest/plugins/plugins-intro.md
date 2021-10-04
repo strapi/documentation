@@ -1,7 +1,9 @@
 ---
 title: Strapi plugins - Strapi Developer Documentation
-description: In Strapi you can install plugins in your node_modules. This allows for easy updates and respect best practices.
+description: In Strapi you can install plugins as npm packages. This allows for easy updates and respect best practices.
 ---
+
+<!-- TODO: update SEO -->
 
 # Strapi plugins
 
