@@ -78,7 +78,7 @@ To simplify and automate the build of the GraphQL schema, we introduced the Shad
 If you've generated an API called `Restaurant` using the CLI `strapi generate:api restaurant` or the administration panel, your model looks like this:
 
 ```json
-// path: ./api/[api-name]/content-types/restaurant/schema.json
+// path: ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
   "kind": "collectionType",
@@ -271,10 +271,7 @@ The `extension` [service](/developer-docs/latest/development/backend-customizati
 | `disableAction()`    | Disable a specific action for the Content-Type | String           | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>   |
 | `disableActions()`    | Disable specific actions for the Content-Type  | Array of Strings | Multiple values from the list: <ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>  |
 
-<!-- TODO: add disable
-disableOutput
-disableInput
-disableFilters -->
+<!-- TODO: add field-related actions: disable, disableOutput, disableInput, disableFilters -->
 
 <!-- TODO: add getters listed in  https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/graphql/server/services/extension/shadow-crud-manager.js#L32-L155 -->
 
