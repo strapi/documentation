@@ -17,7 +17,7 @@ Whatever the query, the response can contain the following fields:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
-    - `id` (number)
+    - `id` (string|number)
     - `attributes` (object)
     - `meta` (object)
   - a list of entries, as an array of objects,
@@ -28,34 +28,25 @@ Whatever the query, the response can contain the following fields:
 
 ## Queries
 
-We assume that the [Shadow CRUD](/developer-docs/latest/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations.
+We assume that the [Shadow CRUD](/developer-docs/latest/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations that mimics basic CRUD operations (findMany, findOne, create, update, delete).
 
 ### Fetch a single entry
 
 Single entries can be found by their `id`.
 
-:::request Example query: Find the entry with id 1, only the French fields
+:::request Example query: Find the entry with id 1
 ```graphql
 query {
-  document(id: 1, locale: "fr", publicationState: LIVE) {
+  document(id: 1) {
     data {
       id
       attributes {
         title
-        locale
         categories {
           data {
             id
             attributes {
               name
-            }
-          }
-          meta {
-            pagination {
-              page
-              pageSize
-              total
-              pageCount
             }
           }
         }
@@ -79,7 +70,6 @@ query {
       id
       attributes {
         title
-        locale
         categories {
           data {
             id
@@ -106,7 +96,7 @@ query {
 :::
 
 <!-- ? is this part 👇 still relevant? -->
-<!-- ### Fetch dynamic zone data
+### Fetch dynamic zone data
 
 Dynamic zones are union types in graphql so you need to use fragments to query the fields.
 
@@ -114,23 +104,22 @@ Dynamic zones are union types in graphql so you need to use fragments to query t
 ```graphql
 query {
   restaurants {
-    dz {
-      __typename
-      ... on ComponentDefaultClosingperiod {
-        label
+    data {
+      attributes {
+        dynamiczone {
+          __typename
+          ...on ComponentDefaultClosingperiod {
+            label
+          }
+        }
       }
     }
   }
 }
 ```
-::: -->
+:::
 
 ## Mutations
-
-| Argument     | Type   | Description      |
-| ------------ | ------ | ---------------- |
-| `id`         | String | Entry id         |
-| `attributes` | Object | Entry attributes |
 
 ### Create a new entry
 
@@ -138,7 +127,7 @@ query {
 
 ```graphql
 mutation createArticle {
-  createArticle(data: { title: "Hello", relation: 1 }) {
+  createArticle(data: { title: "Hello"}) {
     data {
       id
       attributes {
@@ -151,36 +140,41 @@ mutation createArticle {
 
 :::
 
-<!-- ? is it still relevant 👇 ? -->
-<!-- The implementation of the mutations also supports relational attributes. For example, you can create a new `User` and attach many `Restaurant` to it by writing your query like this:
+The implementation of the mutations also supports relational attributes. For example, you can create a new `User` and attach many `Restaurant` to it by writing your query like this:
 
 :::request Mutation
 
 ```graphql
 mutation {
   createUser(
-    input: {
-      data: {
-        username: "John"
-        email: "john@doe.com"
-        restaurants: ["5b51e3949db573a586ad22de", "5b5b26619b0820c1c2fb79c9"]
-      }
+    data: {
+      username: "John"
+      email: "john@doe.com"
+      restaurants: ["1", "2"]
     }
   ) {
-    user {
-      username
-      email
-      restaurant {
-        name
-        description
-        price
+    data {
+      id
+      attributes {
+        username
+        email
+        restaurants {
+          data {
+            id 
+            attributes {
+              name
+              description
+              price
+            }
+          }
+        }
       }
     }
   }
 }
 ```
 
-::: -->
+:::
 
 ### Update an existing entry
 
@@ -188,7 +182,7 @@ mutation {
 
 ```graphql
 mutation updateArticle {
-  updateArticle(id: "1", data: { title: "Hello", relation: 1 }) {
+  updateArticle(id: "1", data: { title: "Hello" }) {
     data {
       id
       attributes {
@@ -201,30 +195,34 @@ mutation updateArticle {
 
 :::
 
-<!-- ? is it still relevant? -->
-<!-- You can also update relational attributes by passing an ID or an array of IDs (depending on the relationship).
+You can also update relational attributes by passing an ID or an array of IDs (depending on the relationship).
 
 :::request Mutation
 ```graphql
 mutation {
-  updateRestaurant(input: {
-    where: {
-      id: "5b5b27f8164f75c29c728110"
-    },
+  updateRestaurant(
+    id: "5b5b27f8164f75c29c728110"
     data: {
-      chef: "5b51e3949db573a586ad22de" // User ID
+      chef: "1" // User ID
     }
   }) {
-    restaurant {
-      chef {
-        username
-        email
+    data {
+      id
+      attributes {
+        chef {
+          data {
+            attributes {
+              username
+              email
+            }
+          }
+        }
       }
     }
   }
 }
 ```
-::: -->
+:::
 
 ### Delete an entry
 
@@ -251,31 +249,32 @@ Queries can accept a `filters` parameter with the following syntax:
 
 `filters: { field: { operator: value } }`
 
-Logical operators (`and`, `or`) can also be used and accept arrays of objects.
+Logical operators (`and`, `or`, `not`) can also be used and accept arrays of objects.
 
 The following operators are available:
 
-| Operator     | Description                      |
-| -------------| ---------------------------------|
-| `eq`         | Equal                            |
-| `ne`         | Not equal                        |
-| `lt`         | Less than                        |
-| `lte`        | Less than or equal to            |
-| `gt`         | Greater than                     |
-| `gte`        | Greater than or equal to         |
-| `in`         | Included in an array             |
-| `notIn`      | Not included in an array         |
-| `contains`   | Contains                         |
-| `ncontains`  | Does not contain                 |
-| `containsi`  | Contains, case sensitive         |
-| `ncontainsi` | Does not contain, case sensitive |
-| `null`       | Is null                          |
-| `notNull`    | Is null                          |
-| `between`    | Is between                       |
-| `startsWith` | Starts with                      |
-| `endsWith`   | Ends with                        |
-| `and`        | Logical `and`                    |
-| `or`         | Logical `or`                     |
+| Operator       | Description                        |
+| -------------- | ---------------------------------- |
+| `eq`           | Equal                              |
+| `ne`           | Not equal                          |
+| `lt`           | Less than                          |
+| `lte`          | Less than or equal to              |
+| `gt`           | Greater than                       |
+| `gte`          | Greater than or equal to           |
+| `in`           | Included in an array               |
+| `notIn`        | Not included in an array           |
+| `contains`     | Contains, case sensitive           |
+| `notContains`  | Does not contain, case sensitive   |
+| `containsi`    | Contains, case insensitive         |
+| `notContainsi` | Does not contain, case insensitive |
+| `null`         | Is null                            |
+| `notNull`      | Is null                            |
+| `between`      | Is between                         |
+| `startsWith`   | Starts with                        |
+| `endsWith`     | Ends with                          |
+| `and`          | Logical `and`                      |
+| `or`           | Logical `or`                       |
+| `not`          | Logical `not`                      |
 
 ::: request Example query with filters
 
@@ -352,12 +351,10 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ### Pagination by page
 
-<!-- ? are we using a zero-based or a 1-based index? -->
-
 | Parameter              | Description | Default |
 | ---------------------- | ----------- | ------- |
 | `pagination[page]`     | Page number | 1       |
-| `pagination[pageSize]` | Page size   | 100     |
+| `pagination[pageSize]` | Page size   | 10      |
 
 ::: request Example query: Pagination by page
 
@@ -386,8 +383,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 | Parameter           | Description                  | Default | Maximum |
 | ------------------- | ---------------------------- | ------- | ------- |
 | `pagination[start]` | Start value                  | 0       | -       |
-| `pagination[limit]` | Number of entities to return | -       | 100     
-
+| `pagination[limit]` | Number of entities to return | 10      | -1      |
 
 ::: request Example query: Pagination by offset
 
@@ -410,67 +406,6 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 :::
 
 ::: tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+The default and maximum values for `pagination[limit]` can be [configured in the `./config/plugins.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
-<!-- TODO: remove this comment: the link above won't work until the content is merged with the `dev/v4-split-configuration-docs-files` branch  -->
-
-<!-- ## Aggregation and Grouping (Connections)
-
-> /!\ Warning: ETA: after v4.0.0
->
-> The following specification is likely to change before its implementation after the release of Strapi V4.0.0
-
-> Note: We're thinking about replacing the `values` attribute by a `nodes` attributes in the Connection queries,
-> and we would like to have the opinion of our community members on this topic
-
-### GroupBy
-
-```graphql
-query {
-  restaurantsConnection {
-    groupBy {
-      open {
-        key
-      }
-    }
-  }
-}
-```
-
-### Aggregate
-
-```graphql
-query {
-  restaurantsConnection {
-    aggregate {
-      avg {
-        nb_likes
-      }
-    }
-  }
-}
-```
-
-### Aggregate on relations
-
-```graphql
-query {
-  restaurantsConnection {
-    aggregate {
-      avg {
-        nb_likes
-      }
-    }
-
-    values {
-      categoriesConnection {
-        aggregate {
-          avg {
-            price
-          }
-        }
-      }
-    }
-  }
-}
-``` -->
+<!-- TODO: update this comment: the link above won't work until the content is merged with the `dev/v4-split-configuration-docs-files` branch  -->
