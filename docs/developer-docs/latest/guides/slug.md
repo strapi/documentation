@@ -62,29 +62,6 @@ When it's done, you have to update the life cycle of the **Article** Content Typ
 
 :::: tabs card
 
-::: tab Mongoose
-
-```js
-const slugify = require('slugify');
-
-module.exports = {
-  lifecycles: {
-    beforeCreate: async (data) => {
-      if (data.title) {
-        data.slug = slugify(data.title);
-      }
-    },
-    beforeUpdate: async (params, data) => {
-      if (data.title) {
-        data.slug = slugify(data.title);
-      }
-    },
-  },
-};
-```
-
-:::
-
 ::: tab Bookshelf
 
 ```js

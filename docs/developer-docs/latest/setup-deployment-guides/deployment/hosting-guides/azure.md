@@ -185,14 +185,12 @@ Strapi will need a database in order to save data to, you have multiple options 
 
 For Azure managed databases you can use the following:
 
-- Azure Cosmos DB (Not officially supported, but has an option for MongoDB based API)
 - Azure Database for MySQL
 - Azure Database for PostgreSQL
 - Azure Database for MariaDB
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MongoDB >= 3.6
 - MySQL >= 5.6
 - MariaDB >= 10.1
 - PostgreSQL >= 10

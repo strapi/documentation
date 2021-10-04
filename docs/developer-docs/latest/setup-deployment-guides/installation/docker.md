@@ -68,45 +68,6 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
 
     ::::
 
-    :::: tab MongoDB
-
-      :::caution
-      <!-- Some rendering issue with the snippet inside a tab… 😅  Copying and pasting content here, waiting for a fix… -->
-      <!-- Original snippet content is in developer-docs/latest/snippets/mongodb-warning.md -->
-      Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
-      :::
-
-    ```yaml
-    version: '3'
-    services:
-      strapi:
-        image: strapi/strapi
-        environment:
-          DATABASE_CLIENT: mongo
-          DATABASE_NAME: strapi
-          DATABASE_HOST: mongo
-          DATABASE_PORT: 27017
-          DATABASE_USERNAME: strapi
-          DATABASE_PASSWORD: strapi
-        volumes:
-          - ./app:/srv/app
-        ports:
-          - '1337:1337'
-        depends_on:
-          - mongo
-
-      mongo:
-        image: mongo
-        environment:
-          MONGO_INITDB_DATABASE: strapi
-          MONGO_INITDB_ROOT_USERNAME: strapi
-          MONGO_INITDB_ROOT_PASSWORD: strapi
-        volumes:
-          - ./data:/data/db
-    ```
-
-    ::::
-
     :::: tab MySQL
 
     ```yaml
