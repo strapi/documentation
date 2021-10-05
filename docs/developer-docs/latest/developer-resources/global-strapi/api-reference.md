@@ -68,7 +68,7 @@ Returns an object of the middlewares available in the project. Every folder in t
 
 ## strapi.models
 
-Returns an object of models available in the project. Every JavaScript or JSON file located in the `./api/**/models` folders will be parsed into the `strapi.models` object. Also every `strapi.models.**` object is merged with the model's instance returned by the ORM (Mongoose, Bookshelf). It allows to call the ORM methods through the `strapi.models.**` object (ex: `strapi.models.users.find()`).
+Returns an object of models available in the project. Every JavaScript or JSON file located in the `./api/**/models` folders will be parsed into the `strapi.models` object. Also every `strapi.models.**` object is merged with the model's instance returned by the ORM (Bookshelf). It allows to call the ORM methods through the `strapi.models.**` object (ex: `strapi.models.users.find()`).
 
 ## strapi.plugins
 
@@ -77,6 +77,7 @@ Returns an object of plugins available within the project. Each plugin object co
 ## strapi.query
 
 This utility function allows to bind models with query functions specific to each ORM (e.g: `mongoose` or `bookshelf`).
+
 
 ## strapi.reload
 

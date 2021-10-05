@@ -27,7 +27,6 @@ To provide the best possible environment for Strapi there are a few requirements
   - MariaDB >= 10.1
   - PostgreSQL >= 10
   - SQLite >= 3
-  - MongoDB >= 3.6
 - A supported operating system
   - Ubuntu >= 18.04 (LTS-Only)
   - Debian >= 9.x
