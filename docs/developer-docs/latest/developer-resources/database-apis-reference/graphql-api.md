@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # GraphQL API
 
-::: strapi GraphQL plugin required
+::: prerequisites
 To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
 :::
 
