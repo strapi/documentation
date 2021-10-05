@@ -1,3 +1,10 @@
+---
+title: Plugins extension - Strapi Developer Docs
+description: …
+---
+
+<!-- TODO: update SEO -->
+
 # Plugins extension
 
 Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the Marketplace or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
