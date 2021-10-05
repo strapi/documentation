@@ -7,8 +7,8 @@ sidebarDepth: 3
 
 # GraphQL API
 
-::: strapi GraphQL plugin required
-To use the GraphQL API, install the [GraphQL](/developer-docs/latest/plugins/graphql.md) plugin.
+::: prerequisites
+To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
 :::
 
 ## Unified response format
@@ -27,6 +27,8 @@ Whatever the query, the response can contain the following fields:
 <!-- TODO: create an entry in the docs to list all errors -->
 
 ## Queries
+
+Queries in GraphQL are used to fetch data without modifying it.
 
 We assume that the [Shadow CRUD](/developer-docs/latest/plugins/graphql.md#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations that mimics basic CRUD operations (findMany, findOne, create, update, delete).
 
@@ -121,6 +123,7 @@ query {
 
 ## Mutations
 
+Mutations in GraphQL are used to modify data (e.g. create, update, delete data).
 ### Create a new entry
 
 :::request Mutation
