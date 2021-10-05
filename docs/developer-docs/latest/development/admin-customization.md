@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 # Admin panel customization
 
-The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Most of its aspects can be [customized](#customizing-the-admin-panel), and plugins can also [extend](#extending-the-admin-panel) it.
+The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customizing-the-admin-panel), and plugins can also [extend](#extending-the-admin-panel) it.
 
 <!-- ? wording: should we use 'admin panel' or 'administration panel' throughout the whole documentation? -->
 
@@ -26,6 +26,7 @@ Customizing the admin panel is helpful to better reflect your brand identity or 
 - The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
 - The [forgotten password email](#forgotten-password-email) can be customized with a template and variables.
 - The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
+<!-- TODO: add theme -->
 
 ### Access URL
 
@@ -77,11 +78,14 @@ The `config` object found at `./admin/src/app.js` stores the admin panel configu
 | `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#updating-logos) on login screen                                                    |
 | `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#updating-the-favicon)                                                        |
 | `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales)) |
+| `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#updating-logos) in the main navigation                                                           |
 | `theme`         | Object           | Overrides or [extends the theme](#extending-the-theme)                                                                                          |
-| `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#toggling-the-display-of-tutorial-videos)                                                            |
 | `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#toggling-strapi-releases-notifications)          |
+
+<!-- TODO: with admin, app.js can require any file stored in … -->
+<!-- to extend admin, files need to be in admin/extensions -->
 
 ::: details Example of a custom configuration for the admin panel:
 
@@ -154,7 +158,7 @@ module.exports = {
   webpack: (config, webpack) => {
     // Note: we provide webpack above so you should not `require` it
     // Perform customizations to webpack config
-    // Important: return the modified config
+    // Important: return the mutated config
     return config;
   },
 
@@ -171,11 +175,17 @@ module.exports = {
 
 * The `en` locale cannot be removed from the build as it is both the fallback (if a translation is not found in a locale, the `en` will be used) and the default locale (used when a user opens the administration panel for the first time).
 * The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-i18n/constants/iso-locales.json).
+<!-- TODO: list is available in file — see latest beta  -->
 :::
 
 ##### Extending translations
 
 Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key.
+
+<!-- TODo: Create /extensions/translations:
+maybe copy translations example code here
++ add exmaple shared by soup -->
+
 
 #### Logos
 
@@ -292,6 +302,10 @@ Only `./admin/app.js` and the files under the `./admin/extensions` folder are be
 :::
 
 ## Extension
+
+<!-- TODO: 
+- either create a plugin that extends the admin panel
+- or (one shot) using src/admin/app.js:  only files required will be build -->
 
 The admin panel can also be extended by plugins. To extend the admin panel:
 
