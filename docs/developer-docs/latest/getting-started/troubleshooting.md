@@ -44,7 +44,7 @@ With the components there is a hidden field called `order` that allows entries t
 
 For the time being there is no recommended way to handle this automatically and instead it may be required for you to create custom controllers to handle this within your own project.
 
-## Why are my app's database and uploads resetting on PaaS?
+## Why are my application's database and uploads resetting on PaaS?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, ect) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
