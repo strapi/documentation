@@ -322,8 +322,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: true,
       title: '📚 Guides',
+      collapsable: true,
       children: [
         ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],

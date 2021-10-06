@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Server API for plugins
 
-A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Server API is about the back end part.
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the [front end](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) of the Strapi application. The Server API is about the back end part.
 
 Creating and using a plugin interacting with the Server API consists in 2 steps:
 
@@ -64,7 +64,7 @@ module.exports = () => {
 
 ### register()
 
-This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
+This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
 
 **Type**: `Function`
 
@@ -74,7 +74,7 @@ This function is called as soon as a plugin is loaded, even before the app is ac
 // path ./strapi-server.js
 
 module.exports = () => ({
-  register() {
+  register({ strapi }) {
     // execute some register code
   },
 });
@@ -92,7 +92,7 @@ The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations/op
 // path: ./strapi-server.js
 
 module.exports = () => ({
-  bootstrap() {
+  bootstrap({ strapi }) {
     // execute some bootstrap code
   },
 });
@@ -110,7 +110,7 @@ This function is called to cleanup the plugin (close connections, remove listene
 // path: ./strapi-server.js
 
 module.exports = () => ({
-  destroy() {
+  destroy({ strapi }) {
     // execute some destroy code
   },
 });
@@ -136,9 +136,9 @@ const config = require('./config');
 
 module.exports = () => ({
   config: {
-    default: ({ env }) => { optionA: true },
+    default: ({ env }) => ({ optionA: true }),
     validator: (config) => { 
-      if (typeof config.optionA !== boolean) {
+      if (typeof config.optionA !== 'boolean') {
         throw new Error('optionA has to be a boolean');
       }
     },
@@ -179,8 +179,8 @@ const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
 module.exports = [
-  contentTypeA, // should re-use the same
-  contentTypeB,
+  'content-type-a': contentTypeA, // should re-use the singularName of the content-type
+  'content-type-b': contentTypeB, 
 ];
 ```
 
@@ -190,8 +190,8 @@ module.exports = [
 module.exports = {
   info: {
     tableName: 'content-type',
-    singularName: 'contentTypeA', // camel case mandatory
-    pluralName: 'contentTypeAs', // camel case mandatory
+    singularName: 'content-type-a', // kebab-case mandatory
+    pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
     description: 'A regular content type'
     kind: 'collectionType'
@@ -221,6 +221,7 @@ module.exports = {
 ### Routes
 
 <!-- ? Have we decided on/implemented routes behavior yet? -->
+<!-- TODO: update once routing docs are updated -->
 
 An array of [routes](/developer-docs/latest/development/backend-customization/routing.md) configuration.
 
@@ -235,6 +236,7 @@ const routes = require('./routes');
 
 module.exports = () => ({
   routes,
+  type: 'content-api' // can also be 'admin-api' depending on the type of route
 });
 ```
 
@@ -366,6 +368,7 @@ module.exports = {
   policyB,
 };
 ```
+<!-- TODO: update example when policies docs are updated -->
 
 ```js
 // path: ./policies/policy-a.js
@@ -382,7 +385,9 @@ module.exports = (ctx, next) => {
 
 ### Middlewares
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) the plugin provides.
+<!-- TODO: check if it should be updated after updating middleware docs -->
+
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares) the plugin provides.
 
 **Type**: `Object`
 
@@ -412,39 +417,43 @@ module.exports = {
 ```js
 // path: ./middlewares/middleware-a.js
 
-module.exports = (strapi) => ({
-  defaults: { enabled: true }, // default settings,
-  beforeInitialize() {},
-  initialize() {},
-});
+module.exports = (options, { strapi }) => {
+ return async (ctx, next) => {
+    const start = Date.now();
+    await next();
+    const delta = Math.ceil(Date.now() - start);
+
+    strapi.log.http(`${ctx.method} ${ctx.url} (${delta} ms) ${ctx.status}`);
+ };
+};
 ```
 
 ## Usage
 
-Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and shortcut getters.
+Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
 
-While top-level getters imply chaining functions, global getters are syntactic sugar shortcuts that allow direct access using a feature's uid:
+While top-level getters imply chaining functions, global getters are syntactic sugar that allow direct access using a feature's uid:
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
-strapi.api('apiName').controller('controllerName')
-strapi.plugin('pluginName').controller('controllerName')
+strapi.api('api-name').controller('controller-name')
+strapi.plugin('plugin-name').controller('controller-name')
 
 // Access an API or a plugin controller using a global getter
-strapi.controller('api::apiName.controllerName')
-strapi.controller('plugin::pluginName.controllerName')
+strapi.controller('api::api-name.controller-name')
+strapi.controller('plugin::plugin-name.controller-name')
 ```
 
 :::details Top-level getter syntax examples
 
 ```js
-strapi.plugin('pluginName').config
-strapi.plugin('pluginName').routes
-strapi.plugin('pluginName').controller('controllerName')
-strapi.plugin('pluginName').service('serviceName')
-strapi.plugin('pluginName').contentType('contentTypeName')
-strapi.plugin('pluginName').policy('policyName')
-strapi.plugin('pluginName').middleware('middlewareName')
+strapi.plugin('plugin-name').config
+strapi.plugin('plugin-name').routes
+strapi.plugin('plugin-name').controller('controller-name')
+strapi.plugin('plugin-name').service('service-name')
+strapi.plugin('plugin-name').contentType('content-type-name')
+strapi.plugin('plugin-name').policy('policy-name')
+strapi.plugin('plugin-name').middleware('middleware-name')
 ```
 
 :::
@@ -452,10 +461,11 @@ strapi.plugin('pluginName').middleware('middlewareName')
 :::details Global getter syntax examples
 
 ```js
-strapi.controller('plugin::pluginName.controllerName');
-strapi.service('plugin::pluginName.serviceName');
-strapi.contentType('plugin::pluginName.contentTypeName');
-strapi.policy('plugin::pluginName.policyName');
-strapi.middleware('plugin::pluginName.middlewareName');
+strapi.controller('plugin::plugin-name.controller-name');
+strapi.service('plugin::plugin-name.service-name');
+strapi.contentType('plugin::plugin-name.content-type-name');
+strapi.policy('plugin::plugin-name.policy-name');
+strapi.middleware('plugin::plugin-name.middleware-name');
 ```
+
 :::
