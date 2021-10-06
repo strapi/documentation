@@ -116,6 +116,16 @@ const sidebar = {
       ],
     },
     {
+      title: '🔧 Development',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
+        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ],
+    },
+    {
       title: '🧩 Strapi plugins',
       path: '/developer-docs/latest/plugins/plugins-intro.html',
       collapsable: false,
@@ -128,16 +138,6 @@ const sidebar = {
         ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
       ],
       sidebarDepth: 1,
-    },
-    {
-      title: '🔧 Development',
-      collapsable: false,
-      children: [
-        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
-        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
-        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
-        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
-      ],
     },
     {
       title: '♻️ Update & Migration',
