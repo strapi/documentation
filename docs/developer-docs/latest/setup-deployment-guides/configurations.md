@@ -72,28 +72,6 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 :::
 
-::: tab Mongoose
-
-- `defaultConnection` (string): Connection by default for models which are not related to a specific `connection`. Default value: `default`.
-- `connections` List of all available connections.
-  - `default`
-    - `connector` (string): Connector used by the current connection. Will be `mongoose`.
-    - `settings` Useful for external session stores such as Redis.
-      - `client` (string): Database client to create the connection. Will be `mongo`.
-      - `host` (string): Database host name. Default value: `localhost`.
-      - `port` (integer): Database port. Default value: `27017`.
-      - `database` (string): Database name.
-      - `username` (string): Username used to establish the connection.
-      - `password` (string): Password used to establish the connection.
-      - `uri` (string): This can overide all previous configurations - _optional_
-    - `options` Options used for database connection.
-      - `ssl` (boolean): For ssl database connection.
-      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
-      - `debug` (boolean): Show database exchanges and errors.
-      - `authenticationDatabase` (string): Connect with authentication.
-
-:::
-
 ::::
 
 ::::: tabs card
@@ -216,37 +194,6 @@ module.exports = ({ env }) => ({
 
 ::::
 
-:::: tab MongoDB
-
-:::caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        client: 'mongo',
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 27017),
-        database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-      },
-      options: {
-        authenticationDatabase: env('AUTHENTICATION_DATABASE'),
-        ssl: env('DATABASE_SSL'),
-      },
-    },
-  },
-});
-```
-
-::::
-
 :::::
 
 ::: tip
@@ -301,7 +248,7 @@ await pluginStore.set({
 
 #### Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **MongoDB**, **SQLite**, **MySQL** and
+Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
 **MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
 ::: tip
@@ -589,7 +536,7 @@ module.exports = ({ env }) => ({
 | Property                      | Description                                                                                                                                                       | Type         | Default |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
 | `responses`                   | Global API response configuration                                                                                                                                 | Object       |         |
-| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
+| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
 | `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
 | `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                       | Integer      | `null`  |
@@ -904,7 +851,6 @@ module.exports = {
 
 :::
 
-
 ##### Response middlewares
 
 - [`gzip`](https://en.wikipedia.org/wiki/Gzip)
@@ -1112,27 +1058,9 @@ You will need to install the plugin using the normal `npm install the-plugin-nam
 
 :::: tabs card
 
-::: tab Mongoose
-
-As an example, for using the `mongoose-simple-random` plugin for MongoDB, you can register it like this:
-
-**Path —** `./config/functions/mongoose.js`.
-
-```js
-'use strict';
-
-const random = require('mongoose-simple-random');
-
-module.exports = (mongoose, connection) => {
-  mongoose.plugin(random);
-};
-```
-
-:::
-
 ::: tab Bookshelf
 
-Another example would be using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
+When using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
 
 **Path —** `./config/functions/bookshelf.js`.
 

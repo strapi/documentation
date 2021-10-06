@@ -30,7 +30,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
 - In your database, find the table `core_store`
 - In that table, find the row with the key `plugin_users-permissions_grant`
 - In that row, find the `value` column (it's JSON)
-- In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ becareful to respect the JSON format)
+- In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ make sure to respect the JSON format)
 
 ```diff
 ...
@@ -54,7 +54,7 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
 - In your database, find the collection `core_store`
 - In that collection, find the document with the key `plugin_users-permissions_grant`
 - In that document, find the `value` field (it's JSON)
-- In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ becareful to respect the JSON format)
+- In this JSON, find the `instagram` attribute and edit it to add `"scope": ["user_profile"]` (⚠️ make sure to respect the JSON format)
 
 ```diff
 ...
