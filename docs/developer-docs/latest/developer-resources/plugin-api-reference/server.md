@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 # Server API for plugins
 
-A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Server API is about the back end part.
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the [front end](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) of the Strapi application. The Server API is about the back end part.
 
 Creating and using a plugin interacting with the Server API consists in 2 steps:
 
@@ -64,7 +64,7 @@ module.exports = () => {
 
 ### register()
 
-This function is called as soon as a plugin is loaded, even before the app is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
+This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
 
 **Type**: `Function`
 
@@ -433,9 +433,9 @@ module.exports = (options, { strapi }) => {
 
 ## Usage
 
-Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and shortcut getters.
+Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
 
-While top-level getters imply chaining functions, global getters are syntactic sugar shortcuts that allow direct access using a feature's uid:
+While top-level getters imply chaining functions, global getters are syntactic sugar that allow direct access using a feature's uid:
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
