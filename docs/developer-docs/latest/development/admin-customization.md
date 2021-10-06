@@ -31,7 +31,7 @@ By default, the administration panel is exposed via [http://localhost:1337/admin
 
 **Example:**
 
-To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) file:
+To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) file:
 
 ```js
 //path: ./config/server.js
@@ -46,7 +46,7 @@ module.exports = ({ env }) => ({
 ```
 
 :::strapi Advanced server settings
-For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
+For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
 :::
 
 #### Host and port
@@ -178,11 +178,30 @@ module.exports = {
 
 ##### Extending translations
 
-Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key.
+Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
-<!-- TODo: Create /extensions/translations:
-maybe copy translations example code here
-+ add exmaple shared by soup -->
+```js
+// path: /src/admin/app.js
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      fr: {
+        or: 'OR',
+        'request.error.model.unknown': "This model doesn't exist",
+        skipToContent: 'Skip to content',
+        submit: 'Submit',
+        Totos: 'tata',
+        "content-type-builder.my-translation-key": "test"
+      },
+    },
+  },
+  bootstrap() {},
+};
+```
+
+If more translations files should be added, place them in `/extensions/translations` folder.
 
 #### Logos
 

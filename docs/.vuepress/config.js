@@ -116,6 +116,16 @@ const sidebar = {
       ],
     },
     {
+      title: '🔧 Development',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
+        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ],
+    },
+    {
       title: '🧩 Strapi plugins',
       path: '/developer-docs/latest/plugins/plugins-intro.html',
       collapsable: false,
@@ -292,8 +302,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: true,
       title: '📚 Guides',
+      collapsable: true,
       children: [
         ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
