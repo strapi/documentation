@@ -3,7 +3,7 @@ title: API Reference - Strapi Developer Documentation
 description: Discover our concise reference documentation containing all the information to work with your Strapi API
 ---
 
-# API reference
+# Global strapi API reference
 
 - strapi
   - [.admin](#strapi-admin)
