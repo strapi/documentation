@@ -1,6 +1,7 @@
 ---
 title: Plugins extension - Strapi Developer Docs
 description: …
+sidebarDepth: 2
 ---
 
 <!-- TODO: update SEO -->
@@ -9,7 +10,7 @@ description: …
 
 Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the Marketplace or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
 
-Plugin extensions code sit in the `./src/extensions` folder. Some plugins automatically create files there, ready to be modified. You can also create files manually to add some custom configuration.
+Plugin extensions code is located in the `/src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified. You can also create files manually to add some custom configuration.
 <!-- TODO: add link to new project structure when updated -->
 
 :::details Example of extensions folder structure:
@@ -43,22 +44,29 @@ New versions of Strapi are released with [migration guides](/developer-docs/late
 
 To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backend-customization.md#models):
 
-1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
+1. _(optional)_ Create the `/src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Create a `content-types` subfolder.
-<!-- TODO: add link to singularName in models description -->
-4. Inside the `content-types` subfolder, create another subfolder with the same [singularName]() as the content-type to overwrite.
+4. Inside the `content-types` subfolder, create another subfolder with the same [singularName](/developer-docs/latest/development/backend-customization/models.md#model-information) as the content-type to overwrite.
 5. Inside this `content-types/name-of-content-type` subfolder, define the new schema for the Content-Type in a `schema.json` file (see [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) documentation).
 6. _(optional)_ Repeat steps 4 and 5 for each Content-Type to overwrite.
-<!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->
+<!-- TODO: remove this comment — The links to the models section above won't work in this PR, but will work once the content is merged with the database PR -->
 
 ## Extending a plugin's interface
 
-A plugin's interface can be extended using Strapi's programmatic APIs such as the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md) and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md).
+When a Strapi application is initializing, plugins, extensions and global lifecycle functions events happen in the following order:
 
-To extend a plugin's interface:
+1. Plugins are loaded and their interfaces are exposed.
+2. Files in `src/extensions` are loaded.
+3. The `register()` and `bootstrap()` functions in `src/index.js` are called.
 
-1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
+A plugin's interface can be extended at step 2 (i.e. within `src/extensions`) or step 3 (i.e. inside `src/index.js`).
+
+### Within the `src/extensions` folder
+
+To extend a plugin's interface using the `src/extensions` folder:
+
+1. _(optional)_ Create the `/src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Depending on what needs to be extended:
     * create a `strapi-server.js` file to extend a plugin's back end using the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)
@@ -69,7 +77,7 @@ To extend a plugin's interface:
 
 <!-- ? is it `pluginConfig` or just `plugin` in the example below? -->
 ```js
-// path: ./extensions/some-plugin-to-extend/strapi-server.js
+// path: /extensions/some-plugin-to-extend/strapi-server.js
 
 module.exports = (plugin, strapi) => {
   pluginConfig.controllers.controllerA.find = (ctx) => {};
@@ -83,7 +91,14 @@ module.exports = (plugin, strapi) => {
   });
 };
 ```
+
 :::
+
+### Within the `src/index.js` file
+
+To extend a plugin's interface within `src/index.js`, use the `bootstrap()` and `register()` (see [functions]((/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)) documentation).
+<!-- TODO: remove this comment — link above won't work until merged with the "Reworked configurations" PR -->
+
 
 ## Understanding the Content-Types loading order
 
@@ -94,5 +109,5 @@ The final schema of the content-types depends on the following loading order:
 1. the content-types of the original plugin,
 2. the content-types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
 3. the content-types declarations in the [`content-types` key exported from `strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
+4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations.html#register) of the Strapi application
 <!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->
-<!-- TODO: add register as step 4 -->
