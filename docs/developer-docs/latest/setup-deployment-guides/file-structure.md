@@ -92,7 +92,7 @@ my-project
 │     │           ├ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├─── <a href="">policies</a>
-│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a>
+│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
 ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html#configuration-using-environment-variables">.env</a>
 └ package.json
   </code>
