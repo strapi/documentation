@@ -15,16 +15,22 @@ description: Discover the project structure of any default Strapi application.
 
 # Project structure
 
-By default, the structure of your Strapi project looks as shown below:
+By default, the structure of a Strapi project created without the starter CLI looks like the following:
 
-<!-- ? where are the controllers, functions and services when you create custom ones ? -->
-<!-- ? where is the custom 404 message file ? -->
-<!-- ? where will EE files and folders be ? -->
-<!-- ? are both .cache and build folders used to build the admin panel ? -->
+:::: note
+If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
 
-::: strapi Interactive map
-The folder structure below is interactive. You can click on highlighted elements to go directly to the dedicated documentation.
+::: details Structure of a project created with the starter CLI
+
+```sh
+my-project
+├─── frontend # starter folder
+├─── backend  # template folder, has the default structure of a project
+└─── node_modules
+```
+
 :::
+::::
 
 <!-- TODO: remove /documentation from URLs once moved to docs.strapi.io -->
 
@@ -36,7 +42,7 @@ The folder structure below is interactive. You can click on highlighted elements
 ├──── <a href="/documentation/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
 ├──── config <span class="token comment"># API configurations</span>
 │     ├──── src
-│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#cron-tasks">cron-tasks.js</a>
+│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
 │     │     └ response-handlers.js
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
@@ -81,22 +87,13 @@ The folder structure below is interactive. You can click on highlighted elements
 │     │           ├──── admin
 │     │           │     └──── src
 │     │           │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
-│     │           └──── <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
 │     │           ├ package.json
+│     │           ├ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     └─── <a href="">policies</a>
+│     ├─── <a href="">policies</a>
+│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a>
 ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html#configuration-using-environment-variables">.env</a>
-└ .package.json
+└ package.json
   </code>
 </pre>
-  
-If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), the project structure looks like this:
-
-```sh
-my-project
-├─── frontend # starter folder
-├─── backend  # template folder
-└─── node_modules
-```
-
-and the `backend` folder has the default structure described above.
