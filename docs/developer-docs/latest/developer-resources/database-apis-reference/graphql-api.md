@@ -13,18 +13,36 @@ To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development
 
 ## Unified response format
 
-Whatever the query, the response can contain the following fields:
+Responses are unified with the GraphQL API in that:
 
-- `data`: the response data itself, which could be:
-  - a single entry, as an object with the following keys:
-    - `id` (string|number)
-    - `attributes` (object)
-    - `meta` (object)
-  - a list of entries, as an array of objects,
-  - or a custom response
+- queries and mutations that return information for a single entry mainly use a `XxxEntityResponse` type
+- queries and mutations that return i️nformation for multiple entries mainly use a `XxxEntityResponseCollection` type, which includes `meta` information (with [pagination](#pagination)) in addition to the data itself
 
-- `meta`(object): information about pagination, publication state, available locales…
-<!-- TODO: create an entry in the docs to list all errors -->
+::: details Example: Response formats for queries and mutations with an example 'Article' content-type
+
+```graphql
+type ArticleEntityResponse {
+    data: ArticleEntity
+}
+
+type ArticleEntityResponseCollection {
+    data: [ArticleEntityResponse!]!
+    meta: ResponseCollectionMeta!
+}
+
+query {
+    article(...): ArticleEntityResponse # find one
+    articles(...): ArticleEntityResponseCollection # find many
+}
+
+mutation {
+    createArticle(...): ArticleEntityResponse # create
+    updateArticle(...): ArticleEntityResponse # update
+    deleteArticle(...): ArticleEntityResponse # delete
+}
+```
+
+:::
 
 ## Queries
 

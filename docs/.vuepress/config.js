@@ -243,19 +243,12 @@ const sidebar = {
           ],
         },
         {
-          title: 'Database APIs Reference',
+          title: 'APIs Reference',
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            {
-              title: 'Content API',
-              collapsable: true,
-              path: '/developer-docs/latest/developer-resources/database-apis-reference/content-api.html',
-              children: [
-                ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
-                ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
-              ]
-            },
+            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
             {
               title: 'Query Engine API',
               path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
