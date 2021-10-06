@@ -973,15 +973,23 @@ module.exports = {
 
 ### Functions
 
-The `./config/functions/` folder contains a set of JavaScript files in order to add dynamic and logic based configurations.
+The `/src/index.js` file contains some functions that can be used to add dynamic and logic based configurations.
 
-All functions that are exposed in this folder are accessible via `strapi.config.functions['fileName']();`
+#### Register
 
-<!-- The text above will be identified as a broken link by the check-links VuePress plugin, because its syntax looks like an empty link. You can safely ignore the error. -->
+**Path —** `/src/index.js`.
+
+The `register` function is an asynchronous function that runs before the application is initialized.
+It can be used to:
+
+- [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface))
+- extend content-types programmatically
+
+<!-- TODO: add example here -->
 
 #### Bootstrap
 
-**Path —** `./config/functions/bootstrap.js`.
+**Path —** `/src/index.js`
 
 The `bootstrap` function is called at every server start. You can use it to add a specific logic at this moment of your server's lifecycle.
 
