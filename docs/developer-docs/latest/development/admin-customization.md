@@ -31,7 +31,7 @@ By default, the administration panel is exposed via [http://localhost:1337/admin
 
 **Example:**
 
-To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) file:
+To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) file:
 
 ```js
 //path: ./config/server.js
@@ -46,7 +46,7 @@ module.exports = ({ env }) => ({
 ```
 
 :::strapi Advanced server settings
-For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
+For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
 :::
 
 #### Host and port
