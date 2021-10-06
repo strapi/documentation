@@ -74,10 +74,10 @@ my-project
 │     │           └ (componentB).json
 │     ├──── <a href="/documentation/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
 │     │     └──── (plugin-to-be-extended)
-│     │           └──── content-types
-│     │                 ├──── (content-type-name)
-│     │                 │     └ schema.json
-│     │                 └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
+│     │           ├──── content-types
+│     │           │     └──── (content-type-name)
+│     │           │           └ schema.json
+│     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├──── <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │     └──── (middleware-name)
 │     │           ├ defaults.json
