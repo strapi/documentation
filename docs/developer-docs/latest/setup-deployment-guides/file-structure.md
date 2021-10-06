@@ -3,43 +3,97 @@ title: Project Structure - Strapi Developer Documentation
 description: Discover the project structure of any default Strapi application.
 ---
 
+<style lang="scss" scoped>
+  pre {
+    a {
+      color: #ffbf00;
+      font-weight: 600;
+      /* letter-spacing: .1px; */
+    }
+  }
+</style>
+
 # Project structure
 
-<!-- TODO: update this document for v4 -->
+By default, the structure of a Strapi project created without the starter CLI looks like the following:
 
-By default, the structure of your Strapi project looks as shown below:
+:::: note
+If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
 
-- `/.cache`: contains files used to build your admin panel.
-- [`/admin`](/developer-docs/latest/development/admin-customization.md): _(optional)_ contains your admin customization files.
-- `/api`: contains the business logic of your project split into sub-folders per API.
-  - `**`
-    - `/config`: contains the API's configurations ([`routes`](/developer-docs/latest/development/backend-customization/routing.md), [`policies`](/developer-docs/latest/development/backend-customization/policies.md), etc.).
-    - [`/controllers`](/developer-docs/latest/development/backend-customization/controllers.md): contains the API's custom controllers.
-    - [`/models`](/developer-docs/latest/development/backend-customization/models.md): contains the API's models.
-    - [`/services`](/developer-docs/latest/development/backend-customization/services.md): contains the API's custom services.
-- `/build`: contains your admin panel UI build.
-- [`/config`](/developer-docs/latest/setup-deployment-guides/configurations.md)
-  - [`/functions`](/developer-docs/latest/setup-deployment-guides/configurations.md#functions): contains lifecycle or generic functions of the project.
-    - [`/responses`](/developer-docs/latest/development/backend-customization/requests-responses.md): contains custom responses.
-      - `404.js`: contains a template for constructing your custom 404 message.
-    - [`bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap): contains the code executed at the application start.
-    - [`cron.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#cron-tasks): contains the cron tasks.
-  - [`server.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#server): contains the general configurations of the project.
-  - [`database.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#database): contains the database configurations of the project.
-- `/extensions`: contains the files to extend installed plugins.
-- [`/hooks`](/developer-docs/latest/setup-deployment-guides/configurations.md#hooks): contains the custom hooks of the project.
-- [`/middlewares`](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares): contains the custom middlewares of the project.
-- [`/plugins`](/developer-docs/latest/setup-deployment-guides/configurations.md#plugins): contains your local plugins.
-- [`/public`](/developer-docs/latest/setup-deployment-guides/configurations.md#public-assets): contains the files accessible to the outside world.
-- `/node_modules`: contains the npm packages used by the project.
-
-If your Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), the project structure looks like this:
+::: details Structure of a project created with the starter CLI
 
 ```sh
 my-project
-  /frontend # starter folder
-  /backend  # template folder
-  /node_modules
+├─── frontend # starter folder
+├─── backend  # template folder, has the default structure of a project
+└─── node_modules
 ```
 
-and the `backend` folder has the default structure described above.
+:::
+::::
+
+<!-- TODO: remove /documentation from URLs once moved to docs.strapi.io -->
+
+<pre>
+  <code>
+. <span class="token comment"># root of the application</span>
+├──── .cache <span class="token comment"># files used to build the admin panel</span>
+├──── .tmp
+├──── <a href="/documentation/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
+├──── config <span class="token comment"># API configurations</span>
+│     ├──── src
+│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
+│     │     └ response-handlers.js
+│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
+│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
+│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middleware.js</a>
+│     ├ <a href="/documentation/developer-docs/latest/development/plugins-development.html#configuring-a-plugin">plugins.js</a>
+│     └ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.js</a>
+├──── database
+│     └──── migrations
+├──── node_modules <span class="token comment"># npm packages used by the project</span>
+├──── <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
+│     └──── uploads
+├──── src
+│     ├──── admin <span class="token comment"># admin customization files</span>
+│     │     ├ <a href="/documentation/developer-docs/latest/development/admin-customization.html#changing-the-configuration">app.js</a>
+│     │     └ <a href="/documentation/developer-docs/latest/development/admin-customization.html#customizing-the-webpack-configuration">webpack.config.js</a>
+│     ├──── api <span class="token comment"># business logic of the project split into sub-folders per API</span>
+│     │     └──── (api-name)
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html">content-types</a>
+│     │           │     └──── (content-type-name)
+│     │           │           └ <a href="/documentation/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html#how-to-create-a-policy">policies</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/routing.html">routes</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/services.html">services</a>
+│     │           └ index.js
+│     ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html#components">components</a>
+│     │     └──── (category-name)
+│     │           ├ (componentA).json
+│     │           └ (componentB).json
+│     ├──── <a href="/documentation/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
+│     │     └──── (plugin-to-be-extended)
+│     │           └──── content-types
+│     │                 ├──── (content-type-name)
+│     │                 │     └ schema.json
+│     │                 └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
+│     ├──── <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
+│     │     └──── (middleware-name)
+│     │           ├ defaults.json
+│     │           └ index.js
+│     ├──── <a href="/documentation/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
+│     │     └──── (plugin-name)
+│     │           ├──── admin
+│     │           │     └──── src
+│     │           │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           ├ package.json
+│     │           ├ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
+│     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
+│     ├─── <a href="">policies</a>
+│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a>
+├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html#configuration-using-environment-variables">.env</a>
+└ package.json
+  </code>
+</pre>
