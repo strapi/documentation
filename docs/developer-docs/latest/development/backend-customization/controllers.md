@@ -72,7 +72,7 @@ module.exports = {
       entities = await strapi.services.restaurant.find(ctx.query);
     }
 
-    return entities.map(entity => sanitizeEntity(entity, { model: strapi.models.restaurant }));
+    return entities.map(entity => sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') }));
   },
 };
 ```
@@ -97,7 +97,7 @@ module.exports = {
     const { id } = ctx.params;
 
     const entity = await strapi.services.restaurant.findOne({ id });
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
@@ -149,7 +149,7 @@ module.exports = {
     } else {
       entity = await strapi.services.restaurant.create(ctx.request.body);
     }
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
@@ -183,7 +183,7 @@ module.exports = {
       entity = await strapi.services.restaurant.update({ id }, ctx.request.body);
     }
 
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
@@ -208,7 +208,7 @@ module.exports = {
     const { id } = ctx.params;
 
     const entity = await strapi.services.restaurant.delete({ id });
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
@@ -269,7 +269,7 @@ module.exports = {
       entity = await strapi.services.restaurant.createOrUpdate(ctx.request.body);
     }
 
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
@@ -292,7 +292,7 @@ module.exports = {
 
   async delete(ctx) {
     const entity = await strapi.services.restaurant.delete();
-    return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
   },
 };
 ```
