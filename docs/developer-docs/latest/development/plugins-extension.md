@@ -10,8 +10,7 @@ sidebarDepth: 2
 
 Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the Marketplace or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
 
-Plugin extensions code is located in the `/src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified. You can also create files manually to add some custom configuration.
-<!-- TODO: add link to new project structure when updated -->
+Plugin extensions code is located in the `/src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified.
 
 :::details Example of extensions folder structure:
 
@@ -33,8 +32,17 @@ Plugin extensions code is located in the `/src/extensions` folder (see [project 
 
 Plugins can be extended in 2 ways:
 
-- extending the plugin Content-Types
-- extending the plugin interface (e.g. to add controllers, services, policies, middlewares and more)
+- [extending the plugin's Content-Types](#extending-a-plugin-s-content-types)
+- [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
+
+A plugin's Content-Types can be extended in 2 ways: using the programmatic interface within `strapi-server.js` and by overriding the content-types schemas.
+
+The final schema of the content-types depends on the following loading order:
+
+1. the content-types of the original plugin,
+2. the content-types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
+3. the content-types declarations in the [`content-types` key exported from `strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
+4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations.html#register) of the Strapi application
 
 :::warning
 New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required.
@@ -122,12 +130,5 @@ module.exports = {
 
 ## Understanding the Content-Types loading order
 
-A plugin's Content-Types can be extended in 2 ways: using the programmatic interface within `strapi-server.js` and by overriding the content-types schemas.
 
-The final schema of the content-types depends on the following loading order:
-
-1. the content-types of the original plugin,
-2. the content-types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the content-types declarations in the [`content-types` key exported from `strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
-4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations.html#register) of the Strapi application
 <!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->
