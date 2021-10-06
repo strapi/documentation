@@ -82,7 +82,7 @@ No, currently does not have the ability to allow for changing the default id nam
 
 ## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
-Currently it is not possible to filter on dynamic zones or polymorphic relations. This is something we are looking into, if you want see more information please take a look at the following [GitHub issue](https://github.com/strapi/strapi/issues/5124).
+At this time we do not plan to allow for filtering on dynamic zones or polymorphic relations due to various complexity and performance issues that come from doing so.
 
 ## How do I setup SSL with Strapi?
 
