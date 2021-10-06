@@ -209,7 +209,7 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
 
 :::note
-`intlLabel.id` are ids used in translation files (`/[plugin-name]/admin/src/translations/[language].json`)
+`intlLabel.id` are ids used in translation files (`[plugin-name]/admin/src/translations/[language].json`)
 :::
 
 **Example:**
@@ -270,7 +270,7 @@ The function takes 2 arguments:
 | second argument | Array of Objects | Links included in the section                                                                                                                                                                                                                                                                                                 |
 
 :::note
-`intlLabel.id` are ids used in translation files (`/[plugin-name]/admin/src/translations/[language].json`)
+`intlLabel.id` are ids used in translation files (`[plugin-name]/admin/src/translations/[language].json`)
 :::
 
 **Example:**
