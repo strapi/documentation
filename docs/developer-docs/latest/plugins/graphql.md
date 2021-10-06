@@ -185,6 +185,7 @@ type Mutation {
 Strapi provides a programmatic API to customize GraphQL, which allows:
 
 * disabling some operations for the [Shadow CRUD](#shadow-crud)
+* [using getters](#using-getters) to return information about allowed operations
 * registering and using an `extension` object to extend the existing schema (e.g. extend types or  define custom resolvers)
 
 ::: details Example of a full GraphQL customization file:
@@ -261,15 +262,25 @@ module.exports = ({ strapi }) => {
 
 ### Disabling operations in the Shadow CRUD
 
-The `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin exposes functions that can be used to disable some actions on Content-Types:
+The `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
 
-| Function             | Description                                    | Argument type    | Possible argument values |
-| -------------------- | ---------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
-| `disable()`          | Fully disable the Content-Type                 | -                | -                                                                                                          |
-| `disableQueries()`   | Only disable queries for the Content-Type      | -                | -                                                                                                          |
-| `disableMutations()` | Only disable mutations for the Content-Type    | -                | -                                                                                                          |
-| `disableAction()`    | Disable a specific action for the Content-Type | String           | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>   |
+| Content-type function | Description                                    | Argument type    | Possible argument values |
+| --------------------  | ---------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| `disable()`           | Fully disable the Content-Type                 | -                | -                                                                                                          |
+| `disableQueries()`    | Only disable queries for the Content-Type      | -                | -                                                                                                          |
+| `disableMutations()`  | Only disable mutations for the Content-Type    | -                | -                                                                                                          |
+| `disableAction()`     | Disable a specific action for the Content-Type | String           | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>   |
 | `disableActions()`    | Disable specific actions for the Content-Type  | Array of Strings | Multiple values from the list: <ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>  |
+
+Actions can also be disabled at a field level, with the following functions:
+
+| Field function     | Description                      |
+| ------------------ | -------------------------------- |
+| `disable()`        | Fully disable the field          |
+| `disableOutput()`  | Disable the output on a field    |
+| `disableInput()`   | Disable the input on a field     |
+| `disableFilters()` | Disable filters input on a field |
+
 
 <!-- TODO: add field-related actions: disable, disableOutput, disableInput, disableFilters -->
 
@@ -286,6 +297,32 @@ strapi
   .shadowCRUD('api::restaurant.restaurant')
   .disableAction('find')
 ```
+
+### Using getters
+
+The following getters can be used to retrieve information about operations allowed on content-types:
+
+| Content-type getter        | Description                                                       | Argument type | Possible argument values                                                                                              |
+| -------------------------- | ----------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `isEnabled()`              | Returns whether a content-type is enabled                         | -             | -                                                                                                                     |
+| `isDisabled()`             | Returns whether a content-type is disabled                        | -             | -                                                                                                                     |
+| `areQueriesEnabled()`      | Returns whether queries are enabled on a content-type             | -             | -                                                                                                                     |
+| `areQueriesDisabled()`     | Returns whether queries are disabled on a content-type            | -             | -                                                                                                                     |
+| `areMutationsEnabled()`    | Returns whether mutations are enabled on a content-type           | -             | -                                                                                                                     |
+| `areMutationsDisabled()`   | Returns whether mutations are disabled on a content-type          | -             | -                                                                                                                     |
+| `isActionEnabled(action)`  | Returns whether the passed `action` is enabled on a content-type  | String        | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul> |
+| `isActionDisabled(action)` | Returns whether the passed `action` is disabled on a content-type | String        | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul> |
+
+The following getters can be used to retrieve information about operations allowed on fields:
+
+| Field getter          | Description                                   |
+| --------------------- | --------------------------------------------- |
+| `isEnabled()`         | Returns whether a field is enabled            |
+| `isDisabled()`        | Returns whether a field is disabled           |
+| `hasInputEnabled()`   | Returns whether a field has input enabled     |
+| `hasOutputEnabled()`  | Returns whether a field has output enabled    |
+| `hasFiltersEnabled()` | Returns whether a field has filtering enabled |
+
 
 ### Extending the schema
 
@@ -331,7 +368,7 @@ strapi.plugin('graphql').service('extension').use(extension)
 
 ## Usage with the Users & Permissions plugin
 
-<!-- TODO: is an optional plugin -->
+The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is an optional plugin that allows protecting the API with a full authentication process.
 
 ### Registration
 

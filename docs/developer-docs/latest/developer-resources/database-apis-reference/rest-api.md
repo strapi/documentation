@@ -6,9 +6,11 @@ sidebarDepth: 3
 
 # REST API
 
+The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates. [API parameters](#api-parameters) can be used to refine the requests.
+
 ## API Endpoints
 
-Creating a Content-Type automatically creates some REST API endpoints available to interact with it.
+Creating a content-type automatically creates some REST API endpoints available to interact with it.
 
 :::note
 [Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
@@ -382,7 +384,7 @@ Deletes an entry by id and returns its value.
 
 ## API Parameters
 
-Query parameters use the LHS bracket syntax.
+Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
 
 :::caution
 <!-- ? is it still relevant? -->
@@ -476,14 +478,16 @@ await request(`/api/books?${query}`);
 
 #### Deep filtering
 
+Deep filtering is filtering on a relation's fields.
+
 :::request Example request: Find restaurants owned by a chef who belongs to a 5-star restaurant
 `GET /api/restaurants?filters[chef][restaurant][star][$eq]=5`
 :::
 
 ::: caution
 
-- Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of your query.
-- Deep filtering isn't available for polymorphic relations. This relation type is used in `media`, `component` and `dynamic zone` fields.
+- Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
+- Deep filtering isn't available for polymorphic relations.
 
 :::
 
