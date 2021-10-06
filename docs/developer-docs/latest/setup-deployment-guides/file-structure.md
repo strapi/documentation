@@ -15,16 +15,22 @@ description: Discover the project structure of any default Strapi application.
 
 # Project structure
 
-By default, the structure of your Strapi project looks as shown below:
+By default, the structure of a Strapi project created without the starter CLI looks like the following:
 
-<!-- ? where are the controllers, functions and services when you create custom ones ? -->
-<!-- ? where is the custom 404 message file ? -->
-<!-- ? where will EE files and folders be ? -->
-<!-- ? are both .cache and build folders used to build the admin panel ? -->
+:::: note
+If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), the project structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure described hereafter.
 
-::: strapi Interactive map
-The folder structure below is interactive. You can click on highlighted elements to go directly to the dedicated documentation.
+::: details Structure of a project created with the starter CLI
+
+```sh
+my-project
+├─── frontend # starter folder
+├─── backend  # template folder
+└─── node_modules
+```
+
 :::
+::::
 
 <!-- TODO: remove /documentation from URLs once moved to docs.strapi.io -->
 
@@ -89,14 +95,4 @@ The folder structure below is interactive. You can click on highlighted elements
 └ .package.json
   </code>
 </pre>
-  
-If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), the project structure looks like this:
 
-```sh
-my-project
-├─── frontend # starter folder
-├─── backend  # template folder
-└─── node_modules
-```
-
-and the `backend` folder has the default structure described above.
