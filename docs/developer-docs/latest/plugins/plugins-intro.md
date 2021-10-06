@@ -12,6 +12,23 @@ Strapi comes with these officially supported plugins:
 <PluginsLinks>
 </PluginsLinks>
 
+## Automatic plugins discovery
+
+Strapi scans every `package.json` file of the project dependencies. A Strapi plugin is automatically detected and loaded when a `package.json` file contains the following declaration:
+
+```json
+"strapi": {
+  "kind": "plugin"
+}
+```
+
+Installed plugins can also be manually enabled or disabled.
+
+## Manual enabling/disabling
+
+To disable a plugin without uninstalling it, switch its `enabled` key to `false` in the [`/config/plugins.js` file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md).
+
+
 ::: strapi To go further
 * To know more about plugins installation, see the [User guide](/user-docs/latest/plugins/introduction-to-plugins.md).
 * Existing plugins can be [extended](/developer-docs/latest/development/plugins-extension.md), or you can even [create your own](/developer-docs/latest/development/plugins-development.md)!
