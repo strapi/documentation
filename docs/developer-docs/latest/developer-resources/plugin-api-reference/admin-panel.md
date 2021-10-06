@@ -7,29 +7,32 @@ sidebarDepth: 3
 
 # Admin Panel API for plugins
 
-<!-- ? wording: should we use admin panel or administration panel throughout the docs? -->
+A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with both the [back end](/developer-docs/latest/developer-resources/plugin-api-reference/server.md) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/developer-docs/latest/development/admin-customization.md).
 
-A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [administration panel](/developer-docs/latest/development/admin-customization.md).
+The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
-The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi's plugin.
+To create a plugin that interacts with the Admin Panel API:
 
-Creating and using a plugin that interacts with the Admin Panel API consists in 2 steps:
+1. Create an [entry file](#entry-file).
+2. Within this file, declare and export a plugin interface that uses the [available actions](#available-actions).
+3. Require this plugin interface in a `strapi-admin.js` file at the root of the plugin package folder:
 
-1. Declare and export the plugin interface within the [`strapi-admin.js` entry file](#entry-file)
+  ```js
+  // path: [plugin-name]/strapi-admin.js
 
-2. [Use the available features](#available-features)
+  'use strict';
+
+  module.exports = require('./admin/src').default;
+  ```
 
 ## Entry file
 
-To tap into the Admin Panel API, create a `strapi-admin.js` file at the root of the plugin package folder. This file exports the required interface, with the following parameters available:
-<!-- ? is it really the case or should we use `admin/src/index.js`? -->
+The entry file for the Admin Panel API is `[plugin-name]/admin/src/index.js`. This file exports the required interface, with the following functions available:
 
-<!-- TODO: strapi-admin requires the admin src (index.js) file that exports the required interface -->
-
-| Parameter type      | Available parameters                                                     |
+| Function type      | Available functions                                                     |
 | ------------------- | ------------------------------------------------------------------------ |
 | Lifecycle functions | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li></ul> |
-| Async function      | [registerTrads](#registertrads)                                  |
+| Async function      | [registerTrads](#registertrads)                                          |
 
 ## Lifecycle functions
 
@@ -45,8 +48,8 @@ Within the register function, a plugin can:
 * [register itself](#registerplugin) so it's available to the admin panel
 * add a new link to the main navigation (see [Menu API](#menu-api))
 * [create a new settings section](#createsettingsection)
-* define [injection zones](#injection-zones)
-* [add reducers](#reducers)
+* define [injection zones](#injection-zones-api)
+* [add reducers](#reducers-api)
 
 #### registerPlugin()
 
@@ -58,7 +61,7 @@ This function returns an object with the following parameters:
 
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
-| `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view. |
+| `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view |
 | `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
@@ -71,6 +74,8 @@ Some parameters can be imported from the `package.json` file.
 **Example:**
 
 ```js
+// path: my-plugin/admin/src/index.js
+
 import pluginId from './pluginId'
 
 export default {
@@ -87,7 +92,7 @@ export default {
 
         return component;
       },
-      permissions: [], // array of permissions (object) used to allow a user to access a plugin depending on its permissions
+      permissions: [], // array of permissions (object), allow a user to access a plugin depending on its permissions
     });
     app.registerPlugin({
       description: pluginDescription,
@@ -127,21 +132,17 @@ module.exports = () => {
 };
 ```
 
-## registerTrads()
+## Async function
+
+While [`register()`](#register) and [`bootstrap()`](#bootstrap) are lifecycle functions, `registerTrads()` is an async function.
+
+### registerTrads()
 
 **Type**: `Function`
 
-::: caution 
-This method is used to create separate chunks for the application translations. You don't need to modify the method.
-:::
+To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files and to create separate chunks for the application translations. It does not need to be modified.
 
-To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files.
-
-:::note
-`registerTrads()` is not a lifecycle function.
-:::
-
-**Example: Register a plugin's translation files**
+::: details Example: Register a plugin's translation files
 
 ```jsx
 export default {
@@ -171,28 +172,30 @@ export default {
 };
 ```
 
-## Available features
+:::
 
-The Admin Panel API allows a plugin to take advantage of several small APIs to perform some actions:
+## Available actions
+
+The Admin Panel API allows a plugin to take advantage of several small APIs to perform actions. Use this table as a reference:
 
 | Action                                   | API to use                              | Function to use                                   | Related lifecycle function  |
 | ---------------------------------------- | --------------------------------------- | ------------------------------------------------- | --------------------------- |
 | Add a new link to the main navigation    | [Menu API](#menu-api)                   | [`addMenuLink()`](#menu-api)                      | [`register()`](#register)   |
 | Create a new settings section            | [Settings API](#settings-api)           | [`createSettingSection()`](#createsettingsection) | [`register()`](#register)   |
-| Declare an injection zone                | [Injection Zones API](#injection-zones) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
-| Add a reducer                            | -                                       | [`addReducers()`](#reducers)                      | [`register()`](#register)   |
+| Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
+| Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
-| Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingLink()`](#addsettinglink)             | [`bootstrap()`](#bootstrap) |
-| Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingLinks()`](#addsettinglinks)           | [`bootstrap()`](#bootstrap) |
+| Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
+| Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones) | [`injectComponent()`](#injection-zones)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
-
 
 ::: tip
 The admin panel supports dotenv variables.
 
 All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
 :::
+
 ### Menu API
 
 The Menu API allows a plugin to add a new link to the main navigation through the `addMenuLink()` function with the following parameters:
@@ -205,16 +208,14 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
 
-<!-- TODO: document permissions.js -->
-
 :::note
-`intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
+`intlLabel.id` are ids used in translation files (`/[plugin-name]/admin/src/translations/[language].json`)
 :::
 
 **Example:**
 
 ```jsx
-// path: ./plugins/my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
 
 export default {
   register(app) {
@@ -239,7 +240,7 @@ export default {
 The Settings API allows:
 
 * [creating a new setting section](#createsettingsection)
-* adding [a single link](#addsettinglink) or [multiple links at once](#addsettinglinks) to existing settings sections
+* adding [a single link](#addsettingslink) or [multiple links at once](#addsettingslinks) to existing settings sections
 
 ::: note
 Adding a new section happens in the [register](#register) lifecycle while adding links happens during the [bootstrap](#bootstrap) lifecycle.
@@ -269,13 +270,13 @@ The function takes 2 arguments:
 | second argument | Array of Objects | Links included in the section                                                                                                                                                                                                                                                                                                 |
 
 :::note
-`intlLabel.id` are ids used in translation files (`./plugins/[plugin-name]/admin/src/translations/[language.json]`)
+`intlLabel.id` are ids used in translation files (`/[plugin-name]/admin/src/translations/[language].json`)
 :::
 
 **Example:**
 
 ```jsx
-// my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
 
 const myComponent = async () => {
   const component = await import(
@@ -301,7 +302,7 @@ export default {
 }
 ```
 
-#### addSettingLink()
+#### addSettingsLink()
 
 **Type**: `Function`
 
@@ -310,18 +311,26 @@ Add a unique link to an existing settings section.
 **Example:**
 
 ```jsx
-// my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
+
+const myComponent = async () => {
+  const component = await import(
+    /* webpackChunkName: "users-providers-settings-page" */ './pages/Providers'
+  );
+
+  return component;
+};
 
 export default {
   bootstrap(app) {
 		// Adding a single link
-		app.addSettingLink(
+		app.addSettingsLink(
 		 'global', // id of the section to add the link to
 			{
 				intLabel: { id: String, defaultMessage: String },
 				id: String,
 				to: String,
-				Component: React.ReactNode,
+				Component: myComponent,
 				permissions: Object[]
 			}
     )
@@ -330,7 +339,7 @@ export default {
 ```
 <!-- TODO: update Compoennt -->
 
-#### addSettingLinks()
+#### addSettingsLinks()
 
 **Type**: `Function`
 
@@ -339,18 +348,26 @@ Add multiple links to an existing settings section.
 **Example:**
 
 ```jsx
-// my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
+
+const myComponent = async () => {
+  const component = await import(
+    /* webpackChunkName: "users-providers-settings-page" */ './pages/Providers'
+  );
+
+  return component;
+};
 
 export default {
   bootstrap(app) {
     // Adding several links at once
-    app.addSettingLinks(
+    app.addSettingsLinks(
       'global', // id of the section to addd the link in
         [{
           intLabel: { id: String, defaultMessage: String },
           id: String,
           to: String,
-          Component: React.ReactNode,
+          Component: myComponent,
           permissions: Object[]
         }]
     )
@@ -358,11 +375,12 @@ export default {
 }
 ```
 
-### Injection zones
+### Injection Zones API
 
 Injection zones refer to areas of a view's layout where a plugin allows another to inject a custom React component (e.g. a UI element like a button).
 
 Plugins can use:
+
 * Strapi's [predefined injection zones](#using-predefined-injection-zones) for the Content Manager,
 * or custom injection zones, created by a plugin
 
@@ -411,7 +429,7 @@ export default {
 
 ```jsx
 // Use the injection zone in a view
-// path: ./plugins/my-plugin/admin/src/injectionZones.js
+// path: my-plugin/admin/src/injectionZones.js
 
 import { InjectionZone } from '@strapi/helper-plugin';
 
@@ -425,7 +443,7 @@ const HomePage = () => {
 };
 
 // Declare this injection zone in the register lifecycle of the plugin
-// path: ./plugins/my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
 
 export default {
   register() {
@@ -441,7 +459,7 @@ export default {
 }
 
 // Inject the component from a plugin in another plugin
-// path: ./plugins/my-other-plugin/admin/src/index.js
+// path: my-other-plugin/admin/src/index.js
 
 export default {
   register() {
@@ -508,18 +526,38 @@ const MyCompo = () => {
 
 :::
 
-### Reducers
+### Reducers API
 
-Reducers are declared as an object with this syntax:
+Reducers are [Redux](https://redux.js.org/) reducers that can be used to share state between components. Reducers can be useful when:
+
+* Large amounts of application state are needed in many places in the application.
+* The application state is updated frequently.
+* The logic to update that state may be complex.
+
+A reducer is declared as an object with this syntax:
 
 `['pluginId_reducerName']: function() {}`
+
+Reducers can be added to a plugin interface with the `addReducers()` function during the [`register`](#register) lifecycle.
 
 **Example:**
 
 ```js
+// path: my-plugin/admin/src/index.js
+import { exampleReducer } from './reducers'
+
 const reducers = {
-  [`${pluginId}_locales`]: localeReducer
+  [`${pluginId}_exampleReducer`]: exampleReducer
 }
+
+export default {
+  register(app) {
+    app.addReducers(reducers)
+  },
+  bootstrap() {},
+};
+
+
 ```
 
 ### Hooks API
@@ -534,10 +572,11 @@ Hooks can then be run in series, in waterfall or in parallel:
 * `runHookParallel` returns an array corresponding to the result of the promise resolved by the function executed, ordered
 * `runHookWaterfall` returns a single value corresponding to all the transformations applied by the different functions starting with the initial value `args`.
 
-:::details Example: Create, register and run a basic hook
+:::details Example: Create a hook in a plugin and use it in another plugin
 
 ```jsx
-// my-plugin/admin/src/index.js
+// path: my-plugin/admin/src/index.js
+// Create a hook in a plugin
 export default {
   register(app) {
     app.createHook('My-PLUGIN/MY_HOOK');
@@ -545,13 +584,14 @@ export default {
 }
 
 
-// my-other-plugin/admin/src/index.js
+// path: my-other-plugin/admin/src/index.js
+// Use the hook in another plugin
 export default {
   bootstrap(app) {
     app.registerHook('My-PLUGIN/MY_HOOK', (...args) => {
       console.log(args)
 
-      // important return the mutated data
+      // important: return the mutated data
       return args
     });
 
@@ -561,34 +601,6 @@ export default {
 ```
 
 :::
-
-<!-- ? not sure what to do with this example 🤔? -->
-<!-- TODO: ask Marvin for a simpler, easier to understand example -->
-<!-- For instance, it can be used to allow people to add new information to the content manager like the following:
-```jsx
-// somewhere at Strapi's core init
-app.createHook('CM/custom-cols')
-
-// somewhere in a plugin definition
-app.registerHook('CM/custom-cols', () => 'intl') 
-
-// In the content manager, when trying to resolve custom cells
-const customCols = app.runSeries('CM/custom-cols')
-
----
-	import { useStrapiApp } from '@strapi/helper-plugin';
-	const INJECT_COLUMN_IN_TABLE = 'myhook/Inject';
-
-const MyCompo = () => {
-  const { runHookWaterfall } = useStrapiApp();
-
-  const tableHeaders = useMemo(() => {
-    const headers = runHookWaterfall(INJECT_COLUMN_IN_TABLE, { displayedHeaders, layout });
-
-    return headers;
-  }, [runHookWaterfall, displayedHeaders, layout]);
-}
-``` -->
 
 #### Predefined hook
 
