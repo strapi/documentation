@@ -18,14 +18,14 @@ description: Discover the project structure of any default Strapi application.
 By default, the structure of a Strapi project created without the starter CLI looks like the following:
 
 :::: note
-If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), the project structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure described hereafter.
+If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
 
 ::: details Structure of a project created with the starter CLI
 
 ```sh
 my-project
 ├─── frontend # starter folder
-├─── backend  # template folder
+├─── backend  # template folder, has the default structure of a project
 └─── node_modules
 ```
 
@@ -90,9 +90,9 @@ my-project
 │     │           └──── <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
 │     │           ├ package.json
 │     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     └─── <a href="">policies</a>
+│     ├─── <a href="">policies</a>
+│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a>
 ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html#configuration-using-environment-variables">.env</a>
-└ .package.json
+└ package.json
   </code>
 </pre>
-
