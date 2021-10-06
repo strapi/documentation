@@ -80,9 +80,9 @@ There is currently no ETA on this migration however.
 
 No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf and integer on mongoose), support for this is being looked at for Strapi v4.
 
-## Can you filter and/or deep filter on components, dynamic zones, and polymorphic relations?
+## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
-Currently it is not possible to filter on components, dynamic zones, or polymorphic relations. This is something we are looking into, if you want see more information please take a look at the following [GitHub issue](https://github.com/strapi/strapi/issues/5124).
+Currently it is not possible to filter on dynamic zones or polymorphic relations. This is something we are looking into, if you want see more information please take a look at the following [GitHub issue](https://github.com/strapi/strapi/issues/5124).
 
 ## How do I setup SSL with Strapi?
 
