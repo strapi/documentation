@@ -6,7 +6,9 @@ sidebarDepth: 3
 
 # REST API
 
-The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates. [API parameters](#api-parameters) can be used to refine the requests.
+The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
+
+[API parameters](#api-parameters) can be used to [filter](#filters), [sort](#sorting), and [paginate](#pagination) results and to [select fields](#fields-selection) and relations to [populate](#relations-population). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](#publication-state) and [locale](#locale).
 
 ## API Endpoints
 
@@ -491,7 +493,7 @@ Deep filtering is filtering on a relation's fields.
 
 :::
 
-### Sort
+### Sorting
 
 Queries can accept a `sort` parameter with the following syntax:
 
@@ -646,8 +648,8 @@ For convenience, the `*` wildcard can be used:
 
 ### Publication State
 
-:::note
-This parameter can only be used on models with the **Draft & Publish** feature activated.
+:::prerequisites
+The [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.html#draft-and-publish) feature should be enabled.
 :::
 
 Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
@@ -675,4 +677,10 @@ To retrieve only draft entries, combine the `preview` publication state and the 
 
 ### Locale
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
+:::prerequisites
+
+- The [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) should be installed.
+- [Localization should be enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
+:::
+
+The `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
