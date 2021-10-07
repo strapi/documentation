@@ -30,7 +30,7 @@ module.exports = strapi => {
 };
 ```
 
-Once exported, middlewares are accessible through the [`strapi.middleware` global variable](/developer-docs/latest/developer-resources/global-strapi/api-reference.html#strapi-middleware).
+Once exported, middlewares are accessible through the [`strapi.middleware` global variable](/developer-docs/latest/developer-resources/global-strapi/api-reference.md#strapi-middleware).
 
 ### Node modules
 

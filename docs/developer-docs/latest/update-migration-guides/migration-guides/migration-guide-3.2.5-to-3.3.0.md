@@ -63,6 +63,4 @@ _After_
 strapi.notification.toggle(config);
 ```
 
-Here is a link to the [new notification API](/developer-docs/latest/development/local-plugins-customization.md#front-end-development).
-
 That's it, now you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).

@@ -15,9 +15,9 @@ What we want here is to add some custom logic and call the email service when a 
 
 To be able to do that, you have first to understand some concepts.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization.md#controllers) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -58,7 +58,7 @@ After saving the new function, let's restart the `POST /comment` request. We wil
 
 We now know the function we have to update. Let's get back to the original function.
 
-In the [controller documentation](/developer-docs/latest/development/backend-customization.md#extending-a-model-controller) you will find the default implementation of every action. It will help you overwrite the create logic.
+In the [controller documentation](/developer-docs/latest/development/backend-customization/controllers.md#extending-a-model-controller) you will find the default implementation of every action. It will help you overwrite the create logic.
 
 **Path —** `./api/comment/controller/Comment.js`
 
@@ -85,7 +85,7 @@ And now the comment creation is back.
 
 We want to check if the content of the comment contains any bad words.
 
-If it does, we want to send an email using the [Email plugin](/developer-docs/latest/development/plugins/email.md)
+If it does, we want to send an email using the [Email plugin](/developer-docs/latest/plugins/email.md)
 
 **Path —** `./api/comment/controller/Comment.js`
 

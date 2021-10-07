@@ -27,7 +27,7 @@ SSO configuration lives in the server configuration of the application, found at
 
 The providers' configuration should be written within the `admin.auth.providers` path of the server configuration.
 
-`admin.auth.providers` is an array of [provider configuration](#provider-configuration).
+`admin.auth.providers` is an array of [provider configuration](#setting-up-provider-configuration).
 
 ```javascript
 module.exports = ({ env }) => ({
@@ -105,7 +105,7 @@ You can also use services such as Okta and Auth0 as bridge services.
 To configure a provider, follow the procedure below:
 
 1. Make sure to import your strategy in your server configuration file, either from an installed package or a local file.
-2. You'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#provider-configuration)
+2. You'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#setting-up-provider-configuration)
 3. Restart your application, the provider should appear on your admin login page.
 
 ### Configuration providers examples
@@ -448,7 +448,7 @@ module.exports = ({ env }) => ({
 ### Admin panel URL
 
 If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.html#changing-the-access-url)).
+update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md#changing-the-access-url)).
 <!-- TODO: remove this comment — the link above won't work until merged with the `dev/v4-plugins-api` branch -->
 
 ### Custom Logic
@@ -478,7 +478,7 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 
 ### Authentication Events
 
-The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations.md#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).

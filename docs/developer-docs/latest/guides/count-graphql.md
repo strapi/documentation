@@ -11,7 +11,9 @@ The count aggregation currently has some issues and this feature is also not ava
 
 With this guide we will code our own count query.
 
-Here is the [GraphQL documentation](/developer-docs/latest/development/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal.
+<!-- TODO: update once GraphQL custom docs are ready -->
+<!-- Commented out as GraphQL customization is not ready yet -->
+<!-- Here is the [GraphQL documentation](/developer-docs/latest/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal. -->
 
 ## Setup the application
 
@@ -36,7 +38,7 @@ module.exports = {
 
 ## Create count query
 
-The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization.md#core-services) service function of the **Restaurant** API.
+The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization/services.md#core-services) service function of the **Restaurant** API.
 
 It needs a JSON object as params, so we will add a `where` options in the GraphQL query.
 

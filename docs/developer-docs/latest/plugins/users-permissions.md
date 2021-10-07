@@ -787,7 +787,7 @@ Congrats, you're done!
 ### Email validation
 
 :::note
-In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
+In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 :::
 
 After having registered, if you have set **Enable email confirmation** to **ON**, the user will receive a confirmation link by email. The user has to click on it to validate his/her registration.
@@ -849,7 +849,7 @@ extensions/users-permissions/services/Providers.js
 extensions/users-permissions/config/functions/bootstrap.js
 ```
 
-If these files don't exist you will need to copy from your `node_modules` or the Strapi mono-repo. You can see [plugin extensions](/developer-docs/latest/development/plugin-customization.md) for more information on how it works.
+If these files don't exist you will need to copy from your `node_modules` or the Strapi mono-repo. You can see [plugin extensions](/developer-docs/latest/development/plugins-extension.md) for more information on how it works.
 
 We will go step by step.
 
@@ -954,7 +954,6 @@ discord: {
 ```
 
 <!-- #### Tests -->
-<!-- TODO Add documentation about how to configure unit test for the new provider -->
 
 ## Templating emails
 

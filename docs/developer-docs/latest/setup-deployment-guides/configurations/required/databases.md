@@ -10,7 +10,7 @@ description:
 The `./config/database.js` file is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
-The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation).
+The CLI installation guide details [supported database and versions](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 :::
 
 **Path —** `./config/database.js`.

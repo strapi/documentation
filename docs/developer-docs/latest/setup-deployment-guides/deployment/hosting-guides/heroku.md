@@ -195,7 +195,7 @@ yarn add pg-connection-string
 
 #### 4. Create your Heroku database config file for production
 
-Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#environment)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
+Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
 
 `Path: ./config/env/production/database.js`
 
@@ -235,7 +235,7 @@ heroku config:set NODE_ENV=production
 
 #### 5. Create your Strapi server config for production
 
-Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations.md#environment) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+Create a new `server.js` in a new [env](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
 
 `Path: ./config/env/production/server.js`
 
@@ -349,11 +349,11 @@ heroku open
 
 Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "Cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
 
-Due to Heroku's filesystem you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](/developer-docs/latest/development/plugins/upload.md#create-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
+Due to Heroku's filesystem you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](/developer-docs/latest/plugins/upload.md#create-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
 
 ### Gzip
 
-As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations.md#core-middleware-configurations), it is recommended that you disable Brotli or define better configuration params.
+As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md#core-middleware-configurations-reference), it is recommended that you disable Brotli or define better configuration params.
 
 To disable Brotli, provide the following configuration in `config/middleware.js`.
 

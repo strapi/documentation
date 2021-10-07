@@ -439,4 +439,4 @@ postRestaurantWithAuth($jwt);
 
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/content-api/content-api.md#get-an-entry), [get how much entry you have](/developer-docs/latest/developer-resources/content-api/content-api.md#count-entries) and [delete](/developer-docs/latest/developer-resources/content-api/content-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).

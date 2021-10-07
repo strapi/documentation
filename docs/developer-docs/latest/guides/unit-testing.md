@@ -71,7 +71,7 @@ Those will inform `Jest` not to look for test inside the folder where it shouldn
 
 Test framework must have a clean empty environment to perform valid test and also not to interfere with current database.
 
-Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations.md#environment) (switching `NODE_ENV` to `test`)
+Once `jest` is running it uses the `test` [environment](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) (switching `NODE_ENV` to `test`)
 so we need to create a special environment setting for this purpose.
 Create a new config for test env `./config/env/test/database.json` and add the following value `"filename": ".tmp/test.db"` - the reason of that is that we want to have a separate sqlite database for tests, so our test will not touch real data.
 This file will be temporary, each time test is finished, we will remove that file that every time tests are run on the clean database.
@@ -192,7 +192,7 @@ If you receive a timeout error for Jest, please add the following line right bef
 ### Testing basic endpoint controller.
 
 ::: tip
-In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization.md#example-2) section.
+In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization/controllers.md#example) section.
 <!-- the link below is reported to have a missing hash by the check-links plugin, but everything is fine 🤷 -->
 :::
 

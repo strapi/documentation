@@ -273,4 +273,4 @@ Feel free to do the same for your restaurants!
 
 Here is how to request your Collection Types in Strapi using Gridsome.
 
-Learn more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md)
+Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md)

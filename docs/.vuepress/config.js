@@ -1,8 +1,8 @@
 const sidebar = {
   developer: [
     {
-      collapsable: false,
       title: '🚀 Getting Started',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
         ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
@@ -11,8 +11,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '⚙️ Setup & Deployment',
+      collapsable: false,
       sidebarDepth: 0,
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
@@ -143,42 +143,56 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '🔧 Development',
+      collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
-        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
-        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         {
-          title: 'Strapi plugins',
-          path: '/developer-docs/latest/development/plugin-customization.html',
+          title: 'Backend customization',
           collapsable: true,
           children: [
-            ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
-            ['/developer-docs/latest/development/plugins/email', 'Email'],
-            ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
-            ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
-          ],
-          sidebarDepth: 1,
+            ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
+            ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
+            ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
+            ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
+            ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
+            ['/developer-docs/latest/development/backend-customization/webhooks.md', 'Webhooks'],
+          ]
         },
-        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
+        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ],
     },
     {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
       collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+      ],
+      sidebarDepth: 1,
+    },
+    {
       title: '♻️ Update & Migration',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
         ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
-      collapsable: false,
       title: '💻 Developer Resources',
+      collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       sidebarDepth: 2,
       children: [
-        ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -245,16 +259,58 @@ const sidebar = {
             ],
           ],
         },
+        {
+          title: 'APIs Reference',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
+            {
+              title: 'Query Engine API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+              collapsable: true,
+              // sidebarDepth: 3,
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+                  'Single Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+                  'Bulk Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+                  'Filtering'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+                  'Populating'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+                  'Ordering & Pagination'
+                ],
+              ]
+            },
+            {
+              title: 'Plugin API Reference',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+              ],
+            },
+            [ '/developer-docs/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference' ],
+          ]
+        },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
-        [
-          '/developer-docs/latest/developer-resources/global-strapi/api-reference',
-          'Global Strapi API Reference',
-        ],
       ],
     },
     {
-      collapsable: true,
       title: '📚 Guides',
+      collapsable: true,
       children: [
         ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
@@ -398,11 +454,9 @@ const checklinksIgnoredFiles = [
   /**
    * Files below give false positives
    */
-  './developer-docs/latest/concepts/file-structure.md', // contains .md links that should not be treated as links
-  './developer-docs/latest/guides/unit-testing.md', // line 190
-  './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
-  './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
-  './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
+  './developer-docs/latest/guides/count-graphql.md', // might be removed once GraphQL customization is ready
+  './developer-docs/latest/setup-deployment-guides/configurations.md', // the script thinks filename[]() at line 977 is a real link
+  './developer-docs/latest/development/backend-customization/webhooks.md', // 'missing" links are in commented part of file
 ];
 
 const plugins = [
@@ -600,6 +654,10 @@ module.exports = {
               {
                 text: 'Setup & Deployment',
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
+              },
+              {
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
               },
               {
                 text: 'Development',

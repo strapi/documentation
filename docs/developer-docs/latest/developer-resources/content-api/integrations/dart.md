@@ -313,4 +313,4 @@ void main() {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Dart. When you create a Collection Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) available to interact with.
+Here is how to request your Collection Types in Strapi using Dart. When you create a Collection Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) available to interact with.

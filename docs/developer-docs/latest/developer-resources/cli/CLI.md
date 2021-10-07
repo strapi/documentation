@@ -209,8 +209,9 @@ options: [--plugin <name>]
 
   Example: `strapi generate:api product --plugin content-manager`
 
-::: tip
-The first letter of the filename will be uppercase.
+::: tip TIPS
+* The filename will be kebab-cased.
+* When you create a new API using the CLI, a model is automatically created.
 :::
 
 ## strapi generate:controller
@@ -342,7 +343,7 @@ strapi generate:plugin <name>
 
   Example: `strapi generate:plugin user` will create the plugin at `./plugins/user`.
 
-Please refer to the [local plugins](/developer-docs/latest/development/local-plugins-customization.md) section to know more.
+Please refer to the [plugins development](/developer-docs/latest/development/plugins-development.md) section to know more.
 
 ## strapi generate:template
 
