@@ -163,7 +163,7 @@ strapi(/* {...} */).start();
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deploying-the-admin-panel).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deployment).
 
 ## Hosting Provider Guides
 
