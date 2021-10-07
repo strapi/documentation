@@ -42,10 +42,10 @@ To unpublish content, click on the **Unpublish** button in the top right corner 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
 1. In the edit view of the entry, click on the **Delete this entry** button, located at the bottom of the right side of the interface.
-2. In the window that pops up, click on the **Yes, confirm** button to confirm the deletion.
+2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
 ::: tip
-You can delete entries from the list view of a collection type, by clicking on the delete button ![Delete icon](../assets/icons/delete.svg) on the right side of the entry's record in the table. <br> You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on ![Delete icon](../assets/icons/delete.svg) **Delete selected** located above the header of the table.
+You can delete entries from the list view of a collection type, by clicking on the delete button ![Delete icon](../assets/icons/delete.svg) on the right side of the entry's record in the table. <br> You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table.
 :::
 
 ::: caution

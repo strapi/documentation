@@ -7,10 +7,10 @@ description: Introduction to the Content Manager which allows to write content f
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying the 2 categories of the Content Manager: _Collection types_ and _Single types_. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
+The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip
-Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavigation to use a text search and find one of your content types more quickly!
+Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavigation to use a text search and find one of your content-types more quickly!
 :::
 
 ## Collection types
@@ -29,7 +29,7 @@ From the list view, it is possible to:
 - create a new entry (3),
 - if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
-- duplicate ![Duplicate icon](../assets/icons/duplicate.svg), edit ![Edit icon](../assets/icons/edit.svg) (see [Writing content](../content-manager/writing-content.md)) or delete ![Delete icon](../assets/icons/delete.svg) (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
+- edit ![Edit icon](../assets/icons/edit.svg) (see [Writing content](../content-manager/writing-content.md)), duplicate ![Duplicate icon](../assets/icons/duplicate.svg), or delete ![Delete icon](../assets/icons/delete.svg) (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
 
 ::: tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
@@ -47,15 +47,15 @@ To set a new filter:
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value(s) of the condition in the remaining boxes.
-6. Click on the **Add Filter** button.
+6. Click on the **Add filter** button.
 
 ::: note
-When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Delete icon](../assets/icons/delete.svg).
+When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](../assets/icons/clear.svg).
 :::
 
 ### Creating a new entry
 
-On the top right side of the list view interface, an **Add Entry** button is displayed. It allows to create a new entry for your collection type.
+On the top right side of the list view interface, an **Add new entry** button is displayed. It allows to create a new entry for your collection type.
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
