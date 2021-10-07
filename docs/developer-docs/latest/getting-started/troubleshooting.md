@@ -44,7 +44,7 @@ With the components there is a hidden field called `order` that allows entries t
 
 For the time being there is no recommended way to handle this automatically and instead it may be required for you to create custom controllers to handle this within your own project.
 
-## Why are my app's database and uploads resetting on PaaS?
+## Why are my application's database and uploads resetting on PaaS?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, ect) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
@@ -80,9 +80,9 @@ There is currently no ETA on this migration however.
 
 No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf), support for this is being looked at for Strapi v4.
 
-## Can you filter / deep filter on components, dynamic zones, and polymorphic relations?
+## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
-Currently it is not possible to filter on components, dynamic zones, or polymorphic relations. This is something we are looking into, if you want see more information please take a look at the following [GitHub issue](https://github.com/strapi/strapi/issues/5124).
+At this time we do not plan to allow for filtering on dynamic zones or polymorphic relations due to various complexity and performance issues that come from doing so.
 
 ## How do I setup SSL with Strapi?
 
