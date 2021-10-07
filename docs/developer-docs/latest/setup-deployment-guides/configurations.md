@@ -446,10 +446,6 @@ Some settings can only be modified through environment variables. Here is a list
 | `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                           | boolean | `false`         |
 | `STRAPI_HIDE_STARTUP_MESSAGE`         | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | boolean | `false`         |
 | `STRAPI_TELEMETRY_DISABLED`           | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | boolean | `false`         |
-| `STRAPI_LOG_TIMESTAMP`                | Add the timestamp info in logs                                                                                                                                                                                                                                                                                                      | boolean | `false`         |
-| `STRAPI_LOG_LEVEL`                    | Select the level of logs among `fatal`, `error`, `warn`, `info`, `debug`, `trace`                                                                                                                                                                                                                                                   | string  | `'info'`        |
-| `STRAPI_LOG_FORCE_COLOR`              | Force colors to be displayed even in environments that are not supposed to have colors enabled (ex: outside of a TTY)                                                                                                                                                                                                               | boolean | `true`          |
-| `STRAPI_LOG_PRETTY_PRINT`             | Log lines are displayed as text instead of as object                                                                                                                                                                                                                                                                                | boolean | `true`          |
 | `STRAPI_LICENSE`                      | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | string  | `undefined`     |
 | `NODE_ENV`                            | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | string  | `'development'` |
 | `BROWSER`                             | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | boolean | `true`          |
@@ -781,7 +777,7 @@ The core of Strapi embraces a small list of middlewares for performances, securi
 - hsts
 - ip
 - language
-- logger
+- [logger](#custom-configuration-for-the-logger-middleware)
 - p3p
 - parser
 - public
@@ -811,9 +807,7 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 - `session`
   - `enabled` (boolean): Enable or disable sessions. Default value: `false`.
 - `logger`
-  - `level` (string): Default log level. Default value: `debug`.
-  - `exposeInContext` (boolean): Expose logger in context so it can be used through `strapi.log.info(‘my log’)`. Default value: `true`.
-  - `requests` (boolean): Enable or disable requests logs. Default value: `false`.
+  - `enabled` (boolean): Enable or disable requests logs. Default value: `false`.
 - `parser` (See [koa-body](https://github.com/dlau/koa-body#options) for more information)
   - `enabled`(boolean): Enable or disable parser. Default value: `true`.
   - `multipart` (boolean): Enable or disable multipart bodies parsing. Default value: `true`.
@@ -822,6 +816,40 @@ The following middlewares cannot be disabled: responses, router, logger and boom
   - `queryStringParser` (see [qs](https://github.com/ljharb/qs) for a full list of options).
     - `arrayLimit` (integer): the maximum length of an array in the query string. Any array members with an index of greater than the limit will instead be converted to an object with the index as the key. Default value: `100`.
     - `depth` (integer): maximum parsing depth of nested query string objects. Default value: `20`.
+
+::: tip
+The session doesn't work with `mongo` as a client. The package that we should use is broken for now.
+:::
+
+###### Custom configuration for the `logger` middleware
+
+To configure the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
+
+::: details Example: Custom configuration for the logger middleware
+
+```js
+'use strict';
+
+const {
+  winston,
+  formats: { prettyPrint, levelFilter },
+} = require('@strapi/logger');
+
+module.exports = {
+  transports: [
+    new winston.transports.Console({
+      level: 'http',
+      format: winston.format.combine(
+        levelFilter('http'),
+        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+      ),
+    }),
+  ],
+};
+
+```
+
+:::
 
 ##### Response middlewares
 

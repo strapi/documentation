@@ -44,13 +44,13 @@ With the components there is a hidden field called `order` that allows entries t
 
 For the time being there is no recommended way to handle this automatically and instead it may be required for you to create custom controllers to handle this within your own project.
 
-## Why is my app's database and uploads resetting on PaaS
+## Why are my application's database and uploads resetting on PaaS?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, ect) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
-## Can I store my Content Manager layout configurations in the model settings
+## Can I store my Content Manager layout configurations in the model settings?
 
 Currently Strapi does not support this, a `config:dump` and `config:restore` command has been added to make migration of these settings easier when moving between different deployments and environments.
 
@@ -62,27 +62,29 @@ We don't offer the ability to store these configurations in the model settings f
 
 For all these reasons, and others, we think it'll be a mistake and might confuse users if we store the configuration in the model settings file. The final solution is to make the migration and deployment across environment easier.
 
-## How do I customize a plugin
+## How do I customize a plugin?
 
-Strapi uses a system called [extensions](/developer-docs/latest/development/plugin-customization.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`. If you are familiar with React and "ejecting" a file, the concept is similar.
+<!-- TODO: update link once merged with Plugins API PR -->
+Strapi uses a system called [extensions](/developer-docs/latest/development/plugin-customization.md) as plugins are stored in the `node_modules` folder. Due to this, extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`. If you are familiar with React and "ejecting" a file, the concept is similar.
 
 You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
 
-## Can I add my own 3rd party auth provider
+## Can I add my own 3rd party auth provider?
 
+<!-- TODO: update links once merged with Plugins API PR -->
 Yes, you can either follow the following [guide](/developer-docs/latest/development/plugins/users-permissions.md#adding-a-new-provider-to-your-project) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 
-## Does Strapi allow me to change the default ID type or name
+## Does Strapi allow me to change the default ID type or name?
 
 No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf), support for this is being looked at for Strapi v4.
 
-## Can you filter / deep filter on components, dynamic zones, and polymorphic relations
+## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
-Currently it is not possible to filter on components, dynamic zones, or polymorphic relations. This is something we are looking into, if you want see more information please take a look at the following [GitHub issue](https://github.com/strapi/strapi/issues/5124).
+At this time we do not plan to allow for filtering on dynamic zones or polymorphic relations due to various complexity and performance issues that come from doing so.
 
-## How do I setup SSL with Strapi
+## How do I setup SSL with Strapi?
 
 Strapi implements no SSL solution natively, this is due to the fact that it is extremely insecure to directly offer a Node.js application to the public web on a low port.
 
@@ -92,6 +94,6 @@ Likewise since Strapi is Node.js based, in order for changes with the SSL certif
 
 Due to these two issues, it is recommended you use a proxy application such as Nginx, Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations.md#server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
-## Is X feature available yet
+## Is X feature available yet?
 
 You can see the [ProductBoard roadmap](https://portal.productboard.com/strapi) to see which feature requests are currently being worked on and which have not been started yet.
