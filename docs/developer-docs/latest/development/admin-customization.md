@@ -68,9 +68,9 @@ module.exports = ({ env }) => ({
 
 ### Configuration options
 
-The `config` object found at `./admin/src/app.js` stores the admin panel configuration.
+The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
 
-Any file used by the `config` object (e.g. a custom logo) should be placed in the `./admin/extensions/` folder and imported inside `./admin/src/app.js`.
+Any file used by the `config` object (e.g. a custom logo) should be placed in the `./admin/extensions/` folder and imported inside `./src/admin/app.js`.
 
 The `config` object accepts the following parameters:
 
