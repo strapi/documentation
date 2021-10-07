@@ -112,30 +112,3 @@ module.exports = {
   },
 };
 ```
-
-## Database ORM customization
-
-When present, database ORM customization functions are loaded to allow customizing the database connection instance (e.g. adding some plugin, customizing parameters, etc.).
-
-You will need to install the plugin using the normal `npm install the-plugin-name` or any of the other supported package tools such as yarn then follow the below examples to load them.
-
-:::: tabs card
-
-::: tab Bookshelf
-
-Another example would be using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
-
-**Path —** `./config/functions/bookshelf.js`.
-
-```js
-'use strict';
-
-module.exports = (bookshelf, connection) => {
-  bookshelf.plugin('bookshelf-uuid');
-};
-```
-
-:::
-
-::::
-
