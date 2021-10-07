@@ -13,5 +13,3 @@ For more information, please refer to the [Koa request documentation](http://koa
 The context object (`ctx`) contains a list of values and functions useful to manage server responses. They are accessible through `ctx.response`, from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) and [policies](/developer-docs/latest/development/backend-customization/policies.md).
 
 For more information, please refer to the [Koa response documentation](http://koajs.com/#response).
-
-<!--- BEGINNING OF SERVICES --->
