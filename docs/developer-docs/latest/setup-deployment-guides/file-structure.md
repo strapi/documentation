@@ -47,7 +47,7 @@ my-project
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
 │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middleware.js</a>
-│     ├ <a href="/documentation/developer-docs/latest/development/plugins-development.html#configuring-a-plugin">plugins.js</a>
+│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
 │     └ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.js</a>
 ├──── database
 │     └──── migrations
@@ -56,19 +56,19 @@ my-project
 │     └──── uploads
 ├──── src
 │     ├──── admin <span class="token comment"># admin customization files</span>
-│     │     ├ <a href="/documentation/developer-docs/latest/development/admin-customization.html#changing-the-configuration">app.js</a>
-│     │     └ <a href="/documentation/developer-docs/latest/development/admin-customization.html#customizing-the-webpack-configuration">webpack.config.js</a>
+│     │     ├ <a href="/documentation/developer-docs/latest/development/admin-customization.html#configuration-options">app.js</a>
+│     │     └ <a href="/documentation/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api <span class="token comment"># business logic of the project split into sub-folders per API</span>
 │     │     └──── (api-name)
 │     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
 │     │           │           └ <a href="/documentation/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
 │     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html#how-to-create-a-policy">policies</a>
+│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html">policies</a>
 │     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/routing.html">routes</a>
 │     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/services.html">services</a>
 │     │           └ index.js
-│     ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html#components">components</a>
+│     ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html">components</a>
 │     │     └──── (category-name)
 │     │           ├ (componentA).json
 │     │           └ (componentB).json
@@ -91,9 +91,9 @@ my-project
 │     │           ├ package.json
 │     │           ├ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     ├─── <a href="">policies</a>
-│     └ <a href="documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
-├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html#configuration-using-environment-variables">.env</a>
+│     ├─── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html">policies</a>
+│     └ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
+├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
 └ package.json
   </code>
 </pre>
