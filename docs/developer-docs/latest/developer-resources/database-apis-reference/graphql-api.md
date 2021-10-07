@@ -8,7 +8,7 @@ sidebarDepth: 3
 # GraphQL API
 
 ::: prerequisites
-To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
+To use the GraphQL API, install the [GraphQL](/developer-docs/latest/plugins/graphql.md) plugin.
 :::
 
 ## Unified response format

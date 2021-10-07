@@ -350,7 +350,7 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 ::::
 
 :::note
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
 :::
 
 ### Delete an entry

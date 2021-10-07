@@ -65,7 +65,7 @@ This function returns an object with the following parameters:
 | `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
-| `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones)                                       |
+| `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones-api)                                       |
 
 ::: note
 Some parameters can be imported from the `package.json` file.
@@ -187,7 +187,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
-| Inject a Component in an injection zone  | [Injection Zones API](#injection-zones) | [`injectComponent()`](#injection-zones)           | [`bootstrap()`](#register)  |
+| Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
 ::: tip

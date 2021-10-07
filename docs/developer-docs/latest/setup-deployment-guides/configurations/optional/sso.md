@@ -448,7 +448,7 @@ module.exports = ({ env }) => ({
 ### Admin panel URL
 
 If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md#changing-the-access-url)).
+update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md#access-url)).
 <!-- TODO: remove this comment — the link above won't work until merged with the `dev/v4-plugins-api` branch -->
 
 ### Custom Logic

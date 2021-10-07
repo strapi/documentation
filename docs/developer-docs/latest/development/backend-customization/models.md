@@ -101,7 +101,7 @@ Many types of attributes are available:
 
 - scalar types (e.g. strings, dates, numbers, booleans, etc.),
 - Strapi-specific types, such as:
-  - `media`, for files uploaded through the [Media library](/user-docs/latest/content-types-builder/configuring-fields-content-type.html#media)
+  - `media`, for files uploaded through the [Media library](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#media)
   - `relation` to describe a [relation](#relations) between content-types
   - `component` to define a [component](#components-2) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
@@ -117,8 +117,8 @@ The `type` parameter of an attribute should be one of the following values:
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
 | Other generic types |<ul><li>`boolean`</li><li>`array`</li><li>`json`</li></ul> |
-| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zone)</li></ul> |
-| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/developer-docs/latest/development/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
+| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zones)</li></ul> |
+| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/developer-docs/latest/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
 #### Validations
 
