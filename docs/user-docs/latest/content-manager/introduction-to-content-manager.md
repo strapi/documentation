@@ -7,7 +7,7 @@ description: Introduction to the Content Manager which allows to write content f
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content* in the main navigation, which opens a subnavigation displaying the 2 categories of the Content Manager: _Collection types_ and _Single types_. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
+The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying the 2 categories of the Content Manager: _Collection types_ and _Single types_. Each category contains the available collection and single content-types, which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip
 Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavigation to use a text search and find one of your content types more quickly!
@@ -15,7 +15,7 @@ Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavig
 
 ## Collection types
 
-The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](../assets/icons/content.svg) Content subnavigation.
+The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](../assets/icons/content.svg) Content Manager subnavigation.
 
 For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
 
@@ -86,7 +86,7 @@ Relational fields can also be displayed in the list view. Please refer to [Confi
 
 ## Single types
 
-The _Single types_ category of the Content Manager displays the list of available single types, which are accessible from the ![Content icon](../assets/icons/content.svg) Content subnavigation.
+The _Single types_ category of the Content Manager displays the list of available single types, which are accessible from the ![Content icon](../assets/icons/content.svg) Content Manager subnavigation.
 
 Unlike collection types which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
 
