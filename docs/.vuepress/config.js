@@ -39,7 +39,34 @@ const sidebar = {
           ],
         },
         ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
-        ['/developer-docs/latest/setup-deployment-guides/configurations.md', 'Configurations'],
+        {
+          title: 'Configurations',
+          path: '/developer-docs/latest/setup-deployment-guides/configurations.html',
+          collapsable: true,
+          children: [
+            { 
+              title: 'Required configurations',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+              ]
+            },
+            {
+              title: 'Optional configurations',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md', 'Public Assets'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md', 'Single Sign On (SSO)'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md', 'Role-Based Access Control (RBAC)'],
+              ]
+            }
+          ]
+        },
         {
           title: 'Deployment',
           path: '/developer-docs/latest/setup-deployment-guides/deployment',
@@ -118,8 +145,21 @@ const sidebar = {
     {
       title: '🔧 Development',
       collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
-        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
+        {
+          title: 'Backend customization',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
+            ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
+            ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
+            ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
+            ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
+            ['/developer-docs/latest/development/backend-customization/webhooks.md', 'Webhooks'],
+          ]
+        },
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
         ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
@@ -150,9 +190,9 @@ const sidebar = {
     {
       title: '💻 Developer Resources',
       collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       sidebarDepth: 2,
       children: [
-        ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -220,18 +260,52 @@ const sidebar = {
           ],
         },
         {
-          title: 'Plugin API Reference',
+          title: 'APIs Reference',
           collapsable: true,
+          sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
-            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
+            {
+              title: 'Query Engine API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+              collapsable: true,
+              // sidebarDepth: 3,
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+                  'Single Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+                  'Bulk Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+                  'Filtering'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+                  'Populating'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+                  'Ordering & Pagination'
+                ],
+              ]
+            },
+            {
+              title: 'Plugin API Reference',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+              ],
+            },
+            [ '/developer-docs/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference' ],
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
-        [
-          '/developer-docs/latest/developer-resources/global-strapi/api-reference',
-          'Global Strapi API Reference',
-        ],
       ],
     },
     {
@@ -380,11 +454,9 @@ const checklinksIgnoredFiles = [
   /**
    * Files below give false positives
    */
-  './developer-docs/latest/concepts/file-structure.md', // contains .md links that should not be treated as links
-  './developer-docs/latest/guides/unit-testing.md', // line 190
-  './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
-  './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
-  './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
+  './developer-docs/latest/guides/count-graphql.md', // might be removed once GraphQL customization is ready
+  './developer-docs/latest/setup-deployment-guides/configurations.md', // the script thinks filename[]() at line 977 is a real link
+  './developer-docs/latest/development/backend-customization/webhooks.md', // 'missing" links are in commented part of file
 ];
 
 const plugins = [
@@ -458,7 +530,7 @@ const checkLegacy = () => {
 };
 
 module.exports = {
-  title: '',
+  title: 'v4 BETA',
   port: 8080,
   description: 'The headless CMS developers love.',
   base: checkLegacy(),

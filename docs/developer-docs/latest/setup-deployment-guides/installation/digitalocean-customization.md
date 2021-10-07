@@ -133,8 +133,6 @@ To change the PostgreSQL password and update Strapi's config:
 psql -c "ALTER USER strapi with password '<your-new-password>';"
 ```
 where `<your-new-password>` should be replaced by the password you want to use.
-<!-- TODO: check with Derrick or Jim if we need quotes -->
-<!-- ? should the command be `ALTER USER strapi with password 'Az123456'` or `ALTER USER strapi with password Az123456` -->
 
 4. Update the `/srv/strapi/strapi-development/.env` file with the new password:
 

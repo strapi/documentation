@@ -51,11 +51,11 @@ Before migrating, you should first read the new [configuration documentation](/d
 
 #### Server
 
-Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
+Your server configuration should move from `./config/environments/{env}/server.json` to `./config/server.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 
 #### Database configuration
 
-Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations.md#database).
+Your database configuration should move from `./config/environments/{env}/database.json` to `./config/database.js` like shown [here](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
 
 #### Middlewares
 
@@ -94,9 +94,7 @@ module.exports = {
 
 You can now move the middleware configurations from `application.json`, `language.json`, `security.json`, `request.json` and `response.json` files directly into the `settings` property.
 
-You can review all possible options in the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations.md#configuration-and-activation-2).
-
-<!-- This hash link above generates an error with the check-links plugins but everything seems to be fine 🤷  So it's been added to the files to ignore, see config.js. -->
+You can review all possible options in the [middleware documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
 
 ::: tip
 If you never configured any middlewares you can delete this file all together. You can also only set the configurations you want to customize and leave the others out.
@@ -236,7 +234,7 @@ config
 
 We have replaced the old lifecycles that had a lot of issues with a new simpler lifecycle layer.
 
-You can read more [here](/developer-docs/latest/development/backend-customization.md#lifecycle-hooks).
+You can read more [here](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks).
 
 ## Email plugin settings
 

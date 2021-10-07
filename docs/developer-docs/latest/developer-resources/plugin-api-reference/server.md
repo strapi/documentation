@@ -82,7 +82,7 @@ module.exports = () => ({
 
 ### bootstrap()
 
-The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) function is called right after the plugin has [registered](#register).
+The [bootstrap](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) function is called right after the plugin has [registered](#register).
 
 **Type**: `Function`
 
@@ -150,7 +150,7 @@ module.exports = () => ({
 
 ### Content-Types
 
-An object with the [Content-Types](/developer-docs/latest/development/backend-customization.md#models) the plugin provides.
+An object with the [Content-Types](/developer-docs/latest/development/backend-customization/models.md) the plugin provides.
 <!-- TODO: update link to Backend customization > models once merged with database PR -->
 
 **Type**: `Object`
@@ -257,8 +257,7 @@ module.exports = [
 
 ### Controllers
 
-An object with the [controllers](/developer-docs/latest/development/backend-customization.md#controllers) the plugin provides.
-<!-- TODO: update link to Backend Customization > Controllers once merged with database PR -->
+An object with the [controllers](/developer-docs/latest/development/backend-customization/controllers.md) the plugin provides.
 
 **Type**: `Object`
 
@@ -298,8 +297,7 @@ module.exports = {
 
 ### Services
 
-An object with the [services](/developer-docs/latest/development/backend-customization.md#services) the plugin provides.
-<!-- TODO: update link to Backend Customization > Services once merged with database PR -->
+An object with the [services](/developer-docs/latest/development/backend-customization/services.md) the plugin provides.
 
 Services should be functions taking `strapi` as a parameter.
 
@@ -343,8 +341,7 @@ module.exports = ({ strapi }) => ({
 
 <!-- ? are policies still implemented like described in the RFC? -->
 
-An object with the [policies](/developer-docs/latest/development/backend-customization.md#policies) the plugin provides.
-<!-- TODO: update link to Backend Customization > Policies once merged with the database PR -->
+An object with the [policies](/developer-docs/latest/development/backend-customization/policies.md) the plugin provides.
 
 **Type**: `Object`
 
@@ -390,7 +387,7 @@ module.exports = (ctx, next) => {
 
 <!-- TODO: check if it should be updated after updating middleware docs -->
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares) the plugin provides.
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) the plugin provides.
 
 **Type**: `Object`
 

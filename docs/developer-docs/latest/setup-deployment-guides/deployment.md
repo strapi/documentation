@@ -7,8 +7,8 @@ description: Learn how to develop locally with Strapi and deploy Strapi with var
 
 Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as 21YunBox, Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
 
-::: tip
-Deploying **databases** along with Strapi is covered in the [Databases Guide](/developer-docs/latest/setup-deployment-guides/configurations.md#databases-installation-guides).
+::: strapi Database deployment
+Deploying databases along with Strapi is covered in the [databases guide](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md#databases-installation-guides).
 :::
 
 ## General guidelines
@@ -163,7 +163,7 @@ strapi(/* {...} */).start();
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deploying-the-admin-panel).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/developer-docs/latest/development/admin-customization.md#deployment).
 
 ## Hosting Provider Guides
 

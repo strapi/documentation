@@ -787,7 +787,7 @@ Congrats, you're done!
 ### Email validation
 
 :::note
-In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
+In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 :::
 
 After having registered, if you have set **Enable email confirmation** to **ON**, the user will receive a confirmation link by email. The user has to click on it to validate his/her registration.
@@ -954,7 +954,6 @@ discord: {
 ```
 
 <!-- #### Tests -->
-<!-- TODO Add documentation about how to configure unit test for the new provider -->
 
 ## Templating emails
 
