@@ -649,7 +649,7 @@ For convenience, the `*` wildcard can be used:
 ### Publication State
 
 :::prerequisites
-The [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.html#draft-and-publish) feature should be enabled.
+The [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) feature should be enabled.
 :::
 
 Queries can accept a `publicationState` parameter to fetch entries based on their publication state:

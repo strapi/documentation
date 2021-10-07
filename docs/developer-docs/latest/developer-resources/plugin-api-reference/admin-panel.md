@@ -183,7 +183,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Add a new link to the main navigation    | [Menu API](#menu-api)                   | [`addMenuLink()`](#menu-api)                      | [`register()`](#register)   |
 | Create a new settings section            | [Settings API](#settings-api)           | [`createSettingSection()`](#createsettingsection) | [`register()`](#register)   |
 | Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
-| Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers)                      | [`register()`](#register)   |
+| Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers-api)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
