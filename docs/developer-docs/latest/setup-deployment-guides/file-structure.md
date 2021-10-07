@@ -15,8 +15,6 @@ description: Discover the project structure of any default Strapi application.
 
 # Project structure
 
-By default, the structure of a Strapi project created without the starter CLI looks like the following:
-
 :::: note
 If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
 
@@ -31,6 +29,8 @@ my-project
 
 :::
 ::::
+
+The default structure of a Strapi project created without the starter CLI looks like the following:
 
 <!-- TODO: remove /documentation from URLs once moved to docs.strapi.io -->
 
