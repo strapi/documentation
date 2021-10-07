@@ -3,7 +3,7 @@ title: Strapi Developer Documentation
 description: This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 ---
 
-# Welcome to the Strapi developer documentation!
+# Welcome to the Strapi v4 developer documentation!
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
