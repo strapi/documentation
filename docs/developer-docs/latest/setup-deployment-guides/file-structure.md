@@ -39,61 +39,61 @@ The default structure of a Strapi project created without the starter CLI looks 
 . <span class="token comment"># root of the application</span>
 ├──── .cache <span class="token comment"># files used to build the admin panel</span>
 ├──── .tmp
-├──── <a href="/documentation/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
+├──── <a href="/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
 ├──── config <span class="token comment"># API configurations</span>
 │     ├──── src
-│     │     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
+│     │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
 │     │     └ response-handlers.js
-│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
-│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
-│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middleware.js</a>
-│     ├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
-│     └ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middleware.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
+│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.js</a>
 ├──── database
 │     └──── migrations
 ├──── node_modules <span class="token comment"># npm packages used by the project</span>
-├──── <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
+├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
 │     └──── uploads
 ├──── src
 │     ├──── admin <span class="token comment"># admin customization files</span>
-│     │     ├ <a href="/documentation/developer-docs/latest/development/admin-customization.html#configuration-options">app.js</a>
-│     │     └ <a href="/documentation/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
+│     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.js</a>
+│     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api <span class="token comment"># business logic of the project split into sub-folders per API</span>
 │     │     └──── (api-name)
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html">content-types</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
-│     │           │           └ <a href="/documentation/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/routing.html">routes</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/services.html">services</a>
+│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routing.html">routes</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
 │     │           └ index.js
-│     ├──── <a href="/documentation/developer-docs/latest/development/backend-customization/models.html">components</a>
+│     ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">components</a>
 │     │     └──── (category-name)
 │     │           ├ (componentA).json
 │     │           └ (componentB).json
-│     ├──── <a href="/documentation/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
+│     ├──── <a href="/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
 │     │     └──── (plugin-to-be-extended)
 │     │           ├──── content-types
 │     │           │     └──── (content-type-name)
 │     │           │           └ schema.json
-│     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     ├──── <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
+│     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
+│     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │     └──── (middleware-name)
 │     │           ├ defaults.json
 │     │           └ index.js
-│     ├──── <a href="/documentation/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
+│     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
 │     │     └──── (plugin-name)
 │     │           ├──── admin
 │     │           │     └──── src
-│     │           │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
-│     │           ├──── <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
+│     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
 │     │           ├ package.json
-│     │           ├ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
-│     │           └ <a href="/documentation/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     ├─── <a href="/documentation/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     └ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
-├ <a href="/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
+│     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
+│     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
+│     ├─── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
+│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
+├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
 └ package.json
   </code>
 </pre>
