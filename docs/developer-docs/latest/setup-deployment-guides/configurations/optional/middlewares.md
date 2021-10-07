@@ -263,7 +263,6 @@ See [koa-body](https://github.com/dlau/koa-body#options) for more information.
 
 This security middleware is about [Content Security Policy (CSP)](https://en.wikipedia.org/wiki/Content_Security_Policy).
 
-<!-- ? is `csp` enabled by default? -->
 | Parameter | Type    | Description                                                                         | Default value |
 | --------- | ------- | ----------------------------------------------------------------------------------- | ------------- |
 | `enabled` | Boolean | Enable to avoid Cross Site Scripting (XSS) and data injection attacks               |               |
@@ -273,7 +272,6 @@ This security middleware is about [Content Security Policy (CSP)](https://en.wik
 
 This security middleware is about [Platform for Privacy Preferences (P3P)](https://en.wikipedia.org/wiki/P3P).
 
-<!-- ? is `p3p` enabled by default? -->
 | Parameter | Type    | Description | Default value |
 | --------- | ------- | ----------- | ------------- |
 | `enabled` | Boolean | Enable p3p  |               |
@@ -291,7 +289,6 @@ This security middleware is about [HTTP Strict Transport Security (HSTS)](https:
 
 This security middleware is about [clickjacking](https://en.wikipedia.org/wiki/Clickjacking).
 
-<!-- ? is `xframe` enabled by default? -->
 | Parameter | Type    | Description                                                       | Default value |
 | --------- | ------- | ----------------------------------------------------------------- | ------------- |
 | `enabled` | Boolean | Enable `X-FRAME-OPTIONS` headers in response.                     |               |
@@ -301,14 +298,12 @@ This security middleware is about [clickjacking](https://en.wikipedia.org/wiki/C
 
 This security middleware is about [cross-site scripting](https://en.wikipedia.org/wiki/Cross-site_scripting).
 
-<!-- ? is `xss` enabled by default? -->
 | Parameter | Type    | Description                                                                          | Default value |
 | --------- | ------- | ------------------------------------------------------------------------------------ | ------------- |
 | `enabled` | Boolean | Enable XSS to prevent Cross Site Scripting (XSS) attacks in older IE browsers (IE8). |               |
 
 #### `cors` configuration
 
-<!-- ? is `cors` enabled by default? -->
 This security middleware is about [cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
 | Parameter     | Type            | Description                                                                                                                                                                      | Default value                                                                                                            |
@@ -336,7 +331,6 @@ To add a custom middleware to the stack:
 1. Create a `./middlewares/your-middleware-name/index.js` file
 2. Enable it and define the loading order, using the `settings` and `load` keys respectively, in the configuration object exported from the `./config/middlewares.js` file
 
-<!-- ? do we really need to have the custom middleware loaded in the first place, or was it just for example purposes? -->
 <!-- Load a middleware at the very first place -->
 
 ::: details Example: Create and set up a custom "timer" middleware:

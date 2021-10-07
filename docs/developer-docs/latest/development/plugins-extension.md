@@ -58,7 +58,6 @@ To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backe
 4. Inside the `content-types` subfolder, create another subfolder with the same [singularName](/developer-docs/latest/development/backend-customization/models.md#model-information) as the content-type to overwrite.
 5. Inside this `content-types/name-of-content-type` subfolder, define the new schema for the Content-Type in a `schema.json` file (see [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) documentation).
 6. _(optional)_ Repeat steps 4 and 5 for each Content-Type to overwrite.
-<!-- TODO: remove this comment — The links to the models section above won't work in this PR, but will work once the content is merged with the database PR -->
 
 ## Extending a plugin's interface
 
@@ -105,7 +104,6 @@ module.exports = (plugin, strapi) => {
 ### Within the `src/index.js` file
 
 To extend a plugin's interface within `src/index.js`, use its `bootstrap()` and `register()` [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)), and access the interface programmatically with [getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage).
-<!-- TODO: remove this comment — link above won't work until merged with the "Reworked configurations" PR -->
 
 ::: details Example of extending a plugin's content-type within src/index.js
 
