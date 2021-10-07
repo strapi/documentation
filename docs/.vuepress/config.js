@@ -702,6 +702,15 @@ module.exports = {
               },
             ],
           },
+          {
+            text: 'Older versions',
+            items: [
+              {
+                text: 'v3 Documentation',
+                link: 'https://strapi.io/documentation'
+              }
+            ],
+          },
         ],
       },
       {
