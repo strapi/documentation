@@ -530,7 +530,7 @@ const checkLegacy = () => {
 };
 
 module.exports = {
-  title: 'v4 BETA',
+  title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
   base: checkLegacy(),
