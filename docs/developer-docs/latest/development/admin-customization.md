@@ -218,7 +218,7 @@ The size of the custom image should be the same as the default one (434px x 120p
 
 #### Favicon
 
-To update the favicon, put a favicon file in the `.extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
+To update the favicon, put a favicon file in the `./extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
 
 #### Tutorial videos
 
