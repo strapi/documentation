@@ -127,8 +127,3 @@ module.exports = {
 ```
 
 :::
-
-## Understanding the Content-Types loading order
-
-
-<!-- ! The link to the `schema` section above won't work in this PR, but will work once the content is merged with the database PR -->
