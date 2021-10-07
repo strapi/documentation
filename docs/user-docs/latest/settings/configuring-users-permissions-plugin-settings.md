@@ -18,11 +18,11 @@ To enable and configure a provider:
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
 2. Click on the provider to enable and configure.
 3. In the provider edition window, click on the **ON** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#setting-up-the-provider-examples)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](https://strapi.io/documentation/developer-docs/latest/plugins/users-permissions.html#setting-up-the-provider-examples)).
 5. Click on the **Save** button.
 
 ::: note
-Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#adding-a-new-provider-to-your-project)).
+Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/plugins/users-permissions.html#adding-a-new-provider-to-your-project)).
 :::
 
 ## Configuring email templates
@@ -45,9 +45,9 @@ To configure and edit email templates:
 | Shipper name   | Indicate the name of the shipper of the email.                                                   |
 | Shipper email  | Indicate the email address of the shipper of the email.                                          |
 | Response email | (optional) Indicate the email address to which responses emails from the end-users will be sent. |
-| Subject        | Write the subject of the email. Variables can be used (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#templating-emails)).             |
+| Subject        | Write the subject of the email. Variables can be used (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/plugins/users-permissions.html#templating-emails)).             |
 
-4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#templating-emails)).
+4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/plugins/users-permissions.html#templating-emails)).
 5. Click on the **Save** button.
 
 ## Configuring advanced settings

@@ -361,9 +361,9 @@ module.exports = ({ env }) => ({
 | `admin.port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                                                                                                                                                                                               | string            | `8000`                                                                                                                           |
 | `admin.serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/developer-docs/latest/setup-deployment-guides/configurations.md#global-middlewares)                                                                                                                                                                      | boolean           | `true`                                                                                                                           |
 | `admin.forgotPassword`                  | Settings to customize the forgot password email (see more here: [Forgot Password Email](/developer-docs/latest/development/admin-customization.md#forgot-password-email))                                                                                                                                                                                                   | Object            | {}                                                                                                                               |
-| `admin.forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/development/plugins/email.md#programmatic-usage)                                                                                                                                                                                                                                                         | Object            | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
-| `admin.forgotPassword.from`             | Sender mail address                                                                                                                                                                                                                                                                                                                                                         | string            | Default value defined in your [provider configuration](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) |
-| `admin.forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                                                                                                                                                                                              | string            | Default value defined in your [provider configuration](/developer-docs/latest/development/plugins/email.md#configure-the-plugin) |
+| `admin.forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/plugins/email.md#programmatic-usage)                                                                                                                                                                                                                                                         | Object            | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
+| `admin.forgotPassword.from`             | Sender mail address                                                                                                                                                                                                                                                                                                                                                         | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
+| `admin.forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                                                                                                                                                                                              | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
 
 ### Formats
 
@@ -441,7 +441,7 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 Some settings can only be modified through environment variables. Here is a list of those settings are associated environment variable names:
 
-| name                                  | description                                                                                                                                                                                                                                                                                                                         | type    | default         |
+| Name                                  | Description                                                                                                                                                                                                                                                                                                                         | Type    | Default         |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
 | `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                           | boolean | `false`         |
 | `STRAPI_HIDE_STARTUP_MESSAGE`         | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | boolean | `false`         |
@@ -944,15 +944,23 @@ module.exports = {
 
 ### Functions
 
-The `./config/functions/` folder contains a set of JavaScript files in order to add dynamic and logic based configurations.
+The `/src/index.js` file contains some functions that can be used to add dynamic and logic based configurations.
 
-All functions that are exposed in this folder are accessible via `strapi.config.functions['fileName']();`
+#### Register
 
-<!-- The text above will be identified as a broken link by the check-links VuePress plugin, because its syntax looks like an empty link. You can safely ignore the error. -->
+**Path —** `/src/index.js`.
+
+The `register` function is an asynchronous function that runs before the application is initialized.
+It can be used to:
+
+- [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface))
+- extend content-types programmatically
+
+<!-- TODO: add example here -->
 
 #### Bootstrap
 
-**Path —** `./config/functions/bootstrap.js`.
+**Path —** `/src/index.js`
 
 The `bootstrap` function is called at every server start. You can use it to add a specific logic at this moment of your server's lifecycle.
 
@@ -987,6 +995,8 @@ module.exports = async () => {
   await someSetup();
 };
 ```
+
+<!-- TODO: add `destroy()` function once implemented -->
 
 #### CRON tasks
 

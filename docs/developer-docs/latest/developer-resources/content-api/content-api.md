@@ -471,7 +471,7 @@ Returns the count of entries matching the query filters. You can read more about
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/development/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: api-call
 
@@ -578,7 +578,7 @@ Partially updates an entry by `id` and returns its value.
 Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
 
 :::note
-It's currently not possible to [update the locale of an entry](/developer-docs/latest/development/plugins/i18n.md#updating-an-entry).
+It's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
 :::
 
 :::: api-call
@@ -1001,7 +1001,7 @@ To achieve this, there are three options:
 
 - Build a custom route.
 - Modify your services.
-- Use [GraphQL](/developer-docs/latest/development/plugins/graphql.md#query-api).
+- Use [GraphQL](/developer-docs/latest/plugins/graphql.md#query-api).
   :::
 
 :::caution
@@ -1092,4 +1092,4 @@ If you only want to retrieve your draft entries, you can combine the `preview` m
 
 ### Locale
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/development/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type), the `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).

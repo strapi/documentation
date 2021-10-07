@@ -1,8 +1,8 @@
 const sidebar = {
   developer: [
     {
-      collapsable: false,
       title: '🚀 Getting Started',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
         ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
@@ -11,8 +11,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '⚙️ Setup & Deployment',
+      collapsable: false,
       sidebarDepth: 0,
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
@@ -116,39 +116,40 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '🔧 Development',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
-        {
-          title: 'Strapi plugins',
-          path: '/developer-docs/latest/development/plugin-customization.html',
-          collapsable: true,
-          children: [
-            ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
-            ['/developer-docs/latest/development/plugins/email', 'Email'],
-            ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
-            ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
-          ],
-          sidebarDepth: 1,
-        },
-        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ],
     },
     {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
       collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+      ],
+      sidebarDepth: 1,
+    },
+    {
       title: '♻️ Update & Migration',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
         ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
-      collapsable: false,
       title: '💻 Developer Resources',
+      collapsable: false,
       sidebarDepth: 2,
       children: [
         ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
@@ -218,6 +219,14 @@ const sidebar = {
             ],
           ],
         },
+        {
+          title: 'Plugin API Reference',
+          collapsable: true,
+          children: [
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+            ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+          ]
+        },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         [
           '/developer-docs/latest/developer-resources/global-strapi/api-reference',
@@ -226,8 +235,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: true,
       title: '📚 Guides',
+      collapsable: true,
       children: [
         ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
@@ -451,7 +460,7 @@ const checkLegacy = () => {
 module.exports = {
   title: '',
   port: 8080,
-  description: 'The headless CMS developers love.',  
+  description: 'The headless CMS developers love.',
   base: checkLegacy(),
   plugins: plugins,
   head: [
@@ -573,6 +582,10 @@ module.exports = {
               {
                 text: 'Setup & Deployment',
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
+              },
+              {
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
               },
               {
                 text: 'Development',
