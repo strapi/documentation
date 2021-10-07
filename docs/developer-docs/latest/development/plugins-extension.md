@@ -10,7 +10,7 @@ sidebarDepth: 2
 
 Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the Marketplace or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
 
-Plugin extensions code is located in the `/src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified.
+Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified.
 
 :::details Example of extensions folder structure:
 
@@ -52,7 +52,7 @@ New versions of Strapi are released with [migration guides](/developer-docs/late
 
 To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backend-customization.md#models):
 
-1. _(optional)_ Create the `/src/extensions` folder at the root of the app, if the folder does not already exist.
+1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Create a `content-types` subfolder.
 4. Inside the `content-types` subfolder, create another subfolder with the same [singularName](/developer-docs/latest/development/backend-customization/models.md#model-information) as the content-type to overwrite.
@@ -65,16 +65,16 @@ To overwrite a plugin's [Content-Types](/developer-docs/latest/development/backe
 When a Strapi application is initializing, plugins, extensions and global lifecycle functions events happen in the following order:
 
 1. Plugins are loaded and their interfaces are exposed.
-2. Files in `src/extensions` are loaded.
-3. The `register()` and `bootstrap()` functions in `src/index.js` are called.
+2. Files in `./src/extensions` are loaded.
+3. The `register()` and `bootstrap()` functions in `./src/index.js` are called.
 
-A plugin's interface can be extended at step 2 (i.e. within `src/extensions`) or step 3 (i.e. inside `src/index.js`).
+A plugin's interface can be extended at step 2 (i.e. within `./src/extensions`) or step 3 (i.e. inside `./src/index.js`).
 
-### Within the `src/extensions` folder
+### Within the extensions folder
 
-To extend a plugin's interface using the `src/extensions` folder:
+To extend a plugin's interface using the `./src/extensions` folder:
 
-1. _(optional)_ Create the `/src/extensions` folder at the root of the app, if the folder does not already exist.
+1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
 3. Depending on what needs to be extended:
     * create a `strapi-server.js` file to extend a plugin's back end using the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)
@@ -85,7 +85,7 @@ To extend a plugin's interface using the `src/extensions` folder:
 
 <!-- ? is it `pluginConfig` or just `plugin` in the example below? -->
 ```js
-// path: /extensions/some-plugin-to-extend/strapi-server.js
+// path: ./src/extensions/some-plugin-to-extend/strapi-server.js
 
 module.exports = (plugin, strapi) => {
   pluginConfig.controllers.controllerA.find = (ctx) => {};
@@ -102,27 +102,25 @@ module.exports = (plugin, strapi) => {
 
 :::
 
-### Within the `src/index.js` file
+### Within the register and bootstrap functions
 
-To extend a plugin's interface within `src/index.js`, use its `bootstrap()` and `register()` [functions]((/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)), and access the interface programmatically with [getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage).
+To extend a plugin's interface within `./src/index.js`, use the `bootstrap()` and `register()` [functions]((/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)) of the whole project, and access the interface programmatically with [getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage).
 <!-- TODO: remove this comment — link above won't work until merged with the "Reworked configurations" PR -->
 
-::: details Example of extending a plugin's content-type within src/index.js
+::: details Example of extending a plugin's content-type within ./src/index.js
 
 ```js
-// path: src/index.js
+// path: ./src/index.js
 
 module.exports = {
   register({ strapi }) {
-    strapi.contentType('plugin::my-plugin.content-type-name') = {
-      attributes: {
-        'toto': {
-          type: 'string',
-        }
+    strapi.contentType('plugin::my-plugin.content-type-name').attributes = {
+      'toto': {
+        type: 'string',
       }
     }
   },
-  bootstrap({ strapi }),
+  bootstrap({ strapi }) {},
 };
 ```
 
