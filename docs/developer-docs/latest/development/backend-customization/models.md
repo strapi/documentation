@@ -46,7 +46,7 @@ Components models are stored in the `./components` folder. Every component has t
 The `schema.json` file of a model consists of:
 
 - [settings](#model-settings), such as the kind of content-type the model represents or the table name in which the data should be stored,
-- [information](#model-information), mostly used to display the model in the admin panel and access it through the Content API,
+- [information](#model-information), mostly used to display the model in the admin panel and access it through the REST and GraphQL APIs,
 - [attributes](#model-attributes), which describe the data structure of the model,
 - and [options](#model-options) used to defined specific behaviors on the model.
 
