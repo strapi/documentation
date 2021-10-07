@@ -72,28 +72,6 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 :::
 
-::: tab Mongoose
-
-- `defaultConnection` (string): Connection by default for models which are not related to a specific `connection`. Default value: `default`.
-- `connections` List of all available connections.
-  - `default`
-    - `connector` (string): Connector used by the current connection. Will be `mongoose`.
-    - `settings` Useful for external session stores such as Redis.
-      - `client` (string): Database client to create the connection. Will be `mongo`.
-      - `host` (string): Database host name. Default value: `localhost`.
-      - `port` (integer): Database port. Default value: `27017`.
-      - `database` (string): Database name.
-      - `username` (string): Username used to establish the connection.
-      - `password` (string): Password used to establish the connection.
-      - `uri` (string): This can overide all previous configurations - _optional_
-    - `options` Options used for database connection.
-      - `ssl` (boolean): For ssl database connection.
-      - `sslCA` (string): Pass content (not filepath!) of server's root CA for ssl connection.
-      - `debug` (boolean): Show database exchanges and errors.
-      - `authenticationDatabase` (string): Connect with authentication.
-
-:::
-
 ::::
 
 ::::: tabs card
@@ -216,37 +194,6 @@ module.exports = ({ env }) => ({
 
 ::::
 
-:::: tab MongoDB
-
-:::caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
-```js
-module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'mongoose',
-      settings: {
-        client: 'mongo',
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 27017),
-        database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-      },
-      options: {
-        authenticationDatabase: env('AUTHENTICATION_DATABASE'),
-        ssl: env('DATABASE_SSL'),
-      },
-    },
-  },
-});
-```
-
-::::
-
 :::::
 
 ::: tip
@@ -301,7 +248,7 @@ await pluginStore.set({
 
 #### Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **MongoDB**, **SQLite**, **MySQL** and
+Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
 **MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
 ::: tip
@@ -494,20 +441,16 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 Some settings can only be modified through environment variables. Here is a list of those settings are associated environment variable names:
 
-| name                                 | description                                                                                                           | type    | default         |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
-| `STRAPI_DISABLE_UPDATE_NOTIFICATION` | Don't show the notification message about updating strapi in the terminal                                             | boolean | `false`         |
-| `STRAPI_HIDE_STARTUP_MESSAGE`        | Don't show the startup message in the terminal                                                                        | boolean | `false`         |
-| `STRAPI_TELEMETRY_DISABLED`          | Don't send telemetry usage data to Strapi                                                                             | boolean | `false`         |
-| `STRAPI_LOG_TIMESTAMP`               | Add the timestamp info in logs                                                                                        | boolean | `false`         |
-| `STRAPI_LOG_LEVEL`                   | Select the level of logs among `fatal`, `error`, `warn`, `info`, `debug`, `trace`                                     | string  | `'info'`        |
-| `STRAPI_LOG_FORCE_COLOR`             | Force colors to be displayed even in environments that are not supposed to have colors enabled (ex: outside of a TTY) | boolean | `true`          |
-| `STRAPI_LOG_PRETTY_PRINT`            | Log lines are displayed as text instead of as object                                                                  | boolean | `true`          |
-| `STRAPI_LICENSE`                     | The license key to activate the Enterprise Edition                                                                    | string  | `undefined`     |
-| `NODE_ENV`                           | Type of environment where the app is running                                                                          | string  | `'development'` |
-| `BROWSER`                            | Open the admin panel in the browser after startup                                                                     | boolean | `true`          |
-| `ENV_PATH`                           | Path to the file that contains your environment variables                                                             | string  | `'./.env'`      |
-| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE`| Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
+| Name                                  | Description                                                                                                                                                                                                                                                                                                                         | Type    | Default         |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
+| `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                           | boolean | `false`         |
+| `STRAPI_HIDE_STARTUP_MESSAGE`         | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | boolean | `false`         |
+| `STRAPI_TELEMETRY_DISABLED`           | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | boolean | `false`         |
+| `STRAPI_LICENSE`                      | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | string  | `undefined`     |
+| `NODE_ENV`                            | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | string  | `'development'` |
+| `BROWSER`                             | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | boolean | `true`          |
+| `ENV_PATH`                            | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | string  | `'./.env'`      |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` | Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
 
 #### Configuration using environment variables
 
@@ -593,7 +536,7 @@ module.exports = ({ env }) => ({
 | Property                      | Description                                                                                                                                                       | Type         | Default |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
 | `responses`                   | Global API response configuration                                                                                                                                 | Object       |         |
-| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. E.g. `_v` when using MongoDb or timestamps like `created_at`, `updated_at` can be treated as private | String array | `[]`    |
+| `responses.privateAttributes` | Set of globally defined attributes to be treated as private. | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                            | Object       |         |
 | `rest.defaultLimit`           | Specifies default `_limit` parameter used in API calls                                                                                                            | Integer      | `100`   |
 | `rest.maxLimit`               | Specifies max allowed number that can be requested as `_limit`. Default to `null` which fetches all results                                                       | Integer      | `null`  |
@@ -834,7 +777,7 @@ The core of Strapi embraces a small list of middlewares for performances, securi
 - hsts
 - ip
 - language
-- logger
+- [logger](#custom-configuration-for-the-logger-middleware)
 - p3p
 - parser
 - public
@@ -864,9 +807,7 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 - `session`
   - `enabled` (boolean): Enable or disable sessions. Default value: `false`.
 - `logger`
-  - `level` (string): Default log level. Default value: `debug`.
-  - `exposeInContext` (boolean): Expose logger in context so it can be used through `strapi.log.info(‘my log’)`. Default value: `true`.
-  - `requests` (boolean): Enable or disable requests logs. Default value: `false`.
+  - `enabled` (boolean): Enable or disable requests logs. Default value: `false`.
 - `parser` (See [koa-body](https://github.com/dlau/koa-body#options) for more information)
   - `enabled`(boolean): Enable or disable parser. Default value: `true`.
   - `multipart` (boolean): Enable or disable multipart bodies parsing. Default value: `true`.
@@ -878,6 +819,36 @@ The following middlewares cannot be disabled: responses, router, logger and boom
 
 ::: tip
 The session doesn't work with `mongo` as a client. The package that we should use is broken for now.
+:::
+
+###### Custom configuration for the `logger` middleware
+
+To configure the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
+
+::: details Example: Custom configuration for the logger middleware
+
+```js
+'use strict';
+
+const {
+  winston,
+  formats: { prettyPrint, levelFilter },
+} = require('@strapi/logger');
+
+module.exports = {
+  transports: [
+    new winston.transports.Console({
+      level: 'http',
+      format: winston.format.combine(
+        levelFilter('http'),
+        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+      ),
+    }),
+  ],
+};
+
+```
+
 :::
 
 ##### Response middlewares
@@ -1097,27 +1068,9 @@ You will need to install the plugin using the normal `npm install the-plugin-nam
 
 :::: tabs card
 
-::: tab Mongoose
-
-As an example, for using the `mongoose-simple-random` plugin for MongoDB, you can register it like this:
-
-**Path —** `./config/functions/mongoose.js`.
-
-```js
-'use strict';
-
-const random = require('mongoose-simple-random');
-
-module.exports = (mongoose, connection) => {
-  mongoose.plugin(random);
-};
-```
-
-:::
-
 ::: tab Bookshelf
 
-Another example would be using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
+When using the `bookshelf-uuid` plugin for MySQL, you can register it like this:
 
 **Path —** `./config/functions/bookshelf.js`.
 
