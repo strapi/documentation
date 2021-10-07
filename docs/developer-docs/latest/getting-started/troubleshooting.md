@@ -64,9 +64,7 @@ For all these reasons, and others, we think it'll be a mistake and might confuse
 
 ## How do I customize a plugin?
 
-<!-- TODO: update link once merged with Plugins API PR -->
-
-Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension.md) as plugins are stored in the `node_modules` folder. Due to this, extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`. If you are familiar with React and "ejecting" a file, the concept is similar.
+Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
 
 You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
 
