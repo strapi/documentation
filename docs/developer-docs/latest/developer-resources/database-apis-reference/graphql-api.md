@@ -11,6 +11,8 @@ sidebarDepth: 3
 To use the GraphQL API, install the [GraphQL](/developer-docs/latest/development/plugins/graphql.md) plugin.
 :::
 
+The GraphQL API allows performing queries and mutations to interact with the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through Strapi's [GraphQL plugin](/developer-docs/latest/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
+
 ## Unified response format
 
 Responses are unified with the GraphQL API in that:
