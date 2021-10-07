@@ -17,7 +17,7 @@ The CLI installation guide details [supported database and versions](http://loca
 
 :::: tabs card
 
-::: tab Bookshelf
+::: tab SQL
 
 - `defaultConnection` (string): Connection by default for models which are not related to a specific `connection`. Default value: `default`.
 - `connections` List of all available connections.
