@@ -635,7 +635,7 @@ module.exports = {
     ],
   ],
   themeConfig: {
-    logo: '/assets/logo.png',
+    logo: '/assets/logo-beta.png',
     nav: [
       {
         text: 'Resource Center',
