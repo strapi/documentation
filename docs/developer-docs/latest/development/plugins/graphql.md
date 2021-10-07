@@ -272,7 +272,7 @@ The `extension` [service](/developer-docs/latest/development/backend-customizati
 | `disableAction()`     | Disable a specific action for the Content-Type | String           | One value from the list:<ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>   |
 | `disableActions()`    | Disable specific actions for the Content-Type  | Array of Strings | Multiple values from the list: <ul><li>`create`</li><li>`find`</li><li>`findOne`</li><li>`update`</li><li>`delete`</li></ul>  |
 
-Actions can also be disabled at a field level, with the following functions:
+Actions can also be disabled at the field level, with the following functions:
 
 | Field function     | Description                      |
 | ------------------ | -------------------------------- |
@@ -281,21 +281,23 @@ Actions can also be disabled at a field level, with the following functions:
 | `disableInput()`   | Disable the input on a field     |
 | `disableFilters()` | Disable filters input on a field |
 
-
-<!-- TODO: add field-related actions: disable, disableOutput, disableInput, disableFilters -->
-
-<!-- TODO: add getters listed in  https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/graphql/server/services/extension/shadow-crud-manager.js#L32-L155 -->
-
-**Example:**
-
-To disable the `find` operation on the "restaurant" content-type in the "restaurant" API, use:
+**Examples:**
 
 ```js
+// Disable the 'find' operation on the 'restaurant' content-type in the 'restaurant' API
 strapi
   .plugin('graphql')
   .service('extension')
   .shadowCRUD('api::restaurant.restaurant')
   .disableAction('find')
+
+// Disable the 'name' field on the 'document' content-type in the 'document' API
+strapi
+  .plugin('graphql')
+  .service('extension')
+  .shadowCRUD('api::document.document')
+  .field('name')
+  .disable()
 ```
 
 ### Using getters
