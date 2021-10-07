@@ -42,7 +42,7 @@ The final schema of the content-types depends on the following loading order:
 1. the content-types of the original plugin,
 2. the content-types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
 3. the content-types declarations in the [`content-types` key exported from `strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
-4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations.html#register) of the Strapi application
+4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#register) of the Strapi application
 
 :::warning
 New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required.

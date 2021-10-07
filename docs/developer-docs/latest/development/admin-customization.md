@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 # Admin panel customization
 
-The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customizing-the-admin-panel), and plugins can also [extend](#extending-the-admin-panel) it.
+The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
 To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
 
@@ -76,14 +76,14 @@ The `config` object accepts the following parameters:
 
 | Parameter       | Type             | Description                                                                                                                                   |
 | --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#updating-logos) on login screen                                                    |
-| `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#updating-the-favicon)                                                        |
-| `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#updating-locales)) |
+| `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#logos) on login screen                                                    |
+| `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#favicon)                                                        |
+| `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#locales)) |
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
-| `menu`          | Object           | Accepts the `logo` key to change the [logo](#updating-logos) in the main navigation                                                           |
-| `theme`         | Object           | Overrides or [extends the theme](#extending-the-theme)                                                                                          |
-| `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#toggling-the-display-of-tutorial-videos)                                                            |
-| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#toggling-strapi-releases-notifications)          |
+| `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
+| `theme`         | Object           | Overrides or [extends the theme](#theme-extension)                                                                                          |
+| `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
+| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
 
 ::: details Example of a custom configuration for the admin panel:
 
@@ -205,7 +205,7 @@ If more translations files should be added, place them in `/extensions/translati
 
 #### Logos
 
-The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#changing-the-configuration):
+The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
 
 | Location in the UI     | Configuration key to update |
 | ---------------------- | --------------------------- |
@@ -218,7 +218,7 @@ The size of the custom image should be the same as the default one (434px x 120p
 
 #### Favicon
 
-To update the favicon, put a favicon file in the `.extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#changing-the-configuration).
+To update the favicon, put a favicon file in the `.extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
 
 #### Tutorial videos
 
@@ -362,7 +362,7 @@ Deploying the admin panel and the API on the same server is the default behavior
 <!-- ? is it /admin or /dashboard? -->
 
 :::tip
-You might want to [change the path to access the administration panel](#changing-the-access-url).
+You might want to [change the path to access the administration panel](#access-url).
 :::
 
 ### Different servers
