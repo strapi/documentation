@@ -15,7 +15,7 @@ Strapi's Query Engine API gives unrestricted internal access to the database lay
 The Query Engine is available through `strapi.db.query`:
 
 ```js
-strapi.db.query('api::blog.article').findMany({
+strapi.db.query('api::blog.article').findMany({ // uid syntax: 'api::api-name.content-type-name'
   where: {
     title: {
       $startWith: '2021',

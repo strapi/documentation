@@ -11,12 +11,12 @@ description: (add description here)
 ### Single
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   orderBy: 'id',
 });
 
 // single with direction
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   orderBy: { id: 'asc' },
 });
 ```
@@ -24,12 +24,12 @@ db.query('article').findMany({
 ### Multiple
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   orderBy: ['id', 'name'],
 });
 
 // multiple with direction
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   orderBy: [{ title: 'asc' }, { publishedAt: 'desc' }],
 });
 ```
@@ -37,7 +37,7 @@ db.query('article').findMany({
 ### Relational ordering
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   orderBy: {
     author: {
       name: 'asc',
@@ -49,7 +49,7 @@ db.query('article').findMany({
 ## Pagination
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   limit: 10,
   offset: 15,
 });

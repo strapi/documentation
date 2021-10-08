@@ -25,7 +25,7 @@ Syntax: `createMany(parameters) => { count: number }`
 ### Example
 
 ```js
-await strapi.db.query('article').createMany({
+await strapi.db.query('api::blog.article').createMany({
   data: [
     {
       title: 'ABCD',
@@ -55,7 +55,7 @@ Syntax: `updateMany(parameters) => { count: number }`
 ### Example
 
 ```js
-await db.query('article').updateMany({
+await strapi.db.query('api::shop.article').updateMany({
   where: {
     price: 20,
   },
@@ -82,7 +82,7 @@ Syntax: `deleteMany(parameters) => { count: number }`
 ### Example
 
 ```js
-await db.query('article').deleteMany({
+await strapi.db.query('api::blog.article').deleteMany({
   where: {
     title: {
       $startsWith: 'v3',
@@ -108,7 +108,7 @@ Syntax: `count(parameters) => number`
 | `where`     | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use             |
 
 ```js
-const count = await db.query('article').count({
+const count = await strapi.db.query('api::blog.article').count({
   where: {
     title: {
       $startsWith: 'v3',

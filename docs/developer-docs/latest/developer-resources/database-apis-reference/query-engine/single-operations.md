@@ -25,7 +25,7 @@ Syntax: `findOne(parameters) ⇒ Entry`
 ### Example
 
 ```js
-const entry = await db.query('article').findOne({
+const entry = await strapi.db.query('api::blog.article').findOne({
   select: ['title', 'description'],
   where: { title: 'Hello World' },
   populate: { category: true },
@@ -52,7 +52,7 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 ### Example
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::blog.article').findMany({
   select: ['title', 'description'],
   where: { title: 'Hello World' },
   orderBy: { publishedAt: 'DESC' },
@@ -81,7 +81,7 @@ Syntax: `findWithCount(parameters) => [Entry[], number]`
 ### Example
 
 ```js
-const [entries, count] = await db.query('article').findWithCount({
+const [entries, count] = await strapi.db.query('api::blog.article').findWithCount({
   select: ['title', 'description'],
   where: { title: 'Hello World' },
   orderBy: { title: 'DESC' },
@@ -106,7 +106,7 @@ Syntax: `create(parameters) => Entry`
 ### Example
 
 ```js
-const entry = await db.query('article').create({
+const entry = await strapi.db.query('api::blog.article').create({
   data: {
     title: 'My Article',
   },
@@ -131,7 +131,7 @@ Syntax: `update(parameters) => Entry`
 ### Example
 
 ```js
-const entry = await db.query('article').update({
+const entry = await strapi.db.query('api::blog.article').update({
   where: { id: 1 },
   data: {
     title: 'xxx',
@@ -156,7 +156,7 @@ Syntax: `delete(parameters) => Entry`
 ### Example
 
 ```js
-const entry = await db.query('article').delete({
+const entry = await strapi.db.query('api::blog.article').delete({
   where: { id: 1 },
 });
 ```

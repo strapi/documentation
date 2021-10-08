@@ -11,7 +11,7 @@ Relations and components have a unified API for populating them.
 To populate all the root level relations, use `populate: true`:
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: true,
 });
 ```
@@ -19,7 +19,7 @@ db.query('article').findMany({
 Select which data to populate by passing an array of attribute names:
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: ['componentA', 'relationA'],
 });
 ```
@@ -27,7 +27,7 @@ db.query('article').findMany({
 An object can be passed for more advanced usage:
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: {
     componentB: true,
     dynamiczoneA: true,
@@ -39,7 +39,7 @@ db.query('article').findMany({
 Complex populating can also be achieved by applying `where` filters and select or populate nested relations:
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: {
     relationA: {
       where: {
@@ -74,14 +74,14 @@ We will however keep the auto populate in the business logic layer for the compo
 This will also allow filtering on them & ordering them like a simple relation.
 
 ```js
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: {
     componentB: true,
     dynamiczoneA: true,
   },
 });
 
-db.query('article').findMany({
+strapi.db.query('api::article.article').findMany({
   populate: {
     repeatableComponent: {
       select: [],

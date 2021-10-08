@@ -17,7 +17,7 @@ All nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     $and: [
       {
@@ -38,7 +38,7 @@ const entries = await db.query('article').findMany({
 `$and` is used implicitly when passing an object with nested conditions:
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: 'Hello World',
     rating: 12,
@@ -53,7 +53,7 @@ One or many nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     $or: [
       {
@@ -76,7 +76,7 @@ Negates the nested conditions.
 **Example**
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     $not: {
       title: {
@@ -99,7 +99,7 @@ Negates nested condition. The `not` operator can be used in an attribute conditi
 
 **Example**
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $not: 'Hello World',
@@ -115,7 +115,7 @@ Attribute equals input value.
 **Example**
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $eq: 'Hello World',
@@ -127,7 +127,7 @@ const entries = await db.query('article').findMany({
 `$eq` can be omitted:
 
 ```js
-const entries = await db.query('article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: 'Hello World',
   },
@@ -141,7 +141,7 @@ Attribute does not equal input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $ne: 'ABCD',
@@ -157,7 +157,7 @@ Attribute is contained in the input list.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
@@ -169,7 +169,7 @@ const entries = db.query('article').findMany({
 `$in` can be ommited when passing an array of values
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
@@ -183,7 +183,7 @@ Attribute is not contained in the input list.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $nin: ['Hello', 'Hola', 'Bonjour'],
@@ -199,7 +199,7 @@ Attribute is less than the input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $lt: 10,
@@ -215,7 +215,7 @@ Attribute is less than or equal to the input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $lte: 10,
@@ -231,7 +231,7 @@ Attribute is greater than the input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $gt: 5,
@@ -247,7 +247,7 @@ Attribute is greater than or equal to the input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $gte: 5,
@@ -263,7 +263,7 @@ Attribute is between the 2 input values.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $between: [1, 20],
@@ -280,7 +280,7 @@ Attribute contains the input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $contains: 'ABCD',
@@ -296,7 +296,7 @@ Attribute starts with input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $startsWith: 'ABCD',
@@ -312,7 +312,7 @@ Attribute ends with input value.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $endsWith: 'ABCD',
@@ -328,7 +328,7 @@ Attribute is `null`.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $null: false,
@@ -344,7 +344,7 @@ Attribute is not `null`.
 **Example**
 
 ```js
-const entries = db.query('article').findMany({
+const entries = strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $notNull: true,
