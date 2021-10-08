@@ -16,7 +16,7 @@ The configurations for all plugins are stored in `/config/plugins.js` (see [proj
 | `resolve`<br><br>_Optional_ | Path to the plugin's folder                                                                                                                                            | String  |
 
 ```js
-// path: /config/plugins.js
+// path: ./config/plugins.js
 
 module.exports = ({ env }) => ({
   // enable a plugin that doesn't require any configuration

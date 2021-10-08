@@ -33,13 +33,13 @@ Creating a content-type with either method generates 2 files:
 - `schema.json` for the model's [schema](#model-schema) definition,
 - `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks).
 
-These models files are stored in `./api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 ### Components
 
 Component models can't be created with CLI tools. Use the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
 
-Components models are stored in the `./components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 ## Model schema
 
@@ -83,7 +83,7 @@ The `info` key in the model's schema describes information used to display the m
 | `icon`<br><br>_Optional,_<br>_only for Components_       | String      | [FontAwesome](https://fontawesome.com/) (v5) icon name to use for the component's icon in the admin panel
 
 ```json
-// ./api/[api-name]/content-types/restaurant/schema.json
+// ./src/api/[api-name]/content-types/restaurant/schema.json
 
   "info": {
     "displayName": "Restaurant",
@@ -138,7 +138,7 @@ Basic validations can be applied to attributes using the following parameters:
 | `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
 
 ```json
-// ./api/[api-name]/content-types/restaurant/schema.json
+// ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
   ...
@@ -197,7 +197,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   - but querying a category won't retrieve the list of articles.
 
   ```js
-  // ./api/[api-name]/content-types/article/schema.json
+  // ./src/api/[api-name]/content-types/article/schema.json
 
   const model = {
     attributes: {
@@ -219,7 +219,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   - and querying a category also retrieves its list of articles.
 
   ```js
-  // ./api/[api-name]/content-types/article/schema.json
+  // ./src/api/[api-name]/content-types/article/schema.json
 
   const model = {
     attributes: {
@@ -233,7 +233,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   };
 
 
-  // ./api/[api-name]/content-types/category/schema.json
+  // ./src/api/[api-name]/content-types/category/schema.json
 
   const model = {
     attributes: {
@@ -265,7 +265,7 @@ One-to-many relationships are always bidirectional, and are usually defined with
 A person can own many plants, but a plant is owned by only one person.
 
 ```js
-// ./api/[api-name]/content-types/plant/schema.json
+// ./src/api/[api-name]/content-types/plant/schema.json
 
 const model = {
   attributes: {
@@ -278,7 +278,7 @@ const model = {
   },
 };
 
-// ./api/person/models/schema.json
+// ./src/api/person/models/schema.json
 
 const model = {
   attributes: {
@@ -307,7 +307,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   A book can be written by many authors.
 
   ```js
-  // .api/[api-name]/content-types/book/schema.json
+  // ./src/api/[api-name]/content-types/book/schema.json
 
   const model = {
     attributes: {
@@ -328,7 +328,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   An article belongs to only one category but a category has many articles.
 
   ```js
-  // .api/[api-name]/content-types/article/schema.json
+  // ./src/api/[api-name]/content-types/article/schema.json
 
   const model = {
     attributes: {
@@ -342,7 +342,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
   };
 
 
-  // .api/[api-name]/content-types/category/schema.json
+  // ./src/api/[api-name]/content-types/category/schema.json
 
   const model = {
     attributes: {
@@ -389,7 +389,7 @@ Many-to-many relationships can be unidirectional or bidirectional. In unidirecti
 An article can have many tags and a tag can be assigned to many articles.
 
   ```js
-  // .api/[api-name]/content-types/article/schema.json
+  // ./src/api/[api-name]/content-types/article/schema.json
 
   const model = {
     attributes: {
@@ -403,7 +403,7 @@ An article can have many tags and a tag can be assigned to many articles.
   };
 
 
-  // .api/[api-name]/content-types/tag/schema.json
+  // ./src/api/[api-name]/content-types/tag/schema.json
 
   const model = {
     attributes: {
@@ -424,7 +424,7 @@ An article can have many tags and a tag can be assigned to many articles.
 The `tableName` key defines the name of the join table. It has to be specified once. If it is not specified, Strapi will use a generated default one. It is useful to define the name of the join table when the name generated by Strapi is too long for the database you use.
 :::
 
-**Path —** `./api/category/models/Category.settings.json`.
+**Path —** `./src/api/category/models/Category.settings.json`.
 
 ```js
 {
@@ -450,7 +450,7 @@ Component fields create a relation between a content-type and a component struct
 | `component`  | String  | Define the corresponding component, following this format:<br/>`<category>.<componentName>`  |
 
 ```json
-// ./api/[apiName]/restaurant/content-types/schema.json
+// ./src/api/[apiName]/restaurant/content-types/schema.json
 
 {
   "attributes": {
@@ -471,7 +471,7 @@ Dynamic zones create a flexible space in which to compose content, based on a mi
 Dynamic zones are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'dynamiczone'`. They also accepts a `components` array, where each component should be named following this format: `<category>.<componentName>`.
 
 ```json
-// ./api/[api-name]/content-types/article/schema.json
+// ./src/api/[api-name]/content-types/article/schema.json
 
 {
   "attributes": {
@@ -494,7 +494,7 @@ The `options` key is used to define specific behaviors and accepts the following
 | `draftAndPublish`       | Boolean                     | Enables the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
 
 ```json
-// .api/[api-name]/content-types/restaurant/schema.json
+// ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
   "options": {
@@ -561,7 +561,7 @@ To configure a content-type lifecycle hook, create a `lifecycles.js` file in the
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
 ```js
-// ./api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
 
 module.exports = {
   beforeCreate(event: Event) {
@@ -581,9 +581,8 @@ module.exports = {
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
-
 ```js
-// ./api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({

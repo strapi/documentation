@@ -33,7 +33,7 @@ To create a plugin, use Strapi CLI tools:
     ```
 5. Run `strapi build` to build the plugin.
 
-Plugins created this way are located in the `/plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Plugins created this way are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 ## Adding features to a plugin
 
