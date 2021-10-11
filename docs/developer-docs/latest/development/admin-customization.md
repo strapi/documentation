@@ -196,7 +196,7 @@ To build the administration, run the following command from the root directory o
 
 <code-block title="NPM">
 ```sh
-npm  build
+npm run build
 ```
 </code-block>
 
