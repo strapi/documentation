@@ -8,11 +8,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
-This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/en-us/). Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/en-us/services/postgresql/). Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
+This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/). Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/services/postgresql/). Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
 ### Azure Install Requirements
 
-- You must have an [Azure account](https://azure.microsoft.com/en-us/free/) before doing these steps.
+- You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
 - An SSH key to access the virtual machine
 
 ### Create a Virtual Machine
