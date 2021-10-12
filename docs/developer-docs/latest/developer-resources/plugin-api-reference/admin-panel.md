@@ -1,5 +1,5 @@
 ---
-title: Local plugins - Strapi Developer Documentation
+title: Admin Panel API - Strapi Developer Documentation
 description: Strapi allows you to create your own custom local plugins that will work exactly the same as external ones.
 sidebarDepth: 3
 ---
