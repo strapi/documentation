@@ -181,7 +181,7 @@ module.exports = {
 Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
 ```js
-// path: /src/admin/app.js
+// path: ./src/admin/app.js
 
 export default {
   config: {
