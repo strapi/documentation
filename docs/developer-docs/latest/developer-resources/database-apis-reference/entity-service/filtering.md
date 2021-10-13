@@ -1,10 +1,12 @@
 ---
-title: Filtering with Query Engine API - Strapi Developer Documentation
-description: (add description here)
+title: Filtering with Entity Service API - Strapi Developer Documentation
+description: …
 sidebarDepth: 3
 ---
-<!-- TODO: update SEO tags -->
-# Query Engine API: Filtering
+
+<!-- TODO: update SEO -->
+
+# Entity Service API: Filtering
 
 Every operator should be prefixed with `$`.
 
@@ -17,13 +19,11 @@ All nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     $and: [
       {
-        rating: {
-          $gte: 12,
-        }
+        title: 'Hello World',
       },
       {
         title: {
@@ -35,11 +35,11 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
-`$and` is used implicitly when passing an object with nested conditions:
+`$and` will be used implicitly when passing an object with nested conditions.
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     title: 'Hello World',
     rating: 12,
   },
@@ -48,13 +48,13 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 ### `$or`
 
-One or many nested conditions must be `true`.
+One or many nested conditions must be `true`
 
 **Example**
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     $or: [
       {
         title: 'Hello World',
@@ -76,12 +76,10 @@ Negates the nested conditions.
 **Example**
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     $not: {
-      title: {
-        $contains: 'Hello'
-      },
+      title: 'Hello World',
     },
   },
 });
@@ -89,20 +87,39 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 ## Attribute Operators
 
-:::caution
-Using these operators may give different results depending on the database's implementation, as the comparison is handled by the database and not by Strapi.
-:::
+**List**:
+
+- `$in`
+- `$notIn`
+- `$eq`
+- `$ne`
+- `$gt`
+- `$gte`
+- `$lt`
+- `$lte`
+- `$null`
+- `$notNull`
+- `$between`
+- `$startsWith`
+- `$endsWith`
+- `$contains`
+- `$notContains`
+- `$containsi` : insensitive
+- `$notContainsi` insensitive
 
 ### `$not`
 
-Negates nested condition. The `not` operator can be used in an attribute condition too.
+Negates nested condition. The `not` operator can be use in an attribute condition too.
 
 **Example**
+
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     title: {
-      $not: 'Hello World',
+      $not: {
+        $contains: 'Hello World',
+      },
     },
   },
 });
@@ -115,8 +132,8 @@ Attribute equals input value.
 **Example**
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $eq: 'Hello World',
     },
@@ -124,11 +141,11 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
-`$eq` can be omitted:
+`$eq` can be omitted
 
 ```js
-const entries = await strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = await strapi.entityService.findMany('articles', {
+  filters {
     title: 'Hello World',
   },
 });
@@ -141,8 +158,8 @@ Attribute does not equal input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $ne: 'ABCD',
     },
@@ -157,8 +174,8 @@ Attribute is contained in the input list.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
     },
@@ -169,8 +186,8 @@ const entries = strapi.db.query('api::article.article').findMany({
 `$in` can be ommited when passing an array of values
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
 });
@@ -183,8 +200,8 @@ Attribute is not contained in the input list.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $nin: ['Hello', 'Hola', 'Bonjour'],
     },
@@ -199,8 +216,8 @@ Attribute is less than the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     rating: {
       $lt: 10,
     },
@@ -215,8 +232,8 @@ Attribute is less than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     rating: {
       $lte: 10,
     },
@@ -231,8 +248,8 @@ Attribute is greater than the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     rating: {
       $gt: 5,
     },
@@ -247,8 +264,8 @@ Attribute is greater than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     rating: {
       $gte: 5,
     },
@@ -258,20 +275,19 @@ const entries = strapi.db.query('api::article.article').findMany({
 
 ### `$between`
 
-Attribute is between the 2 input values.
+Attribute is between the two input values.
 
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     rating: {
       $between: [1, 20],
     },
   },
 });
 ```
-
 
 ### `$contains`
 
@@ -280,8 +296,8 @@ Attribute contains the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $contains: 'ABCD',
     },
@@ -296,8 +312,8 @@ Attribute starts with input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $startsWith: 'ABCD',
     },
@@ -312,8 +328,8 @@ Attribute ends with input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $endsWith: 'ABCD',
     },
@@ -323,15 +339,15 @@ const entries = strapi.db.query('api::article.article').findMany({
 
 ### `$null`
 
-Attribute is `null`.
+Attribute is null`.
 
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
-      $null: false,
+      $null: true,
     },
   },
 });
@@ -339,13 +355,13 @@ const entries = strapi.db.query('api::article.article').findMany({
 
 ### `$notNull`
 
-Attribute is not `null`.
+Attribute is not null.
 
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
-  where: {
+const entries = strapi.entityService.findMany('articles', {
+  filters {
     title: {
       $notNull: true,
     },

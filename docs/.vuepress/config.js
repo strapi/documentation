@@ -296,6 +296,16 @@ const sidebar = {
               ]
             },
             {
+              title: 'Entity Service API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+              collapsable: true,
+              children : [
+               ['/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md', 'CRUD operations'],
+               ['/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filtering.md', 'Filtering'],
+               ['/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md', 'Components and dynamic zones']
+              ],
+            },
+            {
               title: 'Plugin APIs Reference',
               collapsable: true,
               children: [
