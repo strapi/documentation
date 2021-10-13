@@ -296,7 +296,7 @@ const sidebar = {
               ]
             },
             {
-              title: 'Plugin APIs Reference',
+              title: 'Plugin APIs',
               collapsable: true,
               children: [
                 ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
