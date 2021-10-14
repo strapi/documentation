@@ -7,7 +7,7 @@ description: …
 
 # Entity Service API: CRUD operations
 
-The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) is built on top of the the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) to perform CRUD operations on entities.
+The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) is built on top of the the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) and uses it to perform CRUD operations on entities.
 
 ## findOne()
 
@@ -19,8 +19,8 @@ Syntax: `findOne(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 | Parameter | Description                                | Type                           |
 | --------- | ------------------------------------------ | ------------------------------ |
-| fields    | Select some attributes to return           | `string[]`                     |
-| populate  | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
+| `fields`    | Attributes to return           | `String[]`                     |
+| `populate`  | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) |
 
 ### Example
 
@@ -43,13 +43,13 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 
 | Parameter        | Description                                | Type                           |
 | ---------------- | ------------------------------------------ | ------------------------------ |
-| fields           | Select some attributes to return           | `string[]`                     |
-| filters          | Filter                                     | [`FilterParameters`](#filtering)   |
-| start            | How many entries to skip                   | `number`                       |
-| limit            | Always `1` when used with `findOne`        | `number`                       |
-| sort             | How to order the entries                   | [`OrderByParameter`](#ordering)    |
-| populate         | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
-| publicationState | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
+| `fields`           | Attributes to return           | `String[]`                     |
+| `filters`          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) to use                                     | [`FiltersParameters`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md)   |
+| `start`            | Number of entries to skip (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.html#pagination))                   | `Number`                       |
+| `limit`            | Number of entries to return (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.html#pagination))| `Number`                       |
+| `sort`             | [Order](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/ordering-pagination.md) definition                   | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/ordering-pagination.md)    |
+| `populate`         | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) |
+| `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries (default)</li><li>`preview` to return both draft entries & published entries</li></ul> | `PublicationStateParameter` |
 
 ### Example
 
@@ -66,20 +66,20 @@ const entries = await strapi.entityService.findMany('articles', {
 
 Creates one entry and returns it
 
-Syntax: `create(uid: string, parameters: Params)` => `Entry`
+Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
 | Parameter | Description                                | Type                           |
 | --------- | ------------------------------------------ | ------------------------------ |
-| fields    | Select some attributes to return           | `string[]`                     |
-| populate  | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
-| data      | Input data                                 | `Object`                       |
+| `fields`    | Attributes to return           | `String[]`                     |
+| `populate`  | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) |
+| `data`      | Input data                                 | `Object`                       |
 
 ### Example
 
 ```js
-const entry = await db.query('article').create({
+const entry = await strapi.entityService('article').create({
   data: {
     title: 'My Article',
   },
@@ -90,20 +90,20 @@ const entry = await db.query('article').create({
 
 Updates one entry and returns it.
 
-Syntax: `update(uid: string, id: ID, parameters: Params)` => `Entry`
+Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
 | Parameter | Description                                | Type                           |
 | --------- | ------------------------------------------ | ------------------------------ |
-| fields    | Select some attributes to return           | `string[]`                     |
-| populate  | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
-| data      | Input data                                 | `object`                       |
+| `fields`    | Attributes to return           | `String[]`                     |
+| `populate`  | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) |
+| `data`      | Input data                                 | `object`                       |
 
 ### Example
 
 ```js
-const entry = await db.query('article').update({
+const entry = await strapi.entityService('article').update({
   filters { id: 1 },
   data: {
     title: 'xxx',
@@ -115,19 +115,19 @@ const entry = await db.query('article').update({
 
 Deletes one entry and returns it.
 
-Syntax: `delete(uid: string, id: ID, parameters: Params)` => `Entry`
+Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
 | Parameter | Description                                | Type                           |
 | --------- | ------------------------------------------ | ------------------------------ |
-| fields    | Select some attributes to return           | `string[]`                     |
-| populate  | Select which relations should be populated | [`PopulateParameter`](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md) |
+| `fields`    | Attributes to return           | `String[]`                     |
+| `populate`  | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populating.md) |
 
 ### Example
 
 ```js
-const entry = await db.query('article').delete({
+const entry = await strapi.entityService('article').delete({
   filters { id: 1 },
 });
 ```

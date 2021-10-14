@@ -1,6 +1,6 @@
 ---
-title: Filtering with Entity Service API - Strapi Developer Documentation
-description: …
+title: Entity Service API - Filtering - Strapi Developer Documentation
+description: Filter, order and paginate results with Entity Service API
 sidebarDepth: 3
 ---
 
@@ -8,7 +8,9 @@ sidebarDepth: 3
 
 # Entity Service API: Filtering
 
-Every operator should be prefixed with `$`.
+The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) offers the ability to filter results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.html#findmany) method.
+
+Results are filtered with the `filters` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
 
 ## Logical operators
 
@@ -20,7 +22,7 @@ All nested conditions must be `true`.
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     $and: [
       {
         title: 'Hello World',
@@ -35,11 +37,11 @@ const entries = await strapi.entityService.findMany('articles', {
 });
 ```
 
-`$and` will be used implicitly when passing an object with nested conditions.
+`$and` will be used implicitly when passing an object with nested conditions:
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: 'Hello World',
     rating: 12,
   },
@@ -48,13 +50,13 @@ const entries = await strapi.entityService.findMany('articles', {
 
 ### `$or`
 
-One or many nested conditions must be `true`
+One or many nested conditions must be `true`.
 
 **Example**
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     $or: [
       {
         title: 'Hello World',
@@ -71,13 +73,13 @@ const entries = await strapi.entityService.findMany('articles', {
 
 ### `$not`
 
-Negates the nested conditions.
+Negates the nested conditions. 
 
 **Example**
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     $not: {
       title: 'Hello World',
     },
@@ -85,37 +87,23 @@ const entries = await strapi.entityService.findMany('articles', {
 });
 ```
 
+:::note
+`$not` can be used:
+- as a logical operator (e.g. in `filters: { $not: { // conditions… }}`)
+- or [as an attribute operator](#not-2) (e.g. in `filters: { $attribute-name: $not: { … } }`).
+:::
+
 ## Attribute Operators
-
-**List**:
-
-- `$in`
-- `$notIn`
-- `$eq`
-- `$ne`
-- `$gt`
-- `$gte`
-- `$lt`
-- `$lte`
-- `$null`
-- `$notNull`
-- `$between`
-- `$startsWith`
-- `$endsWith`
-- `$contains`
-- `$notContains`
-- `$containsi` : insensitive
-- `$notContainsi` insensitive
 
 ### `$not`
 
-Negates nested condition. The `not` operator can be use in an attribute condition too.
+Negates the nested condition(s).
 
 **Example**
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $not: {
         $contains: 'Hello World',
@@ -133,7 +121,7 @@ Attribute equals input value.
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $eq: 'Hello World',
     },
@@ -141,11 +129,11 @@ const entries = await strapi.entityService.findMany('articles', {
 });
 ```
 
-`$eq` can be omitted
+`$eq` can be omitted:
 
 ```js
 const entries = await strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: 'Hello World',
   },
 });
@@ -159,7 +147,7 @@ Attribute does not equal input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $ne: 'ABCD',
     },
@@ -175,7 +163,7 @@ Attribute is contained in the input list.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
     },
@@ -183,11 +171,11 @@ const entries = strapi.entityService.findMany('articles', {
 });
 ```
 
-`$in` can be ommited when passing an array of values
+`$in` can be ommited when passing an array of values:
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
 });
@@ -201,7 +189,7 @@ Attribute is not contained in the input list.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $nin: ['Hello', 'Hola', 'Bonjour'],
     },
@@ -217,7 +205,7 @@ Attribute is less than the input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     rating: {
       $lt: 10,
     },
@@ -233,7 +221,7 @@ Attribute is less than or equal to the input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     rating: {
       $lte: 10,
     },
@@ -249,7 +237,7 @@ Attribute is greater than the input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     rating: {
       $gt: 5,
     },
@@ -265,7 +253,7 @@ Attribute is greater than or equal to the input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     rating: {
       $gte: 5,
     },
@@ -275,13 +263,13 @@ const entries = strapi.entityService.findMany('articles', {
 
 ### `$between`
 
-Attribute is between the two input values.
+Attribute is between the 2 input values.
 
 **Example**
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     rating: {
       $between: [1, 20],
     },
@@ -297,7 +285,7 @@ Attribute contains the input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $contains: 'ABCD',
     },
@@ -313,7 +301,7 @@ Attribute starts with input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $startsWith: 'ABCD',
     },
@@ -329,7 +317,7 @@ Attribute ends with input value.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $endsWith: 'ABCD',
     },
@@ -339,13 +327,13 @@ const entries = strapi.entityService.findMany('articles', {
 
 ### `$null`
 
-Attribute is null`.
+Attribute is `null`.
 
 **Example**
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $null: true,
     },
@@ -361,7 +349,7 @@ Attribute is not null.
 
 ```js
 const entries = strapi.entityService.findMany('articles', {
-  filters {
+  filters: {
     title: {
       $notNull: true,
     },
