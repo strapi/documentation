@@ -6,7 +6,11 @@ description: (add description here)
 
 # Query Engine API: Ordering & Paginating
 
+The [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) offers the ability to [order](#ordering) and [paginate](#pagination) results.
+
 ## Ordering
+
+To order results returned by the Query Engine, use the `orderBy` parameter. Results can be ordered based on a [single](#single) or on [multiple](#multiple) attributes and can also use [relational ordering](#relational-ordering).
 
 ### Single
 
