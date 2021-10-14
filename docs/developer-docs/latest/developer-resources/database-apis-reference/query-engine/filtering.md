@@ -1,5 +1,5 @@
 ---
-title: Filtering with Query Engine API - Strapi Developer Documentation
+title: Filtering Operations for Query Engine API - Strapi Developer Documentation
 description: (add description here)
 sidebarDepth: 3
 ---
