@@ -48,9 +48,11 @@ strapi.db.query('api::article.article').findMany({
 
 ## Pagination
 
+To paginate results returned by the Query Engine API, use the `offset` and `limit` parameters:
+
 ```js
 strapi.db.query('api::article.article').findMany({
+  offset: 15, 
   limit: 10,
-  offset: 15,
 });
 ```
