@@ -1,5 +1,5 @@
 ---
-title: Backend customization - Strapi Developer Documentation
+title: Backend customization - Strapi Developer Docs
 description: …
 ---
 
@@ -7,245 +7,82 @@ description: …
 
 # Backend customization
 
+Strapi runs an HTTP server based on [Koa](https://koajs.com/). Its internal flow mostly revolves around 7 core concepts: [requests](#requests), [routes](#routes), [policies](#policies), [middlewares](#middlewares), [controllers](#controllers), [services](#services), and [responses](#responses). Each of these parts can be customized, as well as [models](#models) and [webhooks](#webhooks).
+
+## Requests
+
+As Strapi runs an HTTP server, it receives requests, handled by [routes](#routes). These requests can come from API calls (e.g. via a client application) or from the Strapi's admin panel and plugins.
+
+Strapi's server is built upon [Koa](https://koajs.com/). Koa's request objects are an abstraction on top of [node's vanilla request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage). In Strapi, the context object (i.e. `ctx`) contains all the request-related information:
+
+- the request itself is accessible through `ctx.request` and is available to [controllers](#controllers) and [policies](#policies),
+- the body of the request is passed as `ctx.request.body`,
+- and the files are passed as `ctx.request.files`.
+
 ## Routes
 
-Strapi runs an http server. Requests can be handled on any URL by adding routes to Strapi.
+Requests can be handled on any URL by adding [routes](/developer-docs/latest/development/backend-customization/routes.md) to Strapi. Using routes is the first step towards creating custom JSON APIs to be used later on in the client application. 
 
-Routes can be defined as an array of objects, each object with a `method`, a `path` and `handler`:
+Routes can be configured:
 
-**Example**: Handle any GET request on the `/articles` url and call the `actionName` function on the `controllerName` [controller](#controllers):
+- with [policies](#policies), which are a way to block access to a route,
+- and with [middlewares](#middlewares), which are a way to control the request flow and the request itself, and change them.
 
-```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
-
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'controllerName.actionName',
-    },
-  ],
-};
-```
-
-Using routes is the first step towards creating custom JSON APIs to be used later on in the client application.
-
-### Configuration
-
-Routes can be configured with policies and middlewares.
-
-#### Policies
-
-Policies are a way to block access to a route. They are usually used for authorization purposes or to check for some accessibility conditions.
-
-Policies can be added to a route configuration:
-
-- by pointing to a policy registered in `./src/policies`, with or without using some custom configuration
-- or by declaring the policy as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments
-
-```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
-
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'controllerName.actionName',
-      config: {
-        policies: [
-          'policy-name', // point to a registered policy
-          { name: 'policy-name', config: {} }, // point to a registered policy with some custom configuration
-          // pass a policy implementation directly
-          (ctx, { strapi }) => {
-            return true;
-          },
-        ],
-      },
-    },
-  ],
-};
-```
-
-You can read more about policies [here](/developer-docs/latest/development/backend-customization/policies.md).
-
-#### Middlewares
-
-Middlewares are a way to control the request flow and change it. The request can also be changed before moving forward. Usually middlewares are mostly used for logging, caching, debuging, error handling, and security purposes.
-
-Middlewares can be added to a route configuration:
-
-- by pointing to a middleware registered in `./src/middlewares`, with or without using some custom configuration
-- or by declaring the middleware as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments:
-
-```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
-
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'controllerName.actionName',
-      config: {
-        middlewares: [
-          'middleware-name', // point to a registered middleware
-          { name: 'middleware-name', config: {} }, // point to a registered middleware with some custom configuration
-          // pass a middleware implementation directly
-          (ctx, next) => {
-            return next();
-          },
-        ],
-      },
-    },
-  ],
-};
-```
-
-You can read more about policies [here](./middlewares.md)
-
-### Public routes
-
-By default, routes are protected by Strapi's authentication system, which is based on API tokens and/or the use of a plugin such as the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.html#users-permissions-plugin).
-
-In some scenarios, it can be useful to have a route publicly available, and control the access outside of the normal Strapi authentication system. This can be achieved by setting the `auth` configuration parameter of a route to `false`:
-
-```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
-
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'controllerName.actionName',
-      config: {
-        auth: false,
-      },
-    },
-  ],
-};
-```
-
-## Controllers
-
-Once a route has been created, it should execute some code handled by a controller.
-
-A controller can be added like follows:
-
-```js
-// path: .src/api/[apiName]/controllers/[controllerName].js (e.g './src/api/blog/controllers/articles.js')
-
-module.exports = {
-  actionName(ctx) {
-    ctx.send({
-      data: [
-        {
-          id: 1,
-          title: 'My Article',
-        },
-      ],
-    });
-  },
-};
-```
-
-As the logic implemented in the controller becomes more complex, it's a good practice to move that logic into its own layer to be reused and reorganised, using [services](#services).
-
-## Services
-
-Services are a generic way to build business logic. They are made available through `strapi.service()` and can encapsulate any logic.
-
-To create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
-
-```js
-/**
- * @param {{ strapi: import('@strapi/strapi').Strapi }} opts
- */
-module.exports = ({ strapi }) => {
-  return {
-    archiveArticles(ids) {
-      // do some logic here
-    },
-  };
-};
-```
-
-Once a service is created, it's accessible from controllers or from other services:
-
-```js
-// access an API service
-strapi.service('api::apiName.serviceName');
-
-// access a plugin service
-strapi.service('plugin::pluginName.serviceName');
-```
-
-::: tip
-To list all the available services, run `yarn strapi services:list`.
-<!-- TODO: add this to CLI reference -->
-:::
+Once a route has been created, it should execute some code handled by a [controller](#controllers).
 
 ## Policies
 
-Policies are a way to block access to a route. They are usually used for authorization purposes or to check for some accessibility conditions.
+[Policies](/developer-docs/latest/development/backend-customization/policies.md) are a way to block access to a route. They are usually used for authorization purposes or to check for some accessibility conditions.
 
-They work for both REST routes and GraphQL resolvers when using the [GraphQL plugin](/developer-docs/latest/plugins/graphql.md).
+In Strapi, policies work for both:
 
-To create a policy, create a `.js` file in one of the following folders:
+- REST routes when making requests through the [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md)
+- and GraphQL resolvers when using the [GraphQL plugin](/developer-docs/latest/plugins/graphql.md).
 
-- `src/policies/policy.js`
-- `src/api/apiName/policies/policy.js`
+Policies can be global (i.e. applied to any route in a Strapi project) or scoped (i.e. limited to a specific scope, e.g. only used by a plugin or applied to a specific API).
 
-To point to them in your routes you will need to follow the naming convention:
-
-- `src/policies/policy.js` will be available at `global::policy`
-- `src/api/apiName/policies/policy.js` will be available at `api::apiName.policy`
-
-Policies can also be added by plugins and some are added by the admin.
-
-A policy can be created as follows:
-
-```js
-module.exports = (policyContext, { strapi }) => {
-  if (!hasAccess) {
-    return false; // or throw an Error
-  }
-
-  return true; // If you return nothing Strapi considers you didn't want to block the request and will let it pass
-};
-```
-
-The `policyContext` is a wrapper arround the usual [controller](#controller) context. It adds some logic if you want to implement a policy for both REST and GraphQL. (look into graphQL doc for it)
-
-::: tip
-To list all the available policies, run `yarn strapi policies:list`.
-<!-- TODO: add this to CLI reference -->
-:::
+As a developer, you can manually add policies, and they can also be added by the admin panel or by plugins.
 
 ## Middlewares
 
-This middleware syntax only works in REST. You can create graphQL middlewares too with a different syntax (check gql doc).
+[Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) are a way to:
 
-To create a middleware you should create a js file in one of the following folders:
+- control the request flow and change it,
+- and change the [request](#requests) before moving forward.
 
-- `src/middlewares/middleware.js`
-- `src/api/apiName/middlewares/middleware.js`
+Usually middlewares are mostly used for logging, caching, debuging, error handling, and security purposes.
 
-To point to them in your routes you will need to follow the naming convention:
+Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They are based on [Koa](https://koajs.com/)'s middleware stack.
 
-- `src/middlewares/middleware.js` will be available at `global::middleware`
-- `src/api/apiName/middlewares/middleware.js` will be available at `api::apiName.middleware`
+## Controllers
 
-Middlewares can also be added by plugins and some are added by the admin.
+Once a [route](#routes) has been created, it should execute some code handled by a controller.
 
-::: tip
-To list the registered middlewares you can run `yarn strapi middlewares:list`
-:::
+[Controllers](/developer-docs/latest/development/backend-customization/controllers.md) are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](#route). Every time a client requests the route, the action performs the business logic code and sends back the [response](#responses).
 
-```js
-module.exports = (config) => {
-  return (ctx, next) => {};
-};
-```
+In most cases, the controllers will contain the bulk of a project's business logic. As the logic implemented in a controller becomes more complex, it's a good practice to move that logic into its own layer, ready to be reused and reorganised, using [services](#services).
+
+## Services
+
+[Services](/developer-docs/latest/development/backend-customization/services.md) are a generic way to build business logic. They are a set of reusable functions, that can be useful to respect the don’t repeat yourself (DRY) programming concept and to simplify [controllers](#controllers) logic.
+
+## Responses
+
+At the end of the flow, Strapi [controllers](#controllers) send a response to a [request](#requests).
+
+Strapi's is based on Koa, so responses are based on [Koa's response object](https://koajs.com/#response), which are an abstraction on top of [node's response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
+
+In Strapi, the context object (i.e. `ctx`) contains a list of values and functions useful to manage server responses. They are accessible through `ctx.response`, from [controllers](#controllers) and [policies](#policies).
+
+## Models
+
+[Models](/developer-docs/latest/development/backend-customization/models.md), define a representation of the data structure of the content accessible through APIs.
+
+There are 2 different types of models in Strapi:
+
+- [content-types](/developer-docs/latest/development/backend-customization/models.md#models), which can be collection types or single types, depending on how many entries they manage,
+- and [components](/developer-docs/latest/development/backend-customization/models.md#components-2), which are data structures re-usable in multiple content-types and can organized with [dynamic zones](/developer-docs/latest/development/backend-customization/models.md#dynamic-zones)
+
+## Webhooks
+
+[Webhooks](/developer-docs/latest/development/backend-customization/webhooks.md) are a construct used by Strapi to notify other applications that an event occurred. A webhook is a user-defined HTTP callback, used to inform third-party providers so they can start some processing on their end (e.g. continuous integration, build, deployment, etc.).
