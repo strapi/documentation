@@ -55,7 +55,7 @@ strapi.entityService('api::article.article').findMany({
     },
 
     repeatableComponent: {
-      select: ['someAttributeName'],
+      fields: ['someAttributeName'],
       orderBy: ['someAttributeName'],
       populate: {
         componentRelationA: true,
