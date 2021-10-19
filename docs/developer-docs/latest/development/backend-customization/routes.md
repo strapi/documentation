@@ -48,7 +48,7 @@ The router used by Strapi allows the creation of dynamic routes, using parameter
 
 ::: details Example of routes using URL parameters and regular expressions
 ```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
+// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
 
 module.exports = {
   routes: [
