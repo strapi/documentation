@@ -113,7 +113,7 @@ module.exports = {
 <!-- ? can we use `ctx`, `next`, and also `{ strapi }` here ? -->
 
 ```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
+// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
 
 module.exports = {
   routes: [
