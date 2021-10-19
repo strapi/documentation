@@ -70,7 +70,7 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 At the end of the flow, Strapi [controllers](#controllers) send a response to a [request](#requests).
 
-Strapi's is based on Koa, so responses are based on [Koa's response object](https://koajs.com/#response), which are an abstraction on top of [node's response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
+Strapi is based on Koa, so responses are based on [Koa's response object](https://koajs.com/#response), which are an abstraction on top of [node's response object](https://nodejs.org/api/http.html#http_class_http_serverresponse).
 
 In Strapi, the context object (i.e. `ctx`) contains a list of values and functions useful to manage server responses. They are accessible through `ctx.response`, from [controllers](#controllers) and [policies](#policies).
 
