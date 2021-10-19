@@ -127,7 +127,7 @@ Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService('article').delete({
+const entry = await strapi.entityService.delete('article', 1, {
   filters { id: 1 },
 });
 ```
