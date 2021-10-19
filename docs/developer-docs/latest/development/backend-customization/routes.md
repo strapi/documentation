@@ -145,7 +145,7 @@ By default, routes are protected by Strapi's authentication system, which is bas
 In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system. This can be achieved by setting the `auth` configuration parameter of a route to `false`:
 
 ```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
+// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
 
 module.exports = {
   routes: [
