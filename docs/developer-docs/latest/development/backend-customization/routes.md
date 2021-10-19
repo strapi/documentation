@@ -31,7 +31,7 @@ A router file consists of an array of objects, each object being a route with th
 **Example**: Handle any `GET` request on the `/articles` path by calling the `actionName` function from the `controllerName` [controller](/developer-docs/latest/development/backend-customization/controllers.md):
 
 ```js
-// path: .src/api/[apiName]/routes/[routerName].js (e.g '.src/api/blog/routes/articles.js')
+// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
 
 module.exports = {
   routes: [
