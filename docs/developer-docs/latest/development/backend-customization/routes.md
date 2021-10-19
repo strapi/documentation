@@ -19,7 +19,7 @@ Once a route exists, reaching it executes some code handled by a controller (see
 
 Implementing a new route consists in defining it in a router file within the `.src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-A router file consists in an array of objects, each object being a route with the following parameters:
+A router file consists of an array of objects, each object being a route with the following parameters:
 
 | Parameter                  | Description                                                                      | Type     |
 | -------------------------- | -------------------------------------------------------------------------------- | -------- |
