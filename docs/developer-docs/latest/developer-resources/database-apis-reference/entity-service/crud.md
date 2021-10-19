@@ -79,7 +79,7 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService('article').create({
+const entry = await strapi.entityService.create('article', {
   data: {
     title: 'My Article',
   },
