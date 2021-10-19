@@ -30,7 +30,7 @@ A new policy can be implemented:
 **Example**: Global policy
 
 ```js
-// path: .src/policies/is-authenticated.js
+// path: ./src/policies/is-authenticated.js
 
 module.exports = (policyContext, { strapi }) => {
   if (ctx.state.user) { // if a session is open
