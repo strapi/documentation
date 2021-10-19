@@ -25,7 +25,7 @@ Syntax: `findOne(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService.findOne('article', {
+const entry = await strapi.entityService.findOne('article', 1, {
   fields: ['title', 'description'],
   filters: { title: 'Hello World' },
   sort: { title: 'DESC' },
