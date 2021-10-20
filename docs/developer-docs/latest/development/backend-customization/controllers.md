@@ -210,11 +210,11 @@ async delete(ctx) {
 
 ## Usage
 
-Controllers are called different ways depending on their scope:
+Once a controller is created, it's accessible from other parts of the customization code:
 
-- for API controllers, use:
-  - `strapi.api('api-name').controller('controller-name')`
-  - or `strapi.controller('api::api-name.controller-name')`
-- for plugin controllers, use:
-  - `strapi.plugin('plugin-name').controller('controller-name')`
-  - or `strapi.controller('plugin::plugin-name.controller-name')`
+```js
+// access an API controller
+strapi.controller('api::api-name.controller-name');
+// access a plugin controller
+strapi.controller('plugin::plugin-name.service-name');
+```
