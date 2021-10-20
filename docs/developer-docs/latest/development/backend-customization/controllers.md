@@ -1,6 +1,7 @@
 ---
 title: Backend customization - Controllers - Strapi Developer Docs
 description:
+sidebarDepth: 3
 ---
 
 <!-- TODO: update SEO -->
