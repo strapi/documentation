@@ -48,7 +48,7 @@ module.exports = (policyContext, { strapi }) => {
 
 ## Usage
 
-To apply policies to a [route](), add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes#policies.md)).
+To apply policies to a route, add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes#policies.md)).
 <!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 
 ::: caution
