@@ -14,6 +14,10 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 ## Implementation
 
+Controllers can be [generated or added manually](#adding-a-new-controller), and the [core controllers examples](#extending-core-controllers) can help you get started creating custom ones.
+
+### Adding a new controller
+
 A new controller can be implemented:
 
 - with the [interactive CLI command `strapi generate`]()
@@ -69,12 +73,139 @@ module.exports = {
 
 :::
 
-When a new [content-type](/developer-docs/latest/development/backend-customization/models.md#content-types) is created, Strapi builds a generic controller for it and allows overriding and extending it in the generated files.
-
-::: tip
-Use the code for the default controller actions of [collection types](https://github.com/strapi/strapi/blob/releases/v4/packages/core/strapi/lib/core-api/controller/collection-type.js) and [single types](https://github.com/strapi/strapi/blob/releases/v4/packages/core/strapi/lib/core-api/controller/single-type.js) in Strapi's Github repository to create custom controllers or extend the existing ones.
-<!-- TODO: update links once v4 is out as they currently point to the releases/v4 branch -->
+::: note
+When a new [content-type](/developer-docs/latest/development/backend-customization/models.md#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
+
+### Extending core controllers
+
+Strapi's core API provide actions built into controller files for collection types and single types. The following code examples should help you get started creating custom actions for controllers:
+
+<!-- TODO: add instructions if we keep code examples as-is, because they use `transformResponse` and `sanitize` methods that are defined elsewhere -->
+
+::::: details Collection type examples
+
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(ctx) {
+  const { query } = ctx;
+
+  const { results, pagination } = await service.find(query);
+
+  return transformResponse(sanitize(results), { pagination });
+}
+```
+
+:::
+
+::: tab findOne()
+
+```js
+async findOne(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx;
+
+  const entity = await service.findOne(id, query);
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab create()
+
+```js
+async create(ctx) {
+  const { query } = ctx.request;
+
+  const { data, files } = parseBody(ctx);
+
+  const entity = await service.create({ ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx.request;
+  const { data, files } = parseBody(ctx);
+  const entity = await service.update(id, { ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx;
+  const entity = await service.delete(id, query);
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+::::
+:::::
+
+::::: details Single type examples
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(ctx) {
+  const { query } = ctx;
+  const entity = await service.find(query);
+  return transformResponse(sanitize(entity));
+}
+
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(ctx) {
+  const { query } = ctx.request;
+  const { data, files } = parseBody(ctx);
+  const entity = await service.createOrUpdate({ ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(ctx) {
+  const { query } = ctx;
+  const entity = await service.delete(query);
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+::::
+:::::
 
 ## Usage
 
