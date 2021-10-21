@@ -154,6 +154,7 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
             ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
             ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
             ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
