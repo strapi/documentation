@@ -25,7 +25,7 @@ Middlewares working with the REST API are functions like the following:
 ```js
 // path: ./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.js
 module.exports = (config) => {
-  return (ctx, next) => {};
+  return (context, next, { strapi }) => {};
 };
 ```
 
