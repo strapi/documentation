@@ -101,7 +101,7 @@ The core of Strapi embraces a small list of middlewares for performances, securi
 - [response-time](#response-time),
 - responses, which handle the [responses](/developer-docs/latest/development/backend-customization.html#responses),
 - [security](#security),
-- public,
+- [public](#public),
 - [session](#session)
 
 ::: caution
@@ -261,3 +261,12 @@ The `session` middleware is a session middleware based on [koa-session](https://
   secure: true, /** (boolean) secure cookie*/
   sameSite: null, /** (string) session cookie sameSite options (default null, don't set it) */ -->
 
+### public
+
+The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
+
+| Option         | Description                                         | Type    | Default value |
+| -------------- | --------------------------------------------------- | ------- | ------------- |
+| `path`         | Path to the public folder                           | String  | `./public`    |
+| `maxAge`       | Cache-control max-age directive, in milliseconds    | Integer | `60000`       |
+| `defaultIndex` | Display default index page at `/` and `/index.html` | Boolean | `true`        |
