@@ -29,8 +29,7 @@ module.exports = (config) => {
 };
 ```
 
-The GraphQL plugin also allows [implementing custom middlewares](), with a different syntax.
-<!-- TODO: add link once this GraphQL customization topic is documented in the GraphQL plugin section -->
+Once created, custom middlewares should be added to the [middlewares configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) or Strapi won't load them.
 
 <!-- TODO: update the example below, was copied & pasted from v3 but won't probably work as-is -->
 ::: details Example of a custom timer middleware
@@ -54,6 +53,9 @@ module.exports = strapi => {
 ```
 
 :::
+
+The GraphQL plugin also allows [implementing custom middlewares](), with a different syntax.
+<!-- TODO: add link once this GraphQL customization topic is documented in the GraphQL plugin section -->
 
 <!-- ? should we keep this "Node modules" part? -->
 <!-- ### Node modules
