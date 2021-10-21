@@ -1,5 +1,5 @@
 ---
-title: Strapi middlewares - Strapi Developer Documentation
+title: Middlewares configuration - Strapi Developer Documentation
 description:
 ---
 
@@ -7,20 +7,21 @@ description:
 
 # Middlewares configuration
 
-The `./config/middlewares.js` file is used to define all the [middlewares](/developer-docs/latest/development/backend-customization.html#middlewares) that should be applied by the Strapi server.
+In Strapi, 2 middleware concepts coexist:
 
-Only the middlewares present in this file are applied, and this happens in a specific [loading order](#loading-order), following [naming conventions](#naming-conventions) and with an [optional configuration](#optional-configuration) for each middleware.
+- **Strapi middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present configuration documentation describes them. Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/developer-docs/latest/development/backend-customization/middlewares.md)).
+- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [route middlewares documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares).
+
+The `./config/middlewares.js` file is used to define all the Strapi middlewares that should be applied by the Strapi server.
+
+Only the middlewares present in this file are applied in a specific [loading order](#loading-order), with some [naming conventions](#naming-conventions) and an [optional configuration](#optional-configuration) for each middleware.
 <!-- TODO: remove this comment — the link to middlewares above won't work until merged with PR #446 -->
-
-::: strapi Middlewares implementation
-You can implement your own middlewares (see the [customization documentation](/developer-docs/latest/development/backend-customization/middlewares.md)).
-:::
 
 ## Loading order
 
 The `./config/middlewares.js` file exports an array, where order matters and controls the execution order of the middleware stack:
 
-<!-- ? What is 'enabled: we could make enabling dynamic' for? It was in the RFC. Could we use `enabled: false` just like with plugins, and is it implemented yet? -->
+<!-- ? What is "enabled: we could make enabling dynamic" for (see comments in code)? These were in the RFC. Could we use `enabled: false` just like we can disable plugins in ./config/plugins.js? What's the status on this (just an idea, decided but not implemented, etc.)? -->
 
 ```js
 // path: ./config/middlewares.js
@@ -64,6 +65,8 @@ If you aren't sure where to place a middleware in the stack, add it to the end o
 
 Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
 
+<!-- ? is it `app::` or `global::` for 'global' (i.e. application-level) middlewares? Or are these 2 different things? Wondering because I can find `app::` in [this part of the RFC](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#loading-middlwares) and `global::` in [this other part](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#implementation) 🤔 -->
+
 | Middleware type | Origin                                                                       | Naming convention                                                                                       |
 | --------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Internal        | Built-in middlewares (i.e. included with Strapi), automatically loaded       | `strapi::middleware-name`                                                                                |
@@ -76,15 +79,15 @@ Strapi middlewares can be classified into different types depending on their ori
 
 Middlewares can have an optional configuration with the following parameters:
 
-| Parameter                   | Description                                                                                                                                                            | Type    |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `enabled`                   | Enable (`true`) or disable (`false`) a loaded middleware                                                                                                               | Boolean |
-| `config`<br><br>_Optional_  | Used to define or override the middleware configuration | Object  |
-| `resolve`<br><br>_Optional_ | Path to the middleware's folder (useful for external middlewares)                                                                                                                                           | String  |
+| Parameter | Description                                                       | Type    |
+| --------- | ----------------------------------------------------------------- | ------- |
+| `enabled` | Enable (`true`) or disable (`false`) a loaded middleware          | Boolean |
+| `config`  | Used to define or override the middleware configuration           | Object  |
+| `resolve` | Path to the middleware's folder (useful for external middlewares) | String  |
 
 ## Internal middlewares configurations reference
 
-[ TODO ADD FULL LIST WITH TABLES ]
+_[ TODO: Add full list with parameter tables, based on middleware code available in packages/core/strapi/lib/middlewares ]_
 
 
 <!-- Middleware files are functions that return an object. This object accepts an `initialize` function that is called during the server boot:
