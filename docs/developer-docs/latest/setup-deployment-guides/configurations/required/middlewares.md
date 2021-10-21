@@ -1,17 +1,93 @@
 ---
-title: Middlewares - Strapi Developer Documentation
+title: Strapi middlewares - Strapi Developer Documentation
 description:
 ---
 
 <!-- TODO: update SEO -->
 
-# Middlewares
+# Middlewares configuration
 
-Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They are based on [Koa](http://koajs.com/#introduction)'s middleware stack.
+The `./config/middlewares.js` file is used to define all the [middlewares](/developer-docs/latest/development/backend-customization.html#middlewares) that should be applied by the Strapi server.
 
-## General usage
+Only the middlewares present in this file are applied, and this happens in a specific [loading order](#loading-order), following [naming conventions](#naming-conventions) and with an [optional configuration](#optional-configuration) for each middleware.
+<!-- TODO: remove this comment — the link to middlewares above won't work until merged with PR #446 -->
 
-Middleware files are functions that return an object. This object accepts an `initialize` function that is called during the server boot:
+::: strapi Middlewares implementation
+You can implement your own middlewares (see the [customization documentation](/developer-docs/latest/development/backend-customization/middlewares.md)).
+:::
+
+## Loading order
+
+The `./config/middlewares.js` file exports an array, where order matters and controls the execution order of the middleware stack:
+
+<!-- ? What is 'enabled: we could make enabling dynamic' for? It was in the RFC. Could we use `enabled: false` just like with plugins, and is it implemented yet? -->
+
+```js
+// path: ./config/middlewares.js
+
+module.exports = [
+  // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
+  {
+    name: 'strapi::router',
+    config: {
+      foo: 'bar',
+    },
+  },
+  'strapi::cors',
+  'strapi::parser',
+  'strapi::error',
+  'my-custom-node-module', // custom middleware that does not require any configuration
+  {
+    // custom resolve to find a package or a path
+    resolve: 'my-custom-node-module',
+    // enabled: we could make enabling dynamic
+    config: {
+      foo: 'bar',
+    },
+  },
+  {
+    // custom resolve to find a package or a path
+    resolve: '../some-dir/custom-middleware',
+    // enabled: we could make enabling dynamic
+    config: {
+      foo: 'bar',
+    },
+  },
+];
+```
+
+:::tip
+If you aren't sure where to place a middleware in the stack, add it to the end of the list.
+:::
+
+## Naming conventions
+
+Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
+
+| Middleware type | Origin                                                                       | Naming convention                                                                                       |
+| --------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Internal        | Built-in middlewares (i.e. included with Strapi), automatically loaded       | `strapi::middleware-name`                                                                                |
+| Application-level       | Loaded from the `./src/middlewares` folder                                   | `app::middleware-name`                                                                                   |
+| API-level       | Loaded from the `./src/api/[api-name]/middlewares` folder                      | `api::api-name.middleware-name`                                                                           |
+| Plugin          | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares) | `plugin::plugin-name.middleware-name`                                                                     |
+| External        | Can be:<ul><li>either node modules installed with [npm](https://www.npmjs.com/search?q=strapi-middleware)</li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul>                   | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
+
+## Optional configuration
+
+Middlewares can have an optional configuration with the following parameters:
+
+| Parameter                   | Description                                                                                                                                                            | Type    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `enabled`                   | Enable (`true`) or disable (`false`) a loaded middleware                                                                                                               | Boolean |
+| `config`<br><br>_Optional_  | Used to define or override the middleware configuration | Object  |
+| `resolve`<br><br>_Optional_ | Path to the middleware's folder (useful for external middlewares)                                                                                                                                           | String  |
+
+## Internal middlewares configurations reference
+
+[ TODO ADD FULL LIST WITH TABLES ]
+
+
+<!-- Middleware files are functions that return an object. This object accepts an `initialize` function that is called during the server boot:
 
 ```js
 module.exports = strapi => {
@@ -80,7 +156,7 @@ This configuration file can accept the following parameters:
 | ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `timeout`  | integer | Maximum allowed time (in milliseconds) to load a middleware                                                                                                              |
 | `load`     | Object  | [Load order](#load-order)                                                                                                                      |
-| `settings` | Object  | Configuration of each middleware<br/><br/>Accepts a list of middlewares with their options, with the format:<br/>`middlewareName`: `{ option1: value, option2: value, … }` |
+| `settings` | Object  | Configuration of each middleware<br/><br/>Accepts a list of middlewares with their options, with the format:<br/>`middleware-name`: `{ option1: value, option2: value, … }` |
 
 ::: details Example of settings definition:
 
@@ -93,36 +169,6 @@ module.exports = {
     cors: {
       origin: ['http://localhost', 'https://mysite.com', 'https://www.mysite.com'],
     },
-  },
-};
-```
-
-:::
-
-### Load order
-
-The middlewares are injected into the Koa stack asynchronously. Sometimes it happens that some of these middlewares need to be loaded in a specific order. To define a load order, create or edit the `./config/middleware.js` file.
-
-The `load` key accepts 3 arrays, in which the order of items matters:
-
-| Parameter | Type  | Description                                 |
-| --------- | ----- | ------------------------------------------- |
-| `before`  | Array | Middlewares to load first                   |
-| `order`   | Array | Middlewares to load in a specific order     |
-| `after`   | Array | Middlewares to load at the end of the stack |
-
-::: details Example of load order definition:
-
-```js
-// path : ./config/middleware.js
-
-module.exports = {
-  load: {
-    before: ['responseTime', 'logger', 'cors', 'responses'],
-    order: [
-      "Define the middlewares' load order by putting their name in this array in the right order",
-    ],
-    after: ['parser', 'router'],
   },
 };
 ```
@@ -158,7 +204,7 @@ The following middlewares cannot be disabled: `responses`, `router`, `logger` an
 :::
 
 <!-- ? If `logger` can't be disabled, why do we have an `enabled` parameter in its config? -->
-### Global middlewares
+<!-- ### Global middlewares
 
 #### favicon configuration
 
@@ -333,6 +379,7 @@ To add a custom middleware to the stack:
 
 <!-- Load a middleware at the very first place -->
 
+<!-- 
 ::: details Example: Create and set up a custom "timer" middleware:
 
 ```js
@@ -374,4 +421,4 @@ module.exports = {
 
 ```
 
-:::
+::: -->
