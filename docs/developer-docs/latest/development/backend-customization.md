@@ -52,7 +52,12 @@ As a developer, you can manually add policies, and they can also be added by the
 
 Usually middlewares are mostly used for logging, caching, debuging, error handling, and security purposes.
 
-Strapi middlewares are functions that are composed and executed in a stack-like manner upon request. They are based on [Koa](https://koajs.com/)'s middleware stack.
+In Strapi, 2 middleware concepts coexist:
+
+- Strapi middlewares are [configured and enabled](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) as global middlewares for the entire Strapi server application,
+- while [route middlewares](/developer-docs/latest/development/backend-customization/routes.md#middlewares) have a more limited scope and are used as middlewares for a [route](#routes).
+
+Middlewares are functions that are composed and executed in a stack-like manner upon request. They are based on [Koa](https://koajs.com/)'s middleware stack.
 
 ## Controllers
 
