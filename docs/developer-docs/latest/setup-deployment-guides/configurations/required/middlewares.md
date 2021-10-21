@@ -111,22 +111,7 @@ module.exports = strapi => {
 
 Once exported, middlewares are accessible through the [`strapi.middleware` global variable](/developer-docs/latest/developer-resources/global-strapi/api-reference.md#strapi-middleware).
 
-### Node modules
 
-Every folder that follows this name pattern `strapi-middleware-*` in the `./node_modules` folder will be loaded as a middleware.
-
-A middleware needs to follow the structure below:
-
-```
-/middleware
-└─── lib
-     - index.js
-- LICENSE.md
-- package.json
-- README.md
-```
-
-The `index.js` is the entry point to the middleware. It should look like the example above.
 
 ### Custom middlewares
 
