@@ -28,6 +28,7 @@ module.exports = (config) => {
   return (context, next, { strapi }) => {};
 };
 ```
+<!-- ? is is `context` or `ctx`? -->
 
 Once created, custom middlewares should be added to the [middlewares configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) or Strapi won't load them.
 
@@ -35,19 +36,14 @@ Once created, custom middlewares should be added to the [middlewares configurati
 ::: details Example of a custom timer middleware
 
 ```js
-module.exports = strapi => {
-  return {
-    initialize() {
-      strapi.app.use(async (ctx, next) => {
-        const start = Date.now();
+module.exports = () => {
+  return async (ctx, next) => {
+    const start = Date.now();
 
-        await next();
+    await next();
 
-        const delta = Math.ceil(Date.now() - start);
-
-        ctx.set('X-Response-Time', delta + 'ms');
-      });
-    },
+    const delta = Math.ceil(Date.now() - start);
+    ctx.set('X-Response-Time', delta + 'ms');
   };
 };
 ```
