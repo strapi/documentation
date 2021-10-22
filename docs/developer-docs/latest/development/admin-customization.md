@@ -335,7 +335,7 @@ Before deployment, the admin panel needs to be built, by running the following c
 
 <code-block title="NPM">
 ```sh
-npm  build
+npm run build
 ```
 </code-block>
 
