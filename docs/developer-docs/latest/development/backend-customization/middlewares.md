@@ -13,7 +13,7 @@ In Strapi, 2 middleware concepts coexist:
 
 - **Strapi middlewares** are [configured and enabled](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares)).
 
-- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/developer-docs/latest/development/backend-customization/routing.md#middlewares).
+- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares).
 
 :::
 ## Implementation
