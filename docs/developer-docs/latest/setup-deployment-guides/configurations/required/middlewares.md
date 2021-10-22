@@ -8,17 +8,23 @@ description:
 <!-- TODO: maybe decide between "options" and "sensible defaults" in wording -->
 # Middlewares configuration
 
+::: strapi Different types of middlewares
+
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present configuration documentation describes them. Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/developer-docs/latest/development/backend-customization/middlewares.md)).
+- **Strapi middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present documentation describes how to configure Strapi middlewares.<br/>Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/developer-docs/latest/development/backend-customization/middlewares.md)).
+
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [route middlewares documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares).
+<!-- TODO: remove this comment — the link to routes above won't work until merged with PR #450 -->
+
+:::
 
 The `./config/middlewares.js` file is used to define all the Strapi middlewares that should be applied by the Strapi server.
 
-Only the middlewares present in this file are applied in a specific [loading order](#loading-order), with some [naming conventions](#naming-conventions) and an [optional configuration](#optional-configuration) for each middleware.
+Only the middlewares present in `./config/middlewares.js` are applied. Loading middlewares happens in a specific [loading order](#loading-order), with some [naming conventions](#naming-conventions) and an [optional configuration](#optional-configuration) for each middleware.
 <!-- TODO: remove this comment — the link to middlewares above won't work until merged with PR #446 -->
 
-Strapi prepopulates the configuration this file with built-in, internal middlewares that all have their own [configuration options](#internal-middlewares-configuration-reference).
+Strapi prepopulates the `./config/middlewares.js` file with built-in, internal middlewares that all have their own [configuration options](#internal-middlewares-configuration-reference).
 
 ## Loading order
 
@@ -90,7 +96,7 @@ Middlewares can have an optional configuration with the following parameters:
 
 ## Internal middlewares configuration reference
 
-The core of Strapi features the following internal middlewares, mostly used for performances, security and error handling:
+Strapi's core includes the following internal middlewares, mostly used for performances, security and error handling:
 
 - [body](#body),
 - [compression](#compression),
@@ -99,13 +105,15 @@ The core of Strapi features the following internal middlewares, mostly used for 
 - [favicon](#favicon),
 - [ip](#ip),
 - [logger](#logger),
-- [poweredBy](#poweredBy),
+- [poweredBy](#poweredby),
 - [query](#query),
 - [response-time](#response-time),
 - responses, which handle the [responses](/developer-docs/latest/development/backend-customization.html#responses),
 - [security](#security),
 - [public](#public),
 - [session](#session)
+
+<!-- TODO: remove this comment — the link to backend custom > responses above won't work until merged with  PR #446 -->
 
 ::: caution
 The following middlewares cannot be disabled: `responses`, `router`, `logger` and `error`.
