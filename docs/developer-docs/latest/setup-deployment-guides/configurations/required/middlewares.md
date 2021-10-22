@@ -138,18 +138,20 @@ The `compression` middleware is based on [koa-compress](https://github.com/koajs
 
 This security middleware is about cross-origin resource sharing (CORS) and is based on [@koa/cors](https://github.com/koajs/cors). It accepts the following options:
 
+<!-- we definitely need to add multimarkdown support 😅  -->
 | Option     | Type            | Description                                                                                                                                                                      | Default value                                                                                                            |
-| ------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `origin`      | String or Array | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `*`                                                            |
-| `maxAge`      | String or Number         | Configure the `Access-Control-Max-Age` CORS header parameter, in seconds                                                                                                                             | `31536000`                                                                                                              |                                                                 |
-| `credentials` | Boolean         | Configure the `Access-Control-Allow-Credentials` CORS header                                                                                                                    | `true`                                                                                                                  |                                                                 |
-| `methods`     | Array or String                                                                                                                                                                           | Configures the `Access-Control-Allow-Methods` CORS header                                                                | `['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']` |
-| `headers`     | Array           | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's Access-Control-Request-Headers header | `['Content-Type', 'Authorization', 'Origin', 'Accept']`                                                                  |   
-| `keepHeaderOnError`      | Array           | Add set headers to `err.header` if an error is thrown                                                                      | `false`.                                                                          |                                                                 |
+| ---------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `origin`   | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `String or Array`   |  `*`                                                     |
+| `maxAge`       | Configure the `Access-Control-Max-Age` CORS header parameter, in seconds                                                                                                                             | `String or Number`        | `31536000`                                                                                                              |                                                                 |
+| `credentials`  | Configure the `Access-Control-Allow-Credentials` CORS header     | `Boolean`                                                                                                                       | `true`                                                                                                                  |                                                                 
+| `methods`                                                                                                                                                                               | Configures the `Access-Control-Allow-Methods` CORS header                                                                | `Array` or `String` | `['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']` |
+| `headers`       | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's `Access-Control-Request-Headers` header | `Array` or `String`       | `['Content-Type', 'Authorization', 'Origin', 'Accept']`                                                                    |
+| `keepHeaderOnError`      | Add set headers to `err.header` if an error is thrown     | `Boolean`                                                                            | `false`                                                                          |                                                                 |
 
 ### `errors`
 
 The `errors` middleware handles errors. It's a wrapper of [@hapi/boom](https://hapi.dev/module/boom) that uses the [same methods and error management system](https://hapi.dev/api?v=20.2.0).
+<!-- TODO: add link to upcoming Error Handling docs -->
 
 ### `favicon`
 
@@ -221,7 +223,7 @@ The `query` middleware is a query parser based on [qs](https://github.com/ljharb
 
 The `response-time` middleware enables the `X-Response-Time` (in milliseconds) for the response header.
 
-### public
+### `public`
 
 The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
 
@@ -248,38 +250,13 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/) an
 
 ### `session`
 
-The `session` middleware is a session middleware based on [koa-session](https://github.com/koajs/session). It accepts the following options:
+The `session` middleware is a session-handling middleware based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
-[TODO: add table]
-
-<!-- | Option | Description | Type | Default value |
-| --- | --- | --- | --- |
-  "session": {
-    "enabled": true,
-    "client": "cookie",
-    "key" | Cookie key | `String` | 'strapi.sid' |
-    "prefix": "strapi:sess:",
-    |ttl|  in seconds. | `Integer` | `864000000` |
-    |`rolling`| Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. | `Boolean` | `false` |
-    "secretKeys": ["mySecretKey1", "mySecretKey2"],
-    "cookie": {
-      "path": "/",
-      "httpOnly": httpOnly or not
-      "maxAge" | Maximum duration to keep the session cookie, in seconds | 864000000,
-      "rewrite": true,
-      "signed": false
-    }
-  }
-
-  /** (number || 'session') maxAge in ms (default is 1 days) */
-  /** 'session' will result in a cookie that expires when session/browser is closed */
-  /** Warning: If a session cookie is stolen, this cookie will never expire */
-  maxAge: 86400000,
-  autoCommit: true, /** (boolean) automatically commit headers (default true) */
-  overwrite: true, /** (boolean) can overwrite or not (default true) */
-  httpOnly: true, /** (boolean) httpOnly or not (default true) */
-  signed: true, /** (boolean) signed or not (default true) */
-  rolling: false, /** (boolean)  (default is false) */
-  renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
-  secure: true, /** (boolean) secure cookie*/
-  sameSite: null, /** (string) session cookie sameSite options (default null, don't set it) */ -->
+| Option       | Description                                                                                                                                                                                                                                                                                         | Type                                                                                                                                                  | Default value                                                                                                                              |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `client`     |                                                                                                                                                                                                                                                                                                     | `String`                                                                                                                                              | `cookie`                                                                                                                                   |
+| `prefix`     | Prefix for the session                                                                                                                                                                                                                                                                              | `String`                                                                                                                                              | `strapi:sess:`                                                                                                                             |
+| `ttl`        | Time to live                                                                                                                                                                                                                                                                                        | `Integer`                                                                                                                                             | `864000000`                                                                                                                                |
+| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.                                                                                                                                                  | `Boolean`                                                                                                                                             | `false`                                                                                                                                    |
+| `secretKeys` | Secret keys                                                                                                                                                                                                                                                                                         | `Array`                                                                                                                                               | `["mySecretKey1", "mySecretKey2"]`                                                                                                         |
+| `cookie`     | Object with cookie-related options:<ul><li>`path`: path for the cookie</li><li>`httpOnly`: http only or not</li><li>`maxAge`: maximum duration to keep the session cookie, in seconds</li><li>`rewrite`: can the cookie be rewritten or not</li><li>`signed`: is the cookie signed or not</li></ul> | <ul><li>`path`: `String`</li><li>`httpOnly`: `Boolean`</li><li>`maxAge`: `Integer`</li><li>`rewrite`: `Boolean`</li><li>`signed`: `Boolean`</li></ul> | <ul><li>`path`: `/`</li><li>`httpOnly`: `true`</li><li>`maxAge`: `864000000`</li><li>`rewrite`: `true`</li><li>`signed`: `false`</li></ul> |
