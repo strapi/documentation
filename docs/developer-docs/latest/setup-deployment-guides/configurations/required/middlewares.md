@@ -5,6 +5,7 @@ description:
 
 <!-- TODO: update SEO -->
 
+<!-- TODO: maybe decide between "options" and "sensible defaults" in wording -->
 # Middlewares configuration
 
 In Strapi, 2 middleware concepts coexist:
@@ -16,6 +17,8 @@ The `./config/middlewares.js` file is used to define all the Strapi middlewares 
 
 Only the middlewares present in this file are applied in a specific [loading order](#loading-order), with some [naming conventions](#naming-conventions) and an [optional configuration](#optional-configuration) for each middleware.
 <!-- TODO: remove this comment — the link to middlewares above won't work until merged with PR #446 -->
+
+Strapi prepopulates the configuration this file with built-in, internal middlewares that all have their own [configuration options](#internal-middlewares-configuration-reference).
 
 ## Loading order
 
@@ -87,7 +90,7 @@ Middlewares can have an optional configuration with the following parameters:
 
 ## Internal middlewares configuration reference
 
-The core of Strapi embraces a small list of middlewares for performances, security and error handling:
+The core of Strapi features the following internal middlewares, mostly used for performances, security and error handling:
 
 - [body](#body),
 - [compression](#compression),
@@ -125,7 +128,7 @@ The `compression` middleware is based on [koa-compress](https://github.com/koajs
 
 ### `cors`
 
-This security middleware is about [cross-origin resource sharing (CORS)](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) and is based on [@koa/cors](https://github.com/koajs/cors). It accepts the following options:
+This security middleware is about cross-origin resource sharing (CORS) and is based on [@koa/cors](https://github.com/koajs/cors). It accepts the following options:
 
 | Option     | Type            | Description                                                                                                                                                                      | Default value                                                                                                            |
 | ------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
@@ -138,11 +141,11 @@ This security middleware is about [cross-origin resource sharing (CORS)](https:/
 
 ### `errors`
 
-The `errors` middleware is a wrapper of [@hapi/boom](https://hapi.dev/module/boom).
+The `errors` middleware handles errors. It's a wrapper of [@hapi/boom](https://hapi.dev/module/boom) that uses the [same methods and error management system](https://hapi.dev/api?v=20.2.0).
 
 ### `favicon`
 
-The `favicon` middleware is based on [koa-favicon](https://github.com/koajs/favicon) and has these sensible defaults:
+The `favicon` middleware is used to serve the favicon. It's based on [koa-favicon](https://github.com/koajs/favicon) and has these sensible defaults:
 
 | Option   | Description                                      | Type    | Default value |
 | -------- | ------------------------------------------------ | ------- | ------------- |
@@ -159,6 +162,8 @@ The `ip` middleware is an IP filter middleware based on [koa-ip](https://github.
 | `blacklist` | Blacklisted IPs | Array | `[]`          |
 
 ### `logger`
+
+The `logger` middleware is used to log requests.
 
 | Option    | Description          | Type    | Default value |
 | --------- | -------------------- | ------- | ------------- |
@@ -210,6 +215,14 @@ The `response-time` middleware enables the `X-Response-Time` (in milliseconds) f
 
 ### public
 
+The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
+
+| Option         | Description                                         | Type    | Default value |
+| -------------- | --------------------------------------------------- | ------- | ------------- |
+| `path`         | Path to the public folder                           | String  | `./public`    |
+| `maxAge`       | Cache-control max-age directive, in milliseconds    | Integer | `60000`       |
+| `defaultIndex` | Display default index page at `/` and `/index.html` | Boolean | `true`        |
+
 ### `security`
 
 The security middleware is based on [koa-helmet](https://helmetjs.github.io/) and has the following sensible defaults:
@@ -228,6 +241,8 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/) an
 ### `session`
 
 The `session` middleware is a session middleware based on [koa-session](https://github.com/koajs/session). It accepts the following options:
+
+[TODO: add table]
 
 <!-- | Option | Description | Type | Default value |
 | --- | --- | --- | --- |
@@ -260,13 +275,3 @@ The `session` middleware is a session middleware based on [koa-session](https://
   renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
   secure: true, /** (boolean) secure cookie*/
   sameSite: null, /** (string) session cookie sameSite options (default null, don't set it) */ -->
-
-### public
-
-The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
-
-| Option         | Description                                         | Type    | Default value |
-| -------------- | --------------------------------------------------- | ------- | ------------- |
-| `path`         | Path to the public folder                           | String  | `./public`    |
-| `maxAge`       | Cache-control max-age directive, in milliseconds    | Integer | `60000`       |
-| `defaultIndex` | Display default index page at `/` and `/index.html` | Boolean | `true`        |
