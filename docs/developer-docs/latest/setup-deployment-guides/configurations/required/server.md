@@ -53,6 +53,9 @@ module.exports = ({ env }) => ({
     enabled: env.bool('CRON_ENABLED', false),
   },
   admin: {
+    api-tokens: {
+      salt: 'random_string_used_as_a_salt'
+    },
     auth: {
       events: {
         onConnectionSuccess(e) {
