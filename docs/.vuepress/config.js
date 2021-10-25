@@ -149,7 +149,7 @@ const sidebar = {
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
         {
-          title: 'Backend customization',
+          title: 'Back-end customization',
           collapsable: true,
           path: '/developer-docs/latest/development/backend-customization',
           children: [
