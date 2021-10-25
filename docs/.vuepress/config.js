@@ -151,6 +151,7 @@ const sidebar = {
         {
           title: 'Backend customization',
           collapsable: true,
+          path: '/developer-docs/latest/development/backend-customization',
           children: [
             ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
