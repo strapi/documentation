@@ -475,6 +475,69 @@ module.exports = {
 
 :::
 
+#### Middlewares
+
+[Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) can be applied to a GraphQL resolver through the `resolversConfig.middlewares` key.
+
+The `resolversConfig.middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares])).
+<!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
+
+Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's `parent`, `args`, `context` and `info` objects as arguments.
+
+:::tip
+Middlewares with GraphQL can even act on nested resolvers, which offer a more granular control than with REST.
+:::
+
+:::details Examples of custom GraphQL middlewares applied to a resolver
+
+```js
+
+// path: ./src/index.js
+
+module.exports = {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          middlewares: [
+            /**
+             * Basic middleware example #1
+             * publish categories by changing publicationState values
+             */
+            async (next, parent, args, context, info ) => {
+              console.time('Start resolving categories');
+              if (args.publicationState) {
+                args.publicationState = 'LIVE';
+              }
+              const res = await next(parent, args, context, info);
+              console.timeEnd('Stop resolving categories');
+
+              return res;
+            },
+            /**
+             * Basic middleware example #2
+             * change the 'name' attribute of parent with id 1 to 'foobar'
+             */
+            (resolve, parent, ...rest) => {
+              console.log(parent);
+              if (parent.id === 1) {
+                return resolve({...parent, name: 'foobar' }, ...rest);
+              }
+
+              return resolve(parent, ...rest);
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+:::
 
 ## Usage with the Users & Permissions plugin
 
