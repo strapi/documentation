@@ -385,6 +385,7 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ##### Authorization configuration
 
+<!-- TODO: consider reworking the TOC as having h5s is not optimal… -->
 By default, the authorization of a GraphQL request is handled through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). A request is allowed if the appropriate permissions are given: for instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` and/or `findOne` permission(s) for the 'Categories' content-type are given.
 
 To change how this authorization is configured, use the `resolversConfig.auth` key that accepts:
