@@ -426,9 +426,56 @@ module.exports = {
 }
 
 ```
-:::
 
 :::
+
+##### Policies
+
+[Policies](/developer-docs/latest/development/backend-customization/policies.md) can be applied to a GraphQL resolver through the `resolversConfig.policies` key.
+
+The `resolversConfig.policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies])).
+<!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
+
+Policies directly implemented in `resolversConfig` are functions that take a `context` object and the `strapi` instance as arguments.
+The `context` object gives access to:
+
+* the `parent`, `args`, `context` and `info` arguments of the GraphQL resolver,
+* Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
+
+::: details Example of a custom GraphQL policy applied to a resolver
+
+```js
+
+// path: ./src/index.js
+
+module.exports = {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          policies: [
+            (context, { strapi }) => {
+              console.log('hello', context.parent)
+              /**
+               * If 'categories' have a parent, the function returns true,
+               * so the request won't be blocked by the policy.
+               */ 
+              return context.parent !== undefined;
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+:::
+
+
 ## Usage with the Users & Permissions plugin
 
 The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is an optional plugin that allows protecting the API with a full authentication process.
