@@ -373,6 +373,59 @@ module.exports = {
 :::
 ::::
 
+#### Custom configuration for resolvers
+
+A resolver is a GraphQL query handler (i.e. a function, or a collection of functions, that generate(s) a response for a GraphQL query). Each field has a default resolver.
+
+When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig` key can be used to define a custom configuration for a resolver, which can include:
+
+* [authorization configuration](#authorization-with-auth) with the `auth` key
+* [policies with the `policies`]() key
+* and [middlewares with the `middlewares`]() key
+
+##### Authorization configuration
+
+By default, the authorization of a GraphQL request is handled through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). A request is allowed if the appropriate permissions are given: for instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` and/or `findOne` permission(s) for the 'Categories' content-type are given.
+
+To change how this authorization is configured, use the `resolversConfig.auth` key that accepts:
+
+* either `false` to fully bypass the authorization system and allow all requests,
+* or a `scope`, as an array of strings, to define the scopes (i.e. permissions) that the request needs to have to be allowed.
+
+::: details Examples of authorization configuration
+
+```js
+
+// path: .src/index.js
+
+module.exports = {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          /**
+           * Querying the Categories content-type
+           * bypasses the authorization system.
+           */ 
+          auth: false
+        },
+        'Query.restaurants': {
+          /**
+           * Querying the Restaurants content-type
+           * requires the find permission on the Address content-type
+           */
+          scope: ['api::address.address.find']
+        },
+      }
+    })
+  }
+}
+
+```
+
+:::
 ## Usage with the Users & Permissions plugin
 
 The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is an optional plugin that allows protecting the API with a full authentication process.
