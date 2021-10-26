@@ -414,7 +414,9 @@ module.exports = {
         'Query.restaurants': {
           /**
            * Querying the Restaurants content-type
-           * requires the find permission on the Address content-type
+           * requires the find permission
+           * on the 'Address' content-type
+           * of the 'Address' API
            */
           scope: ['api::address.address.find']
         },
@@ -424,6 +426,7 @@ module.exports = {
 }
 
 ```
+:::
 
 :::
 ## Usage with the Users & Permissions plugin
