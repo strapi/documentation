@@ -380,8 +380,8 @@ A resolver is a GraphQL query handler (i.e. a function, or a collection of funct
 When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig` key can be used to define a custom configuration for a resolver, which can include:
 
 * [authorization configuration](#authorization-with-auth) with the `auth` key
-* [policies with the `policies`]() key
-* and [middlewares with the `middlewares`]() key
+* [policies with the `policies`](#policies) key
+* and [middlewares with the `middlewares`](#middlewares) key
 
 ##### Authorization configuration
 
