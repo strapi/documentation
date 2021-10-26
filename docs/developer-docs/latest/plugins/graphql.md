@@ -186,7 +186,7 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 * disabling some operations for the [Shadow CRUD](#shadow-crud)
 * [using getters](#using-getters) to return information about allowed operations
-* registering and using an `extension` object to extend the existing schema (e.g. extend types or  define custom resolvers)
+* registering and using an `extension` object to [extend the existing schema](#extending-the-schema) (e.g. extend types or define custom resolvers)
 
 ::: details Example of GraphQL customizations
 
@@ -323,7 +323,6 @@ The following getters can be used to retrieve information about operations allow
 | `hasInputEnabled()`   | Returns whether a field has input enabled     |
 | `hasOutputEnabled()`  | Returns whether a field has output enabled    |
 | `hasFiltersEnabled()` | Returns whether a field has filtering enabled |
-
 
 ### Extending the schema
 
