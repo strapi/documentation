@@ -191,7 +191,7 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 ::: details Example of GraphQL customizations
 
 ```js
-// path: /src/index.js
+// path: ./src/index.js
 ​
 module.exports = {
 /**
@@ -397,7 +397,7 @@ To change how this authorization is configured, use the `resolversConfig.auth` k
 
 ```js
 
-// path: .src/index.js
+// path: ./src/index.js
 
 module.exports = {
   register({ strapi }) {
