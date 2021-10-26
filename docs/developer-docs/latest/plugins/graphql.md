@@ -188,73 +188,72 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 * [using getters](#using-getters) to return information about allowed operations
 * registering and using an `extension` object to extend the existing schema (e.g. extend types or  define custom resolvers)
 
-::: details Example of a full GraphQL customization file:
+::: details Example of GraphQL customizations
 
 ```js
-// path: /config/functions/register.js
-
-'use strict';
+// path: /src/index.js
 ​
+module.exports = {
 /**
  * An asynchronous register function that runs before
- * your application is loaded.
+ * your application is initialized.
  *
  * This gives you an opportunity to extend code.
  */
-​
-module.exports = ({ strapi }) => {
-  const extensionService = strapi.plugin('graphql').service('extension');
-​
-  extensionService.shadowCRUD('api::restaurant.restaurant').disable();
-  extensionService.shadowCRUD('api::category.category').disableQueries();
-  extensionService.shadowCRUD('api::address.address').disableMutations();
-  extensionService.shadowCRUD('api::document.document').field('locked').disable();
-  extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
-​
-  const extension = ({ nexus }) => ({
-    // Nexus
-    types: [
-      nexus.objectType({
-        name: 'Book',
-        definition(t) {
-          t.string('title');
-        },
-      }),
-    ],
-    plugins: [
-      nexus.plugin({
-        name: 'MyPlugin',
-​
-        onAfterBuild(schema) {
-          console.log(schema);
-        },
-      }),
-    ],
-​
-    // GraphQL SDL
-    typeDefs: `
-        type Article {
-            name: String
-        }
-    `,
-    resolvers: {
-      Query: {
-        address: {
-          resolve() {
-            return { value: { city: 'Montpellier' } };
+  register({ strapi }) => {
+    const extensionService = strapi.plugin('graphql').service('extension');
+  ​
+    extensionService.shadowCRUD('api::restaurant.restaurant').disable();
+    extensionService.shadowCRUD('api::category.category').disableQueries();
+    extensionService.shadowCRUD('api::address.address').disableMutations();
+    extensionService.shadowCRUD('api::document.document').field('locked').disable();
+    extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
+  ​
+    const extension = ({ nexus }) => ({
+      // Nexus
+      types: [
+        nexus.objectType({
+          name: 'Book',
+          definition(t) {
+            t.string('title');
+          },
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          name: 'MyPlugin',
+  ​
+          onAfterBuild(schema) {
+            console.log(schema);
+          },
+        }),
+      ],
+  ​
+      // GraphQL SDL
+      typeDefs: `
+          type Article {
+              name: String
+          }
+      `,
+      resolvers: {
+        Query: {
+          address: {
+            resolve() {
+              return { value: { city: 'Montpellier' } };
+            },
           },
         },
       },
-    },
-​
-    resolversConfig: {
-      'Query.address': {
-        auth: false,
+  ​
+      resolversConfig: {
+        'Query.address': {
+          auth: false,
+        },
       },
-    },
-  });
-​
-  extensionService.use(extension);
+    });
+  ​
+    extensionService.use(extension);
+  },
 };
 ```
 
@@ -347,24 +346,31 @@ The object describing the extension accepts the following parameters:
 The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/). To use them, register the extension as a function that takes `nexus` as a parameter:
 
 ::: details Example:
+
 ```js
-// path: /config/functions/register.js
 
-const extension = ({ nexus }) => ({
-  types: [
-    nexus.objectType({
-      …
-    }),
-  ],
-  plugins: [
-    nexus.plugin({
-      …
+// path: ./src/index.js
+
+module.exports = {
+  register({ strapi }) {
+    const extension = ({ nexus }) => ({
+      types: [
+        nexus.objectType({
+          …
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          …
+        })
+      ]
     })
-  ]
-})
 
-strapi.plugin('graphql').service('extension').use(extension)
+    strapi.plugin('graphql').service('extension').use(extension)
+  }
+}
 ```
+
 :::
 ::::
 
