@@ -186,7 +186,7 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 * disabling some operations for the [Shadow CRUD](#shadow-crud)
 * [using getters](#using-getters) to return information about allowed operations
-* registering and using an `extension` object to [extend the existing schema](#extending-the-schema) (e.g. extend types or define custom resolvers)
+* registering and using an `extension` object to [extend the existing schema](#extending-the-schema) (e.g. extend types or define custom resolvers, policies and middlewares)
 
 ::: details Example of GraphQL customizations
 
@@ -339,7 +339,7 @@ The object describing the extension accepts the following parameters:
 | `typeDefs`        | String | Allows extending the schema types using [GraphQL SDL](https://graphql.org/learn/schema/)     |
 | `plugins`         | Array  | Allows extending the schema using Nexus [plugins](https://nexusjs.org/docs/plugins)          |
 | `resolvers`       | Object | Defines custom resolvers                                                                     |
-| `resolversConfig` | Object | Defines configuration options for the resolvers                                              |
+| `resolversConfig` | Object | Defines [configuration options for the resolvers](#custom-configuration-for-resolvers), such as [authorization](#authorization-configuration), [policies](#policies) and [middlewares](#middlewares) |
 
 ::::tip
 The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/). To use them, register the extension as a function that takes `nexus` as a parameter:
