@@ -136,5 +136,5 @@ The salt can be customized:
 - or by creating an `API_TOKEN_SALT` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#environment-variables) in the `.env` file of the project
 
 ::: caution
-Changing the salt invalidates all the existing API tokens .
+Changing the salt invalidates all the existing API tokens.
 :::
