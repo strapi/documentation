@@ -1,5 +1,5 @@
 ---
-title: Backend customization - Strapi Developer Documentation
+title: Back-end customization - Strapi Developer Documentation
 description:
 ---
 
