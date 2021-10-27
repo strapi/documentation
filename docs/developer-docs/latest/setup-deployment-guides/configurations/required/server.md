@@ -24,6 +24,9 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   admin: {
+    apiToken: {
+      salt: 'random_string_used_as_a_salt'
+    },
     auth: {
       secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     },
@@ -53,7 +56,7 @@ module.exports = ({ env }) => ({
     enabled: env.bool('CRON_ENABLED', false),
   },
   admin: {
-    api-tokens: {
+    apiToken: {
       salt: 'random_string_used_as_a_salt'
     },
     auth: {
