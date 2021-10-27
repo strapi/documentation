@@ -54,8 +54,9 @@ When using a `.js` file, the configuration can be exported:
 
 Some parts of Strapi must be configured for the Strapi application to work properly:
 
-- the [database](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md)
-- and the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
+- the [database](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md),
+- the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md),
+- and the [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md).
 
 ## Optional configurations
 
