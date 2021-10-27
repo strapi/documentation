@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
 
-[API parameters](#api-parameters) can be used to [filter](#filters), [sort](#sorting), and [paginate](#pagination) results and to [select fields](#fields-selection) and relations to [populate](#relations-population). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](#publication-state), [locale](#locale), and an [API token](#api-token).
+[API parameters](#api-parameters) can be used to [filter](#filters), [sort](#sorting), and [paginate](#pagination) results and to [select fields](#fields-selection) and relations to [populate](#relations-population). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](#publication-state) and [locale](#locale).
 
 ## API Endpoints
 
@@ -684,11 +684,3 @@ To retrieve only draft entries, combine the `preview` publication state and the 
 :::
 
 The `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
-
-### API token
-
-The `api-token` API parameter can be used to authenticate a request by passing an [API token](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md#api-tokens).
-
-:::request Example request: Get published articles with an API token to authenticate the request
-`GET /api/articles?api-token=my-secret-key`
-:::
