@@ -379,7 +379,7 @@ A resolver is a GraphQL query handler (i.e. a function, or a collection of funct
 
 When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig` key can be used to define a custom configuration for a resolver, which can include:
 
-* [authorization configuration](#authorization-with-auth) with the `auth` key
+* [authorization configuration](#authorization-configuration) with the `auth` key
 * [policies with the `policies`](#policies) key
 * and [middlewares with the `middlewares`](#middlewares) key
 
@@ -434,7 +434,7 @@ module.exports = {
 
 [Policies](/developer-docs/latest/development/backend-customization/policies.md) can be applied to a GraphQL resolver through the `resolversConfig.policies` key.
 
-The `resolversConfig.policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies])).
+The `resolversConfig.policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
 <!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
 
 Policies directly implemented in `resolversConfig` are functions that take a `context` object and the `strapi` instance as arguments.
@@ -480,7 +480,7 @@ module.exports = {
 
 [Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) can be applied to a GraphQL resolver through the `resolversConfig.middlewares` key.
 
-The `resolversConfig.middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares])).
+The `resolversConfig.middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares)).
 <!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
 
 Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's `parent`, `args`, `context` and `info` objects as arguments.
