@@ -3,6 +3,8 @@ title: Admin panel configuration - Strapi Developer Documentation
 description:
 ---
 
+<!-- TODO: update SEO -->
+
 # Admin panel configuration
 
 The `./config/admin.js` is used to define admin panel configuration for the Strapi application. This file should at least include configurations for authentication and [API tokens](#api-tokens).
