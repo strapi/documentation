@@ -71,7 +71,7 @@ module.exports = ({ env }) => ({
 
 module.exports = ({ env }) => ({
   host: 'my-host', // only used along with `strapi develop --watch-admin` command
-  port: 3000, // only used along with `strapi develop --watch-admin` comman
+  port: 3000, // only used along with `strapi develop --watch-admin` command
 });
 
 ```
