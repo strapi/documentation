@@ -54,7 +54,7 @@ To add a new locale:
 
 ## Managing API tokens
 
-API tokens allow Content API users to authenticate their queries. Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
+API tokens allow users to authenticate their Content API queries (see Developer Documentation). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
 <!-- screenshot -->
 
@@ -62,12 +62,12 @@ The *API Tokens* settings sub-section displays a table listing all created API t
 
 For each API token, the table displays its name, description, type and date of creation. From the table, administrators can also:
 
-- Click on the edit button to edit an API token's name, description or type
-- Click on the trash button to delete an API token
+- Click on the edit button <!-- icon --> to edit an API token's name, description or type
+- Click on the delete button <!-- icon --> to delete an API token
 
 ### Creating a new API token
 
-Administrators can create new API tokens, all permanent tokens that cannot be regenerated or revoked.
+All API tokens created by administrators of the Strapi application are permanent tokens that cannot be regenerated or revoked.
 
 To create a new API token:
 
@@ -80,8 +80,8 @@ To create a new API token:
 | Description  | (optional) Write a description for the API token.         |
 | Token type   | Choose a token type: either *Read-only* or *Full access*. |
 
-3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button.
+3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
 ::: caution
-For security purposes, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
+For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
 :::
