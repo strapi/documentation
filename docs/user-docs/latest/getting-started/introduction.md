@@ -61,8 +61,9 @@ To modify your user information:
 | Last name             | Write your last name in the textbox.                                                                    |
 | Email                 | Write your complete email address in the textbox.                                                       |
 | Username              | (optional) Write a username in the textbox.                                                             |
-| Password              | Write a new password in the textbox. You can click on the eye icon for the password to be shown.        |
-| Confirmation password | Write the same new password in the textbox. You can click on the eye icon for the password to be shown. |
+| Current password      | Write your current password in the textbox. You can click on the eye icon for the password to be shown. |
+| New password          | Write a new password in the textbox. You can click on the eye icon for the password to be shown.        |
+| New password confirmation | Write the same new password in the textbox. You can click on the eye icon for the password to be shown. |
 
 4. Click on the **Save** button.
 
