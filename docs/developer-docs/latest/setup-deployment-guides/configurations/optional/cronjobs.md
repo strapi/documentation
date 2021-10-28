@@ -8,7 +8,7 @@ description: …
 # Cron jobs
 
 :::prerequisites
-The `cron.enabled` configuration option is set to `true` in [the `./config/server.js` file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
+The `cron.enabled` configuration option should be set to `true` in [the `./config/server.js` file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 :::
 
 `cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
