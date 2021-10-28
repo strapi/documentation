@@ -92,7 +92,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├─── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
+│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span>
 ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
 └ package.json
   </code>
