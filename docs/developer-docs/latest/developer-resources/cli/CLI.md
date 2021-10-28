@@ -95,6 +95,15 @@ options: [--no-optimization]
 - **strapi build --no-optimization**<br/>
   Builds the administration panel without minimizing the assets. The build duration is faster.
 
+## strapi watch-admin
+
+Starts the admin server.  Strapi should already be running with `strapi develop`.
+
+```sh
+strapi watch-admin
+options: [--browser <name>]
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
