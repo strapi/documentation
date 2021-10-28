@@ -19,7 +19,9 @@ In Strapi, 2 middleware concepts coexist:
 
 ## Implementation
 
-A new application-level or API-level middleware can be implemented manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
+A new application-level or API-level middleware can be implemented:
+- with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
+- or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
 
 - `./src/middlewares/` for application-level middlewares
 - `./src/api/[api-name]/middlewares/` for API-level middlewares
