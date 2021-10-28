@@ -7,7 +7,7 @@ description:
 
 # Functions
 
-The `./src/index.js` file contains some functions that can be used to add dynamic and logic based configurations.
+The `./src/index.js` file includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic based configurations.
 
 ## Register
 
@@ -58,6 +58,12 @@ module.exports = async () => {
   await someSetup();
 };
 ```
+
+## Destroy
+
+The `destroy` function is an asynchronous function that runs before the application gets shut down.
+
+It can be used to gracefully stop [services](/developer-docs/latest/development/backend-customization/services.md) that are running or [clean up plugin actions](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#destroy) (e.g. close connections, remove listeners, etc.).
 
 ## CRON tasks
 
