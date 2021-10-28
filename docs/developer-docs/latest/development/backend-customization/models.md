@@ -26,7 +26,7 @@ Content-types and components models are created and stored differently.
 Content-types in Strapi can be created:
 
 - with the [Content-Types Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
-- or with [Strapi's CLI `generate:model`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-model) command.
+- or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
 Creating a content-type with either method generates 2 files:
 
