@@ -19,7 +19,6 @@ In Strapi, 2 middleware concepts coexist:
 
 ## Implementation
 
-<!-- ? do we plan to add middleware creation to the strapi generate interactive CLI? -->
 A new application-level or API-level middleware can be implemented manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
 
 - `./src/middlewares/` for application-level middlewares
