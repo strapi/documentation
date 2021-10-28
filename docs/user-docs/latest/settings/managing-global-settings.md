@@ -51,3 +51,37 @@ To add a new locale:
 3. (optional) In the *Locale display name* textbox, write a new display name for your new locale.
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
 5. Click on the **Add locale** button to confirm the addition of your new locale.
+
+## Managing API tokens
+
+API tokens allow Content API users to authenticate their queries. Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
+
+<!-- screenshot -->
+
+The *API Tokens* settings sub-section displays a table listing all created API tokens.
+
+For each API token, the table displays its name, description, type and date of creation. From the table, administrators can also:
+
+- Click on the edit button to edit an API token's name, description or type
+- Click on the trash button to delete an API token
+
+### Creating a new API token
+
+Administrators can create new API tokens, all permanent tokens that cannot be regenerated or revoked.
+
+To create a new API token:
+
+1. Click on the **Add new entry** button.
+2. In the API token edition interface, configure the new API token:
+
+| Setting name | Instructions                                              |
+|--------------|-----------------------------------------------------------|
+| Name         | Write the name of the API token.                          |
+| Description  | (optional) Write a description for the API token.         |
+| Token type   | Choose a token type: either *Read-only* or *Full access*. |
+
+3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button.
+
+::: caution
+For security purposes, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
+:::
