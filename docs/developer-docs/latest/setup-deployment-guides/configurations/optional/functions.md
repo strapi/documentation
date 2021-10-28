@@ -63,7 +63,10 @@ module.exports = async () => {
 
 The `destroy` function is an asynchronous function that runs before the application gets shut down.
 
-It can be used to gracefully stop [services](/developer-docs/latest/development/backend-customization/services.md) that are running or [clean up plugin actions](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#destroy) (e.g. close connections, remove listeners, etc.).
+It can be used to gracefully:
+
+- stop [services](/developer-docs/latest/development/backend-customization/services.md) that are running
+- [clean up plugin actions](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#destroy) (e.g. close connections, remove listeners, etc.).
 
 ## CRON tasks
 
