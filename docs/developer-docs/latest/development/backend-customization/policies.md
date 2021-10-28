@@ -21,7 +21,6 @@ Policies can be global or scoped. [Global policies](#global-policies) can be ass
 A new policy can be implemented:
 
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) 
-<!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
   - `./src/policies/` for global policies
   - `./src/api/[api-name]/policies/` for API policies
