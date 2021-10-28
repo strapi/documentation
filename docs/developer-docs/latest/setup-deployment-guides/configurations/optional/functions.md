@@ -7,7 +7,7 @@ description:
 
 # Functions
 
-The `./src/index.js` file includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic based configurations.
+The `./src/index.js` file includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
 ## Register
 
