@@ -15,7 +15,7 @@ Services are a set of reusable functions. They are particularly useful to respec
 
 A new service can be implemented:
 
-- with the [interactive CLI command `strapi generate`]()
+- with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
 <!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
   - `./src/api/[api-name]/services/` for API services
