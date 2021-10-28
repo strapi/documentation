@@ -215,7 +215,7 @@ strapi generate:template <path>
 
 ## strapi routes:list
 
-Display a list of all the available routes.
+Display a list of all the available [routes](/developer-docs/latest/development/backend-customization/routes.md).
 
 ```sh
 strapi routes:list
@@ -223,7 +223,7 @@ strapi routes:list
 
 ## strapi policies:list
 
-Display a list of all the registered policies.
+Display a list of all the registered [policies](/developer-docs/latest/development/backend-customization/policies.md).
 
 ```sh
 strapi policies:list
@@ -231,7 +231,7 @@ strapi policies:list
 
 ## strapi middlewares:list
 
-Display a list of all the registered middlewares.
+Display a list of all the registered [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md).
 
 ```sh
 strapi middlewares:list
@@ -239,7 +239,7 @@ strapi middlewares:list
 
 ## strapi content-types:list
 
-Display a list of all the existing content-types.
+Display a list of all the existing [content-types](/developer-docs/latest/development/backend-customization/models.md).
 
 ```sh
 strapi content-types:list
@@ -256,11 +256,12 @@ strapi hooks:list
 
 ## strapi services:list
 
-Display a list of all the registered services.
+Display a list of all the registered [services](/developer-docs/latest/development/backend-customization/services.md).
 
 ```sh
 strapi services:list
 ```
+
 ## strapi install
 
 Install a plugin in the project.
