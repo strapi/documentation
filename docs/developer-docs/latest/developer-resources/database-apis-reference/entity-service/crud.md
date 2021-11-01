@@ -25,7 +25,7 @@ Syntax: `findOne(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService.findOne('article', 1, {
+const entry = await strapi.entityService.findOne('api:article.article', 1, {
   fields: ['title', 'description'],
   filters: { title: 'Hello World' },
   sort: { title: 'DESC' },
@@ -54,7 +54,7 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 ### Example
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   fields: ['title', 'description'],
   filters { title: 'Hello World' },
   sort: { title: 'DESC' },
@@ -79,7 +79,7 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService.create('article', {
+const entry = await strapi.entityService.create('api::article.article', {
   data: {
     title: 'My Article',
   },
@@ -103,7 +103,7 @@ Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService.update('article', 1, {
+const entry = await strapi.entityService.update('api::article.article', 1, {
   filters { id: 1 },
   data: {
     title: 'xxx',
@@ -127,7 +127,7 @@ Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 ### Example
 
 ```js
-const entry = await strapi.entityService.delete('article', 1, {
+const entry = await strapi.entityService.delete('api::article.article', 1, {
   filters { id: 1 },
 });
 ```

@@ -21,7 +21,7 @@ All nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     $and: [
       {
@@ -40,7 +40,7 @@ const entries = await strapi.entityService.findMany('articles', {
 `$and` will be used implicitly when passing an object with nested conditions:
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: 'Hello World',
     rating: 12,
@@ -55,7 +55,7 @@ One or many nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     $or: [
       {
@@ -78,7 +78,7 @@ Negates the nested conditions.
 **Example**
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     $not: {
       title: 'Hello World',
@@ -102,7 +102,7 @@ Negates the nested condition(s).
 **Example**
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $not: {
@@ -120,7 +120,7 @@ Attribute equals input value.
 **Example**
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $eq: 'Hello World',
@@ -132,7 +132,7 @@ const entries = await strapi.entityService.findMany('articles', {
 `$eq` can be omitted:
 
 ```js
-const entries = await strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: 'Hello World',
   },
@@ -146,7 +146,7 @@ Attribute does not equal input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $ne: 'ABCD',
@@ -162,7 +162,7 @@ Attribute is contained in the input list.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
@@ -174,7 +174,7 @@ const entries = strapi.entityService.findMany('articles', {
 `$in` can be ommited when passing an array of values:
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
@@ -188,7 +188,7 @@ Attribute is not contained in the input list.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $nin: ['Hello', 'Hola', 'Bonjour'],
@@ -204,7 +204,7 @@ Attribute is less than the input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     rating: {
       $lt: 10,
@@ -220,7 +220,7 @@ Attribute is less than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     rating: {
       $lte: 10,
@@ -236,7 +236,7 @@ Attribute is greater than the input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     rating: {
       $gt: 5,
@@ -252,7 +252,7 @@ Attribute is greater than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     rating: {
       $gte: 5,
@@ -268,7 +268,7 @@ Attribute is between the 2 input values.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     rating: {
       $between: [1, 20],
@@ -284,7 +284,7 @@ Attribute contains the input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $contains: 'ABCD',
@@ -300,7 +300,7 @@ Attribute starts with input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $startsWith: 'ABCD',
@@ -316,7 +316,7 @@ Attribute ends with input value.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $endsWith: 'ABCD',
@@ -332,7 +332,7 @@ Attribute is `null`.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $null: true,
@@ -348,7 +348,7 @@ Attribute is not null.
 **Example**
 
 ```js
-const entries = strapi.entityService.findMany('articles', {
+const entries = await strapi.entityService.findMany('api::article.articles', {
   filters: {
     title: {
       $notNull: true,

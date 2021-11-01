@@ -14,7 +14,7 @@ The [Entity Service](/developer-docs/latest/developer-resources/database-apis-re
 A [component](/developer-docs/latest/development/backend-customization/models.html#components-2) can be created while creating an entry with the Entity Service API:
 
 ```js
-strapi.entityService.create('articles', {
+strapi.entityService.create('api::article.articles', {
   data: {
     myComponent: {
       foo: 'bar',
@@ -26,7 +26,7 @@ strapi.entityService.create('articles', {
 A [dynamic zone](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones) (i.e. a list of components) can be created while creating an entry with the Entity Service API:
 
 ```js
-strapi.entityService.create('articles', {
+strapi.entityService.create('api::article.articles', {
   data: {
     myDynamicZone: [
       {
@@ -47,7 +47,7 @@ strapi.entityService.create('articles', {
 A [component](/developer-docs/latest/development/backend-customization/models.html#components-2) can be updated while updating an entry with the Entity Service API. If a component `id` is specified, the component is updated, otherwise the old one is deleted and a new one is created:
 
 ```js
-strapi.entityService.update('articles', 1, {
+strapi.entityService.update('api::article.articles', 1, {
   data: {
     myComponent: {
       id: 1, // will update component with id: 1 (if not specified, would have deleted it and created a new one)
@@ -60,7 +60,7 @@ strapi.entityService.update('articles', 1, {
 A [dynamic zone](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones) (i.e. a list of components) can be updated while updating an entry with the Entity Service API. If a component `id` is specified, the component is updated, otherwise the old one is deleted and a new one is created:
 
 ```js
-strapi.entityService.update('articles', 1, {
+strapi.entityService.update('api::article.articles', 1, {
   data: {
     myDynamicZone: [
       {

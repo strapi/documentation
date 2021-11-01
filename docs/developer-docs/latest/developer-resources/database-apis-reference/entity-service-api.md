@@ -14,7 +14,7 @@ Strapi provides an Entity Service API, built on top of the [Query Engine API](/d
 The Entity Service is available through `strapi.entityService`:
 
 ```js
-const entry = await strapi.entityService.findOne('article', 1, {
+const entry = await strapi.entityService.findOne('api::article.article', 1, {
   populate: { someRelation: true },
 });
 ```
