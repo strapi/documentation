@@ -19,9 +19,9 @@ The CLI installation guide details [supported database and versions](http://loca
 
 ::: tab SQL
 
-- `connection`
+- `connection` (object): Database configuration options
   - `client` (string): Database client to create the connection. `sqlite` or `postgres` or `mysql`.
-  - `connection`
+  - `connection` (object): Database connection information
     - `host` (string): Database host name. Default value: `localhost`.
     - `port` (integer): Database port.
     - `database` (string): Database name.
@@ -134,6 +134,7 @@ module.exports = ({ env }) => ({
       filename: env('DATABASE_FILENAME', '.tmp/data.db'),
     },
     useNullAsDefault: true,
+    debug: false,
   },
 });
 ```
