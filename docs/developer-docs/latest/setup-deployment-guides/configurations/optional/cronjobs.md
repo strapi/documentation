@@ -45,7 +45,7 @@ Optionally, cron jobs can be directly created in the `cron.tasks` key of the [se
 To define a cron job, create a file with the following structure:
 
 ```js
-// path: ./config/src/cron-tasks.js
+// path: ./config/cron-tasks.js
 
 module.exports = {
   /**
