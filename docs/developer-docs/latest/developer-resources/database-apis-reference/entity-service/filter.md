@@ -92,6 +92,9 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 - or [as an attribute operator](#not-2) (e.g. in `filters: { $attribute-name: $not: { … } }`).
   :::
 
+:::tip
+`$and`, `$or` and `$not` operators are nestable inside of another `$and`, `$or` or `$not` operator.
+:::
 ## Attribute Operators
 
 ### `$not`
