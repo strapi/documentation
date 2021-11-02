@@ -183,7 +183,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 });
 ```
 
-### `$nin`
+### `$notIn`
 
 Attribute is not contained in the input list.
 
@@ -193,7 +193,7 @@ Attribute is not contained in the input list.
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: {
-      $nin: ['Hello', 'Hola', 'Bonjour'],
+      $notIn: ['Hello', 'Hola', 'Bonjour'],
     },
   },
 });
