@@ -11,8 +11,8 @@ Strapi CLI (Command Line Interface) installation scripts are the fastest way to 
 
 The CLI installation guide requires at least two software prerequisites to be already installed on your computer:
 
-- [Node.js](https://nodejs.org): only LTS versions are supported (version 12.x minimum). Other versions of Node.js may not be compatible with the latest release of Strapi. The 14.x version is most recommended by Strapi.
-- [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (version 6.x minimum) or [yarn](https://yarnpkg.com/getting-started/install) to run the CLI installation scripts.
+- [Node.js](https://nodejs.org): only LTS versions are supported (v12 and v14). Other versions of Node.js may not be compatible with the latest release of Strapi. The 14.x version is most recommended by Strapi.
+- [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (v6 only) or [yarn](https://yarnpkg.com/getting-started/install) to run the CLI installation scripts.
 
 A database is also required for any Strapi project. Strapi currently supports the following databases:
 
@@ -39,7 +39,6 @@ The following installation guide covers the most basic installation option using
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
 
-
 1. In a terminal, run the following command:
 
 <code-group>
@@ -59,8 +58,9 @@ yarn create strapi-app my-project
 </code-group>
 
 2. Choose an installation type:
-   * `Quickstart (recommended)`, which uses the default database (SQLite)
-   * `Custom (manual settings)`, which allows to choose your preferred database
+
+   - `Quickstart (recommended)`, which uses the default database (SQLite)
+   - `Custom (manual settings)`, which allows to choose your preferred database
 
 3. When terminal asks `Would you like to use a template?`, type `y` for yes or `n` for no then press Enter.
 
@@ -89,4 +89,3 @@ yarn develop
 </code-block>
 
 </code-group>
-
