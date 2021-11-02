@@ -21,7 +21,7 @@ strapi.entityService('api::article.article').findMany({
 
 // single with direction
 strapi.entityService('api::article.article').findMany({
-  orderBy: { id: 'asc' },
+  orderBy: { id: 'desc' },
 });
 ```
 
