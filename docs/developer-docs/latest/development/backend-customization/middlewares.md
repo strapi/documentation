@@ -30,11 +30,10 @@ Middlewares working with the REST API are functions like the following:
 
 ```js
 // path: ./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.js
-module.exports = (config) => {
-  return (context, next, { strapi }) => {};
+module.exports = (config, { strapi })=> {
+  return (context, next) => {};
 };
 ```
-<!-- ? is is `context` or `ctx`? -->
 
 Once created, custom middlewares should be added to the [middlewares configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) or Strapi won't load them.
 
@@ -57,25 +56,6 @@ module.exports = () => {
 :::
 
 The GraphQL plugin also allows [implementing custom middlewares](), with a different syntax.
-<!-- TODO: add link once this GraphQL customization topic is documented in the GraphQL plugin section -->
-
-<!-- ? should we keep this "Node modules" part? -->
-<!-- ### Node modules
-
-Every folder that follows this name pattern `strapi-middleware-*` in the `./node_modules` folder will be loaded as a middleware.
-
-A middleware needs to follow the structure below:
-
-```
-/middleware
-└─── lib
-     - index.js
-- LICENSE.md
-- package.json
-- README.md
-```
-
-The `index.js` is the entry point to the middleware. It should look like the example above. -->
 
 ## Usage
 
@@ -86,5 +66,4 @@ Middlewares are called different ways depending on their scope:
 
 ::: tip
 To list all the registered middlewares, run `yarn strapi middlewares:list`.
-<!-- TODO: add this to CLI reference -->
 :::
