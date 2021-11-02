@@ -39,6 +39,7 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 ::: warning
 
 The Strapi Beta version is no longer supported, you should upgrade to the V3 Stable.
+If you have issues upgrading, it's our general recommendation to create a new project.
 
 :::
 
