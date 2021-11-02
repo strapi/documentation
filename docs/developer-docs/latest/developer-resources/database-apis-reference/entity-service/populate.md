@@ -41,7 +41,7 @@ strapi.entityService('api::article.article').findMany({
 });
 ```
 
-Complex populating can also be achieved by using the [`filters` parameter](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) and select or populate nested relations or components:
+Complex populating can be achieved by using the [`filters` parameter](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) and select or populate nested relations or components:
 
 ```js
 strapi.entityService('api::article.article').findMany({
