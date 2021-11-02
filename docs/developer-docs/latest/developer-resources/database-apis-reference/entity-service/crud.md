@@ -55,7 +55,7 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 const entries = await strapi.entityService.findMany('api::article.article', {
   fields: ['title', 'description'],
   filters { title: 'Hello World' },
-  sort: { title: 'DESC' },
+  sort: { createdAt: 'DESC' },
   populate: { category: true },
 });
 ```
