@@ -21,7 +21,7 @@ The default configuration created with any new project should at least include t
 
 module.exports = ({ env }) => ({
   apiToken: {
-    salt: 'someRandomLongString'
+    salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
