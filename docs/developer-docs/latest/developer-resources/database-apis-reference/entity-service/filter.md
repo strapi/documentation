@@ -28,9 +28,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
         title: 'Hello World',
       },
       {
-        title: {
-          $contains: 'Hello',
-        },
+        createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
       },
     ],
   },
