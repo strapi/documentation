@@ -106,7 +106,6 @@ Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ```js
 const entry = await strapi.entityService.update('api::article.article', 1, {
-  filters { id: 1 },
   data: {
     title: 'xxx',
   },
