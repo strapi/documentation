@@ -32,10 +32,10 @@ strapi.entityService('api::article.article').findMany({
     componentB: true,
     dynamiczoneA: true,
     repeatableComponent: {
-      fields: [],
+      fields: ['fieldA'],
       filters: {},
-      sort: 'field:asc',
-      populate: {},
+      sort: 'fieldA:asc',
+      populate: false,
     },
   },
 });
