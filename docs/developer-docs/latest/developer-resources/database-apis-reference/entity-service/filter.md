@@ -281,7 +281,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
 ### `$contains`
 
-Attribute contains the input value.
+Attribute contains the input value (case-sensitive).
 
 **Example**
 
@@ -289,7 +289,55 @@ Attribute contains the input value.
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: {
-      $contains: 'ABCD',
+      $contains: 'Hello',
+    },
+  },
+});
+```
+
+### `$notContains`
+
+Attribute does not contain the input value (case-sensitive).
+
+**Example**
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  filters: {
+    title: {
+      $notContains: 'Hello',
+    },
+  },
+});
+```
+
+### `$containsi`
+
+Attribute contains the input value. `$containsi` is not case-sensitive, while [$contains](#contains) is.
+
+**Example**
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  filters: {
+    title: {
+      $contains: 'hello',
+    },
+  },
+});
+```
+
+### `$notContainsi`
+
+Attribute does not contain the input value. `$notContainsi` is not case-sensitive, while [$notContains](#notcontains) is.
+
+**Example**
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  filters: {
+    title: {
+      $notContains: 'hello',
     },
   },
 });
