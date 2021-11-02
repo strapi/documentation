@@ -41,7 +41,7 @@ module.exports = ({ env }) => ({
 
 module.exports = ({ env }) => ({
   apiToken: {
-    salt: 'someRandomLongString'
+    salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
   auth: {
     events: {
