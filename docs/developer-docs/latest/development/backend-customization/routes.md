@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Routes
 
-Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md)). But just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), routes can be customized. New routes [can be added](#implementation) and configured:
+Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md)). Routes can be [added](#implementation) and configured:
 
 - with [policies](#policies), which are a way to block access to a route,
 - and with [middlewares](#middlewares), which are a way to control and change the request flow and the request itself.
@@ -28,7 +28,9 @@ A router file consists of an array of objects, each object being a route with th
 | `handler`                  | Function to execute when the route is reached.<br>Should follow this syntax: `<controllerName>.<actionName>` | `String` |
 | `config`<br><br>_Optional_ | Configuration to handle [policies](policies), [middlewares](middlewares) and [public availability](#public-routes) for the route<br/><br/>           | `Object` |
 
-**Example**: Handle any `GET` request on the `/articles` path by calling the `actionName` function from the `controllerName` [controller](/developer-docs/latest/development/backend-customization/controllers.md):
+Generic implementation example:
+
+To handle any `GET` request on the `/articles` path by calling the `actionName` function from the `controllerName` [controller](/developer-docs/latest/development/backend-customization/controllers.md), use the following code:
 
 ```js
 // path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
@@ -44,7 +46,9 @@ module.exports = {
 };
 ```
 
-The router used by Strapi allows the creation of dynamic routes, using parameters and simple regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
+<br/>
+
+The router used by Strapi allows the creation of dynamic routes, using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
 
 ::: details Example of routes using URL parameters and regular expressions
 ```js
@@ -109,7 +113,6 @@ module.exports = {
 
 - by pointing to a middleware registered in `./src/middlewares`, with or without passing a custom configuration
 - or by declaring the middleware implementation directly, as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments:
-<!-- ? can we use `ctx`, `next`, and also `{ strapi }` here ? -->
 
 ```js
 // path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
