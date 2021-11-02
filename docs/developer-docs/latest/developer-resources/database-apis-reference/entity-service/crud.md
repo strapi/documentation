@@ -90,6 +90,10 @@ const entry = await strapi.entityService.create('api::article.article', {
 
 Updates one entry and returns it.
 
+:::note
+`update()` only performs a partial update, so existing fields that are not included won't be replaced.
+:::
+
 Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
