@@ -16,7 +16,7 @@ Results are filtered with the `filters` parameter that accepts [logical operator
 
 ### `$and`
 
-All nested conditions must be `true`.
+All nested conditions must be true.
 
 **Example**
 
