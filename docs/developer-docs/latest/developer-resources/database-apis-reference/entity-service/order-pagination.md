@@ -29,7 +29,7 @@ strapi.entityService('api::article.article').findMany({
 
 ```js
 strapi.entityService('api::article.article').findMany({
-  orderBy: ['id', 'name'],
+  orderBy: ['publishDate', 'name'],
 });
 
 // multiple with direction
