@@ -63,6 +63,7 @@ Some parts of Strapi must be configured for the Strapi application to work prope
 Strapi also offers the following optional configuration options for specific features:
 
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
+- [cron jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md)
 - [API calls](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)
 - [plugins](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md)
 - the [environment and its variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
