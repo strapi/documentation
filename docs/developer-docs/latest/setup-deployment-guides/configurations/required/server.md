@@ -25,7 +25,7 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   admin: {
     apiToken: {
-      salt: 'random_string_used_as_a_salt'
+      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
     },
     auth: {
       secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
