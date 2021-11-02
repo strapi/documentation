@@ -57,7 +57,7 @@ module.exports = ({ env }) => ({
   },
   admin: {
     apiToken: {
-      salt: 'random_string_used_as_a_salt'
+      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
     },
     auth: {
       events: {
