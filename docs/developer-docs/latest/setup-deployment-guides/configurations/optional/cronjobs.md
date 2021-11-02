@@ -85,7 +85,7 @@ To enable cron jobs, set `cron.enabled` to `true` in the [server configuration f
 ```js
 // path: ./config/server.js
 
-const cronTasks = require("./src/cron-tasks");
+const cronTasks = require("./cron-tasks");
 
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
