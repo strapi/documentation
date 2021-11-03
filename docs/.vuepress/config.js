@@ -59,6 +59,7 @@ const sidebar = {
               children: [
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md', 'Plugins'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
@@ -150,8 +151,9 @@ const sidebar = {
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
         {
-          title: 'Backend customization',
+          title: 'Back-end customization',
           collapsable: true,
+          path: '/developer-docs/latest/development/backend-customization',
           children: [
             ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],

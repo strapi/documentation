@@ -64,6 +64,7 @@ Strapi also offers the following optional configuration options for specific fea
 
 - [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md)
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
+- [cron jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md)
 - [API calls](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)
 - [plugins](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md)
 - the [environment and its variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
