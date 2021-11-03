@@ -24,6 +24,9 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   admin: {
+    apiToken: {
+      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
+    },
     auth: {
       secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
     },
@@ -53,6 +56,9 @@ module.exports = ({ env }) => ({
     enabled: env.bool('CRON_ENABLED', false),
   },
   admin: {
+    apiToken: {
+      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
+    },
     auth: {
       events: {
         onConnectionSuccess(e) {
@@ -101,6 +107,7 @@ module.exports = ({ env }) => ({
 | `cron.enabled`                          | Enable or disable [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                                                            | boolean           | `false`                                                                                                                          |
 | `cron.tasks`                          | Declare [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to be run at specific dates.                                                                                                                                                                                                                                                                                                            | boolean           | `false`                                                                                                                          |
 | `admin`                                 | Admin panel configuration                                                                                                                                                                                                                                                                                                                                                   | Object            |                                                                                                                                  |
+| `admin.apiToken.salt`                                 | Salt used to generate [API tokens](#api-tokens)                                                                                                                                                                                                                                                                                                                                                   | String            |       (A random string<br/>generated<br/>by Strapi)                                                                                                                           |
 | `admin.auth`                            | Authentication configuration                                                                                                                                                                                                                                                                                                                                                | Object            |                                                                                                                                  |
 | `admin.auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                                                                                                                                                                                            | string            | `undefined`                                                                                                                      |
 | `admin.auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                                                                                                                                                                                                      | object            | `{}`                                                                                                                             |
@@ -116,3 +123,22 @@ module.exports = ({ env }) => ({
 | `admin.forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/plugins/email.md#programmatic-usage)                                                                                                                                                                                                                                                         | Object            | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
 | `admin.forgotPassword.from`             | Sender mail address                                                                                                                                                                                                                                                                                                                                                         | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
 | `admin.forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                                                                                                                                                                                              | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
+
+## API tokens
+
+Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in [API token]() feature.
+
+<!-- TODO: add link to API token docs in user guide once written -->
+
+Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) endpoints as an authenticated user. The API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
+
+New API tokens are generated from the admin panel using a salt. This salt is automatically generated by Strapi and stored in `./config/server.js` as `admin.api-tokens.salt`. 
+
+The salt can be customized:
+
+- either by updating the string value for `admin.api-tokens.salt` in `./config/server.js`
+- or by creating an `API_TOKEN_SALT` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#environment-variables) in the `.env` file of the project
+
+::: caution
+Changing the salt invalidates all the existing API tokens.
+:::
