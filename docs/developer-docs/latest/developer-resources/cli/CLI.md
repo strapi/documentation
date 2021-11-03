@@ -200,18 +200,18 @@ Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/late
 strapi generate
 ```
 
-## strapi generate:template
+## strapi templates:generate
 
 Create a template from the current strapi project
 
 ```bash
-strapi generate:template <path>
+strapi templates:generate <path>
 ```
 
-- **strapi generate:template &#60;path&#62;**<br/>
+- **strapi templates:generate &#60;path&#62;**<br/>
   Generates a Strapi template at `<path>`
 
-  Example: `strapi generate:template ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+  Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
 ## strapi routes:list
 
