@@ -67,7 +67,7 @@ For each API token, the table displays its name, description, type and date of c
 
 ### Creating a new API token
 
-All API tokens created by administrators of the Strapi application are permanent tokens that cannot be regenerated or revoked.
+All API tokens created by administrators of the Strapi application are permanent tokens that cannot be regenerated.
 
 To create a new API token:
 
