@@ -17,8 +17,9 @@ To create a plugin, use Strapi CLI tools:
 
 1. (_Optional_) If you don't already have an existing project, create a new development project with `strapi new myDevelopmentProject`.
 2. Start the project with `cd myDevelopmentProject && strapi develop`.
-3. In a new terminal window, [create a new plugin](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-plugin) with `cd /path/to/myDevelopmentProject && strapi generate:plugin my-plugin`
-4. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
+3. In a new terminal window, run `cd /path/to/myDevelopmentProject && strapi generate` to launch the interactive `strapi generate` CLI.
+4. Choose "plugin" from the list, press Enter, and give the plugin a name.
+5. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
     ```js
     // path: /path/to/myDevelopmentProject/config/plugins.js
 
