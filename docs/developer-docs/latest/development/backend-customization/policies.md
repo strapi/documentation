@@ -11,7 +11,7 @@ sidebarDepth: 3
 Policies are functions that execute specific logic on each request before it reaches the [controller](/developer-docs/latest/development/backend-customization/controllers.md). They are mostly used for securing business logic.
 <!-- TODO: remove this comment — the link above will work only when merged with PR #446 -->
 
-Each [route](/developer-docs/latest/development/backend-customization/routes.md) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and uses it for critical routes.
+Each [route](/developer-docs/latest/development/backend-customization/routes.md) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.
 <!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 
 Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies).
