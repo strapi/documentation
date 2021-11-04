@@ -25,9 +25,11 @@ To enable and configure a provider:
 Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#adding-a-new-provider-to-your-project)).
 :::
 
+<!---
 ::: tip
 Click the search button ![Search icon](../assets/icons/search.svg) above the table to use a text search and find one of your providers more quickly!
 :::
+--->
 
 ## Configuring email templates
 

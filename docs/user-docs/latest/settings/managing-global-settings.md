@@ -52,4 +52,4 @@ To add a new locale:
 2. In the locale addition window, choose your new locale among the *Locale* drop-down list. The latter lists alphabetically all locales, displayed as their ISO code, that can be added to your Strapi application.
 3. (optional) In the *Locale display name* textbox, write a new display name for your new locale.
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
-5. Click on the **Finish** button to confirm the addition of your new locale.
+5. Click on the **Save** button to confirm the addition of your new locale.
