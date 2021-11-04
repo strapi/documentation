@@ -11,6 +11,102 @@ As Strapi does not handle SSL directly and hosting a Node.js service on the "edg
 
 The below configuration is based on Nginx virtual hosts, this means that you create configurations for each **domain** to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
 
+### Strapi Server
+
+In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above Nginx configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
+
+:::note API Prefix
+Note that in many of these examples we are using the default API Prefix of `/api`, this can be changed without the need to directly modify the Nginx configuration, please see the [API Prefix](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) documentation for more information.
+:::
+
+:::note Admin URL
+If you are changing the `url` key in the `./config/admin.js` or `./config/server.js` files **you will need to rebuild the admin panel** as we statically build the admin using these keys.
+:::
+
+::::: tabs card
+
+:::: tab Sub-Domain
+
+#### Sub-Domain Strapi config
+
+---
+
+- Example Domain: `api.example.com`
+- Example Admin: `api.example.com/admin`
+- Example API: `api.example.com/api`
+- Example Uploaded Files (local provider): `api.example.com/uploads`
+
+**Path —** `config/server.js`
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://api.example.com',
+});
+```
+
+::::
+
+:::: tab Sub-Folder-Unified
+
+#### Sub-Folder Unified Strapi config
+
+---
+
+- Example Domain: `example.com/test`
+- Example Admin: `example.com/test/admin`
+- Example API: `example.com/test/api`
+- Example Uploaded Files (local provider): `example.com/test/uploads`
+
+**Path —** `config/server.js`
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://example.com/test',
+});
+```
+
+::::
+
+:::: tab Sub-Folder-Split
+
+#### Sub-Folder Split Strapi config
+
+---
+
+- Example Domain: `example.com`
+- Example Admin: `example.com/dashboard`
+- Example API: `example.com/api`
+- Example Uploaded Files (local provider): `example.com/uploads`
+
+**Path —** `config/server.js`
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://example.com',
+});
+```
+
+**Path —** `config/admin.js`
+
+```js
+module.exports = ({ env }) => ({
+  auth: {
+    ...
+  }
+  url: 'https://example.com/dashboard',
+});
+```
+
+::::
+
+:::::
+
 ### Nginx Upstream
 
 Upstream blocks are used to map an alias such as `strapi` to a specific URL such as `localhost:1337`. While it would be useful to define these in each virtual host file, Nginx currently doesn't support loading these within the virtual host **if you have multiple virtual host files** and instead you should configure these within the `conf.d` directory as this is loaded before any virtual host files.
@@ -48,7 +144,10 @@ This config is using the sub-domain that is dedicated to Strapi only. It will re
 
 ---
 
-Example Domain: `api.example.com`
+- Example Domain: `api.example.com`
+- Example Admin: `api.example.com/admin`
+- Example API: `api.example.com/api`
+- Example Uploaded Files (local provider): `api.example.com/uploads`
 
 **Path —** `/etc/nginx/sites-available/strapi.conf`
 
@@ -94,7 +193,7 @@ server {
 
 #### Sub-Folder Unified
 
-This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the "frontend" files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/api` sub-path.
+This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the "frontend" files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/test` sub-path.
 
 :::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
@@ -102,7 +201,10 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-Example Domain: `example.com/api`
+- Example Domain: `example.com/test`
+- Example Admin: `example.com/test/admin`
+- Example API: `example.com/test/api`
+- Example Uploaded Files (local provider): `example.com/test/uploads`
 
 **Path —** `/etc/nginx/sites-available/strapi.conf`
 
@@ -131,8 +233,8 @@ server {
     }
 
     # Strapi API and Admin
-    location /api/ {
-        rewrite ^/api/?(.*)$ /$1 break;
+    location /test/ {
+        rewrite ^/test/?(.*)$ /$1 break;
         proxy_pass http://strapi;
         proxy_http_version 1.1;
         proxy_set_header X-Forwarded-Host $host;
@@ -164,9 +266,10 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
+- Example Domain: `example.com`
+- Example Admin: `example.com/dashboard`
+- Example API: `example.com/api`
+- Example Uploaded Files (local provider): `example.com/uploads`
 
 **Path —** `/etc/nginx/sites-available/strapi.conf`
 
@@ -194,25 +297,9 @@ server {
         root /var/www/html;
     }
 
-    # Strapi API
-    location /api/ {
-        rewrite ^/api/?(.*)$ /$1 break;
+    # Proxy Config
+    location / {
         proxy_pass http://strapi;
-        proxy_http_version 1.1;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header Host $http_host;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_pass_request_headers on;
-    }
-
-    # Strapi Dashboard
-    location /dashboard {
-        proxy_pass http://strapi/dashboard;
         proxy_http_version 1.1;
         proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Forwarded-Server $host;
@@ -231,75 +318,20 @@ server {
 
 :::::
 
-### Strapi Server
+### Redirecting landing page to Admin Panel
 
-In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above Nginx configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
+If you do not wish to have the default landing page mounted on `/` you can create a custom `./public/index.html` using the sample code below to automatically redirect to your Admin Panel.
 
-::::: tabs card
+:::caution Admin Panel Route
+This sample configuration expects that your Admin Panel is accessible on on `/admin` if you used one of the above configurations to change this to `/dashboard` you will also need to adjust this sample config.
+:::
 
-:::: tab Sub-Domain
+**Path —** `./public/index.html`
 
-#### Sub-Domain Strapi config
-
----
-
-Example Domain: `api.example.com`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://api.example.com',
-});
+```html
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;URL='/admin'" />
+  </head>
+</html>
 ```
-
-::::
-
-:::: tab Sub-Folder-Unified
-
-#### Sub-Folder Unified Strapi config
-
----
-
-Example Domain: `example.com/api`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Split
-
-#### Sub-Folder Split Strapi config
-
----
-
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-  admin: {
-    url: 'https://example.com/dashboard',
-  },
-});
-```
-
-::::
-
-:::::
