@@ -50,6 +50,7 @@ const sidebar = {
               children: [
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
               ]
             },
             {

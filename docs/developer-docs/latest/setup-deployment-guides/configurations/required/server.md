@@ -9,42 +9,42 @@ description:
 
 The `./config/server.js` is used to define server configuration for the Strapi application.
 
-:::: tabs card
+::::: tabs card
 
-::: tab Minimal
+:::: tab Minimal configuration
 
-## Minimal Server Config
+## Minimal configuration
 
-This is the default config created with any new project, all these keys are required at the very least, environmental configs do not need to contain all these values so long as they exist in the default `./config/server.js`.
-
-**Path —** `./config/server.js`.
+The default configuration created with any new project should at least include the following:
 
 ```js
+// path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  admin: {
-    apiToken: {
-      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
-    },
-    auth: {
-      secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
-    },
-  },
 });
 ```
 
+:::note
+Environmental configurations (`env`) do not need to contain all these values so long as they exist in the default `./config/server.js`.
 :::
 
-::: tab Full
+::::
 
-## Full Server Config
+:::: tab Full configuration
 
-This is an example of a full configuration, typically certain keys do not need to present in environmental configs, and not all of these keys are required. Please see the table below to see what each key does.
+## Full configuration
 
-**Path —** `./config/server.js`.
+The following is an example of a full configuration file. Not all of these keys are required (see [available options](#available-options)).
 
-```javascript
+:::note
+Environmental configurations (`env`) do not need to contain all these values so long as they exist in the default `./config/server.js`.
+:::
+
+```js
+// path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -55,50 +55,23 @@ module.exports = ({ env }) => ({
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
-  admin: {
-    apiToken: {
-      salt: env('API_TOKEN_SALT','random_string_used_as_a_salt'),
-    },
-    auth: {
-      events: {
-        onConnectionSuccess(e) {
-          console.log(e.user, e.provider);
-        },
-        onConnectionError(e) {
-          console.error(e.error, e.provider);
-        },
-      },
-      secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
-    },
-    url: env('PUBLIC_ADMIN_URL', '/dashboard'),
-    autoOpen: false,
-    watchIgnoreFiles: [
-      './my-custom-folder', // Folder
-      './scripts/someScript.sh', // File
-    ],
-    host: 'localhost', // Only used for --watch-admin
-    port: 8003, // Only used for --watch-admin
-    serveAdminPanel: env.bool('SERVE_ADMIN', true),
-    forgotPassword: {
-      from: 'no-reply@example.com',
-      replyTo: 'no-reply@example.com',
-    },
-  },
 });
 ```
 
-:::
-
 ::::
 
-### Available options
+:::::
+
+## Available options
+
+The `./config/server.js` file can contain the following parameters:
 
 <!-- TODO: add admin jwt config option -->
 
-| Property                                | Description                                                                                                                                                                                                                                                                                                                                                                 | Type              | Default                                                                                                                          |
+| Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                 | Type              | Default                                                                                                                          |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `host`                                  | Host name                                                                                                                                                                                                                                                                                                                                                                   | string            | `localhost`                                                                                                                      |
-| `port`                                  | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer           | `1337`                                                                                                                           |
+| `host`<br/><br/>❗️ _Mandatory_                                 | Host name                                                                                                                                                                                                                                                                                                                                                                   | string            | `localhost`                                                                                                                      |
+| `port`<br/><br/>❗️ _Mandatory_                                  | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer           | `1337`                                                                                                                           |
 | `socket`                                | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer | `/tmp/nginx.socket`                                                                                                              |
 | `emitErrors`                            | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean           | `false`                                                                                                                          |
 | `url`                                   | Public url of the server. Required for many different features (ex: reset password, third login providers etc.). Also enables proxy support such as Apache or Nginx, example: `https://mywebsite.com/api`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however **recommended**.                            | string            | `''`                                                                                                                             |
@@ -106,39 +79,4 @@ module.exports = ({ env }) => ({
 | `cron`                                  | Cron configuration (powered by [`node-schedule`](https://github.com/node-schedule/node-schedule))                                                                                                                                                                                                                                                                           | Object            |                                                                                                                                  |
 | `cron.enabled`                          | Enable or disable [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                                                            | boolean           | `false`                                                                                                                          |
 | `cron.tasks`                          | Declare [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to be run at specific dates.                                                                                                                                                                                                                                                                                                            | boolean           | `false`                                                                                                                          |
-| `admin`                                 | Admin panel configuration                                                                                                                                                                                                                                                                                                                                                   | Object            |                                                                                                                                  |
-| `admin.apiToken.salt`                                 | Salt used to generate [API tokens](#api-tokens)                                                                                                                                                                                                                                                                                                                                                   | String            |       (A random string<br/>generated<br/>by Strapi)                                                                                                                           |
-| `admin.auth`                            | Authentication configuration                                                                                                                                                                                                                                                                                                                                                | Object            |                                                                                                                                  |
-| `admin.auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                                                                                                                                                                                            | string            | `undefined`                                                                                                                      |
-| `admin.auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                                                                                                                                                                                                      | object            | `{}`                                                                                                                             |
-| `admin.auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                                                                                                                                                                                          | function          | `undefined`                                                                                                                      |
-| `admin.auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                                                                                                                                                                                              | function          | `undefined`                                                                                                                      |
-| `admin.url`                             | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`.                                                                                                                                                                                                                                                         | string            | `/admin`                                                                                                                         |
-| `admin.autoOpen`                        | Enable or disabled administration opening on start.                                                                                                                                                                                                                                                                                                                         | boolean           | `true`                                                                                                                           |
-| `admin.watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                                                                                                                                                                                                 | Array(string)     | `[]`                                                                                                                             |
-| `admin.host`                            | Use a different host for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                                                                                                                                                                                               | string            | `localhost`                                                                                                                      |
-| `admin.port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                                                                                                                                                                                               | string            | `8000`                                                                                                                           |
-| `admin.serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md#global-middlewares)                                                                                                                                                                      | boolean           | `true`                                                                                                                           |
-| `admin.forgotPassword`                  | Settings to customize the forgot password email (see more here: [Forgot Password Email](/developer-docs/latest/development/admin-customization.md#forgotten-password-email))                                                                                                                                                                                                   | Object            | {}                                                                                                                               |
-| `admin.forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/plugins/email.md#programmatic-usage)                                                                                                                                                                                                                                                         | Object            | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
-| `admin.forgotPassword.from`             | Sender mail address                                                                                                                                                                                                                                                                                                                                                         | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
-| `admin.forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                                                                                                                                                                                              | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
-
-## API tokens
-
-Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in [API token]() feature.
-
-<!-- TODO: add link to API token docs in user guide once written -->
-
-Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) endpoints as an authenticated user. The API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
-
-New API tokens are generated from the admin panel using a salt. This salt is automatically generated by Strapi and stored in `./config/server.js` as `admin.api-tokens.salt`. 
-
-The salt can be customized:
-
-- either by updating the string value for `admin.api-tokens.salt` in `./config/server.js`
-- or by creating an `API_TOKEN_SALT` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#environment-variables) in the `.env` file of the project
-
-::: caution
-Changing the salt invalidates all the existing API tokens.
-:::
+                                                                                                                                                                                                                                                                                                     | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
