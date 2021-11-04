@@ -1,6 +1,7 @@
 ---
 title: Strapi User Guide
 description: This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
+sidebarDepth: 3
 ---
 
 # Welcome to the Strapi user guide!
@@ -26,7 +27,7 @@ With all this in mind, you should be ready to start your Strapi experience!
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end-users of your Strapi application.
 
 ::: caution
-In order to access the admin panel, your Strapi application must be launched<!-- (see Installing Strapi) -->, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
+In order to access the admin panel, your Strapi application must be launched, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
 :::
 
 ![Login page with SSO activated](../assets/getting-started/login-page-sso.png)
@@ -51,21 +52,35 @@ If you are a new administrator, we recommend making sure your profile is all set
 
 To modify your user information:
 
-1. Click on your initials in the bottom left hand corner of the main navigation of your Strapi application.
+1. Click on your account name or initials in the bottom left hand corner of the main navigation of your Strapi application.
 2. In the drop-down menu, click on **Profile**.
 3. Modify the information of your choice:
 
-| User information      | Instructions                                                                                            |
+| Profile & Experience  | Instructions                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------- |
 | First name            | Write your first name in the textbox.                                                                   |
 | Last name             | Write your last name in the textbox.                                                                    |
 | Email                 | Write your complete email address in the textbox.                                                       |
 | Username              | (optional) Write a username in the textbox.                                                             |
-| Password              | Write a new password in the textbox. You can click on the eye icon for the password to be shown.        |
-| Confirmation password | Write the same new password in the textbox. You can click on the eye icon for the password to be shown. |
 | Interface language    | Among the drop-down list, choose a language for your Strapi application interface.                      |
 
 4. Click on the **Save** button.
+
+### Changing your password
+
+To change the password of your account:
+
+1. Go to your administrator profile.
+2. Fill in the password-related options:
+
+| Password modification |                                                                                                         |
+| --------------------- | ------------------------------------------------------------------------------------------------------- |
+| Current password      | Write your current password in the textbox. <br> 💡 You can click on the eye icon for the password to be shown. |
+| Password              | Write the new password in the textbox. <br> 💡 You can click on the eye icon for the password to be shown.      |
+| Password confirmation | Write the same new password in the textbox. <br> 💡 You can click on the eye icon for the password to be shown. |
+
+3. Click on the **Save** button.
+
 
 ---
 
