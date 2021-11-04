@@ -11,7 +11,7 @@ Strapi has a standard format for errors that can be [returned](#receiving-errors
 
 ## Receiving errors
 
-Errors are included in the response object with the `errors` key and include information such as the HTTP status code, the name of the error, and additional information.
+Errors are included in the response object with the `error` key and include information such as the HTTP status code, the name of the error, and additional information.
 
 ### REST errors
 
