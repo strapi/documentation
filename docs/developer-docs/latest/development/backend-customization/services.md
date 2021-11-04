@@ -8,438 +8,47 @@ sidebarDepth: 3
 
 # Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
+Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), services can be customized.
+<!-- TODO: remove this comment — the links above will work only when merged with PR #446 -->
 
-## Core services
+## Implementation
 
-When you create a new `Content Type` or a new model, you will see a new empty service has been created. It is because Strapi builds a generic service for your models by default and allows you to override and extend it in the generated files.
+A new service can be implemented:
 
-### Extending a Model Service
+- with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
+<!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
+- or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
+  - `./src/api/[api-name]/services/` for API services
+  - or `./src/plugins/[plugin-name]/services/` for [plugin services](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#services).
 
-Here are the core methods (and their current implementation).
-You can simply copy and paste this code to your own service file to customize the methods.
-
-For more information, see the [Query Engine API documentation](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md).
-
-::: tip
-In the following example your controller, service and model are named `restaurant`.
-:::
-
-### Utils
-
-If you're extending the `create` or `update` service, first require the following utility function:
+To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
 ```js
-const { isDraft } = require('strapi-utils').contentTypes;
-```
-
-- `isDraft`: This function checks if the entry is a draft.
-
-#### Collection Type
-
-:::: tabs card
-
-::: tab find
-
-##### `find`
-
-```js
-module.exports = {
-  /**
-   * Promise to fetch all records
-   *
-   * @return {Promise}
-   */
-  find(params, populate) {
-    return strapi.query('restaurant').find(params, populate);
-  },
+/**
+ * @param {{ strapi: import('@strapi/strapi').Strapi }} opts
+ */
+module.exports = ({ strapi }) => {
+  return {
+    archiveArticles(ids) {
+      // do some logic here
+    },
+  };
 };
 ```
 
-The `find` function accepts the following arguments:
-
-- `params` (object): the filters for the find request,
-
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
-
-```json
-{
-  "name": "Tokyo Sushi"
-}
-// or
-{
-  "_limit": 20,
-  "name_contains": "sushi"
-}
-```
-
-- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
-
+::: strapi Entity Service API
+To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
+<!-- TODO: remove this comment — the link above won't work until merged with PR #445 -->
 :::
 
-::: tab findOne
-
-##### `findOne`
-
-```js
-module.exports = {
-  /**
-   * Promise to fetch record
-   *
-   * @return {Promise}
-   */
-
-  findOne(params, populate) {
-    return strapi.query('restaurant').findOne(params, populate);
-  },
-};
-```
-
-The `find` function accepts the following arguments:
-
-- `params` (object): the filters for the find request.
-
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
-
-```json
-{
-  "name": "Tokyo Sushi"
-}
-// or
-{
-  "name_contains": "sushi"
-}
-```
-
-- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
-
-:::
-
-::: tab count
-
-##### `count`
-
-```js
-module.exports = {
-  /**
-   * Promise to count record
-   *
-   * @return {Promise}
-   */
-
-  count(params) {
-    return strapi.query('restaurant').count(params);
-  },
-};
-```
-
-- `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
-
-```json
-{
-  "name": "Tokyo Sushi"
-}
-// or
-{
-  "name_contains": "sushi"
-}
-```
-
-:::
-
-::: tab create
-
-##### `create`
-
-```js
-const { isDraft } = require('strapi-utils').contentTypes;
-
-module.exports = {
-  /**
-   * Promise to add record
-   *
-   * @return {Promise}
-   */
-
-  async create(data, { files } = {}) {
-    const isDraft = isDraft(data, strapi.models.restaurant);
-    const validData = await strapi.entityValidator.validateEntityCreation(
-      strapi.models.restaurant,
-      data,
-      { isDraft }
-    );
-
-    const entry = await strapi.query('restaurant').create(validData);
-
-    if (files) {
-      // automatically uploads the files based on the entry and the model
-      await strapi.entityService.uploadFiles(entry, files, {
-        model: 'restaurant',
-        // if you are using a plugin's model you will have to add the `source` key (source: 'users-permissions')
-      });
-      return this.findOne({ id: entry.id });
-    }
-
-    return entry;
-  },
-};
-```
-
-:::
-
-::: tab update
-
-##### `update`
-
-```js
-const { isDraft } = require('strapi-utils').contentTypes;
-
-module.exports = {
-  /**
-   * Promise to edit record
-   *
-   * @return {Promise}
-   */
-
-  async update(params, data, { files } = {}) {
-    const existingEntry = await strapi.query('restaurant').findOne(params);
-
-    const isDraft = isDraft(existingEntry, strapi.models.restaurant);
-    const validData = await strapi.entityValidator.validateEntityUpdate(
-      strapi.models.restaurant,
-      data,
-      { isDraft }
-    );
-
-    const entry = await strapi.query('restaurant').update(params, validData);
-
-    if (files) {
-      // automatically uploads the files based on the entry and the model
-      await strapi.entityService.uploadFiles(entry, files, {
-        model: 'restaurant',
-        // if you are using a plugin's model you will have to add the `source` key (source: 'users-permissions')
-      });
-      return this.findOne({ id: entry.id });
-    }
-
-    return entry;
-  },
-};
-```
-
-- `params` (object): it should look like this `{id: 1}`
-
-:::
-
-::: tab delete
-
-##### `delete`
-
-```js
-module.exports = {
-  /**
-   * Promise to delete a record
-   *
-   * @return {Promise}
-   */
-
-  delete(params) {
-    return strapi.query('restaurant').delete(params);
-  },
-};
-```
-
-- `params` (object): it should look like this `{id: 1}`
-
-:::
-
-::: tab search
-
-##### `search`
-
-```js
-module.exports = {
-  /**
-   * Promise to search records
-   *
-   * @return {Promise}
-   */
-
-  search(params) {
-    return strapi.query('restaurant').search(params);
-  },
-};
-```
-
-- `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
-
-```json
-{
-  "name": "Tokyo Sushi"
-}
-// or
-{
-  "name_contains": "sushi"
-}
-```
-
-:::
-
-::: tab countSearch
-
-##### `countSearch`
-
-```js
-module.exports = {
-  /**
-   * Promise to count searched records
-   *
-   * @return {Promise}
-   */
-  countSearch(params) {
-    return strapi.query('restaurant').countSearch(params);
-  },
-};
-```
-
-- `params` (object): this represent filters for your find request.<br>
-  The object follow the URL query format, [refer to this documentation.](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters).
-
-```json
-{
-  "name": "Tokyo Sushi"
-}
-// or
-{
-  "name_contains": "sushi"
-}
-```
-
-:::
-
-::::
-
-#### Single Type
-
-:::: tabs card
-
-::: tab find
-
-##### `find`
-
-```js
-const _ = require('lodash');
-
-module.exports = {
-  /**
-   * Promise to fetch the record
-   *
-   * @return {Promise}
-   */
-  async find(params, populate) {
-    const results = await strapi.query('restaurant').find({ ...params, _limit: 1 }, populate);
-    return _.first(results) || null;
-  },
-};
-```
-
-The `find` function accepts the following arguments:
-
-- `params` (object): the filters for the find request.
-
-  The object follows the URL query format (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters)).
-
-- `populate` (array): the data to populate `["author", "author.name", "comment", "comment.content"]`
-
-:::
-
-::: tab createOrUpdate
-
-##### `createOrUpdate`
-
-```js
-const _ = require('lodash');
-
-module.exports = {
-  /**
-   * Promise to add/update the record
-   *
-   * @return {Promise}
-   */
-
-  async createOrUpdate(data, { files } = {}) {
-    const results = await strapi.query('restaurant').find({ _limit: 1 });
-    const entity = _.first(results) || null;
-
-    let entry;
-    if (!entity) {
-      entry = await strapi.query('restaurant').create(data);
-    } else {
-      entry = await strapi.query('restaurant').update({ id: entity.id }, data);
-    }
-
-    if (files) {
-      // automatically uploads the files based on the entry and the model
-      await strapi.entityService.uploadFiles(entry, files, {
-        model: 'restaurant',
-        // if you are using a plugin's model you will have to add the `plugin` key (plugin: 'users-permissions')
-      });
-      return this.findOne({ id: entry.id });
-    }
-
-    return entry;
-  },
-};
-```
-
-:::
-
-::: tab delete
-
-##### `delete`
-
-```js
-module.exports = {
-  /**
-   * Promise to delete a record
-   *
-   * @return {Promise}
-   */
-
-  delete() {
-    const results = await strapi.query('restaurant').find({ _limit: 1 });
-    const entity = _.first(results) || null;
-
-    if (!entity) return;
-
-    return strapi.query('restaurant').delete({id: entity.id});
-  },
-};
-```
-
-:::
-
-::::
-
-## Custom services
-
-You can also create custom services to build your own business logic.
-
-There are two ways to create a service.
-
-- Using the CLI `strapi generate:service restaurant`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md) for more information.
-- Manually create a JavaScript file named in `./api/**/services/`.
-
-### Example
+:::: details Example of an email service
 
 The goal of a service is to store reusable functions. An `email` service could be useful to send emails from different functions in our codebase:
 
-**Path —** `./api/email/services/Email.js`.
-
 ```js
-const nodemailer = require('nodemailer');
+// path: ./src/api/email/services/email.js
+
+const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
 
 // Create reusable transporter object using SMTP transport.
 const transporter = nodemailer.createTransport({
@@ -466,15 +75,11 @@ module.exports = {
 };
 ```
 
-::: tip
-please make sure you installed `nodemailer` (`npm install nodemailer`) for this example.
-:::
-
-The service is now available through the `strapi.services` global variable. We can use it in another part of our codebase. For example a controller like below:
-
-**Path —** `./api/user/controllers/User.js`.
+The service is now available through the `strapi.services` global variable. It can be used in another part of the codebase, like in the following controller:
 
 ```js
+// path: ./src/api/user/controllers/user.js
+
 module.exports = {
   // GET /hello
   signup: async ctx => {
@@ -482,7 +87,8 @@ module.exports = {
     const user = await User.create(ctx.query);
 
     // Send an email to validate his subscriptions.
-    strapi.services.email.send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('api::email.send')('welcome@mysite.com', user.email, 'Welcome', '...');
+
 
     // Send response to the server.
     ctx.send({
@@ -491,3 +97,25 @@ module.exports = {
   },
 };
 ```
+
+::::
+
+::: note
+When a new [content-type](/developer-docs/latest/development/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
+:::
+
+## Usage
+
+Once a service is created, it's accessible from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) or from other services:
+
+```js
+// access an API service
+strapi.service('api::apiName.serviceName');
+// access a plugin service
+strapi.service('plugin::pluginName.serviceName');
+```
+
+::: tip
+To list all the available services, run `yarn strapi services:list`.
+<!-- TODO: add this to CLI reference -->
+:::

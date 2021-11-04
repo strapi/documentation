@@ -50,6 +50,7 @@ const sidebar = {
               children: [
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
               ]
             },
@@ -154,7 +155,7 @@ const sidebar = {
           collapsable: true,
           path: '/developer-docs/latest/development/backend-customization',
           children: [
-            ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
+            ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
             ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
             ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],

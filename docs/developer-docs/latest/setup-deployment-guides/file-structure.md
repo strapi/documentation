@@ -45,6 +45,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations.html#cron-tasks">cron-tasks.js</a>
 │     │     └ response-handlers.js
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin.html">admin.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html">middlewares.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
@@ -92,7 +93,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├─── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register() and bootstrap() functions</span>
+│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span>
 ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
 └ package.json
   </code>
