@@ -18,6 +18,7 @@ It can be used to:
 
 - [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface)
 - extend [content-types](/developer-docs/latest/development/backend-customization/models.md) programmatically
+- load some [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
 
 <!-- TODO: add example here -->
 
@@ -31,7 +32,6 @@ It can be used to:
 
 - create an admin user if there isn't one.
 - fill the database with some necessary data.
-- load some [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
 
 The bootstrap function can be synchronous or asynchronous.
 
