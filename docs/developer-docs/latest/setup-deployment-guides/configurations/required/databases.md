@@ -19,7 +19,7 @@ The CLI installation guide details [supported database and versions](http://loca
 
 ::: tab SQL
 
-- `connection` (object): Database configuration options
+- `connection` (object): Database configuration options passed to [Knex.js](https://github.com/knex/knex)
   - `client` (string): Database client to create the connection. `sqlite` or `postgres` or `mysql`.
   - `connection` (object): Database connection information
     - `host` (string): Database host name. Default value: `localhost`.
@@ -30,10 +30,21 @@ The CLI installation guide details [supported database and versions](http://loca
     - `timezone` (string): Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php).
     - `schema` (string): Set the default database schema. **Used only for Postgres DB.**
     - `ssl` (boolean/object): For ssl database connection. Object is used to pass certificate files as strings.
+  - `useNullAsDefault` (boolean): Will use `NULL` as a default value **Used only for SQLite**
   - `debug` (boolean): Show database exchanges and errors.
-  - `autoMigration` (boolean): To disable auto tables/columns creation for SQL database.
+    <!-- - `autoMigration` (boolean): To disable auto tables/columns creation for SQL database. -->
+  - `pool` (object _optional_): [Tarn.js](https://github.com/vincit/tarn.js) database pooling options
+    - `min` (integer): Minimum number of database connections to keepalive Default value: `0`
+    - `max` (integer): Maximum number of database connections to keepalive Default value: `10`
+    - `acquireTimeoutMillis` (integer): Time in ms before timing out a database connection attempt
+    - `createTimeoutMillis` (integer): Time in ms before timing out a create query attempt
+    - `destroyTimeoutMillis` (integer): Time in ms before timing out a destroy query attempt
+    - `idleTimeoutMillis` (integer): Time in ms before free database connections are destroyed
+    - `reapIntervalMillis` (integer): Time in ms to check for idle database connections to destroy
+    - `createRetryIntervalMillis` (integer): Time in ms to idle before retrying failed create actions
+    - `afterCreate` (function): Callback function to execute custom logic when the pool acquires a new connection. See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information
 
-<!-- TODO: Confirm on Pool settings for Knex -->
+<!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
 :::
 
@@ -57,8 +68,8 @@ module.exports = ({ env }) => ({
       ssl: {
         rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      debug: false,
     },
+    debug: false,
   },
 });
 ```
@@ -116,8 +127,8 @@ module.exports = ({ env }) => ({
       ssl: {
         rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      debug: false,
     },
+    debug: false,
   },
 });
 ```
