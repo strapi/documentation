@@ -7,7 +7,12 @@ description: …
 
 # Error handling
 
-Strapi has a standard format for errors that can be [returned](#receiving-errors) by the REST and GraphQL APIs or [thrown](#throwing-errors) by the customized parts of the Strapi backend.
+Strapi is natively handling errors with a standard format.
+
+There are 2 use cases for error handling:
+
+- As a developer querying content through the [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) or [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs, you might [receive errors](#receiving-errors) in response to the requests.
+- As a developer customizing the backend of your Strapi application, you could use controllers and services to [throw errors](#throwing-errors).
 
 ## Receiving errors
 
@@ -24,7 +29,7 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
     "status": "", // HTTP status
     "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
     "message": "", // A human reable error message
-    "meta": {
+    "details": {
       // error info specific to the error type
     }
   }
@@ -59,6 +64,32 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 ## Throwing errors
 
-The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) add a `badRequest` object to the context (i.e. `ctx`) based on [Koa's](https://koajs.com/#context) context. This `ctx.badRequest` object should contain error information that follows the proper format (see [receiving errors](#receiving-errors)).
+The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) respond with the correct status and body.
 
-[Services](/developer-docs/latest/development/backend-customization/services.md) don't have access to the controller's `ctx` object. If services need to throw errors, these need to be caught by the controller, that in turn is in charge of sending the proper `ctx.badRequest` along with the response.
+This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be camel-cased to be used by Strapi (e.g. `badRequest`).
+
+Error functions accept 2 parameters that correspond to the `error.message` and `error.details` attributes [received](#receiving-errors) by a developer querying the API:
+
+- the first parameter of the function is the error `message`
+- and the second one is the object that will be set as `details` in the response received
+
+```js
+
+// path: ./src/api/[api-name]/controllers/my-controller.js
+
+module.exports = {
+  exampleAction: async (ctx, next) => {
+    try {
+      ctx.body = 'ok';
+    } catch (err) {
+      // …
+      return ctx.badRequest('name is missing', { foo: 'bar' }).
+    }
+  }
+}
+
+```
+
+:::note
+[Services](/developer-docs/latest/development/backend-customization/services.md) don't have access to the controller's `ctx` object. If services need to throw errors, these need to be caught by the controller, that in turn is in charge of sending the proper error function.
+:::
