@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Policies
 
-Policies are functions that execute specific logic on each request before it reaches the [controller](/developer-docs/latest/development/backend-customization/controllers.md). They are mostly used for securing business logic. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), policies can be customized.
+Policies are functions that execute specific logic on each request before it reaches the [controller](/developer-docs/latest/development/backend-customization/controllers.md). They are mostly used for securing business logic.
 <!-- TODO: remove this comment — the link above will work only when merged with PR #446 -->
 
 Each [route](/developer-docs/latest/development/backend-customization/routes.md) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and uses it for critical routes.
@@ -26,7 +26,8 @@ A new policy can be implemented:
   - `./src/api/[api-name]/policies/` for API policies
   - `./src/plugins/[plugin-name]/policies/` for plugin policies
 
-**Example**: Global policy
+<br/>
+Global policy implementation example:
 
 ```js
 // path: ./src/policies/is-authenticated.js
