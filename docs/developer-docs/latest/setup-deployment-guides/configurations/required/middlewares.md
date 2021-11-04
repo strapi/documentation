@@ -30,27 +30,19 @@ Strapi prepopulates the `./config/middlewares.js` file with built-in, internal m
 
 The `./config/middlewares.js` file exports an array, where order matters and controls the execution order of the middleware stack:
 
-<!-- ? What is "enabled: we could make enabling dynamic" for (see comments in code)? These were in the RFC. Could we use `enabled: false` just like we can disable plugins in ./config/plugins.js? What's the status on this (just an idea, decided but not implemented, etc.)? -->
-
 ```js
 // path: ./config/middlewares.js
 
 module.exports = [
   // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
-  {
-    name: 'strapi::router',
-    config: {
-      foo: 'bar',
-    },
-  },
   'strapi::cors',
-  'strapi::parser',
-  'strapi::error',
+  'strapi::body',
+  'strapi::errors',
+  // ...
   'my-custom-node-module', // custom middleware that does not require any configuration
   {
     // custom resolve to find a package or a path
     resolve: 'my-custom-node-module',
-    // enabled: we could make enabling dynamic
     config: {
       foo: 'bar',
     },
@@ -58,7 +50,6 @@ module.exports = [
   {
     // custom resolve to find a package or a path
     resolve: '../some-dir/custom-middleware',
-    // enabled: we could make enabling dynamic
     config: {
       foo: 'bar',
     },
@@ -79,7 +70,7 @@ Strapi middlewares can be classified into different types depending on their ori
 | Middleware type | Origin                                                                       | Naming convention                                                                                       |
 | --------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Internal        | Built-in middlewares (i.e. included with Strapi), automatically loaded       | `strapi::middleware-name`                                                                                |
-| Application-level       | Loaded from the `./src/middlewares` folder                                   | `app::middleware-name`                                                                                   |
+| Application-level       | Loaded from the `./src/middlewares` folder                                   | `global::middleware-name`                                                                                   |
 | API-level       | Loaded from the `./src/api/[api-name]/middlewares` folder                      | `api::api-name.middleware-name`                                                                           |
 | Plugin          | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares) | `plugin::plugin-name.middleware-name`                                                                     |
 | External        | Can be:<ul><li>either node modules installed with [npm](https://www.npmjs.com/search?q=strapi-middleware)</li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul>                   | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
@@ -90,7 +81,6 @@ Middlewares can have an optional configuration with the following parameters:
 
 | Parameter | Description                                                       | Type    |
 | --------- | ----------------------------------------------------------------- | ------- |
-| `enabled` | Enable (`true`) or disable (`false`) a loaded middleware          | Boolean |
 | `config`  | Used to define or override the middleware configuration           | Object  |
 | `resolve` | Path to the middleware's folder (useful for external middlewares) | String  |
 
@@ -111,12 +101,12 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 - responses, which handle the [responses](/developer-docs/latest/development/backend-customization.html#responses),
 - [security](#security),
 - [public](#public),
-- [session](#session)
+<!-- - [session](#session) -->
 
 <!-- TODO: remove this comment — the link to backend custom > responses above won't work until merged with  PR #446 -->
 
 ::: caution
-The following middlewares cannot be disabled: `responses`, `router`, `logger` and `error`.
+The following middlewares cannot be disabled: `errors`, `security`, `cors`, `query`', `body`, `public`, `favicon`.
 :::
 
 ### `body`
@@ -150,8 +140,9 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 
 ### `errors`
 
-The `errors` middleware handles errors. It's a wrapper of [@hapi/boom](https://hapi.dev/module/boom) that uses the [same methods and error management system](https://hapi.dev/api?v=20.2.0).
-<!-- TODO: add link to upcoming Error Handling docs -->
+The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error not supposed to be exposed to the end-user will result in a 500 HTTP response.
+
+The middleware doesn't have any configuration option.
 
 ### `favicon`
 
@@ -248,7 +239,7 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/) an
 | `hsts`                      | Sets  options for the HTTP Strict Transport Security (HSTS) policy.<br/><br/>Accepts the following parameters:<ul><li>`maxAge`: Number of seconds HSTS is in effect</li><li>`includeSubDomains`: Applies HSTS to all subdomains of the host</li></ul> | <ul><li>`maxAge`: `Integer`</li><li>`includeSubDomains`: `Boolean`</li></ul> | <ul><li>`maxAge`: `31536000`</li><li>`includeSubDomains`: `true`</li></ul> |
 | `frameguard`                | Sets `X-Frame-Options` header to help mitigate clickjacking attacks<br/><br />Accepts the `action` parameter that specifies which directive to use.                                                                                                    | `String`                                               | `sameorigin`                                         |
 
-### `session`
+<!-- ### `session`
 
 The `session` middleware is a session-handling middleware based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
@@ -259,4 +250,4 @@ The `session` middleware is a session-handling middleware based on [koa-session]
 | `ttl`        | Time to live                                                                                                                                                                                                                                                                                        | `Integer`                                                                                                                                             | `864000000`                                                                                                                                |
 | `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.                                                                                                                                                  | `Boolean`                                                                                                                                             | `false`                                                                                                                                    |
 | `secretKeys` | Secret keys                                                                                                                                                                                                                                                                                         | `Array`                                                                                                                                               | `["mySecretKey1", "mySecretKey2"]`                                                                                                         |
-| `cookie`     | Object with cookie-related options:<ul><li>`path`: path for the cookie</li><li>`httpOnly`: http only or not</li><li>`maxAge`: maximum duration to keep the session cookie, in seconds</li><li>`rewrite`: can the cookie be rewritten or not</li><li>`signed`: is the cookie signed or not</li></ul> | <ul><li>`path`: `String`</li><li>`httpOnly`: `Boolean`</li><li>`maxAge`: `Integer`</li><li>`rewrite`: `Boolean`</li><li>`signed`: `Boolean`</li></ul> | <ul><li>`path`: `/`</li><li>`httpOnly`: `true`</li><li>`maxAge`: `864000000`</li><li>`rewrite`: `true`</li><li>`signed`: `false`</li></ul> |
+| `cookie`     | Object with cookie-related options:<ul><li>`path`: path for the cookie</li><li>`httpOnly`: http only or not</li><li>`maxAge`: maximum duration to keep the session cookie, in seconds</li><li>`rewrite`: can the cookie be rewritten or not</li><li>`signed`: is the cookie signed or not</li></ul> | <ul><li>`path`: `String`</li><li>`httpOnly`: `Boolean`</li><li>`maxAge`: `Integer`</li><li>`rewrite`: `Boolean`</li><li>`signed`: `Boolean`</li></ul> | <ul><li>`path`: `/`</li><li>`httpOnly`: `true`</li><li>`maxAge`: `864000000`</li><li>`rewrite`: `true`</li><li>`signed`: `false`</li></ul> | -->
