@@ -385,10 +385,19 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ##### Authorization configuration
 
-<!-- TODO: consider reworking the TOC as having h5s is not optimal… -->
-By default, the authorization of a GraphQL request is handled through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). A request is allowed if the appropriate permissions are given: for instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` and/or `findOne` permission(s) for the 'Categories' content-type are given.
+By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). The Users & Permissions plugin offers a more granular control.
 
-To change how this authorization is configured, use the `resolversConfig.auth` key that accepts:
+::: details Authorization with the Users & Permissions plugin
+With the Users & Permissions plugin, a GraphQL request is allowed if the appropriate permissions are given.
+
+For instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` permission for the 'Categories' content-type is given.
+
+To query a single category, which is done with the `Query.category` handler, the request is allowed if the the `findOne` permission is given.
+
+Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#editing-a-role).
+:::
+
+To change how the authorization is configured, use a `auth` attribute in the resolver configuration defined at `resolversConfig.[MyResolverName]`. The `auth` attribute accepts:
 
 * either `false` to fully bypass the authorization system and allow all requests,
 * or a `scope`, as an array of strings, to define the scopes (i.e. permissions) that the request needs to have to be allowed.
@@ -432,9 +441,9 @@ module.exports = {
 
 ##### Policies
 
-[Policies](/developer-docs/latest/development/backend-customization/policies.md) can be applied to a GraphQL resolver through the `resolversConfig.policies` key.
+[Policies](/developer-docs/latest/development/backend-customization/policies.md) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
 
-The `resolversConfig.policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
+The `policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
 <!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
 
 Policies directly implemented in `resolversConfig` are functions that take a `context` object and the `strapi` instance as arguments.
@@ -478,9 +487,9 @@ module.exports = {
 
 #### Middlewares
 
-[Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) can be applied to a GraphQL resolver through the `resolversConfig.middlewares` key.
+[Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key.
 
-The `resolversConfig.middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares)).
+The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares)).
 <!-- TODO: remove this comment — the link won't work until merged with PR #450 -->
 
 Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's `parent`, `args`, `context` and `info` objects as arguments.
@@ -505,14 +514,10 @@ module.exports = {
           middlewares: [
             /**
              * Basic middleware example #1
-             * publish categories by changing publicationState values
+             * Log resolving time in console
              */
             async (next, parent, args, context, info ) => {
               console.time('Start resolving categories');
-              if (args.publicationState) {
-                args.publicationState = 'LIVE';
-              }
-              const res = await next(parent, args, context, info);
               console.timeEnd('Stop resolving categories');
 
               return res;
@@ -522,7 +527,6 @@ module.exports = {
              * change the 'name' attribute of parent with id 1 to 'foobar'
              */
             (resolve, parent, ...rest) => {
-              console.log(parent);
               if (parent.id === 1) {
                 return resolve({...parent, name: 'foobar' }, ...rest);
               }
