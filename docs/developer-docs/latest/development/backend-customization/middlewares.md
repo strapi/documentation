@@ -25,6 +25,7 @@ A new application-level or API-level middleware can be implemented:
 
 - `./src/middlewares/` for application-level middlewares
 - `./src/api/[api-name]/middlewares/` for API-level middlewares
+- `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares)
 
 Middlewares working with the REST API are functions like the following:
 
@@ -55,7 +56,7 @@ module.exports = () => {
 
 :::
 
-The GraphQL plugin also allows [implementing custom middlewares](), with a different syntax.
+The GraphQL plugin also allows [implementing custom middlewares](/developer-docs/latest/plugins/graphql.md#middlewares), with a different syntax.
 
 ## Usage
 
@@ -63,6 +64,7 @@ Middlewares are called different ways depending on their scope:
 
 - use `global::middleware-name` for application-level middlewares
 - use `api::api-name.middleware-name` for API-level middlewares
+- use `pluigin:plugin-name.middleware-name` for plugin middlewares
 
 ::: tip
 To list all the registered middlewares, run `yarn strapi middlewares:list`.
