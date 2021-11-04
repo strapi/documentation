@@ -81,7 +81,7 @@ The optional configuration for a route is defined in its `config` object, which 
 [Policies](/developer-docs/latest/development/backend-customization/policies.md) can be added to a route configuration:
 
 - by pointing to a policy registered in `./src/policies`, with or without passing a custom configuration
-- or by declaring the policy implementation directly, as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments
+- or by declaring the policy implementation directly, as a function that takes `policyContext` to extend [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments (see [policies documentation](/developer-docs/latest/development/backend-customization/routes.md))
 
 ```js
 // path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/blog/routes/articles.js')
