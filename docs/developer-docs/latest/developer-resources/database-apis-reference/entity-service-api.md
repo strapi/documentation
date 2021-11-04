@@ -21,7 +21,7 @@ const entry = await strapi.entityService.findOne('api::article.article', 1, {
 
 ## Available operations
 
-The Entity Service allows:
+The Entity Service API allows:
 
 - [CRUD operations on entities](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md) (e.g. `findOne`, `findMany`, `create`, `update`, `delete`) with the ability to [filter](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md), [order and paginate results](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md), and [populate relations, components and dynamic zones](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md)
 - the [creation and update of components and dynamic zones](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md)

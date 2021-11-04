@@ -14,6 +14,11 @@ To order results returned by the Entity Service API, use the `orderBy` parameter
 
 ### Single
 
+To order results by a single field, just pass it to the `orderBy` parameter: 
+
+- either as a string to sort with the default ascending order
+- or as an object to define both the field name and the order (i.e. `'asc'` for ascending order or `'desc'` for descending order)
+
 ```js
 strapi.entityService('api::article.article').findMany({
   orderBy: 'id',
@@ -27,6 +32,11 @@ strapi.entityService('api::article.article').findMany({
 
 ### Multiple
 
+To order results by multiple fields, pass the fields as an array to the `orderBy` parameter:
+
+- either as an array of strings to sort multiple fields using the default ascending order
+- or as an array of objects to define both the field name and the order (i.e. `'asc'` for ascending order or `'desc'` for descending order)
+
 ```js
 strapi.entityService('api::article.article').findMany({
   orderBy: ['publishDate', 'name'],
@@ -39,6 +49,8 @@ strapi.entityService('api::article.article').findMany({
 ```
 
 ### Relational ordering
+
+Fields can also be sorted based on fields from relations:
 
 ```js
 strapi.entityService('api::article.article').findMany({

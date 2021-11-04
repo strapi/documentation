@@ -8,6 +8,8 @@ description: (add description here)
 
 The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) does not populate relations, components or dynamic zones by default.
 
+## Basic populating
+
 To populate all the root level relations, use `populate: true`:
 
 ```js
@@ -24,7 +26,9 @@ strapi.entityService('api::article.article').findMany({
 });
 ```
 
-An object can be passed for more advanced usage:
+## Advanced populating
+
+An object can be passed for more advanced populating:
 
 ```js
 strapi.entityService('api::article.article').findMany({
