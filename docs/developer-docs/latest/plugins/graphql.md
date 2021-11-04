@@ -375,7 +375,7 @@ module.exports = {
 
 #### Custom configuration for resolvers
 
-A resolver is a GraphQL query handler (i.e. a function, or a collection of functions, that generate(s) a response for a GraphQL query). Each field has a default resolver.
+A resolver is a GraphQL query or mutation handler (i.e. a function, or a collection of functions, that generate(s) a response for a GraphQL query or mutation). Each field has a default resolver.
 
 When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig` key can be used to define a custom configuration for a resolver, which can include:
 
