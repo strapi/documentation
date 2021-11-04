@@ -46,6 +46,9 @@ module.exports = (policyContext, { strapi }) => {
 
 `policyContext` is a wrapper arround the [controller](/developer-docs/latest/development/backend-customization/controllers.md) context. It adds some logic that can be useful to implement a policy for both REST and GraphQL.
 
+<br/>
+Policies can declare a `config` object to inject some custom configuration.
+
 ## Usage
 
 To apply policies to a route, add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes#policies.md)).
