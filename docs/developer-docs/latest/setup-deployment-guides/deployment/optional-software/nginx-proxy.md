@@ -11,101 +11,7 @@ As Strapi does not handle SSL directly and hosting a Node.js service on the "edg
 
 The below configuration is based on Nginx virtual hosts, this means that you create configurations for each **domain** to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
 
-### Strapi Server
-
-In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above Nginx configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
-
-:::note API Prefix
-Note that in many of these examples we are using the default API Prefix of `/api`, this can be changed without the need to directly modify the Nginx configuration, please see the [API Prefix](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) documentation for more information.
-:::
-
-:::note Admin URL
-If you are changing the `url` key in the `./config/admin.js` or `./config/server.js` files **you will need to rebuild the admin panel** as we statically build the admin using these keys.
-:::
-
-::::: tabs card
-
-:::: tab Sub-Domain
-
-#### Sub-Domain Strapi config
-
----
-
-- Example Domain: `api.example.com`
-- Example Admin: `api.example.com/admin`
-- Example API: `api.example.com/api`
-- Example Uploaded Files (local provider): `api.example.com/uploads`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://api.example.com',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Unified
-
-#### Sub-Folder Unified Strapi config
-
----
-
-- Example Domain: `example.com/test`
-- Example Admin: `example.com/test/admin`
-- Example API: `example.com/test/api`
-- Example Uploaded Files (local provider): `example.com/test/uploads`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/test',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Split
-
-#### Sub-Folder Split Strapi config
-
----
-
-- Example Domain: `example.com`
-- Example Admin: `example.com/dashboard`
-- Example API: `example.com/api`
-- Example Uploaded Files (local provider): `example.com/uploads`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com',
-});
-```
-
-**Path —** `config/admin.js`
-
-```js
-module.exports = ({ env }) => ({
-  auth: {
-    ...
-  }
-  url: 'https://example.com/dashboard',
-});
-```
-
-::::
-
-:::::
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
 
 ### Nginx Upstream
 
@@ -131,7 +37,7 @@ In the below examples you will need to replace your domain and likewise your pat
 Below are 3 example Nginx configurations:
 
 - Sub-domain based such as `api.example.com`
-- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/api` and `example.com/api/admin`
+- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
 ::::: tabs card
@@ -318,20 +224,4 @@ server {
 
 :::::
 
-### Redirecting landing page to Admin Panel
-
-If you do not wish to have the default landing page mounted on `/` you can create a custom `./public/index.html` using the sample code below to automatically redirect to your Admin Panel.
-
-:::caution Admin Panel Route
-This sample configuration expects that your Admin Panel is accessible on on `/admin` if you used one of the above configurations to change this to `/dashboard` you will also need to adjust this sample config.
-:::
-
-**Path —** `./public/index.html`
-
-```html
-<html>
-  <head>
-    <meta http-equiv="refresh" content="0;URL='/admin'" />
-  </head>
-</html>
-```
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/admin-redirect.md)!!!

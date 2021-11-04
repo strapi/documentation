@@ -13,6 +13,8 @@ Caddy has some very easy to use options relating to Let's encrypt and automated 
 
 The below configuration is based on "Caddy File" type, this is a single file config that Caddy will use to run the web server. There are multiple other options such as the Caddy REST API that this guide will not cover, you should review the [Caddy documentation](https://caddyserver.com/docs/) for further information on alternatives. You can also visit the [Caddy Community](https://caddy.community/) to speak with others relating to configuration questions.
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
+
 ### Caddy file
 
 The Caddyfile is a convenient Caddy configuration format for humans. It is most people's favorite way to use Caddy because it is easy to write, easy to understand, and expressive enough for most use cases.
@@ -22,7 +24,7 @@ In the below examples you will need to replace your domain, and should you wish 
 Below are 3 example Caddy configurations:
 
 - Sub-domain based such as `api.example.com`
-- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/api` and `example.com/api/admin`
+- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
 ::::: tabs card
@@ -35,7 +37,10 @@ This config is using the sub-domain that is dedicated to Strapi only. It will bi
 
 ---
 
-Example Domain: `api.example.com`
+- Example Domain: `api.example.com`
+- Example Admin: `api.example.com/admin`
+- Example API: `api.example.com/api`
+- Example Uploaded Files (local provider): `api.example.com/uploads`
 
 **Path —** `/etc/caddy/Caddyfile`
 
@@ -52,7 +57,7 @@ http://api.example.com {
 
 #### Sub-Folder Unified
 
-This config is using a sub-folder that is dedicated to Strapi only. It will bind to port 80 HTTP and hosts the "frontend" files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/api` sub-path.
+This config is using a sub-folder that is dedicated to Strapi only. It will bind to port 80 HTTP and hosts the "frontend" files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/test` sub-path.
 
 :::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
@@ -60,16 +65,19 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-Example Domain: `example.com/api`
+- Example Domain: `example.com/test`
+- Example Admin: `example.com/test/admin`
+- Example API: `example.com/test/api`
+- Example Uploaded Files (local provider): `example.com/test/uploads`
 
 **Path —** `/etc/caddy/Caddyfile`
 
 ```
-http://api.example.com {
+http://example.com {
   root * /var/www
   file_server
-  route /api* {
-    uri strip_prefix /api
+  route /test* {
+    uri strip_prefix /test
     reverse_proxy 127.0.0.1:1337
   }
 }
@@ -91,23 +99,16 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
+- Example Domain: `example.com`
+- Example Admin: `example.com/dashboard`
+- Example API: `example.com/api`
+- Example Uploaded Files (local provider): `example.com/uploads`
 
 **Path —** `/etc/caddy/Caddyfile`
 
 ```
-http://api.example.com {
-  root * /var/www
-  file_server
-  route /api* {
-    uri strip_prefix /api
-    reverse_proxy 127.0.0.1:1337
-  }
-  route /dashboard* {
-    reverse_proxy 127.0.0.1:1337
-  }
+http://example.com {
+  reverse_proxy 127.0.0.1:1337
 }
 ```
 
@@ -115,75 +116,4 @@ http://api.example.com {
 
 :::::
 
-### Strapi Server
-
-In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above Caddy configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
-
-::::: tabs card
-
-:::: tab Sub-Domain
-
-#### Sub-Domain Strapi config
-
----
-
-Example Domain: `api.example.com`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://api.example.com',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Unified
-
-#### Sub-Folder Unified Strapi config
-
----
-
-Example Domain: `example.com/api`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Split
-
-#### Sub-Folder Split Strapi config
-
----
-
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-  admin: {
-    url: 'https://example.com/dashboard',
-  },
-});
-```
-
-::::
-
-:::::
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/admin-redirect.md)!!!

@@ -11,6 +11,8 @@ As Strapi does not handle SSL directly and hosting a Node.js service on the "edg
 
 The below examples are more or less acting as an "SSL termination" proxy, meaning that HAProxy is only accepting the requests on SSL and proxying to other backend services such as Strapi or other web servers. **HAProxy cannot serve static content** and as such it is usually used to handle multi-server deployments in a failover or load-balance situation. The examples provided below are based around everything existing on the same server, but could easily be tweaked for multi-server deployments.
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
+
 ### HAProxy
 
 As mentioned previously the following examples are either proxying all requests directly to Strapi or are splitting requests between Strapi and some other backend web server such as Nginx, Apache, or others.
@@ -18,7 +20,7 @@ As mentioned previously the following examples are either proxying all requests 
 Below are 3 example HAProxy configurations:
 
 - Sub-domain based such as `api.example.com`
-- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/api` and `example.com/api/admin`
+- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
 ::::: tabs card
@@ -31,7 +33,10 @@ This config is using the sub-domain that is dedicated to Strapi only. It will re
 
 ---
 
-Example Domain: `api.example.com`
+- Example Domain: `api.example.com`
+- Example Admin: `api.example.com/admin`
+- Example API: `api.example.com/api`
+- Example Uploaded Files (local provider): `api.example.com/uploads`
 
 **Path —** `/etc/haproxy/haproxy.cfg`
 
@@ -89,7 +94,7 @@ backend strapi-backend
 
 #### Sub-Folder Unified
 
-This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the "frontend" to `localhost:8080`, but proxies all Strapi requests on the `example.com/api` sub-path to the locally running Strapi application.
+This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the "frontend" to `localhost:8080`, but proxies all Strapi requests on the `example.com/test` sub-path to the locally running Strapi application.
 
 :::caution
 HAProxy **cannot** serve static content, the below example is proxying frontend traffic to some other web server running on the localhost port 8080
@@ -97,7 +102,10 @@ HAProxy **cannot** serve static content, the below example is proxying frontend 
 
 ---
 
-Example Domain: `example.com/api`
+- Example Domain: `example.com/test`
+- Example Admin: `example.com/test/admin`
+- Example API: `example.com/test/api`
+- Example Uploaded Files (local provider): `example.com/test/uploads`
 
 **Path —** `/etc/haproxy/haproxy.cfg`
 
@@ -143,8 +151,8 @@ frontend example.com
         bind *:80
         bind *:443 ssl crt /path/to/your/cert
         http-request redirect scheme https unless { ssl_fc }
-        acl api path_beg /api
-        use_backend strapi-backend if api
+        acl test path_beg /test
+        use_backend strapi-backend if test
         default_backend default-backend
 
 backend default-backend
@@ -153,7 +161,7 @@ backend default-backend
         server somewebserver 127.0.0.1:8080
 
 backend strapi-backend
-        http-request set-path "%[path,regsub(^/api/?,/)]"
+        http-request set-path "%[path,regsub(^/test/?,/)]"
         server local 127.0.0.1:1337
 
 ```
@@ -172,9 +180,10 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
+- Example Domain: `example.com`
+- Example Admin: `example.com/dashboard`
+- Example API: `example.com/api`
+- Example Uploaded Files (local provider): `example.com/uploads`
 
 **Path —** `/etc/haproxy/haproxy.cfg`
 
@@ -216,26 +225,13 @@ defaults
 
 # Everything above this line is HAProxy defaults
 
-frontend example.com
+frontend api.example.com
         bind *:80
         bind *:443 ssl crt /path/to/your/cert
         http-request redirect scheme https unless { ssl_fc }
-        acl api path_beg /api
-        acl dashboard path_beg /dashboard
-        use_backend strapi-api-backend if api
-        use_backend strapi-dashboard-backend if dashboard
-        default_backend default-backend
+        default_backend strapi-backend
 
-backend default-backend
-        # HAProxy -cannot- serve static content on it's own
-        # This example is relaying traffic to some other backend webserver
-        server somewebserver 127.0.0.1:8080
-
-backend strapi-api-backend
-        http-request set-path "%[path,regsub(^/api/?,/)]"
-        server local 127.0.0.1:1337
-
-backend strapi-dashboard-backend
+backend strapi-backend
         server local 127.0.0.1:1337
 ```
 
@@ -243,75 +239,4 @@ backend strapi-dashboard-backend
 
 :::::
 
-### Strapi Server
-
-In order to take full advantage of a proxied Strapi application you will need to configure Strapi to make it aware of the upstream proxy. Like with the above HAProxy configurations there are 3 matching examples. To read more about this server configuration file please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
-
-::::: tabs card
-
-:::: tab Sub-Domain
-
-#### Sub-Domain Strapi config
-
----
-
-Example Domain: `api.example.com`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://api.example.com',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Unified
-
-#### Sub-Folder Unified Strapi config
-
----
-
-Example Domain: `example.com/api`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-});
-```
-
-::::
-
-:::: tab Sub-Folder-Split
-
-#### Sub-Folder Split Strapi config
-
----
-
-Example API Domain: `example.com/api`
-
-Example Admin Domain: `example.com/dashboard`
-
-**Path —** `config/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com/api',
-  admin: {
-    url: 'https://example.com/dashboard',
-  },
-});
-```
-
-::::
-
-:::::
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/admin-redirect.md)!!!
