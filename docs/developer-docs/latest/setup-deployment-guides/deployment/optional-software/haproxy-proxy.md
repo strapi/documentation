@@ -23,6 +23,10 @@ Below are 3 example HAProxy configurations:
 - Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
 - Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
+:::warning HAProxy SSL Support
+If you are not familiar with HAProxy and using SSL certificates on the bind directive, you should combine your SSL cert, key, and any CA files into a single `.pem` package and use it's path in the bind directive. For more information see [HAProxy's bind documentation](https://www.haproxy.com/documentation/hapee/latest/onepage/#5.1). Most Let's Encrypt clients do not generate a file like this so you may need custom "after issue" scripts to do this for you.
+:::
+
 ::::: tabs card
 
 :::: tab Sub-Domain
@@ -80,7 +84,7 @@ defaults
 
 frontend api.example.com
         bind *:80
-        bind *:443 ssl crt /path/to/your/cert
+        bind *:443 ssl crt /path/to/your/cert+key+ca.pem
         http-request redirect scheme https unless { ssl_fc }
         default_backend strapi-backend
 
@@ -149,7 +153,7 @@ defaults
 
 frontend example.com
         bind *:80
-        bind *:443 ssl crt /path/to/your/cert
+        bind *:443 ssl crt /path/to/your/cert+key+ca.pem
         http-request redirect scheme https unless { ssl_fc }
         acl test path_beg /test
         use_backend strapi-backend if test
@@ -225,9 +229,9 @@ defaults
 
 # Everything above this line is HAProxy defaults
 
-frontend api.example.com
+frontend example.com
         bind *:80
-        bind *:443 ssl crt /path/to/your/cert
+        bind *:443 ssl crt /path/to/your/cert+key+ca.pem
         http-request redirect scheme https unless { ssl_fc }
         default_backend strapi-backend
 
