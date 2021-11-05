@@ -5,9 +5,11 @@ description: Reference guide to Strapi plugins explaining how they work and how 
 
 # List of Strapi plugins
 
+<!--
 ::: callout 🚧 This section of the user guide is a work in progress. Stay tuned!
 <br>
 :::
+-->
 
 No matter if they are installed by default, or additional, Strapi plugins allow to expand your application by adding more options and possibilities. All options are documented in their right places throughout the user guide. However, you can use the following documentation as a reference guide to know which Strapi plugins are available, how they work and which options they add to your Strapi application.
 
@@ -15,7 +17,7 @@ No matter if they are installed by default, or additional, Strapi plugins allow 
 
 ### <img width="28" src="../assets/plugins/icon_i18n-plugin.png"> Internationalization plugin
 
-The Internationalization plugin is installed by default on all Strapi applications running on version 3.6.0 or higher. For lower versions, a migration is needed (see [Update Strapi version](https://strapi.io/documentation/developer-docs/latest/update-migration-guides/update-version.html) in the developer documentation), as well as a manual installation of the plugin (see [Installing plugins via the Marketplace](installing-plugins-via-marketplace.md)).
+The Internationalization plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
 This plugin allows to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
 
@@ -34,7 +36,7 @@ The Internationalization plugin impacts several parts of the admin panel. The ta
 
 ### <img width="28" src="../assets/plugins/icon_up-plugin.png"> Users & Permissions plugin
 
-The Users & Permissions plugin is installed by default on all Strapi applications.
+The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
 This plugin allows to manage end-users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device etc.). With the Users & Permissions plugin, it is possible to:
 

@@ -5,7 +5,13 @@ description: Instructions to install new plugins in a Strapi application via the
 
 # Installing plugins via the Marketplace
 
+::: callout 🚧 The Marketplace is currently not available for v4. It will be back soon, stay tuned!
+In the meantime, plugins can be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
+:::
+
 The Marketplace is a section of the admin panel that lists all plugins that can be installed in a Strapi application. The Marketplace is accessible from ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ in the main navigation of the admin panel.
+
+<!--
 
 ::: note
 Plugins can also be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
@@ -29,3 +35,5 @@ To install a new plugin via the Marketplace:
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
 2. Among the available plugin, choose the one you wish to install.
 3. Click on the **Install** button in the chosen plugin's box.
+
+-->
