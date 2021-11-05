@@ -89,6 +89,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           │     └──── src
 │     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
 │     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies">policies</a>
 │     │           ├ package.json
 │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
