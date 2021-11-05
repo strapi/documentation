@@ -35,19 +35,33 @@ Global policy implementation example:
 module.exports = (policyContext, { strapi }) => {
   if (ctx.state.user) { // if a session is open
     // go to next policy or reach the controller's action
-    return await next();
+    return true;
   }
 
-  ctx.unauthorized(`You're not logged in!`); // returns a 401 error
-
-  return true; // If you return nothing, Strapi considers you didn't want to block the request and will let it pass
+  return false; // If you return nothing, Strapi considers you didn't want to block the request and will let it pass
 };
 ```
 
 `policyContext` is a wrapper arround the [controller](/developer-docs/latest/development/backend-customization/controllers.md) context. It adds some logic that can be useful to implement a policy for both REST and GraphQL.
 
+<!-- TODO: update when implemented/updated -->
+
 <br/>
-Policies can be configured using a `config` object.
+Policies can be configured using a `config` object:
+
+```js
+// path: .src/api/[api-name]/policies/my-policy.js
+
+module.exports = (config) => {
+   return (policyContext, { strapi }) => {
+    if (ctx.state.user.role.code === config.role) { // if user's role is the same as the one described in configuration
+      return true;
+    }
+
+    return false; // If you return nothing, Strapi considers you didn't want to block the request and will let it pass
+  }
+};
+```
 
 ## Usage
 
@@ -62,7 +76,6 @@ Policies are called different ways depending on their scope:
 
 ::: tip
 To list all the available policies, run `yarn strapi policies:list`.
-<!-- TODO: add this to CLI reference -->
 :::
 
 ### Global policies
@@ -124,15 +137,13 @@ API policies are associated to the routes defined in the API where they have bee
 
 // path: ./src/api/restaurant/policies/is-admin.js.
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx, { strapi }) => {
   if (ctx.state.user.role.name === 'Administrator') {
     // Go to next policy or will reach the controller's action.
-    return await next();
+    return true;
   }
 
-  ctx.unauthorized(`You're not allowed to perform this action!`);
-
-  return true;
+  return false;
 };
 
 
