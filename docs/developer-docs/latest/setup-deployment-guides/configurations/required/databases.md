@@ -13,11 +13,9 @@ The `./config/database.js` file is used to define database connections that will
 The CLI installation guide details [supported database and versions](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 :::
 
+## Configuration Structure
+
 **Path —** `./config/database.js`.
-
-:::: tabs card
-
-::: tab SQL
 
 - `connection` (object): Database configuration options passed to [Knex.js](https://github.com/knex/knex)
   - `client` (string): Database client to create the connection. `sqlite` or `postgres` or `mysql`.
@@ -46,9 +44,7 @@ The CLI installation guide details [supported database and versions](http://loca
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
-:::
-
-::::
+### Configuration Examples
 
 ::::: tabs card
 
