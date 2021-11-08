@@ -318,9 +318,8 @@ const sidebar = {
       title: '📚 Guides',
       collapsable: true,
       children: [
-        ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-        ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
+        // ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
         ['/developer-docs/latest/guides/slug', 'Create a slug system'],
         ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
         ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
