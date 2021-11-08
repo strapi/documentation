@@ -6,7 +6,7 @@ description: (add description here)
 
 # Entity Service API: Ordering & Pagination
 
-The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) offers the ability to [order](#ordering) and [paginate](#pagination) results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.html#findmany) method.
+The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) offers the ability to [order](#ordering) and [paginate](#pagination) results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md#findmany) method.
 
 ## Ordering
 

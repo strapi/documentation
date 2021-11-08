@@ -20,6 +20,8 @@ Responses are unified with the GraphQL API in that:
 - queries and mutations that return information for a single entry mainly use a `XxxEntityResponse` type
 - queries and mutations that return i️nformation for multiple entries mainly use a `XxxEntityResponseCollection` type, which includes `meta` information (with [pagination](#pagination)) in addition to the data itself
 
+Responses can also include an `error` (see [error handling documentation](/developer-docs/latest/developer-resources/error-handling.md)).
+
 ::: details Example: Response formats for queries and mutations with an example 'Article' content-type
 
 ```graphql

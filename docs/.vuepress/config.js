@@ -50,14 +50,16 @@ const sidebar = {
               children: [
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
               ]
             },
             {
               title: 'Optional configurations',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md', 'Plugins'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
@@ -149,11 +151,13 @@ const sidebar = {
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
         {
-          title: 'Backend customization',
+          title: 'Back-end customization',
           collapsable: true,
+          path: '/developer-docs/latest/development/backend-customization',
           children: [
-            ['/developer-docs/latest/development/backend-customization/routing.md', 'Routing'],
+            ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
             ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
             ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
             ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
@@ -334,15 +338,15 @@ const sidebar = {
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+        ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
       ],
     },
     {
       title: '📚 Guides',
       collapsable: true,
       children: [
-        ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-        ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
+        // ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
         ['/developer-docs/latest/guides/slug', 'Create a slug system'],
         ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
         ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],

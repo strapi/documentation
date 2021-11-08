@@ -145,7 +145,7 @@ Whatever the query, the response is always an object with the following keys:
 - `meta`(object): information about pagination, publication state, available locales, etc.
 <!-- TODO: create an entry in the docs to list all errors -->
 
-- `error` (object, _optional_): information about any error thrown by the request
+- `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
 
 ### Get entries
 

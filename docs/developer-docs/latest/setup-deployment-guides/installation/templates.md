@@ -78,14 +78,14 @@ First, a template's only concern should be to adapt Strapi to a use case. It sho
 
 Second, a template must follow the file structure detailed below.
 
-You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-template).
+You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate).
 
 :::: tabs
 
 ::: tab yarn
 
 ```bash
-yarn strapi generate:template <path>
+yarn strapi templates:generate <path>
 ```
 
 :::
@@ -93,7 +93,7 @@ yarn strapi generate:template <path>
 ::: tab npx
 
 ```bash
-npx strapi generate:template <path>
+npx strapi templates:generate <path>
 ```
 
 :::
@@ -155,7 +155,7 @@ After reading the above rules, follow these steps to create your template:
 
 1. Create a standard Strapi app with `create-strapi-app`, using the `--quickstart` option.
 2. Customize your app to match the needs of your use case.
-3. Generate your template using the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-template) by running `strapi generate:template <path>`
+3. Generate your template using the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate) by running `strapi templates:generate <path>`
 4. Navigate to this path to see your generated template
 5. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. Otherwise, leave it as an empty object.
 6. Publish the root template project on GitHub. Make sure that the repository is public, and that the code is on the `master` branch.
