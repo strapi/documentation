@@ -63,7 +63,7 @@ module.exports = (policyContext, config, { strapi }) => {
 
 ## Usage
 
-To apply policies to a route, add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes#policies.md)).
+To apply policies to a route, add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
 <!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 
 Policies are called different ways depending on their scope:
@@ -104,7 +104,7 @@ module.exports = {
 
 ### Plugin policies
 
-[Plugins](/developer-docs/latest/plugins/plugins-intro.md) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.html#users-permissions-plugin) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
+[Plugins](/developer-docs/latest/plugins/plugins-intro.md) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
 
 ```js
 // path: ./src/api/restaurant/routes/router.js

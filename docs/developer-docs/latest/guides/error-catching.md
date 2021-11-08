@@ -17,7 +17,7 @@ In this example we will use [Sentry](https://sentry.io).
 
 ## Create a middleware
 
-A [middleware](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) will be used in order to catch the errors which will then be sent to Sentry.
+A [middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) will be used in order to catch the errors which will then be sent to Sentry.
 
 - Create a `./middlewares/sentry/index.js` file.
 

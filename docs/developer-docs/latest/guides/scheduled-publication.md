@@ -29,7 +29,7 @@ The goal will be to check every minute if there are draft articles that have a `
 
 To execute a function every minutes, we will use a CRON task.
 
-Here is the [full documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#cron-tasks) of this feature. If your CRON task requires to run based on a specific timezone then do look into the full documentation.
+Here is the [full documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) of this feature. If your CRON task requires to run based on a specific timezone then do look into the full documentation.
 
 **Path —** `./config/functions/cron.js`
 

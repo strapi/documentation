@@ -220,10 +220,7 @@ module.exports = {
 
 ### Routes
 
-<!-- ? Have we decided on/implemented routes behavior yet? -->
-<!-- TODO: update once routing docs are updated -->
-
-An array of [routes](/developer-docs/latest/development/backend-customization/routing.md) configuration.
+An array of [routes](/developer-docs/latest/development/backend-customization/routes.md) configuration.
 
 **Type**: `Object[]`
 

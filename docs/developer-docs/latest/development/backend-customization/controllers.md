@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Controllers
 
-Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/developer-docs/latest/development/backend-customization/routes.md). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/developer-docs/latest/development/backend-customization#responses). Controllers represent the C in the model-view-controller (MVC) pattern. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), controllers can be customized.
+Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/developer-docs/latest/development/backend-customization/routes.md). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/developer-docs/latest/development/backend-customization/requests-responses.md#responses). Controllers represent the C in the model-view-controller (MVC) pattern. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), controllers can be customized.
 
 In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/developer-docs/latest/development/backend-customization/services.md) to organize the code into re-usable parts.
 <!-- TODO: remove this comment — the links above will work only when merged with PRs #450 and #446 -->
