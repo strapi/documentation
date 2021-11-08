@@ -310,6 +310,7 @@ const sidebar = {
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+        ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
       ],
     },
     {
