@@ -25,18 +25,17 @@ SSO configuration lives in the server configuration of the application, found at
 
 ## Accessing the configuration
 
-The providers' configuration should be written within the `admin.auth.providers` path of the server configuration.
+The providers' configuration should be written within the `auth.providers` path of the admin panel configuration.
 
-`admin.auth.providers` is an array of [provider configuration](#setting-up-provider-configuration).
+`auth.providers` is an array of [provider configuration](#setting-up-provider-configuration).
 
 ```javascript
+// path: ./config/admin.js
+
 module.exports = ({ env }) => ({
   // ...
-  admin: {
-    // ...
-    auth: {
-      providers: [], // The providers' configuration lives there
-    },
+  auth: {
+    providers: [], // The providers' configuration lives there
   },
 });
 ```
@@ -105,7 +104,7 @@ You can also use services such as Okta and Auth0 as bridge services.
 To configure a provider, follow the procedure below:
 
 1. Make sure to import your strategy in your server configuration file, either from an installed package or a local file.
-2. You'll need to add a new item to the `admin.auth.providers` array in your server configuration that will match the [format given above](#setting-up-provider-configuration)
+2. You'll need to add a new item to the `auth.providers` array in your admin panel configuration that will match the [format given above](#setting-up-provider-configuration)
 3. Restart your application, the provider should appear on your admin login page.
 
 ### Configuration providers examples
@@ -448,8 +447,7 @@ module.exports = ({ env }) => ({
 ### Admin panel URL
 
 If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `admin.url` key in the `./config/server.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md#access-url)).
-<!-- TODO: remove this comment — the link above won't work until merged with the `dev/v4-plugins-api` branch -->
+update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md#access-url)).
 
 ### Custom Logic
 
