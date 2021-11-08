@@ -106,7 +106,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 <!-- TODO: remove this comment — the link to backend custom > responses above won't work until merged with  PR #446 -->
 
 ::: caution
-The following middlewares cannot be disabled: `errors`, `security`, `cors`, `query`', `body`, `public`, `favicon`.
+The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`', `body`, `public`, `favicon`. They should not be removed. Removing them will throw an error.
 :::
 
 ### `body`
