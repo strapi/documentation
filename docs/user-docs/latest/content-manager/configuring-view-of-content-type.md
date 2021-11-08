@@ -21,9 +21,8 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view settings
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg).
-2. Click on the **Configure the view** button.
-3. In the Settings area, define your chosen new settings:
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg) to be redirected to the list view configuration interface.
+2. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
 | ---------------------- | -------------------------------------------------------------------------------------------------- |
@@ -31,26 +30,26 @@ Note also that the explanations below explain how to permanently configure which
 | Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
 | Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
 | Entries per page       | Choose among the drop-down list the number of entries per page.                                    |
-| Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
+| Default sort attribute | Choose the sorting field that will be used by default.                                             |
+| Default sort order     | Choose the sorting type that will be applied by default.                                           |
 
-4. Click on the **Save** button.
+3. Click on the **Save** button.
 
 ### List view display
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg).
-2. Click on the **Configure the view** button.
-3. In the View area, define what fields to display in the list view table, and in what order:
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg) to be redirected to the list view configuration interface.
+2. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![Add icon](../assets/icons/add_icon.svg) to add a new field.
    - Click the delete button ![Clear icon](../assets/icons/clear.svg) to remove a field.
    - Click the reorder button ![Drag icon](../assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-4. Click the edit button ![Edit icon](../assets/icons/edit.svg) to access its available own settings:
+3. Click the edit button ![Edit icon](../assets/icons/edit.svg) to access its available own settings:
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
 | Label                     | Write the label to should be used for the field in the list view table.   |
 | Enable sort on this field | Click on **ON** or **OFF** to able or disable the sort on the field.      |
 
-5. Click on the **Save** button.
+4. Click on the **Save** button.
 
 ::: note
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:

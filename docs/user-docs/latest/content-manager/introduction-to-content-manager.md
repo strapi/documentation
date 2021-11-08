@@ -5,9 +5,9 @@ description: Introduction to the Content Manager which allows to write content f
 
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deleted. It is accessible both when the application is in a development and production environment.
+The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the Content-Types Builder. From these 2 categories, administrators can create, manage, and publish content.
+The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip
 Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavigation to use a text search and find one of your content-types more quickly!
@@ -46,7 +46,7 @@ To set a new filter:
 1. Click on the **Filters** button.
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
-4. Enter the value(s) of the condition in the remaining boxes.
+4. Enter the value(s) of the condition in the remaining textbox.
 6. Click on the **Add filter** button.
 
 ::: note
@@ -65,23 +65,22 @@ New entries are only considered created once some of their content has been writ
 
 ### Configuring the table fields
 
-In the header of the list view table, on the right, a settings button ![Cog icon](../assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)), and to choose which fields to display in the table.
+Above the list view table, on the right, a "... currently selected" drop-down menu is displayed. It allows to choose which fields to display in the table.
 
 ::: note
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](../assets/icons/cog.svg) (see [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
 ![Displayed fields in the settings of a list view in the Content Manager](../assets/content-manager/content-manager_displayed-fields.png)
 
 To temporarily configure the fields displayed in the table:
 
-1. Click on the settings button ![Cog icon](../assets/icons/cog.svg).
-2. In the Displayed Fields section, tick the boxes associated with the field you want to be displayed in the table.
+1. Click on the "... currently selected" drop-down menu.
+2. Tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
 ::: tip
 Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
-
 :::
 
 ## Single types

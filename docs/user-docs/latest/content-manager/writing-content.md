@@ -5,7 +5,7 @@ description: Instructions to write content by filling up fields that are meant t
 
 # Writing content
 
-In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the Content-Types Builder.
+In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md).
 
 ![Edit view to write content](../assets/content-manager/edit-view.png)
 
@@ -18,8 +18,8 @@ To write or edit content:
 
 | Field name  | Instructions                                                                                                                                                                                                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Text        | Write your content in the textbox. <br><br> 💡 For long texts, the box can be expanded.                                                                                                                                                                                                                                                                                   |
-| Rich text   | Write your content, in MarkDown, in the textbox. Formatting options are available in the top bar of the textbox, as well as a **Switch to preview** button to see the result of your content. <br><br> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
+| Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
+| Rich text   | Write your content in the textbox. Formatting options are available in the top bar of the textbox, as well as a **Preview mode/Markdown mode** button to switch between modes. <br><br> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview.                |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br> 2. Choose a date using the calendar and/or a time among the list.                                                                                                                                                                                                                                                                 |
 | Boolean     | Click on **OFF** or **ON**.                                                                                                                                                                                                                                                                                                                                               |
@@ -48,7 +48,7 @@ By default, the combination of fields are not directly displayed in the edit vie
 1. Click on the add button ![Add icon](../assets/icons/add_circle.svg) to add the component.
 2. Fill in the fields of the component.
 
-To delete the non-repeatable component, click on the trash button ![Delete icon](../assets/icons/delete.svg), located on the top right corner of the component area.
+To delete the non-repeatable component, click on the delete button ![Delete icon](../assets/icons/delete.svg), located on the top right corner of the component area.
 
 #### Repeatable components
 
@@ -58,13 +58,14 @@ Repeatable components are also a combination of fields, but they allow to create
 
 To add a new entry and display its combination of fields:
 
-1. Click on the **Add new entry** button.
+1. Click on the add button ![Add icon](../assets/icons/add_circle.svg) to add the component.
 2. Fill in the fields of the component.
+3. (optional) Click on the **Add new entry** button and fill in the fields again.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
 - Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder entries of your repeatable component.
-- Use the trash button ![Delete icon](../assets/icons/delete.svg) to delete an entry from your repeatable component.
+- Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete an entry from your repeatable component.
 
 ::: note
 Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end-users will read/see the content.
@@ -77,14 +78,14 @@ Dynamic zones are a combination of components, which themselves are composed of 
 ![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone1.png)
 ![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone3.png)
 
-1. Click on the ![Add icon](../assets/icons/add_circle.svg) **Add [dynamic zone name]** button.
+1. Click on the ![Add icon](../assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
 - Use the arrow buttons ![Up icon](../assets/icons/up2.svg) ![Down icon](../assets/icons/down2.svg) to reorder components in your dynamic zone.
-- Use the trash button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
+- Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
 
 ::: note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end-users will read/see the content.
