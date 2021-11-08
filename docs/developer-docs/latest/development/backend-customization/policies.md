@@ -32,8 +32,8 @@ Global policy implementation example:
 ```js
 // path: ./src/policies/is-authenticated.js
 
-module.exports = (policyContext, { strapi }) => {
-  if (ctx.state.user) { // if a session is open
+module.exports = (policyContext, config, { strapi }) => {
+  if (policyContext.state.user) { // if a session is open
     // go to next policy or reach the controller's action
     return true;
   }
@@ -44,17 +44,15 @@ module.exports = (policyContext, { strapi }) => {
 
 `policyContext` is a wrapper arround the [controller](/developer-docs/latest/development/backend-customization/controllers.md) context. It adds some logic that can be useful to implement a policy for both REST and GraphQL.
 
-<!-- TODO: update when implemented/updated -->
-
 <br/>
+
 Policies can be configured using a `config` object:
 
 ```js
 // path: .src/api/[api-name]/policies/my-policy.js
 
-module.exports = (config) => {
-   return (policyContext, { strapi }) => {
-    if (ctx.state.user.role.code === config.role) { // if user's role is the same as the one described in configuration
+module.exports = (policyContext, config, { strapi }) => {
+    if (policyContext.state.user.role.code === config.role) { // if user's role is the same as the one described in configuration
       return true;
     }
 
@@ -137,8 +135,8 @@ API policies are associated to the routes defined in the API where they have bee
 
 // path: ./src/api/restaurant/policies/is-admin.js.
 
-module.exports = async (ctx, { strapi }) => {
-  if (ctx.state.user.role.name === 'Administrator') {
+module.exports = async (policyContext, config, { strapi }) => {
+  if (policyContext.state.user.role.name === 'Administrator') {
     // Go to next policy or will reach the controller's action.
     return true;
   }

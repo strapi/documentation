@@ -97,7 +97,7 @@ module.exports = {
           'policy-name', // point to a registered policy
           { name: 'policy-name', config: {} }, // point to a registered policy with some custom configuration
           // pass a policy implementation directly
-          (ctx, { strapi }) => {
+          (policyContext, config, { strapi }) => {
             return true;
           },
         ],
