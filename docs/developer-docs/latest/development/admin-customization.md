@@ -39,14 +39,19 @@ To make the admin panel accessible from `http://localhost:1337/dashboard`, use t
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  admin: {
-    url: '/dashboard',
-  },
+
 });
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  url: '/dashboard',
+})
 ```
 
-:::strapi Advanced server settings
-For more advanced settings please see the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) documentation.
+:::strapi Advanced settings
+For more advanced settings please see the [admin panel configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) documentation.
 :::
 
 #### Host and port
@@ -54,16 +59,21 @@ For more advanced settings please see the [server configuration](/developer-docs
 By default, the front end development server runs on `localhost:8000` but this can be modified:
 
 ```js
-//path: ./config/server.js
+// path: ./config/server.js
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  admin: {
-    host: 'my-host', // only used along with `strapi develop --watch-admin` command
-    port: 3000, // only used along with `strapi develop --watch-admin` command
-  },
 });
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  host: 'my-host', // only used along with `strapi develop --watch-admin` command
+  port: 3000, // only used along with `strapi develop --watch-admin` command
+});
+
 ```
 
 ### Configuration options
@@ -172,7 +182,7 @@ module.exports = {
 ::: note NOTES
 
 * The `en` locale cannot be removed from the build as it is both the fallback (i.e. if a translation is not found in a locale, the `en` will be used) and the default locale (i.e. used when a user opens the administration panel for the first time).
-* The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-i18n/constants/iso-locales.json).
+* The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/i18n/server/constants/iso-locales.json).
 <!-- TODO: list is available in file — see latest beta  -->
 :::
 
@@ -253,20 +263,17 @@ The template will be compiled with the following variables: `url`, `user.email`,
 **Example**:
 
 ```js
-// path: ./config/servers.js
+// path: ./config/admin.js
 
 const forgotPasswordTemplate = require('./email-templates/forgot-password');
 
 module.exports = ({ env }) => ({
   // ...
-  admin: {
-    // ...
-    forgotPassword: {
-      from: 'support@mywebsite.fr',
-      replyTo: 'support@mywebsite.fr',
-      emailTemplate: forgotPasswordTemplate,
-    },
-    // ...
+  forgotPassword: {
+    from: 'support@mywebsite.fr',
+    replyTo: 'support@mywebsite.fr',
+    emailTemplate: forgotPasswordTemplate,
+  },
   },
   // ...
 });
@@ -376,10 +383,14 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-  admin: {
-    url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
-    serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
-  },
+});
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
 });
 ```
 

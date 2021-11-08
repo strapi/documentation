@@ -41,7 +41,7 @@ For each locale, the table displays the default ISO code of the locale, its opti
 Administrators can add and manage as many locales as they want. There can however only be one locale set as the default one for the whole Strapi application.
 
 ::: note
-It is not possible to create custom locales. Locales can only be created based on [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-i18n/constants/iso-locales.json) set by Strapi.
+It is not possible to create custom locales. Locales can only be created based on [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/i18n/server/constants/iso-locales.json) set by Strapi.
 :::
 
 To add a new locale:
@@ -85,3 +85,4 @@ To create a new API token:
 ::: caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
 :::
+

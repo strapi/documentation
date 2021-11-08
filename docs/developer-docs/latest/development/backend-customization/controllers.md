@@ -1,355 +1,224 @@
 ---
-title:
+title: Backend customization - Controllers - Strapi Developer Docs
 description:
+sidebarDepth: 3
 ---
 
 <!-- TODO: update SEO -->
 
 # Controllers
 
-Controllers are JavaScript files which contain a set of methods called **actions** reached by the client according to the requested route. It means that every time a client requests the route, the action performs the business logic code and sends back the response. They represent the _C_ in the _MVC_ pattern. In most cases, the controllers will contain the bulk of a project's business logic.
+Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/developer-docs/latest/development/backend-customization/routes.md). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/developer-docs/latest/development/backend-customization#responses). Controllers represent the C in the model-view-controller (MVC) pattern. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), controllers can be customized.
+
+In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/developer-docs/latest/development/backend-customization/services.md) to organize the code into re-usable parts.
+<!-- TODO: remove this comment — the links above will work only when merged with PRs #450 and #446 -->
+
+## Implementation
+
+Controllers can be [generated or added manually](#adding-a-new-controller), and the [core controllers examples](#extending-core-controllers) can help you get started creating custom ones.
+
+### Adding a new controller
+
+A new controller can be implemented:
+
+- with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
+<!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
+- or manually by creating a JavaScript file:
+  - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
+  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for , though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
 ```js
-module.exports = {
-  // GET /hello
-  async index(ctx) {
-    return 'Hello World!';
-  },
-};
-```
-
-In this example, any time a web browser is pointed to the `/hello` URL on your app, the page will display the text: `Hello World!`.
-
-The controllers are defined in each `./api/**/controllers/` folder. Every JavaScript file put in these folders will be loaded as a controller. They are also available through the `strapi.controllers` and `strapi.api.**.controllers` global variables.
-
-## Core controllers
-
-When you create a new `Content Type` you will see a new empty controller has been created. This is because Strapi builds a generic controller for your models by default and allows you to override and extend it in the generated files.
-
-### Extending a Model Controller
-
-Here are the core methods (and their current implementation).
-You can simply copy and paste this code in your own controller file to customize the methods.
-
-:::caution
-In the following example we will assume your controller, service and model are named `restaurant`.
-:::
-
-#### Utils
-
-First require the utility functions
-
-```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
-```
-
-- `parseMultipartData`: This function parses Strapi's formData format.
-- `sanitizeEntity`: This function removes all private fields from the model and its relations.
-
-#### Collection Type
-
-:::: tabs card
-
-::: tab find
-
-##### `find`
-
-```js
-const { sanitizeEntity } = require('strapi-utils');
+// path: ./src/api/[api-name]/controllers/my-controller.js
 
 module.exports = {
-  /**
-   * Retrieve records.
-   *
-   * @return {Array}
-   */
-
-  async find(ctx) {
-    let entities;
-    if (ctx.query._q) {
-      entities = await strapi.services.restaurant.search(ctx.query);
-    } else {
-      entities = await strapi.services.restaurant.find(ctx.query);
+  exampleAction: async (ctx, next) => {
+    try {
+      ctx.body = 'ok';
+    } catch (err) {
+      ctx.body = err;
     }
-
-    return entities.map(entity => sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') }));
-  },
+  }
 };
 ```
 
-:::
+Each controller action can be an `async` or `sync` function.
+Every action receives a context object (`ctx`) as the first parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
+<!-- TODO: update these links once merged with the backend customization intro PR (#446) -->
 
-::: tab findOne
+::: details Example: GET /hello route calling a basic controller
 
-##### `findOne`
+A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, which takes `hello.index` as a handler. Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
+<!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 
 ```js
-const { sanitizeEntity } = require('strapi-utils');
+// path: ./src/api/hello/routes/router.js
 
 module.exports = {
-  /**
-   * Retrieve a record.
-   *
-   * @return {Object}
-   */
-
-  async findOne(ctx) {
-    const { id } = ctx.params;
-
-    const entity = await strapi.services.restaurant.findOne({ id });
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::: tab count
-
-##### `count`
-
-```js
-module.exports = {
-  /**
-   * Count records.
-   *
-   * @return {Number}
-   */
-
-  count(ctx) {
-    if (ctx.query._q) {
-      return strapi.services.restaurant.countSearch(ctx.query);
-    }
-    return strapi.services.restaurant.count(ctx.query);
-  },
-};
-```
-
-:::
-
-::: tab create
-
-##### `create`
-
-```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Create a record.
-   *
-   * @return {Object}
-   */
-
-  async create(ctx) {
-    let entity;
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services.restaurant.create(data, { files });
-    } else {
-      entity = await strapi.services.restaurant.create(ctx.request.body);
-    }
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::: tab update
-
-##### `update`
-
-```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Update a record.
-   *
-   * @return {Object}
-   */
-
-  async update(ctx) {
-    const { id } = ctx.params;
-
-    let entity;
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services.restaurant.update({ id }, data, {
-        files,
-      });
-    } else {
-      entity = await strapi.services.restaurant.update({ id }, ctx.request.body);
-    }
-
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::: tab delete
-
-##### `delete`
-
-```js
-const { sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Delete a record.
-   *
-   * @return {Object}
-   */
-
-  async delete(ctx) {
-    const { id } = ctx.params;
-
-    const entity = await strapi.services.restaurant.delete({ id });
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::::
-
-#### Single Type
-
-:::: tabs card
-
-::: tab find
-
-##### `find`
-
-```js
-const { sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Retrieve the record.
-   *
-   * @return {Object}
-   */
-
-  async find(ctx) {
-    const entity = await strapi.services.homepage.find();
-    return sanitizeEntity(entity, { model: strapi.models.homepage });
-  },
-};
-```
-
-:::
-
-::: tab update
-
-##### `update`
-
-```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Update the record.
-   *
-   * @return {Object}
-   */
-
-  async update(ctx) {
-    let entity;
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services.restaurant.createOrUpdate(data, {
-        files,
-      });
-    } else {
-      entity = await strapi.services.restaurant.createOrUpdate(ctx.request.body);
-    }
-
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::: tab delete
-
-##### `delete`
-
-```js
-const { sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-  /**
-   * Delete the record.
-   *
-   * @return {Object}
-   */
-
-  async delete(ctx) {
-    const entity = await strapi.services.restaurant.delete();
-    return sanitizeEntity(entity, { model: strapi.contentType('api::restaurant.restaurant') });
-  },
-};
-```
-
-:::
-
-::::
-
-## Custom controllers
-
-You can also create custom controllers to build your own business logic and API endpoints.
-
-There are two ways to create a controller:
-
-- Using the CLI `strapi generate:controller restaurant`.<br>Read the [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-controller) for more information.
-- Manually create a JavaScript file in `./api/**/controllers`.
-
-### Adding Endpoints
-
-Each controller’s action can be an `async` or `sync` function.
-Every action receives a `context` (`ctx`) object as first parameter containing the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
-
-### Example
-
-In this example, we are defining a specific route in `./api/hello/config/routes.json` that takes `hello.index` as handler. For more information on routing, please see the [Routing documentation](/developer-docs/latest/development/backend-customization/routing.md)
-
-It means that every time a request `GET /hello` is sent to the server, Strapi will call the `index` action in the `hello.js` controller.
-Our `index` action will return `Hello World!`. You can also return a JSON object.
-
-**Path —** `./api/hello/config/routes.json`.
-
-```json
-{
-  "routes": [
+  routes: [
     {
-      "method": "GET",
-      "path": "/hello",
-      "handler": "hello.index",
-      "config": {
-        "policies": []
-      }
+      method: 'GET',
+      path: '/hello',
+      handler: 'hello.index',
     }
   ]
 }
-```
 
-**Path —** `./api/hello/controllers/hello.js`.
+// path: ./src/api/hello/controllers/hello.js
 
-```js
 module.exports = {
-  // GET /hello
-  async index(ctx) {
-    ctx.send('Hello World!');
+  index: async (ctx, next) => { // called by GET /hello 
+    ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
 ```
 
-::: tip
-A route handler can only access the controllers defined in the `./api/**/controllers` folders.
 :::
+
+::: note
+When a new [content-type](/developer-docs/latest/development/backend-customization/models.md#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
+:::
+
+### Extending core controllers
+
+Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+
+:::caution
+v4 controllers are currently being refactored. The code examples below will be updated soon to reflect these changes.
+:::
+
+<!-- TODO: add instructions if we keep code examples as-is, because they use `transformResponse` and `sanitize` methods that are defined elsewhere -->
+
+::::: details Collection type examples
+
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(ctx) {
+  const { query } = ctx;
+
+  const { results, pagination } = await service.find(query);
+
+  return transformResponse(sanitize(results), { pagination });
+}
+```
+
+:::
+
+::: tab findOne()
+
+```js
+async findOne(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx;
+
+  const entity = await service.findOne(id, query);
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab create()
+
+```js
+async create(ctx) {
+  const { query } = ctx.request;
+
+  const { data, files } = parseBody(ctx);
+
+  const entity = await service.create({ ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx.request;
+  const { data, files } = parseBody(ctx);
+  const entity = await service.update(id, { ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx;
+  const entity = await service.delete(id, query);
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+::::
+:::::
+
+::::: details Single type examples
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(ctx) {
+  const { query } = ctx;
+  const entity = await service.find(query);
+  return transformResponse(sanitize(entity));
+}
+
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(ctx) {
+  const { query } = ctx.request;
+  const { data, files } = parseBody(ctx);
+  const entity = await service.createOrUpdate({ ...query, data, files });
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(ctx) {
+  const { query } = ctx;
+  const entity = await service.delete(query);
+
+  return transformResponse(sanitize(entity));
+}
+```
+
+:::
+::::
+:::::
+
+## Usage
+
+Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/developer-docs/latest/development/backend-customization/services.md) can call controllers, and in this case the following syntax should be used:
+
+```js
+// access an API controller
+strapi.controller('api::api-name.controller-name');
+// access a plugin controller
+strapi.controller('plugin::plugin-name.service-name');
+```

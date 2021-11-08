@@ -100,7 +100,7 @@ module.exports = () => ({
 
 ### destroy()
 
-This function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
+The [destroy](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#destroy) lifecycle function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
 
 **Type**: `Function`
 
@@ -387,7 +387,7 @@ module.exports = (ctx, next) => {
 
 <!-- TODO: check if it should be updated after updating middleware docs -->
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) the plugin provides.
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) the plugin provides.
 
 **Type**: `Object`
 
