@@ -80,7 +80,7 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core controllers
 
-Strapi's core API provide actions built into controller files for collection types and single types. The following code examples should help you get started creating custom actions for controllers:
+Default controllers are created for each of the content-types created. They are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the Content-Type article). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
 <!-- TODO: add instructions if we keep code examples as-is, because they use `transformResponse` and `sanitize` methods that are defined elsewhere -->
 
