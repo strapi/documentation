@@ -78,7 +78,7 @@ First, a template's only concern should be to adapt Strapi to a use case. It sho
 
 Second, a template must follow the file structure detailed below.
 
-You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate-template).
+You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate).
 
 :::: tabs
 

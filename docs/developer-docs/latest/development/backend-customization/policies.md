@@ -64,7 +64,6 @@ module.exports = (policyContext, config, { strapi }) => {
 ## Usage
 
 To apply policies to a route, add them to its configuration object (see [routes documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
-<!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 
 Policies are called different ways depending on their scope:
 
@@ -78,6 +77,7 @@ To list all the available policies, run `yarn strapi policies:list`.
 
 ### Global policies
 
+<!-- TODO: remove this comment — the link above will work only when merged with PR #450 -->
 Global policies can be associated to any route in a project.
 
 ```js

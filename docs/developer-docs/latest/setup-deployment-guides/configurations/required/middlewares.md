@@ -98,12 +98,9 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 - [poweredBy](#poweredby),
 - [query](#query),
 - [response-time](#response-time),
-- responses, which handle the [responses](/developer-docs/latest/development/backend-customization.html#responses),
+- responses, which handle the [responses](/developer-docs/latest/development/backend-customization/requests-responses.md),
 - [security](#security),
 - [public](#public),
-<!-- - [session](#session) -->
-
-<!-- TODO: remove this comment — the link to backend custom > responses above won't work until merged with  PR #446 -->
 
 ::: caution
 The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`', `body`, `public`, `favicon`. They should not be removed. Removing them will throw an error.

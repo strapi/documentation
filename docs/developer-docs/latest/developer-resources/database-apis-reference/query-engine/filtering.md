@@ -6,7 +6,7 @@ sidebarDepth: 3
 <!-- TODO: update SEO tags -->
 # Query Engine API: Filtering
 
-The [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) offers the ability to filter results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.html#findmany) method.
+The [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) offers the ability to filter results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md#findmany) method.
 
 Results are filtered with the `filters` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
 
