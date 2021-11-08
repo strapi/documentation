@@ -31,7 +31,7 @@ A new controller can be implemented:
 // path: ./src/api/[api-name]/controllers/my-controller.js
 
 module.exports = {
-  exampleAction: async (ctx, next) => {
+  async exampleAction(ctx, next) {
     try {
       ctx.body = 'ok';
     } catch (err) {
@@ -66,7 +66,7 @@ module.exports = {
 // path: ./src/api/hello/controllers/hello.js
 
 module.exports = {
-  index: async (ctx, next) => { // called by GET /hello 
+  async index(ctx, next) { // called by GET /hello 
     ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
