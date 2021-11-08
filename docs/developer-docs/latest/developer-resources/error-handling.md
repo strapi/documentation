@@ -78,18 +78,17 @@ Error functions accept 2 parameters that correspond to the `error.message` and `
 // path: ./src/api/[api-name]/controllers/my-controller.js
 
 module.exports = {
-  exampleAction: async (ctx, next) => {
-    try {
-      ctx.body = 'ok';
-    } catch (err) {
-      // …
-      return ctx.badRequest('name is missing', { foo: 'bar' }).
+  renameDog: async (ctx, next) => {
+    const newName = ctx.request.body.name;
+    if (!newName) {
+      return ctx.badRequest('name is missing', { foo: 'bar' })
     }
+    ctx.body = strapi.service('api::dog.dog').rename(newName);
   }
 }
 
 ```
 
 :::note
-[Services](/developer-docs/latest/development/backend-customization/services.md) don't have access to the controller's `ctx` object. If services need to throw errors, these need to be caught by the controller, that in turn is in charge of sending the proper error function.
+[Services](/developer-docs/latest/development/backend-customization/services.md) don't have access to the controller's `ctx` object. If services need to throw errors, these need to be caught by the controller, that in turn is in charge of calling the proper error function.
 :::
