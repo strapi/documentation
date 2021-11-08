@@ -387,7 +387,7 @@ module.exports = (ctx, next) => {
 
 <!-- TODO: check if it should be updated after updating middleware docs -->
 
-An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md) the plugin provides.
+An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) the plugin provides.
 
 **Type**: `Object`
 

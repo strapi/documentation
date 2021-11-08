@@ -51,13 +51,13 @@ const sidebar = {
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
               ]
             },
             {
               title: 'Optional configurations',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
@@ -157,6 +157,7 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
             ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
             ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
             ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],

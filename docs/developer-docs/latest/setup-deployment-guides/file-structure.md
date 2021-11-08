@@ -47,7 +47,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin.html">admin.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
-│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middleware.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html">middlewares.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
 │     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.js</a>
 ├──── database
