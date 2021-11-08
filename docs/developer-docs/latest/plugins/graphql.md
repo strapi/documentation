@@ -397,10 +397,10 @@ To query a single category, which is done with the `Query.category` handler, the
 Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#editing-a-role).
 :::
 
-To change how the authorization is configured, use a `auth` attribute in the resolver configuration defined at `resolversConfig.[MyResolverName]`. The `auth` attribute accepts:
+To change how the authorization is configured, use the resolver configuration defined at `resolversConfig.[MyResolverName]`. The authorization can be configured:
 
-* either `false` to fully bypass the authorization system and allow all requests,
-* or a `scope`, as an array of strings, to define the scopes (i.e. permissions) that the request needs to have to be allowed.
+* either with `auth: false` to fully bypass the authorization system and allow all requests,
+* or with a `scope` attribute that accepts an array of strings to define the permissions required to authorize the request.
 
 ::: details Examples of authorization configuration
 
