@@ -86,16 +86,18 @@ To extend a plugin's interface using the `./src/extensions` folder:
 ```js
 // path: ./src/extensions/some-plugin-to-extend/strapi-server.js
 
-module.exports = (plugin, strapi) => {
-  pluginConfig.controllers.controllerA.find = (ctx) => {};
+module.exports = (plugin) => {
+  plugin.controllers.controllerA.find = (ctx) => {};
 
-  pluginConfig.policies[newPolicy] = (ctx) => {};
+  plugin.policies[newPolicy] = (ctx) => {};
 
-  pluginConfig.routes.push({
+  plugin.routes.push({
     method: 'GET',
     path: '/route-path',
     handler: 'controller.action',
   });
+
+  return plugin;
 };
 ```
 
