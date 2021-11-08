@@ -23,9 +23,9 @@ A new controller can be implemented:
 
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
 <!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
-- or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
-  - `./src/api/[api-name]/controllers/` for API controllers
-  - or `./src/plugins/[plugin-name]/controllers/` for [plugin controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#controllers).
+- or manually by creating a JavaScript file:
+  - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
+  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for , though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
 ```js
 // path: ./src/api/[api-name]/controllers/my-controller.js
@@ -80,7 +80,7 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core controllers
 
-Default controllers are created for each of the content-types created. They are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the Content-Type article). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
 <!-- TODO: add instructions if we keep code examples as-is, because they use `transformResponse` and `sanitize` methods that are defined elsewhere -->
 
@@ -210,7 +210,7 @@ async delete(ctx) {
 
 ## Usage
 
-Once a controller is created, it's accessible from other parts of the customization code:
+Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/developer-docs/latest/development/backend-customization/services.md) can call controllers, and in this case the following syntax should be used:
 
 ```js
 // access an API controller
