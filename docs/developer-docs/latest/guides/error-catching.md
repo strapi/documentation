@@ -5,6 +5,10 @@ description: Learn in this guide how you can catch errors and send them to the A
 
 # Error catching
 
+:::caution
+This guide is outdated and we recommend using [the official Sentry plugin for Strapi](https://www.npmjs.com/package/strapi-plugin-sentry) instead.
+:::
+
 In this guide we will see how you can catch errors and send them to the Application Monitoring / Error Tracking Software you want.
 
 ::: tip
