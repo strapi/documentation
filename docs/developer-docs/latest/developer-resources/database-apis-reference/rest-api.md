@@ -52,8 +52,6 @@ For each Content-Type, the following endpoints are automatically generated:
 
 <div id="endpoint-table">
 
-<!-- ? is `pluralApiId` the value declared with `info.pluralName` in the model? -->
-
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
 | `GET`    | `/api/:pluralApiId`             | [Get a list of entries](#get-entries) |
@@ -61,11 +59,6 @@ For each Content-Type, the following endpoints are automatically generated:
 | `GET`    | `/api/:pluralApiId/:documentId` | [Get an entry](#get-an-entry)         |
 | `PUT`    | `/api/:pluralApiId/:documentId` | [Update an entry](#update-an-entry)   |
 | `DELETE` | `/api/:pluralApiId/:documentId` | [Delete an entry](#delete-an-entry)   |
-<!-- 
-| `POST`   | `/api/:pluralApiId/actions/:action`             | Actions on the collection of documents (bulk actions, custom action…) |
-| `POST`   | `/api/:pluralApiId/:documentId/actions/:action` | Actions on a specific document                                        | -->
-
-<!-- TODO: uncomment & document actions once implemented -->
 
 </div>
 
@@ -81,9 +74,6 @@ For each Content-Type, the following endpoints are automatically generated:
 | `PUT`    | `/api/:singularApiId` | [Update/Create an entry](#update-an-entry) |
 | `DELETE` | `/api/:singularApiId` | [Delete an entry](#delete-an-entry) |
 
-<!-- | `POST`   | `/api/:singularApiId/actions/:action` | Actions on the single type (custom action…) | -->
-
-<!-- TODO: uncomment & document actions once implemented -->
 </div>
 
 :::
@@ -143,7 +133,6 @@ Whatever the query, the response is always an object with the following keys:
   - a custom response
 
 - `meta`(object): information about pagination, publication state, available locales, etc.
-<!-- TODO: create an entry in the docs to list all errors -->
 
 - `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
 
@@ -161,7 +150,6 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
 
 ::: response Example response
 
-<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
   "data": [
@@ -231,7 +219,6 @@ Returns an entry by id.
 
 ::: response Example response
 
-<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
   "data": {
@@ -276,7 +263,6 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.
 
 `POST http://localhost:1337/api/restaurants`
 
-<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
   "data": {
@@ -321,7 +307,6 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 
 `PUT http://localhost:1337/api/restaurants/1`
 
-<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
   "data": {
@@ -369,7 +354,6 @@ Deletes an entry by id and returns its value.
 
 ::: response Example response
 
-<!-- TODO: update with FoodAdvisor? -->
 ```json
 {
   "data": {
@@ -438,7 +422,6 @@ Use `qs` directly to generate complex queries instead of creating them manually.
 
 :::details Example
 
-<!-- ? devs, could you please check that the generated URL and object syntax is correct? -->
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -574,7 +557,6 @@ Use the following parameters:
 ::: tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
-<!-- TODO: remove this comment: the link above won't work until the content is merged with the `dev/v4-split-configuration-docs-files` branch  -->
 
 :::: api-call
 
@@ -611,7 +593,6 @@ Queries can accept a `fields` parameter to select only some fields. Use one of t
 
 To get all fields, use the `*` wildcard.
 
-<!-- TODO: add response example and convert this to an api-call component -->
 ::: request Example request: Get only firstName and lastName of all users
 `GET /api/users?fields=firstName,lastName`
 :::
@@ -628,7 +609,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 `GET /api/:pluralApiId?populate=field1,field2`
 
-<!-- TODO: add an example response and convert this to an api-call component -->
 ::: request Example request: Get books and populate relations with the author's name and address
 `GET /api/books?populate=author.name,author.address`
 :::

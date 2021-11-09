@@ -82,7 +82,6 @@ To extend a plugin's interface using the `./src/extensions` folder:
 
 ::: details Example of backend extension
 
-<!-- ? is it `pluginConfig` or just `plugin` in the example below? -->
 ```js
 // path: ./src/extensions/some-plugin-to-extend/strapi-server.js
 
@@ -106,7 +105,6 @@ module.exports = (plugin) => {
 ### Within the register and bootstrap functions
 
 To extend a plugin's interface within `./src/index.js`, use the `bootstrap()` and `register()` [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md) of the whole project, and access the interface programmatically with [getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage).
-<!-- TODO: remove this comment — link above won't work until merged with the "Reworked configurations" PR -->
 
 ::: details Example of extending a plugin's content-type within ./src/index.js
 

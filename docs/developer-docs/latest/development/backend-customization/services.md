@@ -9,14 +9,12 @@ sidebarDepth: 3
 # Services
 
 Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), services can be customized.
-<!-- TODO: remove this comment — the links above will work only when merged with PR #446 -->
 
 ## Implementation
 
 A new service can be implemented:
 
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
-<!-- TODO: update CLI documentation with the new interactive `strapi generate` -->
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
   - `./src/api/[api-name]/services/` for API services
   - or `./src/plugins/[plugin-name]/services/` for [plugin services](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#services).
@@ -38,7 +36,6 @@ module.exports = ({ strapi }) => {
 
 ::: strapi Entity Service API
 To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
-<!-- TODO: remove this comment — the link above won't work until merged with PR #445 -->
 :::
 
 :::: details Example of an email service
@@ -117,5 +114,4 @@ strapi.service('plugin::pluginName.serviceName');
 
 ::: tip
 To list all the available services, run `yarn strapi services:list`.
-<!-- TODO: add this to CLI reference -->
 :::
