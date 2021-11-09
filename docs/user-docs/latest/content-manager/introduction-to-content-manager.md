@@ -7,7 +7,7 @@ description: Introduction to the Content Manager which allows to write content f
 
 The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 
-The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
+The Content Manager is accessible from ![Content icon](../assets/icons/content.svg) *Content Manager* in the main navigation, which opens a subnavigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
 ::: tip
 Click the search icon ![Search icon](../assets/icons/search.svg) in the subnavigation to use a text search and find one of your content-types more quickly!

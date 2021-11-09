@@ -5,7 +5,7 @@ description: Instructions to manage relation-type fields, called "relational fie
 
 # Managing relational fields
 
-Relation-type fields added to a content-type from the Content-Types Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".
+Relation-type fields added to a content-type from the Content-Type Builder allow to establish a relation with another content-type -mandatorily a collection type. These fields are called "relational fields".
 
 Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)).
 
