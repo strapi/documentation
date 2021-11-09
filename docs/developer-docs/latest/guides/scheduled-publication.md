@@ -15,7 +15,7 @@ What we want here is to be able to set a publication date for an article, and at
 
 For this example, we will have to add a `publish_at` attribute to the **Article** Content Type.
 
-- Click on the Content-Types Builder link in the left menu
+- Click on the Content-Type Builder link in the left menu
 - Select the **Article** Content Type
 - Add another field
   - `date` attribute named `publish_at` with `datetime` type

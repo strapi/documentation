@@ -9,7 +9,7 @@ description: Learn how you can migrate your Strapi application from alpha.12.3 t
 
 - Add search to content manager
 - Add bulk actions in content-manager
-- Add Enumeration type to Content-Types Builder
+- Add Enumeration type to Content-Type Builder
 
 **Useful links:**
 
