@@ -337,7 +337,6 @@ export default {
   }
 }
 ```
-<!-- TODO: update Compoennt -->
 
 #### addSettingsLinks()
 

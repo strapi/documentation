@@ -183,7 +183,6 @@ module.exports = {
 
 * The `en` locale cannot be removed from the build as it is both the fallback (i.e. if a translation is not found in a locale, the `en` will be used) and the default locale (i.e. used when a user opens the administration panel for the first time).
 * The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/i18n/server/constants/iso-locales.json).
-<!-- TODO: list is available in file — see latest beta  -->
 :::
 
 ##### Extending translations

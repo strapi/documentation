@@ -36,8 +36,6 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
 }
 ```
 
-<!-- TODO: add "types" (aka error `name`) list once settled -->
-
 ### GraphQL errors
 
 Errors thrown by the GraphQL API are included in the [response](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#unified-response-format) that has the following format:

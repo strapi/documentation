@@ -14,8 +14,6 @@ Creating and using a plugin interacting with the Server API consists in 2 steps:
 1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
 2. [Use the exported interface](#usage)
 
-<!-- TODO: add TIP with path to Github example here? -->
-
 ## Entry file
 
 To tap into the Server API, create a `strapi-server.js` file at the root of the plugin package folder. This file exports the required interface, with the following parameters available:
@@ -25,40 +23,6 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
 | Configuration          | [config](#configuration) object                                                                                                                                                                                |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
-
-<!-- TODO: update or remove the commented example as it's not super useful as-is: either add some example for every parameter (register, boostrap, routes, controllers…) or provide a link to Github (i18n or upload plugin?) -->
-<!-- **Example:**
-
-```js
-// path: `./my-plugin/strapi-server.js`
-
-module.exports = () => {
-  return {
-    register() {},
-    bootstrap() {},
-    destroy() {},
-    config: {
-      default: ({ env }) => ({ fizz: 'buzz' }),
-      validator: (config) => {
-        if (typeof config.fizz !== string) {
-          throw new Error('fizz has to be a string');
-        }
-      },
-    },
-    routes: [],
-    controllers: {},
-    services: {
-      serviceA: ({ strapi }) => ({
-        functionA: () => {},
-      });
-    },
-    policies: {},
-    middlewares: {},
-    contentTypes: [],
-    hooks: {},
-  };
-};
-``` -->
 
 ## Lifecycle functions
 
@@ -151,11 +115,9 @@ module.exports = () => ({
 ### Content-Types
 
 An object with the [Content-Types](/developer-docs/latest/development/backend-customization/models.md) the plugin provides.
-<!-- TODO: update link to Backend customization > models once merged with database PR -->
 
 **Type**: `Object`
 
-<!-- ! The link to the `info` section below won't work in this PR, but will work once the content is merged with the database PR -->
 :::note
 Content-Types keys in the `contentTypes` object should re-use the `singularName` defined in the [`info`](/developer-docs/latest/development/backend-customization/models.md#model-information) key of the schema.
 :::
@@ -365,24 +327,21 @@ module.exports = {
   policyB,
 };
 ```
-<!-- TODO: update example when policies docs are updated -->
 
 ```js
 // path: ./policies/policy-a.js
 
-module.exports = (ctx, next) => {
+module.exports = (policyContext, config, { strapi }) => {
     if (ctx.state.user && ctx.state.user.isActive) {
-      return next();
+      return true;
     }
 
-    ctx.unauthorized('Unauthorized');
+    return false;
   },
 };
 ```
 
 ### Middlewares
-
-<!-- TODO: check if it should be updated after updating middleware docs -->
 
 An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) the plugin provides.
 

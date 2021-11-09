@@ -107,8 +107,6 @@ Many types of attributes are available:
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md)
 
-<!-- TODO: remove this comment - the link to i18n will work only when merged with the Plugins API PR -->
-
 The `type` parameter of an attribute should be one of the following values:
 
 | Type categories | Available types |
@@ -122,10 +120,7 @@ The `type` parameter of an attribute should be one of the following values:
 
 #### Validations
 
-<!-- TODO: update this table once fully implemented -->
-
 Basic validations can be applied to attributes using the following parameters:
-<!-- - `unique` (boolean) — Whether to define a unique index on this property. not decided yet -->
 
 | Parameter | Type    | Description                                                                                               | Default |
 | -------------- | ------- | --------------------------------------------------------------------------------------------------------- | ------- |
@@ -165,7 +160,6 @@ Basic validations can be applied to attributes using the following parameters:
 
 #### `uid` type
 
-<!-- TODO: review explanations -->
 The `uid` type is used to automatically prefill the field value in the admin panel with a unique identifier (UID) (e.g. slugs for articles) based on 2 optional parameters:
 
 - `targetField` (string): If used, the value of the field defined as a target is used to auto-generate the UID.
@@ -175,7 +169,6 @@ The `uid` type is used to automatically prefill the field value in the admin pan
 
 Relations link content-types together. Relations are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'relation'`  and accept the following additional parameters:
 
-<!-- TODO: describe polymorphic relations once implemented, or maybe just go with documenting the 'link' type -->
 | Parameter                         | Description                                                                                                                                     |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `relation`                  | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul>                   |
@@ -542,7 +535,6 @@ The following lifecycle events are available:
 
 Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
 
-<!-- TODO: add link to Entity Service API (to the EntityManager entry in the table) once documented -->
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
@@ -552,7 +544,6 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
 <!-- TODO: `state` has not been implemented yet, ask for more info once done -->
-
 
 ### Declarative and programmatic usage
 

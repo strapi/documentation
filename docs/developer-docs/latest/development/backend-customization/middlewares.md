@@ -38,7 +38,6 @@ module.exports = (config, { strapi })=> {
 
 Once created, custom middlewares should be added to the [middlewares configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) or Strapi won't load them.
 
-<!-- TODO: update the example below, was copied & pasted from v3 but won't probably work as-is -->
 ::: details Example of a custom timer middleware
 
 ```js

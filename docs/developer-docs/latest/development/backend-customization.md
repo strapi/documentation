@@ -18,12 +18,10 @@ Each part of Strapi's back end can be customized:
 - the [requests](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) received by the Strapi server,
 
 - the [routes](/developer-docs/latest/development/backend-customization/routes.md) that handle the requests and trigger the execution of their controller handlers,
-<!-- TODO: remove this comment — this link won't work until merged with PR #450 -->
 
 - the [policies](/developer-docs/latest/development/backend-customization/policies.md) that can block access to a route,
 
 - the [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) that can control the request flow and the request before moving forward,
-<!-- TODO: remove this comment — this link won't work until merged with PR #455 -->
 
 - the [controllers](/developer-docs/latest/development/backend-customization/controllers.md) that execute code once a route has been reached,
 
