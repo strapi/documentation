@@ -40,10 +40,10 @@ The default structure of a Strapi project created without the starter CLI looks 
 ├──── <a href="/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
 ├──── config <span class="token comment"># API configurations</span>
 │     ├──── src
-│     │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.js</a>
 │     │     └ response-handlers.js
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html">admin.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html">middlewares.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.js</a>
@@ -61,8 +61,10 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │     └──── (api-name)
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
+│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#lifecycle-hooks">lifecyles.js</a>
 │     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
+│     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routing.html">routes</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
