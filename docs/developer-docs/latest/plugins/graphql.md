@@ -426,7 +426,9 @@ module.exports = {
            * on the 'Address' content-type
            * of the 'Address' API
            */
-          scope: ['api::address.address.find']
+          auth: {
+            scope: ['api::address.address.find']
+          }
         },
       }
     })
