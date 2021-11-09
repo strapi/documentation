@@ -245,7 +245,6 @@ Display a list of all the existing [content-types](/developer-docs/latest/develo
 strapi content-types:list
 ```
 
-<!-- ? should we document this? only returns strapi::content-types.beforeSync and afterSync on a new project, and I don't want people to get confused as we officially "remove" hooks ? -->
 ## strapi hooks:list
 
 Display a list of all the available hooks.

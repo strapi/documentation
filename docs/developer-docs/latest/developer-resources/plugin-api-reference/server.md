@@ -298,8 +298,6 @@ module.exports = ({ strapi }) => ({
 
 ### Policies
 
-<!-- ? are policies still implemented like described in the RFC? -->
-
 An object with the [policies](/developer-docs/latest/development/backend-customization/policies.md) the plugin provides.
 
 **Type**: `Object`

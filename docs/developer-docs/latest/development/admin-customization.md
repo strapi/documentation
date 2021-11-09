@@ -365,8 +365,6 @@ This will replace the folder's content located at `./build`. Visit [http://local
 
 Deploying the admin panel and the API on the same server is the default behavior. The build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/admin`.
 
-<!-- ? is it /admin or /dashboard? -->
-
 :::tip
 You might want to [change the path to access the administration panel](#access-url).
 :::

@@ -82,7 +82,6 @@ To extend a plugin's interface using the `./src/extensions` folder:
 
 ::: details Example of backend extension
 
-<!-- ? is it `pluginConfig` or just `plugin` in the example below? -->
 ```js
 // path: ./src/extensions/some-plugin-to-extend/strapi-server.js
 

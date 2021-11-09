@@ -422,7 +422,6 @@ Use `qs` directly to generate complex queries instead of creating them manually.
 
 :::details Example
 
-<!-- ? devs, could you please check that the generated URL and object syntax is correct? -->
 ```js
 const qs = require('qs');
 const query = qs.stringify({

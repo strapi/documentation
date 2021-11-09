@@ -119,7 +119,6 @@ query {
 
 :::
 
-<!-- ? is this part 👇 still relevant? -->
 ### Fetch dynamic zone data
 
 Dynamic zones are union types in graphql so you need to use fragments to query the fields.
