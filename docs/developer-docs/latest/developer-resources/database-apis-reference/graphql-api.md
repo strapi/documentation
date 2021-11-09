@@ -431,6 +431,5 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 :::
 
 ::: tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/plugins.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
+The default and maximum values for `pagination[limit]` can be [configured in the `./config/plugins.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
-<!-- TODO: update this comment: the link above won't work until the content is merged with the `dev/v4-split-configuration-docs-files` branch  -->
