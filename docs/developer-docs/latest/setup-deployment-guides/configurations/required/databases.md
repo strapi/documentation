@@ -1,9 +1,7 @@
 ---
 title: Database configuration - Strapi Developer Documentation
-description: 
+description: Strapi offers a single entry point file to configure its databases.
 ---
-
-<!-- TODO: update SEO -->
 
 # Database configuration
 

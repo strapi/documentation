@@ -1,9 +1,7 @@
 ---
-title: 
-description:
+title: Webhooks - Strapi Developer Documentation 
+description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 ---
-
-<!-- TODO: update SEO -->
 
 # Webhooks
 

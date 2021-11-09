@@ -1,9 +1,7 @@
 ---
 title: Public assets configuration - Strapi Developer Documentation
-description: 
+description: The public folder of Strapi is used for static files that you want to make accesible to the outside world.
 ---
-
-<!-- TODO: update SEO -->
 
 # Public assets configuration
 

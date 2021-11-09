@@ -1,9 +1,7 @@
 ---
 title: API configuration - Strapi Developer Documentation
-description:
+description: Strapi's default API parameters can be configured.
 ---
-
-<!-- TODO: update SEO -->
 
 # API configuration
 

@@ -1,10 +1,8 @@
 ---
 title: Models - Strapi Developer Documentation
-description: (…)
+description: As Strapi is a headless Content Management System (CMS), creating a data structure for the content is one of the most important aspects of using the software. Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
 sidebarDepth: 3
 ---
-
-<!-- TODO: update SEO -->
 
 # Models
 

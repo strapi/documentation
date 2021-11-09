@@ -1,9 +1,7 @@
 ---
-title: Filtering with Entity Service API - Strapi Developer Documentation
-description: …
+title: Components and Dynamic Zones with Entity Service API - Strapi Developer Documentation
+description: Use Strapi's Entity Service to create and update components and dynamic zones.
 ---
-
-<!-- TODO: update SEO -->
 
 # Entity Service API: Components and dynamic zones
 

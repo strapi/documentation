@@ -1,9 +1,7 @@
 ---
 title: Middlewares configuration - Strapi Developer Documentation
-description:
+description: Strapi offers a single entry point file for its middlewares configurations.
 ---
-
-<!-- TODO: update SEO -->
 
 # Middlewares configuration
 

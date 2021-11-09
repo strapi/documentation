@@ -1,9 +1,7 @@
 ---
 title: Admin panel configuration - Strapi Developer Documentation
-description:
+description: Strapi's admin panel offers a single entry point file for its configuration.
 ---
-
-<!-- TODO: update SEO -->
 
 # Admin panel configuration
 

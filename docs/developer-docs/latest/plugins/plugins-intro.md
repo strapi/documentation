@@ -1,9 +1,7 @@
 ---
 title: Strapi plugins - Strapi Developer Documentation
-description: In Strapi you can install plugins as npm packages. This allows for easy updates and respect best practices.
+description: Strapi comes with built-in plugins (i18n, GraphQL, Users & Permissions, Upload, API documentation, and Email) and you can install plugins as npm packages.
 ---
-
-<!-- TODO: update SEO -->
 
 # Strapi plugins
 

@@ -1,9 +1,7 @@
 ---
 title: Server configuration - Strapi Developer Documentation
-description: 
+description: Strapi offers a single entry point file for its server configuration.
 ---
-
-<!-- TODO: update SEO -->
 
 # Server configuration
 

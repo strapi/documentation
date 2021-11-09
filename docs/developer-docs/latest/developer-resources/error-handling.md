@@ -1,9 +1,7 @@
 ---
 title: Error handling - Strapi Developer Documentation
-description: …
+description: With Strapi's error handling feature it's easy to send and receive errors in your application.
 ---
-
-<!-- TODO: update SEO -->
 
 # Error handling
 

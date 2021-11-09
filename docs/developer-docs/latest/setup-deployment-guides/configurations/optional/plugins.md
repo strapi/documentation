@@ -1,9 +1,7 @@
 ---
 title: Plugins configuration - Strapi Developer Docs
-description: …
+description: Strapi plugins have a single entry point file to define their configurations.
 ---
-
-<!-- TODO: update SEO -->
 
 # Plugins configuration
 

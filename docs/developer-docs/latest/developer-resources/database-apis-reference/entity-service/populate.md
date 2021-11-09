@@ -1,8 +1,7 @@
 ---
 title: Entity Service API - Populating - Strapi Developer Documentation
-description: (add description here)
+description: Use Strapi's Entity Service API to populate relations in your queries.
 ---
-<!-- TODO: update SEO tags -->
 
 # Entity Service API: Populating
 

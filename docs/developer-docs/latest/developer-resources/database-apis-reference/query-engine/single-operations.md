@@ -1,8 +1,7 @@
 ---
 title: Single Operations for Query Engine API - Strapi Developer Documentation
-description: (add description here)
+description: Use Strapi's Query Engine API to perform operations on single entries.
 ---
-<!-- TODO: update SEO tags -->
 
 # Query Engine API: Single Operations
 

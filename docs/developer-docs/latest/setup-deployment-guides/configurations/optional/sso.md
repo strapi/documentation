@@ -1,10 +1,8 @@
 ---
 title: Single Sign-On (SSO) - Strapi Developer Documentation
-description: 
+description: Strapi's Single Sign-On allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Entreprise Edition with a Gold plan.
 sidebarDepth: 3
 ---
-
-<!-- TODO: update SEO -->
 
 # Single Sign-On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 

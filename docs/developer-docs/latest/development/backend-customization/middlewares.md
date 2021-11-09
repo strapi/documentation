@@ -1,9 +1,7 @@
 ---
 title: Backend customization - Middlewares - Strapi Developer Documentation
-description : …
+description : Strapi middlewares are configured and enabled for the entire Strapi server application. Middlewares can be customized according to your needs.
 ---
-
-<!-- TODO: update SEO -->
 
 # Middlewares customization
 

@@ -1,9 +1,7 @@
 ---
 title: Cron jobs - Strapi Developer Documentation
-description: …
+description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reccurence rules.
 ---
-
-<!-- TODO: update SEO -->
 
 # Cron jobs
 

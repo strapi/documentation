@@ -1,10 +1,8 @@
 ---
-title: Entity Service API - Filtering - Strapi Developer Documentation
-description: Filter, order and paginate results with Entity Service API
+title: Filtering with Entity Service API - Strapi Developer Documentation
+description: Use Strapi's Entity Service API to filter your queries results.
 sidebarDepth: 3
 ---
-
-<!-- TODO: update SEO -->
 
 # Entity Service API: Filtering
 

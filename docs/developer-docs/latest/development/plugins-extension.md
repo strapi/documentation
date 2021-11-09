@@ -1,10 +1,8 @@
 ---
 title: Plugins extension - Strapi Developer Docs
-description: …
+description: Strapi plugins can be extended by extending the content-types or the plugin's interface.
 sidebarDepth: 2
 ---
-
-<!-- TODO: update SEO -->
 
 # Plugins extension
 
