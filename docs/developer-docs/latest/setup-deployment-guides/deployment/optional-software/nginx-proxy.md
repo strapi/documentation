@@ -51,7 +51,7 @@ This config is using the sub-domain that is dedicated to Strapi only. It will re
 ---
 
 - Example Domain: `api.example.com`
-- Example Admin: `api.example.com/admin`
+- Example admin panel: `api.example.com/admin`
 - Example API: `api.example.com/api`
 - Example Uploaded Files (local provider): `api.example.com/uploads`
 
