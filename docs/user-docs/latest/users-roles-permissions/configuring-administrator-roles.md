@@ -19,10 +19,6 @@ From this interface, it is possible to:
 - delete an administrator role (see [Deleting a role](#deleting-a-role)),
 - or access information regarding an administrator role, and edit it (see [Editing a role](#editing-a-role)).
 
-::: tip
-Click the search button ![Search icon](../assets/icons/search.svg) above the table to use a text search and find one of your administrator roles more quickly!
-:::
-
 By default, 3 administrator roles are defined for any Strapi application:
 
 - Author: to be able to create and manage their own content.
@@ -110,7 +106,7 @@ To configure plugins or settings permissions for a role:
 2. Click on the name of the sub-category which permissions to configure, to display all available permissions.
 3. Tick the boxes of the permissions the role should give access to. You can refer to the table below for more information and instructions.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Plugins
 
@@ -118,9 +114,9 @@ By default, plugins permissions can be configured for the Content-Type Builder, 
 
 | Plugin name          | Permissions |
 | -------------------- | ----------- |
+| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
 | Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-Type Builder plugin in read-only mode</li></ul></ul> |
 | Upload <br> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li><li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |    
-| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
 | Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br> *General > Settings > Users & Permissions plugin* |
 
 :::
@@ -132,6 +128,8 @@ Settings permissions can be configured for all settings accessible from *General
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br> *General > Settings > Global Settings - Media Library* |
+| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br> *General > Settings > Global Settings - Internationalization* |
+| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br> *General > Settings > Global Settings - Single Sign-On* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul><ul><li>Plugins</li><ul><li>"Install (only for dev env)" - allows to install new plugins when in a development environment</li><li>"Uninstall (only for dev env)" - allows to uninstall plugins when in a development environment</li></ul></ul> |    
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br> *General > Settings > Administration Panel* |
@@ -163,6 +161,10 @@ To set custom conditions:
    - Tick the Default option for all available additional conditions to be applied.
    - Click on the arrow button ![Carret icon](../assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
+
+::: tip
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the **Settings** button.
+:::
 
 ::: caution
 Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
