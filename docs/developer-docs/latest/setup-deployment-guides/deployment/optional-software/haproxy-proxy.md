@@ -185,7 +185,7 @@ Please note that this config is not focused on the frontend hosting, you will mo
 ---
 
 - Example domain: `example.com`
-- Example Admin: `example.com/dashboard`
+- Example admin panel: `example.com/dashboard`
 - Example API: `example.com/api`
 - Example uploaded Files (local provider): `example.com/uploads`
 
