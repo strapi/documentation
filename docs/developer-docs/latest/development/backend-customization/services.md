@@ -4,6 +4,8 @@ description:
 sidebarDepth: 3
 ---
 
+<!-- TODO: update SEO -->
+
 # Services
 
 Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
