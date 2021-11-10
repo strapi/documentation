@@ -5,7 +5,7 @@ description: Quickly deploy a Strapi application on DigitalOcean by simply using
 
 # DigitalOcean One-click
 
-::: warning
+::: caution
 The one-click install droplet is currently missing from DigitalOcean's marketplace. We are not planning to continue support for this installation method but if you want to configure it yourself you can use our [one-click repo](https://github.com/strapi/one-click-deploy) to build the image yourself.
 :::
 

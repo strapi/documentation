@@ -39,8 +39,6 @@ The default structure of a Strapi project created without the starter CLI looks 
 ├──── .tmp
 ├──── <a href="/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
 ├──── config <span class="token comment"># API configurations</span>
-│     ├──── src
-│     │     └ response-handlers.js
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html">admin.js</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.js</a>
