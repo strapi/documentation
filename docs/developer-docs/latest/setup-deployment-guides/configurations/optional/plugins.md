@@ -20,10 +20,10 @@ The configurations for all plugins are stored in `/config/plugins.js` (see [proj
 
 module.exports = ({ env }) => ({
   // enable a plugin that doesn't require any configuration
-  'i18n': true,
+  i18n: true,
 
   // enable a custom plugin
-  'my-plugin': {
+  myplugin: {
     // my-plugin is going to be the internal name used for this plugin
     enabled: true,
     resolve: './src/plugins/my-local-plugin',
@@ -33,7 +33,7 @@ module.exports = ({ env }) => ({
   },
 
   // disable a plugin
-  'my-other-plugin': {
+  myotherplugin: {
     enabled: false, // plugin installed but disabled
   },
 });
@@ -42,3 +42,25 @@ module.exports = ({ env }) => ({
 :::tip
 If no specific configuration is required, a plugin can also be declared with the shorthand syntax `'plugin-name': true`.
 :::
+
+## GraphQL configuration
+
+The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the following specific configuration options:
+
+| Parameter      | Description                                                                                                                                                                     | Type    | 
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------- |
+| `defaultLimit` | Default value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
+| `maxLimit`     | Maximum value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
+
+```js
+// path: ./config/plugins.js
+
+module.exports = () => ({
+  graphql: {
+    enabled: true,
+    config: {
+      defaultLimit: 10,
+      maxLimit: 20
+    }
+})
+```

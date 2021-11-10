@@ -325,7 +325,7 @@ If you see the Strapi Welcome page, you have correctly set-up, configured and de
 You can now continue with the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md), if you have any questions on how to proceed.
 
 ::: caution
-For security reasons, the Content-Types Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
+For security reasons, the Content-Type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
 :::
 
 ### Project updates
@@ -353,7 +353,7 @@ Due to Heroku's filesystem you will need to use an upload provider such as AWS S
 
 ### Gzip
 
-As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md#core-middleware-configurations-reference), it is recommended that you disable Brotli or define better configuration params.
+As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#internal-middlewares-configuration-reference), it is recommended that you disable Brotli or define better configuration params.
 
 To disable Brotli, provide the following configuration in `config/middleware.js`.
 

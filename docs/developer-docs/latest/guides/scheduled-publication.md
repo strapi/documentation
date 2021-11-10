@@ -15,7 +15,7 @@ What we want here is to be able to set a publication date for an article, and at
 
 For this example, we will have to add a `publish_at` attribute to the **Article** Content Type.
 
-- Click on the Content-Types Builder link in the left menu
+- Click on the Content-Type Builder link in the left menu
 - Select the **Article** Content Type
 - Add another field
   - `date` attribute named `publish_at` with `datetime` type
@@ -29,7 +29,7 @@ The goal will be to check every minute if there are draft articles that have a `
 
 To execute a function every minutes, we will use a CRON task.
 
-Here is the [full documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#cron-tasks) of this feature. If your CRON task requires to run based on a specific timezone then do look into the full documentation.
+Here is the [full documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) of this feature. If your CRON task requires to run based on a specific timezone then do look into the full documentation.
 
 **Path —** `./config/functions/cron.js`
 

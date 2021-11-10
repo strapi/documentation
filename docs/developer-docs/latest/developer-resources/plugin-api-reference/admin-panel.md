@@ -44,7 +44,6 @@ This function is called to load the plugin, even before the app is actually [boo
 
 Within the register function, a plugin can:
 
-<!-- ? do we call it "main navigation" or "main menu" ? -->
 * [register itself](#registerplugin) so it's available to the admin panel
 * add a new link to the main navigation (see [Menu API](#menu-api))
 * [create a new settings section](#createsettingsection)
@@ -337,7 +336,6 @@ export default {
   }
 }
 ```
-<!-- TODO: update Compoennt -->
 
 #### addSettingsLinks()
 
