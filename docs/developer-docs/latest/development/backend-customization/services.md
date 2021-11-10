@@ -8,8 +8,7 @@ sidebarDepth: 3
 
 # Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic. Just like [all the other parts of the Strapi backend](/developer-docs/latest/development/backend-customization.md), services can be customized.
-<!-- TODO: remove this comment — the links above will work only when merged with PR #446 -->
+Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
 
 ## Implementation
 
