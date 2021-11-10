@@ -47,7 +47,6 @@ module.exports = ({ env }) => ({
 - Example API: `example.com/test/api`
 - Example Uploaded Files (local provider): `example.com/test/uploads`
 
-**Path —** `config/server.js`
 
 ```js
 module.exports = ({ env }) => ({
