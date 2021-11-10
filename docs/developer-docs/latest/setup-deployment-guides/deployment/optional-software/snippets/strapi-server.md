@@ -7,22 +7,21 @@ These examples use the default API Prefix of `/api`. This can be changed without
 :::
 
 :::caution Admin URL
-If `url` key is changed in the `./config/admin.js` or `./config/server.js` files, the admin panel needs to be rebuilt with `yarn build` or `npm run build`.
+If the `url` key is changed in the `./config/admin.js` or `./config/server.js` files, the admin panel needs to be rebuilt with `yarn build` or `npm run build`.
 :::
 
 ::::: tabs card
 
-:::: tab Sub-Domain
+:::: tab Subdomain
 
-#### Sub-domain Strapi configuration
+#### Subdomain Strapi configuration
 
 ---
 
-- Example Domain: `api.example.com`
-- Example Admin: `api.example.com/admin`
+- Example domain: `api.example.com`
+- Example admin: `api.example.com/admin`
 - Example API: `api.example.com/api`
-- Example Uploaded Files (local provider): `api.example.com/uploads`
-
+- Example uploaded files (local provider): `api.example.com/uploads`
 
 ```js
 // path: ./config/server.js
@@ -36,17 +35,16 @@ module.exports = ({ env }) => ({
 
 ::::
 
-:::: tab Sub-Folder-Unified
+:::: tab Subfolder unified
 
-#### Sub-Folder Unified Strapi configuration
+#### Subfolder unified Strapi configuration
 
 ---
 
-- Example Domain: `example.com/test`
-- Example Admin: `example.com/test/admin`
+- Example domain: `example.com/test`
+- Example admin: `example.com/test/admin`
 - Example API: `example.com/test/api`
-- Example Uploaded Files (local provider): `example.com/test/uploads`
-
+- Example uploaded Files (local provider): `example.com/test/uploads`
 
 ```js
 // path: ./config/server.js
@@ -60,17 +58,16 @@ module.exports = ({ env }) => ({
 
 ::::
 
-:::: tab Sub-Folder-Split
+:::: tab Subfolder split
 
-#### Sub-Folder Split Strapi configuration
+#### Subfolder split Strapi configuration
 
 ---
 
-- Example Domain: `example.com`
-- Example Admin: `example.com/dashboard`
+- Example domain: `example.com`
+- Example admin: `example.com/dashboard`
 - Example API: `example.com/api`
-- Example Uploaded Files (local provider): `example.com/uploads`
-
+- Example uploaded files (local provider): `example.com/uploads`
 
 ```js
 // path: ./config/server.js
@@ -81,7 +78,6 @@ module.exports = ({ env }) => ({
   url: 'https://example.com',
 });
 ```
-
 
 ```js
 // path: ./config/admin.js

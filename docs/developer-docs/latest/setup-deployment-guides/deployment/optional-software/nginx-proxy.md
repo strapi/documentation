@@ -9,7 +9,7 @@ As Strapi does not handle SSL directly and hosting a Node.js service on the "edg
 
 ## Configuration
 
-The below configuration is based on Nginx virtual hosts, this means that you create configurations for each **domain** to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
+The below configuration is based on Nginx virtual hosts, this means that you create configurations for each domain to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
 
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
 
@@ -17,11 +17,11 @@ The below configuration is based on Nginx virtual hosts, this means that you cre
 
 Upstream blocks are used to map an alias such as `strapi` to a specific URL such as `localhost:1337`. While it would be useful to define these in each virtual host file, Nginx currently doesn't support loading these within the virtual host if you have multiple virtual host files. Instead, configure these within the `conf.d` directory as this is loaded before any virtual host files.
 
-In the below configuration we are mapping `localhost:1337` to the Nginx alias `strapi`.
+In the following configuration the `localhost:1337` is mapped to the Nginx alias `strapi`:
 
-**Path —** `/etc/nginx/conf.d/upstream.conf`
+```sh
+# path: /etc/nginx/conf.d/upstream.conf
 
-```
 # Strapi server
 upstream strapi {
     server 127.0.0.1:1337;
@@ -30,15 +30,15 @@ upstream strapi {
 
 ### Nginx Virtual Host
 
-Virtual host files are what store the configuration for your specific app, service, or proxied service. For usage with Strapi this virtual host file is handling HTTPS connections and proxying them to Strapi running locally on the server. This configuration also redirects all HTTP requests to HTTPs using a 301 redirect.
+Virtual host files are what store the configuration for a specific app, service, or proxied service. For usage with Strapi this virtual host file is handling HTTPS connections and proxying them to Strapi running locally on the server. This configuration also redirects all HTTP requests to HTTPs using a 301 redirect.
 
 In the below examples you will need to replace your domain and likewise your paths to SSL certificates will need to be changed based on where you place them or, if you are using Let's Encrypt, where your script places them. Please also note that while the path below shows `sites-available` you will need to symlink the file to `sites-enabled` in order for Nginx to enable the config.
 
 Below are 3 example Nginx configurations:
 
-- Sub-domain based such as `api.example.com`
-- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
-- Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
+- subdomain based such as `api.example.com`
+- subfolder based with both the API and Admin on the same subfolder such as `example.com/test/api` and `example.com/test/admin`
+- subfolder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
 
 ::::: tabs card
 
@@ -46,7 +46,7 @@ Below are 3 example Nginx configurations:
 
 #### Sub-Domain
 
-This config is using the sub-domain that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies all requests (both api and admin) to the Strapi server running on the upstream alias configured above.
+This configuration is using the subdomain that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies all requests (both API and admin) to the Strapi server running on the upstream alias configured above.
 
 ---
 
@@ -55,9 +55,9 @@ This config is using the sub-domain that is dedicated to Strapi only. It will re
 - Example API: `api.example.com/api`
 - Example uploaded Files (local provider): `api.example.com/uploads`
 
-**Path —** `/etc/nginx/sites-available/strapi.conf`
+```sh
+# path: /etc/nginx/sites-available/strapi.conf
 
-```
 server {
     # Listen HTTP
     listen 80;
@@ -95,26 +95,26 @@ server {
 
 ::::
 
-:::: tab Sub-Folder-Unified
+:::: tab subfolder unified
 
-#### Sub-Folder unified
+#### Subfolder unified
 
-This configuration is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the front-end files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/test` sub-path.
+This configuration is using a subfolder dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the front-end files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/test` sub-path.
 
-:::caution
-Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
+:::note
+This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
 :::
 
 ---
 
-- Example Domain: `example.com/test`
-- Example Admin: `example.com/test/admin`
+- Example domain: `example.com/test`
+- Example admin: `example.com/test/admin`
 - Example API: `example.com/test/api`
-- Example Uploaded Files (local provider): `example.com/test/uploads`
+- Example uploaded files (local provider): `example.com/test/uploads`
 
-**Path —** `/etc/nginx/sites-available/strapi.conf`
+```sh
+# path: /etc/nginx/sites-available/strapi.conf
 
-```
 server {
     # Listen HTTP
     listen 80;
@@ -158,28 +158,28 @@ server {
 
 ::::
 
-:::: tab Sub-Folder-Split
+:::: tab subfolder split
 
-#### Sub-Folder Split
+#### Subfolder split
 
-This config is using two sub-folders that are dedicated to Strapi. It will redirect normal HTTP traffic over to SSL and hosts the "frontend" files on `/var/www/html` like a normal web server, but proxies all strapi API requests on the `example.com/api` sub-path. Likewise it will proxy all admin requests on the `example.com/dashboard` sub-path.
+This configuration is using 2 subfolders dedicated to Strapi. It will redirect normal HTTP traffic over to SSL and hosts the front end files on `/var/www/html` like a normal web server, but proxies all strapi API requests on the `example.com/api` sub-path and all admin requests on the `example.com/dashboard` subpath.
 
 Alternatively for the admin, you can replace the proxy instead with serving the admin `build` folder directly from Nginx, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
 
-:::caution
-Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
+:::note
+This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
 :::
 
 ---
 
-- Example Domain: `example.com`
-- Example Admin: `example.com/dashboard`
+- Example domain: `example.com`
+- Example admin: `example.com/dashboard`
 - Example API: `example.com/api`
-- Example Uploaded Files (local provider): `example.com/uploads`
+- Example uploaded files (local provider): `example.com/uploads`
 
-**Path —** `/etc/nginx/sites-available/strapi.conf`
+```sh
+# path: /etc/nginx/sites-available/strapi.conf
 
-```
 server {
     # Listen HTTP
     listen 80;

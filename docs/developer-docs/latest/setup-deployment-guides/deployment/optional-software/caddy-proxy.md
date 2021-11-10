@@ -23,17 +23,17 @@ In the below examples you will need to replace your domain, and should you wish 
 
 Below are 3 example Caddy configurations:
 
-- Sub-domain based such as `api.example.com`
-- Sub-folder based with both the API and Admin on the same sub-folder such as `example.com/test/api` and `example.com/test/admin`
-- Sub-folder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
+- Subdomain-based such as `api.example.com`
+- Subfolder-based with both the API and Admin on the same subfolder (e.g. `example.com/test/api` and `example.com/test/admin`)
+- Subfolder-based with split API and admin panel (e.g. `example.com/api` and `example.com/dashboard`)
 
 ::::: tabs card
 
-:::: tab Sub-Domain
+:::: tab Subdomain
 
-#### Sub-Domain
+#### Subdomain
 
-This config is using the sub-domain that is dedicated to Strapi only. It will bind to port 80 HTTP and proxies all requests (both api and admin) to the Strapi server running locally on the address specified. If you have configured Caddy properly to handle automated SSL you can remove the `http://` and Caddy will automatically convert all HTTP to HTTPS traffic.
+This configuration is using a subdomain dedicated to Strapi only. It will bind to port 80 HTTP and proxies all requests (both API and admin) to the Strapi server running locally on the address specified. If you have configured Caddy properly to handle automated SSL, you can remove the `http://` and Caddy will automatically convert all HTTP to HTTPS traffic.
 
 ---
 
@@ -42,9 +42,9 @@ This config is using the sub-domain that is dedicated to Strapi only. It will bi
 - Example API: `api.example.com/api`
 - Example uploaded Files (local provider): `api.example.com/uploads`
 
-**Path —** `/etc/caddy/Caddyfile`
+```sh
+# path: /etc/caddy/Caddyfile
 
-```
 http://api.example.com {
   reverse_proxy 127.0.0.1:1337
 }
@@ -53,11 +53,11 @@ http://api.example.com {
 
 ::::
 
-:::: tab Sub-Folder-Unified
+:::: tab subfolder-unified
 
-#### Sub-Folder Unified
+#### Subfolder unified
 
-This configuration is using a sub-folder that is dedicated to Strapi only. It will bind to port 80 HTTP and hosts the "front-end" files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/test` sub-path.
+This configuration is using a subfolder dedicated to Strapi only. It will bind to port 80 HTTP and hosts the front-end files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/test` sub-path.
 
 :::note
 This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
@@ -70,8 +70,7 @@ This example configuration is not focused on the front end hosting and should be
 - Example API: `example.com/test/api`
 - Example uploaded Files (local provider): `example.com/test/uploads`
 
-
-```
+```sh
 # path: /etc/caddy/Caddyfile
 
 http://example.com {
@@ -86,16 +85,16 @@ http://example.com {
 
 ::::
 
-:::: tab Sub-Folder-Split
+:::: tab Subfolder Split
 
-#### Sub-Folder Split
+#### Subfolder split
 
-This config is using two sub-folders that are dedicated to Strapi. It will bind to port 80 HTTP and hosts the "frontend" files on `/var/www` like a normal web server, but proxies all Strapi API requests on the `example.com/api` sub-path. Likewise it will proxy all admin requests on the `example.com/dashboard` sub-path.
+This configuration is using 2 subfolders dedicated to Strapi. It will bind to port 80 HTTP and hosts the front end files on `/var/www` like a normal web server, but proxies all Strapi API requests on the `example.com/api` subpath and all admin requests on the `example.com/dashboard` subpath.
 
-Alternatively for the admin, you can replace the proxy instead with serving the admin `build` folder directly from Caddy, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
+Alternatively, for the admin panel, you can replace the proxy instead with serving the admin `build` folder directly from Caddy, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
 
 :::caution
-Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
+This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
 :::
 
 ---
@@ -107,7 +106,7 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 **Path —** `/etc/caddy/Caddyfile`
 
-```
+```sh
 # path: /etc/caddy/Caddyfile
 
 http://example.com {

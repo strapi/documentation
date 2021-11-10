@@ -1,9 +1,9 @@
 ### Redirecting landing page to Admin Panel
 
-If you do not wish to have the default landing page mounted on `/` you can create a custom `./public/index.html` using the sample code below to automatically redirect to your Admin Panel.
+If you do not wish to have the default landing page mounted on `/` you can create a custom `./public/index.html` using the sample code below to automatically redirect to your admin panel.
 
 :::caution Admin Panel Route
-This sample configuration expects that the admin panel is accessible on `/admin` if you used one of the above configurations to change this to `/dashboard` you will also need to adjust this sample config.
+This sample configuration expects that the admin panel is accessible on `/admin`. If you used one of the above configurations to change this to `/dashboard` you will also need to adjust this sample configuration.
 :::
 
 **Path —** `./public/index.html`
@@ -15,3 +15,4 @@ This sample configuration expects that the admin panel is accessible on `/admin`
   </head>
 </html>
 ```
+ 

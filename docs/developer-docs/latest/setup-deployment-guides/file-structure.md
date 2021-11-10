@@ -57,7 +57,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     ├──── admin <span class="token comment"># admin customization files</span>
 │     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.js</a>
 │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
-│     ├──── api <span class="token comment"># business logic of the project split into sub-folders per API</span>
+│     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span>
 │     │     └──── (api-name)
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
