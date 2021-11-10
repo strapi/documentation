@@ -65,7 +65,7 @@ This example configuration is not focused on the front end hosting and should be
 
 ---
 
-- Example Domain: `example.com/test`
+- Example domain: `example.com/test`
 - Example Admin: `example.com/test/admin`
 - Example API: `example.com/test/api`
 - Example Uploaded Files (local provider): `example.com/test/uploads`
