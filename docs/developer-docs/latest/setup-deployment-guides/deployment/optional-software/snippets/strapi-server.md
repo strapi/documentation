@@ -38,7 +38,7 @@ module.exports = ({ env }) => ({
 
 :::: tab Sub-Folder-Unified
 
-#### Sub-Folder Unified Strapi config
+#### Sub-Folder Unified Strapi configuration
 
 ---
 
