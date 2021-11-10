@@ -6,7 +6,7 @@ In order to take full advantage of a proxied Strapi application, Strapi should b
 These examples use the default API Prefix of `/api`. This can be changed without the need to directly modify the Nginx configuration (see the [API prefix](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) documentation).
 :::
 
-:::note Admin URL
+:::caution Admin URL
 If `url` key is changed in the `./config/admin.js` or `./config/server.js` files, the admin panel needs to be rebuilt with `yarn build` or `npm run build`.
 :::
 
