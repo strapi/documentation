@@ -15,7 +15,7 @@ There are 2 different types of models in Strapi:
 - content-types, which can be collection types or single types, depending on how many entries they manage,
 - and components that are data structures re-usable in multiple content-types.
 
-If you are just starting out, it is convenient to generate some models with the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
+If you are just starting out, it is convenient to generate some models with the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
 
 ## Model creation
 
@@ -25,7 +25,7 @@ Content-types and components models are created and stored differently.
 
 Content-types in Strapi can be created:
 
-- with the [Content-Types Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
+- with the [Content-Type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
 - or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
 Creating a content-type with either method generates 2 files:
@@ -37,7 +37,7 @@ These models files are stored in `./src/api/[api-name]/content-types/[content-ty
 
 ### Components
 
-Component models can't be created with CLI tools. Use the [Content-Types Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
+Component models can't be created with CLI tools. Use the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
 
 Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
@@ -107,8 +107,6 @@ Many types of attributes are available:
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md)
 
-<!-- TODO: remove this comment - the link to i18n will work only when merged with the Plugins API PR -->
-
 The `type` parameter of an attribute should be one of the following values:
 
 | Type categories | Available types |
@@ -122,10 +120,7 @@ The `type` parameter of an attribute should be one of the following values:
 
 #### Validations
 
-<!-- TODO: update this table once fully implemented -->
-
 Basic validations can be applied to attributes using the following parameters:
-<!-- - `unique` (boolean) — Whether to define a unique index on this property. not decided yet -->
 
 | Parameter | Type    | Description                                                                                               | Default |
 | -------------- | ------- | --------------------------------------------------------------------------------------------------------- | ------- |
@@ -135,7 +130,7 @@ Basic validations can be applied to attributes using the following parameters:
 | `minLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
 | `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
 | `private`      | Boolean | If `true`, the attribute will be removed from the server response.<br/><br/>💡 This is useful to hide sensitive data. | `false` |
-| `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-Types Builder plugin.                         | `true`  |
+| `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-Type Builder plugin.                         | `true`  |
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
@@ -165,7 +160,6 @@ Basic validations can be applied to attributes using the following parameters:
 
 #### `uid` type
 
-<!-- TODO: review explanations -->
 The `uid` type is used to automatically prefill the field value in the admin panel with a unique identifier (UID) (e.g. slugs for articles) based on 2 optional parameters:
 
 - `targetField` (string): If used, the value of the field defined as a target is used to auto-generate the UID.
@@ -175,7 +169,6 @@ The `uid` type is used to automatically prefill the field value in the admin pan
 
 Relations link content-types together. Relations are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'relation'`  and accept the following additional parameters:
 
-<!-- TODO: describe polymorphic relations once implemented, or maybe just go with documenting the 'link' type -->
 | Parameter                         | Description                                                                                                                                     |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `relation`                  | The type of relation among these values:<ul><li>`oneToOne`</li><li>`oneToMany`</li><li>`manyToOne`</li>`manyToMany`</li></ul>                   |
@@ -542,7 +535,6 @@ The following lifecycle events are available:
 
 Lifecycle hooks are functions that take an `event` parameter, an object with the following keys:
 
-<!-- TODO: add link to Entity Service API (to the EntityManager entry in the table) once documented -->
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
@@ -552,7 +544,6 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
 <!-- TODO: `state` has not been implemented yet, ask for more info once done -->
-
 
 ### Declarative and programmatic usage
 

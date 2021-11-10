@@ -56,13 +56,13 @@ Some parts of Strapi must be configured for the Strapi application to work prope
 
 - the [database](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md),
 - the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md),
-- and the [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md).
+- the [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md),
+- and the [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md).
 
 ## Optional configurations
 
 Strapi also offers the following optional configuration options for specific features:
 
-- [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md)
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
 - [cron jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md)
 - [API calls](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)

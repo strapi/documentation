@@ -51,13 +51,13 @@ const sidebar = {
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
               ]
             },
             {
               title: 'Optional configurations',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.md', 'Middlewares'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
@@ -157,6 +157,7 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
             ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
             ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
             ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
@@ -294,12 +295,39 @@ const sidebar = {
                 ],
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
-                  'Ordering & Pagination'
+                  'Ordering & pagination'
                 ],
               ]
             },
             {
-              title: 'Plugin APIs',
+              title: 'Entity Service API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+              collapsable: true,
+              children : [
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+                 'CRUD operations'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+                 'Filters'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+                 'Populate'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+                 'Ordering & pagination'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+                 'Components and dynamic zones'
+               ]
+              ],
+            },
+            {
+              title: 'Plugin APIs Reference',
               collapsable: true,
               children: [
                 ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
@@ -310,15 +338,15 @@ const sidebar = {
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+        ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
       ],
     },
     {
       title: '📚 Guides',
       collapsable: true,
       children: [
-        ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-        ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
+        // ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
         ['/developer-docs/latest/guides/slug', 'Create a slug system'],
         ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
         ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
@@ -374,11 +402,11 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Types Builder',
+      title: 'Content-Type Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-          'Introduction to the Content-Types Builder',
+          'Introduction to the Content-Type Builder',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
@@ -689,7 +717,7 @@ module.exports = {
                 link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
-                text: 'Content-Types Builder',
+                text: 'Content-Type Builder',
                 link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {

@@ -70,7 +70,7 @@ Some settings can only be modified through environment variables:
 | `BROWSER`                             | Boolean | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | `true`          |
 | `ENV_PATH`                            | String | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | `'./.env'`      |
 | `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_| String | Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-in-production-environments)) | `'en'`          |
-| `API_TOKEN_SALT`<br/><br/>_Optional_   | String | Salt to use to generate [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md#api-tokens) | - |
+| `API_TOKEN_SALT`<br/><br/>_Optional_   | String | Salt to use to generate [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) | - |
 
 ### Configuration using environment variables
 

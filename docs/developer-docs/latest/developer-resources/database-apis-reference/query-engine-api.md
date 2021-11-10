@@ -8,7 +8,7 @@ description: (add description here)
 
 Strapi provides a Query Engine API to interact with the database layer at a lower level. It should mostly be used by plugin developers and developers adding custom business logic to their applications.
 
-Strapi's Query Engine API gives unrestricted internal access to the database layer.
+Strapi's Query Engine API gives unrestricted internal access to the database layer. It is not aware of the complex data structures like components and dynamic zones, as opposed to the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md).
 
 ## Basic usage
 

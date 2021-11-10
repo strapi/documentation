@@ -97,7 +97,7 @@ module.exports = {
           'policy-name', // point to a registered policy
           { name: 'policy-name', config: {} }, // point to a registered policy with some custom configuration
           // pass a policy implementation directly
-          (ctx, { strapi }) => {
+          (policyContext, config, { strapi }) => {
             return true;
           },
         ],
@@ -140,9 +140,7 @@ module.exports = {
 
 ### Public routes
 
-By default, routes are protected by Strapi's authentication system, which is based on [API tokens]() or the use of a plugin such as the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.html#users-permissions-plugin).
-
-<!-- TODO: add link to API token section once documented -->
+By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) or the use of a plugin such as the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.md#users-permissions-plugin).
 
 In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system. This can be achieved by setting the `auth` configuration parameter of a route to `false`:
 
