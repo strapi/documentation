@@ -100,7 +100,7 @@ Please note that this config is not focused on the frontend hosting, you will mo
 
 ---
 
-- Example Domain: `example.com`
+- Example domain: `example.com`
 - Example Admin: `example.com/dashboard`
 - Example API: `example.com/api`
 - Example Uploaded Files (local provider): `example.com/uploads`
