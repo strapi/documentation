@@ -62,7 +62,7 @@ module.exports = ({ env }) => ({
 
 :::: tab Sub-Folder-Split
 
-#### Sub-Folder Split Strapi config
+#### Sub-Folder Split Strapi configuration
 
 ---
 
