@@ -97,7 +97,7 @@ server {
 
 :::: tab Sub-Folder-Unified
 
-#### Sub-Folder Unified
+#### Sub-Folder unified
 
 This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and hosts the "frontend" files on `/var/www/html` like a normal web server, but proxies all strapi requests on the `example.com/test` sub-path.
 
