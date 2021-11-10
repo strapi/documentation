@@ -26,6 +26,8 @@ If `url` key is changed in the `./config/admin.js` or `./config/server.js` files
 **Path —** `config/server.js`
 
 ```js
+// path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
