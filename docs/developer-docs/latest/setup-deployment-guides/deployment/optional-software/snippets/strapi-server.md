@@ -7,7 +7,7 @@ Note that in many of these examples we are using the default API Prefix of `/api
 :::
 
 :::note Admin URL
-If you are changing the `url` key in the `./config/admin.js` or `./config/server.js` files **you will need to rebuild the admin panel** as we statically build the admin using these keys.
+If `url` key is changed in the `./config/admin.js` or `./config/server.js` files, the admin panel needs to be rebuilt with `yarn build` or `npm run build`.
 :::
 
 ::::: tabs card
