@@ -15,7 +15,7 @@ The below configuration is based on Nginx virtual hosts, this means that you cre
 
 ### Nginx Upstream
 
-Upstream blocks are used to map an alias such as `strapi` to a specific URL such as `localhost:1337`. While it would be useful to define these in each virtual host file, Nginx currently doesn't support loading these within the virtual host **if you have multiple virtual host files** and instead you should configure these within the `conf.d` directory as this is loaded before any virtual host files.
+Upstream blocks are used to map an alias such as `strapi` to a specific URL such as `localhost:1337`. While it would be useful to define these in each virtual host file, Nginx currently doesn't support loading these within the virtual host if you have multiple virtual host files. Instead, configure these within the `conf.d` directory as this is loaded before any virtual host files.
 
 In the below configuration we are mapping `localhost:1337` to the Nginx alias `strapi`.
 
