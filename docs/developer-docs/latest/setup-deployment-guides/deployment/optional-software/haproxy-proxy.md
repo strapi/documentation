@@ -98,7 +98,7 @@ backend strapi-backend
 
 #### Sub-Folder Unified
 
-This config is using a sub-folder that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the "frontend" to `localhost:8080`, but proxies all Strapi requests on the `example.com/test` sub-path to the locally running Strapi application.
+This configuration is using a sub-folder dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the front end to `localhost:8080`, but proxies all Strapi requests on the `example.com/test` sub-path to the locally running Strapi application.
 
 :::caution
 HAProxy **cannot** serve static content, the below example is proxying frontend traffic to some other web server running on the localhost port 8080
