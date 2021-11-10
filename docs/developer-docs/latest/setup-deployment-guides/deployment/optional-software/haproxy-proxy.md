@@ -94,7 +94,7 @@ backend strapi-backend
 
 ::::
 
-:::: tab subfolder unified
+:::: tab Subfolder unified
 
 #### Subfolder unified
 
@@ -174,7 +174,7 @@ backend strapi-backend
 
 :::: tab Subfolder split
 
-#### Subfolder Split
+#### Subfolder split
 
 This config is using a subfolder dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the front end to `localhost:8080`, but proxies all Strapi API requests on the `example.com/api` subpath to the locally running Strapi application and all admin requests on the `example.com/dashboard` subpath.
 

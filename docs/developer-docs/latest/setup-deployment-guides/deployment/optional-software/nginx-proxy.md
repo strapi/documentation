@@ -42,9 +42,9 @@ Below are 3 example Nginx configurations:
 
 ::::: tabs card
 
-:::: tab Sub-Domain
+:::: tab Subdomain
 
-#### Sub-Domain
+#### Subdomain
 
 This configuration is using the subdomain that is dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies all requests (both API and admin) to the Strapi server running on the upstream alias configured above.
 
@@ -95,7 +95,7 @@ server {
 
 ::::
 
-:::: tab subfolder unified
+:::: tab Subfolder unified
 
 #### Subfolder unified
 
@@ -158,7 +158,7 @@ server {
 
 ::::
 
-:::: tab subfolder split
+:::: tab Subfolder split
 
 #### Subfolder split
 
