@@ -23,7 +23,6 @@ If `url` key is changed in the `./config/admin.js` or `./config/server.js` files
 - Example API: `api.example.com/api`
 - Example Uploaded Files (local provider): `api.example.com/uploads`
 
-**Path —** `config/server.js`
 
 ```js
 // path: ./config/server.js
