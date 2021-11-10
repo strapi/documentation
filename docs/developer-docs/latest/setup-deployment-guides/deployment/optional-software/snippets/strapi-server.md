@@ -14,7 +14,7 @@ If `url` key is changed in the `./config/admin.js` or `./config/server.js` files
 
 :::: tab Sub-Domain
 
-#### Sub-Domain Strapi config
+#### Sub-domain Strapi configuration
 
 ---
 
