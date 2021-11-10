@@ -49,6 +49,8 @@ module.exports = ({ env }) => ({
 
 
 ```js
+// path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
