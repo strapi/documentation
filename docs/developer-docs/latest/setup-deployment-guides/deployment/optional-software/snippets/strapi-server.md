@@ -82,7 +82,6 @@ module.exports = ({ env }) => ({
 });
 ```
 
-**Path —** `config/admin.js`
 
 ```js
 module.exports = ({ env }) => ({
