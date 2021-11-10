@@ -84,6 +84,8 @@ module.exports = ({ env }) => ({
 
 
 ```js
+// path: ./config/admin.js
+
 module.exports = ({ env }) => ({
   auth: {
     ...
