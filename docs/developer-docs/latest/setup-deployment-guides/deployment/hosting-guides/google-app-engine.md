@@ -14,12 +14,11 @@ In this guide we are going to:
 
 ### New Strapi project
 
-
 <code-group>
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -30,7 +29,6 @@ yarn create strapi-app my-project --quickstart
 </code-block>
 
 </code-group>
-
 
 When the setup completes, register an admin user using the form which opens in the browser. This user will be only relevant in local development.
 

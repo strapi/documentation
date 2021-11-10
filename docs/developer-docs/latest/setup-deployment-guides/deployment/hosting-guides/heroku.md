@@ -69,7 +69,7 @@ Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -256,7 +256,6 @@ heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
 Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
 
 `Path: ./my-project/`
-
 
 <code-group>
 
