@@ -204,8 +204,6 @@ Configuring the base settings of the Relation field consists in choosing with wh
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive in the database. |
 
 :::
 
