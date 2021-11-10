@@ -103,7 +103,7 @@ Please note that this config is not focused on the frontend hosting, you will mo
 - Example domain: `example.com`
 - Example admin: `example.com/dashboard`
 - Example API: `example.com/api`
-- Example Uploaded Files (local provider): `example.com/uploads`
+- Example uploaded Files (local provider): `example.com/uploads`
 
 **Path —** `/etc/caddy/Caddyfile`
 
