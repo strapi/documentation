@@ -57,7 +57,7 @@ http://api.example.com {
 
 #### Sub-Folder Unified
 
-This config is using a sub-folder that is dedicated to Strapi only. It will bind to port 80 HTTP and hosts the "frontend" files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/test` sub-path.
+This configuration is using a sub-folder that is dedicated to Strapi only. It will bind to port 80 HTTP and hosts the "front-end" files on `/var/www` like a normal web server, but proxies all Strapi requests on the `example.com/test` sub-path.
 
 :::caution
 Please note that this config is not focused on the frontend hosting, you will most likely need to adjust this to your frontend software requirements, it is only being shown here as an example.
