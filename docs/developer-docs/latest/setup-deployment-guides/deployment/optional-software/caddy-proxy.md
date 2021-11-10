@@ -108,6 +108,8 @@ Please note that this config is not focused on the frontend hosting, you will mo
 **Path —** `/etc/caddy/Caddyfile`
 
 ```
+# path: /etc/caddy/Caddyfile
+
 http://example.com {
   reverse_proxy 127.0.0.1:1337
 }
