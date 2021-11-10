@@ -70,7 +70,6 @@ This example configuration is not focused on the front end hosting and should be
 - Example API: `example.com/test/api`
 - Example uploaded Files (local provider): `example.com/test/uploads`
 
-**Path —** `/etc/caddy/Caddyfile`
 
 ```
 http://example.com {
