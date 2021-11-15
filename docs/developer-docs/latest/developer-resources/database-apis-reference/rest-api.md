@@ -613,6 +613,10 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 `GET /api/books?populate=author.name,author.address`
 :::
 
+::: request Example request: Get articles and populate dynamic zones
+`GET /api/articles?populate=dynamic_zone`
+:::
+
 For convenience, the `*` wildcard can be used:
 
 ::: request Example request: Get all books and populate all their first level relations
