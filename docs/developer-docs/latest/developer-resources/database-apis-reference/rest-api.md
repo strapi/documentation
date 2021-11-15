@@ -613,10 +613,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 `GET /api/books?populate=author.name,author.address`
 :::
 
-::: request Example request: Get articles and populate dynamic zones
-`GET /api/articles?populate=dynamic_zone`
-:::
-
 For convenience, the `*` wildcard can be used:
 
 ::: request Example request: Get all books and populate all their first level relations
@@ -625,6 +621,10 @@ For convenience, the `*` wildcard can be used:
 
 ::: request Example request: Get all books and populate with authors and all their relations
 `GET /api/books?populate[author]=*`
+:::
+
+:::tip 
+Adding `?populate=*` to the query URL will include dynamic zones in the results.
 :::
 
 ### Publication State
