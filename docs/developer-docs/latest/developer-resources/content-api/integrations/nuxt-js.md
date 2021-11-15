@@ -1,6 +1,7 @@
 ---
 title: Get started with Nuxt.js - Strapi Developer Documentation
 description: Build powerful applications using Strapi, the leading open-source headless cms and Nuxt.js.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html
 ---
 
 # Getting Started with Nuxt.js

@@ -1,6 +1,7 @@
 ---
 title: Managing Content-types - Strapi User Guide
 description: The Content-Type Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/managing-content-types.html
 ---
 
 # Managing content-types

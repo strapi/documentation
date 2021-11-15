@@ -1,6 +1,7 @@
 ---
 title: CRUD operations with Entity Service API - Strapi Developer Docs
 description: Use Strapi's Entity Service API to perform CRUD (create, read, update, delete) operations on your content.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.html
 ---
 
 # Entity Service API: CRUD operations

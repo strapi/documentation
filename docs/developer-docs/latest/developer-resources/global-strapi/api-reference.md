@@ -1,6 +1,7 @@
 ---
 title: API Reference - Strapi Developer Documentation
-description: Discover our concise reference documentation containing all the information to work with your Strapi API
+description: Discover our concise reference documentation containing all the information to work with your Strapi API.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/global-strapi/api-reference.html
 ---
 
 # Global strapi API reference

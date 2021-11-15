@@ -2,6 +2,7 @@
 title: Troubleshooting - Strapi Developer Documentation
 description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
 sidebarDepth: 0
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/troubleshooting.html
 ---
 
 # Frequently Asked Questions

@@ -1,6 +1,7 @@
 ---
 title: Email - Strapi Developer Documentation
 description: Send email from your server or externals providers.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 ---
 
 # Email

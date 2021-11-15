@@ -1,6 +1,7 @@
 ---
 title: 21YunBox Deployment - Strapi Developer Documentation
 description: Learn in this guide how to update an existing Strapi project so it can be deployed on 21YunBox.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.html
 ---
 
 # 21YunBox

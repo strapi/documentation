@@ -1,6 +1,7 @@
 ---
 title: Configuring views of a content type - Strapi User Guide
 description: Instructions to configure the edit view and list view of a content type in a Strapi application.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/configuring-view-of-content-type.html
 ---
 
 # Configuring the views of a content type

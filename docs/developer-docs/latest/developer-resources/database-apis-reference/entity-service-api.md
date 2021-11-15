@@ -1,6 +1,7 @@
 ---
 title: Entity Service API - Strapi Developer Documentation
 description: The Entity Service is the layer that handles Strapi's complex data structures like components and dynamic zones, and uses the Query Engine API under the hood to execute database queries.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html
 ---
 
 # Entity Service API

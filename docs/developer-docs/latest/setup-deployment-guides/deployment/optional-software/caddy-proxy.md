@@ -1,6 +1,7 @@
 ---
 title: Caddy Proxying - Strapi Developer Documentation
 description: Learn how you can use a proxy application like Caddy to secure your Strapi application.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html
 ---
 
 # Caddy Proxying

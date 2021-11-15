@@ -1,6 +1,7 @@
 ---
 title: Managing Relational Fields - Strapi User Guide
 description: Instructions to manage relation-type fields, called "relational fields", which establish a relation between two content-types.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/managing-relational-fields.html
 ---
 
 # Managing relational fields

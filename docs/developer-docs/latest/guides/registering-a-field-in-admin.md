@@ -1,6 +1,7 @@
 ---
 title: Field Registering - Strapi Developer Documentation
 description: Learn in this guide how you can create a new Field for your administration panel.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-field-in-admin.html
 ---
 
 # Creating a new Field in the administration panel

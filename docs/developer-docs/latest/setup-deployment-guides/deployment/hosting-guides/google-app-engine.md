@@ -1,6 +1,7 @@
 ---
 title: Google App Engine Deployment - Strapi Developer Documentation
 description: Learn in this guide how to deploy your Strapi application on Google App Engine and how to upload your assets on Google Cloud Storage.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html
 ---
 
 # Google App Engine

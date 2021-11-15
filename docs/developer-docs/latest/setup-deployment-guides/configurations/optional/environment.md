@@ -2,6 +2,7 @@
 title: Environment configuration and variables - Strapi Developer Documentation
 description: In case you need specific static configurations for specific environments, and using environment variables becomes tedious, Strapi configurations can be created per environment.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html
 ---
 
 # Environment configuration and variables

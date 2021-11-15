@@ -1,6 +1,7 @@
 ---
 title: Configure Administrator Roles - Strapi User Guide
 description: Instructions to configure the administrator roles of a Strapi application with the Role-Based Access Control (RBAC) feature.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html
 ---
 
 # Configuring administrator roles
