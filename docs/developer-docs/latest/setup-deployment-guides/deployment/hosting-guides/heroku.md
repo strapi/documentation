@@ -229,6 +229,9 @@ module.exports = ({ env }) => ({
       options: {
         ssl: true,
       },
+      pool: {
+        max: 20 // heroku's postgressql hobby-dev plan has only 20 connections available 
+      }
     },
   },
 });
