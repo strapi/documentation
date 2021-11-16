@@ -26,6 +26,8 @@ A new service can be implemented:
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
 ```js
+// path: ./src/api/restaurant/services/restaurant.js
+
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  {
