@@ -26,17 +26,28 @@ A new controller can be implemented:
   - or in a folder like `./src/plugins/[plugin-name]/controllers/` for , though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
 ```js
-// path: ./src/api/[api-name]/controllers/my-controller.js
+// path: ./src/api/restaurant/controllers/restaurant.js
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::address.address', {
+module.exports = createCoreController('api::restaurant.restaurant', {
   async exampleAction(ctx) {
     try {
       ctx.body = 'ok';
     } catch (err) {
       ctx.body = err;
     }
+  },
+  async find(ctx) {
+    // some logic here
+    const { results, pagination } = await super.find(...args);
+    // some more logic
+
+    return { results, pagination };
+  },
+  async find(ctx) {
+    // some entirely custom logic
+    return { okay: true }
   }
 };
 ```
@@ -80,8 +91,9 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::caution
-v4 controllers are currently being refactored. The code examples below will be updated soon to reflect these changes.
+:::tip Replacing core controllers
+It's possible to replace the core controllers entirely by [creating a custom controller](#adding-a-new-controller) and naming it the same as the core controller.
+(find, findOne, create, update, or delete)
 :::
 
 
@@ -93,11 +105,11 @@ v4 controllers are currently being refactored. The code examples below will be u
 
 ```js
 async find(ctx) {
-  const { query } = ctx;
+  // some logic here
+  const { results, pagination } = await super.find(ctx);
+  // some more logic
 
-  const { results, pagination } = await service.find(query);
-
-  return transformResponse(sanitize(results), { pagination });
+  return { results, pagination };
 }
 ```
 
@@ -107,12 +119,11 @@ async find(ctx) {
 
 ```js
 async findOne(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx;
+  // some logic here
+  const entity = await super.findOne(ctx);
+  // some more logic
 
-  const entity = await service.findOne(id, query);
-
-  return transformResponse(sanitize(entity));
+  return entity;
 }
 ```
 
@@ -122,13 +133,11 @@ async findOne(ctx) {
 
 ```js
 async create(ctx) {
-  const { query } = ctx.request;
+  // some logic here
+  const entity = await super.create(ctx);
+  // some more logic
 
-  const { data, files } = parseBody(ctx);
-
-  const entity = await service.create({ ...query, data, files });
-
-  return transformResponse(sanitize(entity));
+  return entity;
 }
 ```
 
@@ -138,12 +147,11 @@ async create(ctx) {
 
 ```js
 async update(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx.request;
-  const { data, files } = parseBody(ctx);
-  const entity = await service.update(id, { ...query, data, files });
+  // some logic here
+  const entity = await super.update(ctx);
+  // some more logic
 
-  return transformResponse(sanitize(entity));
+  return entity;
 }
 ```
 
@@ -153,10 +161,11 @@ async update(ctx) {
 
 ```js
 async delete(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx;
-  const entity = await service.delete(id, query);
-  return transformResponse(sanitize(entity));
+  // some logic here
+  const entity = await super.delete(ctx);
+  // some more logic
+
+  return entity;
 }
 ```
 
