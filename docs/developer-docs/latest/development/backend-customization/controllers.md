@@ -28,8 +28,10 @@ A new controller can be implemented:
 ```js
 // path: ./src/api/[api-name]/controllers/my-controller.js
 
-module.exports = {
-  async exampleAction(ctx, next) {
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::address.address', {
+  async exampleAction(ctx) {
     try {
       ctx.body = 'ok';
     } catch (err) {
