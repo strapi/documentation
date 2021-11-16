@@ -53,11 +53,7 @@ http://api.example.com {
 
 ::::
 
-<<<<<<< HEAD
 :::: tab Subfolder unified
-=======
-:::: tab subfolder unified
->>>>>>> 00a85a806fafc28968574b4b2e4593638f5edef0
 
 #### Subfolder unified
 
