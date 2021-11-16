@@ -45,6 +45,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     // some custom logic here
     ctx.query = { ...ctx.query, local: 'en' }
     
+    // Calling the default core controller
     const { data, meta } = await super.find(ctx);
 
     // some more custom logic
