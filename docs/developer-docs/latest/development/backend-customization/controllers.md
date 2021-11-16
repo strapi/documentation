@@ -14,7 +14,7 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 ## Implementation
 
-Controllers can be [generated or added manually](#adding-a-new-controller), and the [core controllers examples](#extending-core-controllers) can help you get started creating custom ones.
+Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory that automatically generates internal controllers and allows building custom ones or extend/replace the generated controllers.
 
 ### Adding a new controller
 
