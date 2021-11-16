@@ -1,6 +1,7 @@
 ---
 title: Bulk Operations for Query Engine API - Strapi Developer Documentation
 description: Use Strapi's Query Engine API to perform operations on multiple entries.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.html
 ---
 
 # Query Engine API: Bulk Operations

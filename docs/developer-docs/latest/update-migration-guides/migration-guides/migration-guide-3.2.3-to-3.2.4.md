@@ -1,6 +1,7 @@
 ---
 title: Migrate from 3.2.3 to 3.2.4 - Strapi Developer Documentation
 description: Learn how you can migrate your Strapi application from 3.2.3 to 3.2.4.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.3-to-3.2.4.html
 ---
 
 # Migration guide from 3.2.3 to 3.2.4

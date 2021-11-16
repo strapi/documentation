@@ -2,6 +2,7 @@
 title: Server API - Strapi Developer Documentation
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/plugin-api-reference/server.html
 ---
 
 # Server API for plugins

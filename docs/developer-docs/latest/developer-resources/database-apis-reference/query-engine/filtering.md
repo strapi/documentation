@@ -2,6 +2,7 @@
 title: Filtering Operations for Query Engine API - Strapi Developer Documentation
 description: Use Strapi's Query Engine API to filter the results of your queries.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html
 ---
 
 # Query Engine API: Filtering

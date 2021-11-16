@@ -1,6 +1,7 @@
 ---
 title: Migrate from alpha.17 to alpha.18 - Strapi Developer Documentation
 description: Learn how you can migrate your Strapi application from alpha.17 to alpha.18.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.17-to-alpha.18.html
 ---
 
 # Migration guide from alpha.17 to alpha.18

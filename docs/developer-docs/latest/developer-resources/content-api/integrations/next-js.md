@@ -1,6 +1,7 @@
 ---
 title: Get started with Next.js - Strapi Developer Documentation
 description: Build powerful applications using Strapi, the leading open-source headless cms and Next.js.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/next-js.html
 ---
 
 # Getting Started with Next.js

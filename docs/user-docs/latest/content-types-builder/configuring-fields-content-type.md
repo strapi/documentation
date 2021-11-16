@@ -2,6 +2,7 @@
 title: Fields for Content Types - Strapi User Guide
 description: Instructions to configure in the Content-Type Builder the fields that compose each content-type.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/configuring-fields-content-type.html
 ---
 
 # Configuring fields for content types

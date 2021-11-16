@@ -2,6 +2,7 @@
 title: REST API - Strapi Developer Documentation
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html
 ---
 
 # REST API

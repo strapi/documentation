@@ -1,6 +1,7 @@
 ---
 title: Translating content - Strapi User Guide
-description: Instructions to translate content in various locales with i18n plugin
+description: Instructions to translate content in various locales with i18n plugin.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/translating-content.html
 ---
 
 # Translating content

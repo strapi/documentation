@@ -2,6 +2,7 @@
 title: Backend customization - Controllers - Strapi Developer Docs
 description: Strapi controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested route. Controllers can be customized according to your needs.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/controllers.html
 ---
 
 # Controllers

@@ -1,6 +1,7 @@
 ---
 title: Get started with Sapper - Strapi Developer Documentation
 description: Build powerful applications using Strapi, the leading open-source headless cms and Sapper.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/sapper.html
 ---
 
 # Getting Started with Sapper

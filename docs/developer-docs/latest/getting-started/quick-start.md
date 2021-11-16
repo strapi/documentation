@@ -3,6 +3,7 @@ title: Quick Start Guide - Strapi Developer Documentation
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
 sidebarDepth: 0
 next: ./troubleshooting
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick-start.html
 ---
 
 # Quick Start Guide

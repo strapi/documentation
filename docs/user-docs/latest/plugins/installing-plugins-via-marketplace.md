@@ -1,6 +1,7 @@
 ---
 title: Installing plugins via the Marketplace - Strapi User Guide
-description: Instructions to install new plugins in a Strapi application via the Marketplace
+description: Instructions to install new plugins in a Strapi application via the Marketplace.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html
 ---
 
 # Installing plugins via the Marketplace

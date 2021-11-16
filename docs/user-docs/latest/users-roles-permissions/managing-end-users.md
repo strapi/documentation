@@ -1,6 +1,7 @@
 ---
 title: Managing End-Users Accounts - Strapi User Guide
-description: Instructions to manage the end-users of a front-end application with the Users & Permissions plugin
+description: Instructions to manage the end-users of a front-end application with the Users & Permissions plugin.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-end-users.html
 ---
 
 # Managing end-users accounts

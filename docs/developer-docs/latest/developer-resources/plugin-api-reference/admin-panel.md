@@ -2,6 +2,7 @@
 title: Admin Panel API - Strapi Developer Documentation
 description: Strapi's Admin Panel API for plugins allows a Strapi plugin to customize the front end part (i.e. the admin panel) of your application.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html
 ---
 
 # Admin Panel API for plugins

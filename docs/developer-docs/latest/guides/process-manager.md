@@ -2,6 +2,7 @@
 title: Process Manager - Strapi Developer Documentation
 description: Learn in this guide how you can start a Strapi application using a process manager.
 sidebarDepth: 2
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/process-manager.html
 ---
 
 # Process manager
