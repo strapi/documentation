@@ -196,10 +196,10 @@ async delete(ctx) {
 ```js
 async find(ctx) {
   // some logic here
-  const entity = await super.find(ctx);
+  const response = await super.find(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -210,10 +210,10 @@ async find(ctx) {
 ```js
 async update(ctx) {
   // some logic here
-  const entity = await super.update(ctx);
+  const response = await super.update(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -224,10 +224,10 @@ async update(ctx) {
 ```js
 async delete(ctx) {
   // some logic here
-  const entity = await super.delete(ctx);
+  const response = await super.delete(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -245,8 +245,6 @@ strapi.controller('api::api-name.controller-name');
 // access a plugin controller
 strapi.controller('plugin::plugin-name.controller-name');
 ```
-
-<!-- TODO: Confirm this structure with Alex -->
 
 ::: tip
 To list all the available controllers, run `yarn strapi controllers:list`.
