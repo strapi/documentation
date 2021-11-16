@@ -103,9 +103,8 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::tip Replacing core controllers
-It's possible to replace the core controllers entirely by [creating a custom controller](#adding-a-new-controller) and naming it the same as the core controller.
-(find, findOne, create, update, or delete)
+:::tip 
+A core controller can be replaced entirely by [creating a custom controller](#adding-a-new-controller) and naming it the same as the core controller (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
 ::::: details Collection type examples
