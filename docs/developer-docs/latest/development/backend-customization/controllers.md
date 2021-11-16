@@ -14,7 +14,7 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 ## Implementation
 
-Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory that automatically generates internal controllers and allows building custom ones or extend/replace the generated controllers.
+Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend/replace the generated controllers](#extending-core-controllers).
 
 ### Adding a new controller
 
@@ -23,7 +23,7 @@ A new controller can be implemented:
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
 - or manually by creating a JavaScript file:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
-  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for , though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
+  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
 ```js
 // path: ./src/api/restaurant/controllers/restaurant.js
@@ -31,7 +31,7 @@ A new controller can be implemented:
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
-  // Method 1 - Entirely Custom Controller
+  // Method 1: Creating an entirely custom controller
   async exampleAction(ctx) {
     try {
       ctx.body = 'ok';
@@ -39,7 +39,8 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
       ctx.body = err;
     }
   },
-  // Method 2 - Wrapping Core controller (leaves core logic in place)
+
+  // Method 2: Wrapping a core controller (leaves core logic in place)
   async find(ctx) {
     // some custom logic here
     ctx.query = { ...ctx.query, local: 'en' }
@@ -51,7 +52,8 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
     return { data, meta };
   },
-  // Method 3 - Replacing a core controller
+
+  // Method 3: Replacing a core controller
   async findOne(ctx) {
     const { id } = ctx.params;
     const { query } = ctx;
@@ -65,11 +67,11 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 ```
 
 Each controller action can be an `async` or `sync` function.
-Every action receives a context object (`ctx`) as the first parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
+Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
 
 ::: details Example: GET /hello route calling a basic controller
 
-A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, the name of the router `index` is used to call the controller handler `index`. Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
+A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
 
 ```js
 // path: ./src/api/hello/routes/hello.js
@@ -103,9 +105,9 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core controllers
 
-Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::tip 
+:::tip
 A core controller can be replaced entirely by [creating a custom controller](#adding-a-new-controller) and naming it the same as the core controller (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
