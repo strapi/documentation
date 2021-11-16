@@ -243,3 +243,7 @@ strapi.controller('plugin::plugin-name.controller-name');
 ```
 
 <!-- TODO: Confirm this structure with Alex -->
+
+::: tip
+To list all the available controllers, run `yarn strapi controllers:list`.
+:::
