@@ -30,7 +30,7 @@ A new controller can be implemented:
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::restaurant.restaurant', {
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
   // Method 1 - Entirely Custom Controller
   async exampleAction(ctx) {
     try {
@@ -41,16 +41,25 @@ module.exports = createCoreController('api::restaurant.restaurant', {
   },
   // Method 2 - Wrapping Core controller (leaves core logic in place)
   async find(ctx) {
-    // some logic here
-    const { results, pagination } = await super.find(...args);
-    // some more logic
+    // some custom logic here
+    ctx.query = { ...ctx.query, local: 'en' }
+    
+    const { data, meta } = await super.find(ctx);
 
-    return { results, pagination };
+    // some more custom logic
+    meta.date = Date.now()
+
+    return { data, meta };
   },
   // Method 3 - Replacing a core controller
-  async find(ctx) {
-    // some entirely custom logic
-    return { okay: true }
+  async findOne(ctx) {
+    const { id } = ctx.params;
+    const { query } = ctx;
+
+    const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
+    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+    return this.transformResponse(sanitizedEntity);
   }
 };
 ```
@@ -65,21 +74,14 @@ A specific `GET /hello` [route](/developer-docs/latest/development/backend-custo
 ```js
 // path: ./src/api/hello/routes/hello.js
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::hello.hello', {
-  // prefix: '/someCustomPrefix',
-  // only: [],
-  // except: [],
-  index: {
-    method: 'GET',
-    path: '/hello',
-    config: {
-      auth: false
-      policies: [],
-      middlewares: [].
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/hello',
+      handler: 'hello.index',
     }
-  }
+  ]
 }
 ```
 
@@ -116,10 +118,10 @@ A core controller can be replaced entirely by [creating a custom controller](#ad
 ```js
 async find(ctx) {
   // some logic here
-  const { results, pagination } = await super.find(ctx);
+  const { data, meta } = await super.find(ctx);
   // some more logic
 
-  return { results, pagination };
+  return { data, meta };
 }
 ```
 
@@ -130,10 +132,10 @@ async find(ctx) {
 ```js
 async findOne(ctx) {
   // some logic here
-  const entity = await super.findOne(ctx);
+  const response = await super.findOne(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -144,10 +146,10 @@ async findOne(ctx) {
 ```js
 async create(ctx) {
   // some logic here
-  const entity = await super.create(ctx);
+  const response = await super.create(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -158,10 +160,10 @@ async create(ctx) {
 ```js
 async update(ctx) {
   // some logic here
-  const entity = await super.update(ctx);
+  const response = await super.update(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
@@ -172,10 +174,10 @@ async update(ctx) {
 ```js
 async delete(ctx) {
   // some logic here
-  const entity = await super.delete(ctx);
+  const response = await super.delete(ctx);
   // some more logic
 
-  return entity;
+  return response;
 }
 ```
 
