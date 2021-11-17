@@ -229,7 +229,7 @@ Follow these steps to configure a local Strapi project to use a [MongoDB Atlas](
   - In **Cluster Name**, name your cluster.
 - Click the green `Create Cluster` button. You will get a message that says, "_Your cluster is being created..._"
 
-### 2. Next, click on the `Database Access` in the left menu (under `Overview`):
+### 2. Next, click on the `Database Access` in the left menu (under `Security`):
 
 - Click the green `+ ADD NEW USER` button:
   - Enter a `username`.
