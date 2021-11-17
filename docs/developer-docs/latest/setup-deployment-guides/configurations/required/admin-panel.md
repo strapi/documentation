@@ -97,9 +97,9 @@ module.exports = ({ env }) => ({
 | `forgotPassword.from`             | Sender mail address                                                                                                                                                                                                                                                                                                                                                         | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
 | `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                                                                                                                                                                                              | string            | Default value defined in your [provider configuration](/developer-docs/latest/plugins/email.md#configure-the-plugin) |
 
-### API tokens
+## API tokens
 
-Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in [API token](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) feature.
+Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in [API token](/user-docs/latest/settings/managing-global-settings.md#managing-api-tokens) feature.
 
 Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) endpoints as an authenticated user. The API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
 
