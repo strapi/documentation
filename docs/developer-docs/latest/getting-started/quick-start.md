@@ -302,17 +302,11 @@ Keep on creating amazing content!
 
 ## ⏩  What to do next?
 
-### Consume your API
+Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-You can learn how to consume your API with your favorite frameworks, front-end or back-end programming languages by choosing one in the list below.
-
-<IntegrationLinksAlt></IntegrationLinksAlt>
-
-### Deploy your project
-
-The next step is to deploy both your Strapi back end and the front end on the platforms of your choice.
-
-👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
+- 👉 [create an API token](/user-docs/latest/settings/managing-global-settings.md#managing-api-tokens) to restrict access to your API,
+- 👉 learn how to use Strapi's [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs to query the content,
+- 👉 and [customize your Strapi back end](/developer-docs/latest/development/backend-customization.md) and [admin panel](/developer-docs/latest/development/admin-customization.md).
 
 :::::
 
@@ -439,16 +433,10 @@ Now you know how to use Strapi to create and update your blog. Keep on creating 
 
 ## ⏩  What to do next?
 
-The beauty of using Strapi [starters](https://strapi.io/starters) is that the Strapi back end comes with a front end ready out-of-the-box. Now you probably want to show your shiny new website to the world! The next step is then to deploy both the Strapi back end and the front end on the platforms of your choice:
+Now that you know the basics of kickstarting your project with a Strapi starter, we encourage you to explore and play a bit further:
 
-👉 You can deploy the Strapi back end on various services: Amazon AWS, Microsoft Azure, DigitalOcean, Google App Engine, Heroku, and many more (see our [Deployment guides](/developer-docs/latest/setup-deployment-guides/deployment.md)).
-
-👉 Deploying the front end mostly depends on the technology it's based on. The easiest way to deploy your Gatsby blog front end is probably to [deploy on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/360052324714-Connecting-to-Strapi).
-
-:::strapi  To go further with starters
-
-* Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
-* Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
+* 👉  Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
+* 👉  Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
 
 :::::
 
