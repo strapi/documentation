@@ -17,7 +17,7 @@ From this interface, it is possible to:
 
 - make a textual search (1) to find specific administrators,
 - set filters (2) to find specific administrators,
-- create a new administrator account (see [Creating a new account](#creating-a-new-account)),
+- create a new administrator account (see [Creating a new account](#creating-a-new-account)) (3),
 - delete an administrator account (see [Deleting an account](#deleting-an-account)),
 - or access information regarding an administrator account, and edit it (see [Editing an account](#editing-an-account)).
 

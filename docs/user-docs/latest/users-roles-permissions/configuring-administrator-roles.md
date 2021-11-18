@@ -151,7 +151,7 @@ For each permission of each category, a **Settings** button is displayed. It all
 Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations.md#role-based-access-control)).
 :::
 
-![Custom conditions for administrator role permissions](../assets/users-permissions/administrator_custom-conditions.png)
+<img src="../assets/users-permissions/administrator_custom-conditions.png" alt="Custom conditions for administrator role permissions" width="80%">
 
 To set custom conditions:
 
