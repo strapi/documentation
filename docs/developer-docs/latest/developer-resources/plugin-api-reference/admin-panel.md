@@ -60,8 +60,6 @@ This function returns an object with the following parameters:
 
 | Parameter        | Type                     | Description                                                                                        |
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
-| `description`    | String or TranslationKey | Description of the plugin, generally used in the marketplace or the plugin's API permissions view |
-| `icon`           | FontAwesome icon                        | Plugin icon, used in the marketplace.<br><br>Default: `PlugIcon` |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
 | `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones-api)                                       |
@@ -75,13 +73,15 @@ Some parameters can be imported from the `package.json` file.
 ```js
 // path: my-plugin/admin/src/index.js
 
+// Auto-generated component
+import PluginIcon from './components/PluginIcon';
 import pluginId from './pluginId'
 
 export default {
   register(app) {
     app.addMenuLink({
       to: `/plugins/${pluginId}`,
-      icon,
+      icon: PluginIcon,
       intlLabel: {
         id: `${pluginId}.plugin.name`,
         defaultMessage: 'My plugin',
@@ -94,8 +94,6 @@ export default {
       permissions: [], // array of permissions (object), allow a user to access a plugin depending on its permissions
     });
     app.registerPlugin({
-      description: pluginDescription,
-      icon,
       id: pluginId,
       name,
     });
@@ -202,7 +200,7 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
-| `icon`        | SVGElement       | Icon to display in the main navigation                                                                                                                                                                                   |
+| `icon`        | React Component       | Icon to display in the main navigation                                                                                                                                                                                   |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
@@ -215,12 +213,13 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 
 ```jsx
 // path: my-plugin/admin/src/index.js
+import PluginIcon from './components/PluginIcon';
 
 export default {
   register(app) {
     app.addMenuLink({
       to: '/plugins/my-plugin',
-      icon,
+      icon: PluginIcon,
       intlLabel: {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My plugin',
