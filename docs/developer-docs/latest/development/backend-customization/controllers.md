@@ -14,7 +14,7 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 ## Implementation
 
-Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend/replace the generated controllers](#extending-core-controllers).
+Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
 
 ### Adding a new controller
 

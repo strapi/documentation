@@ -13,28 +13,40 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 - with [policies](#policies), which are a way to block access to a route,
 - and with [middlewares](#middlewares), which are a way to control and change the request flow and the request itself.
 
-Once a route exists, reaching it executes some code handled by a controller (see [controllers](/developer-docs/latest/development/backend-customization/controllers.md) documentation).
+Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/developer-docs/latest/development/backend-customization/controllers.md)).
 
 ## Implementation
 
 Implementing a new route consists in defining it in a router file within the `.src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-There are two different router file structures depending on if you are configuring the core routers or creating your own custom routers. Strapi provides a `createCoreRouter` factory function that automatically generates and allows for configuration of the core routers.
+There are 2 different router file structures, depending on the use case:
 
-### Core Routers
+- configuring [core routers](#configuring-core-routers)
+- or creating [custom routers](#creating-custom-routers).
 
-For core routers (`find`, `findOne`, `create`, `update`, and `delete`), a default file is created that allows passing in some configuration options to each router and allowing you to disable certain core routers so you can create your own custom ones. The core router file structure has the following parameters:
+### Configuring core routers
+
+Core routers (i.e. `find`, `findOne`, `create`, `update`, and `delete`) correspond to [default routes](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) automatically created by Strapi when a new [content-type](/developer-docs/latest/development/backend-customization/models.md#model-creation) is created.
+
+Strapi provides a `createCoreRouter` factory function that automatically generates the core routers and allows:
+
+- passing in configuration options to each router
+- and disabling some core routers to [create custom ones](#creating-custom-routers).
+
+The core router file structure has the following parameters:
 
 | Parameter | Description                                                                                  | Type     |
 | ----------| -------------------------------------------------------------------------------------------- | -------- |
 | `prefix`  | Allows passing in a custom prefix to add to all routers for this model (e.g. `/test`)        | `String` |
-| `only`    | Array of core routes that will only be loaded, anything not in this array is ignored         | `Array` |
-| `except`  | Array of core routes that should not be loaded, functionally the opposite of the only option | `Array` |
-| `config`  | Configuration to handle [policies](policies), [middlewares](middlewares) and [public availability](#public-routes) for the route | `Object` |
+| `only`    | Core routes that will only be loaded<br /><br/>Anything not in this array is ignored.        | `Array` |
+| `except`  | Core routes that should not be loaded<br/><br />This is functionally the opposite of the `only` parameter. | `Array` |
+| `config`  | Configuration to handle [policies](#policies), [middlewares](#middlewares) and [public availability](#public-routes) for the route | `Object` |
 
-Full Core Router configuration example:
+<br/>
 
 ```js
+// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
+
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
 module.exports = createCoreRouter('api::restaurant.restaurant', {
@@ -55,13 +67,15 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
+<br />
+
 Generic implementation example:
 
 To only allow a `GET` request on the `/restaurants` path from the core `find` [controller](/developer-docs/latest/development/backend-customization/controllers.md) without authentication, use the following code:
 
 ::: details Example of disabling authentication on a core route
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
+// path: ./src/api/restaurant/routes/restaurant.js
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -79,9 +93,9 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 :::
 
-### Custom Routers
+### Creating custom routers
 
-For custom routers you will need to generate another router file that doesn't use the `createCoreRouter` factory this router file consists of an array of objects, each object being a route with the following parameters:
+Creating custom routers consists in creating a file that exports an array of objects, each object being a route with the following parameters:
 
 | Parameter                  | Description                                                                      | Type     |
 | -------------------------- | -------------------------------------------------------------------------------- | -------- |
@@ -90,13 +104,13 @@ For custom routers you will need to generate another router file that doesn't us
 | `handler`                  | Function to execute when the route is reached.<br>Should follow this syntax: `<controllerName>.<actionName>` | `String` |
 | `config`<br><br>_Optional_ | Configuration to handle [policies](policies), [middlewares](middlewares) and [public availability](#public-routes) for the route<br/><br/>           | `Object` |
 
-Generic implementation example:
+<br/>
 
-The router used by Strapi allows the creation of dynamic routes, using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
+Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
 
-::: details Example of routes using URL parameters and regular expressions
+::: details Example of a custom router using URL parameters and regular expressions for routes
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/custom-restaurant.js')
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -118,7 +132,7 @@ module.exports = {
 
 ## Configuration
 
-Both the core routers and any custom routers you define in additional files have the same configuration options and is defined in its `config` object, which can be used to handle [policies](#policies) and [middlewares](#middlewares) or to [make the route public](#public-routes).
+Both [core routers](#configuring-core-routers) and [custom routers](#creating-custom-routers) have the same configuration options. The routes configuration is defined in a `config` object that can be used to handle [policies](#policies) and [middlewares](#middlewares) or to [make the route public](#public-routes).
 
 ### Policies
 
@@ -127,12 +141,12 @@ Both the core routers and any custom routers you define in additional files have
 - by pointing to a policy registered in `./src/policies`, with or without passing a custom configuration
 - or by declaring the policy implementation directly, as a function that takes `policyContext` to extend [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments (see [policies documentation](/developer-docs/latest/development/backend-customization/routes.md))
 
-:::: tabs
+:::: tabs card
 
-::: tab Core Router - Policy
+::: tab Core router policy
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
+// path: ./src/api/restaurant/routes/restaurant.js
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -158,10 +172,10 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 :::
 
-::: tab Custom Router - Policy
+::: tab Custom router policy
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/custom-restaurant.js')
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -199,12 +213,12 @@ module.exports = {
 - by pointing to a middleware registered in `./src/middlewares`, with or without passing a custom configuration
 - or by declaring the middleware implementation directly, as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments:
 
-:::: tabs
+:::: tabs card
 
-::: tab Core Router - Middleware
+::: tab Core router middleware
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
+// path: ./src/api/restaurant/routes/restaurant.js
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -230,10 +244,10 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 :::
 
-::: tab Custom Router - Middleware
+::: tab Custom router middleware
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/custom-restaurant.js')
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -266,16 +280,16 @@ module.exports = {
 
 ### Public routes
 
-By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) or the use of a plugin such as the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.md#users-permissions-plugin).
+By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) or on the use of the [Users & Permissions plugin](/user-docs/latest/plugins/strapi-plugins.md#users-permissions-plugin).
 
 In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system. This can be achieved by setting the `auth` configuration parameter of a route to `false`:
 
-:::: tabs
+:::: tabs card
 
-::: tab Core Router - Public
+::: tab Core router with a public route
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
+// path: ./src/api/restaurant/routes/restaurant.js
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -290,10 +304,10 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 :::
 
-::: tab Custom Router - Public
+::: tab Custom router with a public route
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/custom-restaurant.js')
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [

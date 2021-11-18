@@ -8,11 +8,11 @@ sidebarDepth: 3
 
 # Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
+Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
 
 ## Implementation
 
-Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend/replace the generated controllers](#extending-core-services).
+Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated services](#extending-core-services).
 
 ### Adding a new service
 
@@ -133,7 +133,7 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core services
 
-Default services are created for each content-type. These default services are used to execute reusable logic when called throughout your Strapi project and most commonly are used by [controllers](/developer-docs/latest/development/backend-customization/controllers.md). Default services can be customized to implement your own logic. The following code examples should help you get started.
+Core services are created for each content-type and could be used by [controllers](/developer-docs/latest/development/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
 
 :::tip
 A core service can be replaced entirely by [creating a custom service](#adding-a-new-service) and naming it the same as the core service (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
