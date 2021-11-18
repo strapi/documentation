@@ -41,6 +41,8 @@ The CLI installation guide details [supported database and versions](http://loca
     - `reapIntervalMillis` (integer): Time in ms to check for idle database connections to destroy
     - `createRetryIntervalMillis` (integer): Time in ms to idle before retrying failed create actions
     - `afterCreate` (function): Callback function to execute custom logic when the pool acquires a new connection. See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information
+- `settings` (object): Strapi specific database settings
+  - `forceMigration` (boolean): Enable or disable the forced database migration. Default value: `true`.
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
@@ -203,7 +205,7 @@ await pluginStore.set({
 ## Databases installation guides
 
 Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
-**MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
+**MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes). We will be providing additional installation guides for missing databases soon!
 
 <DatabasesLinks>
 </DatabasesLinks>
