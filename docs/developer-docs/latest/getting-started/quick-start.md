@@ -109,7 +109,7 @@ Run the following command in a terminal:
 
 <code-block title="NPM">
 ```bash
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
