@@ -38,8 +38,8 @@ There are 2 types of components: non-repeatable and repeatable components.
 
 #### Non-repeatable components
 
-![Writing content for a component](../assets/content-manager/edit-view_component3.png)
-![Writing content for a component](../assets/content-manager/edit-view_component2.png)
+<img src="../assets/content-manager/edit-view_component3.png" alt="Writing content for a component" width="80%">
+<img src="../assets/content-manager/edit-view_component2.png" alt="Writing content for a component" width="80%">
 
 Non-repeatable components are a combination of fields which can be used only once.
 
@@ -52,7 +52,7 @@ To delete the non-repeatable component, click on the delete button ![Delete icon
 
 #### Repeatable components
 
-![Writing content for a component](../assets/content-manager/edit-view_component4.png)
+<img src="../assets/content-manager/edit-view_component4.png" alt="Writing content for a component" width="80%">
 
 Repeatable components are also a combination of fields, but they allow to create multiple component entries, all following the same combination of fields.
 
@@ -75,8 +75,8 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone1.png)
-![Writing content for a dynamic zone](../assets/content-manager/edit-view_dynamic-zone3.png)
+<img src="../assets/content-manager/edit-view_dynamic-zone1.png" alt="Writing content for a dynamic zone" width="80%">
+<img src="../assets/content-manager/edit-view_dynamic-zone3.png" alt="Writing content for a dynamic zone" width="80%">
 
 1. Click on the ![Add icon](../assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.

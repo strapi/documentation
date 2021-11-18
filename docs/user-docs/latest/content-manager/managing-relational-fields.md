@@ -44,7 +44,7 @@ If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
-<img src="../assets/content-manager/RF_one-choice.png" alt="One-choice relational fields" width="45%">
+<img src="../assets/content-manager/RF_one-choice.png" alt="One-choice relational fields" width="30%">
 
 To select the only relevant relational field's entry:
 
@@ -61,7 +61,7 @@ To remove the entry selected in the drop-down list, click on the delete button !
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
-<img src="../assets/content-manager/RF_multiple-choices.png" alt="Multiple choices relational fields" width="40%">
+<img src="../assets/content-manager/RF_multiple-choices.png" alt="Multiple choices relational fields" width="30%">
 
 To select the relevant relational field's entries:
 
