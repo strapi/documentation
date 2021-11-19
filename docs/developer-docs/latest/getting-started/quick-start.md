@@ -194,7 +194,7 @@ It would help getting a bit more organized if our restaurants directory had some
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", let's use them to actually add content by creating new entries.
 #### Create an entry for the "Restaurant" collection type
 
-1. Go to [Content Manager > Collection types > Restaurants](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation.
+1. Go to [Content Manager > Collection types - Restaurants](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation.
 2. Click on **Add new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
@@ -206,12 +206,12 @@ The restaurant is now listed in the [Collection types > Restaurants](http://loca
 
 #### Add Categories
 
-Let's go to [Content Manager > Collection types > Categories](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
+Let's go to [Content Manager > Collection types - Categories](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
 4. Click **Save**.
-5. Go back to _Collection types > Category_, then click again on **Add new entry**.  
+5. Go back to _Collection types - Category_, then click again on **Add new entry**.  
 6. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
@@ -220,7 +220,7 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 #### Add a Category to a Restaurant
 
-Go to [Content Manager > Collection types > Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
+Go to [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
 
 In the right sidebar, in the **Categories** drop-down list, select "Brunch".  Click **Save**.
 
