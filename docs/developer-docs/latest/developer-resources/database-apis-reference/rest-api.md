@@ -624,6 +624,10 @@ For convenience, the `*` wildcard can be used:
 `GET /api/books?populate[author]=*`
 :::
 
+:::tip 
+Adding `?populate=*` to the query URL will include dynamic zones in the results.
+:::
+
 ### Publication State
 
 :::prerequisites

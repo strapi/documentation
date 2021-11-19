@@ -245,7 +245,7 @@ To disable notifications about new Strapi releases, set the `config.notification
 To extend the theme, use the `config.theme` key.
 
 ::: strapi Strapi Parts! theme
-The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/develop/packages/strapi-parts/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`.
+The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/master/packages/strapi-parts/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`.
 :::
 
 <!-- TODO: maybe provide a theme extension example once design system is ready? -->
