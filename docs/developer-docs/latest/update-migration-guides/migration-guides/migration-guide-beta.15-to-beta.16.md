@@ -1,5 +1,5 @@
 ---
-title: Migrate from beta.15 to beta.16 - Strapi Developer Documentation
+title: Migrate from beta.15 to beta.16 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from beta.15 to beta.16.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.15-to-beta.16.html
 ---

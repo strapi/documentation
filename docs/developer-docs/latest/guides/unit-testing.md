@@ -1,5 +1,5 @@
 ---
-title: Unit Testing - Strapi Developer Documentation
+title: Unit Testing - Strapi Developer Docs
 description: Learn in this guide how you can run basic unit tests for a Strapi application using a testing framework.
 sidebarDepth: 2
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.html

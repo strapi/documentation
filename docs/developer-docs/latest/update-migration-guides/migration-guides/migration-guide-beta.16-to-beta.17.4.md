@@ -1,5 +1,5 @@
 ---
-title: Migrate to beta.17.4 - Strapi Developer Documentation
+title: Migrate to beta.17.4 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application to beta.17.4.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.16-to-beta.17.4.html
 ---

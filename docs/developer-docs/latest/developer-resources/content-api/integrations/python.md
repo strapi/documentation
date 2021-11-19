@@ -1,5 +1,5 @@
 ---
-title: Get started with Python - Strapi Developer Documentation
+title: Get started with Python - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Python.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/python.html
 ---

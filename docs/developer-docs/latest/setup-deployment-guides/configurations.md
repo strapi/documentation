@@ -1,5 +1,5 @@
 ---
-title: Configurations - Strapi Developer Documentation
+title: Configurations - Strapi Developer Docs
 description: Learn how you can manage and customize the configuration of your Strapi application.
 sidebarDepth: auto
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations.html

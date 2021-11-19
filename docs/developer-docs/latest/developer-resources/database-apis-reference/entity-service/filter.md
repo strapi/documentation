@@ -1,5 +1,5 @@
 ---
-title: Filtering with Entity Service API - Strapi Developer Documentation
+title: Filtering with Entity Service API - Strapi Developer Docs
 description: Use Strapi's Entity Service API to filter your queries results.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.html

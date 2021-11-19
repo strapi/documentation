@@ -1,5 +1,5 @@
 ---
-title: Upload - Strapi Developer Documentation
+title: Upload - Strapi Developer Docs
 description: Upload any kind of file on your server or external providers.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 ---

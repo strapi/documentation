@@ -1,5 +1,5 @@
 ---
-title: Single Operations for Query Engine API - Strapi Developer Documentation
+title: Single Operations for Query Engine API - Strapi Developer Docs
 description: Use Strapi's Query Engine API to perform operations on single entries.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.html
 ---

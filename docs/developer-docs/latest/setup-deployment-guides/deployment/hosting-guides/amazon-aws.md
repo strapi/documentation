@@ -1,5 +1,5 @@
 ---
-title: AWS Deployment - Strapi Developer Documentation
+title: AWS Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on AWS EC2, host your database on AWS RDS and upload your assets on AWS S3.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html
 ---

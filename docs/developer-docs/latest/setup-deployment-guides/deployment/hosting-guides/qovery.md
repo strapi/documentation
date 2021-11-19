@@ -1,5 +1,5 @@
 ---
-title: Qovery Deployment - Strapi Developer Documentation
+title: Qovery Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Qovery.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html
 ---

@@ -1,5 +1,5 @@
 ---
-title: Secure your application - Strapi Developer Documentation
+title: Secure your application - Strapi Developer Docs
 description: Learn in this guide how you can secure your Strapi application by using a third party provider.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/secure-your-app.html
 ---

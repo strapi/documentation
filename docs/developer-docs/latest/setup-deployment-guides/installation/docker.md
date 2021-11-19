@@ -1,5 +1,5 @@
 ---
-title: Install from Docker - Strapi Developer Documentation
+title: Install from Docker - Strapi Developer Docs
 description: Quickly create a Strapi application using our official Strapi Docker images.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/docker.html
 ---

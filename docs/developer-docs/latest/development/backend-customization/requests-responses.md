@@ -1,5 +1,5 @@
 ---
-title: Requests and Responses - Strapi Developer Documentation 
+title: Requests and Responses - Strapi Developer Docs 
 description: Learn more about requests and responses for Strapi, the most popular headless CMS.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html
 ---

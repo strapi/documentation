@@ -1,5 +1,5 @@
 ---
-title: Usage information - Strapi Developer Documentation
+title: Usage information - Strapi Developer Docs
 description: We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today.
 sidebarDepth: 0
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/usage-information.html

@@ -1,5 +1,5 @@
 ---
-title: Ordering & Pagination with Entity Service API - Strapi Developer Documentation
+title: Ordering & Pagination with Entity Service API - Strapi Developer Docs
 description: Use Strapi's Entity Service API to order and paginate queries results.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.html
 ---

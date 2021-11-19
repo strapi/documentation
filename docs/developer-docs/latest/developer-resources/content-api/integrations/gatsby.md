@@ -1,5 +1,5 @@
 ---
-title: Get started with Gatsby - Strapi Developer Documentation
+title: Get started with Gatsby - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless CMS and Gatsby.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html
 ---

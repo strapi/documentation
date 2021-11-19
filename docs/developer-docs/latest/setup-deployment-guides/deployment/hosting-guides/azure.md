@@ -1,5 +1,5 @@
 ---
-title: Azure Deployment - Strapi Developer Documentation
+title: Azure Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html
 ---

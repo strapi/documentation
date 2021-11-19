@@ -1,5 +1,5 @@
 ---
-title: Render One-Click - Strapi Developer Documentation
+title: Render One-Click - Strapi Developer Docs
 description: Quickly deploy a Strapi application on Render by simply using their One-click button.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/render.html
 ---

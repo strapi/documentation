@@ -1,5 +1,5 @@
 ---
-title: Get started with Ruby - Strapi Developer Documentation
+title: Get started with Ruby - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Ruby.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/ruby.html
 ---

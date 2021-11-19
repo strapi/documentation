@@ -1,5 +1,5 @@
 ---
-title: DigitalOcean Droplet Deployment - Strapi Developer Documentation
+title: DigitalOcean Droplet Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.html
 ---

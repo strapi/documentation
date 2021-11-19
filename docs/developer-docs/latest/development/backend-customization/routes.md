@@ -1,5 +1,5 @@
 ---
-title: Routes - Strapi Developer Documentation
+title: Routes - Strapi Developer Docs
 description: Strapi routes handle requests to your content and are auto-generated for your content-types. Routes can be customized according to your needs.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/routes.html

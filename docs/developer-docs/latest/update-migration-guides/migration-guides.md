@@ -1,5 +1,5 @@
 ---
-title: Migrate Guides - Strapi Developer Documentation
+title: Migrate Guides - Strapi Developer Docs
 description: All the migration guides for a Strapi application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html
 ---

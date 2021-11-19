@@ -1,5 +1,5 @@
 ---
-title: Is Owner - Strapi Developer Documentation
+title: Is Owner - Strapi Developer Docs
 description: Learn in this guide how to restrict content editing to content authors only.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/is-owner.html
 ---

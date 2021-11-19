@@ -1,5 +1,5 @@
 ---
-title: Migrate from 3.4.x to 3.4.4 - Strapi Developer Documentation
+title: Migrate from 3.4.x to 3.4.4 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from 3.4.x to 3.4.4.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.4.x-to-3.4.4.html
 ---

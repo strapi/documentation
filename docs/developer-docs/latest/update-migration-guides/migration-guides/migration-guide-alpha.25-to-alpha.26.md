@@ -1,5 +1,5 @@
 ---
-title: Migrate from alpha.25 to alpha.26.2s - Strapi Developer Documentation
+title: Migrate from alpha.25 to alpha.26.2s - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.25 to alpha.26.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.25-to-alpha.26.html
 ---

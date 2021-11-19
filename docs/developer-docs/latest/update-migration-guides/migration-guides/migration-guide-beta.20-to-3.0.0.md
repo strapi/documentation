@@ -1,5 +1,5 @@
 ---
-title: Migrate from 3.0.0-beta.20 to 3.0.0 - Strapi Developer Documentation
+title: Migrate from 3.0.0-beta.20 to 3.0.0 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from beta.20 to 3.0.0.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.html
 ---

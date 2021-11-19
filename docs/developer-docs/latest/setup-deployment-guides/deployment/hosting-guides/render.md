@@ -1,5 +1,5 @@
 ---
-title: Render Deployment - Strapi Developer Documentation
+title: Render Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Render.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html
 ---

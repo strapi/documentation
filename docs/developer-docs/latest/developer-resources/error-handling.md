@@ -1,5 +1,5 @@
 ---
-title: Error handling - Strapi Developer Documentation
+title: Error handling - Strapi Developer Docs
 description: With Strapi's error handling feature it's easy to send and receive errors in your application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/error-handling.html
 ---

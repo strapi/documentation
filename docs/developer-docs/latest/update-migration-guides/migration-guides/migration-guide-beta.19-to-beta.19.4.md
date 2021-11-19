@@ -1,5 +1,5 @@
 ---
-title: Migrate from beta.19.x to beta.19.4 - Strapi Developer Documentation
+title: Migrate from beta.19.x to beta.19.4 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from beta.19.x to beta.19.4.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.19.4.html
 ---

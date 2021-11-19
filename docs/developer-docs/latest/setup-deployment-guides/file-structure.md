@@ -1,5 +1,5 @@
 ---
-title: Project Structure - Strapi Developer Documentation
+title: Project Structure - Strapi Developer Docs
 description: Discover the project structure of any default Strapi application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html
 ---

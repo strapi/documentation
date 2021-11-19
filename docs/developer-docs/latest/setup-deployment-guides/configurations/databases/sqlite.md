@@ -1,5 +1,5 @@
 ---
-title: SQLite - Strapi Developer Documentation
+title: SQLite - Strapi Developer Docs
 description: Learn how you can use SQLite for your Strapi application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html
 ---

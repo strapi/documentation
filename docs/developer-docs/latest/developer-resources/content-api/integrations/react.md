@@ -1,5 +1,5 @@
 ---
-title: Get started with React - Strapi Developer Documentation
+title: Get started with React - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and React.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/react.html
 ---
