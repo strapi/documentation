@@ -59,9 +59,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
 
-<!-- Title below is supposed to be an h7, so one level deeper than "The `createStrategy` Factory. But h7 is not a thing, so using bold instead. 🤷 -->
-
-**Configuration Object**
+#### Configuration Object
 
 The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
 
