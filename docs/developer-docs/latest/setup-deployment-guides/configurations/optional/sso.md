@@ -21,7 +21,7 @@ Single Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-SSO configuration lives in the server configuration of the application, found at `/config/server.js`.
+SSO configuration lives in the server configuration of the application, found at `/config/admin.js`.
 
 ## Accessing the configuration
 
@@ -132,7 +132,7 @@ yarn add passport-google-oauth2
 ::: details Configuration example for Google:
 
 ```jsx
-// path: ./config/server.js
+// path: ./config/admin.js
 
 'use strict';
 
@@ -201,7 +201,7 @@ yarn add passport-github2
 ::: details Configuration example for Github:
 
 ```jsx
-// path: ./config/server.js
+// path: ./config/admin.js
 
 'use strict';
 
@@ -265,7 +265,7 @@ yarn add passport-discord
 ::: details Configuration example for Discord:
 
 ```jsx
-// path: ./config/server.js
+// path: ./config/admin.js
 
 'use strict';
 
@@ -329,7 +329,7 @@ yarn add passport-azure-ad-oauth2 jsonwebtoken
 ::: details Configuration example for Microsoft:
 
 ```jsx
-// path: ./config/server.js
+// path: ./config/admin.js
 
 'use strict';
 
@@ -399,7 +399,7 @@ yarn add passport-okta-oauth20
 ::: details Configuration example for Okta:
 
 ```jsx
-// path: ./config/server.js
+// path: ./config/admin.js
 
 'use strict';
 
@@ -476,14 +476,14 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 
 ### Authentication Events
 
-The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations/required/admin.md#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
 
 Example:
 
-`/config/server.js`
+`/config/admin.js`
 
 ```javascript
 module.exports = () => ({
