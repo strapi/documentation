@@ -460,6 +460,8 @@ The easiest way to do so is to plug into the verify function of your strategy an
 For example, if you want to allow only people with an official strapi.io email address, you can instantiate your strategy like this:
 
 ```javascript
+// path: ./config/admin.js
+
 const strategyInstance = new Strategy(configuration, ({ email, username }, done) => {
   // If the email ends with @strapi.io
   if (email.endsWith('@strapi.io')) {
@@ -479,11 +481,9 @@ The SSO feature adds a new [authentication event](/developer-docs/latest/setup-d
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
 
-Example:
-
-`/config/admin.js`
-
 ```javascript
+// path: ./config/admin.js
+
 module.exports = () => ({
   // ...
   admin: {
