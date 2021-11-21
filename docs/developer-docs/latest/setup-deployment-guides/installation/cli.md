@@ -70,6 +70,27 @@ yarn create strapi-app my-project
 
 6. (Custom installation type only) Name your project's database.
 
+## Install Strapi dependencies with npm or yarn
+
+First, you should install npm packages using the following command
+
+<code-group>
+
+<code-block title="NPM">
+```bash
+npm install
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn
+```
+</code-block>
+
+</code-group>
+
+
 ## Running Strapi
 
 To start the Strapi application, run the following command in the project folder:
