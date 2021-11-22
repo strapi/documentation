@@ -5,7 +5,9 @@ description: Instructions to manage the end-users of a front-end application wit
 
 # Managing end-users accounts
 
-End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel. End-users are managed with the Users & Permissions plugin (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)). This plugin is however not entirely managed and configured from one same place of the admin panel: end-users roles and permissions are managed in the Settings interface (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)), but end-users accounts are managed from the Content Manager.
+End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.
+
+With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end-users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-users roles and permissions are managed in the ![Settings icon](../assets/icons/settings.svg) _Settings_ interface (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)), but end-users accounts are managed from the ![Content icon](../assets/icons/content.svg) _Content Manager_.
 
 With the Users & Permissions plugin, the end-users and their account information are managed as a content-type. When the plugin is installed on a Strapi application, 3 collection types are automatically created (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)), including "User" which is the only one available directly in the Content Manager.
 
@@ -20,7 +22,7 @@ If end-users can register themselves on your front-end application (see [Managin
 To create a new end-user account:
 
 1. Go to the User collection type in the Content Manager.
-2. Click on the **Add New user** button in the top right corner.
+2. Click on the **Add new entry** button in the top right corner.
 3. Fill in the default fields of the entry. Additional fields added specifically for your Strapi application by your administrators may be displayed as well.
 
 | Field     | Instructions                                                                                                |

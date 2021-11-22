@@ -5,7 +5,7 @@ description: Instructions to configure the administrator roles of a Strapi appli
 
 # Configuring administrator roles
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the Settings interface, accessible from *General > Settings* in the main navigation of the admin panel.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ subnavigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
 
@@ -42,7 +42,7 @@ To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
 ::: tip
-In the *Roles* interface, from the table, you can click on the duplicate button <Fa-Copy /> to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](../assets/icons/duplicate.svg) to create a new role by duplicating an existing one.
 :::
 
 ## Deleting a role <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
@@ -51,18 +51,14 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 To delete a role:
 
-1. Click on the trash button <Fa-TrashAlt /> on the right side of the role's record.
+1. Click on the delete button ![Delete icon](../assets/icons/delete.svg) on the right side of the role's record.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
-
-::: tip
-You also have the possibility to delete multiple roles at the same time. To do so, select the roles by ticking the box on the left side of the roles' record. Then, click on the **Delete** button in the top right corner of the table.
-:::
 
 ## Editing a role
 
 ![Administrator roles edition interface](../assets/users-permissions/administrator_roles-edition.png)
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](../assets/icons/edit.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ::: caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
@@ -85,15 +81,15 @@ To edit a role's details, follow the instructions from the table below:
 
 ### Configuring role's permissions
 
-The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application. It is displayed as a table, split into 4 categories: Collection Types, Single Types, Plugins and Settings.
+The permissions area of an administrator role editing interface allows to configure in detail what actions an administrator can do for any part of the Strapi application. It is displayed as a table, split into 4 categories: Collection types, Single types, Plugins and Settings.
 
-#### Collection and Single Types
+#### Collection and Single types
 
-The Collection Types and Single Types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
+The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
 
-To configure Collection or Single Types permissions for a role:
+To configure Collection or Single types permissions for a role:
 
-1. Go to the Collection Types or Single Types category of the permissions table.
+1. Go to the Collection types or Single types category of the permissions table.
 2. Tick the box on the left of the name of the content type to give access to. By default, all actions can be performed for all fields of the content type.
 3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
 4. (optional) Click the name of the content type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
@@ -110,7 +106,7 @@ To configure plugins or settings permissions for a role:
 2. Click on the name of the sub-category which permissions to configure, to display all available permissions.
 3. Tick the boxes of the permissions the role should give access to. You can refer to the table below for more information and instructions.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Plugins
 
@@ -118,9 +114,9 @@ By default, plugins permissions can be configured for the Content-Type Builder, 
 
 | Plugin name          | Permissions |
 | -------------------- | ----------- |
+| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
 | Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-Type Builder plugin in read-only mode</li></ul></ul> |
 | Upload <br> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li><li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |    
-| Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
 | Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br> *General > Settings > Users & Permissions plugin* |
 
 :::
@@ -132,10 +128,11 @@ Settings permissions can be configured for all settings accessible from *General
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br> *General > Settings > Global Settings - Media Library* |
+| Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br> *General > Settings > Global Settings - Internationalization* |
+| Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br> *General > Settings > Global Settings - Single Sign-On* |
 | Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul><ul><li>Plugins</li><ul><li>"Install (only for dev env)" - allows to install new plugins when in a development environment</li><li>"Uninstall (only for dev env)" - allows to uninstall plugins when in a development environment</li></ul></ul> |    
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br> *General > Settings > Administration Panel* |
-| API tokens | <ul><li>General</li><ul><li>"Create (generate)" - allows to create API tokens</li><li>"Read" - allows to see created API tokens</li><li>"Update" - allows to edit API tokens' settings</li><li>"Delete" - allows to delete API tokens</li></ul></ul> 👉 Path reminder to API tokens settings: <br> *General > Settings > Global Settings - API Tokens* |
 
 :::
 
@@ -151,10 +148,10 @@ For each permission of each category, a **Settings** button is displayed. It all
 - the administrator must have the same role as the creator.
 
 ::: note
-Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md)).
+Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations.md#role-based-access-control)).
 :::
 
-![Custom conditions for administrator role permissions](../assets/users-permissions/administrator_custom-conditions.png)
+<img src="../assets/users-permissions/administrator_custom-conditions.png" alt="Custom conditions for administrator role permissions" width="80%">
 
 To set custom conditions:
 
@@ -162,8 +159,12 @@ To set custom conditions:
 2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
-   - Click on the arrow button ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
+   - Click on the arrow button ![Carret icon](../assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
+
+::: tip
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the **Settings** button.
+:::
 
 ::: caution
 Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
