@@ -32,7 +32,7 @@ yarn create strapi-app my-app --quickstart --no-run
 ```
 # Create an application using SQLite and prevent the server from starting automatically as we will create a plugin
 # right after the project generation
-npx create-strapi-app my-app --quickstart --no-run
+npx create-strapi-app@latest my-app --quickstart --no-run
 ```
 
 :::
