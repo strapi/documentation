@@ -91,15 +91,16 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 👇 Let's get started! Using the big buttons below, please choose between:
 
-* the **Hands-on** path for a DIY approach to run your project
-* or the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end.
+- the **Hands-on** path for a DIY approach to run your project
+- or the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end.
 
 :::::: tabs type:card
+
 <!-- we need 5 colons or it will conflict with the callouts markup -->
 
 ::::: tab Hands-on
 
-## 🚀  Part A: Create a new project with Strapi
+## 🚀 Part A: Create a new project with Strapi
 
 ### Step 1: Run the installation script
 
@@ -192,13 +193,14 @@ It would help getting a bit more organized if our restaurants directory had some
 ### Step 2: Use the collection types to create new entries
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", let's use them to actually add content by creating new entries.
+
 #### Create an entry for the "Restaurant" collection type
 
 1. Go to [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation.
 2. Click on **Add new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
-5. Click **Save**.  
+5. Click **Save**.
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
@@ -222,7 +224,7 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 Go to [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
 
-In the right sidebar, in the **Categories** drop-down list, select "Brunch".  Click **Save**.
+In the right sidebar, in the **Categories** drop-down list, select "Brunch". Click **Save**.
 
 ### Step 3: Set Roles & Permissions
 
@@ -249,11 +251,13 @@ First, navigate to [Content Manager > Collection types > Category](http://localh
 2. On the next screen, click **Publish**.
 3. In the _Confirmation_ window, click **Yes, publish**.  
 
+
 Then, go back to the Categories list and repeat for the "French Food" category.
 
 Finally, to publish your favorite restaurant, go to [Collection types > Restaurants](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant), click the restaurant entry, and **Publish** it.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
+
 ### Step 5: Use the API
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
@@ -296,7 +300,7 @@ Now your content is created, published, and you have permissions to request it t
 Keep on creating amazing content!
 :::
 
-## ⏩  What to do next?
+## ⏩ What to do next?
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
@@ -320,14 +324,18 @@ To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the follo
 
 :::: tabs card
 ::: tab npm
+
 ```bash
   npx create-strapi-starter my-project gatsby-blog
 ```
+
 :::
 ::: tab yarn
+
 ```bash
   yarn create strapi-starter my-project gatsby-blog
 ```
+
 ::::
 
 During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
@@ -336,15 +344,15 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 Once the installation is complete, your browser automatically opens 2 tabs:
 
-* The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your application.
-* The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your application, and you can already see the Gatsby blog in action.
+- The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your application.
+- The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your application, and you can already see the Gatsby blog in action.
 
 <img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="" class="image--50" />
 <img src="../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png" alt="" class="image--50 image--right" />
 
 By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-:::callout CONGRATULATIONS! 🥳 
+:::callout CONGRATULATIONS! 🥳
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 
 Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
@@ -427,7 +435,7 @@ After a few moments, you should see your blog with its updated title running at 
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
 :::
 
-## ⏩  What to do next?
+## ⏩ What to do next?
 
 Now that you know the basics of kickstarting your project with a Strapi starter, we encourage you to explore and play a bit further:
 

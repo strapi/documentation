@@ -334,7 +334,6 @@ const sidebar = {
                 ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
               ],
             },
-            [ '/developer-docs/latest/developer-resources/global-strapi/api-reference', 'Global Strapi API Reference' ],
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],

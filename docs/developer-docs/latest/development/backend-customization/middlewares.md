@@ -22,10 +22,9 @@ In Strapi, 2 middleware concepts coexist:
 A new application-level or API-level middleware can be implemented:
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
-
-- `./src/middlewares/` for application-level middlewares
-- `./src/api/[api-name]/middlewares/` for API-level middlewares
-- `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares)
+  - `./src/middlewares/` for application-level middlewares
+  - `./src/api/[api-name]/middlewares/` for API-level middlewares
+  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares)
 
 Middlewares working with the REST API are functions like the following:
 
