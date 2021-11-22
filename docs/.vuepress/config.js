@@ -499,6 +499,7 @@ const plugins = [
     siteTitle: (_, $site) => $site.title,
     title: $page => $page.title,
   }],
+  ['@vuepress/medium-zoom'],
   ['vuepress-plugin-code-copy', {
     color: '#ffffff',
     successText: 'Copied to clipboard!',
