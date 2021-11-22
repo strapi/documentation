@@ -9,7 +9,7 @@ In this guide you will learn how to upgrade your application to the latest versi
 
 :::note
 When a new version of Strapi is available, you will be notified both in your terminal, and in the admin panel. <br>
-Also note that you can check the **Settings > Application** section of the admin panel to have more information on:
+Also note that you can check the **Settings > Global settings - Application** section of the admin panel to have more information on:
 
 - The versions of Strapi and Node you are currently using.
 - If relevant, the versions we recommend you to upgrade to.
