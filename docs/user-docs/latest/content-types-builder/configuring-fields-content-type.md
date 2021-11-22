@@ -18,7 +18,7 @@ In the Content-Type Builder, fields can be added at the creation of a new conten
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
-![Select a field](../assets/content-types-builder/fields-selection.png)
+<img src="../assets/content-types-builder/fields-selection.png" alt="Field selection" width="80%">
 
 ## Regular fields
 
