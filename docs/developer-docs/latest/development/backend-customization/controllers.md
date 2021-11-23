@@ -31,7 +31,7 @@ A new controller can be implemented:
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
-  // Method 1: Creating an entirely custom controller
+  // Method 1: Creating an entirely custom action
   async exampleAction(ctx) {
     try {
       ctx.body = 'ok';
@@ -40,12 +40,12 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     }
   },
 
-  // Method 2: Wrapping a core controller (leaves core logic in place)
+  // Method 2: Wrapping a core action (leaves core logic in place)
   async find(ctx) {
     // some custom logic here
     ctx.query = { ...ctx.query, local: 'en' }
     
-    // Calling the default core controller
+    // Calling the default core action
     const { data, meta } = await super.find(ctx);
 
     // some more custom logic
@@ -54,7 +54,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     return { data, meta };
   },
 
-  // Method 3: Replacing a core controller
+  // Method 3: Replacing a core action
   async findOne(ctx) {
     const { id } = ctx.params;
     const { query } = ctx;
@@ -106,10 +106,10 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core controllers
 
-Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
 :::tip
-A core controller can be replaced entirely by [creating a custom controller](#adding-a-new-controller) and naming it the same as the core controller (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
+An action from a core controller can be replaced entirely by [creating a custom controller](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
 ::::: details Collection type examples
