@@ -58,7 +58,7 @@ To add a new locale:
 
 API tokens allow users to authenticate their Content API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
-<!-- screenshot -->
+![API tokens](../assets/settings/settings_api-token.png)
 
 The *API Tokens* settings sub-section displays a table listing all created API tokens.
 
