@@ -5,6 +5,8 @@ description: Learn in this guide how to fetch data from an external service to u
 
 # Fetching external data
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide explains how to fetch data from an external service to use it in your app.
 
 In this example we will see how to daily fetch Docker pull count to store the result in your database.

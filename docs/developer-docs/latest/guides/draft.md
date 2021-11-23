@@ -5,13 +5,13 @@ description: Learn in this guide how to create a draft system that will allow yo
 
 # Draft system
 
-This guide will explain how to create a draft system that will allow you to manage draft, published, and archive status.
-
 :::caution
-The native **Draft & Publish feature** has been released in **version 3.2**. We suggest you to use the native feature instead of this guide.
+The native [**Draft & Publish feature**](/user-docs/latest/content-manager/saving-and-publishing-content.md#saving-publishing-content) has been released in Strapi v3.2. We suggest you to use the native feature instead of this guide.
 
 This guide is still useful if you want to see the concept of "force filtering" in action.
 :::
+
+This guide will explain how to create a draft system that will allow you to manage draft, published, and archive status.
 
 ## Introduction
 

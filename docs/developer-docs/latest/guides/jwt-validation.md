@@ -5,6 +5,8 @@ description: Learn in this guide how to validate a JWT (JSON Web Token) with a t
 
 # JWT validation
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how to validate a `JWT` (JSON Web Token) with a third party service.
 
 When you sign in with the authentication route `POST /auth/local`, Strapi generates a `JWT` which lets your users request your API as an authenticated one.

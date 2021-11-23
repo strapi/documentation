@@ -5,6 +5,8 @@ description: Learn in this guide how to count data with a GraphQL query.
 
 # Count with GraphQL
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide explains how to count data with a GraphQL query.
 
 The count aggregation currently has some issues and this feature is also not available for Bookshelf (SQL databases).

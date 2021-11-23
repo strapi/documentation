@@ -5,6 +5,8 @@ description: Learn in this guide how you can secure your Strapi application by u
 
 # Secure your application
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can secure your Strapi application by using a third party provider.
 
 ::: tip

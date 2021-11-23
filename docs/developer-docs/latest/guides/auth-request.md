@@ -5,6 +5,8 @@ description: Learn in this guide how you can request the API of your Strapi proj
 
 # Authenticated request
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide you will see how you can request the API as an authenticated user.
 
 ## Introduction

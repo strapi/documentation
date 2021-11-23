@@ -5,8 +5,9 @@ description: Learn in this guide how you can customize the admin panel of your S
 
 # Custom admin
 
-In this guide we will see how you can customize the admin panel.
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
+In this guide we will see how you can customize the admin panel.
 ## Introduction
 
 For this example, we will see two things:

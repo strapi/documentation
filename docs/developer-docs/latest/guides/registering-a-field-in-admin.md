@@ -5,6 +5,8 @@ description: Learn in this guide how you can create a new Field for your adminis
 
 # Creating a new Field in the administration panel
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can create a new Field for your administration panel.
 
 ## Introduction

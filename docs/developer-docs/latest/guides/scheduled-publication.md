@@ -5,6 +5,8 @@ description: Learn in this guide how to create an article schedule system.
 
 # Scheduled publication
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide will explain how to create an article schedule system.
 
 ## Introduction

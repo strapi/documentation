@@ -6,6 +6,8 @@ sidebarDepth: 2
 
 # Unit testing
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
 ::: tip
