@@ -5,6 +5,8 @@ description: Learn in this guide how you can customize your Strapi project API's
 
 # Custom data response
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can customize your API's response.
 
 ## Introduction
