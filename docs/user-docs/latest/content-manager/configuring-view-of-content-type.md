@@ -46,7 +46,7 @@ Note also that the explanations below explain how to permanently configure which
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
-| Label                     | Write the label to should be used for the field in the list view table.   |
+| Label                     | Write the label to be used for the field in the list view table.          |
 | Enable sort on this field | Click on **ON** or **OFF** to able or disable the sort on the field.      |
 
 4. Click on the **Save** button.
