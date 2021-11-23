@@ -130,7 +130,7 @@ By completing the form, you create your own account. Once done, you become the f
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![admin panel screenshot](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
+![Admin panel screenshot: dashboard](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
 
 ::: callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
@@ -186,7 +186,7 @@ It would help getting a bit more organized if our restaurants directory had some
 9. On the right side, click the _Category_ relational fields box and select "Restaurant".
 10. In the center, select the icon that represents "many-to-many" ![icon many-to-many](../assets/quick-start-guide/icon_manytomany.png). The text should read `Categories has and belongs to many Restaurants`.
 
-![](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
+![Admin Panel screenshot: relations](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
 9. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
