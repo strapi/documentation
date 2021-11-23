@@ -5,6 +5,8 @@ description: Learn in this guide how to update an existing Strapi project so it 
 
 # 21YunBox
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+
 This guide explains how to update an existing Strapi project so it can be deployed on [21YunBox](https://www.21yunbox.com).
 
 21YunBox provides a Chinese CDN, continuous deployment, one-click HTTPS and [other services such as managed databases and backend web services](https://www.21yunbox.com/docs/#/), allowing to launch web projects in China.

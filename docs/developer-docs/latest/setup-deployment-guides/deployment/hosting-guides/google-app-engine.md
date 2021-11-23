@@ -5,6 +5,8 @@ description: Learn in this guide how to deploy your Strapi application on Google
 
 # Google App Engine
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+
 In this guide we are going to:
 
 - Create a new Strapi project
