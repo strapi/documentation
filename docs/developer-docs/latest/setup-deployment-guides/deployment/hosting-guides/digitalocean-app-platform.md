@@ -5,6 +5,8 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 # DigitalOcean App Platform
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean's App Platform](https://digitalocean.com). App Platform is DigitalOcean's Platform as a Service (PaaS) that will handle deploying, networking, SSL, and more for your app. It is the easiest way to deploy Strapi to DigitalOcean.
 
 Databases can be created using DigitalOcean's [Managed Databases](https://www.digitalocean.com/products/managed-databases/).
