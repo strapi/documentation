@@ -1,5 +1,5 @@
 ---
-title: 
+title: Backend customization - Services - Strapi Developer Docs
 description: 
 sidebarDepth: 3
 ---
@@ -8,9 +8,13 @@ sidebarDepth: 3
 
 # Services
 
-Services are a set of reusable functions. They are particularly useful to respect the DRY (don’t repeat yourself) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
+Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/developer-docs/latest/development/backend-customization/controllers.md) logic.
 
 ## Implementation
+
+Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated services](#extending-core-services).
+
+### Adding a new service
 
 A new service can be implemented:
 
@@ -22,15 +26,39 @@ A new service can be implemented:
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
 ```js
-/**
- * @param {{ strapi: import('@strapi/strapi').Strapi }} opts
- */
-module.exports = ({ strapi }) => {
-  return {
-    archiveArticles(ids) {
-      // do some logic here
-    },
-  };
+// path: ./src/api/restaurant/services/restaurant.js
+
+const { createCoreService } = require('@strapi/strapi').factories;
+
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  {
+  // Method 1: Creating an entirely custom service
+  async exampleService(...args) {
+    let response = { okay: true }
+
+    if (response.okay === false) {
+      return { response, error: true }
+    }
+
+    return response
+  },
+
+  // Method 2: Wrapping a core service (leaves core logic in place)
+  async find(...args) {  
+    // Calling the default core controller
+    const { results, pagination } = await super.find(...args);
+
+    // some custom logic
+    results.forEach(result => {
+      result.counter = 1;
+    });
+
+    return { results, pagination };
+  },
+
+  // Method 3: Replacing a core service
+  async findOne(entityId, params = {}) {
+    return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
+  }
 };
 ```
 
@@ -45,6 +73,7 @@ The goal of a service is to store reusable functions. An `email` service could b
 ```js
 // path: ./src/api/email/services/email.js
 
+const { createCoreService } = require('@strapi/strapi').factories;
 const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
 
 // Create reusable transporter object using SMTP transport.
@@ -56,8 +85,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = {
-  send: (from, to, subject, text) => {
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  {
+  send(from, to, subject, text) => {
     // Setup e-mail data.
     const options = {
       from,
@@ -72,20 +101,21 @@ module.exports = {
 };
 ```
 
-The service is now available through the `strapi.services` global variable. It can be used in another part of the codebase, like in the following controller:
+The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
 
 ```js
 // path: ./src/api/user/controllers/user.js
 
-module.exports = {
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
   // GET /hello
-  signup: async ctx => {
+  async signup(ctx) => {
+    const { userData } = ctx.body;
+
     // Store the new user in database.
-    const user = await User.create(ctx.query);
+    const user = await strapi.service('api::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.send')('welcome@mysite.com', user.email, 'Welcome', '...');
-
+    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -100,6 +130,137 @@ module.exports = {
 ::: note
 When a new [content-type](/developer-docs/latest/development/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
 :::
+
+### Extending core services
+
+Core services are created for each content-type and could be used by [controllers](/developer-docs/latest/development/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
+
+:::tip
+A core service can be replaced entirely by [creating a custom service](#adding-a-new-service) and naming it the same as the core service (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
+:::
+
+::::: details Collection type examples
+
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(params) {
+  // some logic here
+  const { results, pagination } = await super.find(params);
+  // some more logic
+
+  return { results, pagination };
+}
+```
+
+:::
+
+::: tab findOne()
+
+```js
+async findOne(entityId, params) {
+  // some logic here
+  const result = await super.findOne(entityId, params);
+  // some more logic
+
+  return result;
+}
+```
+
+:::
+
+::: tab create()
+
+```js
+async create(params) {
+  // some logic here
+  const result = await super.create(params);
+  // some more logic
+
+  return result;
+}
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(entityId, params) {
+  // some logic here
+  const result = await super.update(entityId, params);
+  // some more logic
+
+  return result;
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(entityId, params) {
+  // some logic here
+  const result = await super.delete(entityId, params);
+  // some more logic
+
+  return result;
+}
+```
+
+:::
+::::
+:::::
+
+::::: details Single type examples
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(params) {
+  // some logic here
+  const entity = await super.find(params);
+  // some more logic
+
+  return entity;
+}
+```
+
+:::
+
+::: tab update()
+
+```js
+async createOrUpdate({ data, ...params }) {
+  // some logic here
+  const entity = await super.createOrUpdate({ data, ...params });
+  // some more logic
+
+  return entity;
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(params) {
+  // some logic here
+  const entity = await super.delete(params);
+  // some more logic
+
+  return entity;
+}
+```
+
+:::
+::::
+:::::
 
 ## Usage
 
