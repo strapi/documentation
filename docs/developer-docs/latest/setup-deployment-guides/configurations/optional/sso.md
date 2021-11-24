@@ -55,7 +55,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 :::
 
 ::: note
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the login screen of the admin panel unless [a security exception is added](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security).
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/latest/getting-started/introduction.md#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security).
 :::
 
 ### The `createStrategy` Factory
