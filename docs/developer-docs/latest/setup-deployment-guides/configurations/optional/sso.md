@@ -55,6 +55,10 @@ A provider's configuration is a JavaScript object built with the following prope
 The `uid` property is the unique identifier of each strategy and is generally found in the strategy's package. If you are not sure of what it refers to, please contact the maintainer of the strategy.
 :::
 
+::: note
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the login screen of the admin panel unless [a security exception is added](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security).
+:::
+
 ### The `createStrategy` Factory
 
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
