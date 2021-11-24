@@ -1,6 +1,7 @@
 ---
-title: Integrations - Strapi Developer Documentation
+title: Integrations - Strapi Developer Docs
 description: Integrate Strapi with a multitude of frameworks, frontend or backend programming languages.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations.html
 ---
 
 # Integrations

@@ -1,6 +1,7 @@
 ---
-title: Get started with Dart - Strapi Developer Documentation
+title: Get started with Dart - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Dart.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/dart.html
 ---
 
 # Getting Started with Dart

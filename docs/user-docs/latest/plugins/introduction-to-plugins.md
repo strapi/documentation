@@ -1,6 +1,7 @@
 ---
 title: Plugins - Strapi User Guide
 description: Reference guide to all Strapi plugins and instructions to use these plugins.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/introduction-to-plugins.html
 ---
 
 # Introduction to plugins

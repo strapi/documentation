@@ -1,10 +1,9 @@
 ---
 title: Backend customization - Controllers - Strapi Developer Docs
-description:
+description: Strapi controllers are files that contain a set of methods reached by the client according to the requested route and can be customized according to your needs.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/controllers.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Controllers
 

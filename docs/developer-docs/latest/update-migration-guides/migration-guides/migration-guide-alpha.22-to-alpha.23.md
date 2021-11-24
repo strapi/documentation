@@ -1,6 +1,7 @@
 ---
-title: Migrate from alpha.22 to alpha.23 - Strapi Developer Documentation
+title: Migrate from alpha.22 to alpha.23 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.22 to alpha.23.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.22-to-alpha.23.html
 ---
 
 # Migration guide from alpha.22 to alpha.23

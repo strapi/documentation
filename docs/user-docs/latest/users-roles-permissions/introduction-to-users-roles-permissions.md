@@ -1,6 +1,7 @@
 ---
 title: Users, Roles & Permissions - Strapi User Guide
 description: Introduction to the system of permissions of Strapi which gives access to features of the admin panel.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html
 ---
 
 # Introduction to users, roles & permissions

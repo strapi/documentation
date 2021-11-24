@@ -1,6 +1,7 @@
 ---
 title: Global Settings - Strapi User Guide
 description: Instructions to manage the global settings of a Strapi application in the admin panel.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/manageing-global-settings.html
 ---
 
 # Managing global settings

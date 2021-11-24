@@ -1,8 +1,8 @@
 ---
-title: Ordering for Query Engine API - Strapi Developer Documentation
-description: (add description here)
+title: Ordering & Pagination for Query Engine API - Strapi Developer Docs
+description: Use Strapi's Query Engine API to order and paginate the results of your queries.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.html
 ---
-<!-- TODO: update SEO tags -->
 
 # Query Engine API: Ordering & Paginating
 

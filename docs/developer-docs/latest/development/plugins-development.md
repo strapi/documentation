@@ -1,6 +1,7 @@
 ---
-title: Plugins development - Strapi Developer Documentation
+title: Plugins development - Strapi Developer Docs
 description: Strapi allows you to create your own custom local plugins that will work exactly the same as external ones.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/plugins-development.html
 ---
 
 # Plugins development

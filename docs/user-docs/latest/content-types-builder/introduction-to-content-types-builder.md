@@ -1,6 +1,7 @@
 ---
 title: Content-Type Builder - Strapi User Guide
 description: From the Content-Type Builder, administrators can create and manage content-types (collection types and single types but also components).
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html
 ---
 
 # Introduction to the Content-Type Builder

@@ -1,6 +1,7 @@
 ---
-title: Migrate from alpha.9 to alpha.10 - Strapi Developer Documentation
+title: Migrate from alpha.9 to alpha.10 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.9 to alpha.10.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.9-to-alpha.10.html
 ---
 
 # Migration guide from alpha.9 to alpha.10

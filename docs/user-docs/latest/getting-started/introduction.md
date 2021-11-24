@@ -1,6 +1,7 @@
 ---
 title: Strapi User Guide
 description: This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/getting-started/introduction.html
 sidebarDepth: 3
 ---
 

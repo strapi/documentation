@@ -1,9 +1,8 @@
 ---
-title: API configuration - Strapi Developer Documentation
-description:
+title: API configuration - Strapi Developer Docs
+description: Strapi's default API parameters can be configured.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html
 ---
-
-<!-- TODO: update SEO -->
 
 # API configuration
 

@@ -1,9 +1,8 @@
 ---
-title: Admin panel configuration - Strapi Developer Documentation
-description:
+title: Admin panel configuration - Strapi Developer Docs
+description: Strapi's admin panel offers a single entry point file for its configuration.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Admin panel configuration
 

@@ -1,6 +1,7 @@
 ---
 title: List of Strapi plugins - Strapi User Guide
-description: Reference guide to Strapi plugins explaining how they work and how they expand a Strapi application
+description: Reference guide to Strapi plugins explaining how they work and how they expand a Strapi application.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/strapi-plugins.html
 ---
 
 # List of Strapi plugins

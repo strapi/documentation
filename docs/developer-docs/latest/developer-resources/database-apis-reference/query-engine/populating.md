@@ -1,8 +1,8 @@
 ---
-title: Populating for Query Engine API - Strapi Developer Documentation
-description: (add description here)
+title: Populating for Query Engine API - Strapi Developer Docs
+description: Use Strapi's Query Engine API to populate relations when querying your content.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.html
 ---
-<!-- TODO: update SEO tags -->
 
 # Query Engine API: Populating
 

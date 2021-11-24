@@ -1,9 +1,8 @@
 ---
-title: Database configuration - Strapi Developer Documentation
-description: Strapi databases have a single entry point file to define their configurations.
+title: Database configuration - Strapi Developer Docs
+description: Strapi offers a single entry point file to configure its databases.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Database configuration
 
