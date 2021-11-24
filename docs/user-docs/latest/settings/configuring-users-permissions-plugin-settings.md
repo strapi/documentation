@@ -1,6 +1,7 @@
 ---
 title: Users & Permissions plugin settings - Strapi User Guide
 description: Instructions to configure the Users & Permissions plugin
+canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html
 ---
 
 # Configuring Users & Permissions plugin settings

@@ -1,9 +1,8 @@
 ---
-title: Server configuration - Strapi Developer Documentation
-description: 
+title: Server configuration - Strapi Developer Docs
+description: Strapi offers a single entry point file for its server configuration.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Server configuration
 

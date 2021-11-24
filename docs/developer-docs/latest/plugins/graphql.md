@@ -1,7 +1,8 @@
 ---
-title: GraphQL - Strapi Developer Documentation
+title: GraphQL - Strapi Developer Docs
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 ---
 
 # GraphQL

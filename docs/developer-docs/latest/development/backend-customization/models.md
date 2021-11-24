@@ -1,10 +1,9 @@
 ---
-title: Models - Strapi Developer Documentation
-description: (…)
+title: Models - Strapi Developer Docs
+description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Models
 

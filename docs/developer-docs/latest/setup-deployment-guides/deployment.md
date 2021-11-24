@@ -1,6 +1,7 @@
 ---
-title: Deployment - Strapi Developer Documentation
+title: Deployment - Strapi Developer Docs
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html
 ---
 
 # Deployment

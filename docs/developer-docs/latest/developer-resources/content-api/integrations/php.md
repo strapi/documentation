@@ -1,6 +1,7 @@
 ---
-title: Get started with PHP - Strapi Developer Documentation
+title: Get started with PHP - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html
 ---
 
 # Getting Started with PHP

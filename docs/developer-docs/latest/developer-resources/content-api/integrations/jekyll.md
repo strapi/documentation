@@ -1,6 +1,7 @@
 ---
-title: Get started with Jekyll - Strapi Developer Documentation
+title: Get started with Jekyll - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Jekyll.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html
 ---
 
 # Getting Started with Jekyll

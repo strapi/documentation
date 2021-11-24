@@ -1,6 +1,7 @@
 ---
-title: Installing from CLI - Strapi Developer Documentation
+title: Installing from CLI - Strapi Developer Docs
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/cli.html
 ---
 
 # Installing from CLI

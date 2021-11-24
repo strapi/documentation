@@ -1,6 +1,7 @@
 ---
 title: Content Manager - Strapi User Guide
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/introduction-to-content-manager.html
 ---
 
 # Introduction to the Content Manager

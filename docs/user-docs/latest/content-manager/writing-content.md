@@ -1,6 +1,7 @@
 ---
 title: Writing Content - Strapi User Guide
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
 ---
 
 # Writing content

@@ -1,6 +1,7 @@
 ---
-title: Authenticated request - Strapi Developer Documentation
+title: Authenticated request - Strapi Developer Docs
 description: Learn in this guide how you can request the API of your Strapi project as an authenticated user.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/auth-request.html
 ---
 
 # Authenticated request

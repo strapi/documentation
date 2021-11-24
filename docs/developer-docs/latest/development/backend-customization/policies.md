@@ -1,10 +1,9 @@
 ---
-title: Policies - Backend customization - Strapi Developer Documentation
-description: …
+title: Policies - Backend customization - Strapi Developer Docs
+description: Strapi policies are functions that execute specific logic on each request before it reaches the controller. Policies can be customized according to your needs.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/policies.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Policies
 

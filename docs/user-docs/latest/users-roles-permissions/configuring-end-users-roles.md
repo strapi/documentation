@@ -1,6 +1,7 @@
 ---
 title: Configure End-users Roles - Strapi User Guide
 description: Instructions to configure the end-users roles for a front-end application using the Users & Permissions plugin
+canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html
 ---
 
 # Configuring end-users roles
