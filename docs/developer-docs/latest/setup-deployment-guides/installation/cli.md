@@ -31,10 +31,12 @@ The following installation guide covers the most basic installation option using
 
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
 - Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+- Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
+
+For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
-
 
 1. In a terminal, run the following command:
 
@@ -42,7 +44,7 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project
+npx create-strapi-app@latest my-project
 ```
 </code-block>
 
@@ -55,8 +57,9 @@ yarn create strapi-app my-project
 </code-group>
 
 2. Choose an installation type:
-   * `Quickstart (recommended)`, which uses the default database (SQLite)
-   * `Custom (manual settings)`, which allows to choose your preferred database
+
+   - `Quickstart (recommended)`, which uses the default database (SQLite)
+   - `Custom (manual settings)`, which allows to choose your preferred database
 
 3. When terminal asks `Would you like to use a template?`, type `y` for yes or `n` for no then press Enter.
 
@@ -85,4 +88,3 @@ yarn develop
 </code-block>
 
 </code-group>
-

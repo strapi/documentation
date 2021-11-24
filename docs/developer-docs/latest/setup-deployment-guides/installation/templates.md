@@ -39,7 +39,7 @@ yarn create strapi-app my-project --template <template-github-name>
 ::: tab npx
 
 ```bash
-npx create-strapi-app my-project --template <template-github-name>
+npx create-strapi-app@latest my-project --template <template-github-name>
 ```
 
 :::

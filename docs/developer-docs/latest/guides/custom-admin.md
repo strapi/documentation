@@ -6,8 +6,9 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/custom-admin.h
 
 # Custom admin
 
-In this guide we will see how you can customize the admin panel.
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
+In this guide we will see how you can customize the admin panel.
 ## Introduction
 
 For this example, we will see two things:

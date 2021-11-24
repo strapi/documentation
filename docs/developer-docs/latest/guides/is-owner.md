@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/is-owner.html
 
 # Create is owner policy
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide will explain how to restrict content editing to content authors only.
 
 ## Introduction

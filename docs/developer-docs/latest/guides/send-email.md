@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/send-email.htm
 
 # Send email programmatically
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how to use the Email plugin to send email where you want in your app.
 
 For this example we want to receive an email when a new article's comment is posted and if it contains bad words.

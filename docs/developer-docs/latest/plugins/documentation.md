@@ -35,10 +35,6 @@ yarn strapi install documentation
 
 When your plugin is installed, you just have to start your application and it will generate your API documentation.
 
-The administration panel lets you configure the basic settings of this plugin.
-
-![Accessing the documentation](../assets/plugins/documentation/open-doc.gif)
-
 ## Administration panel
 
 This plugin comes with an interface that is available in your administration panel and a configuration file.

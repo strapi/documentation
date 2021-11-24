@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/scheduled-publ
 
 # Scheduled publication
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide will explain how to create an article schedule system.
 
 ## Introduction

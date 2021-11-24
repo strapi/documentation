@@ -6,12 +6,14 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Render
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+
 This guide explains how to update an existing Strapi project so it can be deployed on [Render](https://render.com).
 
 With persistent disks and managed PostgreSQL databases, Render gives you multiple different ways to store your content. Render services come with fully managed SSL, so it's no longer necessary to set up a proxy server to secure your Strapi app. Since Render services are automatically restarted if they become unresponsive, you don't need to use a process manager like `pm2` either.
 
 ::: tip
-For more information consult [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi)
+For more information consult [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi).
 :::
 
 ### Step 1: Create a Render Account

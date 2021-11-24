@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/custom-date-re
 
 # Custom data response
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can customize your API's response.
 
 ## Introduction

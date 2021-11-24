@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-
 
 # Creating a new Field in the administration panel
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can create a new Field for your administration panel.
 
 ## Introduction
@@ -33,7 +35,7 @@ yarn create strapi-app my-app --quickstart --no-run
 ```
 # Create an application using SQLite and prevent the server from starting automatically as we will create a plugin
 # right after the project generation
-npx create-strapi-app my-app --quickstart --no-run
+npx create-strapi-app@latest my-app --quickstart --no-run
 ```
 
 :::

@@ -10,7 +10,7 @@ Depending on their type, content types can be divided into 2 interfaces: the lis
 
 ## Configuring the list view
 
-On the right side of the list view interface, right above the table, a settings button <Fa-Cog /> is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
+On the right side of the list view interface, right above the table, a settings button ![Cog icon](../assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 ::: note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -22,9 +22,8 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view settings
 
-1. In the list view of your collection type, click on the settings button <Fa-Cog />.
-2. Click on the **Configure the view** button.
-3. In the Settings area, define your chosen new settings:
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg) to be redirected to the list view configuration interface.
+2. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
 | ---------------------- | -------------------------------------------------------------------------------------------------- |
@@ -32,26 +31,26 @@ Note also that the explanations below explain how to permanently configure which
 | Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
 | Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
 | Entries per page       | Choose among the drop-down list the number of entries per page.                                    |
-| Default sort attribute | Choose the sorting field and type that will be applied by default.                                 |
+| Default sort attribute | Choose the sorting field that will be used by default.                                             |
+| Default sort order     | Choose the sorting type that will be applied by default.                                           |
 
-4. Click on the **Save** button.
+3. Click on the **Save** button.
 
 ### List view display
 
-1. In the list view of your collection type, click on the settings button <Fa-Cog />.
-2. Click on the **Configure the view** button.
-3. In the View area, define what fields to display in the list view table, and in what order:
-   - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
-   - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
-   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed among the other fields.
-4. Click the name of the field to access its available own settings:
+1. In the list view of your collection type, click on the settings button ![Cog icon](../assets/icons/cog.svg) to be redirected to the list view configuration interface.
+2. In the View area, define what fields to display in the list view table, and in what order:
+   - Click the add button ![Add icon](../assets/icons/add_icon.svg) to add a new field.
+   - Click the delete button ![Clear icon](../assets/icons/clear.svg) to remove a field.
+   - Click the reorder button ![Drag icon](../assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](../assets/icons/edit.svg) to access its available own settings:
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
 | Label                     | Write the label to should be used for the field in the list view table.   |
 | Enable sort on this field | Click on **ON** or **OFF** to able or disable the sort on the field.      |
 
-5. Click on the **Save** button.
+4. Click on the **Save** button.
 
 ::: note
 Relational fields can also be displayed in the list view. There are however some specificities to keep in mind:
@@ -87,10 +86,10 @@ In the edit view of a content type, in the right side of the interface, a **Conf
 
 1. In the edit view of your content type, click on the **Configure the view** button.
 2. In the View area, define what fields to display in the list view table, and in what order:
-   - Click the add button ![icon add new](../assets/content-manager/icon_add.png) to add a new field.
-   - Click the delete button ![icon delete](../assets/content-manager/icon_delete.png) to remove a field.
-   - Click the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the name of a field to access its available own settings:
+   - Click the add button ![Add icon](../assets/icons/add_icon.svg) to add a new field.
+   - Click the delete button ![Clear icon](../assets/icons/clear.svg) to remove a field.
+   - Click the reorder button ![Drag icon](../assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](../assets/icons/edit.svg) to access its available own settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
@@ -114,7 +113,7 @@ On the right side of the View area is displayed a Relational fields part. As in 
 To define what relational fields of an entry should be available in the edit view, the following options are available:
 
 - the **Insert another relational field** button, to add another relational field to your entry. If the button remains unclickable, it means that no other relational field can be added.
-- the delete button ![icon delete](../assets/content-manager/icon_delete.png), to remove a relational field.
-- the reorder button ![icon drag & drop](../assets/content-manager/icon_dragdrop.png), to drag and drop to the place you want your relational field to be displayed among the others.
+- the delete button ![Clear icon](../assets/icons/clear.svg), to remove a relational field.
+- the reorder button ![Drag icon](../assets/icons/drag.svg), to drag and drop to the place you want your relational field to be displayed among the others.
 
 As for regular fields, it is possible to access the available settings of the relational fields by clicking on their name. Most settings are the same as for regular fields (see [Edit view display](./configuring-view-of-content-type.md#edit-view-display)) except for "Entry title" which is only available for relational fields. It is recommended to choose well the entry title of relational fields as the more comprehensive it is, the easier it will be for administrators to manage the content of relational fields from the edit view.

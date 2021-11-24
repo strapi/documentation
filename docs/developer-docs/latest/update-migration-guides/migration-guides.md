@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 ## Instructions
 
-When upgrading your application you will need to follow every migration guide between your current version and the one you are upgrading to. 
+When upgrading your application you will need to follow every migration guide between your current version and the one you are upgrading to.
 
 ::: tip TIP
 If there is no specific migration guide for your version step(s), you should follow the general [Update Strapi guide](update-version.md).
@@ -26,7 +26,11 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 4. Migration guide from 3.4.x to 3.4.4.
 5. [Update Strapi guide.](update-version.md)
 
-## V3 guides
+## v4-Stable guides
+
+At the moment there are no migration guides from v3-Stable to v4-Stable. These will be coming soon!
+
+## V3-Stable guides
 
 - [Migration guide from 3.4.x to 3.4.4](migration-guides/migration-guide-3.4.x-to-3.4.4.md)
 - [Migration guide from 3.3.x to 3.4.0](migration-guides/migration-guide-3.3.x-to-3.4.0.md)
@@ -35,7 +39,7 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 - [Migration guide from 3.1.x to 3.2.3](migration-guides/migration-guide-3.1.x-to-3.2.x.md)
 - [Migration guide from 3.0.x to 3.1.x](migration-guides/migration-guide-3.0.x-to-3.1.x.md)
 
-## Beta guides
+## v3-Beta guides
 
 ::: warning
 
@@ -52,7 +56,7 @@ If you have issues upgrading, it's our general recommendation to create a new pr
 - [Migration guide from beta.16+ to beta.17.4](migration-guides/migration-guide-beta.16-to-beta.17.4.md)
 - [Migration guide from beta.15 to beta.16](migration-guides/migration-guide-beta.15-to-beta.16.md)
 
-## Alpha guides
+## v3-Alpha guides
 
 ::: warning
 

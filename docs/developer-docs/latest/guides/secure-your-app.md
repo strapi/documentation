@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/secure-your-ap
 
 # Secure your application
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can secure your Strapi application by using a third party provider.
 
 ::: tip

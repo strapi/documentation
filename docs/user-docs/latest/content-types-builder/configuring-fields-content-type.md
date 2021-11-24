@@ -19,15 +19,15 @@ In the Content-Type Builder, fields can be added at the creation of a new conten
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
-![Select a field](../assets/content-types-builder/fields-selection.png)
+<img src="../assets/content-types-builder/fields-selection.png" alt="Field selection" width="80%">
 
 ## Regular fields
 
-### <img width="28" src="../assets/content-types-builder/field-icon_text.png"> Text
+### <img width="28" src="../assets/icons/ctb_text.svg"> Text
 
 The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -56,11 +56,11 @@ The Text field displays a textbox that can contain small text. This field can be
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_richtext.png"> Rich Text
+### <img width="28" src="../assets/icons/ctb_richtext.svg"> Rich Text
 
 The Rich Text field displays an editor with formatting options to manage rich text. This field can be used for long written content.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -78,6 +78,7 @@ The Rich Text field displays an editor with formatting options to manage rich te
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
+| Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
 
@@ -85,11 +86,11 @@ The Rich Text field displays an editor with formatting options to manage rich te
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_number.png"> Number
+### <img width="28" src="../assets/icons/ctb_number.svg"> Number
 
 The Number field displays a field for any kind of number: integer, decimal and float.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -116,11 +117,11 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_date.png"> Date
+### <img width="28" src="../assets/icons/ctb_date.svg"> Date
 
 The Date field can display a date (year, month, day), time (hour, minute, second) or datetime (year, month, day, hour, minute, and second) picker.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -145,11 +146,11 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_boolean.png"> Boolean
+### <img width="28" src="../assets/icons/ctb_boolean.svg"> Boolean
 
 The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -163,7 +164,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Boolean field.                               |
+| Default value  | Choose the default value of the Boolean field: *true*, *null* or *false*.   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
@@ -173,20 +174,20 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_relation.png"> Relation
+### <img width="28" src="../assets/icons/ctb_relation.svg"> Relation
 
 The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
 There are 6 different types of relations:
 
-- <img width="28" src="../assets/content-types-builder/icon_oneway.png"> One way: Content-type A *has one* Content-type B
-- <img width="28" src="../assets/content-types-builder/icon_1to1.png"> One-to-one: Content-type A *has and belong to one* Content-type B
-- <img width="28" src="../assets/content-types-builder/icon_1tomany.png"> One-to-many: Content-type A *belongs to many* Content-type B
-- <img width="28" src="../assets/content-types-builder/icon_manyto1.png"> Many-to-one: Content-type B *has many* Content-type A
-- <img width="28" src="../assets/content-types-builder/icon_manytomany.png"> Many-to-many: Content-type A *has and belongs to many* Content-type B
-- <img width="28" src="../assets/content-types-builder/icon_manyway.png"> Many way: Content-type A *has many* Content-type B
+- <img width="25" src="../assets/icons/ctb_relation_oneway.svg"> One way: Content-type A *has one* Content-type B
+- <img width="25" src="../assets/icons/ctb_relation_1to1.svg"> One-to-one: Content-type A *has and belong to one* Content-type B
+- <img width="25" src="../assets/icons/ctb_relation_1tomany.svg"> One-to-many: Content-type A *belongs to many* Content-type B
+- <img width="25" src="../assets/icons/ctb_relation_manyto1.svg"> Many-to-one: Content-type B *has many* Content-type A
+- <img width="25" src="../assets/icons/ctb_relation_manytomany.svg"> Many-to-many: Content-type A *has and belongs to many* Content-type B
+- <img width="25" src="../assets/icons/ctb_relation_manyway.svg"> Many way: Content-type A *has many* Content-type B
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -204,18 +205,16 @@ Configuring the base settings of the Relation field consists in choosing with wh
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Custom column names | Rename the columns corresponding to the relational fields to make it more comprehensive in the database. |
 
 :::
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_email.png"> Email
+### <img width="28" src="../assets/icons/ctb_email.svg"> Email
 
 The Email field displays an email address field with format validation to ensure the email address is valid.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -241,11 +240,11 @@ The Email field displays an email address field with format validation to ensure
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_password.png"> Password
+### <img width="28" src="../assets/icons/ctb_password.svg"> Password
 
 The Password field displays a password field that is encrypted.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -271,13 +270,13 @@ The Password field displays a password field that is encrypted.
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_enum.png"> Enumeration
+### <img width="28" src="../assets/icons/ctb_enum.svg"> Enumeration
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
 <!--- Add note about Enumeration fields known issues (i.e. recommending a relation using either oneWay or manyWay for some use-cases instead of enum) --->
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -292,7 +291,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Enumeration field.                           |
+| Default value  | Choose the default value of the Enumeration field.                          |
 | Name override for GraphQL | Write a custom GraphQL schema type to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
@@ -303,11 +302,11 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_media.png"> Media
+### <img width="28" src="../assets/icons/ctb_media.svg"> Media
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -332,11 +331,11 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_json.png"> JSON
+### <img width="28" src="../assets/icons/ctb_json.svg"> JSON
 
 The JSON field allows to configure data in a JSON format, to store JSON objects or arrays.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -354,18 +353,16 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
 
 :::
 
 ::::
 
-### <img width="28" src="../assets/content-types-builder/field-icon_uid.png"> UID
+### <img width="28" src="../assets/icons/ctb_uid.svg"> UID
 
 The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -390,7 +387,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
-## <img width="28" src="../assets/content-types-builder/icon_component.png"> Components
+## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
@@ -399,7 +396,7 @@ When configuring a component through the Content-Type Builder, it is possible to
 - create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-component)),
 - or use an existing one by clicking on *Use an existing component*.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 
@@ -416,6 +413,7 @@ When configuring a component through the Content-Type Builder, it is possible to
 | Setting name   | Instructions                                                                            |
 |----------------|-----------------------------------------------------------------------------------------|
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
+| Private field  | Tick to make the field private and prevent it from being found via the API.             |
 | Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
 | Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the component to be translated per available locale. |
@@ -424,11 +422,11 @@ When configuring a component through the Content-Type Builder, it is possible to
 
 ::::
 
-## <img width="28" src="../assets/content-types-builder/icon_dynamiczone.png"> Dynamic zones
+## <img width="28" src="../assets/icons/ctb_dz.svg"> Dynamic zones
 
 Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrators have the choice of composing and rearranging the components of the dynamic zone how they want.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Base settings
 

@@ -13,7 +13,7 @@ In most cases, the controllers will contain the bulk of a project's business log
 
 ## Implementation
 
-Controllers can be [generated or added manually](#adding-a-new-controller), and the [core controllers examples](#extending-core-controllers) can help you get started creating custom ones.
+Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
 
 ### Adding a new controller
 
@@ -22,31 +22,59 @@ A new controller can be implemented:
 - with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
 - or manually by creating a JavaScript file:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
-  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for , though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
+  - or in a folder like `./src/plugins/[plugin-name]/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
 ```js
-// path: ./src/api/[api-name]/controllers/my-controller.js
+// path: ./src/api/restaurant/controllers/restaurant.js
 
-module.exports = {
-  async exampleAction(ctx, next) {
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
+  // Method 1: Creating an entirely custom action
+  async exampleAction(ctx) {
     try {
       ctx.body = 'ok';
     } catch (err) {
       ctx.body = err;
     }
+  },
+
+  // Method 2: Wrapping a core action (leaves core logic in place)
+  async find(ctx) {
+    // some custom logic here
+    ctx.query = { ...ctx.query, local: 'en' }
+    
+    // Calling the default core action
+    const { data, meta } = await super.find(ctx);
+
+    // some more custom logic
+    meta.date = Date.now()
+
+    return { data, meta };
+  },
+
+  // Method 3: Replacing a core action
+  async findOne(ctx) {
+    const { id } = ctx.params;
+    const { query } = ctx;
+
+    const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
+    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+    return this.transformResponse(sanitizedEntity);
   }
 };
 ```
 
 Each controller action can be an `async` or `sync` function.
-Every action receives a context object (`ctx`) as the first parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
+Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
 
 ::: details Example: GET /hello route calling a basic controller
 
-A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, which takes `hello.index` as a handler. Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
+A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
 
 ```js
-// path: ./src/api/hello/routes/router.js
+// path: ./src/api/hello/routes/hello.js
 
 module.exports = {
   routes: [
@@ -57,7 +85,9 @@ module.exports = {
     }
   ]
 }
+```
 
+```js
 // path: ./src/api/hello/controllers/hello.js
 
 module.exports = {
@@ -75,12 +105,11 @@ When a new [content-type](/developer-docs/latest/development/backend-customizati
 
 ### Extending core controllers
 
-Default controllers are created for each content-type. These default controllers are used to return responses to API requests (e.g. when the `GET /api/articles/3` is accessed, the `findOne` method of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::caution
-v4 controllers are currently being refactored. The code examples below will be updated soon to reflect these changes.
+:::tip
+An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
-
 
 ::::: details Collection type examples
 
@@ -90,11 +119,11 @@ v4 controllers are currently being refactored. The code examples below will be u
 
 ```js
 async find(ctx) {
-  const { query } = ctx;
+  // some logic here
+  const { data, meta } = await super.find(ctx);
+  // some more logic
 
-  const { results, pagination } = await service.find(query);
-
-  return transformResponse(sanitize(results), { pagination });
+  return { data, meta };
 }
 ```
 
@@ -104,12 +133,11 @@ async find(ctx) {
 
 ```js
 async findOne(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx;
+  // some logic here
+  const response = await super.findOne(ctx);
+  // some more logic
 
-  const entity = await service.findOne(id, query);
-
-  return transformResponse(sanitize(entity));
+  return response;
 }
 ```
 
@@ -119,13 +147,11 @@ async findOne(ctx) {
 
 ```js
 async create(ctx) {
-  const { query } = ctx.request;
+  // some logic here
+  const response = await super.create(ctx);
+  // some more logic
 
-  const { data, files } = parseBody(ctx);
-
-  const entity = await service.create({ ...query, data, files });
-
-  return transformResponse(sanitize(entity));
+  return response;
 }
 ```
 
@@ -135,12 +161,11 @@ async create(ctx) {
 
 ```js
 async update(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx.request;
-  const { data, files } = parseBody(ctx);
-  const entity = await service.update(id, { ...query, data, files });
+  // some logic here
+  const response = await super.update(ctx);
+  // some more logic
 
-  return transformResponse(sanitize(entity));
+  return response;
 }
 ```
 
@@ -150,10 +175,11 @@ async update(ctx) {
 
 ```js
 async delete(ctx) {
-  const { id } = ctx.params;
-  const { query } = ctx;
-  const entity = await service.delete(id, query);
-  return transformResponse(sanitize(entity));
+  // some logic here
+  const response = await super.delete(ctx);
+  // some more logic
+
+  return response;
 }
 ```
 
@@ -168,11 +194,12 @@ async delete(ctx) {
 
 ```js
 async find(ctx) {
-  const { query } = ctx;
-  const entity = await service.find(query);
-  return transformResponse(sanitize(entity));
-}
+  // some logic here
+  const response = await super.find(ctx);
+  // some more logic
 
+  return response;
+}
 ```
 
 :::
@@ -181,11 +208,11 @@ async find(ctx) {
 
 ```js
 async update(ctx) {
-  const { query } = ctx.request;
-  const { data, files } = parseBody(ctx);
-  const entity = await service.createOrUpdate({ ...query, data, files });
+  // some logic here
+  const response = await super.update(ctx);
+  // some more logic
 
-  return transformResponse(sanitize(entity));
+  return response;
 }
 ```
 
@@ -195,10 +222,11 @@ async update(ctx) {
 
 ```js
 async delete(ctx) {
-  const { query } = ctx;
-  const entity = await service.delete(query);
+  // some logic here
+  const response = await super.delete(ctx);
+  // some more logic
 
-  return transformResponse(sanitize(entity));
+  return response;
 }
 ```
 
@@ -214,5 +242,9 @@ Controllers are declared and attached to a route. Controllers are automatically 
 // access an API controller
 strapi.controller('api::api-name.controller-name');
 // access a plugin controller
-strapi.controller('plugin::plugin-name.service-name');
+strapi.controller('plugin::plugin-name.controller-name');
 ```
+
+::: tip
+To list all the available controllers, run `yarn strapi controllers:list`.
+:::

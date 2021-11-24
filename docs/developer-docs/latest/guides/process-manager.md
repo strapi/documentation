@@ -7,6 +7,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/process-manage
 
 # Process manager
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 In this guide we will see how you can start a Strapi application using a process manager.
 
 ::: tip

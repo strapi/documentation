@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Heroku
 
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+
 This is a step-by-step guide for deploying a Strapi project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are provided instructions on how to get started.
 
 ### Heroku Install Requirements
@@ -70,7 +72,7 @@ Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -257,7 +259,6 @@ heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
 Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
 
 `Path: ./my-project/`
-
 
 <code-group>
 

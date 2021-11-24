@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/manageing-global-
 
 # Managing global settings
 
-Global settings for plugins and features are managed from *General > Settings* in the main navigation of the admin panel.
+Global settings for plugins and features are managed from ![Settings icon](../assets/icons/settings.svg) *Settings* in the main navigation of the admin panel.
 
 ## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
@@ -24,6 +24,8 @@ To configure the SSO feature settings:
 | Auto-registration | Click on **ON** to allow the automatic creation of a new Strapi administrator when an SSO login does not match an existing Strapi administrator account. If this setting is set on **OFF**, new Strapi administrators accounts must be created manually beforehand. |
 | Default role      | Choose among the drop-down list the role to attribute by default to auto-registrated Strapi administrators through SSO login.                                                                                                                                       |
 
+3. Click the **Save** button.
+
 ## Configuring Internationalization locales
 
 The [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](../plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from the *Global settings > Internationalization* sub-section of the settings interface.
@@ -34,8 +36,8 @@ The *Internationalization* settings sub-section displays a table listing all loc
 
 For each locale, the table displays the default ISO code of the locale, its optional display name and indicates if the locale is set as the default one. From the table, administrators can also:
 
-- Click on the edit button <Fa-PencilAlt /> to edit a locale
-- Click on the trash button <Fa-TrashAlt /> to delete a locale
+- Click on the edit button ![Edit icon](../assets/icons/edit.svg) to edit a locale
+- Click on the delete button ![Delete icon](../assets/icons/delete.svg) to delete a locale
 
 ### Adding a new locale
 
@@ -51,13 +53,13 @@ To add a new locale:
 2. In the locale addition window, choose your new locale among the *Locales* drop-down list. The latter lists alphabetically all locales, displayed as their ISO code, that can be added to your Strapi application.
 3. (optional) In the *Locale display name* textbox, write a new display name for your new locale.
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
-5. Click on the **Add locale** button to confirm the addition of your new locale.
+5. Click on the **Save** button to confirm the addition of your new locale.
 
 ## Managing API tokens
 
 API tokens allow users to authenticate their Content API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
-<!-- screenshot -->
+![API tokens](../assets/settings/settings_api-token.png)
 
 The *API Tokens* settings sub-section displays a table listing all created API tokens.
 

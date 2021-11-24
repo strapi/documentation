@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/external-data.
 
 # Fetching external data
 
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+
 This guide explains how to fetch data from an external service to use it in your app.
 
 In this example we will see how to daily fetch Docker pull count to store the result in your database.
