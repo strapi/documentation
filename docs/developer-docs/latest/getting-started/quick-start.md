@@ -157,7 +157,7 @@ The Content-Type Builder plugin helps you create your data structure. When creat
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Go to [Plugins > Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -170,13 +170,13 @@ Your restaurants directory will eventually include many restaurants, so we need 
 
 ![GIF: Create Restaurant collection type in Content-Type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
-Once Strapi has restarted, "Restaurant" is listed under Content Manager > Collection Types in the main navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) Content Manager > Collection types in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
 
 #### Create a "Category" collection type
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to [Plugins > Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
@@ -197,7 +197,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 #### Create an entry for the "Restaurant" collection type
 
-1. Go to [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation.
+1. Go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation.
 2. Click on **Add new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
@@ -205,11 +205,11 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 ![Screenshot: Biscotte Restaurant in Content Manager](../assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
 
-The restaurant is now listed in the [Collection types > Restaurants](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) view.
+The restaurant is now listed in the [Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) view.
 
 #### Add Categories
 
-Let's go to [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
+Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
@@ -219,11 +219,11 @@ Let's go to [Content Manager > Collection types - Category](http://localhost:133
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
-The "French Food" and "Brunch" categories are now listed in the [Collection types > Categories](http://localhost:1337/admin/content-manager/collectionType/api::category.category) view.
+The "French Food" and "Brunch" categories are now listed in the [Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) view.
 
 #### Add a Category to a Restaurant
 
-Go to [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the main navigation, and click on "Biscotte Restaurant".
+Go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation, and click on "Biscotte Restaurant".
 
 In the right sidebar, in the **Categories** drop-down list, select "Brunch". Click **Save**.
 
@@ -231,7 +231,7 @@ In the right sidebar, in the **Categories** drop-down list, select "Brunch". Cli
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
-1. Click on _General > Settings_ at the bottom of the main navigation.
+1. Click on _General ![Settings icon](../assets/quick-start-guide/icons/settings.svg) Settings_ at the bottom of the main navigation.
 2. Under _Users & Permissions Plugin_, choose [Roles](http://localhost:1337/admin/settings/users-permissions/roles).
 3. Click the **Public** role.
 4. Scroll down under _Permissions_.
@@ -246,16 +246,15 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
-First, navigate to [Content Manager > Collection types > Category](http://localhost:1337/admin/plugins/content-manager/collectionType/application::category.category). From there:
+First, navigate to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category). From there:
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
 3. In the _Confirmation_ window, click **Yes, publish**.  
 
-
 Then, go back to the Categories list and repeat for the "French Food" category.
 
-Finally, to publish your favorite restaurant, go to [Collection types > Restaurants](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant), click the restaurant entry, and **Publish** it.
+Finally, to publish your favorite restaurant, go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant), click the restaurant entry, and **Publish** it.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 
@@ -315,26 +314,26 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 ## 🚀 Part A: Create a new project with Strapi starters
 
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Gatsby, Gridsome, Next, Nuxt).
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Next, Nuxt).
 
-This quick start guide has been specifically tailored to use the [Gatsby blog starter](https://strapi.io/starters/strapi-starter-gatsby-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
+This quick start guide has been specifically tailored to use the [Next blog starter](https://strapi.io/starters/strapi-starter-next-js-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
 
 ### Step 1: Run the installation script
 
-To create a [Gatsby](https://www.gatsbyjs.com/) blog using Strapi, run the following command in a terminal:
+To create a [Next](https://nextjs.org/) blog using Strapi, run the following command in a terminal:
 
 :::: tabs card
 ::: tab npm
 
 ```bash
-  npx create-strapi-starter my-project gatsby-blog
+  npx create-strapi-starter my-project next-blog
 ```
 
 :::
 ::: tab yarn
 
 ```bash
-  yarn create strapi-starter my-project gatsby-blog
+  yarn create strapi-starter my-project next-blog
 ```
 
 ::::
@@ -343,15 +342,14 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 ### Step 2: Register & have a look at your blog
 
-Once the installation is complete, your browser automatically opens 2 tabs:
+Once the installation is complete, your browser automatically opens a tab at ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)). It's for Strapi's admin panel, the back end of your application.
 
-- The first tab ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)) is the admin panel, it's for the back end of your application.
-- The second tab ([http://localhost:8000](http://localhost:8000)) is for the front end of your application, and you can already see the Gatsby blog in action.
+By completing the form in the admin panel tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
 
-<img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="" class="image--50" />
-<img src="../assets/quick-start-guide/qsg-starters-part1-01-gatsby_fe.png" alt="" class="image--50 image--right" />
+Now, open [http://localhost:3000](http://localhost:3000) in another tab. This is the front end of your application, and you can already see the Next blog in action.
 
-By completing the form in the first tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="Register screen" class="image--50" />
+<img src="../assets/quick-start-guide/qsg-starters-part1-01-next_fe.png" alt="Next blog frontend screenshot" class="image--50 image--right" />
 
 :::callout CONGRATULATIONS! 🥳
 Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
@@ -373,7 +371,7 @@ If the Strapi server is not already running, in your terminal, `cd` into the `my
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Click on [Collection types > Writers](http://localhost:1337/admin/plugins/content-manager/collectionType/application::writer.writer?page=1&pageSize=10&_sort=name:ASC) in the main navigation, and click the **Add New Writers** button.
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Writer](http://localhost:1337/admin/content-manager/collectionType/api::writer.writer) in the navigation, and click the **Add new entry** button.
 
 ![Screenshot: Create a new writer in admin panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -383,11 +381,11 @@ Click on [Collection types > Writers](http://localhost:1337/admin/plugins/conten
 
 ### Step 2: Write & publish your first article
 
-To write an article, we need to add a new entry to the "Articles" collection type and fill in a few fields.
+To write an article, we need to add a new entry to the "Article" collection type and fill in a few fields.
 
 ![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
-Click on [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=title:ASC) in the main navigation, and click the **Add New Articles** button.
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article) in the main navigation, and click the **Add new entry** button.
 
 #### Give your article a title, a description, and add some content
 
@@ -402,19 +400,21 @@ In the sidebar on the right, choose your name in the _Author_ drop-down list. Yo
 
 While there, you might also want to choose a _Category_ for your article from the list.
 
+🤓 Don't forget to click on **Save** to save the article.
+
 #### Turn your draft into a publication
 
 By default, your new article would be saved as a draft. Let's not be too shy and publish it right away.
 
 To publish an article, click the **Publish** button at the top of the window.
 
-You have just created and published your first article, "Hello World!". You can find it in the [Collection types > Articles](http://localhost:1337/admin/plugins/content-manager/collectionType/application::article.article?page=1&pageSize=10&_sort=id:DESC) view.
+You have just created and published your first article, "Hello World!". You can find it in the ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article?page=1&pageSize=10&sort=id:DESC) view.
 
 ### Step 3: Update the `Homepage` single type
 
 It's time to make this blog a bit more yours.
 
-Click on [Single Types > Homepage](http://localhost:1337/admin/plugins/content-manager/singleType/application::homepage.homepage) in the main navigation. Let's edit this homepage:
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Single types - Homepage](http://localhost:1337/admin/content-manager/singleType/api::homepage.homepage) in the main navigation. Let's edit this homepage:
 
 1. Replace the image in the _ShareImage_ field.
 2. At the bottom of the page, update the _Title_ to `My Wonderful Strapi Blog` in the _Hero_ field group.
@@ -422,15 +422,15 @@ Click on [Single Types > Homepage](http://localhost:1337/admin/plugins/content-m
 
 ### Step 4: Restart the servers to reflect latest changes
 
-Gatsby is a static-site generator. It means that you need to restart the servers for changes to appear on the front end:
+Next is a static-site generator. It means that you need to restart the servers for changes to appear on the front end:
 
 1. In your terminal, press `Ctrl-C` to stop the servers.
 2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press Enter.
 3. Restart the servers by typing `npm run develop` (or `yarn develop`) and press Enter.
 
-After a few moments, you should see your blog with its updated title running at [http://localhost:8000](http://localhost:8000). The "Hello World!" article you have just created is also visible at the bottom of the page.
+After a few moments, you should see your blog with its updated title running at [http://localhost:3000](http://localhost:3000). The "Hello World!" article you have just created is also visible at the bottom of the page.
 
-![GIF: Updated Gatsby blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
+![GIF: Updated Next blog front end](../assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
 
 :::callout CONGRATULATIONS! 🥳
 Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
