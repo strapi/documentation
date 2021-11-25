@@ -170,7 +170,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 
 ![GIF: Create Restaurant collection type in Content-Type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
-Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) Content Manager > Collection types in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
 
 #### Create a "Category" collection type
 
@@ -197,7 +197,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 #### Create an entry for the "Restaurant" collection type
 
-1. Go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation.
+1. Go to ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation.
 2. Click on **Add new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
@@ -209,7 +209,7 @@ The restaurant is now listed in the [Collection types - Restaurant](http://local
 
 #### Add Categories
 
-Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
+Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
@@ -223,7 +223,7 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 #### Add a Category to a Restaurant
 
-Go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation, and click on "Biscotte Restaurant".
+Go to ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation, and click on "Biscotte Restaurant".
 
 In the right sidebar, in the **Categories** drop-down list, select "Brunch". Click **Save**.
 
@@ -246,7 +246,7 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
-First, navigate to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category). From there:
+First, navigate to ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category). From there:
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
@@ -254,7 +254,7 @@ First, navigate to ![Content Manager icon](../assets/quick-start-guide/icons/con
 
 Then, go back to the Categories list and repeat for the "French Food" category.
 
-Finally, to publish your favorite restaurant, go to ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant), click the restaurant entry, and **Publish** it.
+Finally, to publish your favorite restaurant, go to ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant), click the restaurant entry, and **Publish** it.
 
 ![GIF: Publish content](../assets/quick-start-guide/qsg-handson-publish.gif)
 
@@ -371,7 +371,7 @@ If the Strapi server is not already running, in your terminal, `cd` into the `my
 
 You have several ideas for great articles in mind. But first, the world needs to know who you are!
 
-Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Writer](http://localhost:1337/admin/content-manager/collectionType/api::writer.writer) in the navigation, and click the **Add new entry** button.
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Writer](http://localhost:1337/admin/content-manager/collectionType/api::writer.writer) in the navigation, and click the **Add new entry** button.
 
 ![Screenshot: Create a new writer in admin panel](../assets/quick-start-guide/qsg-starters-part2-01-writer.png)
 
@@ -385,7 +385,7 @@ To write an article, we need to add a new entry to the "Article" collection type
 
 ![Animated GIF to create an article](../assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
 
-Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article) in the main navigation, and click the **Add new entry** button.
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article) in the main navigation, and click the **Add new entry** button.
 
 #### Give your article a title, a description, and add some content
 
@@ -408,13 +408,13 @@ By default, your new article would be saved as a draft. Let's not be too shy and
 
 To publish an article, click the **Publish** button at the top of the window.
 
-You have just created and published your first article, "Hello World!". You can find it in the ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article?page=1&pageSize=10&sort=id:DESC) view.
+You have just created and published your first article, "Hello World!". You can find it in the ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article?page=1&pageSize=10&sort=id:DESC) view.
 
 ### Step 3: Update the `Homepage` single type
 
 It's time to make this blog a bit more yours.
 
-Click on ![Content Manager icon](../assets/quick-start-guide/icons/content_manager.svg) [Content Manager > Single types - Homepage](http://localhost:1337/admin/content-manager/singleType/api::homepage.homepage) in the main navigation. Let's edit this homepage:
+Click on ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) [Content Manager > Single types - Homepage](http://localhost:1337/admin/content-manager/singleType/api::homepage.homepage) in the main navigation. Let's edit this homepage:
 
 1. Replace the image in the _ShareImage_ field.
 2. At the bottom of the page, update the _Title_ to `My Wonderful Strapi Blog` in the _Hero_ field group.
