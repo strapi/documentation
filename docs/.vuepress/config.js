@@ -268,76 +268,76 @@ const sidebar = {
                 ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
               ],
             },
-            {
-              title: 'Integrations',
-              path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
-              collapsable: true,
-              sidebarDepth: 1,
-              children: [
-                ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
-                  'Vue.js',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/angular',
-                  'Angular',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/next-js',
-                  'Next.js',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js',
-                  'Nuxt.js',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/graphql',
-                  'GraphQL',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/gatsby',
-                  'Gatsby',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/gridsome',
-                  'Gridsome',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/jekyll',
-                  'Jekyll',
-                ],
-                ['/developer-docs/latest/developer-resources/content-api/integrations/11ty', '11ty'],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/svelte',
-                  'Svelte',
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/sapper',
-                  'Sapper',
-                ],
-                ['/developer-docs/latest/developer-resources/content-api/integrations/ruby', 'Ruby'],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/python',
-                  'Python',
-                ],
-                ['/developer-docs/latest/developer-resources/content-api/integrations/dart', 'Dart'],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
-                  'Flutter',
-                ],
-                ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
-                ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
-                [
-                  '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
-                  'Laravel',
-                ],
-              ],
-            },
           ]
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+        {
+          title: 'Integrations',
+          path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
+              'Vue.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/angular',
+              'Angular',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/next-js',
+              'Next.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js',
+              'Nuxt.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/graphql',
+              'GraphQL',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gatsby',
+              'Gatsby',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gridsome',
+              'Gridsome',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/jekyll',
+              'Jekyll',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/11ty', '11ty'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/svelte',
+              'Svelte',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/sapper',
+              'Sapper',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/ruby', 'Ruby'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/python',
+              'Python',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/dart', 'Dart'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
+              'Flutter',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
+              'Laravel',
+            ],
+          ],
+        },
       ],
     },
     {
