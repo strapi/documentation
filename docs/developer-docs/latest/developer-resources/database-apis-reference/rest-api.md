@@ -613,9 +613,9 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 `GET /api/books?populate=author.name,author.address`
 :::
 
-For convenience, the `*` wildcard can be used:
+For convenience, the `*` wildcard can be used to populate all first-level relations:
 
-::: request Example request: Get all books and populate all their first level relations
+::: request Example request: Get all books and populate all their first-level relations
 `GET /api/books?populate=*`
 :::
 
@@ -623,7 +623,15 @@ For convenience, the `*` wildcard can be used:
 `GET /api/books?populate[author]=*`
 :::
 
-:::tip 
+<br/>
+
+Only first-level relations are populated with `populate=*`. Use the LHS bracket syntax (i.e. `[populate]=*`) to populate deeper:
+
+::: request Example request: Get all relations nested inside a "navigation" component in the "global" single type
+`GET /api/global?populate[navigation][populate]=*`
+:::
+
+:::tip
 Adding `?populate=*` to the query URL will include dynamic zones in the results.
 :::
 
