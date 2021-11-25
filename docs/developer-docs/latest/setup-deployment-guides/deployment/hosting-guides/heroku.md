@@ -359,7 +359,7 @@ As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/com
 
 To disable Brotli, provide the following configuration in `config/middleware.js`.
 
-```jsonify
+```json
 gzip: {
   enabled: true,
   options: {
