@@ -58,6 +58,7 @@ const sidebar = {
               title: 'Optional configurations',
               collapsable: true,
               children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md', 'API tokens'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
@@ -199,72 +200,6 @@ const sidebar = {
       sidebarDepth: 2,
       children: [
         {
-          title: 'Integrations',
-          path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
-          collapsable: true,
-          sidebarDepth: 1,
-          children: [
-            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
-              'Vue.js',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/angular',
-              'Angular',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/next-js',
-              'Next.js',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js',
-              'Nuxt.js',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/graphql',
-              'GraphQL',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/gatsby',
-              'Gatsby',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/gridsome',
-              'Gridsome',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/jekyll',
-              'Jekyll',
-            ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/11ty', '11ty'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/svelte',
-              'Svelte',
-            ],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/sapper',
-              'Sapper',
-            ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/ruby', 'Ruby'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/python',
-              'Python',
-            ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/dart', 'Dart'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
-              'Flutter',
-            ],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
-            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
-            [
-              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
-              'Laravel',
-            ],
-          ],
-        },
-        {
           title: 'APIs Reference',
           collapsable: true,
           sidebarDepth: 1,
@@ -338,6 +273,72 @@ const sidebar = {
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+        {
+          title: 'Integrations',
+          path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['/developer-docs/latest/developer-resources/content-api/integrations/react', 'React'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/vue-js',
+              'Vue.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/angular',
+              'Angular',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/next-js',
+              'Next.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js',
+              'Nuxt.js',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/graphql',
+              'GraphQL',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gatsby',
+              'Gatsby',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/gridsome',
+              'Gridsome',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/jekyll',
+              'Jekyll',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/11ty', '11ty'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/svelte',
+              'Svelte',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/sapper',
+              'Sapper',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/ruby', 'Ruby'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/python',
+              'Python',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/dart', 'Dart'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/flutter',
+              'Flutter',
+            ],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/go', 'Go'],
+            ['/developer-docs/latest/developer-resources/content-api/integrations/php', 'PHP'],
+            [
+              '/developer-docs/latest/developer-resources/content-api/integrations/laravel',
+              'Laravel',
+            ],
+          ],
+        },
       ],
     },
     {
@@ -345,24 +346,23 @@ const sidebar = {
       collapsable: true,
       children: [
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-        // ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
-        ['/developer-docs/latest/guides/slug', 'Create a slug system'],
-        ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
-        ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
-        ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
+        // ['/developer-docs/latest/guides/slug', 'Create a slug system'],
+        // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
+        // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
+        // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
         ['/developer-docs/latest/guides/draft', 'Draft system'],
-        ['/developer-docs/latest/guides/error-catching', 'Error catching'],
-        ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
+        // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
+        // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
         ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
         ['/developer-docs/latest/guides/process-manager', 'Process manager'],
         ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
-        ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
-        ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-        [
-          '/developer-docs/latest/guides/registering-a-field-in-admin',
-          'Registering a new field in the admin panel',
-        ],
-        ['/developer-docs/latest/guides/client', 'Setup a third party client'],
+        // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
+        // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
+        // [
+        //   '/developer-docs/latest/guides/registering-a-field-in-admin',
+        //   'Registering a new field in the admin panel',
+        // ],
+        // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
         ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
     },
@@ -499,6 +499,7 @@ const plugins = [
     siteTitle: (_, $site) => $site.title,
     title: $page => $page.title,
   }],
+  ['@vuepress/medium-zoom'],
   ['vuepress-plugin-code-copy', {
     color: '#ffffff',
     successText: 'Copied to clipboard!',

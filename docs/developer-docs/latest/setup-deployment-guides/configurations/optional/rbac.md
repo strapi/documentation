@@ -1,9 +1,8 @@
 ---
-title: Role-Based Access Control (RBAC) - Strapi Developer Documentation
-description: 
+title: Role-Based Access Control (RBAC) - Strapi Developer Docs
+description: In Strapi, RBAC is an approach to restricting access to some features of the admin panel to some users. The Community Edition of Strapi offers 3 default roles.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
@@ -23,7 +22,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
-Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
+Declare and register conditions in the global [`bootstrap` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) found in `./src/index.js` (see [Registering conditions](#registering-conditions)).
 
 :::note
 The condition `name` property acts as a [unique id](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/services/permission/condition-provider.js#L22) within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
@@ -86,7 +85,7 @@ const condition = {
 
 ## Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) file. Register a single condition with the `conditionProvider.register()` method:
+To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) found in `./src/index.js`. Register a single condition with the `conditionProvider.register()` method:
 
 ```js
 module.exports = async () => {

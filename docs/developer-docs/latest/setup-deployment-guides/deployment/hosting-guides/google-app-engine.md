@@ -1,9 +1,12 @@
 ---
-title: Google App Engine Deployment - Strapi Developer Documentation
+title: Google App Engine Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Google App Engine and how to upload your assets on Google Cloud Storage.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html
 ---
 
 # Google App Engine
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 In this guide we are going to:
 
@@ -14,12 +17,11 @@ In this guide we are going to:
 
 ### New Strapi project
 
-
 <code-group>
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -30,7 +32,6 @@ yarn create strapi-app my-project --quickstart
 </code-block>
 
 </code-group>
-
 
 When the setup completes, register an admin user using the form which opens in the browser. This user will be only relevant in local development.
 

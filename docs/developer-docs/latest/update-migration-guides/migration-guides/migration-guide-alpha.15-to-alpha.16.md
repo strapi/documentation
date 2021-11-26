@@ -1,6 +1,7 @@
 ---
-title: Migrate from alpha.15 to alpha.16 - Strapi Developer Documentation
+title: Migrate from alpha.15 to alpha.16 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.15 to alpha.16.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.15-to-alpha.16.html
 ---
 
 # Migration guide from alpha.15 to alpha.16

@@ -1,6 +1,7 @@
 ---
-title: Templates - Strapi Developer Documentation
+title: Templates - Strapi Developer Docs
 description: Quickly create a pre-made Strapi application designed for a specific use case. It allows you to quickly bootstrap a custom Strapi app.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/templates.html
 ---
 
 # Templates
@@ -38,7 +39,7 @@ yarn create strapi-app my-project --template <template-github-name>
 ::: tab npx
 
 ```bash
-npx create-strapi-app my-project --template <template-github-name>
+npx create-strapi-app@latest my-project --template <template-github-name>
 ```
 
 :::

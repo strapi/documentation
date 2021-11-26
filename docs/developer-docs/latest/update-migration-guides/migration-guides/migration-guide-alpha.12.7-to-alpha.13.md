@@ -1,6 +1,7 @@
 ---
-title: Migrate from alpha.12.7 to alpha.13 - Strapi Developer Documentation
+title: Migrate from alpha.12.7 to alpha.13 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.12.7 to alpha.13.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.7-to-alpha.13.html
 ---
 
 # Migration guide from alpha.12.7 to alpha.13

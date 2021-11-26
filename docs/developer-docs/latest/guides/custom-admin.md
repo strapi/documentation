@@ -1,12 +1,14 @@
 ---
-title: Custom Admin - Strapi Developer Documentation
+title: Custom Admin - Strapi Developer Docs
 description: Learn in this guide how you can customize the admin panel of your Strapi project.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/custom-admin.html
 ---
 
 # Custom admin
 
-In this guide we will see how you can customize the admin panel.
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
+In this guide we will see how you can customize the admin panel.
 ## Introduction
 
 For this example, we will see two things:

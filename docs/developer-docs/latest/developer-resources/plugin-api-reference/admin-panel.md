@@ -1,9 +1,9 @@
 ---
-title: Admin Panel API - Strapi Developer Documentation
-description: Strapi allows you to create your own custom local plugins that will work exactly the same as external ones.
+title: Admin Panel API - Strapi Developer Docs
+description: Strapi's Admin Panel API for plugins allows a Strapi plugin to customize the front end part (i.e. the admin panel) of your application.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html
 ---
-<!-- TODO: update SEO -->
 
 # Admin Panel API for plugins
 

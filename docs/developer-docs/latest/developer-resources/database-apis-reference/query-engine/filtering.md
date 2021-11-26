@@ -1,9 +1,10 @@
 ---
-title: Filtering Operations for Query Engine API - Strapi Developer Documentation
-description: (add description here)
+title: Filtering Operations for Query Engine API - Strapi Developer Docs
+description: Use Strapi's Query Engine API to filter the results of your queries.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html
 ---
-<!-- TODO: update SEO tags -->
+
 # Query Engine API: Filtering
 
 The [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) offers the ability to filter results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md#findmany) method.

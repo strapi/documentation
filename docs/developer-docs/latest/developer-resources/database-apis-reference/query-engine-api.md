@@ -1,8 +1,8 @@
 ---
-title: Query Engine API - Strapi Developer Documentation
-description: (add description here)
+title: Query Engine API - Strapi Developer Docs
+description: Strapi provides a Query Engine API to give unrestricted internal access to the database layer at a lower level.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html
 ---
-<!-- TODO: update SEO tags -->
 
 # Query Engine API
 

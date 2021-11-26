@@ -1,7 +1,8 @@
 ---
-title: Troubleshooting - Strapi Developer Documentation
+title: Troubleshooting - Strapi Developer Docs
 description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
 sidebarDepth: 0
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/troubleshooting.html
 ---
 
 # Frequently Asked Questions
@@ -10,7 +11,7 @@ Below are answers and solutions to most common issues that you may experience wh
 
 ## Why can't I create or update content-types in production/staging?
 
-Strapi stores model configuration files (what defines the model schema) in files such as `api/restaurant/models/restaurant.settings.json`. Due to how Node.js works, in order for changes to take effect, that would require Node to restart the server. This could potentially cause downtime of your production service and likewise these changes should be tracked in some kind of source control.
+Strapi stores model configuration files (what defines the model schema) in files such as `./src/api/restaurant/content-types/restaurant/schema.json`. Due to how Node.js works, in order for changes to take effect, that would require Node to restart the server. This could potentially cause downtime of your production service and likewise these changes should be tracked in some kind of source control.
 
 Generally your "flow" of development would follow the following path:
 
@@ -44,6 +45,8 @@ With the components there is a hidden field called `order` that allows entries t
 
 For the time being there is no recommended way to handle this automatically and instead it may be required for you to create custom controllers to handle this within your own project.
 
+We are evaluating if we will natively add support for this in the future. We will add more details when they become available.
+
 ## Why are my application's database and uploads resetting on PaaS?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, ect) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
@@ -64,9 +67,11 @@ For all these reasons, and others, we think it'll be a mistake and might confuse
 
 ## How do I customize a plugin?
 
-Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
+Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
 
 You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
+
+<!-- TODO: Confirm with Frontend team if this FAQ is accurate -->
 
 ## Can I add my own 3rd party auth provider?
 
@@ -76,7 +81,7 @@ There is currently no ETA on this migration however.
 
 ## Does Strapi allow me to change the default ID type or name?
 
-No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID on bookshelf), support for this is being looked at for Strapi v4.
+No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID in PostgreSQL), support for this is being looked at in future.
 
 ## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
@@ -90,8 +95,10 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as Nginx, Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
+Due to these two issues, it is recommended you use a proxy application such as [Nginx](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy), [Caddy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy), [HAProxy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
 ## Is X feature available yet?
 
 You can see the [ProductBoard roadmap](https://portal.productboard.com/strapi) to see which feature requests are currently being worked on and which have not been started yet.
+
+<!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->

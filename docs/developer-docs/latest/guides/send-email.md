@@ -1,9 +1,12 @@
 ---
-title: Send Email - Strapi Developer Documentation
+title: Send Email - Strapi Developer Docs
 description: Learn in this guide how to use the Email plugin to send email where you want in your Strapi app.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/send-email.html
 ---
 
 # Send email programmatically
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide we will see how to use the Email plugin to send email where you want in your app.
 

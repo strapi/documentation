@@ -7,14 +7,15 @@ You can click below for more information about the installed software and the Ng
 ::: details Installed software
 The Strapi application running on the droplet has the following softwares installed and configured:
 
-|  Software      |    Version            |   Comments     |
-|----------------|-----------------------|----------------|
-| Node.js        | 12                    | Installed via the offical [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
-| Yarn           | latest stable version | Installed via the official [apt repository](https://classic.yarnpkg.com/en/docs/install/#debian-stable))                                 |
-| Nginx          | latest version        | Installed via Ubuntu default repository                                                                                                  |
-| UFW (Uncomplicated Firewall)           | latest stable version | Configured to only allow incoming ports 80 (HTTP), 443 (HTTPS), and 22 (SSH)                                    |
-| PostgreSQL     | latest version        | Installed via Ubuntu default repository                                                                                                  |
-| PM2            | latest version        | Installed globally using Yarn                                                                                                            |
+| Software                     | Version               | Comments                                                                                                                                 |
+| ---------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Node.js                      | 12                    | Installed via the offical [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
+| Yarn                         | latest stable version | Installed via the official [apt repository](https://classic.yarnpkg.com/en/docs/install/#debian-stable))                                 |
+| Nginx                        | latest version        | Installed via Ubuntu default repository                                                                                                  |
+| UFW (Uncomplicated Firewall) | latest stable version | Configured to only allow incoming ports 80 (HTTP), 443 (HTTPS), and 22 (SSH)                                                             |
+| PostgreSQL                   | latest version        | Installed via Ubuntu default repository                                                                                                  |
+| PM2                          | latest version        | Installed globally using Yarn                                                                                                            |
+
 :::
 
 ::::: details Nginx default configuration
@@ -81,13 +82,12 @@ The Strapi application runs in the `development` environment to allow for creati
 
 To run the new `production` or `staging` environments you can refer to the [PM2 Documentation](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes)
 
-
 ### Accessing the service account
 
 To access your service account:
 
 1. SSH into the `root` user. Depending on your Operating System or your SSH client, there may be multiple ways to do this. You should refer to your SSH client documentation for clarification on using SSH keys.
-2. Run the `sudo su strapi` command. This will take you to the `strapi` user's shell. 
+2. Run the `sudo su strapi` command. This will take you to the `strapi` user's shell.
 
 To go back to the `root` user, run `exit`.
 
@@ -99,16 +99,15 @@ Please note that by default the strapi user cannot run `sudo` commands. This is 
 
 While identified as the service user on the DigitalOcean virtual machine, [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes) can be used to control the Strapi process and view logs with the following commands:
 
-* `pm2 list`: Show a list of all running processes. The default service is called "strapi-development" and should be running with an ID of 0.
-* `pm2 restart strapi-development`: Restart the Strapi process manually.
-* `pm2 stop strapi-development`: Stop the Strapi process.
-* `pm2 start strapi-development`:  Start the Strapi process. Strapi will automatically start if the virtual machine is rebooted.
-* `pm2 logs strapi-development`: Show the logs in real time; to exit, use Ctrl+C. 
+- `pm2 list`: Show a list of all running processes. The default service is called "strapi-development" and should be running with an ID of 0.
+- `pm2 restart strapi-development`: Restart the Strapi process manually.
+- `pm2 stop strapi-development`: Stop the Strapi process.
+- `pm2 start strapi-development`: Start the Strapi process. Strapi will automatically start if the virtual machine is rebooted.
+- `pm2 logs strapi-development`: Show the logs in real time; to exit, use Ctrl+C.
 
 :::tip TIP
 You can also manually view the log files under `/srv/strapi/.pm2/logs` if you encounter any errors during the bootup.
 :::
-
 
 ## Strapi application access with ssh
 
@@ -129,9 +128,11 @@ To change the PostgreSQL password and update Strapi's config:
 1. Log into the [`strapi`](#accessing-the-service-account) service user.
 2. Run the `pm2 stop strapi-development` command to stop the current strapi process.
 3. Run this command to change the password for the `strapi` database user:
+
 ```bash
 psql -c "ALTER USER strapi with password '<your-new-password>';"
 ```
+
 where `<your-new-password>` should be replaced by the password you want to use.
 
 4. Update the `/srv/strapi/strapi-development/.env` file with the new password:

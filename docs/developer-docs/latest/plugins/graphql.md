@@ -1,7 +1,8 @@
 ---
-title: GraphQL - Strapi Developer Documentation
+title: GraphQL - Strapi Developer Docs
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
 sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 ---
 
 # GraphQL
@@ -383,7 +384,7 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ##### Authorization configuration
 
-By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). The Users & Permissions plugin offers a more granular control.
+By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md) or through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). The Users & Permissions plugin offers a more granular control.
 
 ::: details Authorization with the Users & Permissions plugin
 With the Users & Permissions plugin, a GraphQL request is allowed if the appropriate permissions are given.

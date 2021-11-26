@@ -1,9 +1,12 @@
 ---
-title: Scheduled Publication - Strapi Developer Documentation
+title: Scheduled Publication - Strapi Developer Docs
 description: Learn in this guide how to create an article schedule system.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/scheduled-publication.html
 ---
 
 # Scheduled publication
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 This guide will explain how to create an article schedule system.
 

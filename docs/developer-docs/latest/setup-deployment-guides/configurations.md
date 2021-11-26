@@ -1,7 +1,8 @@
 ---
-title: Configurations - Strapi Developer Documentation
+title: Configurations - Strapi Developer Docs
 description: Learn how you can manage and customize the configuration of your Strapi application.
 sidebarDepth: auto
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations.html
 ---
 
 # Configurations
@@ -63,6 +64,7 @@ Some parts of Strapi must be configured for the Strapi application to work prope
 
 Strapi also offers the following optional configuration options for specific features:
 
+- [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)
 - [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md)
 - [cron jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md)
 - [API calls](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md)
@@ -71,4 +73,3 @@ Strapi also offers the following optional configuration options for specific fea
 - [public assets](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md)
 - [Single Sign-On](/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md) <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 - [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
-

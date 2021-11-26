@@ -1,9 +1,12 @@
 ---
-title: DigitalOcean Droplet Deployment - Strapi Developer Documentation
+title: DigitalOcean Droplet Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.html
 ---
 
 # DigitalOcean Droplets
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md).
 

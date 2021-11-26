@@ -1,9 +1,12 @@
 ---
-title: Custom Data Response - Strapi Developer Documentation
+title: Custom Data Response - Strapi Developer Docs
 description: Learn in this guide how you can customize your Strapi project API's response.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/custom-date-response.html
 ---
 
 # Custom data response
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide we will see how you can customize your API's response.
 

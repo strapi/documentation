@@ -1,9 +1,12 @@
 ---
-title: Heroku Deployment - Strapi Developer Documentation
+title: Heroku Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Heroku.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html
 ---
 
 # Heroku
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are provided instructions on how to get started.
 
@@ -69,7 +72,7 @@ Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -257,7 +260,6 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 
 `Path: ./my-project/`
 
-
 <code-group>
 
 <code-block title="NPM">
@@ -357,7 +359,7 @@ As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/com
 
 To disable Brotli, provide the following configuration in `config/middleware.js`.
 
-```jsonify
+```json
 gzip: {
   enabled: true,
   options: {

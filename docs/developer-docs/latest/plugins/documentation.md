@@ -1,6 +1,7 @@
 ---
-title: API Documentation - Strapi Developer Documentation
+title: API Documentation - Strapi Developer Docs
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/documentation.html
 ---
 
 # API Documentation
@@ -33,10 +34,6 @@ yarn strapi install documentation
 </code-group>
 
 When your plugin is installed, you just have to start your application and it will generate your API documentation.
-
-The administration panel lets you configure the basic settings of this plugin.
-
-![Accessing the documentation](../assets/plugins/documentation/open-doc.gif)
 
 ## Administration panel
 
