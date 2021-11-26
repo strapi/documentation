@@ -1,77 +1,29 @@
 ---
 title: Environment configuration and variables - Strapi Developer Docs
 description: In case you need specific static configurations for specific environments, configurations can be created per environment.
-sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html
 ---
 
 # Environment configuration and variables
 
-## Environment configurations
+Strapi provides environment variables that can be used in configuration files.  An `env()` utility can be used to [retrieve the value of environment variables](#configuration-using-environment-variables) and [cast variables to different types](#casting-environment-variables), and  specific [configurations for different environments](#environment-configurations) can be created.
+## Strapi's environment variables
 
-In case you need specific static configurations for specific environments, and using environment variables becomes tedious, Strapi configurations can be created per environment in `./config/env/{env}/{filename}`.
+Strapi provides the following environment variables:
 
-These configurations will be merged into the base configurations defined in the `./config` folder.
-The environment is based on the `NODE_ENV` environment variable (defaults to `development`).
+| Setting                                                    | Description                                                                                                                                                                                                                                                                                                | Type    | Default value   |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
+| `STRAPI_DISABLE_UPDATE_NOTIFICATION`                       | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                  | `Boolean` | `false`         |
+| `STRAPI_HIDE_STARTUP_MESSAGE`                              | Don't show the startup message in the terminal                                                                                                                                                                                                                                                             | `Boolean` | `false`         |
+| `STRAPI_TELEMETRY_DISABLED`                                | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                  | `Boolean` | `false`         |
+| `STRAPI_LICENSE`                                           | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                         | `String`  | `undefined`     |
+| `NODE_ENV`                                                 | Type of environment where the app is running                                                                                                                                                                                                                                                               | `String`  | `'development'` |
+| `BROWSER`                                                  | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                          | `Boolean` | `true`          |
+| `ENV_PATH`                                                 | Path to the file that contains your environment variables                                                                                                                                                                                                                                                  | `String`  | `'./.env'`      |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_ | Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-in-production-environments)) | `String`  | `'en'`          |
+| `API_TOKEN_SALT`<br/><br/>_Optional_                       | Salt to use to generate [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)                                                                                                                                                                                 | `String`  | -               |
 
-When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production configuration will override the default config.
-
-In combination with environment variables this pattern becomes really powerful.
-
-Examples:
-
-`./config/server.js`
-
-```js
-module.exports = {
-  host: '127.0.0.1',
-};
-```
-
-`./config/env/production/server.js`
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-});
-```
-
-When starting your application:
-
-```bash
-yarn start
-# uses host 127.0.0.1
-```
-
-```bash
-NODE_ENV=production yarn start
-# uses host 0.0.0.0
-```
-
-```bash
-HOST=10.0.0.1 NODE_ENV=production yarn start
-# uses host 10.0.0.1
-```
-
-## Environment variables
-
-### List of Strapi's environment variables
-
-Some settings can only be modified through environment variables:
-
-| Setting                                  | Type | Description | Default value |
-|---|---|---|---|
-| `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Boolean | Don't show the notification message about updating strapi in the terminal                 |                                                                                                                                                                                                                                           `false`         |
-| `STRAPI_HIDE_STARTUP_MESSAGE`         | Boolean | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | `false`         |
-| `STRAPI_TELEMETRY_DISABLED`           | Boolean | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | `false`         |
-| `STRAPI_LICENSE`                      | String | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | `undefined`     |
-| `NODE_ENV`                            | String | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | `'development'` |
-| `BROWSER`                             | Boolean | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | `true`          |
-| `ENV_PATH`                            | String | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | `'./.env'`      |
-| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_| String | Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-in-production-environments)) | `'en'`          |
-| `API_TOKEN_SALT`<br/><br/>_Optional_   | String | Salt to use to generate [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md) | - |
-
-### Configuration using environment variables
+## Configuration using environment variables
 
 In most use cases there will be different configurations between environments (e.g. database credentials).
 
@@ -109,11 +61,13 @@ module.exports = ({ env }) => ({
 
 ### Casting environment variables
 
+The `env()` utility can be used to cast environment varibles to different types:
+
 ```js
 // Returns the env if defined without casting it
 env('VAR', 'default');
 
-// Cast to int (using parseInt)
+// Cast to integer (using parseInt)
 env.int('VAR', 0);
 
 // Cast to float (using parseFloat)
@@ -122,12 +76,47 @@ env.float('VAR', 3.14);
 // Cast to boolean (check if the value is equal to 'true')
 env.bool('VAR', true);
 
-// Cast to js object (using JSON.parse)
+// Cast to JS object (using JSON.parse)
 env.json('VAR', { key: 'value' });
 
-// Cast to an array (syntax: ENV_VAR=[value1, value2, value3] | ENV_VAR=["value1", "value2", "value3"])
+// Cast to array (syntax: ENV_VAR=[value1, value2, value3] | ENV_VAR=["value1", "value2", "value3"])
 env.array('VAR', [1, 2, 3]);
 
 // Case to date (using new Date(value))
 env.date('VAR', new Date());
 ```
+
+## Environment configurations
+
+Configurations can be created with the following naming and structure conventions: `./config/env/{environment}/{filename}`. This is useful when you need specific static configurations for specific environments and using environment variables is not the best solution.
+
+These configurations will be merged into the base configurations defined in the `./config` folder.
+The environment is based on the `NODE_ENV` environment variable, which defaults to `development`.
+
+When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production configuration will override the default configuration. In combination with environment variables this pattern becomes really powerful.
+
+For instance, using the following configuration files will give you various options to start the server:
+
+```js
+// path: ./config/server.js
+
+module.exports = {
+  host: '127.0.0.1',
+};
+
+
+// path: ./config/env/production/server.js
+
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+});
+```
+
+With these configuration files the server will start on various ports depending on the environment variables passed:
+
+```bash
+yarn start                                   # uses host 127.0.0.1
+NODE_ENV=production yarn start               # uses host 0.0.0.0
+HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
+```
+
