@@ -58,6 +58,7 @@ const sidebar = {
               title: 'Optional configurations',
               collapsable: true,
               children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md', 'API tokens'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
                 ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
