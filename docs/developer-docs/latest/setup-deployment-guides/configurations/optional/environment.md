@@ -14,7 +14,7 @@ In case you need specific static configurations for specific environments, and u
 These configurations will be merged into the base configurations defined in the `./config` folder.
 The environment is based on the `NODE_ENV` environment variable (defaults to `development`).
 
-When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production config will override the default config.
+When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production configuration will override the default config.
 
 In combination with environment variables this pattern becomes really powerful.
 
