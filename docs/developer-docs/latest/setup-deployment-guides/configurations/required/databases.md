@@ -12,40 +12,65 @@ The `./config/database.js` file is used to define database connections that will
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 :::
 
-## Configuration Structure
+## Configuration structure
 
-**Path —** `./config/database.js`.
+The `./config/database.js` accepts 2 main configuration objects:
 
-- `connection` (object): Database configuration options passed to [Knex.js](https://github.com/knex/knex)
-  - `client` (string): Database client to create the connection. `sqlite` or `postgres` or `mysql`.
-  - `connection` (object): Database connection information
-    - `host` (string): Database host name. Default value: `localhost`.
-    - `port` (integer): Database port.
-    - `database` (string): Database name.
-    - `username` (string): Username used to establish the connection.
-    - `password` (string): Password used to establish the connection.
-    - `timezone` (string): Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php).
-    - `schema` (string): Set the default database schema. **Used only for Postgres DB.**
-    - `ssl` (boolean/object): For ssl database connection. Object is used to pass certificate files as strings.
-  - `useNullAsDefault` (boolean): Will use `NULL` as a default value **Used only for SQLite**
-  - `debug` (boolean): Show database exchanges and errors.
-    <!-- - `autoMigration` (boolean): To disable auto tables/columns creation for SQL database. -->
-  - `pool` (object _optional_): [Tarn.js](https://github.com/vincit/tarn.js) database pooling options
-    - `min` (integer): Minimum number of database connections to keepalive Default value: `0`
-    - `max` (integer): Maximum number of database connections to keepalive Default value: `10`
-    - `acquireTimeoutMillis` (integer): Time in ms before timing out a database connection attempt
-    - `createTimeoutMillis` (integer): Time in ms before timing out a create query attempt
-    - `destroyTimeoutMillis` (integer): Time in ms before timing out a destroy query attempt
-    - `idleTimeoutMillis` (integer): Time in ms before free database connections are destroyed
-    - `reapIntervalMillis` (integer): Time in ms to check for idle database connections to destroy
-    - `createRetryIntervalMillis` (integer): Time in ms to idle before retrying failed create actions
-    - `afterCreate` (function): Callback function to execute custom logic when the pool acquires a new connection. See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information
-- `settings` (object): Strapi specific database settings
-  - `forceMigration` (boolean): Enable or disable the forced database migration. Default value: `true`.
+- [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
+- [`settings`](#settings-configuration-object) for Strapi-specific database settings
+
+### `connection` configuration object
+
+| Parameter                                                          | Description                                                                  | Type      |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | --------- |
+| `client`                                                           | Database client to create the connection. `sqlite` or `postgres` or `mysql`. | `String`  |
+| `connection`                                                       | Database [connection information](#connection-parameters)                    | `Object`  |
+| `debug`                                                            | Show database exchanges and errors.                                          | `Boolean` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_           | Use `NULL` as a default value                                                | `Boolean` |
+| `pool`<br /><br />_Optional_                                       | [Database pooling options](#database-pooling-options)                        | `Object`  |
+
+#### Connection parameters
+
+The `connection.connection` object found in `./config/database.js` is used to pass database connection information and accepts the following parameters:
+
+| Parameter  | Description                                                                                                                   | Type                  |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
+| `port`     | Database port                                                                                                                 | `Integer`             |
+| `database` | Database name.                                                                                                                | `String`              |
+| `username` | Username used to establish the connection                                                                                     | `String`              |
+| `password` | Password used to establish the connection                                                                                     | `String`              |
+| `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
+| `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
+| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+  
+#### Database pooling options
+
+The `connection.pool` object optionally found in `./config/database.js` is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
+
+| Parameter                   | Description                                                                                                                                                                       | Type       | Default |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- |
+| `min`                       | Minimum number of database connections to keepalive                                                                                                                               | `Integer`  | `0`     |
+| `max`                       | Maximum number of database connections to keepalive                                                                                                                               | `Integer`  | `10`    |
+| `acquireTimeoutMillis`      | Time in ms before timing out a database connection attempt                                                                                                                        | `Integer`  | -       |
+| `createTimeoutMillis`       | Time in ms before timing out a create query attempt                                                                                                                               | `Integer`  | -       |
+| `destroyTimeoutMillis`      | Time in ms before timing out a destroy query attempt                                                                                                                              | `Integer`  | -       |
+| `idleTimeoutMillis`         | Time in ms before free database connections are destroyed                                                                                                                         | `Integer`  | -       |
+| `reapIntervalMillis`        | Time in ms to check for idle database connections to destroy                                                                                                                      | `Integer`  | -       |
+| `createRetryIntervalMillis` | Time in ms to idle before retrying failed create actions                                                                                                                          | `Integer`  | -       |
+| `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
+
+### `settings` configuration object
+
+The `settings` object found in `./config/database.js` is used to configure Strapi-specific database settings and accepts the following parameter:
+
+| Parameter        | Description                                      | Type      | Default |
+| ---------------- | ------------------------------------------------ | --------- | ------- |
+| `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
-### Configuration Examples
+### Configuration examples
 
 ::::: tabs card
 
@@ -72,8 +97,8 @@ module.exports = ({ env }) => ({
 ```
 
 :::caution
-We are aware that there is an issue regarding **SSL support for the server**.
-In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
+Strapi is aware that there is an issue regarding **SSL support for the server**.
+In order to fix it, you have to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
 
 ```js
 module.exports = ({ env }) => ({
@@ -153,12 +178,12 @@ module.exports = ({ env }) => ({
 
 ## Configuration in database
 
-Configuration files are not multi server friendly. So we created a data store for config you will want to update in production.
+Configuration files are not multi-server friendly. To update configurations in production you can use a data store to get and set settings.
 
 ### Get settings
 
-- `environment` (string): Sets the environment you want to store the data in. By default it's current environment (can be an empty string if your config is environment agnostic).
-- `type` (string): Sets if your config is for an `api`, `plugin` or `core`. By default it's `core`.
+- `environment` (string): Sets the environment you want to store the data in. By default it's current environment (can be an empty string if your configuration is environment agnostic).
+- `type` (string): Sets if your configuration is for an `api`, `plugin` or `core`. By default it's `core`.
 - `name` (string): You have to set the plugin or api name if `type` is `api` or `plugin`.
 - `key` (string, required): The name of the key you want to store.
 
