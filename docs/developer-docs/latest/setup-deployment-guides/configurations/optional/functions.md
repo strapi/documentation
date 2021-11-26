@@ -10,9 +10,7 @@ The `./src/index.js` file includes global [register](#register), [bootstrap](#bo
 
 ## Register
 
-**Path —** `./src/index.js`.
-
-The `register` lifecycle function is an asynchronous function that runs before the application is initialized.
+The `register` found in `./src/index.js` lifecycle function is an asynchronous function that runs before the application is initialized.
 It can be used to:
 
 - [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface)
@@ -21,18 +19,16 @@ It can be used to:
 
 ## Bootstrap
 
-**Path —** `./src/index.js`
-
-The `bootstrap` lifecycle function is called at every server start.
+The `bootstrap` lifecycle function found in `./src/index.js` is called at every server start.
 
 It can be used to:
 
 - create an admin user if there isn't one.
 - fill the database with some necessary data.
 
-The bootstrap function can be synchronous or asynchronous.
+The bootstrap function can be synchronous, asynchronous, or return a premise:
 
-**Synchronous**
+**Synchronous function**
 
 ```js
 module.exports = () => {
@@ -40,15 +36,7 @@ module.exports = () => {
 };
 ```
 
-**Return a promise**
-
-```js
-module.exports = () => {
-  return new Promise(/* some code */);
-};
-```
-
-**Asynchronous**
+**Asynchronous function**
 
 ```js
 module.exports = async () => {
@@ -56,9 +44,18 @@ module.exports = async () => {
 };
 ```
 
+**Function returning a promise**
+
+```js
+module.exports = () => {
+  return new Promise(/* some code */);
+};
+```
+
+
 ## Destroy
 
-The `destroy` function is an asynchronous function that runs before the application gets shut down.
+The `destroy` function found in `./src/index.js` is an asynchronous function that runs before the application gets shut down.
 
 It can be used to gracefully:
 
