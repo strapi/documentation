@@ -23,8 +23,9 @@ The `bootstrap` lifecycle function found in `./src/index.js` is called at every 
 
 It can be used to:
 
-- create an admin user if there isn't one.
-- fill the database with some necessary data.
+- create an admin user if there isn't one
+- fill the database with some necessary data
+- declare custom conditions for the [Role-Based Access Control (RBAC)](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) feature
 
 The bootstrap function can be synchronous, asynchronous, or return a premise:
 
