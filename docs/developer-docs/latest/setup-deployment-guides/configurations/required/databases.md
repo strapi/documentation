@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 The `./config/database.js` file is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
-The CLI installation guide details [supported database and versions](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
+The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 :::
 
 ## Configuration Structure
@@ -151,10 +151,6 @@ module.exports = ({ env }) => ({
 
 :::::
 
-::: tip
-Take a look at the [database's guide](#databases-installation-guides) for more details.
-:::
-
 ## Configuration in database
 
 Configuration files are not multi server friendly. So we created a data store for config you will want to update in production.
@@ -203,12 +199,13 @@ await pluginStore.set({
 
 ## Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and
-**MariaDB**. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes). We will be providing additional installation guides for missing databases soon!
+Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
+
+The following documentation covers how to install SQLite locally (for development purposes):
 
 <DatabasesLinks>
 </DatabasesLinks>
 
-::: strapi Strapi deployment
-Deploying Strapi itself is covered in the [deployment guide](/developer-docs/latest/setup-deployment-guides/deployment.md).
+:::caution
+Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
 :::

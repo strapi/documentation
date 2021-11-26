@@ -65,7 +65,7 @@ To apply policies to a route, add them to its configuration object (see [routes 
 Policies are called different ways depending on their scope:
 
 - use `global::policy-name` for [global policies](#global-policies)
-- use `api::api-name.policy-name` for [API policies](#API-policies)
+- use `api::api-name.policy-name` for [API policies](#api-policies)
 - use `plugin::plugin-name.policy-name` for [plugin policies](#plugin-policies)
 
 ::: tip
