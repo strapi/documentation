@@ -70,9 +70,6 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 Generic implementation example:
 
-To only allow a `GET` request on the `/restaurants` path from the core `find` [controller](/developer-docs/latest/development/backend-customization/controllers.md) without authentication, use the following code:
-
-::: details Example of disabling authentication on a core route
 ```js
 // path: ./src/api/restaurant/routes/restaurant.js
 
@@ -90,7 +87,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
-:::
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/developer-docs/latest/development/backend-customization/controllers.md) without authentication.
 
 ### Creating custom routers
 
