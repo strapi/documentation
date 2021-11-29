@@ -1,6 +1,6 @@
 {
   "index_name": "documentation",
-  "start_urls": ["https://strapi.io/documentation"],
+  "start_urls": ["https://docs.strapi.io"],
   "selectors": {
     "lvl0": {
       "selector": "//h1/text()",
@@ -30,7 +30,7 @@
     }
   },
   "strip_chars": " .,;:#",
-  "stop_urls": ["https://strapi.io/documentation/developer-docs/latest/update-migration-guides/migration-guides"],
+  "stop_urls": ["https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides"],
   "custom_settings": {
     "attributesForFaceting": ["lang"]
   }
