@@ -1,6 +1,7 @@
 ---
-title: Migrate from beta.19.x to beta.20 - Strapi Developer Documentation
+title: Migrate from beta.19.x to beta.20 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from beta.19.x to beta.20.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.20.html
 ---
 
 # Migration guide from beta.19.x to beta.20
@@ -49,7 +50,7 @@ You can now also disable this behavior with the `public.defaultIndex` option. Re
 
 A lot of our users have been requesting that we move some back-end specific configurations to files. While implementing the media library feature, we decided to move the upload plugin settings to files.
 
-This means that you now have to configure your provider directly in the files. You can read the documentation [here](/developer-docs/latest/development/plugins/upload.md#using-a-provider) to update.
+This means that you now have to configure your provider directly in the files. You can read the documentation [here](/developer-docs/latest/plugins/upload.md#using-a-provider) to update.
 
 ## MongoDB Media relation changes
 

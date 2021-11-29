@@ -1,17 +1,20 @@
 ---
-title: Authenticated request - Strapi Developer Documentation
+title: Authenticated request - Strapi Developer Docs
 description: Learn in this guide how you can request the API of your Strapi project as an authenticated user.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/auth-request.html
 ---
 
 # Authenticated request
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide you will see how you can request the API as an authenticated user.
 
 ## Introduction
 
-To show you many of the concepts on the [roles and permissions](/developer-docs/latest/development/plugins/users-permissions.md) part, we will use many users and roles.
+To show you many of the concepts on the [roles and permissions](/developer-docs/latest/plugins/users-permissions.md) part, we will use many users and roles.
 
-After that we will see the [authentication workflow](/developer-docs/latest/development/plugins/users-permissions.md#authentication) to get a `JWT` and use it for an API request.
+After that we will see the [authentication workflow](/developer-docs/latest/plugins/users-permissions.md#authentication) to get a `JWT` and use it for an API request.
 
 We will have one group of users that will be able to only fetch **Articles** and an other group that will be able to fetch, create and update **Articles**.
 
@@ -21,7 +24,7 @@ We will have one group of users that will be able to only fetch **Articles** and
 
 Lets create a new Content Type **Article**
 
-- Click on `Content-Types Builder` in the left menu
+- Click on `Content-Type Builder` in the left menu
 - Then `+ Create new content-type`
 - Fill `Display name` with `article`
 - Create 2 fields
@@ -64,7 +67,7 @@ Finally create **2 users** with the following data.
 
 ## Login as a Reader
 
-To login as a user, you will need to follow the [login documentation](/developer-docs/latest/development/plugins/users-permissions.md#login).
+To login as a user your will have to follow the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login).
 
 Here is the API route for the authentication `/auth/local`.
 

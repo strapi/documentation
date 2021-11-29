@@ -1,8 +1,8 @@
 const sidebar = {
   developer: [
     {
-      collapsable: false,
       title: '🚀 Getting Started',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
         ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
@@ -11,8 +11,8 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '⚙️ Setup & Deployment',
+      collapsable: false,
       sidebarDepth: 0,
       initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
@@ -39,7 +39,38 @@ const sidebar = {
           ],
         },
         ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
-        ['/developer-docs/latest/setup-deployment-guides/configurations.md', 'Configurations'],
+        {
+          title: 'Configurations',
+          path: '/developer-docs/latest/setup-deployment-guides/configurations.html',
+          collapsable: true,
+          children: [
+            { 
+              title: 'Required configurations',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
+              ]
+            },
+            {
+              title: 'Optional configurations',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md', 'API tokens'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md', 'Plugins'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md', 'Public Assets'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md', 'Single Sign On (SSO)'],
+                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md', 'Role-Based Access Control (RBAC)'],
+              ]
+            }
+          ]
+        },
         {
           title: 'Deployment',
           path: '/developer-docs/latest/setup-deployment-guides/deployment',
@@ -116,42 +147,132 @@ const sidebar = {
       ],
     },
     {
-      collapsable: false,
       title: '🔧 Development',
+      collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       children: [
-        ['/developer-docs/latest/development/backend-customization', 'Backend customization'],
-        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         {
-          title: 'Strapi plugins',
-          path: '/developer-docs/latest/development/plugin-customization.html',
+          title: 'Back-end customization',
           collapsable: true,
+          path: '/developer-docs/latest/development/backend-customization',
           children: [
-            ['/developer-docs/latest/development/plugins/documentation', 'API Documentation'],
-            ['/developer-docs/latest/development/plugins/email', 'Email'],
-            ['/developer-docs/latest/development/plugins/graphql', 'GraphQL'],
-            ['/developer-docs/latest/development/plugins/i18n', 'Internationalization (i18n)'],
-            ['/developer-docs/latest/development/plugins/upload', 'Upload'],
-            ['/developer-docs/latest/development/plugins/users-permissions', 'Users & Permissions'],
-          ],
-          sidebarDepth: 1,
+            ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
+            ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
+            ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
+            ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
+            ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
+            ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
+            ['/developer-docs/latest/development/backend-customization/webhooks.md', 'Webhooks'],
+          ]
         },
-        ['/developer-docs/latest/development/local-plugins-customization.md', 'Local plugins'],
+        ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
+        ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
+        ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ],
     },
     {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
       collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+      ],
+      sidebarDepth: 1,
+    },
+    {
       title: '♻️ Update & Migration',
+      collapsable: false,
       children: [
         ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
         ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
-      collapsable: false,
       title: '💻 Developer Resources',
+      collapsable: false,
+      initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
       sidebarDepth: 2,
       children: [
-        ['/developer-docs/latest/developer-resources/content-api/content-api.md', 'Content API'],
+        {
+          title: 'APIs Reference',
+          collapsable: true,
+          sidebarDepth: 1,
+          children: [
+            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
+            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
+            {
+              title: 'Query Engine API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+              collapsable: true,
+              // sidebarDepth: 3,
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+                  'Single Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+                  'Bulk Operations'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+                  'Filtering'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+                  'Populating'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+                  'Ordering & pagination'
+                ],
+              ]
+            },
+            {
+              title: 'Entity Service API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+              collapsable: true,
+              children : [
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+                 'CRUD operations'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+                 'Filters'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+                 'Populate'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+                 'Ordering & pagination'
+               ],
+               [
+                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+                 'Components and dynamic zones'
+               ]
+              ],
+            },
+            {
+              title: 'Plugin APIs Reference',
+              collapsable: true,
+              children: [
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
+                ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+              ],
+            },
+          ]
+        },
+        ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
+        ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -218,37 +339,30 @@ const sidebar = {
             ],
           ],
         },
-        ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
-        [
-          '/developer-docs/latest/developer-resources/global-strapi/api-reference',
-          'Global Strapi API Reference',
-        ],
       ],
     },
     {
-      collapsable: true,
       title: '📚 Guides',
+      collapsable: true,
       children: [
-        ['/developer-docs/latest/guides/api-token', 'API tokens'],
         ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-        ['/developer-docs/latest/guides/count-graphql', 'Count with GraphQL'],
-        ['/developer-docs/latest/guides/slug', 'Create a slug system'],
-        ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
-        ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
-        ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
+        // ['/developer-docs/latest/guides/slug', 'Create a slug system'],
+        // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
+        // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
+        // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
         ['/developer-docs/latest/guides/draft', 'Draft system'],
-        ['/developer-docs/latest/guides/error-catching', 'Error catching'],
-        ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
+        // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
+        // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
         ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
         ['/developer-docs/latest/guides/process-manager', 'Process manager'],
         ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
-        ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
-        ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-        [
-          '/developer-docs/latest/guides/registering-a-field-in-admin',
-          'Registering a new field in the admin panel',
-        ],
-        ['/developer-docs/latest/guides/client', 'Setup a third party client'],
+        // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
+        // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
+        // [
+        //   '/developer-docs/latest/guides/registering-a-field-in-admin',
+        //   'Registering a new field in the admin panel',
+        // ],
+        // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
         ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
     },
@@ -287,11 +401,11 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Types Builder',
+      title: 'Content-Type Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-          'Introduction to the Content-Types Builder',
+          'Introduction to the Content-Type Builder',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
@@ -371,11 +485,11 @@ const checklinksIgnoredFiles = [
   /**
    * Files below give false positives
    */
-  './developer-docs/latest/concepts/file-structure.md', // contains .md links that should not be treated as links
-  './developer-docs/latest/guides/unit-testing.md', // line 190
-  './developer-docs/latest/setup-deployment-guides/configurations.md', // line 940
-  './developer-docs/latest/developer-resources/content-api/content-api.md', // line 810
-  './developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.md', // line 93
+  '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
+  './developer-docs/latest/development/backend-customization/models.md',
+  './developer-docs/latest/guides/count-graphql.md', // might be removed once GraphQL customization is ready
+  './developer-docs/latest/setup-deployment-guides/configurations.md', // the script thinks filename[]() at line 977 is a real link
+  './developer-docs/latest/development/backend-customization/webhooks.md', // 'missing" links are in commented part of file
 ];
 
 const plugins = [
@@ -387,6 +501,7 @@ const plugins = [
     siteTitle: (_, $site) => $site.title,
     title: $page => $page.title,
   }],
+  ['@vuepress/medium-zoom'],
   ['vuepress-plugin-code-copy', {
     color: '#ffffff',
     successText: 'Copied to clipboard!',
@@ -554,7 +669,7 @@ module.exports = {
     ],
   ],
   themeConfig: {
-    logo: '/assets/logo.png',
+    logo: '/assets/logo-beta.png',
     nav: [
       {
         text: 'Resource Center',
@@ -573,6 +688,10 @@ module.exports = {
               {
                 text: 'Setup & Deployment',
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
+              },
+              {
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
               },
               {
                 text: 'Development',
@@ -600,7 +719,7 @@ module.exports = {
                 link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
-                text: 'Content-Types Builder',
+                text: 'Content-Type Builder',
                 link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
@@ -615,6 +734,15 @@ module.exports = {
                 text: 'General Settings',
                 link: '/user-docs/latest/settings/managing-global-settings.html',
               },
+            ],
+          },
+          {
+            text: 'Older versions',
+            items: [
+              {
+                text: 'v3 Documentation',
+                link: 'https://strapi.io/documentation'
+              }
             ],
           },
         ],

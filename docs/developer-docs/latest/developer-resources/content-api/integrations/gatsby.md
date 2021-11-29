@@ -1,9 +1,12 @@
 ---
-title: Get started with Gatsby - Strapi Developer Documentation
-description: Build powerful applications using Strapi, the leading open-source headless cms and Gatsby.
+title: Get started with Gatsby - Strapi Developer Docs
+description: Build powerful applications using Strapi, the leading open-source headless CMS and Gatsby.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html
 ---
 
 # Getting Started with Gatsby
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -304,4 +307,4 @@ Feel free to do the same for your restaurants!
 ## Conclusion
 
 Here is how to request your Collection Types in Strapi using Gatsby.
-Learn more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md).
+Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md).

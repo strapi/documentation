@@ -1,9 +1,14 @@
 ---
-title: Error Catching - Strapi Developer Documentation
+title: Error Catching - Strapi Developer Docs
 description: Learn in this guide how you can catch errors and send them to the Application Monitoring / Error Tracking Software you want.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/error-catching.html
 ---
 
 # Error catching
+
+:::caution
+This guide is outdated and we recommend using [the official Sentry plugin for Strapi](https://www.npmjs.com/package/strapi-plugin-sentry) instead.
+:::
 
 In this guide we will see how you can catch errors and send them to the Application Monitoring / Error Tracking Software you want.
 
@@ -13,7 +18,7 @@ In this example we will use [Sentry](https://sentry.io).
 
 ## Create a middleware
 
-A [middleware](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares) will be used in order to catch the errors which will then be sent to Sentry.
+A [middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) will be used in order to catch the errors which will then be sent to Sentry.
 
 - Create a `./middlewares/sentry/index.js` file.
 

@@ -1,10 +1,13 @@
 ---
-title: Install using Platform.sh - Strapi Developer Documentation
+title: Install using Platform.sh - Strapi Developer Docs
 description: Quickly deploy a Strapi application using the official Platform.sh Strapi template.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/platformsh.html
 sidebarDepth: 1
 ---
 
 # Platform.sh One-Click
+
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
 
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 

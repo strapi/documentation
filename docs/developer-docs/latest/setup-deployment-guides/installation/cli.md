@@ -1,6 +1,7 @@
 ---
-title: Installing from CLI - Strapi Developer Documentation
+title: Installing from CLI - Strapi Developer Docs
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/cli.html
 ---
 
 # Installing from CLI
@@ -16,17 +17,12 @@ The CLI installation guide requires at least two software prerequisites to be al
 
 A database is also required for any Strapi project. Strapi currently supports the following databases:
 
-::: caution
-!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
-:::
-
 | Database   | Minimum version |
 | ---------- | --------------- |
 | SQLite     | 3               |
 | PostgreSQL | 10              |
 | MySQL      | 5.6             |
 | MariaDB    | 10.1            |
-| MongoDB    | 3.6             |
 
 ## Creating a Strapi project
 
@@ -35,6 +31,9 @@ The following installation guide covers the most basic installation option using
 
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
 - Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+- Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
+
+For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
@@ -45,7 +44,7 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project
+npx create-strapi-app@latest my-project
 ```
 </code-block>
 

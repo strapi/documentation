@@ -1,9 +1,12 @@
 ---
-title: Get started with Laravel - Strapi Developer Documentation
+title: Get started with Laravel - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Laravel.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/laravel.html
 ---
 
 # Getting Started with Laravel
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -85,4 +88,4 @@ $entry = $strapi->entry('restaurants', $id = 5);
 
 Here is how to request your Collection Types in Strapi using Laravel. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).
+There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
