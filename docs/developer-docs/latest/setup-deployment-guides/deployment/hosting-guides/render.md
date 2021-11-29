@@ -31,7 +31,7 @@ Below are descriptions of 3 approaches that make different trade-offs between sc
 
 Select the [render.yaml file](https://render.com/docs/yaml-spec) that matches your storage preferences and add it to the root of your Strapi project.
 
-:::: tabs
+:::: tabs card
 
 ::: tab strapi-sqlite
 

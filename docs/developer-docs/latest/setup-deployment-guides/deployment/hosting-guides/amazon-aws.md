@@ -72,7 +72,7 @@ Amazon calls a virtual private server, a **virtual server** or **Amazon EC2 inst
 
 In the top menu, near your IAM Account User name, select, from the dropdown, the most appropriate region to host your Strapi project. For example, `US East (N.Virginia)` or `Asia Pacific (Hong Kong)`. You will want to remember this region for configuring other services on AWS and serving these services from the same region.
 
-#### 3. Click on the blue `Launch Instance` button
+#### 3. Click on the orange `Launch Instance` button
 
 - `Select` **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
 - Ensure `General purpose` + `t2.small` is `checked`.
@@ -100,7 +100,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 - Review the details, in the **Step 7: Review Instance Launch**, then click the blue `Launch` button. Now, you need to **select an existing key pair** or **create a new key pair**. To create a new key pair, do the following:
   - Select the dropdown option `Create a new key pair`.
   - Name your the key pair name, e.g. `ec2-strapi-key-pair`
-    ::: warning
+    ::: caution
     Download the **private key file** (.pem file). This file is needed, so note where it was downloaded.
     :::
   - After downloading the file, click the blue `Launch Instances` button.
@@ -628,8 +628,8 @@ sudo nano /etc/systemd/system/webhook.service
 
 - In the `nano` editor, copy/paste the following script, but make sure to replace `ubuntu` **in two places** if you changed the default `ubuntu` user, and `paste the $PATH` from above.
 
-::: warning
-**DELETE THE #COMMENTS BEFORE SAVING**, then save and exit.
+:::caution
+Delete the #comments before saving, then save and exit.
 :::
 
 ```bash

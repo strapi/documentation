@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 # Configuring fields for content types
 
-::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+::: callout The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
@@ -14,7 +14,7 @@ Content-types are composed of one or several fields. Each field is designed to c
 
 In the Content-Types Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
-::: tip NOTE
+::: note
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 

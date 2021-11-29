@@ -44,7 +44,7 @@ To create a new administrator account:
 4. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button <Fa-Copy /> to copy the URL.
 5. Click on the **Continue** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
-::: tip NOTE
+::: note
 The administrator invitation URL is accessible from the administrator's account until it has been activated.
 :::
 
@@ -85,6 +85,6 @@ To edit an administrator account:
 
 4. Click on the **Save** button in the top right corner.
 
-::: tip 💡 TIP
+::: tip
 You can go back to the original configurations of the account by clicking on the **Reset** button in the top right corner of the interface.
 :::

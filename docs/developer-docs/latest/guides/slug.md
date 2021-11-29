@@ -30,7 +30,7 @@ Here we will be able to setup the `slug` field.
 - And click **OFF** for **Editable field** option.
 - Don't forget to save your updates.
 
-:::: tabs
+:::: tabs card
 
 ::: tab View before
 
@@ -60,7 +60,7 @@ When it's done, you have to update the life cycle of the **Article** Content Typ
 
 **Path —** `./api/article/models/Article.js`
 
-:::: tabs
+:::: tabs card
 
 ::: tab Mongoose
 

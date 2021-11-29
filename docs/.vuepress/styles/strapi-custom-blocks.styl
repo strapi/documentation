@@ -1,0 +1,197 @@
+.el-tabs__active-bar
+  background-color: #007eff !important
+
+.custom-block
+  /**
+   * CALLOUTS
+   */
+  .custom-block-title
+    font-weight 600
+    margin-bottom -0.4rem
+  &.callout
+  &.callout-alt
+  &.strapi
+  &.prerequisites
+  &.note
+  &.tip
+  &.warning
+  &.danger
+  &.caution
+    padding .1rem 1.5rem
+    margin-top 2rem
+    margin-bottom 2rem
+    border-left-width: .25rem
+    border-left-style solid
+  &.strapi
+    background-color rgba(129,107,250, .05)
+    border-color rgb(129,107,250)
+    .custom-block-title
+      color #816bfa
+      font-weight 700
+    p, li
+      color #2c3e50
+      a
+        color #007eff
+  &.callout
+  &.callout-alt
+  &.prerequisites
+    background-color #f8f8f8
+    border-color #bbbbba
+  &.callout-alt
+    border-radius: 10px
+    background-color: #eff5f7
+    border: none
+  &.note
+    background-color #f4fcff
+    border-color #0193C2
+  &.caution
+    border-color #E7C000
+    background-color rgba(255,229,100,.3)
+    color #6b5900
+    .custom-block-title
+      color #B29400
+    a
+      color #2c3e50
+  &.warning
+    border-color #cc0000
+    background-color rgb(255, 230, 230)
+    color #4d0000
+    .custom-block-title
+      color #900
+    a
+      color #2c3e50
+  &.tip
+    background-color #EFFDF6
+  /**
+   * API CALLS
+  */
+  &.api-call
+    padding: 0
+    border-radius: 12px
+    // margin: 2rem 0 2rem
+    @media (min-width: 1536px)
+      display: flex
+      margin: 0 -12rem 2rem 0
+      align-items: stretch
+  &.request
+    background-color: #666687
+    padding: 0 1rem 1rem
+    border-radius: 12px
+    font-size: 100%
+    color:#F6F6F9
+    .custom-block-title
+      margin-left: -1rem
+      margin-right: -1rem
+      margin-top: 0
+      border-radius: 12px 12px 0 0
+      padding: .5rem 1rem
+      font-weight: 700
+      background-color: #32324D
+      color: #F6F6F9
+      font-size: 90%;
+    .custom-block-title+p
+      padding-top: 1rem
+    p, ul, ol
+      color: #2c3e50
+      color: rgba(241,251,255,.8)
+    p
+      padding-left: 1rem
+    ul, ol
+      padding-left: 3rem
+    [class^="language-"]
+      background-color: transparent
+      font-size: 110%
+      &::before
+        color: #EAEAEF
+    pre
+      padding: 1rem 0 0 1rem
+    code
+      color: #F6F6F9
+      background-color: #212134
+      .token
+        color: #F6F6F9 // catch-all for undefined colors
+        &.punctuation
+          color: #d3d3d3
+        &.operator
+        &.property
+          color: #F6F6F9
+        &.string
+        &.attr-name
+        &.function
+          color: #B6FFB5
+        &.number
+        &.keyword
+          color: #FDED9B
+        &.comment
+          color: #d9d9d9
+  &.response
+    background-color: #DCDCE4
+    margin-top: 2rem
+    padding: 0 1rem 1rem
+    border-radius: 12px
+    font-size: 100%
+    color: #666687
+    .extra-class::before
+      color: #666687
+    .custom-block-title
+      background-color: #C0C0CF
+      color: #32324D
+      border-radius: 12px 12px 0 0
+      margin-left: -1rem
+      margin-right: -1rem
+      padding: .5rem 1rem
+      margin-top: 0
+      font-weight: 700
+      font-size: 90%;
+      margin-bottom: .5rem
+    [class^="language-"]
+      background-color: transparent
+      font-size: 110%
+      &::before
+        color: #666687
+    pre
+      padding: 1rem 0 0 1rem
+    code
+      color: #666687 !important
+      .token
+        color: #666687 // catch-all for undefined colors
+        &.punctuation
+        &.operator
+        &.property
+          color: #666687
+        &.string
+          color: #2B7732
+        &.number
+          color: #B7322A
+        &.comment
+          color: #8585b2
+  &.request
+  &.response
+    margin-top: 2rem
+    .extra-class
+      font-size: 90%
+      border-radius: 6px 0 6px 0
+      pre
+        // white-space: pre-wrap
+        word-break: break-word
+        margin-bottom: 0
+
+  &.api-call
+    > .request
+    > .response
+      @media (min-width: 1536px)
+          flex: 0 0 42%
+          max-width: 42%
+    > .request
+      @media (min-width: 1536px)
+        border-radius: 12px 0 0 12px
+        .custom-block-title
+          border-radius: 12px 0 0 0
+    .response
+      @media (min-width: 1536px)
+        border-radius: 0 12px 12px 0
+        .custom-block-title
+          border-radius: 0 12px 0 0
+
+.custom-block.details
+  color rgb(44, 62, 80)

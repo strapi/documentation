@@ -4,30 +4,6 @@ description: Learn how you can manage and customize the configuration of your St
 sidebarDepth: 3
 ---
 
-<style lang="scss" scoped>
-  /*
-    We override the :::danger callout for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.danger {
-    border-left-width: .25rem;
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-    /* margin-top: 2em; */
-    /* margin-bottom: 2em; */
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-</style>
-
 # Configurations
 
 Your application configuration lives in the `config` folder. All the configuration files are loaded on startup and can be accessed through the configuration provider.
@@ -48,7 +24,7 @@ strapi.config.get('server.host', 'defaultValueIfUndefined');
 
 Nested keys are accessible with `dot-notation`.
 
-:::tip NOTE
+:::note
 Notice that the filename is used as a prefix to access the configurations.
 :::
 
@@ -58,13 +34,13 @@ Notice that the filename is used as a prefix to access the configurations.
 
 This file lets you define database connections that will be used to store your application content.
 
-::: tip NOTE
+:::note
 You can find [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) in the local installation process.
 :::
 
 **Path —** `./config/database.js`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Bookshelf
 
@@ -120,7 +96,7 @@ You can find [supported database and versions](/developer-docs/latest/setup-depl
 
 ::::
 
-::::: tabs
+::::: tabs card
 
 :::: tab PostgreSQL
 
@@ -148,9 +124,10 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::: warning
+:::caution
 We are aware that there is an issue regarding **SSL support for the server**.
 In order to fix it, you have to to set the `ssl:{}` object as a boolean in order to disable it. See below for example:
+
 ```js
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
@@ -167,6 +144,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
 :::
 
 Please note that if you need client side SSL CA verification you will need to use the `ssl:{}` object with the fs module to convert your CA certificate to a string. You can see an example below:
@@ -239,6 +217,10 @@ module.exports = ({ env }) => ({
 ::::
 
 :::: tab MongoDB
+
+:::caution
+!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
+:::
 
 ```js
 module.exports = ({ env }) => ({
@@ -331,7 +313,7 @@ Deploying **Strapi** itself is covered in the [Deployment Guide](/developer-docs
 
 ### Server
 
-:::: tabs
+:::: tabs card
 
 ::: tab Minimal
 
@@ -512,20 +494,20 @@ HOST=10.0.0.1 NODE_ENV=production yarn start
 
 Some settings can only be modified through environment variables. Here is a list of those settings are associated environment variable names:
 
-| name                                 | description                                                                                                           | type    | default         |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
-| `STRAPI_DISABLE_UPDATE_NOTIFICATION` | Don't show the notification message about updating strapi in the terminal                                             | boolean | `false`         |
-| `STRAPI_HIDE_STARTUP_MESSAGE`        | Don't show the startup message in the terminal                                                                        | boolean | `false`         |
-| `STRAPI_TELEMETRY_DISABLED`          | Don't send telemetry usage data to Strapi                                                                             | boolean | `false`         |
-| `STRAPI_LOG_TIMESTAMP`               | Add the timestamp info in logs                                                                                        | boolean | `false`         |
-| `STRAPI_LOG_LEVEL`                   | Select the level of logs among `fatal`, `error`, `warn`, `info`, `debug`, `trace`                                     | string  | `'info'`        |
-| `STRAPI_LOG_FORCE_COLOR`             | Force colors to be displayed even in environments that are not supposed to have colors enabled (ex: outside of a TTY) | boolean | `true`          |
-| `STRAPI_LOG_PRETTY_PRINT`            | Log lines are displayed as text instead of as object                                                                  | boolean | `true`          |
-| `STRAPI_LICENSE`                     | The license key to activate the Enterprise Edition                                                                    | string  | `undefined`     |
-| `NODE_ENV`                           | Type of environment where the app is running                                                                          | string  | `'development'` |
-| `BROWSER`                            | Open the admin panel in the browser after startup                                                                     | boolean | `true`          |
-| `ENV_PATH`                           | Path to the file that contains your environment variables                                                             | string  | `'./.env'`      |
-| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE`| Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
+| name                                  | description                                                                                                                                                                                                                                                                                                                         | type    | default         |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------------- |
+| `STRAPI_DISABLE_UPDATE_NOTIFICATION`  | Don't show the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                           | boolean | `false`         |
+| `STRAPI_HIDE_STARTUP_MESSAGE`         | Don't show the startup message in the terminal                                                                                                                                                                                                                                                                                      | boolean | `false`         |
+| `STRAPI_TELEMETRY_DISABLED`           | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                                           | boolean | `false`         |
+| `STRAPI_LOG_TIMESTAMP`                | Add the timestamp info in logs                                                                                                                                                                                                                                                                                                      | boolean | `false`         |
+| `STRAPI_LOG_LEVEL`                    | Select the level of logs among `fatal`, `error`, `warn`, `info`, `debug`, `trace`                                                                                                                                                                                                                                                   | string  | `'info'`        |
+| `STRAPI_LOG_FORCE_COLOR`              | Force colors to be displayed even in environments that are not supposed to have colors enabled (ex: outside of a TTY)                                                                                                                                                                                                               | boolean | `true`          |
+| `STRAPI_LOG_PRETTY_PRINT`             | Log lines are displayed as text instead of as object                                                                                                                                                                                                                                                                                | boolean | `true`          |
+| `STRAPI_LICENSE`                      | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                                                  | string  | `undefined`     |
+| `NODE_ENV`                            | Type of environment where the app is running                                                                                                                                                                                                                                                                                        | string  | `'development'` |
+| `BROWSER`                             | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                                                   | boolean | `true`          |
+| `ENV_PATH`                            | Path to the file that contains your environment variables                                                                                                                                                                                                                                                                           | string  | `'./.env'`      |
+| `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` | Initialization locale for the app, if [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and enabled on your content types (see [Configuration of i18n in production environments](/developer-docs/latest/development/plugins/i18n.md#configuration-in-production-environments)) | string  | `'en'`          |
 
 #### Configuration using environment variables
 
@@ -1041,7 +1023,7 @@ CRON tasks allow you to schedule jobs (arbitrary functions) for execution at spe
 
 This feature is powered by [`node-schedule`](https://www.npmjs.com/package/node-schedule) node modules. Check it for more information.
 
-::: warning
+:::caution
 Make sure the `enabled` cron config is set to `true` in `./config/server.js` file.
 :::
 
@@ -1103,7 +1085,7 @@ When present, they are loaded to let you customize your database connection inst
 
 You will need to install the plugin using the normal `npm install the-plugin-name` or any of the other supported package tools such as yarn then follow the below examples to load them.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Mongoose
 
@@ -1155,23 +1137,24 @@ An image named `company-logo.png` in `./public/` is accessible through `/company
 `index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
 :::
 
-::: warning
+:::caution
 The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
 :::
 
 ### Single Sign On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
-***
+---
 
 Single-Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
-::: danger PREREQUISITES
+::: prerequisites
+
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a Gold plan.
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
-:::
+  :::
 
-::: warning CAUTION
+:::caution
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
@@ -1217,6 +1200,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
 
 <!-- Title below is supposed to be an h7, so one level deeper than "The `createStrategy` Factory. But h7 is not a thing, so using bold instead. 🤷 -->
+
 **Configuration Object**
 
 The configuration object depends on the strategy needs, but often asks for a callback URL to be redirected to once the connection has been made on the provider side.
@@ -1249,7 +1233,7 @@ Adding a new provider means adding a new way for your administrators to log-in.
 
 To achieve a great flexibility and a large choice of provider, Strapi uses [Passport.js](http://www.passportjs.org/). Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
 
-::: warning
+:::caution
 Strategies such as [ldapauth](https://github.com/vesse/passport-ldapauth) don't work out of the box since they require extra data to be sent from the admin panel.
 If you want to add an LDAP provider to your application, you will need to write a [custom strategy](http://www.passportjs.org/packages/passport-custom/).
 You can also use services such as Okta and Auth0 as bridge services.
@@ -1265,29 +1249,27 @@ To configure a provider, follow the procedure below:
 
 ##### Examples
 
-:::::: tabs
+:::::: tabs card
 
 ::::: tab Google
 
 Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-google-oauth2
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-google-oauth2
 ```
+</code-block>
 
-::::
+<code-block title="YARN">
+```sh
+yarn add passport-google-oauth2
+```
+</code-block>
+
+</code-group>
 
 `/config/server.js`
 
@@ -1339,25 +1321,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-github2
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-github2
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-github2
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 
@@ -1405,25 +1383,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-discord
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-discord
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-discord
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 
@@ -1470,25 +1444,21 @@ module.exports = ({ env }) => ({
 
 Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```bash
-yarn add passport-azure-ad-oauth2 jsonwebtoken
-```
-
-:::
-
-::: tab npm
-
-```bash
+<code-block title="NPM">
+```sh
 npm install --save passport-azure-ad-oauth2 jsonwebtoken
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn add passport-azure-ad-oauth2 jsonwebtoken
+```
+</code-block>
 
-::::
+</code-group>
 
 `/config/server.js`
 
@@ -1526,6 +1496,69 @@ module.exports = ({ env }) => ({
                 done(null, {
                   email: waadProfile.upn,
                   username: waadProfile.upn,
+                });
+              }
+            ),
+        },
+      ],
+    },
+  },
+});
+```
+
+:::::
+::::: tab Okta
+
+Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/blob/main/README.md)
+
+<code-group>
+
+<code-block title="NPM">
+```sh
+npm install --save passport-okta-oauth20
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn add passport-okta-oauth20
+```
+</code-block>
+
+</code-group>
+
+`/config/server.js`
+
+```jsx
+'use strict';
+
+const OktaOAuth2Strategy = require('passport-okta-oauth20').Strategy;
+
+module.exports = ({ env }) => ({
+  // ...
+  admin: {
+    // ...
+    auth: {
+      // ...
+      providers: [
+        {
+          uid: 'okta',
+          displayName: 'Okta',
+          icon:
+            'https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png',
+          createStrategy: strapi =>
+            new OktaOAuth2Strategy(
+              {
+                clientID: env('OKTA_CLIENT_ID'),
+                clientSecret: env('OKTA_CLIENT_SECRET'),
+                audience: env('OKTA_DOMAIN'),
+                scope: ['openid', 'email', 'profile'],
+                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('okta'),
+              },
+              (accessToken, refreshToken, profile, done) => {
+                done(null, {
+                  email: profile.email,
+                  username: profile.username,
                 });
               }
             ),
@@ -1622,7 +1655,7 @@ module.exports = () => ({
 
 ### Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
-::: warning 🚧 This API is considered unstable for now.
+:::caution 🚧 This API is considered unstable for now.
 <br>
 :::
 
@@ -1640,7 +1673,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 
 Declare and register conditions in your [`./config/functions/bootstrap.js`](/developer-docs/latest/setup-deployment-guides/configurations.md#bootstrap) file (see [Registering conditions](#registering-conditions)).
 
-:::tip NOTE
+:::note
 The condition `name` property acts as a [unique id](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/services/permission/condition-provider.js#L22) within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 
@@ -1665,22 +1698,22 @@ Query objects are useful to verify conditions on the entities you read, create, 
 
 The condition `handler` can be a synchronous or asynchronous function that:
 
-* receives the authenticated user making the request,
-* and returns `true`, `false`, or a query object.
+- receives the authenticated user making the request,
+- and returns `true`, `false`, or a query object.
 
 Returning `true` or `false` is useful to verify an external condition or a condition on the authenticated user.
 For instance, a condition that allows access to a page in the admin panel only if server time is 5pm could use this handler:
 
 ```js
-  handler: () => new Date().getHours() === 17
+handler: () => new Date().getHours() === 17;
 ```
 
 The `handler` function receives the authenticated user, so it can verify conditions on the user:
 
 ```js
 const condition = {
-  displayName: "Email address from strapi.io",
-  name: "email-strapi-dot-io",
+  displayName: 'Email address from strapi.io',
+  name: 'email-strapi-dot-io',
   async handler(user) {
     return user.email.includes('@strapi.io');
   },
@@ -1690,15 +1723,14 @@ const condition = {
 For more granular control, the `handler` function can also return a query object:
 
 ```js
-  const condition = {
-    displayName: "price greater than 50",
-    name: "price-gt-50",
-    async handler(user) {
-      return { price: { $gt: 50 } };
-    },
- };
+const condition = {
+  displayName: 'price greater than 50',
+  name: 'price-gt-50',
+  async handler(user) {
+    return { price: { $gt: 50 } };
+  },
+};
 ```
-
 
 #### Registering conditions
 
@@ -1710,7 +1742,7 @@ module.exports = async () => {
     displayName: 'Billing amount under 10K',
     name: 'billing-amount-under-10k',
     plugin: 'admin',
-    handler: { amount: { $lt: 10000 }},
+    handler: { amount: { $lt: 10000 } },
   });
 };
 ```

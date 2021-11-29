@@ -3,14 +3,16 @@
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vuepress dev",
+    "dev": "DEPLOY_ENV=legacy vuepress dev",
+    "dev:prod": "vuepress dev",
     "build": "vuepress build",
     "check-links": "vuepress check-md"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "@vuepress/plugin-medium-zoom": "^1.7.1",
-    "vuepress": "^1.7.1",
+    "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "markdown-it-include": "^2.0.0",
+    "vuepress": "^1.8.2",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-font-awesome": "1.90.6",
@@ -18,7 +20,8 @@
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.8.2",
-    "vuepress-plugin-check-md": "^0.0.2"
+    "vuepress-plugin-check-md": "^0.0.2",
+    "vuepress-plugin-container": "^2.1.5"
   },
   "author": {
     "email": "hi@strapi.io",

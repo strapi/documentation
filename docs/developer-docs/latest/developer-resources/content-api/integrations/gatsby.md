@@ -47,7 +47,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+:::request Example GET request
 
 ```graphql
 query {
@@ -62,8 +63,9 @@ query {
   }
 }
 ```
+:::
 
-_Response_
+:::response Example response
 
 ```json
 {
@@ -82,6 +84,8 @@ _Response_
   }
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -126,7 +130,8 @@ Execute a `GET` request on the `category` Collection Type in order to fetch a sp
 
 Be sure that you activated the `findOne` permission for the `category` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```graphql
 query {
@@ -141,7 +146,9 @@ query {
 }
 ```
 
-_Response_
+:::
+
+::: response Example response
 
 ```json
 {
@@ -160,6 +167,8 @@ _Response_
   "extensions": {}
 }
 ```
+:::
+::::
 
 ### Example
 

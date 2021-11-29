@@ -25,7 +25,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
-::: warning IMPORTANT
+::: caution
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
@@ -41,7 +41,7 @@ On the top right side of the *Administration panel > Roles* interface, an **Add 
 To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
-::: tip 💡 TIP
+::: tip
 In the *Roles* interface, from the table, you can click on the duplicate button <Fa-Copy /> to create a new role by duplicating an existing one.
 :::
 
@@ -54,7 +54,7 @@ To delete a role:
 1. Click on the trash button <Fa-TrashAlt /> on the right side of the role's record.
 2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
 
-::: tip 💡 TIP
+::: tip
 You also have the possibility to delete multiple roles at the same time. To do so, select the roles by ticking the box on the left side of the roles' record. Then, click on the **Delete** button in the top right corner of the table.
 :::
 
@@ -64,7 +64,7 @@ You also have the possibility to delete multiple roles at the same time. To do s
 
 The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Fa-PencilAlt /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
-::: warning IMPORTANT
+::: caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
 :::
 
@@ -72,7 +72,7 @@ It isn't possible to edit the permissions of the Super Admin role. All configura
 
 The details area of an administrator role editing interface allow to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
 
-::: tip 💡 TIP
+::: tip
 In the top right corner, you can see a counter indicating how many administrators have been attributed the role.
 :::
 
@@ -149,7 +149,7 @@ For each permission of each category, a **Settings** button is displayed. It all
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
 
-::: tip NOTE
+::: note
 Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations.md#role-based-access-control)).
 :::
 
@@ -164,6 +164,6 @@ To set custom conditions:
    - Click on the arrow button ![icon arrow](../assets/users-permissions/icon_arrowdown.png) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
-::: warning IMPORTANT
+::: caution
 Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::
