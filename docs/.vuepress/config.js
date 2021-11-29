@@ -552,7 +552,8 @@ const plugins = [
   ['vuepress-plugin-container', {
     type: 'response',
     defaultTitle: 'Response'
-  }]
+  }],
+  ['vuepress-plugin-clean-urls']
 ];
 
 const checkLegacy = () => {

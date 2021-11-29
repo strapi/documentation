@@ -13,6 +13,7 @@
     "@vuepress/plugin-medium-zoom": "^1.8.2",
     "markdown-it-include": "^2.0.0",
     "vuepress": "^1.8.2",
+    "vuepress-plugin-clean-urls": "^1.1.2",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-font-awesome": "1.90.6",
