@@ -808,8 +808,8 @@ module.exports = {
     docsDir: 'docs',
     docsBranch: 'main',
     algolia: {
-      apiKey: 'a93451de224096fb34471c8b8b049de7',
-      indexName: 'strapi',
+      apiKey: 'cf49c82a1865df2618a3d89e18657051',
+      indexName: 'documentation',
     },
     editLinks: true,
     editLinkText: 'Improve this page',
