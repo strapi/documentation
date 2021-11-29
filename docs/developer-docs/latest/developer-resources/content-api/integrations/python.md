@@ -31,7 +31,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```python
 requests.get("http://localhost:1337/restaurants",
@@ -39,8 +40,9 @@ requests.get("http://localhost:1337/restaurants",
     'Content-Type': 'application/json'
   })
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 [
@@ -75,6 +77,8 @@ _Response_
   }
 ]
 ```
+:::
+::::
 
 ### Example
 
@@ -105,7 +109,8 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```python
 requests.post("http://localhost:1337/restaurants",
@@ -117,10 +122,10 @@ data=json_dumps({
   headers={
     'Content-Type': 'application/json'
   })
-)
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -143,6 +148,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -183,7 +190,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```python
 requests.put("http://localhost:1337/restaurants/2",
@@ -194,8 +202,9 @@ headers={
 'Content-Type': 'application/json'
 })
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -218,6 +227,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 

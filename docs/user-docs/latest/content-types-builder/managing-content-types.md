@@ -5,7 +5,7 @@ description: The Content-Types Builder allows to manage any existing content-typ
 
 # Managing content-types
 
-::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+::: callout The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
@@ -27,7 +27,7 @@ Managing a content-type or component can include editing the general settings an
   - Click on the **Add another field** button to add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md))
   - Click on the **Configure the view** button to access the view configuration interface (see [Configuring the edit view](/user-docs/latest/content-manager/configuring-view-of-content-type.md#configuring-the-edit-view))
 
-::: warning IMPORTANT
+::: caution
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
 :::
 
@@ -43,6 +43,6 @@ To delete a content-type or component:
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
 
-::: warning IMPORTANT
+::: caution
 Deleting a content-type only deletes what was created and available from the Content-Types Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related [GitHub issue](https://github.com/strapi/strapi/issues/1114).
 :::

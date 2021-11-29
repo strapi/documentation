@@ -64,13 +64,13 @@ Finally create **2 users** with the following data.
 
 ## Login as a Reader
 
-To login as a user your will have to follow the [login documentation](/developer-docs/latest/development/plugins/users-permissions.md#login).
+To login as a user, you will need to follow the [login documentation](/developer-docs/latest/development/plugins/users-permissions.md#login).
 
 Here is the API route for the authentication `/auth/local`.
 
 You have to request it in **POST**.
 
-:::: tabs
+:::: tabs card
 
 ::: tab axios
 

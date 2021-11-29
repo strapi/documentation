@@ -5,8 +5,8 @@ description: Learn how to install MongoDB on your computer and using it for your
 
 # MongoDB Installation
 
-::: warning WARNING
-Starting from the release of Strapi v4, MongoDB is not supported natively anymore and no connector is available. For more information, please refer to [the official communication on the topic](https://strapi.io/blog/mongo-db-support-in-strapi-past-present-and-future).
+::: caution
+!!!include(developer-docs/latest/snippets/mongodb-warning.md)!!!
 :::
 
 ## Install MongoDB locally
@@ -17,7 +17,7 @@ If you already have MongoDB installed locally and running as a background servic
 
 Please complete the installation steps appropriate to your operating system.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Windows 10
 
@@ -141,25 +141,21 @@ MongoDB must already be running in the background.
 
 `Path: ./`
 
-:::: tabs
+<code-group>
 
-::: tab yarn
-
-```
-yarn create strapi-app my-project
-```
-
-:::
-
-::: tab npx
-
-```
+<code-block title="NPM">
+```sh
 npx create-strapi-app my-project
 ```
+</code-block>
 
-:::
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project
+```
+</code-block>
 
-::::
+</code-group>
 
 - Use your `down arrow` key and select `Custom (manual settings)` and press `enter`:
 
@@ -233,7 +229,7 @@ Follow these steps to configure a local Strapi project to use a [MongoDB Atlas](
   - In **Cluster Name**, name your cluster.
 - Click the green `Create Cluster` button. You will get a message that says, "_Your cluster is being created..._"
 
-### 2. Next, click on the `Database Access` in the left menu (under `Overview`):
+### 2. Next, click on the `Database Access` in the left menu (under `Security`):
 
 - Click the green `+ ADD NEW USER` button:
   - Enter a `username`.
@@ -272,17 +268,14 @@ MongoDB Atlas automatically exposes the database credentials into a single envir
 
 - Under `Atlas` in the left-hand, click on `Clusters`. This should take you to your `cluster`. Next, click `CONNECT` and then `Connect Your Application`.
 - Under `1. Choose your driver version`, select **DRIVER** as `Node.js` and **VERSION** as `3.6 or later`.
-  ::: warning
-  You **must** use `Version: 3.6 or later`.
+  :::caution
+  You must use `Version: 3.6 or later`.
   :::
 - This should show a **Connection String Only** similar to this:
 
 `mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
-
-
-
-::: warning
+:::caution
 Please note the `<password>` after your `username`. In this example, after `mongodb+srv://username:`. You will need to replace the `<password>` with the password you created earlier for this user in your **MongoDB Atlas** account.
 :::
 
@@ -292,9 +285,9 @@ Replace the contents of `/database.js` with the following and replace **< passwo
 
 `Path: ./config/database.js`.
 
-:::: tabs
+:::: tabs card
 
-::: tab Uri Method
+::: tab URI Method
 
 This method uses the URI string aqcuired from Atlas in step 4.
 
@@ -326,7 +319,6 @@ module.exports = ({ env }) => ({
 DATABASE_URI=mongodb+srv://username:<password>@cluster0.blah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 DATABASE_NAME=myFirstDatabase
 ```
-
 
 :::
 
@@ -372,9 +364,8 @@ DATABASE_PASSWORD=yourpassword
 
 ::::
 
-::: danger WARNING
+:::warning
 We recommend replacing sensitive (eg. "URI string" above) information in your database configuration files before uploading your project to a public repository such as GitHub. For more information about using environment variables, please read [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md).
-
 :::
 
 You are now ready use Strapi locally or to deploy your project to an external hosting provider and use MongoDB Atlas as your database server.

@@ -5,7 +5,7 @@ description: The Content-Types Builder allows to create new content-types (singl
 
 # Creating content-types
 
-::: warning The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+::: callout The Content-Types Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
@@ -34,7 +34,7 @@ To create a new content-type:
 6. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md)).
 7. Click on the **Save** button.
 
-::: warning IMPORTANT
+::: caution
 New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-Types Builder, and cannot be used in the Content Manager.
 :::
 

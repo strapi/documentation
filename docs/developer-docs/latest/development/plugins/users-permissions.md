@@ -206,7 +206,7 @@ In the following examples, the frontend app will be the [react login example app
 It (the frontend app) will be running on `http://localhost:3000`. <br>
 Strapi (the backend) will be running on `http://localhost:1337`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab GitHub
 
@@ -704,7 +704,7 @@ Once you have configured strapi and the provider, in your frontend app you have 
 
 Now you can make authenticated requests 🎉 More info here: [token usage](#token-usage).
 
-:::warning Troubleshooting
+:::caution Troubleshooting
 
 - **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
 - **Grant: missing session or misconfigured provider**: It may be due to many things.
@@ -786,7 +786,7 @@ Congrats, you're done!
 
 ### Email validation
 
-:::tip NOTE
+:::note
 In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations.md#server).
 :::
 
@@ -993,5 +993,5 @@ module.exports = {
 ```
 
 ::: tip
-You can learn more on configuration in the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md)
+You can learn more on configuration in the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md).
 :::

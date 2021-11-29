@@ -19,7 +19,7 @@ Extensions folder structure:
     - `controllers`: You can extend the plugin's controllers by creating controllers with the same names and override certain methods.
     - `services`: You can extend the plugin's services by creating services with the same names and override certain methods.
 
-::: warning
+:::caution
 When using **extensions** you will need to update your code whenever you upgrade your strapi version. Not updating and comparing your **extensions** with the new changes on the repository, can break your app in unexpected ways that we cannot predict in the [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md).
 :::
 
