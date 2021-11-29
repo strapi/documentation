@@ -1,6 +1,7 @@
 ---
-title: Draft and publish - Strapi Developer Documentation
+title: Draft and publish - Strapi Developer Docs
 description: The draft and publish feature allows you to save your content as a draft, to publish it later.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/concepts/draft-and-publish.html
 ---
 
 # Draft and publish
@@ -17,7 +18,7 @@ If the feature is deactivated while contents are saved as drafts, they will auto
 
 To deactivate the draft and publish feature for a content type:
 
-1. Go the Plugins > Content-Types Builder.
+1. Go the Plugins > Content-Type Builder.
 2. Select the collection or single type for which you want the draft and publish feature to be deactivated.
 3. Click on the Edit <Fa-PencilAlt /> button to access the content type's configurations.
 4. Click on the "Advanced Settings" tab.
@@ -25,7 +26,7 @@ To deactivate the draft and publish feature for a content type:
 6. Click on the **Finish** button to confirm the deactivation of the feature.
 
 ::: tip
-It is also possible to activate or deactivate the feature when creating a new content type. To do so: after clicking on the **Create new collection/single type** button in the Content-Types Builder, follow steps 4 and 5 from the procedure above.
+It is also possible to activate or deactivate the feature when creating a new content type. To do so: after clicking on the **Create new collection/single type** button in the Content-Type Builder, follow steps 4 and 5 from the procedure above.
 :::
 
 ![Deactivate Draft & Publish](../assets/concepts/draft-publish/deactivating_draft_publish.png)

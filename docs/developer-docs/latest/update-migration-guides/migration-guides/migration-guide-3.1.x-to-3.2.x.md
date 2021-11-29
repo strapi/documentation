@@ -1,6 +1,7 @@
 ---
-title: Migrate from 3.1.x to 3.2.3 - Strapi Developer Documentation
+title: Migrate from 3.1.x to 3.2.3 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from 3.1.x to 3.2.3.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.1.x-to-3.2.x.html
 ---
 
 # Migration guide from 3.1.x to 3.2.3

@@ -1,9 +1,12 @@
 ---
-title: Get started with Laravel - Strapi Developer Documentation
+title: Get started with Laravel - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Laravel.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/laravel.html
 ---
 
 # Getting Started with Laravel
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -19,6 +22,12 @@ composer require dbfx/laravel-strapi
 
 This will install [Laravel-Strapi](https://github.com/dbfx/laravel-strapi), a Laravel specific package for interacting with Strapi.
 
+You will need to publish a config file:
+
+```bash
+php artisan vendor:publish --provider="Dbfx\LaravelStrapi\LaravelStrapiServiceProvider" --tag="strapi-config"
+```
+
 You will also need to define your `STRAPI_URL` and `STRAPI_CACHE_TIME` in the `.env` file:
 
 ``` json
@@ -32,12 +41,13 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+::: request Example GET request
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
 $restaurants = $strapi->collection('restaurants');
 ```
+:::
 
 You may now iterate over the $restaurants array which will contain all your restaurants. More options are available as well: 
 
@@ -76,6 +86,6 @@ $entry = $strapi->entry('restaurants', $id = 5);
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your Collection Types in Strapi using Laravel. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.html).
+There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).

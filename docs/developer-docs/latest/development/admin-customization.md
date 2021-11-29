@@ -1,336 +1,287 @@
 ---
-title: Admin panel customization - Strapi Developer Documentation
+title: Admin panel customization - Strapi Developer Docs
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
+sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/admin-customization.html
 ---
 
 # Admin panel customization
 
-## Admin extension
+The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
-The admin panel is a `node_module` that is similar to a [plugin](/developer-docs/latest/development/plugin-customization.md), with the slight difference that it encapsulates all the installed plugins of your application.
-
-To extend this package you will have to create an `admin` folder at the root of your application.
-
-In this folder you will be able to override admin files and functions.
-
-
-## Customization options
-
-The administration panel can be customized according to your needs, so you can make it reflect your identity.
-
-::: warning
-To apply your changes you need to [rebuild](#build) your admin panel
-:::
-
-### Change access URL
-
-By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). However, for security reasons, you can easily update this path. For more advanced settings please see the [server config](/developer-docs/latest/setup-deployment-guides/configurations.md#server) documentation.
-
-**Path —** `./config/server.js`.
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  admin: {
-    url: '/dashboard',
-  },
-});
-```
-
-The panel will be available through [http://localhost:1337/dashboard](http://localhost:1337/dashboard) with the configuration above.
-
-### Development mode
-
-To enable the front-end development mode you need to start your application using the `--watch-admin` flag.
+To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
 
 ```bash
-cd my-app
+cd my-app # cd into the root directory of the Strapi application project
 strapi develop --watch-admin
 ```
 
-With this option you can do the following:
+## Customization options
 
-#### Customize the `strapi-admin` package
+Customizing the admin panel is helpful to better reflect your brand identity or to modify some default Strapi behavior:
 
-All files added in `my-app/admin/src/` will either be replaced or added
+- The [access URL, host and port](#access-url) can be modified through the server configuration.
+- The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
+- The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
+- The [forgotten password email](#forgotten-password-email) can be customized with a template and variables.
+- The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
-**Example: Changing the available locales of your application**
+### Access URL
 
-```bash
-# Create both the admin and admin/src/translations folders
-cd my-app && mkdir -p admin/src/translations
-# Change the available locales of the administration panel
-touch admin/src/i18n.js
-# Change the import and exports of the translations files
-touch admin/src/translations/index.js
-```
+By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, this path can be updated.
 
-**Path -** `my-app/admin/src/translations/index.js`
+**Example:**
 
-```js
-import en from './en.json';
-import fr from './fr.json';
-
-const trads = {
-  en,
-  fr,
-};
-
-export const languageNativeNames = {
-  en: 'English',
-  fr: 'Français',
-};
-
-export default trads;
-```
-
-::: tip
-With this modification only English and French will be available in your admin
-:::
-
-#### Customize a plugin
-
-Similarly to the back-end override system, any file added in `my-app/extensions/<plugin-name>/admin/` will be copied and used instead of the original one (use with care).
-
-**Example: Changing the current WYSIWYG**
-
-```bash
-cd my-app/extensions
-# Create the content manager folder
-mkdir content-manager && cd content-manager
-# Create the admin folder
-mkdir -p admin/src
-# Create the components folder and the WysiwygWithErrors one
-cd admin/src && mkdir -p components/WysiwygWithErrors
-# Create the index.js so the original file is overridden
-touch components/WysiwygWithErrors/index.js
-```
-
-**Path -** `my-app/extensions/content-manager/admin/src/components/WysiwygWithErrors/index.js`
+To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) file:
 
 ```js
-import React from 'react';
-import MyNewWYSIWYG from 'my-awesome-lib';
+//path: ./config/server.js
 
-// This is a dummy example
-const WysiwygWithErrors = props => <MyNewWYSIWYG {...props} />;
-
-export default WysiwygWithErrors;
-```
-
-#### Styles
-
-The AdminUI package source is located in `./node_modules/strapi-admin/admin/src/`.
-
-For example, to change the top-left admin panel's color:
-
-1. create a copy of the 
-- `./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader` folder to 
-- `./admin/src/components/LeftMenu/LeftMenuHeader` (create these folders if they don't exist)
-
-```
-mkdir -p ./admin/src/components/LeftMenu/LeftMenuHeader
-cp ./node_modules/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js ./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js
-```
-
-2. modify style within that copy (see also [sourcecode online](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js#L7)):
-
-**Path:** `./admin/src/components/LeftMenu/LeftMenuHeader/Wrapper.js`
-```js
-  background-color: #007eff;
-```
-
-Thus, files in `admin/src/some/file/path` take precedence over `node_modules/strapi-admin/admin/src/file/path`.
-
-::: warning
-To apply your changes you need to [rebuild](#build) your admin panel
-:::
-
-#### Logo
-
-To change the top-left displayed admin panel's logo, add your custom image at `./admin/src/assets/images/logo-strapi.png`.
-
-To change the login page's logo, add your custom image at `./admin/src/assets/images/logo_strapi.png`.
-
-::: tip
-make sure the size of your image is the same as the existing one (434px x 120px).
-:::
-
-#### Tutorial videos
-
-To disable the information box containing the tutorial videos, create a file at `./admin/src/config.js`
-
-Add the following configuration:
-
-```js
-export const LOGIN_LOGO = null;
-export const SHOW_TUTORIALS = false;
-export const SETTINGS_BASE_URL = '/settings';
-export const STRAPI_UPDATE_NOTIF = true;
-```
-
-#### Changing the host and port
-
-By default, the front-development server runs on `localhost:8000`. However, you can change this setting by updating the following configuration:
-
-**Path —** `./config/server.js`.
-
-```js
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  admin: {
-    host: 'my-host', // only used along with `strapi develop --watch-admin` command
-    port: 3000, // only used along with `strapi develop --watch-admin` command
-  },
+
 });
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  url: '/dashboard',
+})
 ```
 
-### Build
-
-To build the administration, run the following command from the root directory of your project.
-
-:::: tabs
-
-::: tab yarn
-
-```
-yarn build
-```
-
+:::strapi Advanced settings
+For more advanced settings please see the [admin panel configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) documentation.
 :::
 
-::: tab npm
+#### Host and port
 
-```
-npm run build
-```
-
-:::
-
-::: tab strapi
-
-```
-strapi build
-```
-
-:::
-
-::::
-
-This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure your updates have been taken into account.
-
-## Custom Webpack Config
-
-In order to extend the usage of webpack, you can define a function that extends its config inside `admin/admin.config.js`, like so:
+By default, the front end development server runs on `localhost:8000` but this can be modified:
 
 ```js
+// path: ./config/server.js
+
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+});
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  host: 'my-host', // only used along with `strapi develop --watch-admin` command
+  port: 3000, // only used along with `strapi develop --watch-admin` command
+});
+
+```
+
+### Configuration options
+
+The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
+
+Any file used by the `config` object (e.g. a custom logo) should be placed in the `./admin/extensions/` folder and imported inside `./src/admin/app.js`.
+
+The `config` object accepts the following parameters:
+
+| Parameter       | Type             | Description                                                                                                                                   |
+| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#logos) on login screen                                                    |
+| `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#favicon)                                                        |
+| `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#locales)) |
+| `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
+| `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
+| `theme`         | Object           | Overrides or [extends the theme](#theme-extension)                                                                                          |
+| `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
+| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
+
+::: details Example of a custom configuration for the admin panel:
+
+```jsx
+// path: ./admin/src/app.js
+
+import AuthLogo from './extensions/my-logo.png';
+import MenuLogo from './extensions/logo.png';
+import favicon from './extensions/favicon.ico';
+
+export default {
+  config: {
+    // Replace the Strapi logo in auth (login) views
+    auth: {
+      logo: AuthLogo,
+    },
+   // Replace the favicon
+    head: {
+      favicon: favicon,
+    },
+    // Add a new locale, other than 'en'
+    locales: ['fr', 'de'],
+    // Replace the Strapi logo in the main navigation
+    menu: {
+      logo: MenuLogo,
+    },
+    // Override or extend the theme
+    theme: {
+      colors: {
+        alternative100: '#f6ecfc',
+        alternative200: '#e0c1f4',
+        alternative500: '#ac73e6',
+        alternative600: '#9736e8',
+        alternative700: '#8312d1',
+        danger700: '#b72b1a'
+      },
+    },
+    // Extend the translations
+    translations: {
+      fr: {
+        'Auth.form.email.label': 'test',
+        Users: 'Utilisateurs',
+        City: 'CITY (FRENCH)',
+        // Customize the label of the Content Manager table.
+        Id: 'ID french',
+      },
+    },
+   // Disable video tutorials
+    tutorials: false,
+   // Disable notifications about new Strapi releases
+    notifications: { release: false },
+  },
+
+  bootstrap() {},
+};
+
+```
+
+:::
+
+#### Locales
+
+To update the list of available locales in the admin panel, use the `config.locales` array:
+
+```jsx
+// path: ./my-app/src/admin/app.js
+
 module.exports = {
+  // Custom webpack config
   webpack: (config, webpack) => {
     // Note: we provide webpack above so you should not `require` it
     // Perform customizations to webpack config
-    // Important: return the modified config
-    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+    // Important: return the mutated config
+    return config;
+  },
+
+  // App customizations
+  app: config => {
+    config.locales = ['ru', 'zh'];
 
     return config;
   },
 };
 ```
 
+::: note NOTES
 
-## Deployment
-
-The administration is nothing more than a React front-end application calling an API. The front-end and the back-end are independent and can be deployed on different servers which brings us to different scenarios:
-
-1. Deploy the entire project on the same server.
-2. Deploy the administration panel on another server (AWS S3, Azure, etc) than the API.
-
-Let's dive into the build configurations for each case.
-
-### Deploy the entire project on the same server.
-
-You don't need to touch anything in your configuration file. This is the default behavior and the build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/dashboard`.
-
-You might want to change the path to access the administration panel. Here is the required configuration to change the path:
-
-**Path —** `./config/server.js`.
-
-```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  admin: {
-    url: '/dashboard', // We change the path to access to the admin (highly recommended for security reasons).
-  },
-});
-```
-
-::: warning
-To apply your changes you need to [rebuild](#build) your admin panel
+* The `en` locale cannot be removed from the build as it is both the fallback (i.e. if a translation is not found in a locale, the `en` will be used) and the default locale (i.e. used when a user opens the administration panel for the first time).
+* The full list of available locales is accessible on [Strapi's Github repo](https://github.com/strapi/strapi/blob/releases/v4/packages/plugins/i18n/server/constants/iso-locales.json).
 :::
 
-### Deploy the administration panel on another server (AWS S3, Azure, etc) than the API.
+##### Extending translations
 
-It's very common to deploy the front-end and the back-end on different servers. Here is the required configuration to handle this case:
-
-**Path —** `./config/server.js`.
+Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
 ```js
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'http://yourbackend.com',
-  admin: {
-    url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
-    serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+// path: ./src/admin/app.js
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      fr: {
+        or: 'OR',
+        'request.error.model.unknown': "This model doesn't exist",
+        skipToContent: 'Skip to content',
+        submit: 'Submit',
+        Totos: 'tata',
+        "content-type-builder.my-translation-key": "test"
+      },
+    },
   },
-});
+  bootstrap() {},
+};
 ```
 
-After running `yarn build` with this configuration, the folder `build` will be created/overwritten. You can then use this folder to serve it from another server with the domain of your choice (ex: `http://yourfrontend.com`).
+If more translations files should be added, place them in `/extensions/translations` folder.
 
-The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
+#### Logos
 
-::: tip NOTE
-If you add a path to the `url` option, it won't prefix your app. To do so, you need to also use a proxy server like Nginx. More [here](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides).
+The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
+
+| Location in the UI     | Configuration key to update |
+| ---------------------- | --------------------------- |
+| On the login page      | `config.auth.logo`          |
+| In the main navigation | `config.menu.logo`          |
+
+To update the logos, put image files in the `./extensions` folder and update the corresponding keys.
+
+The size of the custom image should be the same as the default one (434px x 120px).
+
+#### Favicon
+
+To update the favicon, put a favicon file in the `./extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
+
+#### Tutorial videos
+
+To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
+
+#### Releases notifications
+
+To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
+
+#### Theme extension
+
+<!-- TODO: complete this section once design system is ready -->
+
+To extend the theme, use the `config.theme` key.
+
+::: strapi Strapi Parts! theme
+The default [Strapi Parts! theme](https://github.com/strapi/parts/tree/master/packages/strapi-parts/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`.
 :::
 
+<!-- TODO: maybe provide a theme extension example once design system is ready? -->
 
-## Forgot Password Email
+### WYSIWYG editor
 
-### Customize forgot password email
+To change the current WYSIWYG, you can either install a third-party plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
 
-You may want to customize the forgot password email.
-You can do it by providing your own template (formatted as a [lodash template](https://lodash.com/docs/4.17.15#template)).
+### 'Forgotten password' email
+
+To customize the 'Forgotten password' email, provide your own template (formatted as a [lodash template](https://lodash.com/docs/4.17.15#template)).
 
 The template will be compiled with the following variables: `url`, `user.email`, `user.username`, `user.firstname`, `user.lastname`.
 
-### Example
-
-**Path -** `./config/servers.js`
+**Example**:
 
 ```js
+// path: ./config/admin.js
+
 const forgotPasswordTemplate = require('./email-templates/forgot-password');
 
 module.exports = ({ env }) => ({
   // ...
-  admin: {
-    // ...
-    forgotPassword: {
-      from: 'support@mywebsite.fr',
-      replyTo: 'support@mywebsite.fr',
-      emailTemplate: forgotPasswordTemplate,
-    },
-    // ...
+  forgotPassword: {
+    from: 'support@mywebsite.fr',
+    replyTo: 'support@mywebsite.fr',
+    emailTemplate: forgotPasswordTemplate,
+  },
   },
   // ...
 });
 ```
 
-**Path -** `./config/email-templates/forgot-password.js`
-
 ```js
+// path: ./config/email-templates/forgot-password.js
+
 const subject = `Reset password`;
 
 const html = `<p>Hi <%= user.firstname %></p>
@@ -345,3 +296,106 @@ module.exports = {
   html,
 };
 ```
+
+### Webpack configuration
+
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./admin/webpack.config.js`:
+
+```js
+module.exports = {
+  webpack: (config, webpack) => {
+    // Note: we provide webpack above so you should not `require` it
+
+    // Perform customizations to webpack config
+    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+    // Important: return the modified config
+    return config;
+  },
+};
+```
+
+::: note
+Only `./admin/app.js` and the files under the `./admin/extensions` folder are being watched by the webpack dev server.
+:::
+
+## Extension
+
+There are 2 use cases to extend the admin panel:
+
+- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md).
+
+- A Strapi user only needs to extend a specific instance of a Strapi application. This can be done by directly updating the `./src/admin/app.js` file, which can import any file located in `./src/admin/extensions`.
+
+## Deployment
+
+The administration is a React front-end application calling an API. The front end and the back end are independent and can be deployed on different servers, which brings us to different scenarios:
+
+* Deploy the entire project on the same server.
+* Deploy the administration panel on a server (AWS S3, Azure, etc) different from the API server.
+
+Build configurations differ for each case.
+
+Before deployment, the admin panel needs to be built, by running the following command from the project's root directory:
+
+<code-group>
+
+<code-block title="NPM">
+```sh
+npm run build
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn build
+```
+</code-block>
+
+<code-block title="STRAPI CLI">
+```sh
+strapi build
+```
+</code-block>
+
+</code-group>
+
+This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure customizations have been taken into account.
+
+### Same server
+
+Deploying the admin panel and the API on the same server is the default behavior. The build configuration will be automatically set. The server will start on the defined port and the administration panel will be accessible through `http://yourdomain.com:1337/admin`.
+
+:::tip
+You might want to [change the path to access the administration panel](#access-url).
+:::
+
+### Different servers
+
+To deploy the front end and the back end on different servers, use the following configuration:
+
+```js
+// path: ./config/server.js
+
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'http://yourbackend.com',
+});
+
+
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+});
+```
+
+After running `yarn build` with this configuration, the `build` folder will be created/overwritten. Use this folder to serve it from another server with the domain of your choice (e.g. `http://yourfrontend.com`).
+
+The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
+
+:::note
+If you add a path to the `url` option, it won't prefix your app. To do so, use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
+:::

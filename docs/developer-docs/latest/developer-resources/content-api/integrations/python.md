@@ -1,9 +1,12 @@
 ---
-title: Get started with Python - Strapi Developer Documentation
+title: Get started with Python - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Python.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/python.html
 ---
 
 # Getting Started with Python
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -31,7 +34,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```python
 requests.get("http://localhost:1337/restaurants",
@@ -39,8 +43,9 @@ requests.get("http://localhost:1337/restaurants",
     'Content-Type': 'application/json'
   })
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 [
@@ -75,6 +80,8 @@ _Response_
   }
 ]
 ```
+:::
+::::
 
 ### Example
 
@@ -105,7 +112,8 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```python
 requests.post("http://localhost:1337/restaurants",
@@ -117,10 +125,10 @@ data=json_dumps({
   headers={
     'Content-Type': 'application/json'
   })
-)
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -143,6 +151,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -183,7 +193,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```python
 requests.put("http://localhost:1337/restaurants/2",
@@ -194,8 +205,9 @@ headers={
 'Content-Type': 'application/json'
 })
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -218,6 +230,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 

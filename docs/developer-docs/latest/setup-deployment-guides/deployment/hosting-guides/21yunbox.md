@@ -1,33 +1,12 @@
 ---
-title: 21YunBox Deployment - Strapi Developer Documentation
+title: 21YunBox Deployment - Strapi Developer Docs
 description: Learn in this guide how to update an existing Strapi project so it can be deployed on 21YunBox.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.html
 ---
 
-<style lang="scss" scoped>
-  /*
-    We override the :::danger callout for specific uses here.
-    The CSS is scoped so this won't affect the rest of the docs.
-
-    Eventually this will be turned into custom blocks or VuePress components,
-    once I understand better how markdown-it and markdown-it-custom-block work.
-  */
-  .custom-block.danger {
-    border-left-width: .25rem;
-    background-color: #f8f8f8;
-    border-color: #bbbbba;
-    /* margin-top: 2em; */
-    /* margin-bottom: 2em; */
-
-    .custom-block-title, p, li {
-      color: rgb(44, 62, 80);
-    }
-    a {
-      color: #007eff;
-    }
-  }
-</style>
-
 # 21YunBox
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This guide explains how to update an existing Strapi project so it can be deployed on [21YunBox](https://www.21yunbox.com).
 
@@ -36,10 +15,10 @@ This guide explains how to update an existing Strapi project so it can be deploy
 With persistent disks and managed PostgreSQL databases, 21YunBox gives you multiple different ways to store your content. 21YunBox services come with fully managed SSL, so it's no longer necessary to set up a proxy server to secure your Strapi app. Since 21YunBox services are automatically restarted if they become unresponsive, you don't need to use a process manager like `pm2` either.
 
 ::: tip
-For more information consult [21YunBox's Deploy Strapi guide](https://www.21yunbox.com/docs/#/deploy-strapi)
+For more information consult [21YunBox's Deploy Strapi guide](https://www.21yunbox.com/docs/#/deploy-strapi).
 :::
 
-:::danger PREREQUISITES
+:::prerequisites
 
 This guide assumes you already have a Strapi project to deploy. If you need a project, use the [Quick Start](/developer-docs/latest/getting-started/quick-start.md) to get started or fork 21YunBox's Strapi Examples:
 - [Strapi with SQLite Starter](https://gitee.com/eryiyunbox-examples/hello-strapi-sqlite)
@@ -89,7 +68,3 @@ Now that 21YunBox is connected to your repo, it will automatically build and pub
 ## Custom domains
 
 Add your own domains to your site easily using 21YunBox's [custom domains](https://www.21yunbox.com/docs/#/custom-domains) guide.
-
-::: tip NOTE
-If you need customized deployment with Strapi, please contact [21YunBox](https://www.21yunbox.com/docs/#/contact).
-:::

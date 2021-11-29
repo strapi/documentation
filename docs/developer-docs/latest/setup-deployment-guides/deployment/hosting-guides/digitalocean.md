@@ -1,9 +1,12 @@
 ---
-title: DigitalOcean Droplet Deployment - Strapi Developer Documentation
+title: DigitalOcean Droplet Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.html
 ---
 
 # DigitalOcean Droplets
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md).
 
@@ -118,7 +121,7 @@ git --version
 
 #### 2. **OPTIONAL:** Install Git.
 
-::: tip NOTE
+:::note
 Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04).
 :::
 
@@ -130,7 +133,7 @@ After installing and configuring Git on your Droplet. Please continue to the nex
 
 DigitalOcean has excellent documentation regarding the installation and use of the major databases that work with Strapi. The previous steps above should all be completed prior to continuing. You can find links, and any further instructions, below:
 
-:::: tabs
+:::: tabs card
 
 ::: tab PostgreSQL
 
@@ -153,7 +156,7 @@ postgres=# \q
 exit
 ```
 
-- **OPTIONAL:** If in **Development**, your Strapi project is uses **SQLite**, you will need to install a dependency package called `pg`:
+- **OPTIONAL:** If in **Development**, your Strapi project uses **SQLite**, you will need to install a dependency package called `pg`:
 
   - On your **Development** computer:
 

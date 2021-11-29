@@ -1,9 +1,12 @@
 ---
-title: Google App Engine Deployment - Strapi Developer Documentation
+title: Google App Engine Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Google App Engine and how to upload your assets on Google Cloud Storage.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html
 ---
 
 # Google App Engine
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 In this guide we are going to:
 
@@ -14,29 +17,21 @@ In this guide we are going to:
 
 ### New Strapi project
 
-:::: tabs
+<code-group>
 
-::: tab yarn
+<code-block title="NPM">
+```sh
+npx create-strapi-app@latest my-project --quickstart
+```
+</code-block>
 
-Use **yarn** to install the Strapi project (**recommended**). [Install yarn with these docs](https://yarnpkg.com/lang/en/docs/install/)
-
-```bash
+<code-block title="YARN">
+```sh
 yarn create strapi-app my-project --quickstart
 ```
+</code-block>
 
-:::
-
-::: tab npx
-
-Use **npm/npx** to install the Strapi project
-
-```bash
-npx create-strapi-app my-project --quickstart
-```
-
-:::
-
-::::
+</code-group>
 
 When the setup completes, register an admin user using the form which opens in the browser. This user will be only relevant in local development.
 
@@ -106,12 +101,12 @@ The `myapi-123456` part is the project identifier. (The number is automatically 
 
 The following is an example config for `Standard Environment` or `Flexible Environment`.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Standard Environment
 
 ```yaml
-runtime: nodejs10
+runtime: nodejs14
 
 instance_class: F2
 
@@ -177,7 +172,7 @@ yarn add pg
 
 [Google App Engine requires](https://cloud.google.com/sql/docs/postgres/connect-app-engine) to connect to the database using the unix socket path, not an IP and port.
 
-Edit `database.js`, and use the socket path as `host`.
+Edit `database.js`, and use the socket path as `socketPath`.
 
 `Path: ./config/env/production/database.js`.
 
@@ -189,7 +184,7 @@ module.exports = ({ env }) => ({
       connector: 'bookshelf',
       settings: {
         client: 'postgres',
-        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+        socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
         database: env('DATABASE_NAME'),
         username: env('DATABASE_USERNAME'),
         password: env('DATABASE_PASSWORD'),
@@ -250,7 +245,7 @@ Follow the [documentation of the plugin](https://github.com/Lith/strapi-provider
 
 CORS is enabled by default, allowing `*` origin. You may want to limit the allowed origins.
 
-Read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md#middlewares).
+Read the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md).
 
 **Changing the admin url**
 

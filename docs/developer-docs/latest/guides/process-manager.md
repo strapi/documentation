@@ -1,10 +1,13 @@
 ---
-title: Process Manager - Strapi Developer Documentation
+title: Process Manager - Strapi Developer Docs
 description: Learn in this guide how you can start a Strapi application using a process manager.
 sidebarDepth: 2
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/process-manager.html
 ---
 
 # Process manager
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide we will see how you can start a Strapi application using a process manager.
 
@@ -18,14 +21,18 @@ PM2 allows you to keep your Strapi project alive and to reload it without downti
 
 You will install PM2 globally
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
-`yarn global add pm2`
+```sh
+yarn global add pm2
+```
 :::
 
 ::: tab npm
-`npm install pm2 -g`
+```sh
+npm install pm2 -g
+```
 :::
 
 ::::

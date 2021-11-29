@@ -1,9 +1,12 @@
 ---
-title: Field Registering - Strapi Developer Documentation
+title: Field Registering - Strapi Developer Docs
 description: Learn in this guide how you can create a new Field for your administration panel.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-field-in-admin.html
 ---
 
 # Creating a new Field in the administration panel
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide we will see how you can create a new Field for your administration panel.
 
@@ -15,7 +18,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
 1. Create a new project:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -32,7 +35,7 @@ yarn create strapi-app my-app --quickstart --no-run
 ```
 # Create an application using SQLite and prevent the server from starting automatically as we will create a plugin
 # right after the project generation
-npx create-strapi-app my-app --quickstart --no-run
+npx create-strapi-app@latest my-app --quickstart --no-run
 ```
 
 :::
@@ -41,7 +44,7 @@ npx create-strapi-app my-app --quickstart --no-run
 
 2. Generate a plugin:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -74,7 +77,7 @@ strapi generate:plugin wysiwyg
 
 3. Install the needed dependencies:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -98,7 +101,7 @@ npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 
 4. Start your application with the front-end development mode:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 
@@ -429,9 +432,9 @@ export default strapi => {
 };
 ```
 
-Finally you will have to rebuild strapi so the new plugin is loaded correctly
+Finally you will have to rebuild strapi so the new plugin is loaded correctly:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
 

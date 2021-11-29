@@ -1,9 +1,12 @@
 ---
-title: Slug System - Strapi Developer Documentation
+title: Slug System - Strapi Developer Docs
 description: Learn in this guide how to create a slug system for a Post, Article or any Content Type you want in your Strapi project.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/slug.html
 ---
 
 # Create a slug system
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 This guide will explain how to create a slug system for a Post, Article or any Content Type you want.
 
@@ -30,7 +33,7 @@ Here we will be able to setup the `slug` field.
 - And click **OFF** for **Editable field** option.
 - Don't forget to save your updates.
 
-:::: tabs
+:::: tabs card
 
 ::: tab View before
 
@@ -60,30 +63,7 @@ When it's done, you have to update the life cycle of the **Article** Content Typ
 
 **Path —** `./api/article/models/Article.js`
 
-:::: tabs
-
-::: tab Mongoose
-
-```js
-const slugify = require('slugify');
-
-module.exports = {
-  lifecycles: {
-    beforeCreate: async (data) => {
-      if (data.title) {
-        data.slug = slugify(data.title);
-      }
-    },
-    beforeUpdate: async (params, data) => {
-      if (data.title) {
-        data.slug = slugify(data.title);
-      }
-    },
-  },
-};
-```
-
-:::
+:::: tabs card
 
 ::: tab Bookshelf
 

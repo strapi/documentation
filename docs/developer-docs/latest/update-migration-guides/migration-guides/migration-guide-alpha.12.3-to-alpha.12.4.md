@@ -1,6 +1,7 @@
 ---
-title: Migrate from alpha.12.3 to alpha.12.4 - Strapi Developer Documentation
+title: Migrate from alpha.12.3 to alpha.12.4 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from alpha.12.3 to alpha.12.4.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.3-to-alpha.12.4.html
 ---
 
 # Migration guide from alpha.12.3 to alpha.12.4
@@ -9,7 +10,7 @@ description: Learn how you can migrate your Strapi application from alpha.12.3 t
 
 - Add search to content manager
 - Add bulk actions in content-manager
-- Add Enumeration type to Content-Types Builder
+- Add Enumeration type to Content-Type Builder
 
 **Useful links:**
 

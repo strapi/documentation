@@ -1,9 +1,12 @@
 ---
-title: External Data - Strapi Developer Documentation
+title: External Data - Strapi Developer Docs
 description: Learn in this guide how to fetch data from an external service to use it in your Strapi project.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/external-data.html
 ---
 
 # Fetching external data
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 This guide explains how to fetch data from an external service to use it in your app.
 
@@ -84,7 +87,7 @@ With this code, everytime this function is called it will fetch the docker repo'
 
 Here is how to call the function in your application `strapi.config.functions.docker()`
 
-So let's execute this function everyday at 2am. For this we will use a [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations.md#cron-tasks).
+So let's execute this function everyday at 2am. For this we will use a [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md).
 
 **Path —** `./config/functions/cron.js`
 

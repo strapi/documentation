@@ -1,9 +1,12 @@
 ---
-title: AWS Deployment - Strapi Developer Documentation
+title: AWS Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on AWS EC2, host your database on AWS RDS and upload your assets on AWS S3.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html
 ---
 
 # Amazon AWS
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
@@ -72,7 +75,7 @@ Amazon calls a virtual private server, a **virtual server** or **Amazon EC2 inst
 
 In the top menu, near your IAM Account User name, select, from the dropdown, the most appropriate region to host your Strapi project. For example, `US East (N.Virginia)` or `Asia Pacific (Hong Kong)`. You will want to remember this region for configuring other services on AWS and serving these services from the same region.
 
-#### 3. Click on the blue `Launch Instance` button
+#### 3. Click on the orange `Launch Instance` button
 
 - `Select` **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
 - Ensure `General purpose` + `t2.small` is `checked`.
@@ -100,7 +103,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 - Review the details, in the **Step 7: Review Instance Launch**, then click the blue `Launch` button. Now, you need to **select an existing key pair** or **create a new key pair**. To create a new key pair, do the following:
   - Select the dropdown option `Create a new key pair`.
   - Name your the key pair name, e.g. `ec2-strapi-key-pair`
-    ::: warning
+    ::: caution
     Download the **private key file** (.pem file). This file is needed, so note where it was downloaded.
     :::
   - After downloading the file, click the blue `Launch Instances` button.
@@ -109,7 +112,7 @@ Your instance is now running. Continue to the next steps.
 
 ### Install a PostgreSQL database on AWS RDS
 
-Amazon calls their database hosting services **RDS**. Multiple database options exist and are available. In this guide, **PostgreSQL** is used as the example, and the steps are similar for each of the other database that are supported by Strapi. (**MySQL**, **MongoDB**, **PostgreSQL**, **MariaDB**, **SQLite**). You will set-up an **RDS instance** to host your `postgresql` database.
+Amazon calls their database hosting services **RDS**. Multiple database options exist and are available. In this guide, **PostgreSQL** is used as the example, and the steps are similar for each of the other database that are supported by Strapi. (**MySQL**, **PostgreSQL**, **MariaDB**, **SQLite**). You will set-up an **RDS instance** to host your `postgresql` database.
 
 ::: tip
 **Amazon RDS** does **NOT** have a completely free evaluation tier. After finishing this guide, if you are only testing, please remember to [delete the database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html). Otherwise, you will incur charges.
@@ -354,7 +357,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/plugins/upload.md#using-a-provider).
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
 
 #### 4. Push your local changes to your project's GitHub repository.
 
@@ -628,8 +631,8 @@ sudo nano /etc/systemd/system/webhook.service
 
 - In the `nano` editor, copy/paste the following script, but make sure to replace `ubuntu` **in two places** if you changed the default `ubuntu` user, and `paste the $PATH` from above.
 
-::: warning
-**DELETE THE #COMMENTS BEFORE SAVING**, then save and exit.
+:::caution
+Delete the #comments before saving, then save and exit.
 :::
 
 ```bash

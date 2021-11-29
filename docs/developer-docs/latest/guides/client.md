@@ -1,9 +1,13 @@
 ---
-title: Client - Strapi Developer Documentation
+title: Client - Strapi Developer Docs
 description: Learn in this guide how to setup a connection with a third party client and use it everywhere in your code.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/client.html
 ---
-
 # Setup a third party client
+
+:::caution
+This guide is outdated as hooks have been removed from Strapi v4. We recommend taking advantage of [plugins](/developer-docs/latest/development/plugins-development.md) instead.
+:::
 
 This guide will explain how to setup a connection with a third party client and use it everywhere in your code.
 
@@ -15,21 +19,25 @@ This guide could also be used to setup an Axios client instance.
 
 First you will have to install the client package in your application by running one of the following commands:
 
-:::: tabs
+:::: tabs card
 
 ::: tab yarn
-`yarn add @octokit/rest`
+```sh
+yarn add @octokit/rest
+```
 :::
 
 ::: tab npm
-`npm install @octokit/rest`
+```sh
+npm install @octokit/rest
+```
 :::
 
 ::::
 
 ## Create a hook
 
-To init the client, we will use the [hooks system](/developer-docs/latest/setup-deployment-guides/configurations.md#hooks). Hooks let you add new features in your Strapi application.
+To init the client, we will use the hooks system. Hooks let you add new features in your Strapi application.
 
 Hooks are loaded once at server start.
 

@@ -1,9 +1,12 @@
 ---
-title: Qovery Deployment - Strapi Developer Documentation
+title: Qovery Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Qovery.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html
 ---
 
 # Qovery
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project on [Qovery](https://www.qovery.com).
 
@@ -21,9 +24,9 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 * Click on the **create a project** button and give a name to your project.
 * Click on **next**.
 
- 	::: tip NOTE
-	One project can have multiple apps running. This is convenient to group your backend, frontend, database etc.
-	:::
+::: note
+One project can have multiple apps running. This is convenient to group your backend, frontend, database etc.
+:::
 
 ### 3. Add your Strapi app
 * Click on the **create an application** button and select your Github or Gitlab repository where your Strapi app is located.
@@ -77,11 +80,11 @@ routers:
     - /*
 ```
 
-::: tip TIP
+::: tip
 For more information about the `.qovery.yml` file, please refer to [the Qovery application documentation](https://docs.qovery.com/docs/using-qovery/configuration/applications).
 :::
 
-::: tip NOTE
+:::note
 Alternatively, you can deploy your Strapi application with a PostgreSQL database in the Qovery dashboard.
 :::
 

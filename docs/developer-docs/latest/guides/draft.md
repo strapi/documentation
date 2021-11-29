@@ -1,29 +1,30 @@
 ---
-title: Draft System - Strapi Developer Documentation
+title: Draft System - Strapi Developer Docs
 description: Learn in this guide how to create a draft system that will allow you to manage draft, published, and archive status inside your Strapi project.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/draft.html
 ---
 
 # Draft system
 
-This guide will explain how to create a draft system that will allow you to manage draft, published, and archive status.
-
-::: warning
-The native **Draft & Publish feature** has been released in **version 3.2**. We suggest you to use the native feature instead of this guide.
+:::caution
+The native [**Draft & Publish feature**](/user-docs/latest/content-manager/saving-and-publishing-content.md#saving-publishing-content) has been released in Strapi v3.2. We suggest you to use the native feature instead of this guide.
 
 This guide is still useful if you want to see the concept of "force filtering" in action.
 :::
+
+This guide will explain how to create a draft system that will allow you to manage draft, published, and archive status.
 
 ## Introduction
 
 What we want here is to fetch only data that has a `published` status.
 
-But we don't want to use [parameters](/developer-docs/latest/developer-resources/content-api/content-api.md#api-parameters) (eg. /articles?status=published) because you can easily fake the params.
+But we don't want to use [parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-parameters) (eg. /articles?status=published) because you can easily fake the params.
 
 To be able to do that, you have first to understand some concepts.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization.md#controllers) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -86,7 +87,7 @@ After saving the new function, let's restart the `GET /articles` request. We wil
 
 We now know the function we have to update, but we just want to customize the returned article values.
 
-In the [controller documentation](/developer-docs/latest/development/backend-customization.md#extending-a-model-controller) you will find the default implementation of every action. It will help you overwrite the fetch logic.
+In the [controller documentation](/developer-docs/latest/development/backend-customization/controllers.md#extending-core-controllers) you will find the default implementation of every action. It will help you overwrite the fetch logic.
 
 **Path —** `./api/article/controller/Article.js`
 

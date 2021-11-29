@@ -1,9 +1,12 @@
 ---
-title: Get started with Dart - Strapi Developer Documentation
+title: Get started with Dart - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Dart.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/dart.html
 ---
 
 # Getting Started with Dart
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -42,7 +45,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```dart
 Map<String,String> headers = {
@@ -57,8 +61,9 @@ var response = await http.get(
 
 print(response.body)
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 [
@@ -93,6 +98,8 @@ _Response_
   }
 ]
 ```
+:::
+::::
 
 ### Example
 
@@ -127,7 +134,8 @@ Be sure that you activated the `create` permission for the `restaurant` Collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-_Request_
+:::: api-call
+::: request Example POST request
 
 ```dart
 Map<String,String> headers = {
@@ -145,8 +153,9 @@ var response = await http.post(
   });
 );
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -169,6 +178,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -215,7 +226,8 @@ Execute a `PUT` request on the `restaurant` Collection Type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example PUT request
 
 ```dart
 Map<String,String> headers = {
@@ -231,8 +243,9 @@ var response = await http.put(
   });
 );
 ```
+:::
 
-_Response_
+::: response Example response
 
 ```json
 {
@@ -255,6 +268,8 @@ _Response_
   ]
 }
 ```
+:::
+::::
 
 ### Example
 
@@ -301,4 +316,4 @@ void main() {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Dart. When you create a Collection Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints) available to interact with.
+Here is how to request your Collection Types in Strapi using Dart. When you create a Collection Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) available to interact with.

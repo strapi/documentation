@@ -1,7 +1,8 @@
 ---
-title: Usage information - Strapi Developer Documentation
+title: Usage information - Strapi Developer Docs
 description: We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today.
 sidebarDepth: 0
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/usage-information.html
 ---
 
 # Collected Usage Information
@@ -33,7 +34,7 @@ The following data is collected:
 - System information (OS)
 - Build configurations
 
-::: warning GDPR
+::: caution GDPR
 The collected data are of a non-sensitive nature and no personal data is collected. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
 :::
 
@@ -54,6 +55,6 @@ Should you decide to opt-out, you may do so by removing the `uuid` property in t
 }
 ```
 
-::: tip NOTE
+::: note
 Should you have any questions regarding this feature, feel free to email [privacy@strapi.io](mailto:privacy@strapi.io).
 :::

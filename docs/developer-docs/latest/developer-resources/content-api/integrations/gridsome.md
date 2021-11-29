@@ -1,9 +1,12 @@
 ---
-title: Get started with Gridsome - Strapi Developer Documentation
+title: Get started with Gridsome - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Gridsome.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html
 ---
 
 # Getting Started with Gridsome
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -49,7 +52,8 @@ Execute a `GET` request on the `restaurant` Collection Type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` Collection Type.
 
-_Request_
+:::: api-call
+::: request Example GET request
 
 ```graphql
 query {
@@ -64,9 +68,9 @@ query {
   }
 }
 ```
+:::
 
-_Response_
-
+:::response Example response
 ```json
 {
   "data": {
@@ -85,12 +89,14 @@ _Response_
   }
 }
 ```
+:::
+::::
 
 ### Example
 
 `./src/pages/Index.vue`
 
-```js
+```jsx
 <template>
 <Layout>
   <ul>
@@ -128,8 +134,8 @@ Execute a `GET` request on the `category` Collection Type in order to fetch a sp
 
 Be sure that you activated the `findOne` permission for the `category` Collection Type.
 
-_Request_
-
+:::: api-call
+::: request Example GET request
 ```graphql
 query {
   strapiCategory(id: 1) {
@@ -142,8 +148,9 @@ query {
   }
 }
 ```
+:::
 
-_Response_
+:::response Example response
 
 ```json
 {
@@ -162,12 +169,15 @@ _Response_
   "extensions": {}
 }
 ```
+:::
+
+::::
 
 ### Example
 
 `./src/pages/Index.vue`
 
-```js
+```jsx
 <template>
 <Layout>
   <h1>{{ $page.strapiCategory.name }}</h1>
@@ -257,7 +267,7 @@ You can find your restaurant categories by browsing `http://localhost:8080/categ
 
 Feel free to do the same for your restaurants!
 
-## Starter
+## Starters
 
 - [Gridsome Blog starter](https://github.com/strapi/strapi-starter-gridsome-blog)
 - [Gridsome Portfolio starter](https://github.com/strapi/strapi-starter-gridsome-portfolio)
@@ -266,4 +276,4 @@ Feel free to do the same for your restaurants!
 
 Here is how to request your Collection Types in Strapi using Gridsome.
 
-Learn more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md)
+Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md)

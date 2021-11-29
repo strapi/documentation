@@ -42,8 +42,6 @@ The core team will review your pull request and will either merge it, request ch
 
 ### Contribution Workflow
 
-<!-- TODO add contrib-docs and link here -->
-
 #### Setting up
 
 1. Fork the `documentation` repository.
@@ -87,7 +85,7 @@ The core team will review your pull request and will either merge it, request ch
     ```
 
 #### Writing
-We can't provide you specific procedures with step-by-step instructions to write technical documentation. But if you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
+We can't provide you specific procedures with step-by-step instructions to write technical documentation. But our ["12 Rules of Technical Writing"](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and [style guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) should help you get started. If you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).
 
 #### Sharing & reviewing
 

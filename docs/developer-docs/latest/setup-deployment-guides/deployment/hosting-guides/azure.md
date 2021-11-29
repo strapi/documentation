@@ -1,9 +1,12 @@
 ---
-title: Azure Deployment - Strapi Developer Documentation
+title: Azure Deployment - Strapi Developer Docs
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html
 ---
 
 # Azure
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/en-us/). Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/en-us/services/postgresql/). Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
@@ -185,14 +188,12 @@ Strapi will need a database in order to save data to, you have multiple options 
 
 For Azure managed databases you can use the following:
 
-- Azure Cosmos DB (Not officially supported, but has an option for MongoDB based API)
 - Azure Database for MySQL
 - Azure Database for PostgreSQL
 - Azure Database for MariaDB
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MongoDB >= 3.6
 - MySQL >= 5.6
 - MariaDB >= 10.1
 - PostgreSQL >= 10
@@ -467,4 +468,4 @@ There are many different types of proxy services you could use, anything from lo
 
 #### 3. File upload providers
 
-There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/development/plugins/upload.md#create-providers) on searching for options as well as installing them.
+There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/plugins/upload.md#create-providers) on searching for options as well as installing them.
