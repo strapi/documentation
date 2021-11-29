@@ -75,7 +75,7 @@ Amazon calls a virtual private server, a **virtual server** or **Amazon EC2 inst
 
 In the top menu, near your IAM Account User name, select, from the dropdown, the most appropriate region to host your Strapi project. For example, `US East (N.Virginia)` or `Asia Pacific (Hong Kong)`. You will want to remember this region for configuring other services on AWS and serving these services from the same region.
 
-#### 3. Click on the blue `Launch Instance` button
+#### 3. Click on the orange `Launch Instance` button
 
 - `Select` **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
 - Ensure `General purpose` + `t2.small` is `checked`.
