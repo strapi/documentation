@@ -741,7 +741,7 @@ module.exports = {
             items: [
               {
                 text: 'v3 Documentation',
-                link: 'https://strapi.io/documentation'
+                link: 'https://docs-v3.strapi.io'
               }
             ],
           },
