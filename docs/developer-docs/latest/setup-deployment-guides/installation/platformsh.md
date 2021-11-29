@@ -7,6 +7,8 @@ sidebarDepth: 1
 
 # Platform.sh One-Click
 
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
+
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Platform.sh](https://platform.sh/).
 
 Platform.sh is a Platform as a Service (PaaS) that allows the management of multiple websites and applications. In particular, it allows to quickly install and deploy a Strapi application.

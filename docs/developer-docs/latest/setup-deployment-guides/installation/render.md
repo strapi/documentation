@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Render One-Click
 
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
+
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Render](https://render.com).
 
 Render is a cloud provider with persistent disks and managed PostgreSQL databases, that offers multiple different ways to store content.

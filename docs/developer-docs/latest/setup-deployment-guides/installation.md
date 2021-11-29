@@ -46,9 +46,7 @@ Strapi projects and applications can be installed either locally on a computer, 
 
 ## One-click installations
 
-::: caution
-One-click installation guides stop being updated by the Strapi documentation team starting at the release of Strapi v4. Community contributions to keep these guides updates are very welcome.
-:::
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
 
 <div>
 	<InstallLink link="installation/digitalocean-one-click.html">
