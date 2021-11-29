@@ -808,6 +808,7 @@ module.exports = {
     docsDir: 'docs',
     docsBranch: 'main',
     algolia: {
+      appId: '9FTY6J9E4X',
       apiKey: 'cf49c82a1865df2618a3d89e18657051',
       indexName: 'documentation',
     },
