@@ -20,7 +20,7 @@ A DigitalOcean account is necessary to follow this installation guide. Please vi
 
 ## Creating a Strapi project
 
-1. Go to the [Strapi page on DigitalOcean's marketplace](https://marketplace.digitalocean.com/apps/strapi).
+1. Go to the Strapi page on DigitalOcean's marketplace.
 2. Click on **Create Strapi Droplet** button.
 3. Keep the selected "Shared CPU - Basic" plan.
 4. Choose "Regular Intel with SSD" as a CPU option.
