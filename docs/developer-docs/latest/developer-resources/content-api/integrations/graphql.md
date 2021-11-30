@@ -1,6 +1,6 @@
 ---
 title: Get started with GraphQL - Strapi Developer Docs
-description: Build powerful applications using Strapi, the leading open-source headless cms and GraphQL.
+description: Use the GraphQL plugin in your Strapi project to fetch and mutate your content.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/graphql.html
 ---
 

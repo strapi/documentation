@@ -25,7 +25,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 Declare and register conditions in the global [`bootstrap` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) found in `./src/index.js` (see [Registering conditions](#registering-conditions)).
 
 :::note
-The condition `name` property acts as a [unique id](https://github.com/strapi/strapi/blob/master/packages/strapi-admin/services/permission/condition-provider.js#L22) within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
+The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
 :::
 
 ## Using the condition handler
