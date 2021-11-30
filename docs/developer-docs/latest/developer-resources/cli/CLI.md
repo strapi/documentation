@@ -254,6 +254,10 @@ Display a list of all the available hooks.
 strapi hooks:list
 ```
 
+## strapi controllers:list
+
+Display a list of all the registered [controllers](/developer-docs/latest/development/backend-customization/controllers.md).
+
 ## strapi services:list
 
 Display a list of all the registered [services](/developer-docs/latest/development/backend-customization/services.md).
