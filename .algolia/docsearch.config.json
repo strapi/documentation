@@ -5,7 +5,7 @@
   ],
   "selectors": {
     "lvl0": {
-      "selector": "//*[contains(@class, 'sidebar-heading open')]/span/text() | //*[contains(@class, 'sidebar-heading clickable open')]/span/text()",
+      "selector": "//*[contains(@class, 'sidebar-heading open') or contains(@class, 'sidebar-heading clickable open')]/span/text()",
       "type": "xpath",
       "global": true
     },
