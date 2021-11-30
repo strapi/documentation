@@ -1,6 +1,6 @@
 ---
 title: API tokens - Strapi Developer Docs
-description:
+description: Using API tokens allows executing a request on Strapi's REST API endpoints as an authenticated user.
 ---
 
 # API tokens

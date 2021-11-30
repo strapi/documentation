@@ -1,7 +1,7 @@
 ---
 title: CLI - Strapi Developer Docs
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/cli.html
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html
 ---
 
 # Command Line Interface (CLI)
@@ -253,6 +253,10 @@ Display a list of all the available hooks.
 ```sh
 strapi hooks:list
 ```
+
+## strapi controllers:list
+
+Display a list of all the registered [controllers](/developer-docs/latest/development/backend-customization/controllers.md).
 
 ## strapi services:list
 
