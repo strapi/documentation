@@ -1,24 +1,31 @@
 {
   "index_name": "documentation",
-  "start_urls": ["https://docs.strapi.io"],
+  "start_urls": [
+    "https://docs.strapi.io"
+  ],
   "selectors": {
     "lvl0": {
-      "selector": "//h1/text()",
+      "selector": "//*[contains(@class, 'sidebar-heading open') or contains(@class, 'sidebar-heading clickable open')]/span/text()",
       "type": "xpath",
       "global": true
     },
     "lvl1": {
-      "selector": "//h2/text()",
+      "selector": "//h1/text()",
       "type": "xpath",
       "global": true
     },
     "lvl2": {
-      "selector": "//h3/text()",
+      "selector": "/html/head/meta[@name='description']/@content",
       "type": "xpath",
       "global": true
     },
     "lvl3": {
-      "selector": "/html/head/meta[@name='description']/@content",
+      "selector": "//h2/text()",
+      "type": "xpath",
+      "global": true
+    },
+    "lvl4": {
+      "selector": "//h3/text()",
       "type": "xpath",
       "global": true
     },
@@ -30,8 +37,12 @@
     }
   },
   "strip_chars": " .,;:#",
-  "stop_urls": ["https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides"],
+  "stop_urls": [
+    "https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides"
+  ],
   "custom_settings": {
-    "attributesForFaceting": ["lang"]
+    "attributesForFaceting": [
+      "lang"
+    ]
   }
 }
