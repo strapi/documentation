@@ -29,7 +29,7 @@ To manually create a service, export a factory function that returns the service
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  {
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom service
   async exampleService(...args) {
     let response = { okay: true }
@@ -58,7 +58,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
   async findOne(entityId, params = {}) {
     return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
   }
-};
+});
 ```
 
 ::: strapi Entity Service API
@@ -84,8 +84,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  {
-  send(from, to, subject, text) => {
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
+  send(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
       from,
@@ -97,7 +97,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
     // Return a promise of the function that sends the email.
     return transporter.sendMail(options);
   },
-};
+});
 ```
 
 The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
@@ -105,9 +105,9 @@ The service is now available through the `strapi.service('api::email.email').sen
 ```js
 // path: ./src/api/user/controllers/user.js
 
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
-  async signup(ctx) => {
+  async signup(ctx) {
     const { userData } = ctx.body;
 
     // Store the new user in database.
@@ -121,7 +121,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
       ok: true,
     });
   },
-};
+});
 ```
 
 ::::
