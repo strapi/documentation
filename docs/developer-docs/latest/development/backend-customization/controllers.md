@@ -29,7 +29,7 @@ A new controller can be implemented:
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  {
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom action
   async exampleAction(ctx) {
     try {
@@ -63,7 +63,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
     return this.transformResponse(sanitizedEntity);
   }
-};
+});
 ```
 
 Each controller action can be an `async` or `sync` function.

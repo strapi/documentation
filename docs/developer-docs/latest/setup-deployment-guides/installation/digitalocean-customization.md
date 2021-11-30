@@ -1,3 +1,8 @@
+---
+title: DigitalOcean Virtual Machine Configuration - Strapi Developer Docs 
+description: Learn how to handle the DigitalOcean virtual machine running the Strapi application.
+---
+
 # DigitalOcean Virtual Machine Configuration
 
 This DigitalOcean configuration documentation is related to the [DigitalOcean One-click installation guide](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md). It should guide you through the handling of the DigitalOcean virtual machine running the Strapi application.
