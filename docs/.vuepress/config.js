@@ -617,6 +617,15 @@ module.exports = {
               },
             ],
           },
+          {
+            text: 'Newer versions',
+            items: [
+              {
+                text: 'v4 Documentation',
+                link: 'https://docs.strapi.io'
+              }
+            ],
+          },
         ],
       },
       {
