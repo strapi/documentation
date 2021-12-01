@@ -390,7 +390,7 @@ While top-level getters imply chaining functions, global getters are syntactic s
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
-strapi.api('api-name').controller('controller-name')
+strapi.api['api-name'].controller('controller-name')
 strapi.plugin('plugin-name').controller('controller-name')
 
 // Access an API or a plugin controller using a global getter
