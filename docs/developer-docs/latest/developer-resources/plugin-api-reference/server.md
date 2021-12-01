@@ -247,11 +247,11 @@ module.exports = {
 ```js
 // path: ./controllers/controller-a.js
 
-module.exports = {
+module.exports = ({ strapi }) => ({
   doSomething(ctx) {
     ctx.body = { message: 'HelloWorld' };
   },
-};
+});
 ```
 
 ### Services
