@@ -70,11 +70,11 @@ By default Strapi provides a local email system ([sendmail](https://www.npmjs.co
 
 Below are the providers maintained by the Strapi team:
 
-- [Amazon SES](/developer-docs/latest/plugins/provider-email/amazon-ses.md)
-- [Mailgun](/developer-docs/latest/plugins/provider-email/mailgun.md)
-- [Nodemailer](/developer-docs/latest/plugins/provider-email/nodemailer.md)
-- [SendGrid](/developer-docs/latest/plugins/provider-email/sendgrid.md)
-- [Sendmail](/developer-docs/latest/plugins/provider-email/sendmail.md)
+- [Amazon SES](https://www.npmjs.com/package/@strapi/provider-email-amazon-ses)
+- [Mailgun](https://www.npmjs.com/package/@strapi/provider-email-mailgun)
+- [Nodemailer](https://www.npmjs.com/package/@strapi/provider-email-nodemailer)
+- [SendGrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid)
+- [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail)
 
 You can also find additional community maintained providers on [NPM](https://www.npmjs.com/).
 
