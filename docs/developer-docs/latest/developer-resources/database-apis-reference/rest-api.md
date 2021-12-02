@@ -389,13 +389,15 @@ const query = qs.stringify({
   pagination: {
     pageSize: 10,
     page: 1
-  }
+  },
+  publicationState: 'live',
+  locale: ['en']
 }, {
   encodeValuesOnly: true, // prettify url
 });
 
 await request(`/api/books?${query}`);
-// GET /api/books?sort[0]=title%3Aasc&filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1
+// GET /api/books?sort[0]=title%3Aasc&filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
 ```
 
 :::
