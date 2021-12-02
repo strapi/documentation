@@ -44,32 +44,71 @@ const sidebar = {
           path: '/developer-docs/latest/setup-deployment-guides/configurations.html',
           collapsable: true,
           children: [
-            { 
+            {
               title: 'Required configurations',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md', 'Database'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/required/server.md', 'Server'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md', 'Admin panel'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md', 'Middlewares'],
-              ]
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md',
+                  'Database',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/required/server.md',
+                  'Server',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md',
+                  'Admin panel',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md',
+                  'Middlewares',
+                ],
+              ],
             },
             {
               title: 'Optional configurations',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md', 'API tokens'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md', 'Functions'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md', 'Cron jobs'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md', 'API'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md', 'Plugins'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md', 'Environment'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md', 'Public Assets'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md', 'Single Sign On (SSO)'],
-                ['/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md', 'Role-Based Access Control (RBAC)'],
-              ]
-            }
-          ]
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md',
+                  'API tokens',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md',
+                  'Functions',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md',
+                  'Cron jobs',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md',
+                  'API',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md',
+                  'Plugins',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md',
+                  'Environment',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md',
+                  'Public Assets',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md',
+                  'Single Sign On (SSO)',
+                ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md',
+                  'Role-Based Access Control (RBAC)',
+                ],
+              ],
+            },
+          ],
         },
         {
           title: 'Deployment',
@@ -79,7 +118,8 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path:
+                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -123,7 +163,8 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path:
+                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -158,39 +199,26 @@ const sidebar = {
           children: [
             ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
-            ['/developer-docs/latest/development/backend-customization/middlewares.md', 'Middlewares'],
-            ['/developer-docs/latest/development/backend-customization/controllers.md', 'Controllers'],
-            ['/developer-docs/latest/development/backend-customization/requests-responses.md', 'Requests & Responses'],
+            [
+              '/developer-docs/latest/development/backend-customization/middlewares.md',
+              'Middlewares',
+            ],
+            [
+              '/developer-docs/latest/development/backend-customization/controllers.md',
+              'Controllers',
+            ],
+            [
+              '/developer-docs/latest/development/backend-customization/requests-responses.md',
+              'Requests & Responses',
+            ],
             ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
             ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
             ['/developer-docs/latest/development/backend-customization/webhooks.md', 'Webhooks'],
-          ]
+          ],
         },
         ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
         ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
         ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
-      ],
-    },
-    {
-      title: '🧩 Strapi plugins',
-      path: '/developer-docs/latest/plugins/plugins-intro.html',
-      collapsable: false,
-      children: [
-        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
-        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
-        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
-        ['/developer-docs/latest/plugins/email', 'Email'],
-        ['/developer-docs/latest/plugins/upload', 'Upload'],
-        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
-      ],
-      sidebarDepth: 1,
-    },
-    {
-      title: '♻️ Update & Migration',
-      collapsable: false,
-      children: [
-        ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
-        ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
@@ -204,72 +232,86 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md', 'REST API'],
-            ['/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md', 'GraphQL API'],
+            [
+              '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md',
+              'REST API',
+            ],
+            [
+              '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
+              'GraphQL API',
+            ],
             {
               title: 'Query Engine API',
-              path: '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+              path:
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
               collapsable: true,
               // sidebarDepth: 3,
               children: [
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
-                  'Single Operations'
+                  'Single Operations',
                 ],
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
-                  'Bulk Operations'
+                  'Bulk Operations',
                 ],
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
-                  'Filtering'
+                  'Filtering',
                 ],
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
-                  'Populating'
+                  'Populating',
                 ],
                 [
                   '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
-                  'Ordering & pagination'
+                  'Ordering & pagination',
                 ],
-              ]
+              ],
             },
             {
               title: 'Entity Service API',
-              path: '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+              path:
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
               collapsable: true,
-              children : [
-               [
-                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
-                 'CRUD operations'
-               ],
-               [
-                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
-                 'Filters'
-               ],
-               [
-                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
-                 'Populate'
-               ],
-               [
-                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
-                 'Ordering & pagination'
-               ],
-               [
-                 '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
-                 'Components and dynamic zones'
-               ]
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+                  'CRUD operations',
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+                  'Filters',
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+                  'Populate',
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+                  'Ordering & pagination',
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+                  'Components and dynamic zones',
+                ],
               ],
             },
             {
               title: 'Plugin APIs Reference',
               collapsable: true,
               children: [
-                ['/developer-docs/latest/developer-resources/plugin-api-reference/server.md', 'Server API for plugins'],
-                ['/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md', 'Admin Panel API for plugins'],
+                [
+                  '/developer-docs/latest/developer-resources/plugin-api-reference/server.md',
+                  'Server API for plugins',
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
+                  'Admin Panel API for plugins',
+                ],
               ],
             },
-          ]
+          ],
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
@@ -339,6 +381,28 @@ const sidebar = {
             ],
           ],
         },
+      ],
+    },
+    {
+      title: '🧩 Strapi plugins',
+      path: '/developer-docs/latest/plugins/plugins-intro.html',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/plugins/graphql', 'GraphQL'],
+        ['/developer-docs/latest/plugins/i18n', 'Internationalization (i18n)'],
+        ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
+        ['/developer-docs/latest/plugins/email', 'Email'],
+        ['/developer-docs/latest/plugins/upload', 'Upload'],
+        ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
+      ],
+      sidebarDepth: 1,
+    },
+    {
+      title: '♻️ Update & Migration',
+      collapsable: false,
+      children: [
+        ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
+        ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
       ],
     },
     {
@@ -494,80 +558,114 @@ const checklinksIgnoredFiles = [
 
 const plugins = [
   ['vuepress-plugin-element-tabs', {}],
-  ['check-md', {
-    ignore: checklinksIgnoredFiles,
-  }],
-  ['seo', {
-    siteTitle: (_, $site) => $site.title,
-    title: $page => $page.title,
-  }],
+  [
+    'check-md',
+    {
+      ignore: checklinksIgnoredFiles,
+    },
+  ],
+  [
+    'seo',
+    {
+      siteTitle: (_, $site) => $site.title,
+      title: $page => $page.title,
+    },
+  ],
   ['@vuepress/medium-zoom'],
-  ['vuepress-plugin-code-copy', {
-    color: '#ffffff',
-    successText: 'Copied to clipboard!',
-  }],
+  [
+    'vuepress-plugin-code-copy',
+    {
+      color: '#ffffff',
+      successText: 'Copied to clipboard!',
+    },
+  ],
   ['@vuepress/back-to-top', {}],
-  ['vuepress-plugin-container', {
-    type: 'callout',
-    defaultTitle: ''
-  }],
-  ['vuepress-plugin-container', {
-    type: 'strapi',
-    defaultTitle: '',
-    before: info => `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
-    after: '</div>'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'tip',
-    before: info => `<div class="custom-block tip"><p class="custom-block-title">💡 ${info}</p>`,
-    after: '</div>'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'note',
-    before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
-    after: '</div>'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'caution',
-    before: info => `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
-    after: '</div>'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'warning',
-    before: info => `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
-    after: '</div>'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'prerequisites',
-    defaultTitle: 'PREREQUISITES'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'api-call',
-    defaultTitle: ''
-  }],
-  ['vuepress-plugin-container', {
-    type: 'request',
-    defaultTitle: 'Request'
-  }],
-  ['vuepress-plugin-container', {
-    type: 'response',
-    defaultTitle: 'Response'
-  }]
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'callout',
+      defaultTitle: '',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'strapi',
+      defaultTitle: '',
+      before: info =>
+        `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
+      after: '</div>',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'tip',
+      before: info => `<div class="custom-block tip"><p class="custom-block-title">💡 ${info}</p>`,
+      after: '</div>',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'note',
+      before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
+      after: '</div>',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'caution',
+      before: info =>
+        `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
+      after: '</div>',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'warning',
+      before: info =>
+        `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
+      after: '</div>',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'prerequisites',
+      defaultTitle: 'PREREQUISITES',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'api-call',
+      defaultTitle: '',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'request',
+      defaultTitle: 'Request',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'response',
+      defaultTitle: 'Response',
+    },
+  ],
 ];
-
-const checkLegacy = () => {
-  if (process.env.DEPLOY_ENV == 'legacy') {
-    return '/documentation/';
-  } else {
-    return '/';
-  }
-};
 
 module.exports = {
   title: '',
   port: 8080,
   description: 'The headless CMS developers love.',
-  base: checkLegacy(),
+  base: '/',
   plugins: plugins,
   head: [
     [
@@ -720,11 +818,13 @@ module.exports = {
               },
               {
                 text: 'Content-Type Builder',
-                link: '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
+                link:
+                  '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link:
+                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -820,7 +920,7 @@ module.exports = {
   markdown: {
     extendMarkdown: md => {
       // use more markdown-it plugins!
-      md.use(require('markdown-it-include'))
-    }
-  }
+      md.use(require('markdown-it-include'));
+    },
+  },
 };
