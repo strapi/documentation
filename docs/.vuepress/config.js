@@ -774,7 +774,7 @@ module.exports = {
         link: 'https://strapi.io/resource-center',
       },
       {
-        text: 'Documentation',
+        text: 'v4 Documentation',
         items: [
           {
             text: 'Developer Docs',
@@ -836,16 +836,11 @@ module.exports = {
               },
             ],
           },
-          {
-            text: 'Older versions',
-            items: [
-              {
-                text: 'v3 Documentation',
-                link: 'https://docs-v3.strapi.io',
-              },
-            ],
-          },
         ],
+      },
+      {
+        text: 'v3 documentation',
+        link: 'https://docs-v3.strapi.io'
       },
       {
         text: 'Ecosystem',
