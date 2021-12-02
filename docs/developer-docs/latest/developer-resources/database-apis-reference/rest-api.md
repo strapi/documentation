@@ -158,18 +158,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
       "id": 1,
       "attributes": {
         "title": "Restaurant A",
-        "description": "Restaurant A's description",
-        "categories": [
-          {
-            "id": 1,
-            "attributes": {
-              "name": "My category"
-            },
-            "meta": {
-              "availableLocales": []
-            }
-          }
-        ]
+        "description": "Restaurant A's description"
       },
       "meta": {
         "availableLocales": []
@@ -179,18 +168,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
       "id": 2,
       "attributes": {
         "title": "Restaurant B",
-        "description": "Restaurant B's description",
-        "categories": [
-          {
-            "id": 1,
-            "attributes": {
-              "name": "My category"
-            },
-            "meta": {
-              "availableLocales": []
-            }
-          }
-        ]
+        "description": "Restaurant B's description"
       },
       "meta": {
         "availableLocales": []
@@ -226,18 +204,7 @@ Returns an entry by id.
     "id": 1,
     "attributes": {
       "title": "Restaurant A",
-      "description": "Restaurant A's description",
-      "categories": [
-        {
-          "id": 1,
-          "attributes": {
-            "name": "My category"
-          },
-          "meta": {
-            "availableLocales": []
-          }
-        }
-      ]
+      "description": "Restaurant A's description"
     },
     "meta": {
       "availableLocales": []
@@ -373,6 +340,18 @@ Deletes an entry by id and returns its value.
 
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
 
+The following parameters are available:
+
+| Operator           | Type          | Description                                           |
+| ------------------ | ------------- | ----------------------------------------------------- |
+| `sort`             | String/Array  | Sorting the response                                  |
+| `filters`          | Object        | Filtering the response                                |
+| `populate`         | String/Object | Populate relations, components, or dyanmic zones      |
+| `fields`           | Array         | Select only specific fields to display\               |
+| `pagination`       | Object        | Page through entries                                  |
+| `publicationState` | String        | Select the draft & publish state: `live` or `preview` |
+| `locale`           | String/Array  | Select one ore multiple locales: `en`, `fr`, ect      |
+
 ::::tip
 Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
 Use `qs` directly to generate complex queries instead of creating them manually.
@@ -382,6 +361,7 @@ Use `qs` directly to generate complex queries instead of creating them manually.
 ```js
 const qs = require('qs');
 const query = qs.stringify({
+  sort: ['title:asc'],
   filters: {
     $or: [
       {
@@ -404,12 +384,18 @@ const query = qs.stringify({
       },
     },
   },
+  populate: '*',
+  fields: ['title'],
+  pagination: {
+    pageSize: 10,
+    page: 1
+  }
 }, {
   encodeValuesOnly: true, // prettify url
 });
 
 await request(`/api/books?${query}`);
-// GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe
+// GET /api/books?sort[0]=title%3Aasc&filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1
 ```
 
 :::
@@ -470,7 +456,7 @@ Deep filtering is filtering on a relation's fields.
 ::: caution
 
 - Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
-- Deep filtering isn't available for polymorphic relations.
+- Deep filtering isn't available for polymorphic relations (eg: Dynamic Zones & Media Fields).
 
 :::
 
