@@ -107,21 +107,21 @@ Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-
 
 Run the following command in a terminal:
 
-<code-group>
+:::: tabs card
+::: tab npm
 
-<code-block title="NPM">
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+  npx create-strapi-app@latest my-project --quickstart
 ```
-</code-block>
 
-<code-block title="YARN">
+:::
+::: tab yarn
+
 ```bash
-yarn create strapi-app my-project --quickstart
+  yarn create strapi-app my-project --quickstart
 ```
-</code-block>
 
-</code-group>
+::::
 
 ### Step 2: Register the first administrator user
 
