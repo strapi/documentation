@@ -17,6 +17,8 @@ The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it use
 You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middleware.js`:
 
 ```js
+// path: ./config/middlewares.js
+
 module.exports = {
   //...
   {
@@ -46,6 +48,8 @@ When the `Enable responsive friendly upload` setting is enabled in the settings 
 These sizes can be overridden in `./config/plugins.js`:
 
 ```js
+// path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   upload: {
     config: {
@@ -155,14 +159,20 @@ To upload files that will be linked to a specific entry.
 The `Restaurant` model attributes:
 
 ```json
-"attributes": {
-  "name": {
-    "type": "string"
-  },
-  "cover": {
-    "type": "media",
-    "multiple": false,
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
+{
+  //..
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+    }
   }
+//..
 }
 ```
 
@@ -206,15 +216,22 @@ You can also add files during your entry creation.
 The `Restaurant` model attributes:
 
 ```json
-"attributes": {
-  "name": {
-    "type": "string"
-  },
-  "cover": {
-    "type": "media",
-    "multiple": false,
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
+{
+  //..
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+    }
   }
+  //..
 }
+
 ```
 
 Code
@@ -282,44 +299,53 @@ Adding a file attribute to a model (or the model of another plugin) is like addi
 
 In the first example below, you will be able to upload and attach one file to the avatar attribute.
 
-**Path —** `schema.json`.
-
 ```json
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
 {
-  "attributes": {
-    "pseudo": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "email",
-      "required": true,
-      "unique": true
-    },
-    "avatar": {
-      "type": "media",
-      "multiple": false,
+  //..
+  {
+    "attributes": {
+      "pseudo": {
+        "type": "string",
+        "required": true
+      },
+      "email": {
+        "type": "email",
+        "required": true,
+        "unique": true
+      },
+      "avatar": {
+        "type": "media",
+        "multiple": false,
+      }
     }
   }
+  //..
 }
+
 ```
 
 In our second example, you can upload and attach multiple pictures to the restaurant.
 
-**Path —** `schema.json`.
-
 ```json
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
 {
-  "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "convers": {
-      "type": "media",
-      "multiple": true,
+  //..
+  {
+    "attributes": {
+      "name": {
+        "type": "string",
+        "required": true
+      },
+      "covers": {
+        "type": "media",
+        "multiple": true,
+      }
     }
   }
+  //..
 }
 ```
 
@@ -361,6 +387,8 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
 
 ```js
+//path: ./config/plugins.js
+
 module.exports = ({ env })=>({
   upload: {
     config: {
@@ -383,6 +411,8 @@ When using community providers, you need to pass the full package name to the `p
 :::
 
 ```js
+//path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   upload: {
@@ -443,11 +473,13 @@ You can then publish it to make it available to the community.
 
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
-- Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
-- Create your provider as explained in the [documentation](#create-providers) above.
-- Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
+1. Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
+2. Create your provider as explained in the [documentation](#create-providers) above.
+3. Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
 
 ```json
+//path: ./package.json
+
 {
   ...
   "dependencies": {
@@ -458,4 +490,4 @@ If you want to create your own provider without publishing it on **npm** you can
 }
 ```
 
-- Finally, run `yarn install` or `npm install` to install your new custom provider.
+4. Finally, run `yarn install` or `npm install` to install your new custom provider.
