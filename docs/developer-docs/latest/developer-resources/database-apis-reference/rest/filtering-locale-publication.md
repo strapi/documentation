@@ -17,25 +17,27 @@ Queries can accept a `filters` parameter with the following syntax:
 
 The following operators are available:
 
-| Operator        | Description                       |
-| --------------- | --------------------------------- |
-| `$eq`           | Equal                             |
-| `$ne`           | Not equal                         |
-| `$lt`           | Less than                         |
-| `$lte`          | Less than or equal to             |
-| `$gt`           | Greater than                      |
-| `$gte`          | Greater than or equal to          |
-| `$in`           | Included in an array              |
-| `$notIn`        | Not included in an array          |
-| `$contains`     | Contains (case-sensitive)         |
-| `$notContains`  | Does not contain (case-sensitive) |
-| `$containsi`    | Contains                          |
-| `$notContainsi` | Does not contain                  |
-| `$null`         | Is null                           |
-| `$notNull`      | Is not null                       |
-| `$between`      | Is between                        |
-| `$startsWith`   | Starts with                       |
-| `$endsWith`     | Ends with                         |
+| Operator        | Description                              |
+| --------------- | ---------------------------------------- |
+| `$eq`           | Equal                                    |
+| `$ne`           | Not equal                                |
+| `$lt`           | Less than                                |
+| `$lte`          | Less than or equal to                    |
+| `$gt`           | Greater than                             |
+| `$gte`          | Greater than or equal to                 |
+| `$in`           | Included in an array                     |
+| `$notIn`        | Not included in an array                 |
+| `$contains`     | Contains (case-sensitive)                |
+| `$notContains`  | Does not contain (case-sensitive)        |
+| `$containsi`    | Contains                                 |
+| `$notContainsi` | Does not contain                         |
+| `$null`         | Is null                                  |
+| `$notNull`      | Is not null                              |
+| `$between`      | Is between                               |
+| `$startsWith`   | Starts with                              |
+| `$endsWith`     | Ends with                                |
+| `$or`           | Joins the filters in an "or" expression  |
+| `$and`          | Joins the filters in an "and" expression |
 
 ::::api-call
 :::request Example request: Find users having 'John' as first name
