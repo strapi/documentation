@@ -52,7 +52,7 @@ const emailTemplate = {
     <p>Your account is now linked with: <%= user.email %>.<p>`,
 };
 
-await strapi.plugins.email.services.email.sendTemplatedEmail(
+await strapi.plugins['email'].services.email.sendTemplatedEmail(
   {
     to: user.email,
     // from: is not specified, so it's the defaultFrom that will be used instead
@@ -68,45 +68,43 @@ await strapi.plugins.email.services.email.sendTemplatedEmail(
 
 By default Strapi provides a local email system ([sendmail](https://www.npmjs.com/package/sendmail)). If you want to use a third party to send emails, you need to install the correct provider module. Otherwise you can skip this part and continue to configure your provider.
 
-You can check all the available providers developed by the community on npmjs.org - [Providers list](https://www.npmjs.com/search?q=strapi-provider-email-)
+Below are the providers maintained by the Strapi team:
+
+- [Amazon SES](https://www.npmjs.com/package/@strapi/provider-email-amazon-ses)
+- [Mailgun](https://www.npmjs.com/package/@strapi/provider-email-mailgun)
+- [Nodemailer](https://www.npmjs.com/package/@strapi/provider-email-nodemailer)
+- [SendGrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid)
+- [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail)
+
+You can also find additional community maintained providers on [NPM](https://www.npmjs.com/).
 
 To install a new provider run:
-
-
 
 <code-group>
 
 <code-block title="NPM">
 ```sh
-npm install strapi-provider-email-sendgrid --save
+npm install @strapi/provider-email-sendgrid --save
 ```
 </code-block>
 
 <code-block title="YARN">
 ```sh
-yarn add strapi-provider-email-sendgrid --save
+yarn add @strapi/provider-email-sendgrid --save
 ```
 </code-block>
 
 </code-group>
 
-#### Using scoped packages as providers
-
-If your package name is [scoped](https://docs.npmjs.com/about-scopes) (for example `@username/strapi-provider-email-gmail-oauth2`) you need to take an extra step by aliasing it in `package.json`. Go to the `dependencies` section and change the provider line to look like this:
-
-`"strapi-provider-email-gmail-oauth2": "npm:@username/strapi-provider-email-gmail-oauth2@0.1.9"`
-
-The string after the last `@` represents your desired [semver](https://docs.npmjs.com/about-semantic-versioning) version range.
-
 ### Configure your provider
 
-After installing your provider you will need to add some settings in `config/plugins.js`. If this file doesn't exists, you'll need to create it. Check the README of each provider to know what configuration settings the provider needs.
+After installing your provider you will need to add some settings in `./config/plugins.js`. If this file doesn't exists, you'll need to create it. Check the README of each provider to know what configuration settings the provider needs.
 
 ::: tip
 Make sure you have the correct spelling of the configuration filename, it is written in plural (with a trailing 's'): `plugins.js`.
 :::
 
-Here is an example of a configuration made for the provider [strapi-provider-email-sendgrid](https://www.npmjs.com/package/strapi-provider-email-sendgrid).
+Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/strapi-provider-email-sendgrid).
 
 **Path —** `./config/plugins.js`.
 
@@ -114,14 +112,16 @@ Here is an example of a configuration made for the provider [strapi-provider-ema
 module.exports = ({ env }) => ({
   // ...
   email: {
-    provider: 'sendgrid',
-    providerOptions: {
-      apiKey: env('SENDGRID_API_KEY'),
-    },
-    settings: {
-      defaultFrom: 'juliasedefdjian@strapi.io',
-      defaultReplyTo: 'juliasedefdjian@strapi.io',
-      testAddress: 'juliasedefdjian@strapi.io',
+    config: {
+      provider: 'sendgrid',
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
     },
   },
   // ...
@@ -129,7 +129,7 @@ module.exports = ({ env }) => ({
 ```
 
 ::: tip
-If you're using a different provider depending on your environment, you can specify the correct configuration in `config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](http://localhost:8080/documentation/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
+If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
 :::
 
 ::: tip
@@ -143,8 +143,6 @@ More info here: [Configure templates Locally](/user-docs/latest/settings/configu
 
 ## Create new provider
 
-If you want to create your own, make sure the name starts with `strapi-provider-email-` (duplicating an existing one will be easier) and customize the `send` function.
-
 Default template
 
 ```js
@@ -155,6 +153,17 @@ module.exports = {
     };
   },
 };
+```
+
+It is important that your provider's `package.json` includes the following object:
+
+```json
+{
+  // ...
+  "strapi": {
+    "isProvider": true
+  }
+}
 ```
 
 In the `send` function you will have access to:
@@ -170,7 +179,7 @@ To use it you will have to publish it on **npm**.
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
 - Create a `providers` folder in your application.
-- Create your provider as explained in the documentation eg. `./providers/strapi-provider-email-[...]/...`
+- Create your provider (e.g. `./providers/strapi-provider-email-[...]/...`)
 - Then update your `package.json` to link your `strapi-provider-email-[...]` dependency to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your new provider.
 
 ```json
