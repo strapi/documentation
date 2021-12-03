@@ -14,25 +14,29 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `parser` middleware configuration in `config/middleware.js`:
+You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middleware.js`:
 
 ```js
+// path: ./config/middlewares.js
+
 module.exports = {
   //...
-  settings: {
-    parser: {
-      enabled: true,
-      multipart: true,
+  {
+    name: "strapi::body",
+    config: {
+      formLimit: "256mb", // modify form body
+      jsonLimit: "256mb", // modify JSON body
+      textLimit: "256mb", // modify text body
       formidable: {
-        maxFileSize: 200 * 1024 * 1024 // Defaults to 200mb
-      }
-    }
+        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
   },
   //...
 };
 ```
 
-#### Responsive Images
+### Responsive Images
 
 When the `Enable responsive friendly upload` setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
 | Name    | Largest Dimension |
@@ -41,20 +45,26 @@ When the `Enable responsive friendly upload` setting is enabled in the settings 
 | medium  | 750px      |
 | small   | 500px      |
 
-These sizes can be overridden in `config/plugins.js`:
-```javascript
-module.exports = {
+These sizes can be overridden in `./config/plugins.js`:
+
+```js
+// path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
   upload: {
-    breakpoints: {
-      xlarge: 1920,
-      large: 1000,
-      medium: 750,
-      small: 500,
-      xsmall: 64
-    }
-  }
-}
+    config: {
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+});
 ```
+
 :::caution
   Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
 :::
@@ -86,12 +96,12 @@ module.exports = {
 
 <div id="endpoint-table">
 
-| Method | Path              | Description         |
-| :----- | :---------------- | :------------------ |
-| GET    | /upload/files     | Get a list of files |
-| GET    | /upload/files/:id | Get a specific file |
-| POST   | /upload           | Upload files        |
-| DELETE | /upload/files/:id | Delete a file       |
+| Method | Path                  | Description         |
+| :----- | :-------------------- | :------------------ |
+| GET    | /api/upload/files     | Get a list of files |
+| GET    | /api/upload/files/:id | Get a specific file |
+| POST   | /api/upload           | Upload files        |
+| DELETE | /api/upload/files/:id | Delete a file       |
 
 </div>
 
@@ -149,15 +159,20 @@ To upload files that will be linked to a specific entry.
 The `Restaurant` model attributes:
 
 ```json
-"attributes": {
-  "name": {
-    "type": "string"
-  },
-  "cover": {
-    "model": "file",
-    "via": "related",
-    "plugin": "upload"
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
+{
+  //..
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+    }
   }
+//..
 }
 ```
 
@@ -201,16 +216,22 @@ You can also add files during your entry creation.
 The `Restaurant` model attributes:
 
 ```json
-"attributes": {
-  "name": {
-    "type": "string"
-  },
-  "cover": {
-    "model": "file",
-    "via": "related",
-    "plugin": "upload"
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
+{
+  //..
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+    }
   }
+  //..
 }
+
 ```
 
 Code
@@ -278,48 +299,53 @@ Adding a file attribute to a model (or the model of another plugin) is like addi
 
 In the first example below, you will be able to upload and attach one file to the avatar attribute.
 
-**Path —** `User.settings.json`.
-
 ```json
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
 {
-  "connection": "default",
-  "attributes": {
-    "pseudo": {
-      "type": "string",
-      "required": true
-    },
-    "email": {
-      "type": "email",
-      "required": true,
-      "unique": true
-    },
-    "avatar": {
-      "model": "file",
-      "via": "related",
-      "plugin": "upload"
+  //..
+  {
+    "attributes": {
+      "pseudo": {
+        "type": "string",
+        "required": true
+      },
+      "email": {
+        "type": "email",
+        "required": true,
+        "unique": true
+      },
+      "avatar": {
+        "type": "media",
+        "multiple": false,
+      }
     }
   }
+  //..
 }
+
 ```
 
 In our second example, you can upload and attach multiple pictures to the restaurant.
 
-**Path —** `Restaurant.settings.json`.
-
 ```json
+// path: ./src/api/restaurant/content-types/restaurant/schema.json
+
 {
-  "connection": "default",
-  "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "convers": {
-      "collection": "file",
-      "via": "related",
-      "plugin": "upload"
+  //..
+  {
+    "attributes": {
+      "name": {
+        "type": "string",
+        "required": true
+      },
+      "covers": {
+        "type": "media",
+        "multiple": true,
+      }
     }
   }
+  //..
 }
 ```
 
@@ -327,7 +353,14 @@ In our second example, you can upload and attach multiple pictures to the restau
 
 By default Strapi provides a provider that uploads files to a local directory. You might want to upload your files to another provider like AWS S3.
 
-You can check all the available providers developed by the community on npmjs.org - [Providers list](https://www.npmjs.com/search?q=strapi-provider-upload-&ranking=popularity)
+Below are the providers maintained by the Strapi team:
+
+- [Amazon S3](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3)
+- [Cloudinary](https://www.npmjs.com/package/@strapi/provider-upload-cloudinary)
+- [Local](https://www.npmjs.com/package/@strapi/provider-upload-local)
+- [Rackspace](https://www.npmjs.com/package/@strapi/provider-upload-rackspace)
+
+You can also find additional community maintained providers on [NPM](https://www.npmjs.com/).
 
 To install a new provider run:
 
@@ -335,13 +368,13 @@ To install a new provider run:
 
 <code-block title="NPM">
 ```sh
-npm install strapi-provider-upload-aws-s3 --save
+npm install @strapi/provider-upload-aws-s3 --save
 ```
 </code-block>
 
 <code-block title="YARN">
 ```sh
-yarn add strapi-provider-upload-aws-s3
+yarn add @strapi/provider-upload-aws-s3
 ```
 </code-block>
 
@@ -354,46 +387,56 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
 
 ```js
+//path: ./config/plugins.js
+
 module.exports = ({ env })=>({
   upload: {
-    providerOptions: {
-      localServer: {
-        maxage: 300000
-      }
-    }
-  }
-});
-```
-
-### Using scoped packages as providers
-
-If your package name is [scoped](https://docs.npmjs.com/about-scopes) (for example `@username/strapi-provider-upload-aws2`) you need to take an extra step by aliasing it in `package.json`. Go to the `dependencies` section and change the provider line to look like this:
-
-`"strapi-provider-upload-aws2": "npm:@username/strapi-provider-upload-aws2@0.1.9"`
-
-The string after the last `@` represents your desired [semver](https://docs.npmjs.com/about-semantic-versioning) version range.
-
-### Enabling the provider
-
-To enable the provider, create or edit the file at `./config/plugins.js`
-
-```js
-module.exports = ({ env }) => ({
-  upload: {
-    provider: 'aws-s3',
-    providerOptions: {
-      accessKeyId: env('AWS_ACCESS_KEY_ID'),
-      secretAccessKey: env('AWS_ACCESS_SECRET'),
-      region: 'aws-region',
-      params: {
-        Bucket: 'my-bucket',
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
       },
     },
   },
 });
 ```
 
+### Enabling the provider
+
+To enable the provider, create or edit the file at `./config/plugins.js`
+
+:::tip
+When using community providers, you need to pass the full package name to the `provider` key, only Strapi maintained providers can use the short-code eg: `provider: 'strapi-provider-upload-google-cloud-storage'`
+:::
+
+```js
+//path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        accessKeyId: env('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env('AWS_ACCESS_SECRET'),
+        region: env('AWS_REGION'),
+        params: {
+          Bucket: env('AWS_BUCKET'),
+        },
+      },
+    },
+  },
+  // ...
+});
+```
+
 Make sure to read the provider's `README` to know what are the possible parameters.
+
+:::caution
+Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the provider page or take a look at our [middleare documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
+:::
 
 ### Configuration per environment
 
@@ -404,8 +447,6 @@ You can set a specific configuration in the `./config/env/{env}/plugins.js` conf
 ## Create providers
 
 You can create a Node.js module to implement a custom provider. Read the official documentation [here](https://docs.npmjs.com/creating-node-js-modules).
-
-To work with strapi, your provider name must match the pattern `strapi-provider-upload-{provider-name}`.
 
 Your provider need to export the following interface:
 
@@ -432,11 +473,13 @@ You can then publish it to make it available to the community.
 
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
-- Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
-- Create your provider as explained in the [documentation](#create-providers) above.
-- Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
+1. Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
+2. Create your provider as explained in the [documentation](#create-providers) above.
+3. Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
 
 ```json
+//path: ./package.json
+
 {
   ...
   "dependencies": {
@@ -447,4 +490,4 @@ If you want to create your own provider without publishing it on **npm** you can
 }
 ```
 
-- Finally, run `yarn install` or `npm install` to install your new custom provider.
+4. Finally, run `yarn install` or `npm install` to install your new custom provider.
