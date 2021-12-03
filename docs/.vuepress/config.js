@@ -232,10 +232,26 @@ const sidebar = {
           collapsable: true,
           sidebarDepth: 1,
           children: [
-            [
-              '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md',
-              'REST API',
-            ],
+            {
+              title: 'REST API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
+              collapsable: true,
+              // sidebarDepth: 3,
+              children: [
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
+                  'Filtering, Locale, and Publication State'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
+                  'Population & Field Selection'
+                ],
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
+                  'Sort & Pagination'
+                ],
+              ],
+            },
             [
               '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
               'GraphQL API',
