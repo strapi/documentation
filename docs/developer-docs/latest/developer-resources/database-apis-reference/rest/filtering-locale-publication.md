@@ -64,33 +64,7 @@ await request(`/api/users?${query}`);
 ::::
 
 ::::api-call
-:::request Example request: Find restaurants having a price equal or greater than `3`
-`GET /api/restaurants?filters[price][$gte]=3`
-:::
-
-:::response Example using qs
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    price: {
-      $gte: 3
-    },
-  },
-}, {
-  encodeValuesOnly: true,
-});
-
-await request(`/api/restaurants?${query}`);
-// GET /api/restaurants?filters[price][$gte]=3
-```
-
-:::
-::::
-
-::::api-call
-:::request Example request: Find multiple restaurant with id 3, 6, 8
+:::request Example request: Find multiple restaurants with ids 3, 6, 8
 `GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
 :::
 
