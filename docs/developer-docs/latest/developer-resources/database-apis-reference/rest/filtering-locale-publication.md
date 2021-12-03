@@ -203,32 +203,6 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 - `preview`: returns both draft entries & published entries
 
 ::::api-call
-:::request Example requests: Get published articles
-`GET /api/articles`
-
-or
-
-`GET /api/articles?publicationState=live`
-:::
-
-:::response Example using qs
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  publicationState: 'live'
-}, {
-  encodeValuesOnly: true,
-});
-
-await request(`/api/articles?${query}`);
-// GET /api/articles?publicationState=live
-```
-
-:::
-::::
-
-::::api-call
 :::request Example request: Get both published and draft articles
 `GET /api/articles?publicationState=preview`
 :::
