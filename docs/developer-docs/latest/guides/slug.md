@@ -89,6 +89,42 @@ module.exports = {
 };
 ```
 
+If you want to write automated slug for child components as well, use:
+
+```js
+const slugify = require('slugify');
+
+function iterate(data) {
+  if (data) {
+    Object.keys(data).forEach(key => {
+      if (key === 'slug') {
+        if (data.title) {
+          data.slug = slugify(data.title)
+        }
+      }
+      if (typeof data[key] === 'object') {
+        iterate(data[key]);
+      }
+    });
+  }
+}
+
+
+module.exports = {
+  /**
+   * Triggered before user creation.
+   */
+  lifecycles: {
+    async beforeCreate(data) {
+      iterate(data)
+    },
+    async beforeUpdate(params, data) {
+      iterate(data)
+    },
+  },
+};
+```
+
 :::
 
 ::::
