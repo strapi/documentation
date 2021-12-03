@@ -1,4 +1,19 @@
-### Fields selection
+---
+title: Population for REST API - Strapi Developer Docs
+description: Use Strapi's REST API to populate or select certain fields.
+sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html
+---
+
+# REST API: Population & Field Selection
+
+The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) by default does not populate any relations, media fields, components, or dynamic zones. It will return all fields for the model and while populating.
+
+:::caution
+At this time there is no mechanism to return just an array of IDs. This is something that is currently under discussion.
+:::
+
+## Field selection
 
 Queries can accept a `fields` parameter to select only some fields. Use one of the following syntaxes:
 
@@ -16,7 +31,9 @@ To get all fields, use the `*` wildcard.
 `GET /api/users?fields=*`
 :::
 
-### Relations population
+## Population
+
+### Relation & Media fields
 
 By default, relations are not populated when fetching entries.
 
@@ -49,3 +66,7 @@ Only first-level relations are populated with `populate=*`. Use the LHS bracket 
 :::tip
 Adding `?populate=*` to the query URL will include dynamic zones in the results.
 :::
+
+### Component & Dynamic Zones
+
+### Combining Population with other operators
