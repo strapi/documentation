@@ -69,7 +69,7 @@ Finally create **2 users** with the following data.
 
 To login as a user your will have to follow the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login).
 
-Here is the API route for the authentication `/auth/local`.
+Here is the API route for the authentication `/api/auth/local`.
 
 You have to request it in **POST**.
 
@@ -80,7 +80,7 @@ You have to request it in **POST**.
 ```js
 import axios from 'axios';
 
-const { data } = await axios.post('http://localhost:1337/auth/local', {
+const { data } = await axios.post('http://localhost:1337/api/auth/local', {
   identifier: 'reader@strapi.io',
   password: 'strapi',
 });
