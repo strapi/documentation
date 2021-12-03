@@ -179,7 +179,7 @@ To use it you will have to publish it on **npm**.
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
 - Create a `providers` folder in your application.
-- Create your provider eg. `./providers/strapi-provider-email-[...]/...`
+- Create your provider (e.g. `./providers/strapi-provider-email-[...]/...`)
 - Then update your `package.json` to link your `strapi-provider-email-[...]` dependency to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your new provider.
 
 ```json
