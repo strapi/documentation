@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 !!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Python](https://www.python.org/) remains the same except that you will not fetch the same content.
 
@@ -38,7 +38,7 @@ Be sure that you activated the `find` permission for the `restaurant` Collection
 ::: request Example GET request
 
 ```python
-requests.get("http://localhost:1337/restaurants",
+requests.get("http://localhost:1337/api/restaurants",
   headers={
     'Content-Type': 'application/json'
   })
@@ -116,7 +116,7 @@ In this example a `japanese` category has been created which has the id: 3.
 ::: request Example POST request
 
 ```python
-requests.post("http://localhost:1337/restaurants",
+requests.post("http://localhost:1337/api/restaurants",
 data=json_dumps({
     'name': 'Dolemon Sushi',
     'description': 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
@@ -197,7 +197,7 @@ Be sure that you activated the `put` permission for the `restaurant` Collection 
 ::: request Example PUT request
 
 ```python
-requests.put("http://localhost:1337/restaurants/2",
+requests.put("http://localhost:1337/api/restaurants/2",
 data=json_dumps({
   'categories': [2]
 }),
