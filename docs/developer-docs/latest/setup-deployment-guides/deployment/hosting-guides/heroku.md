@@ -11,7 +11,143 @@ This is a step-by-step guide for deploying a Strapi project on [Heroku](https://
 ### Heroku Install Requirements
 
 - You must have [Git installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
+- You must have a [Github account](https://github.com/signup) if you are deploying with the web interface.
 - You must have a [free Heroku account](https://signup.heroku.com/) before doing these steps.
+
+## Deploying with the web interface
+
+#### 1. Create a Strapi App
+
+Create a [new Strapi project](/developer-docs/latest/getting-started/quick-start.md) (if you want to deploy an existing project go to the next step ).
+
+`Path: ./`
+
+<code-group>
+
+<code-block title="NPM">
+```sh
+npx create-strapi-app my-project --quickstart
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
+
+</code-group>
+
+::: tip
+When you use `--quickstart` to create a Strapi project locally, a **SQLite database** is used which is not compatible with Heroku. Therefore, another database option [must be chosen](#_7-heroku-database-set-up).
+:::
+
+#### 2. Create your Heroku database config file for production
+
+Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
+
+`Path: ./config/env/production/database.js`
+
+```js
+const parse = require('pg-connection-string').parse;
+const config = parse(process.env.DATABASE_URL);
+
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: config.host,
+      port: config.port,
+      database: config.database,
+      user: config.user,
+      password: config.password,
+      ssl: {
+        rejectUnauthorized: false
+      },
+    },
+    debug: false,
+  },
+});
+```
+
+
+#### 3. Install the `pg` and `pg-connection-string` node modules
+
+Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://yarnpkg.com/package/pg) and the [pg-conection-string](https://yarnpkg.com/package/pg-connection-string) node modules.
+
+`Path: ./my-project/`
+
+<code-group>
+
+<code-block title="YARN">
+```sh
+yarn add pg pg-connection-string
+```
+</code-block>
+
+</code-group>
+
+
+
+
+#### 3. Update `.gitignore`
+
+Add the following line at end of `.gitignore`:
+
+`Path: ./my-project/.gitignore`
+
+```
+package-lock.json
+```
+
+Even if it is usually recommended to version this file, it may create issues on Heroku.
+
+#### 4. Init a Git Repository, Commit and Push Your Project to Github
+
+Create a new repository on Github.
+
+`Path: ./my-project/`
+
+```bash
+cd my-project
+git init
+git add .
+git commit -m "Initial Commit"
+git branch -M main
+git remote add origin https://github.com/USERNAME/REPOSITORYNAME
+git push -u origin main
+```
+
+#### 5. Login to Heroku and Create a New App
+
+* Log in to Heroku.
+* Click on **Create new app**.
+* Input your app name, then click on **Create app** button.
+
+#### 6. Connect Github to Heroku
+
+* Under **Deployment Method**, Choose Github.
+* Your Github account should appear, search for the repository that has your Strapi project.
+* Click on **Enable Automatic Deploy** button. This will watch for any changes that happens on the repository.
+* Under **Manual Deploy**, your main branch is selected, click on **Deploy Branch** button.
+
+#### 7. Heroku Postgres
+
+* Go to the **Resources** tab.
+* Search for Heroku Postgres on the **Add-ons** section.
+
+![Postgres Add-on](../../assets/deployment/postgres.png)
+
+* Click on **Heroku Postgres**, you should get this:
+
+![Submit](../../assets/deployment/submit.png)
+
+* Click on **Submit Order Form**.
+
+
+
+
+## Deploying with the CLI
 
 If you already have the Heroku CLI installed locally on your computer. Skip to [Login to Heroku](#_2-login-to-heroku-from-your-cli).
 
@@ -21,11 +157,11 @@ Download and install the `Heroku CLI` for your operating system:
 
 :::: tabs card
 
-::: tab Ubuntu
+::: tab Linux
 Run the following from your terminal:
 
 ```bash
-sudo snap install --classic heroku
+curl https://cli-assets.heroku.com/install.sh | sh
 ```
 
 :::
