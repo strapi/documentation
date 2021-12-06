@@ -1,27 +1,119 @@
-### Sorting
+---
+title: Sort & Pagination for REST API - Strapi Developer Docs
+description: Use Strapi's REST API to sort or paginate your data.
+sidebarDepth: 3
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html
+---
 
-Queries can accept a `sort` parameter with the following syntax:
+# REST API: Sort & Pagination
 
-`GET /api/:pluralApiId?sort=field1,field2`
+The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) by default does not populate any relations, media fields, components, or dynamic zones. It will return all fields for the model and while populating.
+
+## Sorting
+
+Queries can accept a `sort` parameter that allow sorting on one or multiple fields with the following syntax:
+
+::::api-call
+:::request Example request: Populate with Filtering
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  sort: ['title', 'slug']
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?sort[0]=title&sort[1]=slug
+```
+
+:::
+
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
+        //..
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article-1",
+        //..
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
+
+:::
+::::
 
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
 
-:::request Example requests: Sort users by email
-`GET /api/users?sort=email` to sort by ascending order (default)
 
-`GET /api/users?sort=email:desc` to sort by descending order
+
+::::api-call
+:::request Example request: Populate with Filtering
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  sort: ['title:asc', 'slug:desc']
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc
+```
+
 :::
 
-:::request Example requests: Sort books on multiple fields
-`GET /api/books?sort=title,price:desc`
+:::response Example response
 
-`GET /api/books?sort=title,author.name`
-
-`GET /api/books?sort[0]=title&sort[1][author]=name` using an array format
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article-1",
+        //..
+      }
+    },
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
+        //..
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
 
 :::
+::::
 
-### Pagination
+## Pagination
 
 Queries can accept `pagination` parameters. Results can be paginated:
 
@@ -32,29 +124,44 @@ Queries can accept `pagination` parameters. Results can be paginated:
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
 
-#### Pagination by page
+### Pagination by page
 
 Use the following parameters:
-
-<!-- ? is it 100 or 10 for default page size -->
 
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 100     |
+| `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 :::: api-call
 
-::: request Example request
-`GET /api/:pluralApiId?pagination[page]=1&pagination[pageSize]=10`
+::: request Example request: Select only 10 entries on page 1
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  pagination: {
+    page: 1,
+    pageSize: 10,
+  },
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?pagination[page]=1&pagination[pageSize]=10
+```
+
 :::
 
 ::: response Example response
 
 ```json
 {
-  "data": […],
+  "data": [
+    //..
+  ],
   "meta": {
     "pagination": {
       "page": 1,
@@ -69,7 +176,7 @@ Use the following parameters:
 :::
 ::::
 
-#### Pagination by offset
+### Pagination by offset
 
 Use the following parameters:
 
@@ -86,7 +193,21 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 :::: api-call
 
 ::: request Example request
-`GET /api/:pluralApiId?pagination[start]=20&pagination[limit]=30`
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  pagination: {
+    start: 0,
+    limit: 10,
+  },
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?pagination[start]=0&pagination[limit]=10
+```
 
 :::
 
@@ -94,7 +215,9 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 
 ```json
 {
-  "data": [],
+  "data": [
+    //..
+  ],
   "meta": {
     "pagination": {
       "start": 0,

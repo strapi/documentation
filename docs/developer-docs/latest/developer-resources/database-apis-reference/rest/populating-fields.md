@@ -381,3 +381,117 @@ await request(`/api/articles?${query}`);
 ::::
 
 ### Combining Population with other operators
+
+By utilizing the `population` operator you can combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) into your population queries. See the following complex population examples:
+
+::::api-call
+:::request Example request: Populate with Field Selection
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  fields: ['title', 'slug'],
+  populate: {
+    headerImage: {
+      fields: ['name', 'url']
+    }
+  } 
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
+```
+
+:::
+
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
+        "headerImage": {
+          "data": {
+            "id": 1,
+            "attributes": {
+              "name": "17520.jpg",
+              "url": "/uploads/17520_73c601c014.jpg"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
+
+:::
+::::
+
+::::api-call
+:::request Example request: Populate with Filtering
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    categories: {
+      sort: ['name:asc'],
+      filters: {
+        name: {
+          $eq: 'Cars',
+        },
+      },
+    },
+  },
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
+```
+
+:::
+
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        //..
+        "categories": {
+          "data": [
+            {
+              "id": 2,
+              "attributes": {
+                "name": "Cars",
+                //..
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
+
+:::
+::::

@@ -531,11 +531,9 @@ Reducers are [Redux](https://redux.js.org/) reducers that can be used to share s
 * The application state is updated frequently.
 * The logic to update that state may be complex.
 
-A reducer is declared as an object with this syntax:
-
-`['pluginId_reducerName']: function() {}`
-
 Reducers can be added to a plugin interface with the `addReducers()` function during the [`register`](#register) lifecycle.
+
+A reducer is declared as an object with this syntax:
 
 **Example:**
 
@@ -544,6 +542,7 @@ Reducers can be added to a plugin interface with the `addReducers()` function du
 import { exampleReducer } from './reducers'
 
 const reducers = {
+  // Reducer Syntax
   [`${pluginId}_exampleReducer`]: exampleReducer
 }
 

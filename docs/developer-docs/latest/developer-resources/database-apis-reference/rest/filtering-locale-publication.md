@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API: Filtering, Locale, and Publication State
 
-The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) offers the ability to filter results found with its ["Get entries"](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-entries) method. If the [i18n]() plugin is enabled on your content-type it's possible to filter by locale and likewise if you have [draft & publish]() enabled it's possible to filter based on a `live` or `draft` state.
+The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) offers the ability to filter results found with its ["Get entries"](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-entries) method. If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is enabled on your content-type it's possible to filter by locale and likewise if you have [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) enabled it's possible to filter based on a `live` or `draft` state.
 
 ## Filtering
 
@@ -280,7 +280,7 @@ await request(`/api/restaurants?${query}`);
 :::
 
 :::tip
-Relations, Media Fields, Components, and Dynamic Zones are not populated by default, to populate these please see our [population documentation](). Also please note that it is not possible to filter on Dynamic Zones or Media Fields.
+Relations, Media Fields, Components, and Dynamic Zones are not populated by default, to populate these please see our [population documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population). Also please note that it is not possible to filter on Dynamic Zones or Media Fields.
 :::
 
 ## Locale
