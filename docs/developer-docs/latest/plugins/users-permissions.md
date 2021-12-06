@@ -41,7 +41,7 @@ On the right sidebar you will be able to see the URL related to this function.
 
 ### Update the default role
 
-When you create a user without a role or if you use the `/auth/local/register` route, the `authenticated` role is given to the user.
+When you create a user without a role or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 
 To change the default role, go to the `Advanced settings` tab and update the `Default role for authenticated users` option.
 
