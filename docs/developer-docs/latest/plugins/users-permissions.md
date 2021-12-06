@@ -41,7 +41,7 @@ On the right sidebar you will be able to see the URL related to this function.
 
 ### Update the default role
 
-When you create a user without a role or if you use the `/auth/local/register` route, the `authenticated` role is given to the user.
+When you create a user without a role or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 
 To change the default role, go to the `Advanced settings` tab and update the `Default role for authenticated users` option.
 
@@ -113,7 +113,7 @@ import axios from 'axios';
 // Request API.
 // Add your own code here to customize or restrict how the public can register new users.
 axios
-  .post('http://localhost:1337/auth/local/register', {
+  .post('http://localhost:1337/api/auth/local/register', {
     username: 'Strapi user',
     email: 'user@strapi.io',
     password: 'strapiPassword',
@@ -143,7 +143,7 @@ import axios from 'axios';
 
 // Request API.
 axios
-  .post('http://localhost:1337/auth/local', {
+  .post('http://localhost:1337/api/auth/local', {
     identifier: 'user@strapi.io',
     password: 'strapiPassword',
   })
