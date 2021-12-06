@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API: Filtering, Locale, and Publication State
 
-The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) offers the ability to filter results found with its ["Get entries"](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html#get-entries) method. If the [i18n]() plugin is enabled on your content-type it's possible to filter by locale and likewise if you have [draft & publish]() enabled it's possible to filter based on a `live` or `draft` state.
+The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) offers the ability to filter results found with its ["Get entries"](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-entries) method. If the [i18n]() plugin is enabled on your content-type it's possible to filter by locale and likewise if you have [draft & publish]() enabled it's possible to filter based on a `live` or `draft` state.
 
 ## Filtering
 
