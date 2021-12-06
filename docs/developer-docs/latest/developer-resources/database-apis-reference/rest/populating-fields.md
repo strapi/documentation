@@ -75,37 +75,182 @@ At this time there is no mechanism to return just an array of IDs. This is somet
 
 ### Relation & Media fields
 
-By default, relations are not populated when fetching entries.
+Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
 
-Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
-
-`GET /api/:pluralApiId?populate=field1,field2`
-
-::: request Example request: Get books and populate relations with the author's name and address
-`GET /api/books?populate=author.name,author.address`
+:::caution
+If the users-permissions plugin is installed, permissions must be enabled for the content-types that are being populated (role based). **If a role doesn't have access to a content-type it will not be populated.**
 :::
 
-For convenience, the `*` wildcard can be used to populate all first-level relations:
+::::api-call
+:::request Example request: Populate 1 level for all relations
 
-::: request Example request: Get all books and populate all their first-level relations
-`GET /api/books?populate=*`
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: '*', 
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?populate=%2A
+```
+
 :::
 
-::: request Example request: Get all books and populate with authors and all their relations
-`GET /api/books?populate[author]=*`
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
+        "body": "Test 1",
+        //..
+        "headerImage": {
+          "data": {
+            "id": 1,
+            "attributes": {
+              "name": "17520.jpg",
+              "alternativeText": "17520.jpg",
+              "formats": {
+                //..
+              },
+              //..
+            }
+          }
+        },
+        "author": {
+          //..
+        },
+        "categories": {
+          //..
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
+
+:::
+::::
+
+::::api-call
+:::request Example request: Populate 1 level `categories`
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: ['categories'], 
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?populate[0]=categories
+```
+
 :::
 
-<br/>
+:::response Example response
 
-Only first-level relations are populated with `populate=*`. Use the LHS bracket syntax (i.e. `[populate]=*`) to populate deeper:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        //..
+        "categories": {
+          "data": [
+            {
+              "id": 1,
+              "attributes": {
+                "name": "Food",
+                //..
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
 
-::: request Example request: Get all relations nested inside a "navigation" component in the "global" single type
-`GET /api/global?populate[navigation][populate]=*`
+:::
+::::
+
+::::api-call
+:::request Example request: Populate 2 levels `author` and `author.company`
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    author: {
+      populate: ['company']
+    }
+  } 
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?populate[author][populate][0]=company
+```
+
 :::
 
-:::tip
-Adding `?populate=*` to the query URL will include dynamic zones in the results.
+:::response Example response
+
+```json
+
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        //..
+        "author": {
+          "data": {
+            "id": 1,
+            "attributes": {
+              "name": "Kai Doe",
+              //..
+              "company": {
+                "data": {
+                  "id": 1,
+                  "attributes": {
+                    "name": "Strapi",
+                    //..
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
+```
+
 :::
+::::
 
 ### Component & Dynamic Zones
 
