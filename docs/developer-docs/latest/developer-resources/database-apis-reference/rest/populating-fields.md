@@ -63,7 +63,7 @@ Queries can accept a `populate` parameter to populate various field types:
 - [Relations & Media Fields](#relation-media-fields)
 - [Components & Dynamic Zones](#component-dynamic-zones)
 
-It is also possible to [combine `population` and `fields`](#combining-population-with-other-operators) among various other operators to have much more control over the population.
+It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
 :::caution
 By default Strapi will not populate any type of fields
@@ -215,7 +215,7 @@ await request(`/api/articles?${query}`);
 :::response Example response
 
 ```json
-
+{
   "data": [
     {
       "id": 1,
@@ -253,5 +253,99 @@ await request(`/api/articles?${query}`);
 ::::
 
 ### Component & Dynamic Zones
+
+Identical to relations, the `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate. See the following examples:
+
+::::api-call
+:::request Example request: Deeply populate a 2 level component & media
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: [
+    'seoData',
+    'seoData.sharedImage',
+    'seoData.sharedImage.media'
+  ]
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?populate[0]=seoData&populate[1]=seoData.sharedImage&populate[2]=seoData.sharedImage.media
+```
+
+:::
+
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        //..
+        "seoData": {
+          "id": 1,
+          "metaTitle": "Test Article",
+          //..
+          "sharedImage": {
+            "id": 1,
+            "alt": "starSky",
+            "media": {
+              "data": [
+                {
+                  "id": 1,
+                  "attributes": {
+                    "name": "17520.jpg",
+                    "formats": {
+                      //..
+                    },
+                    //..
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    //..
+}
+```
+
+:::
+::::
+
+::::api-call
+:::request Example request: Deeply populate a Dynamic Zone with 2 components
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    
+  } 
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/articles?${query}`);
+// GET /api/articles?
+```
+
+:::
+
+:::response Example response
+
+```json
+```
+
+:::
+::::
 
 ### Combining Population with other operators
