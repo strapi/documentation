@@ -24,4 +24,4 @@ jobs:
       - name: Install dependencies
         working-directory: ./docs
         run: yarn --frozen-lockfile
-        run: yarn run check-links
+      - run: yarn run check-links
