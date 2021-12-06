@@ -24,4 +24,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./docs
         run: yarn --frozen-lockfile
-      - run: yarn run check-links
+      - name: Check Vuepress Links
+        working-directory: ./docs
+        run: yarn run check-links
