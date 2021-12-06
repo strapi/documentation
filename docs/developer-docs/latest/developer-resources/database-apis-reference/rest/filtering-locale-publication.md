@@ -333,6 +333,14 @@ await request(`/api/articles?${query}`);
         "publishedAt": null
         //..
       }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "This is Live",
+        "publishedAt": "2021-12-03T20:08:17.740Z"
+        //..
+      }
     }
   ],
   "meta": {
@@ -345,20 +353,18 @@ await request(`/api/articles?${query}`);
 ::::
 
 ::::tip
-To retrieve only draft entries, combine the `preview` publication state and the `published_at` fields:
+To retrieve only draft entries, combine the `preview` publication state and the `publishedAt` fields:
 
-`GET /api/articles?publicationState=preview&filters[published_at][$null]=true`
+`GET /api/articles?publicationState=preview&filters[publishedAt][$null]=true`
 
 :::details Example using qs
-
-// TODO: Ask how to properly set published_at_null in qs as the below filter doesn't work
 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
   publicationState: 'preview',
   filters: {
-    published_at: {
+    publishedAt: {
       $null: true
     },
   },
@@ -367,7 +373,7 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?publicationState=preview&filters[published_at][$null]=true
+// GET /api/articles?publicationState=preview&filters[publishedAt][$null]=true
 ```
 
 :::
