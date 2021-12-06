@@ -328,14 +328,16 @@ await request(`/api/articles?${query}`);
 const qs = require('qs');
 const query = qs.stringify({
   populate: {
-    
+    testDZ: {
+      populate: '*'
+    }
   } 
 }, {
   encodeValuesOnly: true,
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?
+// GET /api/articles?populate[testDZ][populate]=%2A
 ```
 
 :::
@@ -343,6 +345,36 @@ await request(`/api/articles?${query}`);
 :::response Example response
 
 ```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "testString": "test1",
+        //..
+        "testDZ": [
+          {
+            "id": 3,
+            "__component": "test.test-compo",
+            "testString": "test1",
+            "testNestedCompo": {
+              "id": 3,
+              "testNestedString": "testNested1"
+            }
+          },
+          {
+            "id": 1,
+            "__component": "test.test-compo2",
+            "testInt": 1
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    //..
+  }
+}
 ```
 
 :::
