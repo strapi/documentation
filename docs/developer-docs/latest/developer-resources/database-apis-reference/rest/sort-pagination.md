@@ -19,7 +19,7 @@ Queries can accept a `sort` parameter that allow sorting on one or multiple fiel
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  sort: ['title', 'slug']
+  sort: ['title', 'slug'],
 }, {
   encodeValuesOnly: true,
 });
@@ -71,7 +71,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  sort: ['title:asc', 'slug:desc']
+  sort: ['title:asc', 'slug:desc'],
 }, {
   encodeValuesOnly: true,
 });
@@ -216,13 +216,13 @@ await request(`/api/articles?${query}`);
 ```json
 {
   "data": [
-    //..
+    // ...
   ],
   "meta": {
     "pagination": {
       "start": 0,
       "limit": 10,
-      "total": 42,
+      "total": 42
     }
   }
 }

@@ -199,7 +199,7 @@ const qs = require('qs');
 const query = qs.stringify({
   populate: {
     author: {
-      populate: ['company']
+      populate: ['company'],
     }
   } 
 }, {
@@ -265,8 +265,8 @@ const query = qs.stringify({
   populate: [
     'seoData',
     'seoData.sharedImage',
-    'seoData.sharedImage.media'
-  ]
+    'seoData.sharedImage.media',
+  ],
 }, {
   encodeValuesOnly: true,
 });
@@ -329,9 +329,9 @@ const qs = require('qs');
 const query = qs.stringify({
   populate: {
     testDZ: {
-      populate: '*'
-    }
-  } 
+      populate: '*',
+    },
+  },
 }, {
   encodeValuesOnly: true,
 });
@@ -393,9 +393,9 @@ const query = qs.stringify({
   fields: ['title', 'slug'],
   populate: {
     headerImage: {
-      fields: ['name', 'url']
-    }
-  } 
+      fields: ['name', 'url'],
+    },
+  },
 }, {
   encodeValuesOnly: true,
 });

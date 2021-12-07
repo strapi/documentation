@@ -39,17 +39,17 @@ const query = qs.stringify({
   sort: ['title:asc'],
   filters: {
     title: {
-      $eq: 'hello'
+      $eq: 'hello',
     },
   },
   populate: '*',
   fields: ['title'],
   pagination: {
     pageSize: 10,
-    page: 1
+    page: 1,
   },
   publicationState: 'live',
-  locale: ['en']
+  locale: ['en'],
 }, {
   encodeValuesOnly: true, // prettify url
 });

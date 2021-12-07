@@ -47,7 +47,7 @@ const qs = require('qs');
 const query = qs.stringify({
   filters: {
     username: {
-      $eq: 'John'
+      $eq: 'John',
     },
   },
 }, {
@@ -88,7 +88,7 @@ const qs = require('qs');
 const query = qs.stringify({
   filters: {
     id: {
-      $in: [3, 6, 8]
+      $in: [3, 6, 8],
     },
   },
 }, {
@@ -156,18 +156,18 @@ const query = qs.stringify({
     $or: [
       {
         date: {
-          $eq: '2020-01-01'
+          $eq: '2020-01-01',
         },
       },
       {
         date: {
-          $eq: '2020-01-02'
+          $eq: '2020-01-02',
         },
-      }
+      },
     ],
     author: {
       name: {
-        $eq: 'Kai doe'
+        $eq: 'Kai doe',
       },
     },
   },
@@ -226,7 +226,7 @@ const query = qs.stringify({
     chef: {
       restaurants: {
         stars: {
-          $eq: 5
+          $eq: 5,
         },
       },
     },
@@ -310,7 +310,7 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  publicationState: 'preview'
+  publicationState: 'preview',
 }, {
   encodeValuesOnly: true,
 });
@@ -365,7 +365,7 @@ const query = qs.stringify({
   publicationState: 'preview',
   filters: {
     publishedAt: {
-      $null: true
+      $null: true,
     },
   },
 }, {
