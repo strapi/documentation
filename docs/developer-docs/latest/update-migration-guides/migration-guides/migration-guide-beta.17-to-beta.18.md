@@ -233,7 +233,7 @@ The admin panel contains certain assets that use `data:img;base64` images. To al
       "block-all-mixed-content"
     ]
   }
-  // ....
+  // ...
 }
 ```
 
@@ -245,7 +245,7 @@ The admin panel contains certain assets that use `data:img;base64` images. To al
     "enabled": true,
     "policy": ["block-all-mixed-content"]
   }
-  // ....
+  // ...
 }
 ```
 
@@ -517,7 +517,7 @@ RENAME TABLE groups_old_table_name TO components_new_table_name;
 ```json
 {
   "collectionName": "components_new_table_name"
-  // ....
+  // ...
 }
 ```
 
@@ -586,7 +586,7 @@ db.collection.renameCollection('groups_my_group', 'components_my_component');
 ```json
 {
   "collectionName": "components_new_table_name"
-  // ....
+  // ...
 }
 ```
 
