@@ -130,7 +130,6 @@ await request(`/api/restaurants?${query}`);
   ],
   "meta": {
     // ...
-    }
   }
 }
 ```
