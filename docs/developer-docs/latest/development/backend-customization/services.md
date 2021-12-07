@@ -111,7 +111,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const { userData } = ctx.body;
 
     // Store the new user in database.
-    const user = await strapi.service('api::users-permissions.user').add(userData);
+    const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
     strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
