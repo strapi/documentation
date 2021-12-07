@@ -1,0 +1,29 @@
+name: Vuepress Tests
+
+on: [pull_request]
+
+jobs:
+  # lint:
+
+  # runs-on: ubuntu-latest
+
+  checkLinks:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        working-directory: ./docs
+        run: yarn --frozen-lockfile
+      - name: Check Vuepress Links
+        working-directory: ./docs
+        run: yarn run check-links
