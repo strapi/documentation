@@ -110,26 +110,26 @@ await request(`/api/restaurants?${query}`);
       "id": 3,
       "attributes": {
         "name": "test3",
-        //...
+        // ...
       }
     },
     {
       "id": 6,
       "attributes": {
         "name": "test6",
-        //...
+        // ...
       }
     },
     {
       "id": 8,
       "attributes": {
         "name": "test8",
-        //...
+        // ...
       }
     }
   ],
   "meta": {
-    //...
+    // ...
     }
   }
 }
@@ -191,7 +191,7 @@ await request(`/api/books?${query}`);
       "attributes": {
         "name": "test1",
         "date": "2020-01-01",
-        //..
+        // ...
       }
     },
     {
@@ -199,12 +199,12 @@ await request(`/api/books?${query}`);
       "attributes": {
         "name": "test2",
         "date": "2020-01-02",
-        //..
+        // ...
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -251,7 +251,7 @@ await request(`/api/restaurants?${query}`);
       "attributes": {
         "name": "GORDON RAMSAY STEAK",
         "stars": 5
-        //..
+        // ...
       }
     },
     {
@@ -259,12 +259,12 @@ await request(`/api/restaurants?${query}`);
       "attributes": {
         "name": "GORDON RAMSAY BURGER",
         "stars": 5
-        //..
+        // ...
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -331,7 +331,7 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "This a Draft",
         "publishedAt": null
-        //..
+        // ...
       }
     },
     {
@@ -339,12 +339,12 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "This is Live",
         "publishedAt": "2021-12-03T20:08:17.740Z"
-        //..
+        // ...
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```

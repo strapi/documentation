@@ -16,7 +16,7 @@ Your package.json would look like this:
 
 ```json
 {
-  //...
+  // ...
   "dependencies": {
     "strapi": "3.0.0-beta.16",
     "strapi-admin": "3.0.0-beta.16",
@@ -66,7 +66,7 @@ To make sure a Wysiwyg field stays the same when deploying, we introduced the `r
 
 ```json
 {
-  //...
+  // ...
   "attributes": {
     "name": {
       "type": "string"
@@ -82,7 +82,7 @@ To make sure a Wysiwyg field stays the same when deploying, we introduced the `r
 
 ```json
 {
-  //...
+  // ...
   "attributes": {
     "name": {
       "type": "string"

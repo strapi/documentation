@@ -40,7 +40,7 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "Test Article",
         "slug": "test-article",
-        //..
+        // ...
       }
     },
     {
@@ -48,12 +48,12 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "Test Article",
         "slug": "test-article-1",
-        //..
+        // ...
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -92,7 +92,7 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "Test Article",
         "slug": "test-article-1",
-        //..
+        // ...
       }
     },
     {
@@ -100,12 +100,12 @@ await request(`/api/articles?${query}`);
       "attributes": {
         "title": "Test Article",
         "slug": "test-article",
-        //..
+        // ...
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -160,7 +160,7 @@ await request(`/api/articles?${query}`);
 ```json
 {
   "data": [
-    //..
+    // ...
   ],
   "meta": {
     "pagination": {

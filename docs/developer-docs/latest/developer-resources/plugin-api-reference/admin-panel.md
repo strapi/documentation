@@ -118,7 +118,7 @@ Within the bootstrap function, a plugin can:
 ```js
 module.exports = () => {
   return {
-    //...
+    // ...
     bootstrap(app) {
       // execute some bootstrap code
       app

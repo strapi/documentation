@@ -44,7 +44,7 @@ await request(`/api/users?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -109,7 +109,7 @@ await request(`/api/articles?${query}`);
         "title": "Test Article",
         "slug": "test-article",
         "body": "Test 1",
-        //..
+        // ...
         "headerImage": {
           "data": {
             "id": 1,
@@ -117,23 +117,23 @@ await request(`/api/articles?${query}`);
               "name": "17520.jpg",
               "alternativeText": "17520.jpg",
               "formats": {
-                //..
+                // ...
               },
-              //..
+              // ...
             }
           }
         },
         "author": {
-          //..
+          // ...
         },
         "categories": {
-          //..
+          // ...
         }
       }
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -167,14 +167,14 @@ await request(`/api/articles?${query}`);
       "id": 1,
       "attributes": {
         "title": "Test Article",
-        //..
+        // ...
         "categories": {
           "data": [
             {
               "id": 1,
               "attributes": {
                 "name": "Food",
-                //..
+                // ...
               }
             }
           ]
@@ -183,7 +183,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -221,19 +221,19 @@ await request(`/api/articles?${query}`);
       "id": 1,
       "attributes": {
         "title": "Test Article",
-        //..
+        // ...
         "author": {
           "data": {
             "id": 1,
             "attributes": {
               "name": "Kai Doe",
-              //..
+              // ...
               "company": {
                 "data": {
                   "id": 1,
                   "attributes": {
                     "name": "Strapi",
-                    //..
+                    // ...
                   }
                 }
               }
@@ -244,7 +244,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -286,11 +286,11 @@ await request(`/api/articles?${query}`);
       "id": 1,
       "attributes": {
         "title": "Test Article",
-        //..
+        // ...
         "seoData": {
           "id": 1,
           "metaTitle": "Test Article",
-          //..
+          // ...
           "sharedImage": {
             "id": 1,
             "alt": "starSky",
@@ -301,9 +301,9 @@ await request(`/api/articles?${query}`);
                   "attributes": {
                     "name": "17520.jpg",
                     "formats": {
-                      //..
+                      // ...
                     },
-                    //..
+                    // ...
                   }
                 }
               ]
@@ -314,7 +314,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
 }
 ```
 
@@ -351,7 +351,7 @@ await request(`/api/articles?${query}`);
       "id": 1,
       "attributes": {
         "testString": "test1",
-        //..
+        // ...
         "testDZ": [
           {
             "id": 3,
@@ -372,7 +372,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -429,7 +429,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
@@ -472,14 +472,14 @@ await request(`/api/articles?${query}`);
       "id": 1,
       "attributes": {
         "title": "Test Article",
-        //..
+        // ...
         "categories": {
           "data": [
             {
               "id": 2,
               "attributes": {
                 "name": "Cars",
-                //..
+                // ...
               }
             }
           ]
@@ -488,7 +488,7 @@ await request(`/api/articles?${query}`);
     }
   ],
   "meta": {
-    //..
+    // ...
   }
 }
 ```
