@@ -186,7 +186,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
 
   - A blog article belongs to a category.
   - Querying an article can retrieve its category,
-  - but querying a category won't retrieve the list of articles.
+  - but querying a category won't retrieve the owned article.
 
   ```js
   // ./src/api/[api-name]/content-types/article/schema.json
@@ -208,7 +208,7 @@ They can be unidirectional or bidirectional. In unidirectional relationships, on
 
   - A blog article belongs to a category.
   - Querying an article can retrieve its category,
-  - and querying a category also retrieves its list of articles.
+  - and querying a category also retrieves its owned article.
 
   ```js
   // ./src/api/[api-name]/content-types/article/schema.json
