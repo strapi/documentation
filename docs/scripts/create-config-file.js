@@ -11,6 +11,7 @@ const createConfigFile = async () => {
   const metas = await fs.readFile(path.resolve(dest, 'metas.js'));
   const themeConfig = await fs.readFile(path.resolve(dest, 'theme-config.js'));
   const markdown = await fs.readFile(path.resolve(dest, 'markdown-config.js'));
+  const patterns = await fs.readFile(path.resolve(dest, 'patterns.js'));
 
   const content = `
 ${sidebar.toString()}
@@ -25,12 +26,15 @@ ${themeConfig.toString()}
 
 ${markdown.toString()}
 
+${patterns.toString()}
+
 
 module.exports = {
   ...metas,
   themeConfig,
   markdown,
   plugins,
+  patterns
 };
   `;
 

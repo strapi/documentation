@@ -933,11 +933,20 @@ const markdown = {
 };
 
 
+const patterns = [
+  '**/*.md',
+  '!**/developer-docs/**/*.md',
+  '**/developer-docs/latest/getting-started/introduction.md',
+];
+
+
 
 module.exports = {
   ...metas,
   themeConfig,
   markdown,
   plugins,
+  cache: true,
+  patterns
 };
   
