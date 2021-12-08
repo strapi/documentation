@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 
 const createConfigFile = async () => {
   const dest = path.resolve(__dirname, '..', '.vuepress', 'config');
-  const sidebar = await fs.readFile(path.resolve(dest, 'sidebar.js'));
+  const userSidebar = await fs.readFile(path.resolve(dest, 'sidebar-user.js'));
   const plugins = await fs.readFile(path.resolve(dest, 'plugins.js'));
   const metas = await fs.readFile(path.resolve(dest, 'metas.js'));
   const themeConfig = await fs.readFile(path.resolve(dest, 'theme-config.js'));
@@ -13,7 +13,11 @@ const createConfigFile = async () => {
   const patterns = await fs.readFile(path.resolve(dest, 'patterns-user.js'));
 
   const content = `
-${sidebar.toString()}
+${userSidebar.toString()}
+
+const sidebar = {
+  user,
+};
 
 ${plugins.toString()}
 

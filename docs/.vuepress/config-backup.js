@@ -1,3 +1,8 @@
+/**
+ * This file is the backyup the old config.js one.
+ * @Piwi & @DerrickMehaffy I'll let you decide if you want to keep it.
+ */
+
 const sidebar = {
   developer: [
     {
