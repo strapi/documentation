@@ -666,7 +666,6 @@ module.exports = {
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/',
-  plugins: plugins,
   head: [
     [
       'link',
@@ -923,4 +922,5 @@ module.exports = {
       md.use(require('markdown-it-include'));
     },
   },
+  plugins: plugins,
 };
