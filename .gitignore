@@ -109,3 +109,7 @@ dist
 # IDE
 .idea
 .vscode
+
+
+# Auto generated files
+*.vuepress/config.js

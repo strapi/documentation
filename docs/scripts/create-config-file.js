@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs-extra');
 
 const createConfigFile = async () => {
-  const dest = path.resolve(__dirname, '..', '.vuepress');
+  const dest = path.resolve(__dirname, '..', '.vuepress', 'config');
   const sidebar = await fs.readFile(path.resolve(dest, 'sidebar.js'));
   const linkChecker = await fs.readFile(path.resolve(dest, 'link-checker.js'));
   const plugins = await fs.readFile(path.resolve(dest, 'plugins.js'));
