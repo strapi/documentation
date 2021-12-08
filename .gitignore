@@ -112,4 +112,4 @@ dist
 
 
 # Auto generated files
-*.vuepress/config.js
+docs/.vuepress/config.js

@@ -78,11 +78,26 @@ The core team will review your pull request and will either merge it, request ch
     cd docs
     ```
 
-6. Make sure all dependencies are installed, then run the server:
+6. Make sure all dependencies are installed
 
     ```bash
-    yarn && yarn dev
+    yarn 
     ```
+    
+7. Start the documentation server
+
+    ```bash
+    # Launch the full documentation
+    yarn dev
+
+    # Launch only the developer docs
+    yarn dev:developer
+
+    # Launch only the user docs
+    yarn dev:user
+    ```
+
+
 
 #### Writing
 We can't provide you specific procedures with step-by-step instructions to write technical documentation. But our ["12 Rules of Technical Writing"](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and [style guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) should help you get started. If you have any question or need help, do feel free to reach us through [our forum](https://forum.strapi.io/).

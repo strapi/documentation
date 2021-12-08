@@ -6,17 +6,13 @@ const fs = require('fs-extra');
 const createConfigFile = async () => {
   const dest = path.resolve(__dirname, '..', '.vuepress', 'config');
   const sidebar = await fs.readFile(path.resolve(dest, 'sidebar.js'));
-  const linkChecker = await fs.readFile(path.resolve(dest, 'link-checker.js'));
   const plugins = await fs.readFile(path.resolve(dest, 'plugins.js'));
   const metas = await fs.readFile(path.resolve(dest, 'metas.js'));
   const themeConfig = await fs.readFile(path.resolve(dest, 'theme-config.js'));
-  const markdown = await fs.readFile(path.resolve(dest, 'markdown-config.js'));
-  const patterns = await fs.readFile(path.resolve(dest, 'patterns.js'));
+  const markdown = await fs.readFile(path.resolve(dest, 'markdown.js'));
 
   const content = `
 ${sidebar.toString()}
-
-${linkChecker.toString()}
 
 ${plugins.toString()}
 
@@ -26,15 +22,11 @@ ${themeConfig.toString()}
 
 ${markdown.toString()}
 
-${patterns.toString()}
-
-
 module.exports = {
   ...metas,
   themeConfig,
   markdown,
   plugins,
-  patterns
 };
   `;
 

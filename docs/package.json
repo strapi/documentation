@@ -4,9 +4,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "yarn create:config-file && vuepress dev",
-    "build": "vuepress build",
+    "dev:developer": "yarn create:dev-config-file && vuepress dev",
+    "dev:user": "yarn create:user-config-file && vuepress dev",
+    "build": "yarn create:config-file && vuepress build",
     "check-links": "vuepress check-md",
-    "create:config-file": "node ./scripts/create-config-file.js"
+    "create:config-file": "node ./scripts/create-main-config-file.js",
+    "create:dev-config-file": "node ./scripts/create-developer-docs-config-file.js",
+    "create:user-config-file": "node ./scripts/create-user-docs-config-file.js"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
