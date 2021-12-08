@@ -29,7 +29,13 @@ For more information, consult [Cleavr's Strapi deployment guide](https://docs.cl
 
 ### Step 1: Add A New Site
 
-From your Cleavr panel, add a new **NodeJS SSR** site to the server you want to host your project on. 
+From your Cleavr panel, add a new **Strapi** site to the server you want to host your project on. 
+
+Expand the advanced options to configure your port number, database, and NodeJS version. 
+
+::: tip
+For Strapi v3 apps, select either NodeJS v12 or v14. For Strapi v4, you may choose to select Node v16. 
+:::
 
 ### Step 2: Configure Web App Repository Settings
 
@@ -37,42 +43,23 @@ After you've added the new site, go to the web app section and edit the web app 
 
 Navigate to the **Code Repository** settings section and fill in the details for your VC provider, your repository, and the branch-to-deploy. 
 
-### Step 3: Configure Web App Build Settings
+### Step 3: Make any additional required configuration updates
 
-On the **Build** settings tab, make the following configurations: 
+In many cases, you're all set to deploy your Strapi CMS app. 
 
-- Set **Entry Point** to `npm`
-- Set **Arguments** to `build`
-- Set **Build Commands** to `npm run build --production`
-- Set **Artifacts Path** to `build`
+However, you may need to customize some configs prior to deploying. 
 
-If you are not keying off an environment variable in the `.env` file for production, you can use PM2 to start Strapi in production mode.
+Check the following areas for any additional configs you may need to make: 
 
-In the **PM2 Ecosystem** area of the build settings tab, add `"NODE_ENV":"production"` to the `env` section.
-
-It should look something like the following:
-
-```json
-{
-  "name": "<site-name>",
-  "script": "npm",
-  "args": "start",
-  "log_type": "json",
-  "cwd": "/home/<server-user-name>/<site-name>/current",
-  "instances": "max",
-  "exec_mode" : "cluster",
-  "env": {
-    "NODE_ENV":"production",
-    "PORT": <port number>,
-    "CI": 1,
-  }
-}
-```
+- Settings > Build to customize entry point, PM2 Ecosystem, and build command
+- Environment section to manage environment variables
+- Deployment hooks to create any custom hooks required to deploy your app
 
 ### Step 4: Deploy
 
 Once you have your web app configured, navigate to the web app deployment tab and click Deploy. 
 
-If you'd like to use GitHub Actions to build your project, you can enable the GitHub Actions integration from the web app settings section. 
+If you'd like to use GitHub Actions to build your project, you can enable the GitHub Actions integration from the web app settings section. However, using GitHub Actions 
+will likely require you to add your environment variables to the PM2 Ecosystem > ENV section. 
 
 Refer to the Cleavr [guide](https://docs.cleavr.io/guides/strapi-cms/) and [forum](https://forum.cleavr.io/) if you run across any issues. 
