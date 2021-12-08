@@ -179,6 +179,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | ---------------------------------------- | --------------------------------------- | ------------------------------------------------- | --------------------------- |
 | Add a new link to the main navigation    | [Menu API](#menu-api)                   | [`addMenuLink()`](#menu-api)                      | [`register()`](#register)   |
 | Create a new settings section            | [Settings API](#settings-api)           | [`createSettingSection()`](#createsettingsection) | [`register()`](#register)   |
+| Replace fields in the Content Manager    | [Fields API](#fields-api)               | [`addFields()`](#field-api) | [`register()`](#register)   |
 | Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
 | Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers-api)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
@@ -370,6 +371,30 @@ export default {
     )
   }
 }
+```
+
+### Fields API
+
+The Fields API allows a plugin to replace a component within a field type by another one with `addFields()` function using the following parameters:
+
+| Parameter     | Type             | Description                                                                                                                                                                                                              |
+| ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`          | String           | Type of field to customize |
+| `Component`        | React Component       | Component used for this type of field. <br /> Should be one of the content types available in the Content Type Builder:<ul><li>`string`</li><li>`text`</li><li>`richtext`</li><li>`wysiwyg`</li><li>`enumeration`</li><li>`email`</li><li>`password`</li><li>`uid`</li><li>`date`</li><li>`time`</li><li>`datetime`</li><li>`timestamp`</li><li>`integer`</li><li>`biginteger`</li><li>`float`</li><li>`decimal`</li><li>`boolean`</li><li>`array`</li><li>`json`</li><li>`media`</li><li>`relation`</li><li>`component`</li><li>`dynamiczone`</li></ul> |
+
+**Example:**
+
+```jsx
+// path: my-plugin/admin/src/index.js
+// Overrides every field of wysiwyg type with MyCustomWysiwyg component
+import MyCustomWysiwyg from './components/MyCustomWysiwyg';
+
+export default {
+  register(app) {
+    app.addFields({ type: 'wysiwyg', Component: MyCustomWysiwyg });
+  },
+  bootstrap() {},
+};
 ```
 
 ### Injection Zones API
