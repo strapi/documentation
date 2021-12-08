@@ -1,9 +1,12 @@
 ---
-title: JWT validation - Strapi Developer Documentation
+title: JWT validation - Strapi Developer Docs
 description: Learn in this guide how to validate a JWT (JSON Web Token) with a third party service.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/jwt-validation.html
 ---
 
 # JWT validation
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 In this guide we will see how to validate a `JWT` (JSON Web Token) with a third party service.
 
@@ -26,7 +29,7 @@ We can now imagine you have a `JWT` that comes from [Auth0](https://auth0.com) a
 
 ## Customize the JWT validation function
 
-We will update the function that validates the `JWT`. This feature is powered by the **Users & Permissions** [plugin](/developer-docs/latest/development/plugin-customization.md).
+We will update the function that validates the `JWT`. This feature is powered by the **Users & Permissions** [plugin](/developer-docs/latest/plugins/upload.md).
 
 Here is the file we will have to customize: [permission.js](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-users-permissions/config/policies/permissions.js)
 

@@ -1,9 +1,12 @@
 ---
-title: Get started with GraphQL - Strapi Developer Documentation
-description: Build powerful applications using Strapi, the leading open-source headless cms and GraphQL.
+title: Get started with GraphQL - Strapi Developer Docs
+description: Use the GraphQL plugin in your Strapi project to fetch and mutate your content.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/graphql.html
 ---
 
 # Getting Started with GraphQL
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
@@ -314,4 +317,4 @@ export default {
 
 This is how you request your Collection Types in Strapi using GraphQL.
 
-Feel free to explore more about [GraphQL](/developer-docs/latest/development/plugins/graphql.md).
+Feel free to explore more about [GraphQL](/developer-docs/latest/plugins/graphql.md).

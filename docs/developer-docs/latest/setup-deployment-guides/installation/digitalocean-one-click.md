@@ -1,15 +1,16 @@
 ---
-title: DigitalOcean One-click - Strapi Developer Documentation
+title: DigitalOcean One-click - Strapi Developer Docs
 description: Quickly deploy a Strapi application on DigitalOcean by simply using their One-click button.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html
 ---
 
 # DigitalOcean One-click
 
 ::: caution
- The one-click install droplet is currently missing from DigitalOcean's marketplace. We are actively working with them on this issue and recommend you to use another installation method in the meantime.
- :::
+The one-click install droplet is currently missing from DigitalOcean's marketplace. We are not planning to continue support for this installation method but if you want to configure it yourself you can use our [one-click repo](https://github.com/strapi/one-click-deploy) to build the image yourself.
+:::
 
-The following documentation will guide you through the one-click creation of a new Strapi project hosted on  [DigitalOcean](https://www.digitalocean.com/).
+The following documentation will guide you through the one-click creation of a new Strapi project hosted on [DigitalOcean](https://www.digitalocean.com/)
 
 DigitalOcean is a cloud platform that helps to deploy and scale applications by offering an Infrastructure as a Service (IaaS) platform for developers.
 
@@ -19,7 +20,7 @@ A DigitalOcean account is necessary to follow this installation guide. Please vi
 
 ## Creating a Strapi project
 
-1. Go to the [Strapi page on DigitalOcean's marketplace](https://marketplace.digitalocean.com/apps/strapi).
+1. Go to the Strapi page on DigitalOcean's marketplace.
 2. Click on **Create Strapi Droplet** button.
 3. Keep the selected "Shared CPU - Basic" plan.
 4. Choose "Regular Intel with SSD" as a CPU option.
@@ -42,6 +43,6 @@ To visit your Strapi application:
 
 Visiting the Strapi application page for the first time will require to create the first administrator user.
 
-::: strapi Customization options for the DigitalOcean droplet 
+::: strapi Customization options for the DigitalOcean droplet
 The DigitalOcean droplet includes everything you need to run Strapi. However, should you need to access and customize the droplet environment and change some of its settings, you may want to refer to [our dedicated documentation](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-customization.md). You can also find the image generation [source code](https://github.com/strapi/one-click-deploy/tree/master/digital-ocean) on Strapi's GitHub.
 :::

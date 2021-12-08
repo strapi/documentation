@@ -1,6 +1,7 @@
 ---
-title: CLI - Strapi Developer Documentation
+title: CLI - Strapi Developer Docs
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html
 ---
 
 # Command Line Interface (CLI)
@@ -33,8 +34,7 @@ options: [--no-run|--use-npm|--debug|--quickstart|--dbclient=<dbclient> --dbhost
 
   Generates a new project called **&#60;name&#62;** and skip the interactive database configuration and initialize with these options.
 
-  - **&#60;dbclient&#62;** can be `mongo`, `postgres`, `mysql`.
-  - **&#60;dbssl&#62;** and **&#60;dbauth&#62;** are available only for `mongo` and are optional.
+  - **&#60;dbclient&#62;** can be `postgres`, `mysql`.
   - **--dbforce** Allows you to overwrite content if the provided database is not empty. Only available for `postgres`, `mysql`, and is optional.
 
 ## strapi develop
@@ -95,6 +95,15 @@ options: [--no-optimization]
   Builds the administration panel and delete the previous build and .cache folders
 - **strapi build --no-optimization**<br/>
   Builds the administration panel without minimizing the assets. The build duration is faster.
+
+## strapi watch-admin
+
+Starts the admin server.  Strapi should already be running with `strapi develop`.
+
+```sh
+strapi watch-admin
+options: [--browser <name>]
+```
 
 ## strapi configuration:dump
 
@@ -184,180 +193,78 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 | -p, --password | string | New password for the user |
 | -h, --help     |        | display help for command  |
 
-## strapi generate:api
+## strapi generate
 
-Scaffold a complete API with its configurations, controller, model and service.
+Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/latest/development/backend-customization/controllers.md), [content-types](/developer-docs/latest/development/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#creating-a-plugin), [policies](/developer-docs/latest/development/backend-customization/policies.md), [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) and [services](/developer-docs/latest/development/backend-customization/services.md).
 
-```bash
-strapi generate:api <name> [<attribute:type>]
-
-options: [--plugin <name>]
+```sh
+strapi generate
 ```
 
-- **strapi generate:api &#60;name&#62;**<br/>
-  Generates an API called **&#60;name&#62;** in the `./api` folder at the root of your project.
-
-- **strapi generate:api &#60;name&#62; --draft-and-publish=true**<br/>
-  Generates an API called **&#60;name&#62;** in the `./api` folder at the root of your project and enabled the draft/publish feature.
-
-- **strapi generate:api &#60;name&#62; &#60;attribute:type&#62;**<br/>
-  Generates an API called **&#60;name&#62;** in the `./api` folder at the root of your project. The model will already contain an attribute called **&#60;attribute&#62;** with the type property set to **&#60;type&#62;**.
-
-  Example: `strapi generate:api product name:string description:text price:integer`
-
-- **strapi generate:api &#60;name&#62; --plugin &#60;plugin&#62;**<br/>
-  Generates an API called **&#60;name&#62;** in the `./plugins/<plugin>` folder.
-
-  Example: `strapi generate:api product --plugin content-manager`
-
-::: tip
-The first letter of the filename will be uppercase.
-:::
-
-## strapi generate:controller
-
-Create a new controller.
-
-```bash
-strapi generate:controller <name>
-
-options: [--api <name>|--plugin <name>]
-```
-
-- **strapi generate:controller &#60;name&#62;**<br/>
-  Generates an empty controller called **&#60;name&#62;** in the `./api/<name>/controllers` folder.
-
-  Example: `strapi generate:controller category` will create the controller at `./api/category/controllers/Category.js`.
-
-- **strapi generate:controller &#60;name&#62; --api &#60;api&#62;**<br/>
-  Generates an empty controller called **&#60;name&#62;** in the `./api/<api>/controllers` folder.
-
-  Example: `strapi generate:controller category --api product` will create the controller at `./api/product/controllers/Category.js`.
-
-- **strapi generate:controller &#60;name&#62; --plugin &#60;plugin&#62;**<br/>
-  Generates an empty controller called **&#60;name&#62;** in the `./plugins/<plugin>/controllers` folder.
-
-::: tip
-The first letter of the filename will be uppercase.
-:::
-
-## strapi generate:model
-
-Create a new model.
-
-```bash
-strapi generate:model <name> [<attribute:type>]
-
-options: [--api <name>|--plugin <name>|--draft-and-publish <boolean>]
-```
-
-- **strapi generate:model &#60;name&#62;**<br/>
-  Generates an empty model called **&#60;name&#62;** in the `./api/<name>/models` folder. It will create two files.
-  The first one will be **&#60;name&#62;.js** which contains your lifecycle callbacks and another **&#60;name&#62;.settings.json** that will list your attributes and options.
-
-  Example: `strapi generate:model category` will create these two files `./api/category/models/Category.js` and `./api/category/models/Category.settings.json`.
-
-- **strapi generate:model &#60;name&#62; &#60;attribute:type&#62;**<br/>
-  Generates an empty model called **&#60;name&#62;** in the `./api/<name>/models` folder. The file **&#60;name&#62;.settings.json** will already contain a list of attribute with their associated **&#60;type&#62;**.
-
-  Example: `strapi generate:model category name:string description:text` will create these two files `./api/category/models/Category.js` and `./api/category/models/Category.settings.json`. This last file will contain two attributes `name` with the type `string` and `description` with type `text`.
-
-- **strapi generate:model &#60;name&#62; --api &#60;api&#62;**<br/>
-  Generates an empty model called **&#60;name&#62;** in the `./api/<api>/models` folder.
-
-  Example: `strapi generate:model category --api product` will create these two files:
-
-  - `./api/product/models/Category.js`
-  - `./api/product/models/Category.settings.json`.
-
-* **strapi generate:model &#60;name&#62; --plugin &#60;plugin&#62;**<br/>
-  Generates an empty model called **&#60;name&#62;** in the `./plugins/<plugin>/models` folder.
-
-* **strapi generate:model &#60;name&#62; --draft-and-publish=true**<br/>
-  Generates an empty model called **&#60;name&#62;** in the `./plugins/<plugin>/models` folder with the draft/publish feature enabled
-
-::: tip
-The first letter of the filename will be uppercase.
-:::
-
-## strapi generate:service
-
-Create a new service.
-
-```bash
-strapi generate:service <name>
-
-options: [--api <name>|--plugin <name>]
-```
-
-- **strapi generate:service &#60;name&#62;**<br/>
-  Generates an empty service called **&#60;name&#62;** in the `./api/<name>/services` folder.
-
-  Example: `strapi generate:service category` will create the service at `./api/category/services/Category.js`.
-
-- **strapi generate:service &#60;name&#62; --api &#60;api&#62;**<br/>
-  Generates an empty service called **&#60;name&#62;** in the `./api/<api>/services` folder.
-
-  Example: `strapi generate:service category --api product` will create the service at `./api/product/services/Category.js`.
-
-- **strapi generate:service &#60;name&#62; --plugin &#60;plugin&#62;**<br/>
-  Generates an empty service called **&#60;name&#62;** in the `./plugins/<plugin>/services` folder.
-
-::: tip
-The first letter of the filename will be uppercase.
-:::
-
-## strapi generate:policy
-
-Create a new policy.
-
-```bash
-strapi generate:policy <name>
-
-options: [--api <name>|--plugin <name>]
-```
-
-- **strapi generate:policy &#60;name&#62;**<br/>
-  Generates an empty policy called **&#60;name&#62;** in the `./config/policies` folder.
-
-  Example: `strapi generate:policy isAuthenticated` will create the policy at `./config/policies/isAuthenticated.js`.
-
-- **strapi generate:policy &#60;name&#62; --api &#60;api&#62;**<br/>
-  Generates an empty policy called **&#60;name&#62;** in the `./api/<api>/config/policies` folder. This policy will be scoped and only accessible by the **&#60;api&#62;** routes.
-
-  Example: `strapi generate:policy isAuthenticated --api product` will create the policy at `./api/product/config/policies/isAuthenticated.js`.
-
-- **strapi generate:policy &#60;name&#62; --plugin &#60;plugin&#62;**<br/>
-  Generates an empty policy called **&#60;name&#62;** in the `./plugins/<plugin>/config/policies` folder. This policy will be scoped and accessible only by the **&#60;plugin&#62;** routes.
-
-## strapi generate:plugin
-
-Create a new plugin skeleton.
-
-```bash
-strapi generate:plugin <name>
-```
-
-- **strapi generate:plugin &#60;name&#62;**<br/>
-  Generates an empty plugin called **&#60;name&#62;** in the `./plugins` folder.
-
-  Example: `strapi generate:plugin user` will create the plugin at `./plugins/user`.
-
-Please refer to the [local plugins](/developer-docs/latest/development/local-plugins-customization.md) section to know more.
-
-## strapi generate:template
+## strapi templates:generate
 
 Create a template from the current strapi project
 
 ```bash
-strapi generate:template <path>
+strapi templates:generate <path>
 ```
 
-- **strapi generate:template &#60;path&#62;**<br/>
+- **strapi templates:generate &#60;path&#62;**<br/>
   Generates a Strapi template at `<path>`
 
-  Example: `strapi generate:template ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+  Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
+## strapi routes:list
+
+Display a list of all the available [routes](/developer-docs/latest/development/backend-customization/routes.md).
+
+```sh
+strapi routes:list
+```
+
+## strapi policies:list
+
+Display a list of all the registered [policies](/developer-docs/latest/development/backend-customization/policies.md).
+
+```sh
+strapi policies:list
+```
+
+## strapi middlewares:list
+
+Display a list of all the registered [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md).
+
+```sh
+strapi middlewares:list
+```
+
+## strapi content-types:list
+
+Display a list of all the existing [content-types](/developer-docs/latest/development/backend-customization/models.md).
+
+```sh
+strapi content-types:list
+```
+
+## strapi hooks:list
+
+Display a list of all the available hooks.
+
+```sh
+strapi hooks:list
+```
+
+## strapi controllers:list
+
+Display a list of all the registered [controllers](/developer-docs/latest/development/backend-customization/controllers.md).
+
+## strapi services:list
+
+Display a list of all the registered [services](/developer-docs/latest/development/backend-customization/services.md).
+
+```sh
+strapi services:list
+```
 
 ## strapi install
 

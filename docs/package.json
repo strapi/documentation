@@ -3,8 +3,7 @@
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "DEPLOY_ENV=legacy vuepress dev",
-    "dev:prod": "vuepress dev",
+    "dev": "vuepress dev",
     "build": "vuepress build",
     "check-links": "vuepress check-md"
   },

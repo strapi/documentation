@@ -268,13 +268,12 @@ You can also apply different parameters to the query to make more complex querie
 - `start` (integer): Define the amount of entries to skip.
 - `sort` (string): Define how the data should be sorted.
 - `publicationState` (PublicationState): Only select entries matching the publication state provided.
-- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 
   Handled states are:
-
   - `live`: Return only published entries (default)
   - `preview`: Return both draft entries & published entries
 
+- `locale` (string): Define the locale to fetch the content for, if the [Internationalization (i18n) plugin](/developer-docs/latest/development/plugins/i18n.md) is installed and [localization is enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 - `<field>:asc` or `<field>:desc`
 - `where` (object): Define the filters to apply in the query.
   - `<field>`: Equals.

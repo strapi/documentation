@@ -1,11 +1,14 @@
 ---
-title: Get started with PHP - Strapi Developer Documentation
+title: Get started with PHP - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html
 ---
 
 # Getting Started with PHP
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
@@ -28,7 +31,7 @@ Be sure that you activated the `find` permission for the `restaurant` Collection
 ::: request Example GET request
 
 ```php
-curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 ```
 
 Running the PHP file on the browser  will give you this response:
@@ -69,7 +72,7 @@ Running the PHP file on the browser  will give you this response:
 <?php
 function getRestaurants(){
     $curl = curl_init(); //Initializes curl
-    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json'
@@ -103,7 +106,7 @@ $restaurants = array(
 // Initializes a new cURL session
 $curl = curl_init();
 
-curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
@@ -144,7 +147,7 @@ Running the PHP file on the browser  will give you this response:
 <?php
 function getRestaurants(){
     $curl = curl_init(); //Initializes curl
-    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json'
@@ -166,7 +169,7 @@ function postRestaurant(){
       // Initializes a new cURL session
       $curl = curl_init();
 
-      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
@@ -192,7 +195,7 @@ postRestaurant();
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 
 Be sure that you activated the `update` permission for the `restaurant` Collection Type.
-PUT Request is sligtly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
+PUT Request is sligtly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
 :::: api-call
 ::: request Example PUT request
@@ -203,7 +206,7 @@ $restaurants = array(
   );
 
 $curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants/1');
+curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants/1');
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 
@@ -240,7 +243,7 @@ Running the PHP file on the browser  will give you this response:
 <?php
 function getRestaurants(){
     $curl = curl_init(); //Initializes curl
-    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+    curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
         'Content-Type: application/json'
@@ -262,7 +265,7 @@ function postRestaurant(){
       // Initializes a new cURL session
       $curl = curl_init();
 
-      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
@@ -285,7 +288,7 @@ $restaurants = array(
   );
 
 $curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants/1');
+curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants/1');
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($restaurants));
@@ -417,7 +420,7 @@ function postRestaurantWithAuth($jwt){
       // Initializes a new cURL session
       $curl = curl_init();
       
-      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/restaurants');
+      curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
       
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
       
@@ -439,4 +442,4 @@ postRestaurantWithAuth($jwt);
 
 Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/content-api/content-api.md#get-an-entry), [get how much entry you have](/developer-docs/latest/developer-resources/content-api/content-api.md#count-entries) and [delete](/developer-docs/latest/developer-resources/content-api/content-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).

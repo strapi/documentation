@@ -2,7 +2,7 @@
   <div>
     <!-- API Documentation -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/documentation.html">
+      <InstallLink link="/developer-docs/latest/plugins/documentation.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24">
             <text
@@ -25,7 +25,7 @@
 
     <!-- Email -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/email.html">
+      <InstallLink link="/developer-docs/latest/plugins/email.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24">
             <text
@@ -48,7 +48,7 @@
 
     <!-- GraphQL -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/graphql.html">
+      <InstallLink link="/developer-docs/latest/plugins/graphql.html">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +185,7 @@
 
     <!-- i18n -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/i18n.html">
+      <InstallLink link="/developer-docs/latest/plugins/i18n.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32">
             <g fill="none" fill-rule="evenodd">
@@ -208,7 +208,7 @@
 
     <!-- Upload -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/upload.html">
+      <InstallLink link="/developer-docs/latest/plugins/upload.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22">
             <g fill="none" fill-rule="evenodd">
@@ -241,7 +241,7 @@
 
     <!-- Users & Permissions -->
     <div>
-      <InstallLink link="/developer-docs/latest/development/plugins/users-permissions.html">
+      <InstallLink link="/developer-docs/latest/plugins/users-permissions.html">
         <template #icon>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24">
             <text

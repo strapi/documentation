@@ -1,6 +1,7 @@
 ---
-title: SQLite - Strapi Developer Documentation
+title: SQLite - Strapi Developer Docs
 description: Learn how you can use SQLite for your Strapi application.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html
 ---
 
 # SQLite Installation
@@ -15,7 +16,7 @@ Simply use one of the following commands.
 
 <code-block title="NPM">
 ```sh
-npx create-strapi-app my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
 ```
 </code-block>
 
@@ -35,7 +36,7 @@ The [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) i
 
 ## Other SQL Databases (PostgreSQL, MySQL)
 
-Refer to the [configuration section](/developer-docs/latest/setup-deployment-guides/configurations.md#database) for all supported options to setup Strapi with your SQL database.
+Refer to the [configuration section](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md) for all supported options to setup Strapi with your SQL database.
 
 ::: tip
 Most cloud service providers offer a managed SQL database service, which is a hassle-free way to get your database up and running. To get up and running locally, you might want to try using a Docker container.

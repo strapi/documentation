@@ -1,9 +1,12 @@
 ---
-title: Render One-Click - Strapi Developer Documentation
+title: Render One-Click - Strapi Developer Docs
 description: Quickly deploy a Strapi application on Render by simply using their One-click button.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/render.html
 ---
 
 # Render One-Click
+
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
 
 The following documentation will guide you through the one-click creation of a new Strapi project hosted on [Render](https://render.com).
 
@@ -33,7 +36,7 @@ When using Cloudinary, you will be prompted to enter your account credentials as
 
 ## Running Strapi
 
-Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. <!-- Need more info here --> However, to add or edit content-types via the admin panel (see [Content-Types Builder](https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html) documentation), Strapi must be running locally in development mode.
+Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. <!-- Need more info here --> However, to add or edit content-types via the admin panel (see [Content-Type Builder](https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html) documentation), Strapi must be running locally in development mode.
 
 To run Strapi locally:
 

@@ -1,9 +1,12 @@
 ---
-title: Count with GraphQL - Strapi Developer Documentation
+title: Count with GraphQL - Strapi Developer Docs
 description: Learn in this guide how to count data with a GraphQL query.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/count-graphql.html
 ---
 
 # Count with GraphQL
+
+!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
 This guide explains how to count data with a GraphQL query.
 
@@ -11,7 +14,7 @@ The count aggregation currently has some issues and this feature is also not ava
 
 With this guide we will code our own count query.
 
-Here is the [GraphQL documentation](/developer-docs/latest/development/plugins/graphql.md#customize-the-graphql-schema) which we will use to achieve our goal.
+Here is the [GraphQL documentation](/developer-docs/latest/plugins/graphql.md#customization) which we will use to achieve our goal.
 
 ## Setup the application
 
@@ -36,7 +39,7 @@ module.exports = {
 
 ## Create count query
 
-The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization.md#core-services) service function of the **Restaurant** API.
+The `count` query will call the [`count`](/developer-docs/latest/development/backend-customization/services.md#core-services) service function of the **Restaurant** API.
 
 It needs a JSON object as params, so we will add a `where` options in the GraphQL query.
 

@@ -1,11 +1,14 @@
 ---
-title: Get started with Ruby - Strapi Developer Documentation
+title: Get started with Ruby - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Ruby.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/ruby.html
 ---
 
 # Getting Started with Ruby
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Ruby](https://www.ruby-lang.org/en/) remains the same except that you will not fetch the same content.
 
@@ -46,7 +49,7 @@ Be sure that you activated the `find` permission for the `restaurant` Collection
 ::: request Example GET request
 
 ```ruby
-HTTParty.get('http://localhost:1337/restaurants',
+HTTParty.get('http://localhost:1337/api/restaurants',
   header: {
     'Content-Type' => 'application/json'
   })
@@ -126,7 +129,7 @@ In this example a `japanese` category has been created which has the id: 3.
 ::: request Example POST request
 
 ```ruby
-HTTParty.post("http://localhost:1337/restaurants",
+HTTParty.post("http://localhost:1337/api/restaurants",
   body: {
     name: 'Dolemon Sushi',
     description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
@@ -215,7 +218,7 @@ Be sure that you activated the `put` permission for the `restaurant` Collection 
 ::: request Example PUT request
 
 ```ruby
-HTTParty.put("http://localhost:1337/restaurants/2",
+HTTParty.put("http://localhost:1337/api/restaurants/2",
   body: {
     categories: [2]
   },

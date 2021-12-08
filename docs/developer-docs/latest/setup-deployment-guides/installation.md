@@ -1,6 +1,7 @@
 ---
-title: Installation - Strapi Developer Documentation
+title: Installation - Strapi Developer Docs
 description: Learn many different options to install Strapi and getting started on using it.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation.html
 ---
 
 # Installation
@@ -45,9 +46,7 @@ Strapi projects and applications can be installed either locally on a computer, 
 
 ## One-click installations
 
-::: caution
-One-click installation guides stop being updated by the Strapi documentation team starting at the release of Strapi v4. Community contributions to keep these guides updates are very welcome.
-:::
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/one-click-install-not-updated.md)!!!
 
 <div>
 	<InstallLink link="installation/digitalocean-one-click.html">

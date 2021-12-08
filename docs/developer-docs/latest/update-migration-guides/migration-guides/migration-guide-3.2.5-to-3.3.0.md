@@ -1,6 +1,7 @@
 ---
-title: Migrate from 3.2.5 to 3.3.0 - Strapi Developer Documentation
+title: Migrate from 3.2.5 to 3.3.0 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from 3.2.5 to 3.3.0.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.5-to-3.3.0.html
 ---
 
 # Migration guide from 3.2.5 to 3.3.0
@@ -62,7 +63,5 @@ _After_
 ```js
 strapi.notification.toggle(config);
 ```
-
-Here is a link to the [new notification API](/developer-docs/latest/development/local-plugins-customization.md#front-end-development).
 
 That's it, now you can follow the basic [version update guide](/developer-docs/latest/update-migration-guides/update-version.md).

@@ -1,11 +1,14 @@
 ---
-title: Get started with Nuxt.js - Strapi Developer Documentation
+title: Get started with Nuxt.js - Strapi Developer Docs
 description: Build powerful applications using Strapi, the leading open-source headless cms and Nuxt.js.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html
 ---
 
 # Getting Started with Nuxt.js
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Nuxt.js](https://nuxtjs.org/) remains the same except that you will not fetch the same content.
 
@@ -99,7 +102,7 @@ try {
 ```js
 import axios from 'axios';
 
-axios.get('http://localhost:1337/restaurants').then(response => {
+axios.get('http://localhost:1337/api/restaurants').then(response => {
   console.log(response);
 });
 ```
@@ -111,7 +114,7 @@ axios.get('http://localhost:1337/restaurants').then(response => {
 
 ::: request Example GET request with fetch
 ```js
-fetch('http://localhost:1337/restaurants', {
+fetch('http://localhost:1337/api/restaurants', {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -237,7 +240,7 @@ export default {
   },
   async mounted () {
     try {
-      const response = await axios.get('http://localhost:1337/restaurants')
+      const response = await axios.get('http://localhost:1337/api/restaurants')
       this.restaurants = response.data
     } catch (error) {
       this.error = error;
@@ -293,7 +296,7 @@ export default {
   },
   async mounted () {
     try {
-      const response = await fetch("http://localhost:1337/restaurants", {
+      const response = await fetch("http://localhost:1337/api/restaurants", {
         method: 'GET',
         headers: this.headers,
       }).then(this.checkStatus)
@@ -346,7 +349,7 @@ try {
 import axios from 'axios';
 
 axios
-  .post('http://localhost:1337/restaurants', {
+  .post('http://localhost:1337/api/restaurants', {
     name: 'Dolemon Sushi',
     description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
     categories: [3],
@@ -362,7 +365,7 @@ axios
 :::: tab fetch
 ::: request Example POST request with fetch
 ```js
-fetch('http://localhost:1337/restaurants', {
+fetch('http://localhost:1337/api/restaurants', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -548,7 +551,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await axios.get('http://localhost:1337/categories')
+      const response = await axios.get('http://localhost:1337/api/categories')
       this.allCategories = response.data;
     } catch (error) {
       this.error = error;
@@ -559,7 +562,7 @@ export default {
       e.preventDefault();
 
       try {
-        const response = await axios.post('http://localhost:1337/restaurants', this.modifiedData)
+        const response = await axios.post('http://localhost:1337/api/restaurants', this.modifiedData)
         console.log(response);
       } catch(error) {
         this.error = error;
@@ -632,7 +635,7 @@ export default {
   },
   async mounted() {
     try {
-      const allCategories = await fetch("http://localhost:1337/categories", {
+      const allCategories = await fetch("http://localhost:1337/api/categories", {
           method: 'GET',
           headers: this.headers,
         }).then(this.checkStatus)
@@ -658,7 +661,7 @@ export default {
       e.preventDefault();
 
       try {
-        const response = await fetch('http://localhost:1337/restaurants', {
+        const response = await fetch('http://localhost:1337/api/restaurants', {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify(this.modifiedData)
@@ -711,7 +714,7 @@ try {
 import axios from 'axios';
 
 axios
-  .put('http://localhost:1337/restaurants/2', {
+  .put('http://localhost:1337/api/restaurants/2', {
     categories: [2],
   })
   .then(response => {
@@ -725,7 +728,7 @@ axios
 :::: tab fetch
 ::: request Example PUT request with fetch
 ```js
-fetch('http://localhost:1337/restaurants/2', {
+fetch('http://localhost:1337/api/restaurants/2', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -777,4 +780,4 @@ fetch('http://localhost:1337/restaurants/2', {
 
 Here is how to request your Collection Types in Strapi using Nuxt.js. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/content-api/content-api.md#get-an-entry), [get how much entry you have](/developer-docs/latest/developer-resources/content-api/content-api.md#count-entries) and [delete](/developer-docs/latest/developer-resources/content-api/content-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/content-api/content-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry),  and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
