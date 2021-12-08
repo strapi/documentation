@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vuepress dev",
+    "dev": "yarn create:config-file && vuepress dev",
     "build": "vuepress build",
     "check-links": "vuepress check-md",
     "create:config-file": "node ./scripts/create-config-file.js"
