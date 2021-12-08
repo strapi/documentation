@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vuepress dev",
     "build": "vuepress build",
-    "check-links": "vuepress check-md"
+    "check-links": "vuepress check-md",
+    "create:config-file": "node ./scripts/create-config-file.js"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {

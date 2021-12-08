@@ -1,4 +1,10 @@
+'use strict';
 
+const path = require('path');
+const fs = require('fs-extra');
+
+const createConfigFile = async () => {
+  const content = `
   const sidebar = {
     developer: [
       {
@@ -594,7 +600,7 @@
         type: 'strapi',
         defaultTitle: '',
         before: info =>
-          `<div class="custom-block strapi"><p class="custom-block-title">🤓 ${info}</p>`,
+          \`<div class="custom-block strapi"><p class="custom-block-title">🤓 \${info}</p>\`,
         after: '</div>',
       },
     ],
@@ -602,7 +608,7 @@
       'vuepress-plugin-container',
       {
         type: 'tip',
-        before: info => `<div class="custom-block tip"><p class="custom-block-title">💡 ${info}</p>`,
+        before: info => \`<div class="custom-block tip"><p class="custom-block-title">💡 \${info}</p>\`,
         after: '</div>',
       },
     ],
@@ -610,7 +616,7 @@
       'vuepress-plugin-container',
       {
         type: 'note',
-        before: info => `<div class="custom-block note"><p class="custom-block-title">✏️ ${info}</p>`,
+        before: info => \`<div class="custom-block note"><p class="custom-block-title">✏️ \${info}</p>\`,
         after: '</div>',
       },
     ],
@@ -619,7 +625,7 @@
       {
         type: 'caution',
         before: info =>
-          `<div class="custom-block caution"><p class="custom-block-title">✋ ${info}</p>`,
+          \`<div class="custom-block caution"><p class="custom-block-title">✋ \${info}</p>\`,
         after: '</div>',
       },
     ],
@@ -628,7 +634,7 @@
       {
         type: 'warning',
         before: info =>
-          `<div class="custom-block warning"><p class="custom-block-title">️❗️ ${info}</p>`,
+          \`<div class="custom-block warning"><p class="custom-block-title">️❗️ \${info}</p>\`,
         after: '</div>',
       },
     ],
@@ -764,7 +770,7 @@
       [
         'script',
         {},
-        `(function(w, d, s, l, i) {
+        \`(function(w, d, s, l, i) {
     w[l] = w[l] || [];
     w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
     var f = d.getElementsByTagName(s)[0],
@@ -774,7 +780,7 @@
     j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
     f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-KN9JRWG');
-  `,
+  \`,
       ],
     ],
     themeConfig: {
@@ -935,4 +941,11 @@
       },
     },
   };
-  
+  `;
+
+  const destination = path.resolve(__dirname, '..', '.vuepress', 'config.js');
+
+  await fs.writeFile(destination, content);
+};
+
+createConfigFile();
