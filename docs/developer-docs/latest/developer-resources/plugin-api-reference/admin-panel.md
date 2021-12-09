@@ -386,6 +386,7 @@ The Fields API allows a plugin to replace a component within a field type by ano
 
 ```jsx
 // path: my-plugin/admin/src/index.js
+
 // Overrides every field of wysiwyg type with MyCustomWysiwyg component
 import MyCustomWysiwyg from './components/MyCustomWysiwyg';
 
