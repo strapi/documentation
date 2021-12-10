@@ -131,6 +131,23 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 | `headers`       | Configure the `Access-Control-Allow-Headers` CORS header<br/><br/>If not specified, defaults to reflecting the headers specified in the request's `Access-Control-Request-Headers` header | `Array` or `String`       | `['Content-Type', 'Authorization', 'Origin', 'Accept']`                                                                    |
 | `keepHeaderOnError`      | Add set headers to `err.header` if an error is thrown     | `Boolean`                                                                            | `false`                                                                          |                                                                 |
 
+Example:
+
+```js
+// path: ./config/middlewares.js
+
+module.exports = [
+  ...,
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: '*',
+      headers: '*'
+    }
+  }
+];
+```
+
 ### `errors`
 
 The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error not supposed to be exposed to the end-user will result in a 500 HTTP response.
