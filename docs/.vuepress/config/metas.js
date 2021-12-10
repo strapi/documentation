@@ -53,7 +53,6 @@ const metas = {
         content: 'strapi',
       },
     ],
-
     [
       'meta',
       {
