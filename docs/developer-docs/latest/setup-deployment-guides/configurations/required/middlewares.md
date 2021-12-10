@@ -61,8 +61,6 @@ If you aren't sure where to place a middleware in the stack, add it to the end o
 
 Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
 
-<!-- ? is it `app::` or `global::` for 'global' (i.e. application-level) middlewares? Or are these 2 different things? Wondering because I can find `app::` in [this part of the RFC](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#loading-middlwares) and `global::` in [this other part](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#implementation) 🤔 -->
-
 | Middleware type | Origin                                                                       | Naming convention                                                                                       |
 | --------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Internal        | Built-in middlewares (i.e. included with Strapi), automatically loaded       | `strapi::middleware-name`                                                                                |
@@ -79,6 +77,31 @@ Middlewares can have an optional configuration with the following parameters:
 | --------- | ----------------------------------------------------------------- | ------- |
 | `config`  | Used to define or override the middleware configuration           | Object  |
 | `resolve` | Path to the middleware's folder (useful for external middlewares) | String  |
+
+<br/>
+
+```js
+// path: ./config/middlewares.js
+
+module.exports = [
+  // ... other internal middlewares go here
+  {
+    // adding a configuration to an internal middleware
+    name: 'strapi::cors', // notice that the name is prefixed with strapi::
+    config: {
+      origin: 'some-url.com'
+    },
+  },
+  {
+    // adding a configuration to a custom middleware 
+    resolve: 'my-custom-node-module',
+    config: {
+      foo: 'bar',
+    },
+  },
+  // ... other custom middlewares go here
+];
+```
 
 ## Internal middlewares configuration reference
 
