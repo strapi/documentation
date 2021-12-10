@@ -684,8 +684,9 @@ module.exports = {
     docsDir: 'docs',
     docsBranch: 'main',
     algolia: {
-      apiKey: 'a93451de224096fb34471c8b8b049de7',
-      indexName: 'strapi',
+      appId: '9FTY6J9E4X',
+      apiKey: 'cf49c82a1865df2618a3d89e18657051',
+      indexName: 'docs-v3',
     },
     editLinks: true,
     editLinkText: 'Improve this page',
