@@ -122,7 +122,7 @@ input DocumentFiltersInput {
   or: [DocumentFiltersInput]
   not: DocumentFiltersInput
 }
-​
+
 input DocumentInput {
   name: String
   description: String
@@ -131,7 +131,7 @@ input DocumentInput {
   updatedAt: DateTime
   publishedAt: DateTime
 }
-​
+
 type Document {
   name: String
   description: String
@@ -140,21 +140,21 @@ type Document {
   updatedAt: DateTime
   publishedAt: DateTime
 }
-​
+
 type DocumentEntity {
   id: ID
   attributes: Document
 }
-​
+
 type DocumentEntityResponse {
   data: DocumentEntity
 }
-​
+
 type DocumentEntityResponseCollection {
   data: [DocumentEntity!]!
   meta: ResponseCollectionMeta!
 }
-​
+
 type DocumentRelationResponseCollection {
   data: [DocumentEntity!]!
 }
@@ -192,23 +192,23 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 ```js
 // path: ./src/index.js
-​
+
 module.exports = {
-/**
- * An asynchronous register function that runs before
- * your application is initialized.
- *
- * This gives you an opportunity to extend code.
- */
-  register({ strapi }) => {
+  /**
+   * An asynchronous register function that runs before
+   * your application is initialized.
+   *
+   * This gives you an opportunity to extend code.
+   */
+  register({ strapi }) {
     const extensionService = strapi.plugin('graphql').service('extension');
-  ​
+    
     extensionService.shadowCRUD('api::restaurant.restaurant').disable();
     extensionService.shadowCRUD('api::category.category').disableQueries();
     extensionService.shadowCRUD('api::address.address').disableMutations();
     extensionService.shadowCRUD('api::document.document').field('locked').disable();
     extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
-  ​
+    
     const extension = ({ nexus }) => ({
       // Nexus
       types: [
@@ -222,13 +222,11 @@ module.exports = {
       plugins: [
         nexus.plugin({
           name: 'MyPlugin',
-  ​
           onAfterBuild(schema) {
             console.log(schema);
           },
         }),
       ],
-  ​
       // GraphQL SDL
       typeDefs: `
           type Article {
@@ -244,14 +242,12 @@ module.exports = {
           },
         },
       },
-  ​
       resolversConfig: {
         'Query.address': {
           auth: false,
         },
       },
     });
-  ​
     extensionService.use(extension);
   },
 };

@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 !!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [React](https://reactjs.org/) remains the same except that you will not fetch the same content.
 
@@ -69,7 +69,7 @@ Be sure that you activated the `find` permission for the `restaurant` Collection
 ```js
 import axios from 'axios';
 
-axios.get('http://localhost:1337/restaurants').then(response => {
+axios.get('http://localhost:1337/api/restaurants').then(response => {
   console.log(response);
 });
 ```
@@ -81,7 +81,7 @@ axios.get('http://localhost:1337/restaurants').then(response => {
 
 ::: request Example GET request with fetch
 ```js
-fetch('http://localhost:1337/restaurants', {
+fetch('http://localhost:1337/api/restaurants', {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ class App extends React.Component {
   // Fetch your restaurants immediately after the component is mounted
   componentDidMount = async () => {
     try {
-      const response = await axios.get('http://localhost:1337/restaurants');
+      const response = await axios.get('http://localhost:1337/api/restaurants');
       this.setState({ restaurants: response.data });
     } catch (error) {
       this.setState({ error });
@@ -219,7 +219,7 @@ class App extends React.Component {
     };
 
     try {
-      const restaurants = await fetch('http://localhost:1337/restaurants', {
+      const restaurants = await fetch('http://localhost:1337/api/restaurants', {
         method: 'GET',
         headers: headers,
       })
@@ -275,7 +275,7 @@ In this example a `japanese` category has been created which has the id: 3.
 import axios from 'axios';
 
 axios
-  .post('http://localhost:1337/restaurants', {
+  .post('http://localhost:1337/api/restaurants', {
     name: 'Dolemon Sushi',
     description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
     categories: [3],
@@ -292,7 +292,7 @@ axios
 
 ::: request Example POST request with fetch
 ```js
-fetch('http://localhost:1337/restaurants', {
+fetch('http://localhost:1337/api/restaurants', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -366,7 +366,7 @@ class App extends React.Component {
   // Fetch your categories immediately after the component is mounted
   componentDidMount = async () => {
     try {
-      const response = await axios.get('http://localhost:1337/categories');
+      const response = await axios.get('http://localhost:1337/api/categories');
       this.setState({ allCategories: response.data });
     } catch (error) {
       this.setState({ error });
@@ -388,7 +388,7 @@ class App extends React.Component {
 
     try {
       const response = await axios.post(
-        'http://localhost:1337/restaurants',
+        'http://localhost:1337/api/restaurants',
         this.state.modifiedData
       );
       console.log(response);
@@ -519,7 +519,7 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     try {
-      const allCategories = await fetch('http://localhost:1337/categories', {
+      const allCategories = await fetch('http://localhost:1337/api/categories', {
         method: 'GET',
         headers: headers,
       })
@@ -545,7 +545,7 @@ class App extends React.Component {
     e.preventDefault();
 
     try {
-      await fetch('http://localhost:1337/restaurants', {
+      await fetch('http://localhost:1337/api/restaurants', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(this.state.modifiedData),
@@ -660,7 +660,7 @@ We consider that the id of your restaurant is `2`, and the id of your category i
 import axios from 'axios';
 
 axios
-  .put('http://localhost:1337/restaurants/2', {
+  .put('http://localhost:1337/api/restaurants/2', {
     categories: [2],
   })
   .then(response => {
@@ -675,7 +675,7 @@ axios
 
 ::: request Example PUT request with fetch
 ```js
-fetch('http://localhost:1337/restaurants/2', {
+fetch('http://localhost:1337/api/restaurants/2', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
