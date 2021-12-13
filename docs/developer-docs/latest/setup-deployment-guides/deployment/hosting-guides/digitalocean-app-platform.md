@@ -33,6 +33,54 @@ const parse = require('pg-connection-string').parse;
 const config = parse(process.env.DATABASE_URL);
 
 module.exports = () => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      ...config,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
+  },
+});
+
+```
+
+As the connection object and the `config` returned by parsing the database URL have the same structure, we can use [spread syntax](http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) to copy it.
+
+Alternatively, you can add the values manually:
+
+```javascript
+const parse = require('pg-connection-string').parse;
+const config = parse(process.env.DATABASE_URL);
+
+module.exports = () => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: config.host,
+      port: config.port,
+      database: config.database,
+      user: config.user,
+      password: config.password,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
+  },
+});
+
+```
+
+::: tip
+The configuration above works with Strapi v4. For v3 use the config below.
+:::
+
+```javascript
+const parse = require('pg-connection-string').parse;
+const config = parse(process.env.DATABASE_URL);
+
+module.exports = () => ({
   defaultConnection: 'default',
   connections: {
     default: {
@@ -53,6 +101,7 @@ module.exports = () => ({
   },
 });
 ```
+
 
 Your application is now ready to deploy to DigitalOcean App Platform.
 
