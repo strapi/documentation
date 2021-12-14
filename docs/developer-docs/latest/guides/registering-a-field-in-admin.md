@@ -6,8 +6,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-
 
 # Creating a new Field in the administration panel
 
-!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
-
 In this guide we will see how you can create a new Field for your administration panel.
 
 ## Introduction
@@ -50,7 +48,9 @@ npx create-strapi-app@latest my-app --quickstart --no-run
 
 ```
 cd my-app
-yarn strapi generate:plugin wysiwyg
+yarn strapi generate
+choose plugin
+enter plugin name - wysiwyg
 ```
 
 :::
@@ -59,7 +59,9 @@ yarn strapi generate:plugin wysiwyg
 
 ```
 cd my-app
-npm run strapi generate:plugin wysiwyg
+npm run strapi generate
+choose plugin
+enter plugin name - wysiwyg
 ```
 
 :::
@@ -67,6 +69,7 @@ npm run strapi generate:plugin wysiwyg
 ::: tab strapi
 
 ```
+DOESNT WORK TO DO
 cd my-app
 strapi generate:plugin wysiwyg
 ```
@@ -82,7 +85,7 @@ strapi generate:plugin wysiwyg
 ::: tab yarn
 
 ```
-cd plugins/wysiwyg
+cd src/plugins/wysiwyg
 yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 ```
 
@@ -91,7 +94,7 @@ yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 ::: tab npm
 
 ```
-cd plugins/wysiwyg
+cd src/plugins/wysiwyg
 npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 ```
 
@@ -99,7 +102,22 @@ npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 
 ::::
 
-4. Start your application with the front-end development mode:
+4. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
+
+```js
+// path: /my-app/config/plugins.js
+
+module.exports = {
+  // ...
+  'my-plugin': {
+    enabled: true,
+    resolve: './src/plugins/wysiwyg' // path to plugin folder
+  },
+  // ...
+}
+```
+
+5. Start your application with the front-end development mode:
 
 :::: tabs card
 
@@ -107,7 +125,7 @@ npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 
 ```
 # Go back to to strapi root folder
-cd ../..
+cd ../../..
 yarn develop --watch-admin
 ```
 
@@ -117,7 +135,7 @@ yarn develop --watch-admin
 
 ```
 # Go back to to strapi root folder
-cd ../..
+cd ../../..
 npm run develop -- --watch-admin
 ```
 
@@ -127,7 +145,7 @@ npm run develop -- --watch-admin
 
 ```
 # Go back to to strapi root folder
-cd ../..
+cd ../../..
 strapi develop --watch-admin
 ```
 
@@ -150,59 +168,31 @@ In this part we will create three components:
 **Path —** `./plugins/wysiwyg/admin/src/components/MediaLib/index.js`
 
 ```js
-import React, { useEffect, useState } from 'react';
-import { useStrapi, prefixFileUrlWithBackendUrl } from 'strapi-helper-plugin';
+import React from 'react';
+import { prefixFileUrlWithBackendUrl, useLibrary } from '@strapi/helper-plugin';
 import PropTypes from 'prop-types';
 
 const MediaLib = ({ isOpen, onChange, onToggle }) => {
-  const {
-    strapi: {
-      componentApi: { getComponent },
-    },
-  } = useStrapi();
-  const [data, setData] = useState(null);
-  const [isDisplayed, setIsDisplayed] = useState(false);
+  const { components } = useLibrary();
+  const MediaLibraryDialog = components['media-library'];
 
-  useEffect(() => {
-    if (isOpen) {
-      setIsDisplayed(true);
-    }
-  }, [isOpen]);
+  const handleSelectAssets = files => {
+    const formattedFiles = files.map(f => ({
+      alt: f.alternativeText || f.name,
+      url: prefixFileUrlWithBackendUrl(f.url),
+      mime: f.mime,
+    }));
 
-  const Component = getComponent('media-library').Component;
-
-  const handleInputChange = data => {
-    if (data) {
-      const { url } = data;
-
-      setData({ ...data, url: prefixFileUrlWithBackendUrl(url) });
-    }
+    onChange(formattedFiles);
   };
 
-  const handleClosed = () => {
-    if (data) {
-      onChange(data);
-    }
-
-    setData(null);
-    setIsDisplayed(false);
+  if(!isOpen) {
+    return null
   };
 
-  if (Component && isDisplayed) {
-    return (
-      <Component
-        allowedTypes={['images', 'videos', 'files']}
-        isOpen={isOpen}
-        multiple={false}
-        noNavigation
-        onClosed={handleClosed}
-        onInputMediaChange={handleInputChange}
-        onToggle={onToggle}
-      />
-    );
-  }
-
-  return null;
+  return(
+    <MediaLibraryDialog onClose={onToggle} onSelectAssets={handleSelectAssets} />
+  );
 };
 
 MediaLib.defaultProps = {
@@ -330,15 +320,16 @@ export default Wysiwyg;
 ```js
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import styled from 'styled-components';
+import { Box } from '@strapi/design-system/Box';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   .ck-editor__main {
-    min-height: 200px;
+    min-height: ${200 / 16}em;
     > div {
-      min-height: 200px;
+      min-height: ${200 / 16}em;
     }
   }
 `;
@@ -364,14 +355,15 @@ const configuration = {
   ],
 };
 
-const Editor = ({ onChange, name, value }) => {
+const Editor = ({ onChange, name, value, disabled }) => {
   return (
     <Wrapper>
       <CKEditor
         editor={ClassicEditor}
+        disabled={disabled}
         config={configuration}
-        data={value}
-        onReady={editor => editor.setData(value)}
+        data={value || ''}
+        onReady={editor => editor.setData(value || '')}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange({ target: { name, value: data } });
@@ -381,10 +373,16 @@ const Editor = ({ onChange, name, value }) => {
   );
 };
 
+Editor.defaultProps = {
+  value: '',
+  disabled: false
+};
+
 Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 export default Editor;
