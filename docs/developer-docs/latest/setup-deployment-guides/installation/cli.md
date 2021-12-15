@@ -21,8 +21,8 @@ A database is also required for any Strapi project. Strapi currently supports th
 | ---------- | --------------- |
 | SQLite     | 3               |
 | PostgreSQL | 10              |
-| MySQL      | 5.6             |
-| MariaDB    | 10.1            |
+| MySQL      | 5.7.8           |
+| MariaDB    | 10.2.7          |
 
 ## Creating a Strapi project
 
