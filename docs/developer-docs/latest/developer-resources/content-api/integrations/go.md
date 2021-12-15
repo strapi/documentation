@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 !!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start guide, the way you request a Strapi API with [GO](https://golang.org/) remains the same except that you will not fetch the same content.
 
@@ -35,7 +35,7 @@ Be sure that you activated the `find` permission for the `restaurant` Collection
 ::: request Example GET request
 
 ```go
-response, error := http.Get("http://localhost:1337/restaurants")
+response, error := http.Get("http://localhost:1337/api/restaurants")
 ```
 :::
 
@@ -87,7 +87,7 @@ func main() {
 
 func getD() {
 	fmt.Println("Getting data...")
-	res, error := http.Get("http://localhost:1337/restaurants")
+	res, error := http.Get("http://localhost:1337/api/restaurants")
 	if error != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", error)
 	} else {
@@ -111,7 +111,7 @@ postRest, _ := json.Marshal(map[string]string{
   "description": "This is a very nice place to eat native soup",
 })
 responseBody := bytes.NewBuffer(postRest)
-resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
+resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
 ```
 :::
 
@@ -150,7 +150,7 @@ func main() {
 
 func getD() {
   fmt.Println("Getting data...")
-  resp, error := http.Get("http://localhost:1337/restaurants")
+  resp, error := http.Get("http://localhost:1337/api/restaurants")
   if error != nil {
     fmt.Printf("The HTTP request failed with error %s\n", error)
   } else {
@@ -167,7 +167,7 @@ func postD() {
     "description": "This is a very nice place to eat native soup",
   })
   responseBody := bytes.NewBuffer(postRest)
-  resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
+  resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
   //Handle Error
   if error != nil {
     log.Fatalf("An Error Occured %v", error)
@@ -188,7 +188,7 @@ func postD() {
 Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
 
 Be sure that you activated the `update` permission for the `restaurant` Collection Type.
-PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
+PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
 
 :::: api-call
 ::: request Example PUT request
@@ -198,7 +198,7 @@ putRest, _ := json.Marshal(map[string]string {
   "name": "Resturant Homes",    
 })
 client := &http.Client{}
-url := "http://localhost:1337/restaurants/1"
+url := "http://localhost:1337/api/restaurants/1"
 req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
 req.Header.Set("Content-Type", "application/json")
 ```
@@ -256,7 +256,7 @@ func main() {
 }
 func getD() {
 	fmt.Println("Getting data...")
-	resp, error := http.Get("http://localhost:1337/restaurants")
+	resp, error := http.Get("http://localhost:1337/api/restaurants")
 	if error != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", error)
 	} else {
@@ -274,7 +274,7 @@ func postD() {
 	})
 
 	responseBody := bytes.NewBuffer(postRest)
-	resp, error := http.Post("http://localhost:1337/restaurants", "application/json", responseBody)
+	resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
 	// Handle Error
 	if error != nil {
 		log.Fatalf("An Error Occured %v", error)
@@ -293,7 +293,7 @@ func putD() {
 		"name": "Resturant Homes",
 	})
 	client := &http.Client{}
-	url := "http://localhost:1337/restaurants/1"
+	url := "http://localhost:1337/api/restaurants/1"
 	req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
 	req.Header.Set("Content-Type", "application/json")
 	if error != nil {

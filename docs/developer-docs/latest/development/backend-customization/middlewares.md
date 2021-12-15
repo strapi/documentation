@@ -61,7 +61,7 @@ Middlewares are called different ways depending on their scope:
 
 - use `global::middleware-name` for application-level middlewares
 - use `api::api-name.middleware-name` for API-level middlewares
-- use `pluigin:plugin-name.middleware-name` for plugin middlewares
+- use `plugin::plugin-name.middleware-name` for plugin middlewares
 
 ::: tip
 To list all the registered middlewares, run `yarn strapi middlewares:list`.
