@@ -30,7 +30,7 @@ Content-types in Strapi can be created:
 The content-types has the following models files:
 
 - `schema.json` for the model's [schema](#model-schema) definition. (generated automatically, when creating content-type with either method)
-- `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks). (must be created manually)
+- `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks). This file must be created manually.
 
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
