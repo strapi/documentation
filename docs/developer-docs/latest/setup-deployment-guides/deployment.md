@@ -24,8 +24,8 @@ To provide the best possible environment for Strapi there are a few requirements
 - At least 2 GB of RAM (Moderately recommended 4)
 - Minimum required storage space recommended by your OS or 32 GB of **free** space
 - A supported database version
-  - MySQL >= 5.6
-  - MariaDB >= 10.1
+  - MySQL >= 5.7.8
+  - MariaDB >= 10.2.7
   - PostgreSQL >= 10
   - SQLite >= 3
 - A supported operating system
