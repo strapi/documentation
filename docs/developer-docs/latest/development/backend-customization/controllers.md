@@ -63,7 +63,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
     return this.transformResponse(sanitizedEntity);
   }
-});
+}));
 ```
 
 Each controller action can be an `async` or `sync` function.
