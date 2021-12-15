@@ -356,7 +356,7 @@ The use of `ngrok` is not needed.
   - **Client ID**: fill in the **App client id** (`5bd7a786qdupjmi0b3s10vegdt`)
   - **Client Secret**: fill in the **App client secret** (`19c5c78dsfsdfssfsdfhpdb4nkpb145vesdfdsfsffgh7vwd6g45jlipbpb`)
   - **Host URI (Subdomain)**: fill in the URL value that you copied earlier (`myapp67b50345-67b50b17-local.auth.eu-central-1.amazoncognito.com`)
-  - **The redirect URL to your front-end app**: if you are using strapi react-login [https://github.com/strapi/strapi-examples/tree/master/login-react/](https://github.com/strapi/strapi-examples/tree/master/login-react/) use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/auth/cognito/callback`
+  - **The redirect URL to your front-end app**: if you are using strapi react-login [https://github.com/strapi/strapi-examples/tree/master/login-react/](https://github.com/strapi/strapi-examples/tree/master/login-react/) use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/api/auth/cognito/callback`
 
 :::
 
@@ -747,7 +747,7 @@ import axios from 'axios';
 
 // Request API.
 axios
-  .post('http://localhost:1337/auth/forgot-password', {
+  .post('http://localhost:1337/api/auth/forgot-password', {
     email: 'user@strapi.io', // user's email
   })
   .then(response => {
@@ -770,7 +770,7 @@ import axios from 'axios';
 
 // Request API.
 axios
-  .post('http://localhost:1337/auth/reset-password', {
+  .post('http://localhost:1337/api/auth/reset-password', {
     code: 'privateCode', // code contained in the reset link of step 3.
     password: 'userNewPassword',
     passwordConfirmation: 'userNewPassword',
@@ -802,7 +802,7 @@ import axios from 'axios';
 
 // Request API.
 axios
-  .post(`http://localhost:1337/auth/send-email-confirmation`, {
+  .post(`http://localhost:1337/api/auth/send-email-confirmation`, {
     email: 'user@strapi.io', // user's email
   })
   .then(response => {
