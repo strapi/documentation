@@ -11,7 +11,7 @@ This is a step-by-step guide for deploying a Strapi project on [Heroku](https://
 ### Heroku Install Requirements
 
 - You must have [Git installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- You must have a [Github account](https://github.com/signup) if you are deploying with the web interface(Optional)
+- A [Github account](https://github.com/signup) if you are deploying with the web interface.
 - You must have a [free Heroku account](https://signup.heroku.com/) before doing these steps.
 
 
@@ -358,7 +358,7 @@ When you use `--quickstart` to create a Strapi project locally, a **SQLite datab
 
 #### 2. Create your Heroku database config file for production
 
-Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
+Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it is recommended you use PostgreSQL locally also, for information on configuring your local database, please have a look at [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
 
 `Path: ./config/env/production/database.js`
 
@@ -414,7 +414,7 @@ Add the following line at end of `.gitignore`:
 package-lock.json
 ```
 
-Even if it is usually recommended to version this file, it may create issues on Heroku.
+Even if it is usually recommended to version this file, it creates issues on Heroku.
 
 #### 4. Init a Git Repository, Commit and Push Your Project to Github
 
