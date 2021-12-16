@@ -80,6 +80,9 @@ The `settings` object found in `./config/database.js` is used to configure Strap
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
+    settings: {
+      client: 'postgres',
+    },
     connection: {
       host: env('DATABASE_HOST', '127.0.0.1'),
       port: env.int('DATABASE_PORT', 5432),
@@ -103,7 +106,9 @@ In order to fix it, you have to set the `ssl:{}` object as a boolean in order to
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    settings: {
+      client: "postgres",
+    },
     connection: {
       ...
       ssl: env('DATABASE_SSL', false)
@@ -121,7 +126,9 @@ const fs = require('fs');
 
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    settings: {
+      client: "postgres",
+    },
     connection: {
       ...
       ssl: {
@@ -139,7 +146,10 @@ module.exports = ({ env }) => ({
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: 'mysql',
+    connector: "bookshelf",
+    settings: {
+      client: 'mysql',
+    },
     connection: {
       host: env('DATABASE_HOST', '127.0.0.1'),
       port: env.int('DATABASE_PORT', 3306),
@@ -162,7 +172,9 @@ module.exports = ({ env }) => ({
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: 'sqlite',
+    settings: {
+      client: 'sqlite',
+    },
     connection: {
       filename: env('DATABASE_FILENAME', '.tmp/data.db'),
     },
