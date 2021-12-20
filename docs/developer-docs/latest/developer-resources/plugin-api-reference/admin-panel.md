@@ -631,7 +631,7 @@ export default {
 			    cellFormatter: props => <div>Object.keys(props).map(key => <p key={key}>key</p>)</div>,
 			  },
 			];
-    };
+    });
   },
 }
 ```

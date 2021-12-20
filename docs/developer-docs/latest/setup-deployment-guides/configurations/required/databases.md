@@ -38,7 +38,7 @@ The `connection.connection` object found in `./config/database.js` is used to pa
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
-| `username` | Username used to establish the connection                                                                                     | `String`              |
+| `user` | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
@@ -142,7 +142,7 @@ module.exports = ({ env }) => ({
     client: 'mysql',
     connection: {
       host: env('DATABASE_HOST', '127.0.0.1'),
-      port: env.int('DATABASE_PORT', 5432),
+      port: env.int('DATABASE_PORT', 3306),
       database: env('DATABASE_NAME', 'strapi'),
       user: env('DATABASE_USERNAME', 'strapi'),
       password: env('DATABASE_PASSWORD', 'strapi'),
