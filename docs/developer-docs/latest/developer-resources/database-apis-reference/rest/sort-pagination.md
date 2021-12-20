@@ -126,7 +126,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ### Pagination by page
 
-Use the following parameters:
+To paginate results by page, use the following parameters:
 
 | Parameter               | Type    | Description                                                               | Default |
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
@@ -178,11 +178,11 @@ await request(`/api/articles?${query}`);
 
 ### Pagination by offset
 
-Use the following parameters:
+To paginate results by offset, use the following parameters:
 
 | Parameter               | Type    | Description                                                    | Default |
 | ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (first entry to return) value                      | 0       |
+| `pagination[start]`     | Integer | Start value (i.e. first entry to return)                      | 0       |
 | `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
 | `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
 
