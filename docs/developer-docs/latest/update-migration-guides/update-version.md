@@ -32,13 +32,13 @@ For example upgrading from `4.0.0` to `4.0.1`:
 
 ```json
 {
-  //...
+  // ...
   "dependencies": {
     "@strapi/plugin-documentation": "4.0.0",
     "@strapi/plugin-i18n": "4.0.0",
     "@strapi/plugin-users-permissions": "4.0.0",
     "@strapi/strapi": "4.0.0"
-    //...
+    // ...
   }
 }
 ```
@@ -49,13 +49,13 @@ For example upgrading from `4.0.0` to `4.0.1`:
 
 ```json
 {
-  //...
+  // ...
   "dependencies": {
     "@strapi/plugin-documentation": "4.0.1",
     "@strapi/plugin-i18n": "4.0.1",
     "@strapi/plugin-users-permissions": "4.0.1",
     "@strapi/strapi": "4.0.1"
-    //...
+    // ...
   }
 }
 ```
