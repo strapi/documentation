@@ -66,7 +66,7 @@ Queries can accept a `populate` parameter to populate various field types:
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
 :::caution
-By default Strapi will not populate any type of fields
+By default Strapi will not populate any type of fields.
 :::
 
 :::caution
