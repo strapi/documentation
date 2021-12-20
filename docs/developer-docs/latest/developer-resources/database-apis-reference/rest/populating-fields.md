@@ -70,7 +70,7 @@ By default Strapi will not populate any type of fields.
 :::
 
 :::caution
-At this time there is no mechanism to return just an array of IDs. This is something that is currently under discussion.
+It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
 :::
 
 ### Relation & Media fields
