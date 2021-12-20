@@ -52,7 +52,7 @@ await request(`/api/users?${query}`);
 :::
 ::::
 
-:::note
+:::tip
 By default all normal fields are selected, but you can specify a wildcard `*` instead of an array.
 :::
 
