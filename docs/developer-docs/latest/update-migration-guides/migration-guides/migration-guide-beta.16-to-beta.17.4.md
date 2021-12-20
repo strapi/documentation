@@ -20,7 +20,7 @@ Your package.json should look like this:
 
 ```json
 {
-  //...
+  // ...
   "dependencies": {
     "strapi": "3.0.0-beta.17.4",
     "strapi-admin": "3.0.0-beta.17.4",
