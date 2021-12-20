@@ -10,8 +10,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) offers the ability to filter results found with its ["Get entries"](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-entries) method.<br/>
 Using optional Strapi features can provide some more filters:
 
-* If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
-* If the [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) is enabled, it's possible to filter based on a `live` or `draft` state.
+- If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
+- If the [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) is enabled, it's possible to filter based on a `live` or `draft` state.
 
 ## Filtering
 
@@ -43,8 +43,10 @@ The following operators are available:
 | `$or`           | Joins the filters in an "or" expression  |
 | `$and`          | Joins the filters in an "and" expression |
 
+### Find users having 'John' as first name
+
 ::::api-call
-:::request Example request: Find users having 'John' as first name
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -84,8 +86,10 @@ await request(`/api/users?${query}`);
 :::
 ::::
 
+### Find multiple restaurants with ids 3, 6, 8
+
 ::::api-call
-:::request Example request: Find multiple restaurants with ids 3, 6, 8
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -283,9 +287,10 @@ await request(`/api/restaurants?${query}`);
 :::
 
 :::note
-* Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these data structures (see [population documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population))
 
-* It is not possible to filter on dynamic zones or media fields.
+- Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these data structures (see [population documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population))
+- It is not possible to filter on dynamic zones or media fields
+
 :::
 
 ## Locale
@@ -325,7 +330,6 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
-
 :::response Example response
 
 ```json

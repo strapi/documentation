@@ -13,8 +13,10 @@ The [REST API](/developer-docs/latest/developer-resources/database-apis-referenc
 
 Queries can accept a `sort` parameter that allow sorting on one or multiple fields with the following syntax:
 
+### Sort using 2 fields
+
 ::::api-call
-:::request Example request: Populate with Filtering
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -61,12 +63,12 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+### Sort using 2 fields and set the order
+
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
 
-
-
 ::::api-call
-:::request Example request: Populate with Filtering
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -135,7 +137,6 @@ To paginate results by page, use the following parameters:
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 :::: api-call
-
 ::: request Example request: Select only 10 entries on page 1
 
 ```js
@@ -154,7 +155,6 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
-
 ::: response Example response
 
 ```json
@@ -191,7 +191,6 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 :::
 
 :::: api-call
-
 ::: request Example request
 
 ```js
@@ -210,7 +209,6 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
-
 ::: response Example response
 
 ```json

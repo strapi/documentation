@@ -230,26 +230,39 @@ const sidebar = {
         {
           title: 'APIs Reference',
           collapsable: true,
+          initialOpenGroupIndex: -1,
           sidebarDepth: 1,
           children: [
             {
               title: 'REST API',
               path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
               collapsable: true,
+              initialOpenGroupIndex: -1,
               // sidebarDepth: 3,
               children: [
+                {
+                  title: 'API Parameters',
+                  collapsable: true,
+                  initialOpenGroupIndex: -1,
+                  children: [
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
+                      'Filtering, Locale, and Publication State'
+                    ],
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
+                      'Population & Field Selection'
+                    ],
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
+                      'Sort & Pagination'
+                    ],
+                  ]
+                },
                 [
-                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
-                  'Filtering, Locale, and Publication State'
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
-                  'Population & Field Selection'
-                ],
-                [
-                  '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
-                  'Sort & Pagination'
-                ],
+                  '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
+                  'API Endpoints'
+                ]
               ],
             },
             [

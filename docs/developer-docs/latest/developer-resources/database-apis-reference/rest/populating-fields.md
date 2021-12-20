@@ -11,7 +11,14 @@ The [REST API](/developer-docs/latest/developer-resources/database-apis-referenc
 
 ## Field selection
 
-Queries can accept a `fields` parameter to select only some fields. By default Strapi will return all normal fields and field selection will not work on relational, media, component, or dynamic zone fields, to see how to properly populate these refer to the [population documentation](#population).
+Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/developer-docs/latest/development/backend-customization/models.md#model-attributes) are returned
+
+- String (string, text, richtext, enumeration, email, password, and uid)
+- Date (date, time, datetime, timestamp)
+- Number (integer, biginteger, float, decimal)
+- Generic (boolean, array, json)
+
+Field selection will not work on relational, media, component, or dynamic zone fields, to see how to properly populate these refer to the [population documentation](#population).
 
 ::::api-call
 :::request Example request: Select only title & body fields
@@ -53,24 +60,23 @@ await request(`/api/users?${query}`);
 ::::
 
 :::tip
-By default all normal fields are selected, but you can specify a wildcard `*` instead of an array.
+By default fields are selected except relations, media, dynamic zones, and components; but you can specify a wildcard `*` instead of an array.
 :::
 
 ## Population
 
 Queries can accept a `populate` parameter to populate various field types:
 
-- [Relations & Media Fields](#relation-media-fields)
-- [Components & Dynamic Zones](#component-dynamic-zones)
+- [Relations & media fields](#relation-media-fields)
+- [Components & dynamic zones](#component-dynamic-zones)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
 :::caution
-By default Strapi will not populate any type of fields.
-:::
 
-:::caution
-It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
+- By default Strapi will not populate any type of fields.
+- It's currently not possible to return just an array of IDs. This is something that is currently under discussion
+
 :::
 
 ### Relation & Media fields
@@ -78,11 +84,13 @@ It's currently not possible to return just an array of IDs. This is something th
 Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
 
 :::caution
-If the users-permissions plugin is installed, permissions must be enabled for the content-types that are being populated (role based). **If a role doesn't have access to a content-type it will not be populated.**
+If the users-permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. **If a role doesn't have access to a content-type it will not be populated.**
 :::
 
+#### Populate 1 level for all relations
+
 ::::api-call
-:::request Example request: Populate 1 level for all relations
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -141,8 +149,10 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+#### Populate 1 level: `categories`
+
 ::::api-call
-:::request Example request: Populate 1 level `categories`
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -191,8 +201,10 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+#### Populate 2 levels: `author` and `author.company`
+
 ::::api-call
-:::request Example request: Populate 2 levels `author` and `author.company`
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -256,8 +268,10 @@ await request(`/api/articles?${query}`);
 
 The `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
+#### Deeply populate a 2 level component & media
+
 ::::api-call
-:::request Example request: Deeply populate a 2 level component & media
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -321,8 +335,10 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+#### Deeply populate a dynamic zone with 2 components
+
 ::::api-call
-:::request Example request: Deeply populate a Dynamic Zone with 2 components
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -382,10 +398,12 @@ await request(`/api/articles?${query}`);
 
 ### Combining Population with other operators
 
-By utilizing the `population` operator you can combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) into your population queries. See the following complex population examples:
+By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+
+#### Populate with field selection
 
 ::::api-call
-:::request Example request: Populate with Field Selection
+:::request Example request
 
 ```js
 const qs = require('qs');
@@ -437,8 +455,10 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+#### Populate with filtering
+
 ::::api-call
-:::request Example request: Populate with Filtering
+:::request Example request
 
 ```js
 const qs = require('qs');
