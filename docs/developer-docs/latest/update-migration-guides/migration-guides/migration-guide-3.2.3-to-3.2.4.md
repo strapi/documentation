@@ -32,7 +32,7 @@ If you have extended the model in any way, you will need to add the new attribut
 ```json
 {
   "attributes": {
-    //...
+    // ...
   }
 }
 ```
@@ -42,7 +42,7 @@ If you have extended the model in any way, you will need to add the new attribut
 ```json
 {
   "attributes": {
-    //...
+    // ...
     "confirmationToken": {
       "type": "string",
       "configurable": false,

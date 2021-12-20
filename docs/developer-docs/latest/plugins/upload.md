@@ -20,7 +20,7 @@ You can pass configuration to the middleware directly by setting it in the `body
 // path: ./config/middlewares.js
 
 module.exports = {
-  //...
+  // ...
   {
     name: "strapi::body",
     config: {
@@ -32,7 +32,7 @@ module.exports = {
       },
     },
   },
-  //...
+  // ...
 };
 ```
 
@@ -162,7 +162,7 @@ The `Restaurant` model attributes:
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
 
 {
-  //..
+  // ...
   "attributes": {
     "name": {
       "type": "string"
@@ -172,7 +172,7 @@ The `Restaurant` model attributes:
       "multiple": false,
     }
   }
-//..
+// ...
 }
 ```
 
@@ -219,7 +219,7 @@ The `Restaurant` model attributes:
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
 
 {
-  //..
+  // ...
   "attributes": {
     "name": {
       "type": "string"
@@ -229,7 +229,7 @@ The `Restaurant` model attributes:
       "multiple": false,
     }
   }
-  //..
+  // ...
 }
 
 ```
@@ -303,7 +303,7 @@ In the first example below, you will be able to upload and attach one file to th
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
 
 {
-  //..
+  // ...
   {
     "attributes": {
       "pseudo": {
@@ -321,7 +321,7 @@ In the first example below, you will be able to upload and attach one file to th
       }
     }
   }
-  //..
+  // ...
 }
 
 ```
@@ -332,7 +332,7 @@ In our second example, you can upload and attach multiple pictures to the restau
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
 
 {
-  //..
+  // ...
   {
     "attributes": {
       "name": {
@@ -345,7 +345,7 @@ In our second example, you can upload and attach multiple pictures to the restau
       }
     }
   }
-  //..
+  // ...
 }
 ```
 

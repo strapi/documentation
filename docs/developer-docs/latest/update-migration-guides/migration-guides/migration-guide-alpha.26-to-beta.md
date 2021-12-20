@@ -53,7 +53,7 @@ You must upgrade the versions and add `strapi-admin` as a dependency.
 ```json
 {
   "dependencies": {
-    //...
+    // ...
     "strapi": "3.0.0-alpha.26.2",
     "strapi-hook-bookshelf": "3.0.0-alpha.26.2",
     "strapi-hook-knex": "3.0.0-alpha.26.2",
@@ -67,7 +67,7 @@ You must upgrade the versions and add `strapi-admin` as a dependency.
 ```json
 {
   "dependencies": {
-    //...
+    // ...
     "strapi": "3.0.0-beta.x",
     "strapi-admin": "3.0.0-beta.x",
     "strapi-hook-bookshelf": "3.0.0-beta.x",
@@ -84,7 +84,7 @@ Here are the default ones. If you have installed other plugins you will also nee
 ```json
 {
   "dependencies": {
-    //...
+    // ...
     "strapi-plugin-content-manager": "3.0.0-beta.x",
     "strapi-plugin-content-type-builder": "3.0.0-beta.x",
     "strapi-plugin-email": "3.0.0-beta.x",
@@ -107,7 +107,7 @@ We have completely refreshed the `scripts` of a project, so update them as follo
     "start": "node server.js",
     "strapi": "node_modules/strapi/bin/strapi.js",
     "postinstall": "node node_modules/strapi/lib/utils/post-install.js"
-    //...
+    // ...
   }
 }
 ```
@@ -121,7 +121,7 @@ We have completely refreshed the `scripts` of a project, so update them as follo
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"
-    //...
+    // ...
   }
 }
 ```
@@ -141,7 +141,7 @@ We removed the need for the `packageManager` key under `strapi`.
 ```json
 {
   "strapi": {
-    //...
+    // ...
     "packageManager": "yarn"
   }
 }
@@ -152,7 +152,7 @@ We removed the need for the `packageManager` key under `strapi`.
 ```json
 {
   "strapi": {
-    //...
+    // ...
   }
 }
 ```
@@ -331,7 +331,7 @@ All the unchanged routes must be removed from this file.
         }
       }
     }
-    //...
+    // ...
   ]
 }
 ```
@@ -370,14 +370,14 @@ module.exports = {
   customIndex: async ctx => {},
 
   find: async (ctx, next, { populate } = {}) => {
-    //...
+    // ...
   },
 
   me: async ctx => {
-    //...
+    // ...
   },
 
-  //...
+  // ...
 };
 ```
 
@@ -622,7 +622,7 @@ If you haven't customized the `destroy` action, then remove it from your control
 ```json
 {
   "routes": [
-    //...
+    // ...
     {
       "method": "DELETE",
       "path": "/products/:id",
@@ -672,7 +672,7 @@ module.exports = {
 ```json
 {
   "routes": [
-    //...
+    // ...
     {
       "method": "DELETE",
       "path": "/products/:id",
