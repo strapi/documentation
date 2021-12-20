@@ -254,7 +254,7 @@ await request(`/api/articles?${query}`);
 
 ### Component & Dynamic Zones
 
-Identical to relations, the `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate. See the following examples:
+The `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 ::::api-call
 :::request Example request: Deeply populate a 2 level component & media
