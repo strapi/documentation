@@ -12,159 +12,135 @@ In this guide we will see how you can create a new Field for your administration
 
 For this example, we will see how to change the WYSIWYG with [CKEditor](https://ckeditor.com/ckeditor-5/) in the **`Content Manager`** plugin by creating a new plugin which will add a new **Field** in your application.
 
-## Setup
+## Plugin setup
 
 1. Create a new project:
 
-:::: tabs card
+    :::: tabs card
 
-::: tab yarn
+    ::: tab yarn
 
-```
-# Create an application using SQLite and prevent the server from starting automatically as we will create a plugin
-# right after the project generation
-yarn create strapi-app my-app --quickstart --no-run
-```
+    Create an application using SQLite and prevent the server from starting automatically as we will create a plugin right after the project generation
 
-:::
+    ```
+    yarn create strapi-app my-app --quickstart --no-run
+    ```
 
-::: tab npx
+    :::
 
-```
-# Create an application using SQLite and prevent the server from starting automatically as we will create a plugin
-# right after the project generation
-npx create-strapi-app@latest my-app --quickstart --no-run
-```
+    ::: tab npx
 
-:::
+    Create an application using SQLite and prevent the server from starting automatically as we will create a plugin right after the project generation
 
-::::
+    ```
+    npx create-strapi-app@latest my-app --quickstart --no-run
+    ```
+
+    :::
+
+    ::::
 
 2. Generate a plugin:
 
-:::: tabs card
+    :::: tabs card
 
-::: tab yarn
+    ::: tab yarn
 
-```
-cd my-app
-yarn strapi generate
-choose plugin
-enter plugin name - wysiwyg
-```
+    ```
+    cd my-app
+    yarn strapi generate
+    ```
 
-:::
+    Choose "plugin" from the list, press Enter and name the plugin wysiwyg.
 
-::: tab npm
+    :::
 
-```
-cd my-app
-npm run strapi generate
-choose plugin
-enter plugin name - wysiwyg
-```
+    ::: tab npm
 
-:::
+    ```
+    cd my-app
+    npm run strapi generate
+    ```
+    Choose "plugin" from the list, press Enter and name the plugin wysiwyg.
 
-::: tab strapi
+    :::
 
-```
-DOESNT WORK TO DO
-cd my-app
-strapi generate:plugin wysiwyg
-```
+    ::::
 
-:::
+3. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
 
-::::
+    ```js
+    // path: /my-app/config/plugins.js
 
-3. Install the needed dependencies:
+    module.exports = {
+      // ...
+      'my-plugin': {
+        enabled: true,
+        resolve: './src/plugins/wysiwyg' // path to plugin folder
+      },
+      // ...
+    }
+    ```
 
-:::: tabs card
+4. Install the needed dependencies:
 
-::: tab yarn
+    :::: tabs card
 
-```
-cd src/plugins/wysiwyg
-yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
-```
+    ::: tab yarn
 
-:::
+    ```
+    cd src/plugins/wysiwyg
+    yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+    ```
 
-::: tab npm
+    :::
 
-```
-cd src/plugins/wysiwyg
-npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
-```
+    ::: tab npm
 
-:::
+    ```
+    cd src/plugins/wysiwyg
+    npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+    ```
 
-::::
+    :::
 
-4. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
+    ::::
 
-```js
-// path: /my-app/config/plugins.js
+5. Build then start your application with the front-end development mode:
 
-module.exports = {
-  // ...
-  'my-plugin': {
-    enabled: true,
-    resolve: './src/plugins/wysiwyg' // path to plugin folder
-  },
-  // ...
-}
-```
+    :::: tabs card
 
-5. Start your application with the front-end development mode:
+    ::: tab yarn
 
-:::: tabs card
+    ```
+    # Go back to to strapi root folder
+    cd ../../..
+    yarn build
+    yarn develop --watch-admin
+    ```
 
-::: tab yarn
+    :::
 
-```
-# Go back to to strapi root folder
-cd ../../..
-yarn develop --watch-admin
-```
+    ::: tab npm
 
-:::
+    ```
+    # Go back to to strapi root folder
+    cd ../../..
+    npm run build
+    npm run develop -- --watch-admin
+    ```
 
-::: tab npm
+    :::
 
-```
-# Go back to to strapi root folder
-cd ../../..
-npm run develop -- --watch-admin
-```
-
-:::
-
-::: tab strapi
-
-```
-# Go back to to strapi root folder
-cd ../../..
-strapi develop --watch-admin
-```
-
-:::
-
-::::
+    ::::
 
 Once this step is over all we need to do is to create our new WYSIWYG which will replace the default one in the **Content Manager** plugin.
 
-### Creating the WYSIWYG
+## Creating the WYSIWYG
 
 In this part we will create three components:
 
-- MediaLib which will be used to insert media in the editor
-- Wysiwyg which will wrap the CKEditor with a label and the errors
-- CKEditor which will be the implementation of the new WYSIWYG
-
-### Creating the MediaLib
-
+::: details Example of a MediaLib component which will be used to insert media in the editor:
 **Path —** `./plugins/wysiwyg/admin/src/components/MediaLib/index.js`
 
 ```js
@@ -209,111 +185,9 @@ MediaLib.propTypes = {
 
 export default MediaLib;
 ```
+:::
 
-#### Creating the WYSIWYG Wrapper
-
-**Path —** `./plugins/wysiwyg/admin/src/components/Wysiwyg/index.js`
-
-```js
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
-import { Button } from '@buffetjs/core';
-import { Label, InputDescription, InputErrors } from 'strapi-helper-plugin';
-import Editor from '../CKEditor';
-import MediaLib from '../MediaLib';
-
-const Wysiwyg = ({
-  inputDescription,
-  errors,
-  label,
-  name,
-  noErrorsDescription,
-  onChange,
-  value,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  let spacer = !isEmpty(inputDescription) ? <div style={{ height: '.4rem' }} /> : <div />;
-
-  if (!noErrorsDescription && !isEmpty(errors)) {
-    spacer = <div />;
-  }
-
-  const handleChange = data => {
-    if (data.mime.includes('image')) {
-      const imgTag = `<p><img src="${data.url}" caption="${data.caption}" alt="${data.alternativeText}"></img></p>`;
-      const newValue = value ? `${value}${imgTag}` : imgTag;
-
-      onChange({ target: { name, value: newValue } });
-    }
-
-    // Handle videos and other type of files by adding some code
-  };
-
-  const handleToggle = () => setIsOpen(prev => !prev);
-
-  return (
-    <div
-      style={{
-        marginBottom: '1.6rem',
-        fontSize: '1.3rem',
-        fontFamily: 'Lato',
-      }}
-    >
-      <Label htmlFor={name} message={label} style={{ marginBottom: 10 }} />
-      <div>
-        <Button color="primary" onClick={handleToggle}>
-          MediaLib
-        </Button>
-      </div>
-      <Editor name={name} onChange={onChange} value={value} />
-      <InputDescription
-        message={inputDescription}
-        style={!isEmpty(inputDescription) ? { marginTop: '1.4rem' } : {}}
-      />
-      <InputErrors errors={(!noErrorsDescription && errors) || []} name={name} />
-      {spacer}
-      <MediaLib onToggle={handleToggle} isOpen={isOpen} onChange={handleChange} />
-    </div>
-  );
-};
-
-Wysiwyg.defaultProps = {
-  errors: [],
-  inputDescription: null,
-  label: '',
-  noErrorsDescription: false,
-  value: '',
-};
-
-Wysiwyg.propTypes = {
-  errors: PropTypes.array,
-  inputDescription: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-    PropTypes.shape({
-      id: PropTypes.string,
-      params: PropTypes.object,
-    }),
-  ]),
-  label: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-    PropTypes.shape({
-      id: PropTypes.string,
-      params: PropTypes.object,
-    }),
-  ]),
-  name: PropTypes.string.isRequired,
-  noErrorsDescription: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
-};
-
-export default Wysiwyg;
-```
-
-#### Implementing CKEditor
+::: details Example of a CKEditor component which will be the implementation of the new WYSIWYG:
 
 **Path —** `./plugins/wysiwyg/admin/src/components/CKEditor/index.js`
 
@@ -388,80 +262,130 @@ Editor.propTypes = {
 export default Editor;
 ```
 
-At this point we have simply created a new plugin which is mounted in our project but our custom **Field** has not been registered yet.
+:::
 
-### Registering a our new Field
+::: details Example of a Wysiwyg component which will wrap the CKEditor with a label and the errors:
 
-Since the goal of our plugin is to override the current WYSIWYG we don't want it to be displayed in the administration panel but we need it to register our new **Field**.
-In order to do so, we will simply **modify** the front-end entry point of our plugin.
-
-This file is already present. Please replace the content of this file with the following:
-
-**Path —** `./plugins/wysiwyg/admin/src/index.js`
+**Path —** `./plugins/wysiwyg/admin/src/components/Wysiwyg/index.js`
 
 ```js
-import pluginPkg from '../../package.json';
-import Wysiwyg from './components/Wysiwyg';
-import pluginId from './pluginId';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Stack } from '@strapi/design-system/Stack';
+import { Box } from '@strapi/design-system/Box';
+import { Button } from '@strapi/design-system/Button';
+import { Typography } from '@strapi/design-system/Typography';
+import Landscape from '@strapi/icons/Landscape';
+import MediaLib from './MediaLib';
+import Editor from './Editor';
+import { useIntl } from 'react-intl';
 
-export default strapi => {
-  const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
+const Wysiwyg = ({ name, onChange, value, intlLabel, disabled, error, description, required }) => {
+  const { formatMessage } = useIntl();
+  const [mediaLibVisible, setMediaLibVisible] = useState(false);
 
-  const plugin = {
-    blockerComponent: null,
-    blockerComponentProps: {},
-    description: pluginDescription,
-    icon: pluginPkg.strapi.icon,
-    id: pluginId,
-    initializer: () => null,
-    injectedComponents: [],
-    isReady: true,
-    isRequired: pluginPkg.strapi.required || false,
-    mainComponent: null,
-    name: pluginPkg.strapi.name,
-    preventComponentRendering: false,
-    settings: null,
-    trads: {},
+  const handleToggleMediaLib = () => setMediaLibVisible(prev => !prev);
+
+  const handleChangeAssets = assets => {
+    let newValue = value ? value : '';
+
+    assets.map(asset => {
+      if (asset.mime.includes('image')) {
+        const imgTag = `<p><img src="${asset.url}" alt="${asset.alt}"></img></p>`;
+
+        newValue = `${newValue}${imgTag}`
+      }
+
+      // Handle videos and other type of files by adding some code
+    });
+
+    onChange({ target: { name, value: newValue } });
+    handleToggleMediaLib();
   };
+  
+  return (
+    <>
+      <Stack size={1}>
+        <Box>
+          <Typography variant="pi" fontWeight="bold">
+            {formatMessage({ id: intlLabel.id, defaultMessage: intlLabel.defaultMessage })}
+          </Typography>
+          {required && 
+            <Typography variant="pi" fontWeight="bold" textColor="danger600">*</Typography>
+          }
+        </Box>
+        <Button startIcon={<Landscape />} variant='secondary' fullWidth onClick={handleToggleMediaLib}>Media library</Button>
+        <Editor 
+          disabled={disabled} 
+          name={name} 
+          onChange={onChange} 
+          value={value} 
+        />
+        {error && 
+          <Typography variant="pi" textColor="danger600">
+            {formatMessage({ id: error, defaultMessage: error })}
+          </Typography>
+        }
+        {description && 
+          <Typography variant="pi">
+            {formatMessage({ id: description.id, defaultMessage: description.defaultMessage })}
+          </Typography>
+        }
+      </Stack>
+      <MediaLib 
+        isOpen={mediaLibVisible} 
+        onChange={handleChangeAssets}
+        onToggle={handleToggleMediaLib} 
+      />
+    </>
+  );
+};
 
-  strapi.registerField({ type: 'wysiwyg', Component: Wysiwyg });
+Wysiwyg.defaultProps = {
+  description: '',
+  disabled: false,
+  error: undefined,
+  intlLabel: '',
+  required: false,
+  value: '',
+};
 
-  return strapi.registerPlugin(plugin);
+Wysiwyg.propTypes = {
+  description: PropTypes.shape({
+    id: PropTypes.string,
+    defaultMessage: PropTypes.string,
+  }),
+  disabled: PropTypes.bool, 
+  error: PropTypes.string, 
+  intlLabel: PropTypes.shape({
+    id: PropTypes.string,
+    defaultMessage: PropTypes.string,
+  }),
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
+  value: PropTypes.string, 
+};
+
+export default Wysiwyg;
+```
+
+:::
+
+## Register the field
+
+The last step is to register the field `wysiwyg` with the WYSIWYG component with `addFields()`.
+
+```js
+// path: wysiwyg/admin/src/index.js
+import Wysiwyg from './components/Wysiwyg';
+
+export default {
+  register(app) {
+    app.addFields({ type: 'wysiwyg', Component: Wysiwyg })
+  },
+  bootstrap() {},
 };
 ```
-
-Finally you will have to rebuild strapi so the new plugin is loaded correctly:
-
-:::: tabs card
-
-::: tab yarn
-
-```
-yarn build
-```
-
-:::
-
-::: tab npm
-
-```
-npm run build
-```
-
-:::
-
-::: tab strapi
-
-```
-strapi build
-```
-
-:::
-
-::::
-
-::: tip
-If the plugin still doesn't show up, you should probably empty the `.cache` folder too.
-:::
 
 And VOILA, if you create a new `collectionType` or a `singleType` with a `richtext` field you will see the implementation of [CKEditor](https://ckeditor.com/ckeditor-5/) instead of the default WYSIWYG.
