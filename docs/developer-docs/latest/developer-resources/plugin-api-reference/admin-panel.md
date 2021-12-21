@@ -36,6 +36,10 @@ The entry file for the Admin Panel API is `[plugin-name]/admin/src/index.js`. Th
 
 ## Lifecycle functions
 
+::: tip
+Looking for a way to change the WYSIWYG? Find the guide to register a new field in the admin panel [here](/developer-docs/latest/guides/registering-a-field-in-admin.md).
+:::
+
 ### register()
 
 **Type:** `Function`
