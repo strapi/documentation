@@ -74,7 +74,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
     module.exports = {
       // ...
-      'my-plugin': {
+      'wysiwyg': {
         enabled: true,
         resolve: './src/plugins/wysiwyg' // path to plugin folder
       },
@@ -113,9 +113,8 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     ::: tab yarn
 
     ```
-    # Go back to to strapi root folder
+    # Go back to the application root folder
     cd ../../..
-    yarn build
     yarn develop --watch-admin
     ```
 
@@ -124,9 +123,8 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     ::: tab npm
 
     ```
-    # Go back to to strapi root folder
+    # Go back to the application root folder
     cd ../../..
-    npm run build
     npm run develop -- --watch-admin
     ```
 
@@ -309,7 +307,7 @@ const Wysiwyg = ({ name, onChange, value, intlLabel, disabled, error, descriptio
       <Stack size={1}>
         <Box>
           <Typography variant="pi" fontWeight="bold">
-            {formatMessage({ id: intlLabel.id, defaultMessage: intlLabel.defaultMessage })}
+            {formatMessage(intlLabel)}
           </Typography>
           {required && 
             <Typography variant="pi" fontWeight="bold" textColor="danger600">*</Typography>
@@ -380,11 +378,21 @@ The last step is to register the field `wysiwyg` with the WYSIWYG component with
 ```js
 // path: wysiwyg/admin/src/index.js
 
-import Wysiwyg from './components/Wysiwyg';
+import pluginPkg from "../../package.json";
+import Wysiwyg from "./components/Wysiwyg";
+import pluginId from "./pluginId";
+
+const name = pluginPkg.strapi.name;
 
 export default {
   register(app) {
-    app.addFields({ type: 'wysiwyg', Component: Wysiwyg })
+    app.addFields({ type: 'wysiwyg', Component: Wysiwyg });
+    
+    app.registerPlugin({
+      id: pluginId,
+      isReady: true,
+      name,
+    });
   },
   bootstrap() {},
 };
