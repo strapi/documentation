@@ -106,7 +106,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
     ::::
 
-5. Build then start your application with the front-end development mode:
+5. Start your application with the front-end development mode:
 
     :::: tabs card
 
@@ -387,7 +387,7 @@ const name = pluginPkg.strapi.name;
 export default {
   register(app) {
     app.addFields({ type: 'wysiwyg', Component: Wysiwyg });
-    
+
     app.registerPlugin({
       id: pluginId,
       isReady: true,
