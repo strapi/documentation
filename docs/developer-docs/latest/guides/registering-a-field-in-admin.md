@@ -263,7 +263,7 @@ export default Editor;
 
 :::
 
-::: details Example of a Wysiwyg component which will wrap the CKEditor with a label and the errors:
+::: details Example of a Wysiwyg component which will wrap the CKEditor:
 
 **Path —** `./plugins/wysiwyg/admin/src/components/Wysiwyg/index.js`
 
@@ -327,7 +327,7 @@ const Wysiwyg = ({ name, onChange, value, intlLabel, disabled, error, descriptio
         }
         {description && 
           <Typography variant="pi">
-            {formatMessage({ id: description.id, defaultMessage: description.defaultMessage })}
+            {formatMessage(description)}
           </Typography>
         }
       </Stack>
