@@ -20,7 +20,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
     ::: tab yarn
 
-    Create an application using SQLite and prevent the server from starting automatically as we will create a plugin right after the project generation
+    Create an application and prevent the server from starting automatically as we will create a plugin right after the project generation.
 
     ```
     yarn create strapi-app my-app --quickstart --no-run
@@ -30,7 +30,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
     ::: tab npx
 
-    Create an application using SQLite and prevent the server from starting automatically as we will create a plugin right after the project generation
+    Create an application and prevent the server from starting automatically as we will create a plugin right after the project generation.
 
     ```
     npx create-strapi-app@latest my-app --quickstart --no-run
@@ -187,9 +187,9 @@ export default MediaLib;
 ```
 :::
 
-::: details Example of a CKEditor component which will be the implementation of the new WYSIWYG:
+::: details Example of an Editor component using CKEditor which will be the implementation of the new WYSIWYG:
 
-**Path —** `./plugins/wysiwyg/admin/src/components/CKEditor/index.js`
+**Path —** `./plugins/wysiwyg/admin/src/components/Editor/index.js`
 
 ```js
 import React from 'react';
@@ -205,6 +205,7 @@ const Wrapper = styled(Box)`
     > div {
       min-height: ${200 / 16}em;
     }
+    // Since Strapi resets css styles, it can be configured here (h2, h3, strong, i, ...)
   }
 `;
 
@@ -276,8 +277,8 @@ import { Box } from '@strapi/design-system/Box';
 import { Button } from '@strapi/design-system/Button';
 import { Typography } from '@strapi/design-system/Typography';
 import Landscape from '@strapi/icons/Landscape';
-import MediaLib from './MediaLib';
-import Editor from './Editor';
+import MediaLib from '../MediaLib';
+import Editor from '../Editor';
 import { useIntl } from 'react-intl';
 
 const Wysiwyg = ({ name, onChange, value, intlLabel, disabled, error, description, required }) => {
@@ -378,6 +379,7 @@ The last step is to register the field `wysiwyg` with the WYSIWYG component with
 
 ```js
 // path: wysiwyg/admin/src/index.js
+
 import Wysiwyg from './components/Wysiwyg';
 
 export default {
