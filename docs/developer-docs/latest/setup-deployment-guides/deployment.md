@@ -157,7 +157,7 @@ We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
 
 ```js
-const strapi = require('strapi');
+const strapi = require('@strapi/strapi');
 
 strapi(/* {...} */).start();
 ```
