@@ -435,7 +435,7 @@ module.exports = ({ env }) => ({
 Make sure to read the provider's `README` to know what are the possible parameters.
 
 :::caution
-Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the provider page or take a look at our [middleare documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
+Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the provider page or take a look at our [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
 :::
 
 ### Configuration per environment
