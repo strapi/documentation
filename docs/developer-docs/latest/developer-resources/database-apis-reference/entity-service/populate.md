@@ -10,15 +10,15 @@ The [Entity Service API](/developer-docs/latest/developer-resources/database-api
 
 ## Basic populating
 
-To populate all the root level relations, use `populate: true`:
+To populate specific relation or component, add his name to `populate`:
 
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
-  populate: true,
+  populate: 'componentA',
 });
 ```
 
-Select which data to populate by passing an array of attribute names:
+Populate lot of component or relation by passing an array of attribute names:
 
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
@@ -33,13 +33,14 @@ An object can be passed for more advanced populating:
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
   populate: {
-    componentB: true,
-    dynamiczoneA: true,
+    relationA: true,
     repeatableComponent: {
       fields: ['fieldA'],
       filters: {},
       sort: 'fieldA:asc',
-      populate: false,
+      populate: {
+        relationB: true,
+      },
     },
   },
 });
