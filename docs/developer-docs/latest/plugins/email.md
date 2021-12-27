@@ -104,7 +104,7 @@ After installing your provider you will need to add some settings in `./config/p
 Make sure you have the correct spelling of the configuration filename, it is written in plural (with a trailing 's'): `plugins.js`.
 :::
 
-Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/strapi-provider-email-sendgrid).
+Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
 **Path —** `./config/plugins.js`.
 
