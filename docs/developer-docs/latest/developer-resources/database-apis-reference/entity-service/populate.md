@@ -10,11 +10,10 @@ The [Entity Service API](/developer-docs/latest/developer-resources/database-api
 
 ## Basic populating
 
-To populate specific relation or component, add his name to `populate`:
-
+To populate all the root level relations, use `populate: '*'`:
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
-  populate: 'componentA',
+  populate: '*',
 });
 ```
 
