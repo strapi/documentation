@@ -140,10 +140,10 @@ module.exports = () => ({
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
-module.exports = [
+module.exports = {
   'content-type-a': contentTypeA, // should re-use the singularName of the content-type
   'content-type-b': contentTypeB, 
-];
+};
 ```
 
 ```js
