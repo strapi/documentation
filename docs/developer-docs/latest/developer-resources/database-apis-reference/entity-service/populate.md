@@ -18,7 +18,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 });
 ```
 
-Populate lot of component or relation by passing an array of attribute names:
+Populate various component or relation fields by passing an array of attribute names:
 
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
