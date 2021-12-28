@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/p
 
 A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the [front end](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) of the Strapi application. The Server API is about the back end part.
 
-Creating and using a plugin interacting with the Server API consists in 2 steps:
+Creating and using a plugin interacting with the Server API consists of 2 steps:
 
 1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
 2. [Use the exported interface](#usage)
@@ -155,7 +155,7 @@ module.exports = {
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
-    description: 'A regular content type'
+    description: 'A regular content type',
     kind: 'collectionType'
   },
   options: {
@@ -386,7 +386,7 @@ module.exports = (options, { strapi }) => {
 
 Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
 
-While top-level getters imply chaining functions, global getters are syntactic sugar that allow direct access using a feature's uid:
+While top-level getters imply chaining functions, global getters are syntactic sugar that allows direct access using a feature's uid:
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
