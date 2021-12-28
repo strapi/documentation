@@ -47,7 +47,7 @@ To do so you will have to create a `server.js` file to be able to start our appl
 **Path —** `./server.js`
 
 ```js
-const strapi = require('strapi');
+const strapi = require('@strapi/strapi');
 strapi().start();
 ```
 
@@ -66,7 +66,7 @@ To do so, you will have to update this file.
 
 ```js
 require('sqreen');
-const strapi = require('strapi');
+const strapi = require('@strapi/strapi');
 strapi().start();
 ```
 

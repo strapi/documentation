@@ -112,7 +112,7 @@ const sidebar = {
         },
         {
           title: 'Deployment',
-          path: '/developer-docs/latest/setup-deployment-guides/deployment',
+          path: '/developer-docs/latest/setup-deployment-guides/deployment.html',
           collapsable: true,
           initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
           children: [
@@ -193,7 +193,7 @@ const sidebar = {
         {
           title: 'Back-end customization',
           collapsable: true,
-          path: '/developer-docs/latest/development/backend-customization',
+          path: '/developer-docs/latest/development/backend-customization.html',
           children: [
             ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
@@ -299,7 +299,7 @@ const sidebar = {
             {
               title: 'Entity Service API',
               path:
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html',
               collapsable: true,
               children: [
                 [
@@ -815,20 +815,20 @@ module.exports = {
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
               },
               {
-                text: 'Plugins',
-                link: '/developer-docs/latest/plugins/plugins-intro.html',
-              },
-              {
                 text: 'Development',
                 link: '/developer-docs/latest/development/backend-customization.html',
               },
               {
-                text: 'Update & Migration',
-                link: '/developer-docs/latest/update-migration-guides/update-version.html',
+                text: 'Developer Resources',
+                link: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
               },
               {
-                text: 'Developer Resources',
-                link: '/developer-docs/latest/developer-resources/content-api/content-api.html',
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
+              },
+              {
+                text: 'Update & Migration',
+                link: '/developer-docs/latest/update-migration-guides/update-version.html',
               },
             ],
           },
@@ -874,7 +874,7 @@ module.exports = {
         ],
       },
       {
-        text: 'v3 documentation',
+        text: 'v3 Documentation',
         link: 'https://docs-v3.strapi.io'
       },
       {
