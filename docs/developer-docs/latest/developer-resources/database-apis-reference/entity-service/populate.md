@@ -10,18 +10,17 @@ The [Entity Service API](/developer-docs/latest/developer-resources/database-api
 
 ## Basic populating
 
-To populate all the root level relations, use `populate: true`:
-
+To populate all the root level relations, use `populate: '*'`:
 ```js
-strapi.entityService('api::article.article').findMany({
-  populate: true,
+const entries = await strapi.entityService.findMany('api::article.article', {
+  populate: '*',
 });
 ```
 
-Select which data to populate by passing an array of attribute names:
+Populate various component or relation fields by passing an array of attribute names:
 
 ```js
-strapi.entityService('api::article.article').findMany({
+const entries = await strapi.entityService.findMany('api::article.article', {
   populate: ['componentA', 'relationA'],
 });
 ```
@@ -31,15 +30,16 @@ strapi.entityService('api::article.article').findMany({
 An object can be passed for more advanced populating:
 
 ```js
-strapi.entityService('api::article.article').findMany({
+const entries = await strapi.entityService.findMany('api::article.article', {
   populate: {
-    componentB: true,
-    dynamiczoneA: true,
+    relationA: true,
     repeatableComponent: {
       fields: ['fieldA'],
       filters: {},
       sort: 'fieldA:asc',
-      populate: false,
+      populate: {
+        relationB: true,
+      },
     },
   },
 });
@@ -48,7 +48,7 @@ strapi.entityService('api::article.article').findMany({
 Complex populating can be achieved by using the [`filters` parameter](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) and select or populate nested relations or components:
 
 ```js
-strapi.entityService('api::article.article').findMany({
+const entries = await strapi.entityService.findMany('api::article.article', {
   populate: {
     relationA: {
       filters: {
