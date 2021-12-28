@@ -141,8 +141,8 @@ const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
 module.exports = {
-  'content-type-a': contentTypeA, // should re-use the singularName of the content-type
-  'content-type-b': contentTypeB, 
+  'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
+  'content-type-b': { schema: contentTypeB }, 
 };
 ```
 
@@ -156,17 +156,17 @@ module.exports = {
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
     description: 'A regular content type',
-    kind: 'collectionType'
+    kind: 'collectionType',
   },
   options: {
     draftAndPublish: true,
   },
   pluginOptions: {
     'content-manager': {
-      visible: false
+      visible: false,
     },
     'content-type-builder': {
-      visible: false
+      visible: false,
     }
   },
   attributes: {
@@ -174,7 +174,7 @@ module.exports = {
       type: 'string',
       min: 1,
       max: 50,
-      configurable: false
+      configurable: false,
     },
   }
 };
@@ -195,7 +195,7 @@ const routes = require('./routes');
 
 module.exports = () => ({
   routes,
-  type: 'content-api' // can also be 'admin-api' depending on the type of route
+  type: 'content-api', // can also be 'admin-api' depending on the type of route
 });
 ```
 
