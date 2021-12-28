@@ -118,8 +118,7 @@ const sidebar = {
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -163,8 +162,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -852,8 +850,7 @@ module.exports = {
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -863,6 +860,15 @@ module.exports = {
                 text: 'General Settings',
                 link: '/user-docs/latest/settings/managing-global-settings.html',
               },
+            ],
+          },
+          {
+            text: 'Older versions',
+            items: [
+              {
+                text: 'v3 Documentation',
+                link: 'https://docs-v3.strapi.io'
+              }
             ],
           },
         ],

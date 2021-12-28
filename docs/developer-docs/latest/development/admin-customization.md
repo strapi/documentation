@@ -93,8 +93,8 @@ The `config` object accepts the following parameters:
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
 | `theme`         | Object           | Overrides or [extends the theme](#theme-extension)                                                                                          |
-| `tutorial`      | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
-| `notifications` | Object           | Accepts the `release` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
+| `tutorials`     | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
+| `notifications` | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
 
 ::: details Example of a custom configuration for the admin panel:
 

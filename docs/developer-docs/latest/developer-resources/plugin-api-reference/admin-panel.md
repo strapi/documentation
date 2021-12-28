@@ -359,7 +359,7 @@ export default {
   bootstrap(app) {
     // Adding several links at once
     app.addSettingsLinks(
-      'global', // id of the section to addd the link in
+      'global', // id of the section to add the link in
         [{
           intLabel: { id: String, defaultMessage: String },
           id: String,
@@ -389,7 +389,7 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 
 Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
 
-<!-- TODO: maybe add screenshots once design system is ready? -->
+<!-- TODO: maybe add screenshots once the design system is ready? -->
 
 | View      | Injection zone name & Location                                                                                                                                            |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

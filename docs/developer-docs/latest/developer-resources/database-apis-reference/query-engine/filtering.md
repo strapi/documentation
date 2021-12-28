@@ -169,7 +169,7 @@ const entries = strapi.db.query('api::article.article').findMany({
 });
 ```
 
-`$in` can be ommited when passing an array of values
+`$in` can be omitted when passing an array of values
 
 ```js
 const entries = strapi.db.query('api::article.article').findMany({
