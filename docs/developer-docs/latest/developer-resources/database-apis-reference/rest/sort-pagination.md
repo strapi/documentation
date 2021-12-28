@@ -11,7 +11,7 @@ The [REST API](/developer-docs/latest/developer-resources/database-apis-referenc
 
 ## Sorting
 
-Queries can accept a `sort` parameter that allow sorting on one or multiple fields with the following syntax:
+Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntax:
 
 ### Sort using 2 fields
 
