@@ -290,7 +290,7 @@ export default {
 	   { id: String, intlLabel: { id: String, defaultMessage: String }, // Section to create
 		 [ // links
 			 {
-			   intLabel: { id: String, defaultMessage: String },
+			   intlLabel: { id: String, defaultMessage: String },
 			   id: String,
 			   to: String,
 			   Component: myComponent,
@@ -325,7 +325,7 @@ export default {
 		app.addSettingsLink(
 		 'global', // id of the section to add the link to
 			{
-				intLabel: { id: String, defaultMessage: String },
+				intlLabel: { id: String, defaultMessage: String },
 				id: String,
 				to: String,
 				Component: myComponent,
@@ -361,7 +361,7 @@ export default {
     app.addSettingsLinks(
       'global', // id of the section to addd the link in
         [{
-          intLabel: { id: String, defaultMessage: String },
+          intlLabel: { id: String, defaultMessage: String },
           id: String,
           to: String,
           Component: myComponent,
