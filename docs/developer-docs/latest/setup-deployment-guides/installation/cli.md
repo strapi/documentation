@@ -33,7 +33,7 @@ The following installation guide covers the most basic installation option using
 - Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
 - Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
 
-For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI).
+For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
