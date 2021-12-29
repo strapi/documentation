@@ -58,7 +58,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
   async findOne(entityId, params = {}) {
     return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
   }
-});
+}));
 ```
 
 ::: strapi Entity Service API
