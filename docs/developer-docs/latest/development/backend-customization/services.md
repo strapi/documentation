@@ -97,7 +97,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
     // Return a promise of the function that sends the email.
     return transporter.sendMail(options);
   },
-});
+}));
 ```
 
 The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
@@ -121,7 +121,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
       ok: true,
     });
   },
-});
+}));
 ```
 
 ::::
