@@ -100,8 +100,8 @@ yarn add @strapi/provider-email-sendgrid --save
 
 After installing your provider you will need to add some settings in `./config/plugins.js`. If this file doesn't exists, you'll need to create it. Check the README of each provider to know what configuration settings the provider needs.
 
-::: tip
-Make sure you have the correct spelling of the configuration filename, it is written in plural (with a trailing 's'): `plugins.js`.
+:::tip
+When using community providers, you need to pass the full package name to the `provider` key, only Strapi maintained providers can use the short-code eg: `provider: 'strapi-provider-upload-google-cloud-storage'`
 :::
 
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
@@ -153,17 +153,6 @@ module.exports = {
     };
   },
 };
-```
-
-It is important that your provider's `package.json` includes the following object:
-
-```json
-{
-  // ...
-  "strapi": {
-    "isProvider": true
-  }
-}
 ```
 
 In the `send` function you will have access to:
