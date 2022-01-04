@@ -100,7 +100,7 @@ yarn add @strapi/provider-email-sendgrid --save
 
 After installing your provider you will need to add some settings in `./config/plugins.js`. If this file doesn't exists, you'll need to create it. Check the README of each provider to know what configuration settings the provider needs.
 
-:::tip
+::: note
 When using community providers, you need to pass the full package name to the `provider` key, only Strapi maintained providers can use the short-code eg: `provider: 'strapi-provider-email-mandrill'`
 :::
 
