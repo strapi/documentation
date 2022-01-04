@@ -406,8 +406,8 @@ module.exports = ({ env })=>({
 
 To enable the provider, create or edit the file at `./config/plugins.js`
 
-:::tip
-When using community providers, you need to pass the full package name to the `provider` key, only Strapi maintained providers can use the short-code eg: `provider: 'strapi-provider-upload-google-cloud-storage'`
+::: note
+When using community providers, pass the full package name to the `provider` key (e.g. `provider: 'strapi-provider-upload-google-cloud-storage'`). Only Strapi-maintained providers can use the shortcode format (e.g. `provider: 'aws-s3'`).
 :::
 
 ```js
