@@ -142,7 +142,7 @@ const contentTypeB = require('./content-type-b');
 
 module.exports = {
   'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
-  'content-type-b': { schema: contentTypeB }, 
+  'content-type-b': { schema: contentTypeB },
 };
 ```
 
