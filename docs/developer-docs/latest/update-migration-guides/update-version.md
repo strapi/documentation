@@ -79,13 +79,13 @@ Rebuild the admin panel with one of the following commands:
 
 <code-block title="NPM">
 ```sh
-npm run build -- --clean
+npm run build
 ```
 </code-block>
 
 <code-block title="YARN">
 ```sh
-yarn build --clean
+yarn build
 ```
 </code-block>
 
