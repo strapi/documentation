@@ -10,7 +10,7 @@ The draft and publish feature allows you to save your content as a draft, to pub
 
 ## Activating or deactivating the draft and publish feature
 
-By default, the draft and publish feature is activated for all newly created collection and single types. It is however possible to deactivate the feature at content type level (i.e. it can be activated for one content type, but deactivated for another).
+By default, the draft and publish feature is enabled for all newly created collection and single types. It is however possible to disable the feature at the content-type level (i.e. it can be enabled for one content type, but disabled for another).
 
 ::: warning
 If the feature is deactivated while contents are saved as drafts, they will automatically be deleted. Make sure all contents are published before deactivating the feature.
