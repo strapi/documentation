@@ -436,7 +436,7 @@ The use of `ngrok` is not needed.
 
 #### Using ngrok
 
-Discord accepts the `localhost` urls. <br>
+Twitch accepts the `localhost` urls. <br>
 The use of `ngrok` is not needed.
 
 #### Twitch configuration
