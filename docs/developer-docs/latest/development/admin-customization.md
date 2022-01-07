@@ -99,7 +99,7 @@ The `config` object accepts the following parameters:
 ::: details Example of a custom configuration for the admin panel:
 
 ```jsx
-// path: ./admin/src/app.js
+// path: ./my-app/src/admin/app.js
 
 import AuthLogo from './extensions/my-logo.png';
 import MenuLogo from './extensions/logo.png';
@@ -162,22 +162,12 @@ To update the list of available locales in the admin panel, use the `config.loca
 ```jsx
 // path: ./my-app/src/admin/app.js
 
-module.exports = {
-  // Custom webpack config
-  webpack: (config, webpack) => {
-    // Note: we provide webpack above so you should not `require` it
-    // Perform customizations to webpack config
-    // Important: return the mutated config
-    return config;
+export default {
+  config: {
+    locales: ['ru', 'zh']
   },
-
-  // App customizations
-  app: config => {
-    config.locales = ['ru', 'zh'];
-
-    return config;
-  },
-};
+  bootstrap() {},
+}
 ```
 
 ::: note NOTES
@@ -191,7 +181,7 @@ module.exports = {
 Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
 ```js
-// path: ./src/admin/app.js
+// path: ./my-app/src/admin/app.js
 
 export default {
   config: {
