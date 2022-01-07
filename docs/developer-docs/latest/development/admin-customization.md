@@ -81,7 +81,7 @@ module.exports = ({ env }) => ({
 
 The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
 
-Any file used by the `config` object (e.g. a custom logo) should be placed in the `./admin/extensions/` folder and imported inside `./src/admin/app.js`.
+Any file used by the `config` object (e.g. a custom logo) should be placed in the `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
 
 The `config` object accepts the following parameters:
 
@@ -178,7 +178,7 @@ export default {
 
 ##### Extending translations
 
-Translation key/value pairs are declared in `./translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
+Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
 ```js
 // path: ./my-app/src/admin/app.js
@@ -188,12 +188,11 @@ export default {
     locales: ['fr'],
     translations: {
       fr: {
-        or: 'OR',
-        'request.error.model.unknown': "This model doesn't exist",
-        skipToContent: 'Skip to content',
-        submit: 'Submit',
-        Totos: 'tata',
-        "content-type-builder.my-translation-key": "test"
+        'Auth.form.email.label': 'test',
+        Users: 'Utilisateurs',
+        City: 'CITY (FRENCH)',
+        // Customize the label of the Content Manager table.
+        Id: 'ID french',
       },
     },
   },
@@ -201,7 +200,7 @@ export default {
 };
 ```
 
-If more translations files should be added, place them in `/extensions/translations` folder.
+If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
 
 #### Logos
 
@@ -212,13 +211,13 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | On the login page      | `config.auth.logo`          |
 | In the main navigation | `config.menu.logo`          |
 
-To update the logos, put image files in the `./extensions` folder and update the corresponding keys.
+To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys.
 
 The size of the custom image should be the same as the default one (434px x 120px).
 
 #### Favicon
 
-To update the favicon, put a favicon file in the `./extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
+To update the favicon, put a favicon file in the `./src/admin/extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
 
 #### Tutorial videos
 
@@ -289,7 +288,7 @@ module.exports = {
 
 ### Webpack configuration
 
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `./admin/webpack.config.js`:
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
 
 ```js
 module.exports = {
@@ -306,7 +305,7 @@ module.exports = {
 ```
 
 ::: note
-Only `./admin/app.js` and the files under the `./admin/extensions` folder are being watched by the webpack dev server.
+Only `./src/admin/app.js` and the files under the `./src/admin/extensions` folder are being watched by the webpack dev server.
 :::
 
 ## Extension
