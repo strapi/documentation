@@ -93,8 +93,6 @@ Create another database, named `strapi` for example. It may be useful to delete 
 
 Create the `app.yaml` file in the project root.
 
-Add `app.yaml` to `.gitignore`.
-
 The instance identifier looks like `myapi-123456:europe-west1:myapi`.
 
 The `myapi-123456` part is the project identifier. (The number is automatically added to short project names).
@@ -106,7 +104,7 @@ The following is an example config for `Standard Environment` or `Flexible Envir
 ::: tab Standard Environment
 
 ```yaml
-runtime: nodejs14
+runtime: nodejs16
 
 instance_class: F2
 
@@ -114,7 +112,7 @@ env_variables:
   HOST: '0.0.0.0'
   NODE_ENV: 'production'
   DATABASE_NAME: 'strapi'
-  DATABASE_USERNAME: 'postgres'
+  DATABASE_USER: 'postgres'
   DATABASE_PASSWORD: '<password>'
   INSTANCE_CONNECTION_NAME: '<instance_identifier>'
 
@@ -135,7 +133,7 @@ env_variables:
   HOST: '0.0.0.0'
   NODE_ENV: 'production'
   DATABASE_NAME: 'strapi'
-  DATABASE_USERNAME: 'postgres'
+  DATABASE_USER: 'postgres'
   DATABASE_PASSWORD: '<password>'
   INSTANCE_CONNECTION_NAME: '<instance_identifier>'
 
@@ -150,17 +148,27 @@ beta_settings:
 Create `.gcloudignore` in the project root.
 
 ```
-app.yaml
 .gcloudignore
 .git
 .gitignore
 node_modules/
 #!include:.gitignore
+!.env
 ```
 
 In the case of Strapi, the admin UI will have to be re-built after every deploy,
 and so we don't deploy local build artifacts, cache files and so on by including
 the `.gitignore` entries.
+
+### Adding `.gitkeep` to database folder
+Because Google App Engine does not give `mkdir` permission,
+We need to keep database folder when deploy codes.
+
+`Path: ./database/migrations/`.
+
+```bash
+touch .gitkeep
+```
 
 ### Configure the database
 
@@ -178,18 +186,13 @@ Edit `database.js`, and use the socket path as `socketPath`.
 
 ```js
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
-        socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+  connection: {
+    client: 'postgres',
+    connection: {
+        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
         database: env('DATABASE_NAME'),
-        username: env('DATABASE_USERNAME'),
+        user: env('DATABASE_USER'),
         password: env('DATABASE_PASSWORD'),
-      },
-      options: {},
     },
   },
 });
