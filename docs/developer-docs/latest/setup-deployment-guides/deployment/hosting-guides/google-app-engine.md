@@ -178,9 +178,7 @@ The `PostgreSQL` database will need the `pg` package.
 yarn add pg
 ```
 
-[Google App Engine requires](https://cloud.google.com/sql/docs/postgres/connect-app-engine) to connect to the database using the unix socket path, not an IP and port.
-
-Edit `database.js`, and use the socket path as `socketPath`.
+Adding the production database configuration for connect to GCP SQL.
 
 `Path: ./config/env/production/database.js`.
 
