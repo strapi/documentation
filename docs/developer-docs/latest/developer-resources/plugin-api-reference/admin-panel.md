@@ -36,10 +36,6 @@ The entry file for the Admin Panel API is `[plugin-name]/admin/src/index.js`. Th
 
 ## Lifecycle functions
 
-::: tip
-Looking for a way to change the WYSIWYG? Find the guide to register a new field in the admin panel [here](/developer-docs/latest/guides/registering-a-field-in-admin.md).
-:::
-
 ### register()
 
 **Type:** `Function`
@@ -190,6 +186,10 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
+
+::: strapi Replacing the WYSIWYG
+The WYSIWYG editor can be replaced by taking advantage of the [register lifecycle](#register) (see [register a new field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
+:::
 
 ::: tip
 The admin panel supports dotenv variables.

@@ -8,11 +8,9 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-
 
 In this guide we will see how you can create a new Field for your administration panel.
 
-## Introduction
+For this example, we will see how to change the WYSIWYG with [CKEditor](https://ckeditor.com/ckeditor-5/) in the Content Manager plugin by creating a new plugin that will add a new field in your application.
 
-For this example, we will see how to change the WYSIWYG with [CKEditor](https://ckeditor.com/ckeditor-5/) in the **`Content Manager`** plugin by creating a new plugin which will add a new **Field** in your application.
-
-## Plugin setup
+## Setting up the plugin
 
 1. Create a new project:
 
@@ -20,21 +18,25 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 
     ::: tab yarn
 
-    Create an application and prevent the server from starting automatically as we will create a plugin right after the project generation.
+    Create an application and prevent the server from starting automatically with the following command:
 
     ```
     yarn create strapi-app my-app --quickstart --no-run
     ```
 
+    The `--no-run` flag was added as we will run additional commands to create a plugin right after the project generation.
+
     :::
 
     ::: tab npx
 
-    Create an application and prevent the server from starting automatically as we will create a plugin right after the project generation.
+    Create an application and prevent the server from starting automatically with the following command:
 
     ```
     npx create-strapi-app@latest my-app --quickstart --no-run
     ```
+
+    The `--no-run` flag was added as we will run additional commands to create a plugin right after the project generation.
 
     :::
 
@@ -51,7 +53,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     yarn strapi generate
     ```
 
-    Choose "plugin" from the list, press Enter and name the plugin wysiwyg.
+    Choose "plugin" from the list, press Enter and name the plugin `wysiwyg`.
 
     :::
 
@@ -61,7 +63,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     cd my-app
     npm run strapi generate
     ```
-    Choose "plugin" from the list, press Enter and name the plugin wysiwyg.
+    Choose "plugin" from the list, press Enter and name the plugin `wysiwyg`.
 
     :::
 
@@ -82,66 +84,55 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     }
     ```
 
-4. Install the needed dependencies:
+4. Install the required dependencies:
 
-    :::: tabs card
+    <code-group>
+      <code-block title="yarn">
+      ```bash
+      cd src/plugins/wysiwyg
+      yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+      ```
+      </code-block>
 
-    ::: tab yarn
+      <code-block title="npm">
+      ```bash
+      cd src/plugins/wysiwyg
+      npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
+      ```
+      </code-block>
+    </code-group>
 
-    ```
-    cd src/plugins/wysiwyg
-    yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
-    ```
+5. Start the application with the front-end development mode:
 
-    :::
+    <code-group>
+      <code-block title="yarn">
+      ```bash
+      # Go back to the application root folder
+      cd ../../..
+      yarn develop --watch-admin
+      ```
+      </code-block>
 
-    ::: tab npm
+      <code-block title="npm">
+      ```bash
+      # Go back to the application root folder
+      cd ../../..
+      npm run develop -- --watch-admin
+      ```
+      </code-block>
+    </code-group>
 
-    ```
-    cd src/plugins/wysiwyg
-    npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
-    ```
-
-    :::
-
-    ::::
-
-5. Start your application with the front-end development mode:
-
-    :::: tabs card
-
-    ::: tab yarn
-
-    ```
-    # Go back to the application root folder
-    cd ../../..
-    yarn develop --watch-admin
-    ```
-
-    :::
-
-    ::: tab npm
-
-    ```
-    # Go back to the application root folder
-    cd ../../..
-    npm run develop -- --watch-admin
-    ```
-
-    :::
-
-    ::::
-
-Once this step is over all we need to do is to create our new WYSIWYG which will replace the default one in the **Content Manager** plugin.
+Once this step is over all we need to do is to create our new WYSIWYG, which will replace the default one in the Content Manager plugin.
 
 ## Creating the WYSIWYG
 
-In this part we will create three components:
+In this part we will create 3 components:
 
-::: details Example of a MediaLib component which will be used to insert media in the editor:
-**Path —** `./plugins/wysiwyg/admin/src/components/MediaLib/index.js`
+::: details Example of a MediaLib component used to insert media in the editor:
 
 ```js
+// path: ./src/plugins/wysiwyg/admin/src/components/MediaLib/index.js
+
 import React from 'react';
 import { prefixFileUrlWithBackendUrl, useLibrary } from '@strapi/helper-plugin';
 import PropTypes from 'prop-types';
@@ -185,11 +176,11 @@ export default MediaLib;
 ```
 :::
 
-::: details Example of an Editor component using CKEditor which will be the implementation of the new WYSIWYG:
-
-**Path —** `./plugins/wysiwyg/admin/src/components/Editor/index.js`
+::: details Example of an Editor component using CKEditor as the WYSIWYG editor:
 
 ```js
+// path: ./src/plugins/wysiwyg/admin/src/components/Editor/index.js
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -263,11 +254,11 @@ export default Editor;
 
 :::
 
-::: details Example of a Wysiwyg component which will wrap the CKEditor:
-
-**Path —** `./plugins/wysiwyg/admin/src/components/Wysiwyg/index.js`
+::: details Example of a Wysiwyg component wrapping CKEditor:
 
 ```js
+// path: ./src/plugins/wysiwyg/admin/src/components/Wysiwyg/index.js
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Stack } from '@strapi/design-system/Stack';
@@ -371,12 +362,12 @@ export default Wysiwyg;
 
 :::
 
-## Register the field
+## Registering the field
 
 The last step is to register the field `wysiwyg` with the WYSIWYG component with `addFields()`.
 
 ```js
-// path: wysiwyg/admin/src/index.js
+// path: .src/plugins/wysiwyg/admin/src/index.js
 
 import pluginPkg from "../../package.json";
 import Wysiwyg from "./components/Wysiwyg";
@@ -398,4 +389,4 @@ export default {
 };
 ```
 
-And VOILA, if you create a new `collectionType` or a `singleType` with a `richtext` field you will see the implementation of [CKEditor](https://ckeditor.com/ckeditor-5/) instead of the default WYSIWYG.
+And _voilà_, if you create a new `collectionType` or a `singleType` with a `richtext` field you will see the implementation of [CKEditor](https://ckeditor.com/ckeditor-5/) instead of the default WYSIWYG.
