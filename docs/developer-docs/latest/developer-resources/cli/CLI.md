@@ -96,7 +96,7 @@ options: [--no-optimization]
 
 ## strapi watch-admin
 
-Starts the admin server.  Strapi should already be running with `strapi develop`.
+Starts the admin server. Strapi should already be running with `strapi develop`.
 
 ```sh
 strapi watch-admin

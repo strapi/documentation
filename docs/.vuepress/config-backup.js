@@ -1,3 +1,8 @@
+/**
+ * This file is the backyup the old config.js one.
+ * @Piwi & @DerrickMehaffy I'll let you decide if you want to keep it.
+ */
+
 const sidebar = {
   developer: [
     {
@@ -693,7 +698,6 @@ module.exports = {
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/',
-  plugins: plugins,
   head: [
     [
       'link',
@@ -874,8 +878,8 @@ module.exports = {
         ],
       },
       {
-        text: 'v3 Documentation',
-        link: 'https://docs-v3.strapi.io'
+        text: 'v3 documentation',
+        link: 'https://docs-v3.strapi.io',
       },
       {
         text: 'Ecosystem',
@@ -958,4 +962,5 @@ module.exports = {
       md.use(require('markdown-it-include'));
     },
   },
+  plugins: plugins,
 };
