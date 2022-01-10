@@ -70,6 +70,10 @@ Start a Strapi application with autoReload disabled.
 This command is there to run a Strapi application without restarts and file writes (aimed at production usage).
 Certain features are disabled in the `strapi start` mode because they require application restarts.
 
+- **strapi start --no-migrate**<br/>
+  Skips migrations which are normally run when the application boots up to sync content-types and any user-generated migrations. If `--no-migrate` option is passed, migrations must be run separately with the `strapi migrate` command.
+
+
 Allowed environment variables:
 | Property | Description | Type | Default |
 | --------- | ----------- | ----- | ------- |
@@ -78,6 +82,10 @@ Allowed environment variables:
 | STRAPI_LOG_TIMESTAMP | Enables or disables the inclusion of a timestamp in the log message. Values can be `true` or `false` | string | `false`|
 | STRAPI_LOG_FORCE_COLOR | Values can be `true` or `false` | string | `true` |
 | STRAPI_LOG_PRETTY_PRINT | If pino-pretty module will be used to format logs. Values can be `true` or `false` | string | `true` |
+
+## strapi migrate
+
+Run any migrations, including syncing DB schema to content-type changes or migrations in the `database/migrations` directory.
 
 ## strapi build
 
