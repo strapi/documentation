@@ -50,7 +50,7 @@ So first let's create a `server.js` file that will let you run the `pm2` command
 **Path —** `./server.js`
 
 ```js
-const strapi = require('strapi');
+const strapi = require('@strapi/strapi');
 strapi().start();
 ```
 

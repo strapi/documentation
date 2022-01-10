@@ -67,7 +67,7 @@ You should never use this command to run a Strapi application in production.
 
 Start a Strapi application with autoReload disabled.
 
-This commands is there to run a Strapi application without restarts and file writes (aimed at production usage).
+This command is there to run a Strapi application without restarts and file writes (aimed at production usage).
 Certain features are disabled in the `strapi start` mode because they require application restarts.
 
 Allowed environment variables:
@@ -90,8 +90,6 @@ options: [--no-optimization]
 ```
 
 - **strapi build**<br/>
-  Builds the administration panel and minimizing the assets
-- **strapi build --clean**<br/>
   Builds the administration panel and delete the previous build and .cache folders
 - **strapi build --no-optimization**<br/>
   Builds the administration panel without minimizing the assets. The build duration is faster.
@@ -177,7 +175,7 @@ When running the restore command, you can choose from three different strategies
 **Alias** `admin:reset-password`
 
 Reset an admin user's password.
-You can pass the email and new password as options or set them interactivly if you call the command without passing the options.
+You can pass the email and new password as options or set them interactively if you call the command without passing the options.
 
 **Example**
 

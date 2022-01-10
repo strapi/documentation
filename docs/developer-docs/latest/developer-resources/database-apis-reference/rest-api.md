@@ -9,7 +9,57 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
 
-[API parameters](#api-parameters) can be used to [filter](#filters), [sort](#sorting), and [paginate](#pagination) results and to [select fields](#fields-selection) and relations to [populate](#relations-population). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](#publication-state) and [locale](#locale).
+[API parameters](#api-parameters) can be used to [filter](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering), [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting), and [paginate](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) results and to [select fields](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) and relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population)). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state) and [locale](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale).
+
+## API Parameters
+
+Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
+
+The following parameters are available:
+
+| Operator           | Type          | Description                                           |
+| ------------------ | ------------- | ----------------------------------------------------- |
+| `sort`             | String/Array  | [Sorting the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting) |
+| `filters`          | Object        | [Filter the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering) |
+| `populate`         | String/Object | [Populate relations, components, or dynamic zones](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population) |
+| `fields`           | Array         | [Select only specific fields to display](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) |
+| `pagination`       | Object        | [Page through entries](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) |
+| `publicationState` | String        | [Select the draft & publish state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
+| `locale`           | String/Array  | [Select one ore multiple locales](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale) |
+
+::::tip
+Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
+Use `qs` directly to generate complex queries instead of creating them manually.
+
+:::details Example using qs
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  sort: ['title:asc'],
+  filters: {
+    title: {
+      $eq: 'hello',
+    },
+  },
+  populate: '*',
+  fields: ['title'],
+  pagination: {
+    pageSize: 10,
+    page: 1,
+  },
+  publicationState: 'live',
+  locale: ['en'],
+}, {
+  encodeValuesOnly: true, // prettify url
+});
+
+await request(`/api/books?${query}`);
+// GET /api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
+```
+
+:::
+::::
 
 ## API Endpoints
 
@@ -69,11 +119,11 @@ For each Content-Type, the following endpoints are automatically generated:
 
 <div id="endpoint-table">
 
-| Method   | URL                   | Description                         |
-| -------- | --------------------- | ----------------------------------- |
-| `GET`    | `/api/:singularApiId` | [Get an entry](#get-an-entry)       |
+| Method   | URL                   | Description                                |
+| -------- | --------------------- | ------------------------------------------ |
+| `GET`    | `/api/:singularApiId` | [Get an entry](#get-an-entry)              |
 | `PUT`    | `/api/:singularApiId` | [Update/Create an entry](#update-an-entry) |
-| `DELETE` | `/api/:singularApiId` | [Delete an entry](#delete-an-entry) |
+| `DELETE` | `/api/:singularApiId` | [Delete an entry](#delete-an-entry)        |
 
 </div>
 
@@ -158,18 +208,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
       "id": 1,
       "attributes": {
         "title": "Restaurant A",
-        "description": "Restaurant A's description",
-        "categories": [
-          {
-            "id": 1,
-            "attributes": {
-              "name": "My category"
-            },
-            "meta": {
-              "availableLocales": []
-            }
-          }
-        ]
+        "description": "Restaurant A's description"
       },
       "meta": {
         "availableLocales": []
@@ -179,18 +218,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
       "id": 2,
       "attributes": {
         "title": "Restaurant B",
-        "description": "Restaurant B's description",
-        "categories": [
-          {
-            "id": 1,
-            "attributes": {
-              "name": "My category"
-            },
-            "meta": {
-              "availableLocales": []
-            }
-          }
-        ]
+        "description": "Restaurant B's description"
       },
       "meta": {
         "availableLocales": []
@@ -226,18 +254,7 @@ Returns an entry by id.
     "id": 1,
     "attributes": {
       "title": "Restaurant A",
-      "description": "Restaurant A's description",
-      "categories": [
-        {
-          "id": 1,
-          "attributes": {
-            "name": "My category"
-          },
-          "meta": {
-            "availableLocales": []
-          }
-        }
-      ]
+      "description": "Restaurant A's description"
     },
     "meta": {
       "availableLocales": []
@@ -368,309 +385,3 @@ Deletes an entry by id and returns its value.
 
 :::
 ::::
-
-## API Parameters
-
-Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
-
-::::tip
-Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
-Use `qs` directly to generate complex queries instead of creating them manually.
-
-:::details Example
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    $or: [
-      {
-        date: {
-          $eq: '2020-01-01'
-        },
-      },
-      {
-        date: {
-          $eq: '2020-01-02'
-        },
-      }
-    ],
-    title: {
-      $eq: 'hello'
-    },
-    author: {
-      name: {
-        $eq: 'Kai doe'
-      },
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify url
-});
-
-await request(`/api/books?${query}`);
-// GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[title][$eq]=hello&filters[author][name][$eq]=Kai%20doe
-```
-
-:::
-::::
-
-### Filters
-
-Queries can accept a `filters` parameter with the following syntax:
-
-`GET /api/:pluralApiId?filters[field][operator]=value`
-
-The following operators are available:
-
-| Operator        | Description                       |
-| --------------- | --------------------------------- |
-| `$eq`           | Equal                             |
-| `$ne`           | Not equal                         |
-| `$lt`           | Less than                         |
-| `$lte`          | Less than or equal to             |
-| `$gt`           | Greater than                      |
-| `$gte`          | Greater than or equal to          |
-| `$in`           | Included in an array              |
-| `$notIn`        | Not included in an array          |
-| `$contains`     | Contains (case-sensitive)         |
-| `$notContains`  | Does not contain (case-sensitive) |
-| `$containsi`    | Contains                          |
-| `$notContainsi` | Does not contain                  |
-| `$null`         | Is null                           |
-| `$notNull`      | Is not null                       |
-| `$between`      | Is between                        |
-| `$startsWith`   | Starts with                       |
-| `$endsWith`     | Ends with                         |
-
-:::request Example request: Find users having 'John' as first name
-`GET /api/users?filters[firstName][$eq]=John`
-:::
-
-:::request Example request: Find restaurants having a price equal or greater than `3`
-`GET /api/restaurants?filters[price][$gte]=3`
-:::
-
-:::request Example request: Find multiple restaurant with id 3, 6, 8
-`GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
-:::
-
-:::caution
-By default, the filters can only be used from `find` endpoints generated by the Content-Type Builder and the CLI.
-:::
-
-#### Deep filtering
-
-Deep filtering is filtering on a relation's fields.
-
-:::request Example request: Find restaurants owned by a chef who belongs to a 5-star restaurant
-`GET /api/restaurants?filters[chef][restaurant][star][$eq]=5`
-:::
-
-::: caution
-
-- Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
-- Deep filtering isn't available for polymorphic relations.
-
-:::
-
-### Sorting
-
-Queries can accept a `sort` parameter with the following syntax:
-
-`GET /api/:pluralApiId?sort=field1,field2`
-
-The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
-
-:::request Example requests: Sort users by email
-`GET /api/users?sort=email` to sort by ascending order (default)
-
-`GET /api/users?sort=email:desc` to sort by descending order
-:::
-
-:::request Example requests: Sort books on multiple fields
-`GET /api/books?sort=title,price:desc`
-
-`GET /api/books?sort=title,author.name`
-
-`GET /api/books?sort[0]=title&sort[1][author]=name` using an array format
-
-:::
-
-### Pagination
-
-Queries can accept `pagination` parameters. Results can be paginated:
-
-- either by page (i.e. specifying a page number and the number of entries per page)
-- or by offset (i.e. specifying how many entries to skip and to return)
-
-:::note
-Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
-:::
-
-#### Pagination by page
-
-Use the following parameters:
-
-<!-- ? is it 100 or 10 for default page size -->
-
-| Parameter               | Type    | Description                                                               | Default |
-| ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
-| `pagination[page]`      | Integer | Page number                                                               | 1       |
-| `pagination[pageSize]`  | Integer | Page size                                                                 | 100     |
-| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
-
-:::: api-call
-
-::: request Example request
-`GET /api/:pluralApiId?pagination[page]=1&pagination[pageSize]=10`
-:::
-
-::: response Example response
-
-```json
-{
-  "data": […],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 10,
-      "pageCount": 5,
-      "total": 48
-    }
-  }
-}
-```
-
-:::
-::::
-
-#### Pagination by offset
-
-Use the following parameters:
-
-| Parameter               | Type    | Description                                                    | Default |
-| ----------------------- | ------- | -------------------------------------------------------------- | ------- |
-| `pagination[start]`     | Integer | Start value (first entry to return) value                      | 0       |
-| `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
-| `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
-
-::: tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
-:::
-
-:::: api-call
-
-::: request Example request
-`GET /api/:pluralApiId?pagination[start]=20&pagination[limit]=30`
-
-:::
-
-::: response Example response
-
-```json
-{
-  "data": [],
-  "meta": {
-    "pagination": {
-      "start": 0,
-      "limit": 10,
-      "total": 42,
-    }
-  }
-}
-```
-
-:::
-::::
-
-### Fields selection
-
-Queries can accept a `fields` parameter to select only some fields. Use one of the following syntaxes:
-
-`GET /api/:pluralApiId?fields=field1,field2`
-<br>or<br>
-`GET /api/:pluralApiId?fields[0]=field1&fields[1]=field2`
-
-To get all fields, use the `*` wildcard.
-
-::: request Example request: Get only firstName and lastName of all users
-`GET /api/users?fields=firstName,lastName`
-:::
-
-::: request Example request: Get all fields for all users
-`GET /api/users?fields=*`
-:::
-
-### Relations population
-
-By default, relations are not populated when fetching entries.
-
-Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax:
-
-`GET /api/:pluralApiId?populate=field1,field2`
-
-::: request Example request: Get books and populate relations with the author's name and address
-`GET /api/books?populate=author.name,author.address`
-:::
-
-For convenience, the `*` wildcard can be used to populate all first-level relations:
-
-::: request Example request: Get all books and populate all their first-level relations
-`GET /api/books?populate=*`
-:::
-
-::: request Example request: Get all books and populate with authors and all their relations
-`GET /api/books?populate[author]=*`
-:::
-
-<br/>
-
-Only first-level relations are populated with `populate=*`. Use the LHS bracket syntax (i.e. `[populate]=*`) to populate deeper:
-
-::: request Example request: Get all relations nested inside a "navigation" component in the "global" single type
-`GET /api/global?populate[navigation][populate]=*`
-:::
-
-:::tip
-Adding `?populate=*` to the query URL will include dynamic zones in the results.
-:::
-
-### Publication State
-
-:::prerequisites
-The [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) feature should be enabled.
-:::
-
-Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
-
-- `live`: returns only published entries (default)
-- `preview`: returns both draft entries & published entries
-
-:::request Example requests: Get published articles
-`GET /api/articles`
-
-or
-
-`GET /api/articles?publicationState=live`
-:::
-
-:::request Example request: Get both published and draft articles
-`GET /api/articles?publicationState=preview`
-:::
-
-:::tip
-To retrieve only draft entries, combine the `preview` publication state and the `published_at` fields:
-
-`GET /api/articles?publicationState=preview&published_at_null=true`
-:::
-
-### Locale
-
-:::prerequisites
-
-- The [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) should be installed.
-- [Localization should be enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
-:::
-
-The `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).

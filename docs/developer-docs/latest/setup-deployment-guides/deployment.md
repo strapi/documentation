@@ -24,8 +24,8 @@ To provide the best possible environment for Strapi there are a few requirements
 - At least 2 GB of RAM (Moderately recommended 4)
 - Minimum required storage space recommended by your OS or 32 GB of **free** space
 - A supported database version
-  - MySQL >= 5.6
-  - MariaDB >= 10.1
+  - MySQL >= 5.7.8
+  - MariaDB >= 10.2.7
   - PostgreSQL >= 10
   - SQLite >= 3
 - A supported operating system
@@ -157,7 +157,7 @@ We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
 
 ```js
-const strapi = require('strapi');
+const strapi = require('@strapi/strapi');
 
 strapi(/* {...} */).start();
 ```

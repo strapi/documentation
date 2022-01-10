@@ -67,7 +67,7 @@ For all these reasons, and others, we think it'll be a mistake and might confuse
 
 ## How do I customize a plugin?
 
-Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
+Strapi uses a system called [extensions](/developer-docs/latest/development/plugins-extension.md) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
 
 You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
 
@@ -75,7 +75,7 @@ You gain the ability to modify these files without forking the plugin package, h
 
 ## Can I add my own 3rd party auth provider?
 
-Yes, you can either follow the following [guide](/developer-docs/latest/plugins/users-permissions.md#adding-a-new-provider-to-your-project) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
+Yes, you can either follow the following [guide](/developer-docs/latest/plugins/users-permissions.md#adding-a-new-provider-to-your-project) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 
@@ -95,7 +95,7 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as [Nginx](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy), [Caddy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy), [HAProxy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
+Due to these two issues, it is recommended you use a proxy application such as [Nginx](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md), [Caddy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md), [HAProxy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
 ## Is X feature available yet?
 

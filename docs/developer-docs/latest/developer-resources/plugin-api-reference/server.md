@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/p
 
 A Strapi [plugin](/developer-docs/latest/plugins/plugins-intro.md) can interact with the back end or the [front end](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) of the Strapi application. The Server API is about the back end part.
 
-Creating and using a plugin interacting with the Server API consists in 2 steps:
+Creating and using a plugin interacting with the Server API consists of 2 steps:
 
 1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
 2. [Use the exported interface](#usage)
@@ -140,10 +140,10 @@ module.exports = () => ({
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
-module.exports = [
-  'content-type-a': contentTypeA, // should re-use the singularName of the content-type
-  'content-type-b': contentTypeB, 
-];
+module.exports = {
+  'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
+  'content-type-b': { schema: contentTypeB },
+};
 ```
 
 ```js
@@ -155,18 +155,18 @@ module.exports = {
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
-    description: 'A regular content type'
-    kind: 'collectionType'
+    description: 'A regular content type',
+    kind: 'collectionType',
   },
   options: {
     draftAndPublish: true,
   },
   pluginOptions: {
     'content-manager': {
-      visible: false
+      visible: false,
     },
     'content-type-builder': {
-      visible: false
+      visible: false,
     }
   },
   attributes: {
@@ -174,7 +174,7 @@ module.exports = {
       type: 'string',
       min: 1,
       max: 50,
-      configurable: false
+      configurable: false,
     },
   }
 };
@@ -195,7 +195,7 @@ const routes = require('./routes');
 
 module.exports = () => ({
   routes,
-  type: 'content-api' // can also be 'admin-api' depending on the type of route
+  type: 'content-api', // can also be 'admin-api' depending on the type of route
 });
 ```
 
@@ -386,11 +386,11 @@ module.exports = (options, { strapi }) => {
 
 Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
 
-While top-level getters imply chaining functions, global getters are syntactic sugar that allow direct access using a feature's uid:
+While top-level getters imply chaining functions, global getters are syntactic sugar that allows direct access using a feature's uid:
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
-strapi.api('api-name').controller('controller-name')
+strapi.api['api-name'].controller('controller-name')
 strapi.plugin('plugin-name').controller('controller-name')
 
 // Access an API or a plugin controller using a global getter

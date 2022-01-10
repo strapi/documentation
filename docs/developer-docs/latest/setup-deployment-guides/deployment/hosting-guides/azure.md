@@ -194,8 +194,8 @@ For Azure managed databases you can use the following:
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MySQL >= 5.6
-- MariaDB >= 10.1
+- MySQL >= 5.7.8
+- MariaDB >= 10.2.7
 - PostgreSQL >= 10
 - SQLite >= 3
 

@@ -118,7 +118,7 @@ Within the bootstrap function, a plugin can:
 ```js
 module.exports = () => {
   return {
-    //...
+    // ...
     bootstrap(app) {
       // execute some bootstrap code
       app
@@ -290,7 +290,7 @@ export default {
 	   { id: String, intlLabel: { id: String, defaultMessage: String }, // Section to create
 		 [ // links
 			 {
-			   intLabel: { id: String, defaultMessage: String },
+			   intlLabel: { id: String, defaultMessage: String },
 			   id: String,
 			   to: String,
 			   Component: myComponent,
@@ -325,7 +325,7 @@ export default {
 		app.addSettingsLink(
 		 'global', // id of the section to add the link to
 			{
-				intLabel: { id: String, defaultMessage: String },
+				intlLabel: { id: String, defaultMessage: String },
 				id: String,
 				to: String,
 				Component: myComponent,
@@ -359,9 +359,9 @@ export default {
   bootstrap(app) {
     // Adding several links at once
     app.addSettingsLinks(
-      'global', // id of the section to addd the link in
+      'global', // id of the section to add the link in
         [{
-          intLabel: { id: String, defaultMessage: String },
+          intlLabel: { id: String, defaultMessage: String },
           id: String,
           to: String,
           Component: myComponent,
@@ -389,7 +389,7 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 
 Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md):
 
-<!-- TODO: maybe add screenshots once design system is ready? -->
+<!-- TODO: maybe add screenshots once the design system is ready? -->
 
 | View      | Injection zone name & Location                                                                                                                                            |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -531,11 +531,9 @@ Reducers are [Redux](https://redux.js.org/) reducers that can be used to share s
 * The application state is updated frequently.
 * The logic to update that state may be complex.
 
-A reducer is declared as an object with this syntax:
-
-`['pluginId_reducerName']: function() {}`
-
 Reducers can be added to a plugin interface with the `addReducers()` function during the [`register`](#register) lifecycle.
+
+A reducer is declared as an object with this syntax:
 
 **Example:**
 
@@ -544,6 +542,7 @@ Reducers can be added to a plugin interface with the `addReducers()` function du
 import { exampleReducer } from './reducers'
 
 const reducers = {
+  // Reducer Syntax
   [`${pluginId}_exampleReducer`]: exampleReducer
 }
 
@@ -632,7 +631,7 @@ export default {
 			    cellFormatter: props => <div>Object.keys(props).map(key => <p key={key}>key</p>)</div>,
 			  },
 			];
-    };
+    });
   },
 }
 ```

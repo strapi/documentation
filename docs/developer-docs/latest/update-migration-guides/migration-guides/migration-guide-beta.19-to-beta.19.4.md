@@ -18,7 +18,7 @@ Update your package.json accordingly:
 
 ```json
 {
-  //...
+  // ...
   "dependencies": {
     "strapi": "3.0.0-beta.19.4",
     "strapi-admin": "3.0.0-beta.19.4",

@@ -290,7 +290,7 @@ This option tells strapi where it is hosted and is useful for generating links o
 
 ```js
 module.exports = {
-  //...
+  // ...
   url: `https://domain.com:1337`,
 };
 ```
@@ -299,7 +299,7 @@ What you can now do is add a path to the url to host strapi in a sub path of you
 
 ```js
 module.exports = {
-  //...
+  // ...
   url: `https://domain.com:1337/my-strapi-api`,
 };
 ```
@@ -334,7 +334,7 @@ The `url` option can either be a relative path: `/admin-panel` or an absolute ur
 
 ```js
 module.exports = {
-  //...
+  // ...
   admin: {
     url: '/dashboard',
   },

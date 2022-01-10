@@ -117,14 +117,13 @@ const sidebar = {
         },
         {
           title: 'Deployment',
-          path: '/developer-docs/latest/setup-deployment-guides/deployment',
+          path: '/developer-docs/latest/setup-deployment-guides/deployment.html',
           collapsable: true,
           initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
           children: [
             {
               title: 'Hosting Provider Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
               collapsable: true,
               children: [
                 [
@@ -168,8 +167,7 @@ const sidebar = {
             },
             {
               title: 'Optional Software Guides',
-              path:
-                '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
+              path: '/developer-docs/latest/setup-deployment-guides/deployment.html#optional-software-guides',
               collapsable: true,
               children: [
                 [
@@ -200,7 +198,7 @@ const sidebar = {
         {
           title: 'Back-end customization',
           collapsable: true,
-          path: '/developer-docs/latest/development/backend-customization',
+          path: '/developer-docs/latest/development/backend-customization.html',
           children: [
             ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
             ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
@@ -235,12 +233,41 @@ const sidebar = {
         {
           title: 'APIs Reference',
           collapsable: true,
+          initialOpenGroupIndex: -1,
           sidebarDepth: 1,
           children: [
-            [
-              '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md',
-              'REST API',
-            ],
+            {
+              title: 'REST API',
+              path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
+              collapsable: true,
+              initialOpenGroupIndex: -1,
+              // sidebarDepth: 3,
+              children: [
+                {
+                  title: 'API Parameters',
+                  collapsable: true,
+                  initialOpenGroupIndex: -1,
+                  children: [
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
+                      'Filtering, Locale, and Publication State'
+                    ],
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
+                      'Population & Field Selection'
+                    ],
+                    [
+                      '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
+                      'Sort & Pagination'
+                    ],
+                  ]
+                },
+                [
+                  '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
+                  'API Endpoints'
+                ]
+              ],
+            },
             [
               '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
               'GraphQL API',
@@ -277,7 +304,7 @@ const sidebar = {
             {
               title: 'Entity Service API',
               path:
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html',
               collapsable: true,
               children: [
                 [
@@ -792,20 +819,20 @@ module.exports = {
                 link: '/developer-docs/latest/setup-deployment-guides/installation.html',
               },
               {
-                text: 'Plugins',
-                link: '/developer-docs/latest/plugins/plugins-intro.html',
-              },
-              {
                 text: 'Development',
                 link: '/developer-docs/latest/development/backend-customization.html',
               },
               {
-                text: 'Update & Migration',
-                link: '/developer-docs/latest/update-migration-guides/update-version.html',
+                text: 'Developer Resources',
+                link: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
               },
               {
-                text: 'Developer Resources',
-                link: '/developer-docs/latest/developer-resources/content-api/content-api.html',
+                text: 'Plugins',
+                link: '/developer-docs/latest/plugins/plugins-intro.html',
+              },
+              {
+                text: 'Update & Migration',
+                link: '/developer-docs/latest/update-migration-guides/update-version.html',
               },
             ],
           },
@@ -827,8 +854,7 @@ module.exports = {
               },
               {
                 text: 'Users, Roles, and Permissions',
-                link:
-                  '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+                link: '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
               },
               {
                 text: 'Plugins',
@@ -838,6 +864,15 @@ module.exports = {
                 text: 'General Settings',
                 link: '/user-docs/latest/settings/managing-global-settings.html',
               },
+            ],
+          },
+          {
+            text: 'Older versions',
+            items: [
+              {
+                text: 'v3 Documentation',
+                link: 'https://docs-v3.strapi.io'
+              }
             ],
           },
         ],
