@@ -72,7 +72,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 3. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
 
     ```js
-    // path: /my-app/config/plugins.js
+    // path: ./config/plugins.js
 
     module.exports = {
       // ...
@@ -367,7 +367,7 @@ export default Wysiwyg;
 The last step is to register the field `wysiwyg` with the WYSIWYG component with `addFields()`.
 
 ```js
-// path: .src/plugins/wysiwyg/admin/src/index.js
+// path: ./src/plugins/wysiwyg/admin/src/index.js
 
 import pluginPkg from "../../package.json";
 import Wysiwyg from "./components/Wysiwyg";
