@@ -128,6 +128,12 @@ Once this step is over all we need to do is to create our new WYSIWYG, which wil
 
 In this part we will create 3 components:
 
+- a `MediaLib` component used to insert media in the editor
+- an `Editor` component that uses [CKEditor](https://ckeditor.com/) as the WYSIWYG editor
+- a `Wysiwyg` component to wrap the CKEditor
+
+The following code examples can be used to implement the logic for the 3 components:
+
 ::: details Example of a MediaLib component used to insert media in the editor:
 
 ```js
