@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "yarn create:config-file && vuepress dev",
-    "dev:developer": "yarn create:dev-config-file && vuepress dev",
+    "dev:dev": "yarn create:dev-config-file && vuepress dev",
     "dev:user": "yarn create:user-config-file && vuepress dev",
     "build": "yarn create:config-file && vuepress build",
     "check-links": "vuepress check-md",
