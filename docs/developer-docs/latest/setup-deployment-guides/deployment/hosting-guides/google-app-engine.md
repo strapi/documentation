@@ -161,10 +161,7 @@ and so we don't deploy local build artifacts, cache files and so on by including
 the `.gitignore` entries.
 
 ### Adding `.gitkeep` to database folder
-Because Google App Engine does not give `mkdir` permission,
-We need to keep database folder when deploy codes.
-
-`Path: ./database/migrations/`.
+Because Google App Engine does not give `mkdir` permissions and the `database/migrations` folder is required for deployments. Make sure `git` keeps track of the `database/migrations` folder by adding a `.gitkeep` file to the folder. Use the following command:
 
 ```bash
 touch .gitkeep
@@ -180,9 +177,9 @@ yarn add pg
 
 Adding the production database configuration for connect to GCP SQL.
 
-`Path: ./config/env/production/database.js`.
-
 ```js
+// path: ./config/env/production/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
