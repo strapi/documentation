@@ -87,14 +87,14 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 4. Install the required dependencies:
 
     <code-group>
-      <code-block title="yarn">
+      <code-block title="YARN">
       ```bash
       cd src/plugins/wysiwyg
       yarn add @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
       ```
       </code-block>
 
-      <code-block title="npm">
+      <code-block title="NPM">
       ```bash
       cd src/plugins/wysiwyg
       npm install @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
@@ -105,7 +105,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 5. Start the application with the front-end development mode:
 
     <code-group>
-      <code-block title="yarn">
+      <code-block title="YARN">
       ```bash
       # Go back to the application root folder
       cd ../../..
@@ -113,7 +113,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
       ```
       </code-block>
 
-      <code-block title="npm">
+      <code-block title="NPM">
       ```bash
       # Go back to the application root folder
       cd ../../..
