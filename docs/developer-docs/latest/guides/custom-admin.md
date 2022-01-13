@@ -136,7 +136,7 @@ npm run develop -- --watch-admin
 
 ::::
 
-If you visit the entry list view of your content type, nothing will have changed. And it's normal!
+If you visit the entry list view of your content-type, nothing will have changed. And it's normal!
 
 ### Customize the file
 

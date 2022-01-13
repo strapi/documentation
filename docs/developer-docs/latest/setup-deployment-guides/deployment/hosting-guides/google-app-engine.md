@@ -37,7 +37,7 @@ When the setup completes, register an admin user using the form which opens in t
 
 The `sqlite` database is created at `.tmp/data.db`.
 
-Login, but don't add content types yet. Close the browser. Quit the running app.
+Login, but don't add content-types yet. Close the browser. Quit the running app.
 
 ### Initial commit
 

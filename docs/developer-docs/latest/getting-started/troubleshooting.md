@@ -30,7 +30,7 @@ Strapi does not currently provide any tools for migrating or deploying your data
 
 With the release of the Strapi beta version a fundamental change occurred in that the "end-users" (REST and GraphQL users) were split from the Administrators (admin panel users) in such a way that normal users can not be given access to the admin panel. If you would like to read more on why this change was done, you can read the Strapi [blog post](https://strapi.io/blog/why-we-split-the-management-of-the-admin-users-and-end-users) about it.
 
-Strapi has released the new Admin & Permissions (RBAC - Role based access control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can now also give roles specific permissions for things like content-types, single-types, plugins, and settings.
+Strapi has released the new Admin & Permissions (RBAC - Role based access control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can now also give roles specific permissions for things like content-types, single types, plugins, and settings.
 
 When this new plugin release, there is two versions:
 

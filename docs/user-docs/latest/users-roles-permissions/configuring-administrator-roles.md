@@ -30,7 +30,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
-- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content type are accessible, these fields are automatically fully accessible with all permissions.
+- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content-type are accessible, these fields are automatically fully accessible with all permissions.
 - Custom conditions defined for a specific permission are also only available for the Enterprise Edition.
 
 :::
@@ -86,15 +86,15 @@ The permissions area of an administrator role editing interface allows to config
 
 #### Collection and Single types
 
-The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
+The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content-type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
 
 To configure Collection or Single types permissions for a role:
 
 1. Go to the Collection types or Single types category of the permissions table.
-2. Tick the box on the left of the name of the content type to give access to. By default, all actions can be performed for all fields of the content type.
+2. Tick the box on the left of the name of the content-type to give access to. By default, all actions can be performed for all fields of the content-type.
 3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
-4. (optional) Click the name of the content type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
-5. Repeat steps 2 to 4 for each content type available to which the role should give access.
+4. (optional) Click the name of the content-type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
+5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
 #### Plugins and Settings <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>

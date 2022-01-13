@@ -170,7 +170,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 
 ![GIF: Create Restaurant collection type in Content-Type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
-Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
 
 #### Create a "Category" collection type
 
