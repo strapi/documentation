@@ -161,7 +161,7 @@ and so we don't deploy local build artifacts, cache files and so on by including
 the `.gitignore` entries.
 
 ### Adding `.gitkeep` to database folder
-Because Google App Engine does not give `mkdir` permissions and the `database/migrations` folder is required for deployments. Make sure `git` keeps track of the `database/migrations` folder by adding a `.gitkeep` file to the folder. Use the following command:
+Google App Engine does not give `mkdir` permissions and the `database/migrations` folder is required for deployments. Make sure `git` keeps track of the `database/migrations` folder by adding a `.gitkeep` file to the folder. Use the following command:
 
 ```bash
 touch .gitkeep
