@@ -7,15 +7,33 @@ description: Migrate your plugins from v3.6.8 to v4.0 with step-by-step instruct
 
 # v4 Plugins Migration Guide
 
-Here you will find all the steps you need to take to migrate your plugin with as little friction as possible. To expedite the process we've also included some codemods, or code that modifies your code automatically.
+The goal of this guide is to get a v3 plugin up and running on v4 as fast as possible by resolving breaking changes. It is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#server-api-for-plugins) and [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#admin-panel-api-for-plugins) documentations.
 
-The goal of this guide is to get a v3 plugin up and running on v4 as fast as possible by resolving breaking changes. It is not an exhaustive resource for the v4 plugin API. For more information, you should consult the v4 plugin API documentation: [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#server-api-for-plugins), [Admin API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#admin-panel-api-for-plugins)
+Updating a plugin consists in:
 
-When possible, this guide suggests the use of codemods. To use the codemods you will need to clone this repository and run all commands provided from its root:
+- [enabling the plugin](#enable-the-plugin)
+- [updating the folder structure](#update-the-folder-structure)
+- [migrating the front end](#migrate-the-front-end)
+- [migrating the back end](#migrate-the-back-end)
+
+Some of these steps can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
+
+| Action                              | Migration type                                                                                             |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Enable the plugin                   | [Manual](#enable-the-plugin)                                                                               |
+| Update the folder structure         | [Automatic](#update-the-folder-structure-automatically) or [manual](#update-the-folder-structure-manually) |
+| Migrate the back end of the plugin  | Partially automatic (see [Migrate the backend](#migrate-the-back-end))                                      |
+| Migrate the front end of the plugin | [Manual](#migrate-the-front-end)                                                                      |
+
+<br/>
+
+::: prerequisites
+To use the codemods, clone the [Strapi codemods repository](https://github.com/strapi/codemods) by running the following command in your terminal:
 
 ```bash
 git clone https://github.com/strapi/codemods.git
 ```
+:::
 
 ## 1. Enable your plugin
 
