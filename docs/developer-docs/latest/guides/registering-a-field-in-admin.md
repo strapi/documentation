@@ -370,7 +370,7 @@ export default Wysiwyg;
 
 ## Registering the field
 
-The last step is to register the field `wysiwyg` with the WYSIWYG component with `addFields()`.
+The last step is to register the `wysiwyg` field with the `Wysiwyg` component using `addFields()`. Replace the content of the `admin/src/index.js` field of the plugin with the following code:
 
 ```js
 // path: ./src/plugins/wysiwyg/admin/src/index.js
