@@ -10,7 +10,7 @@ canonicalUrl:
 
 The goal of this guide is to get a v3 plugin up and running on v4 as fast as possible by resolving breaking changes. It is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#server-api-for-plugins) and [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#admin-panel-api-for-plugins) documentations.
 
-Updating a plugin consists in:
+Migrating a plugin from Strapi v3.6.8 to v4.0.4 consists in:
 
 - [enabling the plugin](#enable-the-plugin)
 - [updating the folder structure](#update-the-folder-structure)
@@ -69,24 +69,27 @@ Disabling any plugin and adding additional configuration can be done here as wel
 
 As opposed to v3 plugins, which required a specific folder structure, v4 plugins are developed using a programmatic API.
 
-At the root of your plugin you must have the `strapi-server.js` and `strapi-admin.js` entry files. Otherwise, the folder structure is up to you. Here is an example:
+The root of the plugin folder must include a `strapi-server.js` and a `strapi-admin.js` entry files. Otherwise, the folder structure is up to you.
+
+A v4 plugin could have the following example structure:
 
 ```jsx
-/plugin
--- /admin
----- /components
----- /pages
----- // etc...
----- index.js
--- /server
----- /config
----- /controllers
----- /routes
----- bootstrap.js
----- // etc...
----- index.js
--- strapi-server.js // require('./server')
--- strapi-admin.js // require('./admin')
+my-plugin
+└─ admin
+│  ├─ components
+│  ├─ pages
+│  ├─ // more folders
+│  └─ index.js
+├─ server
+│  ├─ config
+│  ├─ controllers
+│  ├─ routes
+│  ├─ bootstrap.js
+│  ├─ // more folders and files
+│  └─ index.js
+├─ strapi-admin.js // require('./admin')
+└─ strapi-server.js // require('./server')
+
 ```
 
 ### Update the folder structure automatically
