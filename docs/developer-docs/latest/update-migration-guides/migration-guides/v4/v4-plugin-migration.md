@@ -610,6 +610,6 @@ export default {
 };
 ```
 
-## Conclusion
-
+::: strapi Codemods support & community contributions
 If you have any issues with the codemods or would like to contribute to the project please [create an issue](https://github.com/strapi/codemods/issues) or [open a pull request](https://github.com/strapi/codemods/pulls).
+:::
