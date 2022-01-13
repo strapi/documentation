@@ -79,7 +79,7 @@ axios
 
 ### JWT configuration
 
-You can configure option for the JWT generation by using the plugin config `./config/plugins.js` file. See more information about this file in our [configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) section.
+You can configure the JWT generation by using the [plugins configuration file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md).
 We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
 
 Available options:
