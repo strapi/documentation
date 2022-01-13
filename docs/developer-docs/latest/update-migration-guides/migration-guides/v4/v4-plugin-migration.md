@@ -38,19 +38,32 @@ git clone https://github.com/strapi/codemods.git
 
 ## Enable the plugin
 
-A v3 plugin was enabled if it was installed or it was found in the `plugins` directory. In v4, if a plugin is installed (in the `package.json` dependencies), it is automatically enabled. However, while developing a local plugin you must explicitly enable the plugin in the `./config/plugins.js` file of the Strapi application. Disabling any plugin and adding additional config can be done here as well. Here's an example for a local plugin:
+A v3 plugin was enabled if it was manually installed or found in the `plugins` directory.
 
-```jsx
+In Strapi v4:
+
+- If a plugin is installed via the [automatic plugins discovery](/developer-docs/latest/plugins/plugins-intro.md#automatic-plugins-discovery) feature, it is automatically enabled.
+- While developing a local plugin, the plugin must explicitly be enabled in [the `./config/plugins.js` file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) of the Strapi application.
+
+A `my-plugin` plugin is enabled with the following code:
+
+```js
+// path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   "my-plugin": {
     enabled: true,
-    resolve: "./my-local-plugin",
+    resolve: "./path-to-my-plugin",
     config: {
-      // additional config goes here
+      // additional configuration goes here
     },
   },
 });
 ```
+:::tip
+Disabling any plugin and adding additional configuration can be done here as well (see [plugins configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) documentation).
+:::
+
 
 ## Update the folder structure
 
