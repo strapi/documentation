@@ -6,7 +6,7 @@ canonicalUrl:
 
 <!-- TODO: update SEO -->
 
-# v4 Plugins Migration Guide
+# v4 Plugin Migration Guide
 
 The goal of this guide is to get a v3 plugin up and running on v4 as fast as possible by resolving breaking changes. It is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#server-api-for-plugins) and [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#admin-panel-api-for-plugins) documentations.
 
