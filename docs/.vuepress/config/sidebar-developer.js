@@ -401,7 +401,24 @@ const developer = [
     collapsable: false,
     children: [
       ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
-      ['/developer-docs/latest/update-migration-guides/migration-guides.md', 'Migration'],
+      {
+        title: 'Migration',
+        path: '/developer-docs/latest/update-migration-guides/migration-guides.html',
+        collapsable: true,
+        children: [
+          {
+            title: 'v4',
+            path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v4-stable-guides',
+            collapsable: true,
+            children: [
+              ['/developer-docs/latest/update-migration-guides/migration-guides/v4/v4-plugin-migration.html', 'Plugins migration guide'],
+              // ['', 'Code migration guide'],
+              // ['', 'Data migration guide'],
+            ]
+          },
+          ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-stable-guides', 'v3 stable'],
+        ]
+      }
     ],
   },
   {
