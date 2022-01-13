@@ -36,7 +36,7 @@ git clone https://github.com/strapi/codemods.git
 ```
 :::
 
-## 1. Enable your plugin
+## Enable the plugin
 
 A v3 plugin was enabled if it was installed or it was found in the `plugins` directory. In v4, if a plugin is installed (in the `package.json` dependencies), it is automatically enabled. However, while developing a local plugin you must explicitly enable the plugin in the `./config/plugins.js` file of the Strapi application. Disabling any plugin and adding additional config can be done here as well. Here's an example for a local plugin:
 
@@ -52,7 +52,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-## 2. Update the folder structure
+## Update the folder structure
 
 As opposed to v3 plugins, which required a specific folder structure, v4 plugins are developed using a programmatic API.
 
@@ -76,7 +76,7 @@ At the root of your plugin you must have the `strapi-server.js` and `strapi-admi
 -- strapi-admin.js // require('./admin')
 ```
 
-### Automatic migration with codemod
+### Update the folder structure automatically
 
 To make this update, you can use the following codemod to move files and folders into a v4 plugin structure:
 
@@ -96,7 +96,7 @@ The codemod creates the two entry files `strapi-server.js` and `strapi-admin.js`
 
 </aside>
 
-### Manual migration
+### Update the folder structure manually
 
 Manually updating the folder structure requires the following updates:
 
@@ -286,7 +286,7 @@ module.exports = {
 module.exports = require("./admin/src").default;
 ```
 
-## 3. Migrate the back end
+## Migrate the back end
 
 ### Update imports
 
@@ -425,7 +425,7 @@ config: {
 }
 ```
 
-## 4. Migrate the front end
+## Migrate the front end
 
 ### Register the plugin
 
