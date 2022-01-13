@@ -91,6 +91,8 @@ Available options:
 **Path —** `./config/plugins.js`
 
 ```js
+// path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   'users-permissions': {
