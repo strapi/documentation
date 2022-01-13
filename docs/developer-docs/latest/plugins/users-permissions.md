@@ -88,7 +88,6 @@ Available options:
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
-**Path —** `./config/plugins.js`
 
 ```js
 // path: ./config/plugins.js
