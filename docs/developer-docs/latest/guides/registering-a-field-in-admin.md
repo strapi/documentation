@@ -395,5 +395,6 @@ export default {
 };
 ```
 
-And _voilà_, if you create a new `collectionType` or a `singleType` with a `richtext` field you will see the implementation of [CKEditor](https://ckeditor.com/ckeditor-5/) instead of the default WYSIWYG.
+And _voilà_, if you [create a new collection type or single type](/user-docs/latest/content-types-builder/creating-new-content-type.md) with a [rich text field](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#rich-text) you will see the implementation of [CKEditor](https://ckeditor.com/ckeditor-5/) instead of the default WYSIWYG:
+
 ![Screenshot of Content Manager using CKEditor for rich text fields](../assets/guides/register-field-admin/ckeditor-rich-text.png)
