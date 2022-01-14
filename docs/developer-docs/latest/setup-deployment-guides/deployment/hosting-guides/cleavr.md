@@ -60,6 +60,5 @@ Check the following areas for any additional configs you may need to make:
 Once you have your web app configured, navigate to the web app deployment tab and click Deploy. 
 
 If you'd like to use GitHub Actions to build your project, you can enable the GitHub Actions integration from the web app settings section. However, using GitHub Actions will likely require you to add your environment variables to the PM2 Ecosystem > ENV section.
-will likely require you to add your environment variables to the PM2 Ecosystem > ENV section. 
 
 Refer to the Cleavr [guide](https://docs.cleavr.io/guides/strapi-cms/) and [forum](https://forum.cleavr.io/) if you run across any issues. 
