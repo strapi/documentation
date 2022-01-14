@@ -8,7 +8,6 @@ description: Learn in this guide how to deploy your Strapi application to popula
 This guide explains how to deploy your Strapi projects to a VPS (virtual private server) using [Cleavr](https://cleavr.io).
 
 Cleavr is a server management console that integrates with multiple VPS providers (Hetzner, Linode, Vultr, DigitalOcean, UpCloud, AWS, and custom) and helps you configure servers to host and deploy your Strapi projects.
-and helps you configure servers to host and deploy your Strapi projects.
 
 Cleavr includes the following features:
 
