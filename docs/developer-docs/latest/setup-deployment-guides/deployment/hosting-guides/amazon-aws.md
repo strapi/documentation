@@ -603,7 +603,7 @@ http
       - Port Range: `8080`
       - Source: `Custom` `0.0.0.0/0, ::/0`
     - Then `Save`
-  - If you have the `ufw` firewall enabled, as recommended by steps below, you will need to configure your settings to include `port 8080`:
+  - If the `ufw` firewall is enabled, configure settings to include `port 8080` by running the following command:
 
 ```bash
 sudo ufw allow 8080/tcp
