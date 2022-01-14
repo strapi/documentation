@@ -21,7 +21,7 @@ Cleavr includes the following features:
 For more information, consult [Cleavr's Strapi deployment guide](https://docs.cleavr.io/guides/strapi-cms)
 :::
 
-### Prerequisites
+::: prerequisites
 - Your [cleavr.io](https://cleavr.io) account is set up and connected to your VPS and VC providers
 - You have a Strapi project ready to deploy
 - You have an existing provisioned server
