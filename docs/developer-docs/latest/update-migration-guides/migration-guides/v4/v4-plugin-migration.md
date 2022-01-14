@@ -17,7 +17,7 @@ Migrating a plugin from Strapi v3.6.8 to v4.0.4 consists in:
 - [migrating the front end](#migrate-the-front-end)
 - [migrating the back end](#migrate-the-back-end)
 
-Some of these steps can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
+Some of the actions required for plugin migration can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
 | Action                              | Migration type                                                                                             |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -26,14 +26,13 @@ Some of these steps can be performed by scripts that automatically modify code (
 | Migrate the back end of the plugin  | Partially automatic (see [Migrate the backend](#migrate-the-back-end))                                      |
 | Migrate the front end of the plugin | [Manual](#migrate-the-front-end)                                                                      |
 
-<br/>
-
 ::: prerequisites
-To use the codemods, clone the [Strapi codemods repository](https://github.com/strapi/codemods) by running the following command in your terminal:
+To use the codemods for automatic migration, the [Strapi codemods repository](https://github.com/strapi/codemods) should be cloned by running the following command in a terminal:
 
 ```bash
 git clone https://github.com/strapi/codemods.git
 ```
+
 :::
 
 ## Enable the plugin
