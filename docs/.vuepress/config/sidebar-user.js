@@ -32,11 +32,11 @@ const user = [
   },
   {
     collapsable: false,
-    title: 'Content-Type Builder',
+    title: 'Content-type Builder',
     children: [
       [
         '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-        'Introduction to the Content-Type Builder',
+        'Introduction to the Content-type Builder',
       ],
       [
         '/user-docs/latest/content-types-builder/creating-new-content-type',

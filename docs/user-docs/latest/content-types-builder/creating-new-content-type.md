@@ -1,22 +1,22 @@
 ---
 title: Creating Content-Types - Strapi User Guide
-description: The Content-Type Builder allows to create new content-types (single and collection types).
+description: The Content-type Builder allows to create new content-types (single and collection types).
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/creating-new-content-type.html
 ---
 
 # Creating content-types
 
-::: callout The Content-Type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+::: callout The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
-The Content-Type Builder allows to create new content-types: single and collection types. Although they are not proper content-types as they cannot exist independently, components can also be created through the Content-Type Builder, in the same way as collection and single types.
+The Content-type Builder allows to create new content-types: single and collection types. Although they are not proper content-types as they cannot exist independently, components can also be created through the Content-type Builder, in the same way as collection and single types.
 
 ## Creating a new content-type
 
 ![Content-type creation](../assets/content-types-builder/content-type-creation.png)
 
-Content types are created from the Content-Type Builder's Collection types and Single types categories, both displayed in the Content-Type Builder subnavigation.
+Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder subnavigation.
 
 To create a new content-type:
 
@@ -36,18 +36,18 @@ To create a new content-type:
 8. Click on the **Save** button.
 
 ::: caution
-New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-Type Builder, and cannot be used in the Content Manager.
+New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-type Builder, and cannot be used in the Content Manager.
 :::
 
 ## Creating a new component
 
 ![Component creation](../assets/content-types-builder/component-creation.png)
 
-Components are created from the same-named category of the Content-Type Builder's subnavigation.
+Components are created from the same-named category of the Content-type Builder's subnavigation.
 
 To create a new component:
 
-1. In the Components category of the Content-Type Builder subnavigation, click on **Create a new component**.
+1. In the Components category of the Content-type Builder subnavigation, click on **Create a new component**.
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.

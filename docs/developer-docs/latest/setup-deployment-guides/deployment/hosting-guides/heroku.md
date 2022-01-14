@@ -321,7 +321,7 @@ If you see the Strapi Welcome page, you have correctly set-up, configured and de
 You can now continue with the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md), if you have any questions on how to proceed.
 
 ::: caution
-For security reasons, the Content-Type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
+For security reasons, the Content-type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
 :::
 
 ### Project updates

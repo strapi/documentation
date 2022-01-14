@@ -18,7 +18,7 @@ If the feature is deactivated while contents are saved as drafts, they will auto
 
 To deactivate the draft and publish feature for a content-type:
 
-1. Go to the Plugins > Content-Type Builder.
+1. Go to the Plugins > Content-type Builder.
 2. Select the collection or single type for which you want the draft and publish feature to be deactivated.
 3. Click on the Edit <Fa-PencilAlt /> button to access the content-type's configurations.
 4. Click on the "Advanced Settings" tab.
@@ -26,7 +26,7 @@ To deactivate the draft and publish feature for a content-type:
 6. Click on the **Finish** button to confirm the deactivation of the feature.
 
 ::: tip
-It is also possible to activate or deactivate the feature when creating a new content-type. To do so: after clicking on the **Create new collection/single type** button in the Content-Type Builder, follow steps 4 and 5 from the procedure above.
+It is also possible to activate or deactivate the feature when creating a new content-type. To do so: after clicking on the **Create new collection/single type** button in the Content-type Builder, follow steps 4 and 5 from the procedure above.
 :::
 
 ![Deactivate Draft & Publish](../assets/concepts/draft-publish/deactivating_draft_publish.png)

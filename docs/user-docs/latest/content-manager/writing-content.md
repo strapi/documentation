@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-co
 
 # Writing content
 
-In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md).
+In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md).
 
 ![Edit view to write content](../assets/content-manager/edit-view.png)
 
