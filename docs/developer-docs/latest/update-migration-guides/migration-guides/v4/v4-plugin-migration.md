@@ -80,9 +80,7 @@ In Strapi v4:
 
 - Plugins are developed using a programmatic API, which gives flexibility in the folder structure.
 - The root of the plugin folder must include a `strapi-server.js` and a `strapi-admin.js` entry files, for the [Server API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) and [Admin Panel API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md), respectively.
-- The rest of the folder structure is up to you, as long as `strapi-server.js` and `strapi-admin.js` are aware of the files.
-
-The folder structure of a v3 plugin can be migrated to a v4 plugin either automatically or manually.
+- The rest of the folder structure is up to you, as long as everything is imported into `strapi-admin.js` and `strapi-server.js`.
 
 ::: details Example v4 plugin structure
 
@@ -106,51 +104,63 @@ my-plugin
 
 :::
 
+The folder structure of a v3 plugin can be migrated to a v4 plugin either [automatically](#updating-the-folder-structure-automatically) or [manually](#updating-the-folder-structure-manually).
 
 ### Update the folder structure automatically
 
-To make this update, you can use the following codemod to move files and folders into a v4 plugin structure:
+A codemod can be used to move files and folders into a v4 plugin structure.
 
-```jsx
-node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> [path-for-v4-plugin]
+To execute this codemod, run the following commands in a terminal:
+
+```sh
+cd <the-folder-where-the-codemods-repo-was-cloned>
+node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
 ```
 
-<aside>
-ℹ️ This codemod will create a new v4 plugin leaving your v3 plugin in place. We recommend confirming the v4 version of your plugin is working properly before deleting the v3 version.
+The codemod:
 
-</aside>
+- creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
+- organizes files and folders into `/server` and `/admin` directories respectively,
+- changes `models` to `contentTypes`,
+- and exports `services` as functions.
 
-The codemod creates the two entry files `strapi-server.js` and `strapi-admin.js`, organizes files and folders into `/server` and `/admin` directories respectively, changes `models` to `contentTypes` , and exports `services` as functions.
+::: caution
+This codemod will create a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of your plugin is working properly before deleting the v3 version.
+:::
 
-<aside>
-ℹ️ For a more detailed explanation of what the codemod does, consult the check list below
-
-</aside>
 
 ### Update the folder structure manually
 
 Manually updating the folder structure requires the following updates:
 
-1. create a server directory
-2. move controllers, services and middlewares to the server directory
-3. move the bootstrap function
+1. [create a `server` directory](#create-a-server-directory)
+2. [move controllers, services and middlewares](#move-controllers-services-and-middlewares) to the `server` directory
+3. move the `bootstrap` function
 4. move the routes
 5. move the policies
-6. create strapi-server.js and strapi-admin entry files
+6. create `strapi-server.js` and `strapi-admin.js` entry files
 
-If you prefer to make these changes yourself, you can use the checklist below to help migrate your plugin.
-
-:::note
-💡 This is only a suggested folder structure.  You can  organize the plugin however you want as long as everything is imported to `strapi-admin.js` and `strapi-server.js`
-:::
+These different steps are detailed in the following subsections. The folder structure is given as an example, and everything can be organized as you like as long as `strapi-server.js` and `strapi-admin.js` exist and import all the required files.
 
 #### Create a `server` directory
 
-<!-- TODO: add explanations -->
+The `server` folder includes everything related to the back-end of the plugin. To create it at the root of the plugin folder, run the following command in a terminal:
+
+```sh
+cd <my-plugin-name>
+mkdir server
+```
 
 #### Move controllers, services, and middlewares
 
-Move `controllers`, `services` , and `middlewares` to `/server` . For each directory add an `index.js` file that exports all files in that folder. Make sure that each file in these directories exports a function taking `{strapi}` as a parameter and returns an object. For example the `controllers` directory would look like this:
+Though the organization of files and folders is flexible in v4 plugins, it is recommended to create distinct `controllers`, `services`, and `middlewares` folders inside a `server` folder.
+
+Plugin files and folders in Strapi v4 should meet 2 requirements:
+
+- Each file in the `server/<subfolder-name>` should export a function taking `{strapi}` as a parameter and return an object.
+- Each of the `server/<subfolder-name>` directories should include an `index.js` file that exports all files in that folder.
+
+For example the `controllers` directory would look like this:
 
 ```jsx
 // server/controllers/my-controllerA
