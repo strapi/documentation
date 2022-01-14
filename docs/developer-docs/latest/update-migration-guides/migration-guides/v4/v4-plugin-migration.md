@@ -74,15 +74,21 @@ module.exports = ({ env }) => ({
 
 ## Update the folder structure
 
-As opposed to v3 plugins, which required a specific folder structure, v4 plugins are developed using a programmatic API.
+v3 plugins required a specific folder structure.
 
-The root of the plugin folder must include a `strapi-server.js` and a `strapi-admin.js` entry files. Otherwise, the folder structure is up to you.
+In Strapi v4:
 
-A v4 plugin could have the following example structure:
+- Plugins are developed using a programmatic API, which gives flexibility in the folder structure.
+- The root of the plugin folder must include a `strapi-server.js` and a `strapi-admin.js` entry files, for the [Server API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) and [Admin Panel API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md), respectively.
+- The rest of the folder structure is up to you, as long as `strapi-server.js` and `strapi-admin.js` are aware of the files.
+
+The folder structure of a v3 plugin can be migrated to a v4 plugin either automatically or manually.
+
+::: details Example v4 plugin structure
 
 ```jsx
 my-plugin
-└─ admin
+├─ admin
 │  ├─ components
 │  ├─ pages
 │  ├─ // more folders
@@ -96,8 +102,10 @@ my-plugin
 │  └─ index.js
 ├─ strapi-admin.js // require('./admin')
 └─ strapi-server.js // require('./server')
-
 ```
+
+:::
+
 
 ### Update the folder structure automatically
 
