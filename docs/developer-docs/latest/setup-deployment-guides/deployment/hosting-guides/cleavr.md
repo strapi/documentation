@@ -25,6 +25,7 @@ For more information, consult [Cleavr's Strapi deployment guide](https://docs.cl
 - Your [cleavr.io](https://cleavr.io) account is set up and connected to your VPS and VC providers
 - You have a Strapi project ready to deploy
 - You have an existing provisioned server
+:::
 
 ### Step 1: Add A New Site
 
