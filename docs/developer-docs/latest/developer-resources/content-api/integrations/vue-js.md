@@ -135,7 +135,7 @@ fetch('http://localhost:1337/api/restaurants', {
     </div>
     <ul v-else>
       <li v-for="restaurant in restaurants" :key="restaurant.id">
-        {{ restaurant.name }}
+        {{ restaurant.attributes.name }}
       </li>
     </ul>
   </div>
