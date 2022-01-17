@@ -15,7 +15,7 @@ On the right side of the list view interface, right above the table, a settings 
 ::: note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
 <br>
-Note also that the explanations below explain how to permanently configure which fields are displayed in the table of the list view of your collection type. It is also possible to configure the displayed fields temporarily (see [Introduction to content manager](../content-manager/introduction-to-content-manager.md)).
+Note also that the explanations below explain how to permanently configure which fields are displayed in the table of the list view of your collection type. It is also possible to configure the displayed fields temporarily (see [Introduction to Content Manager](../content-manager/introduction-to-content-manager.md)).
 :::
 
 ![Settings of a list view in the Content Manager](../assets/content-manager/content-manager_settings-list-view.png)

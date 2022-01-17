@@ -944,8 +944,8 @@ For our discord provider it will look like:
 discord: {
   enabled: false,  // make this provider disabled by default
   icon: 'comments', // The icon to use on the UI
-  key: '',  // our provider app id (leave it blank, you will fill it with the content manager)
-  secret: '', // our provider secret key (leave it blank, you will fill it with the content manager)
+  key: '',  // our provider app id (leave it blank, you will fill it with the Content Manager)
+  secret: '', // our provider secret key (leave it blank, you will fill it with the Content Manager)
   callback: '/auth/discord/callback', // the callback endpoint of our provider
   scope: [  // the scope that we need from our user to retrieve information
     'identify',
