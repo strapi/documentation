@@ -10,7 +10,7 @@ End-users are the users who consume the content that is created and managed with
 
 With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-user roles and permissions are managed in the Settings interface.
 
-The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ subnavigation.
+The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ sub navigation.
 
 ![End-users roles interface](../assets/users-permissions/end-user_roles.png)
 

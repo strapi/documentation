@@ -16,7 +16,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 
 ![Content-type creation](../assets/content-types-builder/content-type-creation.png)
 
-Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder subnavigation.
+Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder sub navigation.
 
 To create a new content-type:
 
@@ -43,11 +43,11 @@ New content-types are only considered created once they have been saved. Saving 
 
 ![Component creation](../assets/content-types-builder/component-creation.png)
 
-Components are created from the same-named category of the Content-type Builder's subnavigation.
+Components are created from the same-named category of the Content-type Builder's sub navigation.
 
 To create a new component:
 
-1. In the Components category of the Content-type Builder subnavigation, click on **Create a new component**.
+1. In the Components category of the Content-type Builder sub navigation, click on **Create a new component**.
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.

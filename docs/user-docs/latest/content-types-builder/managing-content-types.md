@@ -39,7 +39,7 @@ Content types and components can be deleted through the Content-type Builder. De
 
 To delete a content-type or component:
 
-1. In the Content-type Builder subnavigation, click on the name of the content-type or component to delete.
+1. In the Content-type Builder sub navigation, click on the name of the content-type or component to delete.
 2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](../assets/icons/edit.svg) **Edit** button on the right side of the content-type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.

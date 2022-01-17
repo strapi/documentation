@@ -18,13 +18,13 @@ From the Content-type Builder, administrators can create and manage content-type
 - Single types are content-types that can only manage one entry.
 - Components are a data structure that can be used in multiple collection types and single types.
 
-All 3 are displayed as categories in the subnavigation of the Content-type Builder. In each category are listed all content-types and components that have already been created.
+All 3 are displayed as categories in the sub navigation of the Content-type Builder. In each category are listed all content-types and components that have already been created.
 
-From each category of the Content-type Builder subnavigation, it is possible to:
+From each category of the Content-type Builder sub navigation, it is possible to:
 
 - click on an existing content-type or component to access it and edit it (see [Managing content-types](/user-docs/latest/content-types-builder/managing-content-types.md)),
 - or create a new content-type or component (see [Creating content-types](/user-docs/latest/content-types-builder/creating-new-content-type.md)).
 
 ::: tip
-Click the search icon ![Search icon](../assets/icons/search.svg) in the Content-type Builder subnavigation to find a specific collection type, single type, or component.
+Click the search icon ![Search icon](../assets/icons/search.svg) in the Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::
