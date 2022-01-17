@@ -439,7 +439,7 @@ const developer = [
             path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v4-stable-guides',
             collapsable: true,
             children: [
-              ['/developer-docs/latest/update-migration-guides/migration-guides/v4/v4-plugin-migration.html', 'Plugins migration guide'],
+              ['/developer-docs/latest/update-migration-guides/migration-guides/v4/v4-plugin-migration.html', 'Plugin migration guide'],
               // ['', 'Code migration guide'],
               // ['', 'Data migration guide'],
             ]
