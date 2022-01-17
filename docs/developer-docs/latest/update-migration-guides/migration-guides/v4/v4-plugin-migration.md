@@ -40,14 +40,14 @@ git clone https://github.com/strapi/codemods.git
 
 A v3 plugin was enabled if it was manually installed or found in the `plugins` directory.
 
-In Strapi v4:
+In v4:
 
 - If a plugin is installed via the [automatic plugins discovery](/developer-docs/latest/plugins/plugins-intro.md#automatic-plugins-discovery) feature, it is automatically enabled.
 - While developing a local plugin, the plugin must explicitly be enabled in [the `./config/plugins.js` file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) of the Strapi application.
 
 <br/>
 
-Enabling a plugin in Strapi v4 should be done manually with the following procedure:
+Enabling a plugin in v4 should be done manually with the following procedure:
 
 1. _(optional)_ Create the `./config/plugins.js` file if it does not already exist. This JavaScript file should export an object and can take the `{ env }` object as an input (see [Environment configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) documentation).
 2. Within the object exported by `./config/plugins.js`, create a key with the name of the plugin (e.g. `"my-plugin"`). The value of this key is also an object.
@@ -76,11 +76,17 @@ module.exports = ({ env }) => ({
 
 v3 plugins required a specific folder structure.
 
-In Strapi v4:
+In v4, plugins are developed using a programmatic API, which gives flexibility in the folder structure.
 
-- Plugins are developed using a programmatic API, which gives flexibility in the folder structure.
-- The root of the plugin folder must include a `strapi-server.js` and a `strapi-admin.js` entry files, for the [Server API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) and [Admin Panel API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md), respectively.
-- The rest of the folder structure is up to you, as long as everything is imported into `strapi-admin.js` and `strapi-server.js`.
+<br/>
+
+The folder structure of a v4 plugin should meet 2 requirements:
+
+- The root of the plugin folder should include a `strapi-server.js` and a `strapi-admin.js` entry files, for the [Server API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) and [Admin Panel API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md), respectively.
+
+- `strapi-admin.js` and `strapi-server.js` should import other files and folders.
+
+As long as these requirements are met, the rest of the folder structure is up to you.
 
 ::: details Example of a v4 plugin structure
 
@@ -94,6 +100,8 @@ my-plugin
 ├─ server
 │  ├─ config
 │  ├─ controllers
+│  ├─ middlewares
+│  ├─ policies
 │  ├─ routes
 │  ├─ bootstrap.js
 │  ├─ // more folders and files
@@ -105,14 +113,14 @@ my-plugin
 :::
 <br/>
 
-The folder structure of a v3 plugin can be migrated to a v4 plugin either [automatically](#updating-the-folder-structure-automatically) or [manually](#updating-the-folder-structure-manually).
+The folder structure of a v3 plugin can be migrated to a v4 plugin either [automatically](#update-the-folder-structure-automatically) or [manually](#update-the-folder-structure-manually).
 
 ### Update the folder structure automatically
 
-A [codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to update your folder structure for v4.
+A [codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to update the folder structure of a plugin for v4.
 
 ::: caution
-This codemod will create a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
+This codemod creates a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
 :::
 
 To execute the codemod, run the following commands in a terminal:
@@ -128,9 +136,12 @@ The codemod:
 
 - creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
 - organizes files and folders into a `/server` and an `/admin` folders, respectively,
-- changes `models` to `contentTypes`,
+- changes `models` to `contentTypes` and reorganizes the schema declarations,
 - and exports `services` as functions.
 
+:::note
+The [manual update section](#update-the-folder-structure-manually) details what the codemod is actually doing.
+:::
 
 ### Update the folder structure manually
 
@@ -139,9 +150,10 @@ Manually updating the folder structure requires the following updates:
 1. [create a `server` directory](#create-a-server-directory)
 2. [move controllers, services and middlewares](#move-controllers-services-and-middlewares) to the `server` directory
 3. [move the `bootstrap` function](#move-the-bootstrap-function)
-4. move the routes
-5. move the policies
-6. create `strapi-server.js` and `strapi-admin.js` entry files
+4. [move the routes](#move-routes)
+5. [move the policies](#move-policies)
+6. [move models to a content-types folder and update their schemas](#update-models-to-content-types)
+7. [create entry files](#create-entry-files) (i.e. `strapi-server.js` and `strapi-admin.js`)
 
 These different steps are detailed in the following subsections.
 
@@ -160,14 +172,20 @@ mkdir server
 
 #### Move controllers, services, and middlewares
 
-Though the organization of files and folders is flexible in v4 plugins, it is recommended to create distinct `controllers`, `services`, and `middlewares` folders inside a `server` folder.
+In Strapi v3, controllers, services, and middlewares of a plugin should follow a strict folder structure convention.
 
-Plugin files and folders in Strapi v4 should meet 2 requirements:
+In v4, the organization of files and folders for plugins is flexible. However, it is recommended to create dedicated folders for [controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers), [services](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#services), and [middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#middlewares) inside a `server` folder.
 
-- Each file in the `server/<subfolder-name>` should export a function taking the `strapi` instance (object) as a parameter and return an object.
-- Each of the `server/<subfolder-name>` folders should include an `index.js` file that exports all files in that folder.
+<br />
 
-::: details Example of a controllers folder and files
+To update the controllers, services, and middlewares of a plugin to v4, create specific subfolders in a `server` folder.
+
+Plugin files and folders in v4 should meet 2 requirements:
+
+- Each file in the `server/<subfolder-name>` should export a function taking the `strapi` instance (object) as a parameter and returning an object.
+- Each of the `server/<subfolder-name>` folders should include an `index.js` file that exports all files in the folder.
+
+::: details Example of files and folder for v4 plugin controllers
 
 ```jsx
 // path: ./src/plugins/my-plugin/server/controllers/my-controllerA.js
@@ -198,31 +216,48 @@ module.exports = {
 
 #### Move the `bootstrap` function
 
-Strapi v3 has a specific `/config/functions` folder for each plugin.
+Strapi v3 has a dedicated `/config/functions` folder for each plugin.
 
-In v4, `bootstrap` and other function files don't need to be in a `config` folder.
+In v4, the `config/` folder does not necessarily exist for a plugin and [the `bootstrap` function](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#bootstrap) and other life cycle functions can be declared elsewhere.
 
-To update the plugin to v4:
+<br/>
+
+To update the plugin's `bootstrap` function to v4:
 
 - move the `bootstrap()` function from `/server/config/functions/bootstrap.js` to `/server/bootstrap.js`
 - pass the `strapi` instance (object) as an argument
 
 ```jsx
 // path: ./src/plugins/my-plugin/server/bootstrap.js
+
 "use strict";
 
 module.exports = ({ strapi }) => ({
-  // bootstrap!
+  // bootstrap the plugin
 });
 ```
 
+<!-- ? If we keep it this way, we should probably extend the code examples with another block, showing that strapi-server.js needs to import bootstrap.js. Or is any "bootstrap" file automatically imported? -->
+
 #### Move routes
 
-- Move routes from `/config/routes.json` to `/server/routes/index.json`. Your routes should return an array or an object specifying `admin` or `content-api` routes.
-- Make sure your routes handler matches the same casing of your controller exports
+Strapi v3 declares routes for a plugin in a specific `/config/routes.json` file.
+
+In v4, the `config/` folder does not necessarily exist for a plugin and [plugin routes](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#routes) can be declared in a `routes/index.json` file.
+
+<br />
+
+To update plugin routes to v4, move routes from `/config/routes.json` to `/server/routes/index.json`.
+
+Routes in v4 should meet 2 requirements:
+
+- Routes should return an array or an object specifying `admin` or `content-api` routes.
+- Routes handler names should match the same casing as the controller exports.
+
+::: details Example of controllers export and routes in a v4 plugin
 
 ```jsx
-// server/controllers/index.js
+// path: ./src/plugins/my-plugin/server/controllers/index.js
 
 "use strict";
 
@@ -236,7 +271,7 @@ module.exports = {
 ```
 
 ```jsx
-// server/routes/index.js
+// path: ./src/plugins/my-plugin/server/routes/index.js
 
 module.exports = [
   {
@@ -249,47 +284,68 @@ module.exports = [
 ];
 ```
 
+:::
+
 #### Move policies
 
-- Move policies from `/config/policies` to `/server/policies/<policyName>.js`, add an `index.js` file to the directory that exports all files in the folder.
+Strapi v3 declares policies for a plugin in a specific `/config/policies` folder.
 
-#### Move & rename models to content-types
+In v4, the `config/` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies) can be declared in dedicated files found under `/server/policies`.
 
-- Move / rename the `models` directory to `/server/content-types`
+<br/>
 
-  - Move / rename each model's `<modelName>.settings.json` to `/server/content-types/<contentTypeName>/schema.json`
+To update plugin policies to v4:
 
-    - Update the info object on each `schema.json`
+- move policies from `/config/policies` to `/server/policies/<policyName>.js`
+- add an `index.js` file to the folder and make sure it exports all files in the folder.
+
+#### Update models to content-types
+
+Strapi v3 declares plugin content-types in a `models/` folder.
+
+In v4, [plugin content-types](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types) should be declared in a `/server/content-types` folder and [schemas](/developer-docs/latest/development/backend-customization/models.md#model-schema) need to be updated with some new keys.
+
+<br/>
+
+To update content-types to v4:
+
+1. Move/rename the `models` folder to `/server/content-types`.
+2. Move/rename each model's `<modelName>.settings.json` file to `/server/content-types/<contentTypeName>/schema.json`.
+3. In each `<contentTypeName>/schema.json` file, update [the `info` object](/developer-docs/latest/development/backend-customization/models.md#model-information), which now requires declaring the 3 new `singularName`, `pluralName` and `displayName` keys and respecting some case-formatting conventions:
 
     ```json
+    // path: ./src/plugins/my-plugin/content-types/<content-type-name>/schema.json
+
+    // ...
     "info": {
       "singularName": "content-type-name", // kebab-case required
       "pluralName": "content-type-names", // kebab-case required
-      "displayName": "Content-Type Name",
-      "name": "Content-Type Name",
+      "displayName": "Content-type name",
+      "name": "Content-type name",
     };
+    // ...
     ```
 
-    - If your model used lifecycle-hooks found in `<model-name>.js` move / rename this file `/server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
-    - Create an index file for each Content Type that exports the schema and lifecycles
+4. (_optional_) If the v3 model uses life cycle hooks found in `<model-name>.js`, move/rename the file to `/server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
+5. Create an `index.js` file for each content-type to export the schema and, optionally, life cycle hooks:
 
     ```jsx
-    // server/content-types/<content-type-name>/index.js
+    // path: ./src/plugins/my-plugin/server/content-types/<content-type-name>/index.js
 
     const schema = require("./schema.json");
-    const lifecycles = require("./lifecycles.js");
+    const lifecycles = require("./lifecycles.js"); // optional
 
     module.exports = {
       schema,
-      lifecycles,
+      lifecycles, // optional
     };
     ```
 
-    - Create an index file for `server/content-types` and export all content-types
-    - Make sure the key for your Content-Types matches the singular name on the Content-Type’s schema.json info object.
+6. Create a `/server/content-types/index.js` file.
+7. In `/server/content-types/index.js`, export all content-types and make sure the key of each content-type matches the `singularName` found in the `info` object of the content-type’s `schema.json` file:
 
     ```json
-    // server/content-types/content-type-a/schema.json
+    // path: ./src/plugins/my-plugin/server/content-types/content-type-a/schema.json
 
     "info": {
       "singularName": "content-type-a", // kebab-case required
@@ -300,13 +356,15 @@ module.exports = [
     ```
 
     ```jsx
-    // server/content-types/index.js
+    // path: ./src/plugins/my-plugin/server/content-types/index.js
+
     "use strict";
 
     const contentTypeA = require("./content-type-a");
     const contentTypeB = require("./content-type-b");
 
     module.exports = {
+      // Key names should match info.singularName key values found in corresponding schema.json files
       "content-type-a": contentTypeA,
       "content-type-b": contentTypeB,
     };
@@ -314,35 +372,53 @@ module.exports = [
 
 #### Create entry files
 
-- Create the server entry file at the root of your plugin: `strapi-server.js` and require all necessary files for your plugin. For example:
+Strapi v3 plugins use a strict folder structure convention.
 
-```jsx
-// strapi-server.js
-"use strict";
+In v4, the folder structure for plugins is flexible. However, each plugin needs at least a `strapi-server.js` entry file and, optionally, a `strapi-admin.js` entry file. The 2 entry files are used to take advantage of, respectively, the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.html) for the back end of the plugin and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html) for the front end of the plugin, if interactions with the admin panel are required.
 
-const bootstrap = require("./server/bootstrap");
-const contentTypes = require("./server/contentTypes");
-const controllers = require("./server/contentTypes");
-const services = require("./server/services");
-const routes = require("./server/routes");
+<br />
 
-module.exports = {
-  bootstrap,
-  contentTypes,
-  controllers,
-  services,
-  routes,
-};
-```
+To update a plugin to v4:
 
-- Create the frontend entry file at the root of your project: `strapi-admin.js` For example:
+- Create the `strapi-server.js` back-end entry file at the root of the plugin folder. The file should require all necessary files and export the back-end plugin interface.
 
-```jsx
-// strapi-admin.js
-"use strict";
+  ::: details Example strapi-server.js entry file
 
-module.exports = require("./admin/src").default;
-```
+    ```jsx
+    // path: ./src/plugins/my-plugin/strapi-server.js
+
+    "use strict";
+
+    const bootstrap = require("./server/bootstrap");
+    const contentTypes = require("./server/contentTypes");
+    const controllers = require("./server/contentTypes");
+    const services = require("./server/services");
+    const routes = require("./server/routes");
+
+    module.exports = {
+      bootstrap,
+      contentTypes,
+      controllers,
+      services,
+      routes,
+    };
+    ```
+
+  :::
+
+- (_optional_) Create the `strapi-admin.js` front-end entry file at the root of the plugin folder. The file should require all necessary files and export the front-end plugin interface.
+
+  ::: details Example strapi-admin.js entry file
+
+    ```jsx
+    // path: ./src/plugins/my-plugin/strapi-admin.js
+
+    "use strict";
+
+    module.exports = require("./admin/src").default;
+    ```
+
+  :::
 
 ## Migrate the back end
 
@@ -404,7 +480,7 @@ npx jscodeshift -t ./transforms/change-model-getters-to-content-types.js <path-t
 If you prefer to do this yourself, you just need to replace any instance of `.models` with `.contentTypes`
 
 :::tip
-💡 To refactor further, check out the [new getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage) introduced in the Strapi v4 Plugin API
+💡 To refactor further, check out the [new getters](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage) introduced in the v4 Plugin API
 :::
 
 #### Update relations
