@@ -313,6 +313,10 @@ To update content-types to v4:
     };
     ```
 
+:::note
+Migrating to v4 content-types also requires updating getters and relations (see [back end migration documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md#update-models-to-content-types)).
+:::
+
 ### Create entry files
 
 Strapi v3 plugins use a strict folder structure convention.
