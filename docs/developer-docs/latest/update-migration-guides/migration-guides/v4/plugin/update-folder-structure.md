@@ -7,7 +7,7 @@ sidebarDepth: 2
 
 <!-- TODO: update SEO -->
 
-# v4 Plugin Migration: Update the folder structure
+# v4 plugin migration: Update the folder structure
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
