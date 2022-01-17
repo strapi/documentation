@@ -39,17 +39,17 @@ The Internationalization plugin impacts several parts of the admin panel. The ta
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
-This plugin allows to manage end-users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device etc.). With the Users & Permissions plugin, it is possible to:
+This plugin allows to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device etc.). With the Users & Permissions plugin, it is possible to:
 
-- manage end-users accounts, based on a "User" collection type available through the plugin,
-- define the available end-users roles and their related permissions,
-- manage available providers to enable end-users to login through third-party providers,
-- configure available email templates aimed at the end-users (e.g. password reset, email address confirmation).
+- manage end users accounts, based on a "User" collection type available through the plugin,
+- define the available end-user roles and their related permissions,
+- manage available providers to enable end users to login through third-party providers,
+- configure available email templates aimed at the end users (e.g. password reset, email address confirmation).
 
 The Users & Permissions plugin impacts several parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
 | Section impacted | Options and settings                                                                                    |
 |------------------|---------------------------------------------------------------------------------------------------------|
-| Settings         | <ul>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles (see [Configuring end-users roles](../users-roles-permissions/configuring-end-users-roles.md)), Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin](../settings/configuring-users-permissions-plugin-settings.md)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Users & Permissions plugin* </ul> |
-| Content-type Builder | <ul>Creation of 3 default collection types: "User", "Role" and "Permission". They respectively allow to manage the end-users, the end-users roles and their permissions. These collection types cannot be deleted and their composing fields cannot be edited, but addition of new fields is possible. Out of the 3, only the "User" collection type is then available via the Content Manager.</ul> |
-| Content Manager | <ul>Addition of the default "User" collection type that allows to manage end-user accounts (see [Managing end-users accounts](../users-roles-permissions/managing-end-users.md)). <ul><li>By default, the following fields are available: Username, Email, Password, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must indeed be attributed a role: by default, the end-user is attributed the end-user role set as default, but that role can be changed via the end-users entries directly in the Content Manager.</li></ul> </ul> |
+| Settings         | <ul>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles (see [Configuring end-user roles](../users-roles-permissions/configuring-end-users-roles.md)), Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin](../settings/configuring-users-permissions-plugin-settings.md)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Users & Permissions plugin* </ul> |
+| Content-type Builder | <ul>Creation of 3 default collection types: "User", "Role" and "Permission". They respectively allow to manage the end users, the end-user roles and their permissions. These collection types cannot be deleted and their composing fields cannot be edited, but addition of new fields is possible. Out of the 3, only the "User" collection type is then available via the Content Manager.</ul> |
+| Content Manager | <ul>Addition of the default "User" collection type that allows to manage end-user accounts (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)). <ul><li>By default, the following fields are available: Username, Email, Password, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must indeed be attributed a role: by default, the end user is attributed the end-user role set as default, but that role can be changed via the end-user entries directly in the Content Manager.</li></ul> </ul> |

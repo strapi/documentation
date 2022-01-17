@@ -69,7 +69,7 @@ The repeatable component entries can be reordered or deleted directly in the edi
 - Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete an entry from your repeatable component.
 
 ::: note
-Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end-users will read/see the content.
+Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end users will read/see the content.
 :::
 
 ### Dynamic zones
@@ -89,7 +89,7 @@ Dynamic zones' components can also be reordered or deleted directly in the edit 
 - Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
 
 ::: note
-Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end-users will read/see the content.
+Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
 
 <!--

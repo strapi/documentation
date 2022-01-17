@@ -111,7 +111,7 @@ To configure plugins or settings permissions for a role:
 
 ::: tab Plugins
 
-By default, plugins permissions can be configured for the Content-type Builder, the Upload (i.e. Media Library) plugin, the Content Manager, and Users Permissions (i.e. the Users & Permissions plugin allowing to manage end-users). Each plugin has its own specific set of permissions.
+By default, plugins permissions can be configured for the Content-type Builder, the Upload (i.e. Media Library) plugin, the Content Manager, and Users Permissions (i.e. the Users & Permissions plugin allowing to manage end users). Each plugin has its own specific set of permissions.
 
 | Plugin name          | Permissions |
 | -------------------- | ----------- |

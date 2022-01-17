@@ -70,11 +70,11 @@ const user = [
       ],
       [
         '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
-        'Configuring end-users roles',
+        'Configuring end-user roles',
       ],
       [
         '/user-docs/latest/users-roles-permissions/managing-end-users',
-        'Managing end-users accounts',
+        'Managing end-user accounts',
       ],
     ],
   },
