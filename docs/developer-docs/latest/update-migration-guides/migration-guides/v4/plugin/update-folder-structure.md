@@ -83,7 +83,7 @@ node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <
 Manually updating the folder structure requires the following updates:
 
 1. [create a `server` folder](#create-a-server-folder)
-2. [move controllers, services and middlewares](#move-controllers-services-and-middlewares) to the `server` directory
+2. [move controllers, services and middlewares](#move-controllers-services-and-middlewares) to the `server` folder
 3. [move the `bootstrap` function](#move-the-bootstrap-function)
 4. [move the routes](#move-routes)
 5. [move the policies](#move-policies)
@@ -178,7 +178,7 @@ module.exports = ({ strapi }) => ({
 
 Strapi v3 declares routes for a plugin in a specific `config/routes.json` file.
 
-In v4, the `config` folder does not necessarily exist for a plugin and [plugin routes](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#routes) can be declared in a `routes/index.json` file.
+In v4, the `config` folder does not necessarily exist for a plugin and [plugin routes](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#routes) can be declared in a `server/routes/index.json` file.
 
 <br />
 
@@ -223,7 +223,7 @@ module.exports = [
 
 ### Move policies
 
-Strapi v3 declares policies for a plugin in a specific `/config/policies` folder.
+Strapi v3 declares policies for a plugin in a specific `config/policies` folder.
 
 In v4, the `config` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies) can be declared in dedicated files found under `server/policies`.
 
