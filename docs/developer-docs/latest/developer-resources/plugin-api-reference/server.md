@@ -114,7 +114,7 @@ module.exports = () => ({
 
 ### Content-types
 
-An object with the [Content-types](/developer-docs/latest/development/backend-customization/models.md) the plugin provides.
+An object with the [content-types](/developer-docs/latest/development/backend-customization/models.md) the plugin provides.
 
 **Type**: `Object`
 

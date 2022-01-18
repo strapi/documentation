@@ -60,7 +60,7 @@ The folder structure of a v3 plugin can be migrated to a v4 plugin either [autom
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
 :::
 
-A [codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to update the folder structure of a plugin for v4.
+The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to update the folder structure of a plugin for v4.
 
 ::: caution
 This codemod creates a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
@@ -69,7 +69,7 @@ This codemod creates a new v4 plugin, leaving the v3 plugin in place. We recomme
 To execute the codemod, run the following commands in a terminal:
 
 ```sh
-cd <the-folder-where-the-codemods-repo-was-cloned>
+!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/cd-codemod-folder.md)!!!
 node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
 ```
 
@@ -79,7 +79,7 @@ The codemod:
 
 - creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
 - organizes files and folders into a `/server` and an `/admin` folders, respectively,
-- changes `models` to `contentTypes` and reorganizes the schema declarations,
+- converts `models` to `contentTypes`,
 - and exports `services` as functions.
 
 :::note
@@ -95,7 +95,7 @@ Manually updating the folder structure requires the following updates:
 3. [move the `bootstrap` function](#move-the-bootstrap-function)
 4. [move the routes](#move-routes)
 5. [move the policies](#move-policies)
-6. [move models to a content-types folder and update their schemas](#update-models-to-content-types)
+6. [convert models to content-types](#convert-models-to-content-types)
 7. [create entry files](#create-entry-files) (i.e. `strapi-server.js` and `strapi-admin.js`)
 
 These different steps are detailed in the following subsections.
@@ -242,11 +242,11 @@ To update plugin policies to v4:
 - move policies from `/config/policies` to `/server/policies/<policyName>.js`
 - add an `index.js` file to the folder and make sure it exports all files in the folder.
 
-### Update models to content-types
+### Convert models to content-types
 
-Strapi v3 declares plugin content-types in a `models/` folder.
+Strapi v3 declares plugin models in `<model-name>.settings.json` files found in a `models` folder.
 
-In v4, [plugin content-types](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types) should be declared in a `/server/content-types` folder and [schemas](/developer-docs/latest/development/backend-customization/models.md#model-schema) need to be updated with some new keys.
+In v4, [plugin content-types](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types) are declared in `schema.json` files found in a `/server/content-types/<contentTypeName>` folder. The `schema.json` files introduce some new properties (see [schema documentation](/developer-docs/latest/development/backend-customization/models.md#model-schema)).
 
 <br/>
 
@@ -314,7 +314,7 @@ To update content-types to v4:
     ```
 
 :::note
-Migrating to v4 content-types also requires updating getters and relations (see [back end migration documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md#update-models-to-content-types)).
+Converting v3 models to v4 content-types also requires updating getters and, optionally, relations (see [plugin back end migration documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)).
 :::
 
 ### Create entry files
