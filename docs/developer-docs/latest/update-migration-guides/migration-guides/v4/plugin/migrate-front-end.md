@@ -16,6 +16,7 @@ Migrating the front end of a plugin to Strapi v4 requires:
 - updating how the plugin is [added to the amin panel menu](#add-a-menu-link)
 - optionally, [registering translations](#register-translations)
 
+Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
 
 :::strapi Going further with the new Admin Panel APIs
 Following this guide should help you migrate a basic plugin with a single view. However, the [Admin Panel APIs](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) introduced in Strapi v4 allow for further customization.
