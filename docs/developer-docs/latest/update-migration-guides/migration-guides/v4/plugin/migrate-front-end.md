@@ -10,91 +10,88 @@ canonicalUrl:
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
-## Register the plugin
+Migrating the front end of a plugin to Strapi v4 requires:
 
-A v3 plugin exports its configurations as an object passed to `registerPlugin(config)`, like this:
+- [updating how the plugin's front-end is registered](#register-the-plugin-with-the-admin-panel)
+- [updating how the plugin is added to the amin panel menu](#add-a-menu-link)
+- optionally, [registering translations](#register-translations)
 
-```jsx
-export default (strapi) => {
-  const pluginDescription =
-    pluginPkg.strapi.description || pluginPkg.description;
-  const icon = pluginPkg.strapi.icon;
+
+:::strapi Going further with the new Admin Panel APIs
+Following this guide should help you migrate a basic plugin with a single view. However, the [Admin Panel APIs](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) introduced in Strapi v4 allow for further customization.
+
+In addition to the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register), which is executed as soon as the plugin is loaded, a [`bootstrap()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap) executes after all plugins are loaded.
+
+To add a settings link or section, use Redux reducers, hook into other plugins, and modify the UI with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated life cycle functions.
+:::
+
+## Register the plugin with the admin panel
+
+A v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
+
+In v4, the plugin is registered within the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register).
+
+To update the front-end registration of a plugin to v4:
+
+1. (_optional_) If it does not already exist, create a `admin/src/index.js` file at the root of the plugin folder.
+2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` life cycle function, passing the current Strapi application instance as an argument.
+3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the old configuration object.
+4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
+
+    ```jsx
+    module.exports = require('./admin/src').default;
+    ```
+
+::: details Example of a v4 plugin registration
+
+  ```jsx
+  // path: ./src/plugins/my-plugin/admin/src/index.js
+
+  import pluginId from './pluginId';
+
+  const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
   const name = pluginPkg.strapi.name;
-  const plugin = {
-    blockerComponent: null,
-    blockerComponentProps: {},
-    description: pluginDescription,
-    icon,
-    id: pluginId,
-    initializer: Initializer,
-    injectedComponents: [],
-    isReady: false,
-    isRequired: pluginPkg.strapi.required || false,
-    layout: null,
-    lifecycles,
-    mainComponent: App,
-    name,
-    pluginLogo,
-    preventComponentRendering: false,
-    reducers,
-    trads,
-    menu: {
-      pluginsSectionLinks: [
-        {
-          destination: `/plugins/${pluginId}`,
-          icon,
-          label: {
-            id: `${pluginId}.plugin.name`,
-            defaultMessage: "My Plugin",
-          },
+
+  export default {
+    register(app) {
+        // executes as soon as the plugin is loaded
+        app.registerPlugin({
+          id: pluginId
           name,
-          permissions: pluginPermissions.main,
-        },
-      ],
-    },
-  };
-
-  return strapi.registerPlugin(plugin);
-};
-```
-
-To migrate this to v4 we will need to export a function that calls the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register), passing the current strapi app as an argument:
-
-```jsx
-export default {
-  register(app) {
-    // executes as soon as the plugin is loaded
-  },
-};
-```
-
-Here we can go ahead and register our plugin by grabbing the `name` and `id` keys from the old configuration object:
-
-```jsx
-import pluginId from './pluginId';
-
-const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
-const name = pluginPkg.strapi.name;
-
-export default {
-  register(app) {
-      app.registerPlugin({
-        id: pluginId
-        name,
-      })
+        })
+      }
     }
-  }
-```
+  ```
 
-## Add Menu Link
+  ```jsx
+  // path: .src/plugins/my-plugin/strapi-admin.js
 
-To add a link to your plugin in the Strapi Admin, use the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. The `menu` key from the v3 config object can be passed to `app.addMenuLink()` with the following properties changed:
+  module.exports = require('./admin/src').default;
+  ```
 
-- `destination` ⇒ `to`
-- `label` ⇒ `intlLabel`
-- `icon` is no longer a string, it's now a React component. You can create it in a separate file like this:
+:::
+
+## Add a menu link
+
+A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
+
+In v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
+
+To migrate to v4, pass the `menu` key from the v3 configuration object to `app.addMenuLink()` with the following properties changed:
+
+| Property name and type in v3                      | Equivalent in v4             |
+| ------------------------------------------------- | ---------------------------- |
+| `destination` (String)                            | `to` (String)                |
+| `label` (String)                                  | `intlLabel` in v4 (String)   |
+| `icon` (String)<br/><br/>`mainComponent` (String) | `<Icon />` (React component) |
+
+The React-based icon component can be created in a separate file.
+
+::: details Example of an PluginIcon component
 
 ```jsx
+// path: ./src/plugins/my-plugin/admin/src/components/PluginIcon/index.js
+
 import React from "react";
 import { Icon } from "@strapi/parts/Icon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -106,9 +103,15 @@ const PluginIcon = () => (
 export default PluginIcon;
 ```
 
+:::
+
 In v3 the component would be specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
 
+::: details Example of adding a menu link with a custom plugin icon component
+
 ```jsx
+// path: ./src/plugins/my-plugin/admin/src/index.js
+
 import pluginId from './pluginId';
 import pluginPermissions from './permissions';
 import PluginIcon from './PluginIcon'
@@ -143,19 +146,13 @@ export default {
 }
 ```
 
-## Going Further
+:::
 
-### All available actions
+## Register translations
 
-At this point a basic plugin with a single view should be migrated to v4. However, it is likely that you will want to customize your plugin further. Depending on the needs of your plugin you will have to look into the different API's available.
+In v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
 
-In addition to the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register), which is executed as soon as the plugin is loaded, there is also the [`bootstrap()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap) which executes after all plugins are loaded.
-
-To add a settings link or section, use redux reducers, hook into other plugins, and modify the UI with injection zones, consult [this table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available API's and their associated lifecycle functions.
-
-### Register Translations
-
-The plugin interface can also export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files. You can use the following function:
+::: details Example of translation registrations
 
 ```jsx
 import { prefixPluginTranslations } from "@strapi/helper-plugin";
@@ -193,3 +190,4 @@ export default {
 };
 ```
 
+:::
