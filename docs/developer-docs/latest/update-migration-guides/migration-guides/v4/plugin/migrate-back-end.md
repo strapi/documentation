@@ -12,9 +12,9 @@ canonicalUrl:
 
 Migrating the back end of a plugin to Strapi v4 requires:
 
-- [updating imports](#update-imports)
-- [updating content-types getters](#update-content-types-getters) and [relations](#update-content-types-relations)
-- [updating the plugin configuration](#update-plugin-configuration)
+- updating [imports](#update-imports)
+- updating content-types [getters](#update-content-types-getters) and [relations](#update-content-types-relations)
+- updating the [plugin configuration](#update-plugin-configuration)
 
 Some actions required to migrate the back end of a plugin can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
@@ -52,10 +52,10 @@ To update imports automatically:
   node ./migration-helpers/update-package-dependencies.js <path-to-plugin>
   ```
 
-- in any other file importing Strapi packages, use a [jscodeshift](https://github.com/facebook/jscodeshift) (no installation required) by running the following command in a terminal:
+- in any other file importing Strapi packages, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
 
   ```sh
-  npx jscodeshift -t ./transforms/update-scoped-imports.js <path-to-file | path-to-folder>
+  npx jscodeshift -t ./transforms/update-strapi-scoped-imports.js <path-to-file | path-to-folder>
   ```
 
 ### Update imports manually
@@ -99,6 +99,8 @@ Updating content-types relations to v4 requires that the v3 models have been con
 Strapi v3 defines relations between content-types with the `via`, `model` and `collection` properties in the model settings.
 
 In v4, relations should be explicitly described in the `schema.json` file of the content-types (see [relations documentation](/developer-docs/latest/development/backend-customization/models.md#relations)).
+
+<br />
 
 If the plugin declares content-types with relations between them, migrating relations to v4 should be done manually. Update the `server/content-types/<contentTypeName>/schema.json` file for each content-type with the following procedure:
 
@@ -176,7 +178,9 @@ If the plugin declares content-types with relations between them, migrating rela
 
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In v4, the configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+In v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+
+<br/>
 
 To handle default plugin configurations in v4:
 

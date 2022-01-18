@@ -12,8 +12,8 @@ canonicalUrl:
 
 Migrating the front end of a plugin to Strapi v4 requires:
 
-- [updating how the plugin's front-end is registered](#register-the-plugin-with-the-admin-panel)
-- [updating how the plugin is added to the amin panel menu](#add-a-menu-link)
+- updating how the plugin's front-end is [registered](#register-the-plugin-with-the-admin-panel)
+- updating how the plugin is [added to the amin panel menu](#add-a-menu-link)
 - optionally, [registering translations](#register-translations)
 
 
@@ -22,7 +22,7 @@ Following this guide should help you migrate a basic plugin with a single view. 
 
 In addition to the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register), which is executed as soon as the plugin is loaded, a [`bootstrap()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap) executes after all plugins are loaded.
 
-To add a settings link or section, use Redux reducers, hook into other plugins, and modify the UI with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated life cycle functions.
+To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated life cycle functions.
 :::
 
 ## Register the plugin with the admin panel
@@ -30,6 +30,8 @@ To add a settings link or section, use Redux reducers, hook into other plugins, 
 A v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
 
 In v4, the plugin is registered within the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register).
+
+<br />
 
 To update the front-end registration of a plugin to v4:
 
@@ -77,12 +79,14 @@ A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `me
 
 In v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
 
-To migrate to v4, pass the `menu` key from the v3 configuration object to `app.addMenuLink()` with the following properties changed:
+<br />
+
+To migrate to v4, pass the `menu` key from the v3 configuration object to `app.addMenuLink()` with the following properties updated:
 
 | Property name and type in v3                      | Equivalent in v4             |
 | ------------------------------------------------- | ---------------------------- |
 | `destination` (String)                            | `to` (String)                |
-| `label` (String)                                  | `intlLabel` in v4 (String)   |
+| `label` (String)                                  | `intlLabel` (String)   |
 | `icon` (String)<br/><br/>`mainComponent` (String) | `<Icon />` (React component) |
 
 The React-based icon component can be created in a separate file.
@@ -105,7 +109,7 @@ export default PluginIcon;
 
 :::
 
-In v3 the component would be specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
+In v3 the component is specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
 
 ::: details Example of adding a menu link with a custom plugin icon component
 

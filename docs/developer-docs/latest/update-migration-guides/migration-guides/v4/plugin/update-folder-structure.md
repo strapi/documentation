@@ -60,7 +60,12 @@ The folder structure of a v3 plugin can be migrated to a v4 plugin either [autom
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
 :::
 
-The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to update the folder structure of a plugin for v4.
+The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to automatically update the folder structure of a plugin for v4. The codemod:
+
+- creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
+- organizes files and folders into a `server` and an `admin` folders, respectively,
+- converts `models` to `contentTypes`,
+- and exports `services` as functions.
 
 ::: caution
 This codemod creates a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
@@ -73,24 +78,11 @@ To execute the codemod, run the following commands in a terminal:
 node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
 ```
 
-<br/>
-
-The codemod:
-
-- creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
-- organizes files and folders into a `/server` and an `/admin` folders, respectively,
-- converts `models` to `contentTypes`,
-- and exports `services` as functions.
-
-:::note
-The [manual update section](#update-the-folder-structure-manually) describes in details what the codemod is actually doing.
-:::
-
 ## Update the folder structure manually
 
 Manually updating the folder structure requires the following updates:
 
-1. [create a `server` directory](#create-a-server-directory)
+1. [create a `server` folder](#create-a-server-folder)
 2. [move controllers, services and middlewares](#move-controllers-services-and-middlewares) to the `server` directory
 3. [move the `bootstrap` function](#move-the-bootstrap-function)
 4. [move the routes](#move-routes)
@@ -104,7 +96,7 @@ These different steps are detailed in the following subsections.
 The folder structure is given as an example, and files and folders can be organized freely as long as `strapi-server.js` and `strapi-admin.js` exist and import all the required files.
 :::
 
-### Create a `server` directory
+### Create a `server` folder
 
 The `server` folder includes all the code for the back end of the plugin. To create it at the root of the plugin folder, run the following command in a terminal:
 
@@ -159,15 +151,15 @@ module.exports = {
 
 ### Move the `bootstrap` function
 
-Strapi v3 has a dedicated `/config/functions` folder for each plugin.
+Strapi v3 has a dedicated `config/functions` folder for each plugin.
 
-In v4, the `config/` folder does not necessarily exist for a plugin and [the `bootstrap` function](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#bootstrap) and other life cycle functions can be declared elsewhere.
+In v4, the `config` folder does not necessarily exist for a plugin and [the `bootstrap` function](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#bootstrap) and other life cycle functions can be declared elsewhere.
 
 <br/>
 
 To update the plugin's `bootstrap` function to v4:
 
-- move the `bootstrap()` function from `/server/config/functions/bootstrap.js` to `/server/bootstrap.js`
+- move the `bootstrap()` function from `server/config/functions/bootstrap.js` to `server/bootstrap.js`
 - pass the `strapi` instance (object) as an argument
 
 ```jsx
@@ -184,13 +176,13 @@ module.exports = ({ strapi }) => ({
 
 ### Move routes
 
-Strapi v3 declares routes for a plugin in a specific `/config/routes.json` file.
+Strapi v3 declares routes for a plugin in a specific `config/routes.json` file.
 
-In v4, the `config/` folder does not necessarily exist for a plugin and [plugin routes](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#routes) can be declared in a `routes/index.json` file.
+In v4, the `config` folder does not necessarily exist for a plugin and [plugin routes](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#routes) can be declared in a `routes/index.json` file.
 
 <br />
 
-To update plugin routes to v4, move routes from `/config/routes.json` to `/server/routes/index.json`.
+To update plugin routes to v4, move routes from `config/routes.json` to `server/routes/index.json`.
 
 Routes in v4 should meet 2 requirements:
 
@@ -233,27 +225,28 @@ module.exports = [
 
 Strapi v3 declares policies for a plugin in a specific `/config/policies` folder.
 
-In v4, the `config/` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies) can be declared in dedicated files found under `/server/policies`.
+In v4, the `config` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies) can be declared in dedicated files found under `server/policies`.
 
 <br/>
 
 To update plugin policies to v4:
 
-- move policies from `/config/policies` to `/server/policies/<policyName>.js`
-- add an `index.js` file to the folder and make sure it exports all files in the folder.
+1. Move policies from `config/policies` to `server/policies/<policyName>.js`
+
+2. Add an `index.js` file to the `server/policies` folder and make sure it exports all files in the folder.
 
 ### Convert models to content-types
 
 Strapi v3 declares plugin models in `<model-name>.settings.json` files found in a `models` folder.
 
-In v4, [plugin content-types](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types) are declared in `schema.json` files found in a `/server/content-types/<contentTypeName>` folder. The `schema.json` files introduce some new properties (see [schema documentation](/developer-docs/latest/development/backend-customization/models.md#model-schema)).
+In v4, [plugin content-types](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types) are declared in `schema.json` files found in a `server/content-types/<contentTypeName>` folder. The `schema.json` files introduce some new properties (see [schema documentation](/developer-docs/latest/development/backend-customization/models.md#model-schema)).
 
 <br/>
 
-To update content-types to v4:
+To convert v3 models to v4 content-types:
 
-1. Move/rename the `models` folder to `/server/content-types`.
-2. Move/rename each model's `<modelName>.settings.json` file to `/server/content-types/<contentTypeName>/schema.json`.
+1. Move/rename the `models` folder to `server/content-types`.
+2. Move/rename each model's `<modelName>.settings.json` file to `server/content-types/<contentTypeName>/schema.json`.
 3. In each `<contentTypeName>/schema.json` file, update [the `info` object](/developer-docs/latest/development/backend-customization/models.md#model-information), which now requires declaring the 3 new `singularName`, `pluralName` and `displayName` keys and respecting some case-formatting conventions:
 
     ```json
@@ -269,7 +262,7 @@ To update content-types to v4:
     // ...
     ```
 
-4. (_optional_) If the v3 model uses life cycle hooks found in `<model-name>.js`, move/rename the file to `/server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
+4. (_optional_) If the v3 model uses life cycle hooks found in `<model-name>.js`, move/rename the file to `server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
 5. Create an `index.js` file for each content-type to export the schema and, optionally, life cycle hooks:
 
     ```jsx
@@ -284,8 +277,8 @@ To update content-types to v4:
     };
     ```
 
-6. Create a `/server/content-types/index.js` file.
-7. In `/server/content-types/index.js`, export all content-types and make sure the key of each content-type matches the `singularName` found in the `info` object of the content-type’s `schema.json` file:
+6. Create a `server/content-types/index.js` file.
+7. In `server/content-types/index.js`, export all content-types and make sure the key of each content-type matches the `singularName` found in the `info` object of the content-type’s `schema.json` file:
 
     ```json
     // path: ./src/plugins/my-plugin/server/content-types/content-type-a/schema.json
