@@ -195,7 +195,7 @@ const routes = require('./routes');
 
 module.exports = () => ({
   routes,
-  type: 'content-api', // can also be 'admin-api' depending on the type of route
+  type: 'content-api', // can also be 'admin' depending on the type of route
 });
 ```
 
