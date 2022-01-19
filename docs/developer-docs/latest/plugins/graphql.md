@@ -514,10 +514,10 @@ module.exports = {
              * Log resolving time in console
              */
             async (next, parent, args, context, info ) => {
-              console.time('Start resolving categories');
-              console.timeEnd('Stop resolving categories');
+              console.time('Time consuming for resolving categories');
+              console.timeEnd('Time consuming for resolving categories');
 
-              return res;
+              return await next(parent, args, context, info);
             },
             /**
              * Basic middleware example #2
