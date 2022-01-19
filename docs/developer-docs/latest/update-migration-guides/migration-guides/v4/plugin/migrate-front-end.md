@@ -2,6 +2,7 @@
 title: v4 Plugin Migration - Migrate back end - Strapi Developer Docs
 description:
 canonicalUrl:
+next: false
 ---
 
 <!-- TODO: update SEO -->

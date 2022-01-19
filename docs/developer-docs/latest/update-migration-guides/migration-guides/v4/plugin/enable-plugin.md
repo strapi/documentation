@@ -2,6 +2,7 @@
 title: v4 plugin migration - Enable a plugin - Strapi Developer Docs
 description:
 canonicalUrl:
+prev: /developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.md
 ---
 
 <!-- TODO: update SEO -->
