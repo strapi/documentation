@@ -135,7 +135,7 @@ fetch('http://localhost:1337/api/restaurants', {
     </div>
     <ul v-else>
       <li v-for="restaurant in restaurants" :key="restaurant.id">
-        {{ restaurant.name }}
+        {{ restaurant.attributes.name }}
       </li>
     </ul>
   </div>
@@ -155,7 +155,7 @@ export default {
   async mounted () {
     try {
       const response = await axios.get('http://localhost:1337/api/restaurants')
-      this.restaurants = response.data
+      this.restaurants = response.data.data
     } catch (error) {
       this.error = error;
     }
