@@ -79,22 +79,30 @@ axios
 
 ### JWT configuration
 
-You can configure option for the JWT generation by creating `extensions/users-permissions/config/security.json` file.
+You can configure the JWT generation by using the [plugins configuration file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md).
 We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
 
 Available options:
 
-- `expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
+- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables).
+- `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
-**Path —** `extensions/users-permissions/config/security.json`
 
-```json
-{
-  "jwt": {
-    "expiresIn": "1d"
-  }
-}
+```js
+// path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d',
+      },
+    },
+  },
+  // ...
+});
 ```
 
 :::warning
