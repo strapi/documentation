@@ -29,11 +29,13 @@ Some actions required to migrate the back end of a plugin can be performed by sc
 
 ## Update imports
 
+:::callout
 Package names in Strapi v3 are prefixed by `strapi-`.
 
 Strapi v4 uses scoped imports.
+:::
 
-To migrate to v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#update-imports-automatically) or [manually](#update-imports-manually).
+To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#update-imports-automatically) or [manually](#update-imports-manually).
 
 ### Update imports automatically
 
@@ -66,7 +68,9 @@ To update all imports manually, find any imports of Strapi packages (e.g. `strap
 
 ## Update content-types getters
 
-Strapi v3 models have been renamed to [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) in v4.
+:::callout
+Strapi v3 models have been renamed to [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) in Strapi v4.
+:::
 
 If the plugin declares models, update the syntax for all getters from `strapi.models` to `strapi.contentTypes`. The syntax can be updated [automatically](#update-content-types-getters-automatically) or [manually](#update-content-types-getters-manually).
 
@@ -95,16 +99,17 @@ Strapi v4 introduced new getters that can be used to refactor the plugin code fu
 ## Update content-types relations
 
 ::: prerequisites
-Updating content-types relations to v4 requires that the v3 models have been converted to v4 content-types (see [converting models to content-types documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#convert-models-to-content-types)).
+Updating content-types relations to Strapi v4 requires that the v3 models have been converted to Strapi v4 content-types (see [converting models to content-types documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#convert-models-to-content-types)).
 :::
 
+
+::: callout
 Strapi v3 defines relations between content-types with the `via`, `model` and `collection` properties in the model settings.
 
-In v4, relations should be explicitly described in the `schema.json` file of the content-types (see [relations documentation](/developer-docs/latest/development/backend-customization/models.md#relations)).
+In Strapi v4, relations should be explicitly described in the `schema.json` file of the content-types (see [relations documentation](/developer-docs/latest/development/backend-customization/models.md#relations)).
+:::
 
-<br />
-
-If the plugin declares content-types with relations between them, migrating relations to v4 should be done manually in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) of the content-types.
+If the plugin declares content-types with relations between them, migrating relations to Strapi v4 should be done manually in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) of the content-types.
 
 To update content-type relations, update the `server/content-types/<contentTypeName>/schema.json` file for each content-type with the following procedure:
 
@@ -180,13 +185,13 @@ To update content-type relations, update the `server/content-types/<contentTypeN
 
 ## Update plugin configuration
 
+:::callout
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+In Strapi v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+:::
 
-<br/>
-
-To handle default plugin configurations in v4:
+To handle default plugin configurations in Strapi v4:
 
 1. In the `strapi-server.js` file, create a `config` object.
 

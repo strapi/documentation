@@ -13,14 +13,14 @@ prev: /developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-
 
 <br/>
 
-A v3 plugin was enabled if it was manually installed or found in the `plugins` directory.
+::: callout
+A Strapi v3 plugin was enabled if it was manually installed or found in the `plugins` directory.
 
-In v4:
+In Strapi v4:
 
 - If a plugin is installed via the [automatic plugins discovery](/developer-docs/latest/plugins/plugins-intro.md#automatic-plugins-discovery) feature, it is automatically enabled.
 - While developing a local plugin, the plugin must explicitly be enabled in [the `./config/plugins.js` file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) of the Strapi application.
-
-<br/>
+:::
 
 Enabling a plugin in v4 should be done manually with the following procedure:
 

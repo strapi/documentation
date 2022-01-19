@@ -29,24 +29,24 @@ To add a settings link or section, use Redux reducers, hook into other plugins, 
 
 ## Register the plugin with the admin panel
 
-A v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
+::: callout
+A Strapi v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
 
-In v4, the plugin is registered within the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register).
+In Strapi v4, the plugin is registered within the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register).
+:::
 
-<br />
-
-To update the front-end registration of a plugin to v4:
+To update the front-end registration of a plugin to Strapi v4:
 
 1. (_optional_) If it does not already exist, create a `admin/src/index.js` file at the root of the plugin folder.
 2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` life cycle function, passing the current Strapi application instance as an argument.
-3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the v3 configuration object.
+3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
 4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
 
     ```jsx
     module.exports = require('./admin/src').default;
     ```
 
-::: details Example of a v4 plugin registration
+::: details Example of a Strapi v4 plugin registration
 
   ```jsx
   // path: ./src/plugins/my-plugin/admin/src/index.js
@@ -77,13 +77,13 @@ To update the front-end registration of a plugin to v4:
 
 ## Add a menu link
 
+::: callout
 A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
 
-In v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
+In Strapi v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
+:::
 
-<br />
-
-To migrate to v4, pass the `menu` key from the v3 configuration object to `app.addMenuLink()` with the following properties updated:
+To migrate to Strapi v4, pass the `menu` key from the Strapi v3 configuration object to `app.addMenuLink()` with the following properties updated:
 
 | Property name and type in v3                      | Equivalent in v4             |
 | ------------------------------------------------- | ---------------------------- |
@@ -111,7 +111,7 @@ export default PluginIcon;
 
 :::
 
-In v3 the icon component is specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
+In Strapi v3 the icon component is specified on the `mainComponent` key, in Strapi v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
 
 ::: details Example of adding a menu link with a custom plugin icon component
 
@@ -156,7 +156,7 @@ export default {
 
 ## Register translations
 
-In v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
+In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
 
 ::: details Example of translation registrations
 
