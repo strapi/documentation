@@ -13,8 +13,10 @@ canonicalUrl:
 Migrating the back end of a plugin to Strapi v4 requires:
 
 - updating [imports](#update-imports)
-- updating content-types [getters](#update-content-types-getters) and [relations](#update-content-types-relations)
+- updating content-types [getters](#update-content-types-getters) and, optionally, [relations](#update-content-types-relations)
 - updating the [plugin configuration](#update-plugin-configuration)
+
+<br/>
 
 Some actions required to migrate the back end of a plugin can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
@@ -48,7 +50,7 @@ To update imports automatically:
 - in the `package.json` file of the Strapi plugin, use the [`update-package-dependencies` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-package-dependencies.js) by running the following commands in a terminal:
 
   ```sh
-  !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/cd-codemod-folder.md)!!!
+  cd <the-folder-where-the-strapi-codemods-repo-was-cloned>
   node ./migration-helpers/update-package-dependencies.js <path-to-plugin>
   ```
 
@@ -60,7 +62,7 @@ To update imports automatically:
 
 ### Update imports manually
 
-To update all imports manually, find any imports of Strapi packages and rename them to `@strapi/package-name`.
+To update all imports manually, find any imports of Strapi packages (e.g. `strapi-package-name`) and rename them to `@strapi/package-name`.
 
 ## Update content-types getters
 
@@ -102,7 +104,9 @@ In v4, relations should be explicitly described in the `schema.json` file of the
 
 <br />
 
-If the plugin declares content-types with relations between them, migrating relations to v4 should be done manually. Update the `server/content-types/<contentTypeName>/schema.json` file for each content-type with the following procedure:
+If the plugin declares content-types with relations between them, migrating relations to v4 should be done manually in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) of the content-types.
+
+To update content-type relations, update the `server/content-types/<contentTypeName>/schema.json` file for each content-type with the following procedure:
 
 1. Declare the relation explicitly by setting the `type` attribute value to `"relation"`.
 

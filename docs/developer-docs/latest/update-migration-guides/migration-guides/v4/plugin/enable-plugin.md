@@ -10,6 +10,8 @@ canonicalUrl:
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
+<br/>
+
 A v3 plugin was enabled if it was manually installed or found in the `plugins` directory.
 
 In v4:

@@ -54,29 +54,32 @@ my-plugin
 
 The folder structure of a v3 plugin can be migrated to a v4 plugin either [automatically](#update-the-folder-structure-automatically) or [manually](#update-the-folder-structure-manually).
 
+<br/>
+
 ## Update the folder structure automatically
 
 :::prerequisites
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
 :::
 
-The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to automatically update the folder structure of a plugin for v4. The codemod:
+::: caution
+The codemod creates a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
+:::
+
+The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to automatically update the folder structure of a plugin for v4. To execute the codemod, run the following commands in a terminal:
+
+```sh
+cd <the-folder-where-the-strapi-codemods-repo-was-cloned>
+node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
+```
+
+
+The codemod:
 
 - creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
 - organizes files and folders into a `server` and an `admin` folders, respectively,
 - converts `models` to `contentTypes`,
 - and exports `services` as functions.
-
-::: caution
-This codemod creates a new v4 plugin, leaving the v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
-:::
-
-To execute the codemod, run the following commands in a terminal:
-
-```sh
-!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/cd-codemod-folder.md)!!!
-node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
-```
 
 ## Update the folder structure manually
 
@@ -235,6 +238,9 @@ To update plugin policies to v4:
 
 2. Add an `index.js` file to the `server/policies` folder and make sure it exports all files in the folder.
 
+
+<!-- TODO: add example code block with some policies, like we did for controllers above -->
+
 ### Convert models to content-types
 
 Strapi v3 declares plugin models in `<model-name>.settings.json` files found in a `models` folder.
@@ -318,9 +324,9 @@ In v4, the folder structure for plugins is flexible. However, each plugin needs 
 
 <br />
 
-To update a plugin to v4:
+To update the plugin to v4:
 
-- Create the `strapi-server.js` back-end entry file at the root of the plugin folder. The file should require all necessary files and export the back-end plugin interface.
+- Create the `strapi-server.js` back-end entry file at the root of the plugin folder. The file should require all necessary files and export the back-end plugin interface (see [migrating the back end of a plugin](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)).
 
   ::: details Example strapi-server.js entry file
 
@@ -346,7 +352,7 @@ To update a plugin to v4:
 
   :::
 
-- (_optional_) Create the `strapi-admin.js` front-end entry file at the root of the plugin folder. The file should require all necessary files and export the front-end plugin interface.
+- (_optional_) Create the `strapi-admin.js` front-end entry file at the root of the plugin folder. The file should require all necessary files and export the front-end plugin interface (see [migrating the front end of a plugin](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md)).
 
   ::: details Example strapi-admin.js entry file
 

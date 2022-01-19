@@ -18,6 +18,8 @@ Migrating a plugin from Strapi v3.6.9 to v4.0.4 consists in:
 - [migrating the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)
 - optionally, [migrating the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md) if the plugin interacts with the admin panel
 
+<br/>
+
 Some actions required for plugin migration can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
 | Action                              | Migration type                                                                                             |

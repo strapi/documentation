@@ -33,8 +33,8 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 This section is still a work in progress. Each of the 3 planned migration guides (i.e. plugins, code and data migration guides) will be released separately.
 :::
 
-Migrating from v3.6.8 to v4.0.x revolves around 3 topics. Please use the following guides:
-- [plugin migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/v4-plugin-migration.md)
+Migrating from v3.6.9 to v4.0.4 revolves around 3 topics. Please use the following guides:
+- [plugin migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.md)
 - code migration guide (coming soon!)
 - data migration guide (coming soon!)
 

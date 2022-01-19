@@ -38,7 +38,7 @@ To update the front-end registration of a plugin to v4:
 
 1. (_optional_) If it does not already exist, create a `admin/src/index.js` file at the root of the plugin folder.
 2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` life cycle function, passing the current Strapi application instance as an argument.
-3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the old configuration object.
+3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the v3 configuration object.
 4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
 
     ```jsx
@@ -110,7 +110,7 @@ export default PluginIcon;
 
 :::
 
-In v3 the component is specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
+In v3 the icon component is specified on the `mainComponent` key, in v4 the component is passed as a dynamic import to the `app.addMenuLink()` function.
 
 ::: details Example of adding a menu link with a custom plugin icon component
 
