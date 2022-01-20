@@ -11,12 +11,12 @@ canonicalUrl:
 
 The goal of this guide is to get a v3 plugin up and running on v4 as fast as possible by resolving breaking changes. It is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#server-api-for-plugins) and [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#admin-panel-api-for-plugins) documentations.
 
-Migrating a plugin from Strapi v3.6.9 to v4.0.4 consists in:
+Migrating a plugin from Strapi v3.6.9 to v4.0.x consists in:
 
 - [enabling the plugin](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md)
 - [updating the folder structure](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md)
-- [migrating the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)
-- optionally, [migrating the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md) if the plugin interacts with the admin panel
+- [migrating the back-end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)
+- optionally, [migrating the front-end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md) if the plugin interacts with the admin panel
 
 <br/>
 

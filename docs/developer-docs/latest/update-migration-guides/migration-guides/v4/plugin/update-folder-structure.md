@@ -78,7 +78,6 @@ cd <the-folder-where-the-strapi-codemods-repo-was-cloned>
 node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
 ```
 
-
 The codemod:
 
 - creates 2 entry files: `strapi-server.js` and `strapi-admin.js`,
@@ -106,9 +105,9 @@ mkdir server
 ### Move controllers, services, and middlewares
 
 :::callout
-In Strapi v3, controllers, services, and middlewares of a plugin should follow a strict folder structure convention.
+In Strapi v3, controllers, services, and middlewares of a plugin must follow a strict folder structure convention.
 
-In Strapi v4, the organization of files and folders for plugins is flexible. However, it is recommended to create dedicated folders for [controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers), [services](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#services), and [middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#middlewares) inside a `server` folder.
+In Strapi v4, the organization of files and folders for plugins is flexible. However, it is recommended to create dedicated folders for every type of back-end element (e.g. [controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers), [services](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#services), and [middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#middlewares)) inside a `server` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 :::
 
@@ -153,13 +152,13 @@ module.exports = {
 :::callout
 Strapi v3 has a dedicated `config/functions` folder for each plugin.
 
-In Strapi v4, the `config` folder does not necessarily exist for a plugin and [the `bootstrap` function](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#bootstrap) and other life cycle functions can be declared elsewhere.
+In Strapi v4, the `config` folder does not necessarily exist for a plugin and [the `bootstrap` function](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#bootstrap) and other lifecycle functions can be declared elsewhere.
 :::
 
 To update the plugin's `bootstrap` function to Strapi v4:
 
 - move the `bootstrap()` function from `server/config/functions/bootstrap.js` to `server/bootstrap.js`
-- pass the `strapi` instance (object) as an argument
+- pass the `strapi` instance (object) as a parameter
 
 ```jsx
 // path: ./src/plugins/my-plugin/server/bootstrap.js
@@ -230,7 +229,7 @@ In Strapi v4, the `config` folder does not necessarily exist for a plugin and [p
 
 To update plugin policies to Strapi v4:
 
-1. Move policies from `config/policies` to `server/policies/<policyName>.js`
+1. Move policies from `config/policies` to `server/policies/<policy-name>.js`
 
 2. Add an `index.js` file to the `server/policies` folder and make sure it exports all files in the folder.
 
@@ -264,8 +263,8 @@ To convert Strapi v3 models to v4 content-types:
     // ...
     ```
 
-4. (_optional_) If the Strapi v3 model uses life cycle hooks found in `<model-name>.js`, move/rename the file to `server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
-5. Create an `index.js` file for each content-type to export the schema and, optionally, life cycle hooks:
+4. (_optional_) If the Strapi v3 model uses lifecycle hooks found in `<model-name>.js`, move/rename the file to `server/content-types/<contentTypeName>/lifecycle.js`, otherwise delete the file.
+5. Create an `index.js` file for each content-type to export the schema and, optionally, lifecycle hooks:
 
     ```jsx
     // path: ./src/plugins/my-plugin/server/content-types/<content-type-name>/index.js

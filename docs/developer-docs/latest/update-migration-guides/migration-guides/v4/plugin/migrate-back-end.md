@@ -47,16 +47,7 @@ To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to
 Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you've pushed your v3 plugin, and you are on a new branch.
 :::
 
-To update imports automatically:
-
-- in the `package.json` file of the Strapi plugin, use the [`update-package-dependencies` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-package-dependencies.js) by running the following commands in a terminal:
-
-  ```sh
-  cd <the-folder-where-the-strapi-codemods-repo-was-cloned>
-  node ./migration-helpers/update-package-dependencies.js <path-to-plugin>
-  ```
-
-- in any other file importing Strapi packages, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
+To update imports automatically, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
 
   ```sh
   npx jscodeshift -t ./transforms/update-strapi-scoped-imports.js <path-to-file | path-to-folder>
@@ -111,7 +102,7 @@ In Strapi v4, relations should be explicitly described in the `schema.json` file
 
 If the plugin declares content-types with relations between them, migrating relations to Strapi v4 should be done manually in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) of the content-types.
 
-To update content-type relations, update the `server/content-types/<contentTypeName>/schema.json` file for each content-type with the following procedure:
+To update content-type relations, update the `server/content-types/<content-type-name>/schema.json` file for each content-type with the following procedure:
 
 1. Declare the relation explicitly by setting the `type` attribute value to `"relation"`.
 

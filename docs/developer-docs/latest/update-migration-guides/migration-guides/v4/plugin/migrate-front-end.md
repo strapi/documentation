@@ -1,5 +1,5 @@
 ---
-title: v4 Plugin Migration - Migrate back end - Strapi Developer Docs
+title: v4 Plugin Migration - Migrate front end - Strapi Developer Docs
 description:
 canonicalUrl:
 next: false
@@ -24,7 +24,7 @@ Following this guide should help you migrate a basic plugin with a single view. 
 
 In addition to the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register), which is executed as soon as the plugin is loaded, a [`bootstrap()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap) executes after all plugins are loaded.
 
-To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated life cycle functions.
+To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated lifecycle functions.
 :::
 
 ## Register the plugin with the admin panel
@@ -38,8 +38,8 @@ In Strapi v4, the plugin is registered within the [`register()` lifecycle functi
 To update the front-end registration of a plugin to Strapi v4:
 
 1. (_optional_) If it does not already exist, create a `admin/src/index.js` file at the root of the plugin folder.
-2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` life cycle function, passing the current Strapi application instance as an argument.
-3. Inside the `register()` life cycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
+2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` lifecycle function, passing the current Strapi application instance as an argument.
+3. Inside the `register()` lifecycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
 4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
 
     ```jsx
