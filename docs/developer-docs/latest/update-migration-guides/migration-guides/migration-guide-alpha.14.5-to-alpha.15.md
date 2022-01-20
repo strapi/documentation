@@ -67,7 +67,7 @@ Go in [diff files](https://github.com/strapi/strapi/compare/v3.0.0-alpha.14.5...
 
 Services: `packages/strapi-generate-api/templates/bookshelf/service.template`
 
-Life cycle: `packages/strapi-generate-model/templates/bookshelf/model.template`
+lifecycle: `packages/strapi-generate-model/templates/bookshelf/model.template`
 
 You will have to update all your service by applying the diff.
 

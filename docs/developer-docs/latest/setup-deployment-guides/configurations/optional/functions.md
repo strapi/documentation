@@ -1,6 +1,6 @@
 ---
 title: Functions - Strapi Developer Docs
-description: Strapi includes life cycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
+description: Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html
 ---
 
