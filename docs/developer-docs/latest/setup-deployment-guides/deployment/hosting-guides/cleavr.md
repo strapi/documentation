@@ -33,10 +33,6 @@ From your Cleavr panel, add a new **Strapi** site to the server you want to host
 
 Expand the advanced options to configure your port number, database, and NodeJS version. 
 
-::: tip
-For Strapi v3 apps, select either NodeJS v12 or v14. For Strapi v4, you may choose to select Node v16. 
-:::
-
 ### Step 2: Configure Web App Repository Settings
 
 After you've added the new site, go to the web app section and edit the web app that was automatically added. 
