@@ -3,10 +3,14 @@
   "version": "4.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vuepress dev",
-    "build": "vuepress build",
+    "dev": "yarn create:config-file && vuepress dev",
+    "dev:dev": "yarn create:dev-config-file && vuepress dev",
+    "dev:user": "yarn create:user-config-file && vuepress dev",
+    "build": "yarn create:config-file && vuepress build",
     "check-links": "vuepress check-md",
-    "lint": ""
+    "create:config-file": "node ./scripts/create-main-config-file.js",
+    "create:dev-config-file": "node ./scripts/create-developer-docs-config-file.js",
+    "create:user-config-file": "node ./scripts/create-user-docs-config-file.js"
   },
   "dependencies": {
     "@vuepress/plugin-medium-zoom": "^1.8.2",

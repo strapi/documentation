@@ -150,7 +150,7 @@ To upload files that will be linked to a specific entry.
 - `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
 - `path` (optional): The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3).
 - `refId`: The ID of the entry which the file(s) will be linked to.
-- `ref`: The name of the model which the file(s) will be linked to (see more below).
+- `ref`: The unique ID (uid) of the model which the file(s) will be linked to (see more below).
 - `source` (optional): The name of the plugin where the model is located.
 - `field`: The field of the entry which the file(s) will be precisely linked to.
 
@@ -182,7 +182,7 @@ Code
 <form>
   <!-- Can be multiple files if you setup "collection" instead of "model" -->
   <input type="file" name="files" />
-  <input type="text" name="ref" value="restaurant" />
+  <input type="text" name="ref" value="api::restaurant.restaurant" />
   <input type="text" name="refId" value="5c126648c7415f0c0ef1bccd" />
   <input type="text" name="field" value="cover" />
   <input type="submit" value="Submit" />
@@ -406,8 +406,8 @@ module.exports = ({ env })=>({
 
 To enable the provider, create or edit the file at `./config/plugins.js`
 
-:::tip
-When using community providers, you need to pass the full package name to the `provider` key, only Strapi maintained providers can use the short-code eg: `provider: 'strapi-provider-upload-google-cloud-storage'`
+::: note
+When using community providers, pass the full package name to the `provider` key (e.g. `provider: 'strapi-provider-upload-google-cloud-storage'`). Only Strapi-maintained providers can use the shortcode format (e.g. `provider: 'aws-s3'`).
 :::
 
 ```js
@@ -435,7 +435,7 @@ module.exports = ({ env }) => ({
 Make sure to read the provider's `README` to know what are the possible parameters.
 
 :::caution
-Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the provider page or take a look at our [middleare documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
+Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the provider page or take a look at our [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
 :::
 
 ### Configuration per environment
