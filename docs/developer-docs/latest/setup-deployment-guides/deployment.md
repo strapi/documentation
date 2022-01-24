@@ -298,6 +298,18 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 	</InstallLink>
 </div>
 
+<div>
+	<InstallLink link="deployment/hosting-guides/microtica.html">
+    <template #icon>
+      <svg width="114" height="113" viewBox="0 0 114 113" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M57.0999 0.200012C25.8999 0.200012 0.699951 25.5 0.699951 56.6C0.699951 87.7 25.9999 113 57.0999 113C88.1999 113 113.5 87.7 113.5 56.6C113.5 25.5 88.2999 0.200012 57.0999 0.200012ZM88.1 83.2C88.1 83.2 87.5 76.6 84.6 71.6C81 65.3 74.5 62.9 69.5 68.6C61.7 77.4 60.7 84.1 51.4 83C41.8 81.9 30.1999 53.8 23.7999 84.2C23.7999 84.2 16.6 76.6 15.7 62.7C15.4 56 17.9999 49 24.7999 45.9C34.9 41.3 40.5999 52.1 46.2999 50.9C54.0999 49.3 50.9 40.1 58 29.9C67.8 15.9 89 27.1 94.2 42C102.6 66.2 88.1 83.2 88.1 83.2Z" fill="white"/></svg>
+    </template>
+		<template #title>Microtica</template>
+		<template #description>
+			Deploy on your AWS account with Microtica
+		</template>
+	</InstallLink>
+</div>
+
 ## Optional Software Guides
 
 Additional guides for optional software additions that compliment or improve the deployment process when using Strapi in a production or production-like environment.
