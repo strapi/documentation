@@ -6,134 +6,114 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/is-owner.html
 
 # Create is owner policy
 
-!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
+This guide will explain how to restrict updating and deleting an entry to the User that created it.
 
-This guide will explain how to restrict content editing to content authors only.
-
-## Introduction
-
-It is often required that the author of an entry is the only user allowed to edit or delete the entry.
-
-This is a feature that is requested a lot and in this guide we will show how to implement it.
+You will have to modify the controllers of each Content-Type that you would like to enable owner-restricted API access.
 
 ## Example
 
-For this example, we will need an Article Content Type.
+For this example, we will create an **article** Content-Type.
 
-Add a `text` field and a `relation` field for this Content Type.
+Add a `text` field named `title` and a `relation` field to this Content-Type.
 
-The `relation` field is a **many-to-one** relation with User.<br>
-One User can have many Articles and one Article can have only one User.<br>
-Name the field `author` for the Article Content Type and `articles` on the User side.
+The `relation` field is a **many-to-one** relation with User (from:users-permissions).<br>
+A User can have many Articles, but an Article can have only one User.<br>
+Name the field `author` for the Article Content-Type and `articles` on the User side.
 
-Now we are ready to start customization.
+Create some Users and Articles, and now we are ready to start the customization.
 
 ## Apply the author by default
 
-When we are creating a new Article via `POST /articles` we will need to set the authenticated user as the author of the article.
+When creating a new Article via `POST /api/articles` we must set the authenticated User as the article's author.
 
-To do so we will customize the `create` controller function of the Article API.
+We will [customize the `create` controller](https://docs.strapi.io/developer-docs/latest/development/backend-customization/controllers.html#extending-core-controllers) function of the Article API to do so.
 
-**Concepts we will use:**
-Here is the code of [core controllers](/developer-docs/latest/development/backend-customization/controllers.md#extending-core-controllers).
-We will also use this [documentation](/developer-docs/latest/plugins/users-permissions.md#user-object-in-strapi-context) to access the current authenticated user information.
+> You must enable the permissions to **create, update** and **delete** Articles from Settings -> Users & Permissions Plugin -> Roles -> Authenticated
 
-**Path —** `./api/article/controllers/Article.js`
+**Path —** `./src/api/article/controllers/article.js`
 
 ```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
+'use strict';
 
-module.exports = {
-  /**
-   * Create a record.
-   *
-   * @return {Object}
-   */
+/**
+ *  article controller
+ */
 
-  async create(ctx) {
-    let entity;
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      data.author = ctx.state.user.id;
-      entity = await strapi.services.article.create(data, { files });
-    } else {
-      ctx.request.body.author = ctx.state.user.id;
-      entity = await strapi.services.article.create(ctx.request.body);
-    }
-    return sanitizeEntity(entity, { model: strapi.models.article });
-  },
-};
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::article.article', {
+    async create(ctx) {
+        var { id } = ctx.state.user; //ctx.state.user contains the current authenticated user 
+        const response = await super.create(ctx);
+        const updatedResponse = await strapi.entityService
+            .update('api::article.article', response.data.id, { data: { author: id } })
+        return updatedResponse;
+    },
+}
+);
 ```
 
-Now, when an article is created, the authenticated user is automatically set as author of the article.
+Now, when an article is created, the authenticated User is automatically set as author of the article.
 
-## Limit the update
+## Limit the delete and update
 
-Now we will restrict the update of articles only for the author.
+Now we will restrict the update and delete controller of articles to only allow for the author to make changes.
 
 We will use the same concepts as previously.
 
-**Path —** `./api/article/controllers/Article.js`
+**Path —** `./src/api/article/controllers/article.js`
 
 ```js
-const { parseMultipartData, sanitizeEntity } = require('strapi-utils');
+'use strict';
 
-module.exports = {
-  /**
-   * Create a record.
-   *
-   * @return {Object}
-   */
+/**
+ *  article controller
+ */
 
-  async create(ctx) {
-    let entity;
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      data.author = ctx.state.user.id;
-      entity = await strapi.services.article.create(data, { files });
-    } else {
-      ctx.request.body.author = ctx.state.user.id;
-      entity = await strapi.services.article.create(ctx.request.body);
-    }
-    return sanitizeEntity(entity, { model: strapi.models.article });
-  },
+const { createCoreController } = require('@strapi/strapi').factories;
 
-  /**
-   * Update a record.
-   *
-   * @return {Object}
-   */
-
-  async update(ctx) {
-    const { id } = ctx.params;
-
-    let entity;
-
-    const [article] = await strapi.services.article.find({
-      id: ctx.params.id,
-      'author.id': ctx.state.user.id,
-    });
-
-    if (!article) {
-      return ctx.unauthorized(`You can't update this entry`);
-    }
-
-    if (ctx.is('multipart')) {
-      const { data, files } = parseMultipartData(ctx);
-      entity = await strapi.services.article.update({ id }, data, {
-        files,
-      });
-    } else {
-      entity = await strapi.services.article.update({ id }, ctx.request.body);
-    }
-
-    return sanitizeEntity(entity, { model: strapi.models.article });
-  },
-};
+module.exports = createCoreController('api::article.article', {
+    async create(ctx) {
+        var { id } = ctx.state.user; //ctx.state.user contains the current authenticated user 
+        const response = await super.create(ctx);
+        const updatedResponse = await strapi.entityService
+            .update('api::article.article', response.data.id, { data: { author: id } })
+        return updatedResponse;
+    },
+    async update(ctx) {
+        var { id } = ctx.state.user
+        var [article] = await strapi.entityService
+            .findMany('api::article.article', {
+                filters: {
+                    id: ctx.request.params.id,
+                    author: id
+                }
+            })
+        if (article) {
+            const response = await super.update(ctx);
+            return response;
+        } else {
+            return ctx.unauthorized();
+        }
+    },
+    async delete(ctx) {
+        var { id } = ctx.state.user
+        var [article] = await strapi.entityService
+            .findMany('api::article.article', {
+                filters: {
+                    id: ctx.request.params.id,
+                    author: id
+                }
+            })
+        if (article) {
+            const response = await super.delete(ctx);
+            return response;
+        } else {
+            return ctx.unauthorized();
+        }
+    },
+}
+);
 ```
 
-And tada!
-
-:::tip
-For the delete action, it will be the exact same check as the update action.
-:::
+And tada! now the User that creates an article, will be set as the author, and is the only one who is able to update/delete the article.
