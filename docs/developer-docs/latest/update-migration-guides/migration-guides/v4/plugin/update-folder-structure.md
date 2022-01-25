@@ -204,7 +204,7 @@ module.exports = {
 module.exports = [
   {
     method: "GET",
-    path: "/my-controller-a/",
+    path: "/my-controller-a",
     // Camel case handler to match export in server/controllers/index.js
     handler: "myControllerA.index",
     config: { policies: [] },
