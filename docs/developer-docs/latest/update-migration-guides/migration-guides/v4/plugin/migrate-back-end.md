@@ -1,12 +1,12 @@
 ---
-title: v4 Plugin Migration - Migrate back end - Strapi Developer Docs
+title: v4 Plugin Migration - Migrating the back end - Strapi Developer Docs
 description:
 canonicalUrl:
 ---
 
 <!-- TODO: update SEO -->
 
-# v4 plugin migration: Migrate the back end
+# v4 plugin migration: Migrating the back end
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
@@ -15,8 +15,6 @@ Migrating the back end of a plugin to Strapi v4 requires:
 - updating [imports](#update-imports)
 - updating content-types [getters](#update-content-types-getters) and, optionally, [relations](#update-content-types-relations)
 - updating the [plugin configuration](#update-plugin-configuration)
-
-<br/>
 
 Some actions required to migrate the back end of a plugin can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
@@ -27,9 +25,9 @@ Some actions required to migrate the back end of a plugin can be performed by sc
 | Update content-types relations | [Manual](#update-content-types-relations)                                                                    |
 | Update configuration           | [Manual](#update-configuration)                                                                              |
 
-## Update imports
+## Updating imports
 
-:::callout
+:::strapi v3/v4 comparison
 Package names in Strapi v3 are prefixed by `strapi-`.
 
 Strapi v4 uses scoped imports.
@@ -37,45 +35,45 @@ Strapi v4 uses scoped imports.
 
 To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#update-imports-automatically) or [manually](#update-imports-manually).
 
-### Update imports automatically
+### Automatic imports update
 
 ::: caution
 Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you've pushed your v3 plugin, and you are on a new branch.
 :::
 
-To update imports automatically, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
+To update imports automatically, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
 
   ```sh
-  npx jscodeshift -t ./transforms/update-strapi-scoped-imports.js <path-to-file | path-to-folder>
+  npx @strapi/codemods transform update-strapi-scoped-imports [path-to-file | folder]
   ```
 
-### Update imports manually
+### Manual imports update
 
 To update all imports manually, find any imports of Strapi packages (e.g. `strapi-package-name`) and rename them to `@strapi/package-name`.
 
-## Update content-types getters
+## Updating content-types getters
 
-:::callout
+:::strapi v3/v4 comparison
 Strapi v3 models have been renamed to [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) in Strapi v4.
 :::
 
 If the plugin declares models, update the syntax for all getters from `strapi.models` to `strapi.contentTypes`. The syntax can be updated [automatically](#update-content-types-getters-automatically) or [manually](#update-content-types-getters-manually).
 
-### Update content-types getters automatically
+### Automatic content-types getters update
 
 ::: caution
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-modify-source-code.md)!!!
 :::
 
-To update the syntax for content-types getters automatically, use the [`change-model-getters-to-content-types` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/change-model-getters-to-content-types.js) by running the following command in a terminal:
+To update the syntax for content-types getters automatically, use the [`change-model-getters-to-content-types` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/change-model-getters-to-content-types.js). The codemod replaces all instances of `strapi.models` with `strapi.contentTypes` in the indicated file or folder.
+
+To use the codemod, run the following command in a terminal:
 
 ```jsx
-npx @strapi/codemods transform  change-model-getters-to-content-types [path-to-file | folder]
+npx @strapi/codemods transform change-model-getters-to-content-types [path-to-file | folder]
 ```
 
-The codemod replaces all instances of `strapi.models` with `strapi.contentTypes` in the indicated file or folder.
-
-### Update content-types getters manually
+### Manual content-types getters update
 
 To update the syntax for content-types getters manually, replace any instance of `strapi.models` with `strapi.contentTypes`.
 
@@ -83,14 +81,13 @@ To update the syntax for content-types getters manually, replace any instance of
 Strapi v4 introduced new getters that can be used to refactor the plugin code further (see [Server API usage documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#usage)).
 :::
 
-## Update content-types relations
+## Updating content-types relations
 
 ::: prerequisites
 Updating content-types relations to Strapi v4 requires that the v3 models have been converted to Strapi v4 content-types (see [converting models to content-types documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#convert-models-to-content-types)).
 :::
 
-
-::: callout
+::: strapi v3/v4 comparison
 Strapi v3 defines relations between content-types with the `via`, `model` and `collection` properties in the model settings.
 
 In Strapi v4, relations should be explicitly described in the `schema.json` file of the content-types (see [relations documentation](/developer-docs/latest/development/backend-customization/models.md#relations)).
@@ -170,9 +167,9 @@ To update content-type relations, update the `server/content-types/<content-type
 
 :::
 
-## Update plugin configuration
+## Updating plugin configuration
 
-:::callout
+:::strapi v3/v4 comparison
 Strapi v3 defines plugin configurations in a `config` folder.
 
 In Strapi v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).

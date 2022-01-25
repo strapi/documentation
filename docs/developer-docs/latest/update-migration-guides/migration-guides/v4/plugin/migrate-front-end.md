@@ -1,13 +1,13 @@
 ---
-title: v4 Plugin Migration - Migrate front end - Strapi Developer Docs
+title: v4 Plugin Migration - Migrating the front end - Strapi Developer Docs
 description:
 canonicalUrl:
-next: false
+next: ./enable-plugin.md
 ---
 
 <!-- TODO: update SEO -->
 
-# v4 plugin migration: Migrate the front end
+# v4 plugin migration: Migrating the front end
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
@@ -27,9 +27,9 @@ In addition to the [`register()` lifecycle function](/developer-docs/latest/deve
 To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#available-actions) for all available APIs and their associated lifecycle functions.
 :::
 
-## Register the plugin with the admin panel
+## Registering the plugin with the admin panel
 
-::: callout
+::: strapi v3/v4 comparison
 A Strapi v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
 
 In Strapi v4, the plugin is registered within the [`register()` lifecycle function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#register).
@@ -75,9 +75,9 @@ const { name } = pluginPkg.strapi;
 
 :::
 
-## Add a menu link
+## Adding a menu link
 
-::: callout
+::: strapi v3/v4 comparison
 A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
 
 In Strapi v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
@@ -154,7 +154,7 @@ export default {
 
 :::
 
-## Register translations
+## Registering translations
 
 In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
 
