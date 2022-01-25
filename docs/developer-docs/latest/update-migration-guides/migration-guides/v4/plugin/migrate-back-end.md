@@ -188,7 +188,7 @@ To handle default plugin configurations in Strapi v4:
 
 2. Within the `config` object:
    - Define a `default` key that takes an object to store the default configuration.
-   - Add a `validator` key, which is a function taking the `config` as an argument.
+   - (_optional_) Add a `validator` key, which is a function taking the `config` as an argument.
 
 ::: details Example of a default plugin configuration
 
