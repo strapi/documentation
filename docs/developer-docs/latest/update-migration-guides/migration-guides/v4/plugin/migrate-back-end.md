@@ -20,12 +20,12 @@ Migrating the back end of a plugin to Strapi v4 requires:
 
 Some actions required to migrate the back end of a plugin can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
 
-| Action                          | Migration type                                                                                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Update imports                  | [Automatic](#update-imports-automatically) or [manual](#update-imports-manually)                             |
+| Action                         | Migration type                                                                                               |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| Update imports                 | [Automatic](#update-imports-automatically) or [manual](#update-imports-manually)                             |
 | Update content-types getters   | [Automatic](#update-content-types-getters-automatically) or [manual](#update-content-types-getters-manually) |
 | Update content-types relations | [Manual](#update-content-types-relations)                                                                    |
-| Update configuration            | [Manual](#update-configuration)                                                                              |
+| Update configuration           | [Manual](#update-configuration)                                                                              |
 
 ## Update imports
 
