@@ -32,17 +32,22 @@ As long as these requirements are met, the rest of the folder structure is up to
 ```jsx
 my-plugin
 ├─ admin
-│  ├─ components
-│  ├─ pages
-│  ├─ // more folders and files
-│  └─ index.js
+│  └─ src
+│     ├─ components
+│     ├─ pages
+│     ├─ // more folders and files
+│     └─ index.js
 ├─ server
 │  ├─ config
+│  ├─ content-types
 │  ├─ controllers
 │  ├─ middlewares
 │  ├─ policies
 │  ├─ routes
+│  ├─ services
 │  ├─ bootstrap.js
+│  ├─ destroy.js
+│  ├─ register.js
 │  ├─ // more folders and files
 │  └─ index.js
 ├─ strapi-admin.js // require('./admin')
@@ -98,7 +103,7 @@ In Strapi v4, the organization of files and folders for plugins is flexible. How
 
 :::
 
-To update the controllers, services, and middlewares of a plugin to Strapi v4, create specific subfolders in a `server` folder.
+To update the controllers, services, and middlewares of a plugin to Strapi v4, create specific sub-folders in a `server` folder.
 
 Plugin files and folders in Strapi v4 should meet 2 requirements:
 
@@ -196,7 +201,7 @@ module.exports = [
     method: "GET",
     path: "/my-controller-a",
     // Camel case handler to match export in server/controllers/index.js
-    handler: "myControllerA.index",
+    handler: "myControllerA.doSomething",
     config: { policies: [] },
   },
 ];

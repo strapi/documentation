@@ -24,11 +24,11 @@ To enable a local plugin in v4 and define an optional configuration:
 
 1. If it does not already exist, create the `./config/plugins.js` file.
 2. In the `./config/plugins.js` file, export a function that:
-    * returns an object
-    * and can take the `{ env }` object as a parameter (see [Environment configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) documentation).
-2. Within the object exported by `./config/plugins.js`, create a key with the name of the plugin (e.g. `"my-plugin"`). The value of this key is also an object.
-3. Within the `"my-plugin"` object, set the `enabled` key value to `true` (boolean).
-4. _(optional)_ Add a `resolve` key, whose value is the path of the plugin folder (as a string), and a `config` key (as an object) that can include additional configuration for the plugin (see [plugins configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) documentation).
+    - returns an object
+    - and can take the `{ env }` object as a parameter (see [Environment configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) documentation).
+3. Within the object exported by `./config/plugins.js`, create a key with the name of the plugin (e.g. `"my-plugin"`). The value of this key is also an object.
+4. Within the `"my-plugin"` object, set the `enabled` key value to `true` (boolean).
+5. _(optional)_ Add a `resolve` key, whose value is the path of the plugin folder (as a string), and a `config` key (as an object) that can include additional configuration for the plugin (see [plugins configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) documentation).
 
 ::: details Example: Enabling and configuring a "my-plugin" plugin
 

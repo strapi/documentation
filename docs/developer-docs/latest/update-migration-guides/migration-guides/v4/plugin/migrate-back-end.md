@@ -172,12 +172,12 @@ To update content-type relations, update the `server/content-types/<content-type
 :::strapi v3/v4 comparison
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In Strapi v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file or in the `server/index.js` file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+In Strapi v4, the default configuration of a plugin is defined as an object found in the `config.js` file or in the `config/index.js` file, these are then called from the entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
 :::
 
-To handle default plugin configurations in Strapi v4:
+To handle default plugin configurations in Strapi v4 the recommended way:
 
-1. In the `server/index.js` file, create a `config` object.
+1. Create the `server/config/index.js` file containing an exported object.
 
 2. Within the `config` object:
    - Define a `default` key that takes an object to store the default configuration.
@@ -186,19 +186,43 @@ To handle default plugin configurations in Strapi v4:
 ::: details Example of a default plugin configuration
 
   ```jsx
-  // path: ./src/plugins/my-plugin/server/index.js
+  // path: ./src/plugins/my-plugin/server/config/index.js
 
-  module.exports = () => {
-  // … bootstrap, routes, controllers, etc.
-  config: {
-      default: { optionA: true },
-      validator: (config) => {
-        if (typeof config.optionA !== 'boolean') {
-          throw new Error('optionA has to be a boolean');
-        }
-      },
+  module.exports = {
+    default: { optionA: true },
+    validator: (config) => {
+      if (typeof config.optionA !== 'boolean') {
+        throw new Error('optionA has to be a boolean');
+      }
     },
   }
   ```
 
 :::
+
+3. In the `server/index.js` file, import the config and export it.
+
+::: details Example of a default entry file
+
+  ```jsx
+  // path: ./src/plugins/my-plugin/server/index.js
+
+  // ...
+  const config = require('./config');
+  // ...
+
+  module.exports = {
+    // ...
+    config,
+    // ...
+  };
+  ```
+:::
+
+4. Make sure that Strapi is aware of the plugin's back-end interface exported from `server/index.js` by adding the following line to the `<plugin-name>/strapi-server.js` entry file:
+
+  ```jsx
+  // path ./src/plugins/my-plugin/strapi-server.js
+
+  module.exports = require('./server');
+  ```

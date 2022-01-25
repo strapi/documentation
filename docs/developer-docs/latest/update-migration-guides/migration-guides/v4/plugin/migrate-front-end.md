@@ -37,7 +37,7 @@ In Strapi v4, the plugin is registered within the [`register()` lifecycle functi
 
 To update the front-end registration of a plugin to Strapi v4:
 
-1. (_optional_) If it does not already exist, create a `admin/src/index.js` file at the root of the plugin folder.
+1. (_optional_) If it does not already exist, create an `admin/src/index.js` file at the root of the plugin folder.
 2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` lifecycle function, passing the current Strapi application instance as an argument.
 3. Inside the `register()` lifecycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
 4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
