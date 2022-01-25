@@ -65,7 +65,7 @@ If you have issues upgrading, it's our general recommendation to create a new pr
 - [Migration guide from beta.16+ to beta.17.4](migration-guides/migration-guide-beta.16-to-beta.17.4.md)
 - [Migration guide from beta.15 to beta.16](migration-guides/migration-guide-beta.15-to-beta.16.md)
 
-## v3-alpha guides
+## v3 alpha guides
 
 ::: warning
 
