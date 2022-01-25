@@ -16,9 +16,9 @@ Syntax: `findOne(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
-| Parameter  | Description                                                                                                                                            | Type                                                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fields`   | Attributes to return                                                                                                                                   | `String[]`                                                                                                                                    |
+| Parameter  | Description                                                                                                                                          | Type                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`   | Attributes to return                                                                                                                                 | `String[]`                                                                                                                                  |
 | `populate` | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) |
 
 ### Example
@@ -38,15 +38,15 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 
 ### Parameters
 
-| Parameter          | Description                                                                                                                                                        | Type                                                                                                                                                  |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fields`           | Attributes to return                                                                                                                                               | `String[]`                                                                                                                                            |
-| `filters`          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) to use                                                      | [`FiltersParameters`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md)             |
-| `start`            | Number of entries to skip (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination))   | `Number`                                                                                                                                              |
-| `limit`            | Number of entries to return (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination)) | `Number`                                                                                                                                              |
-| `sort`             | [Order](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md) definition                                       | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md) |
-| `populate`         | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md)             | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md)         |
-| `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries (default)</li><li>`preview` to return both draft entries & published entries</li></ul>   | `PublicationStateParameter`                                                                                                                           |
+| Parameter          | Description                                                                                                                                                      | Type                                                                                                                                               |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`           | Attributes to return                                                                                                                                             | `String[]`                                                                                                                                         |
+| `filters`          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) to use                                                    | [`FiltersParameters`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md)          |
+| `start`            | Number of entries to skip (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination))   | `Number`                                                                                                                                           |
+| `limit`            | Number of entries to return (see [pagination](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination)) | `Number`                                                                                                                                           |
+| `sort`             | [Order](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md) definition                                        | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md) |
+| `populate`         | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md)             | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md)        |
+| `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries (default)</li><li>`preview` to return both draft entries & published entries</li></ul> | `PublicationStateParameter`                                                                                                                        |
 
 ### Example
 
@@ -67,11 +67,11 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
-| Parameter  | Description                                                                                                                                            | Type                                                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fields`   | Attributes to return                                                                                                                                   | `String[]`                                                                                                                                    |
+| Parameter  | Description                                                                                                                                          | Type                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`   | Attributes to return                                                                                                                                 | `String[]`                                                                                                                                  |
 | `populate` | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) |
-| `data`     | Input data                                                                                                                                             | `Object`                                                                                                                                      |
+| `data`     | Input data                                                                                                                                           | `Object`                                                                                                                                    |
 
 ### Example
 
@@ -95,11 +95,11 @@ Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
-| Parameter  | Description                                                                                                                                            | Type                                                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fields`   | Attributes to return                                                                                                                                   | `String[]`                                                                                                                                    |
+| Parameter  | Description                                                                                                                                          | Type                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`   | Attributes to return                                                                                                                                 | `String[]`                                                                                                                                  |
 | `populate` | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) |
-| `data`     | Input data                                                                                                                                             | `object`                                                                                                                                      |
+| `data`     | Input data                                                                                                                                           | `object`                                                                                                                                    |
 
 ### Example
 
@@ -119,13 +119,39 @@ Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
 ### Parameters
 
-| Parameter  | Description                                                                                                                                            | Type                                                                                                                                          |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fields`   | Attributes to return                                                                                                                                   | `String[]`                                                                                                                                    |
+| Parameter  | Description                                                                                                                                          | Type                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`   | Attributes to return                                                                                                                                 | `String[]`                                                                                                                                  |
 | `populate` | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) |
 
 ### Example
 
 ```js
 const entry = await strapi.entityService.delete('api::article.article', 1);
+```
+
+## count()
+
+Returns the count of entries matching the parameters.
+
+Syntax: `count(uid: string, parameters: Params) => Integer`
+
+### Parameters
+
+| Parameter | Type                                                                                                          | Description                                                                                                                               |
+| --------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `filters` | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) to use | [`FiltersParameters`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md) |
+| `_q`      | String                                                                                                        | Text search query                                                                                                                         |
+
+### Example
+
+```js
+const entry = await strapi.entityService.count('api::article.article', {
+  filters: {
+    type: {
+      $eq: 'journal',
+    },
+  },
+  _q: 'science',
+});
 ```
