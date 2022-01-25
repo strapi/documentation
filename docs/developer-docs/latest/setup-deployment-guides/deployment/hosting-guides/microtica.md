@@ -19,7 +19,7 @@ If you want to use a previous version of Strapi, go to step [Deploy Strapi Infra
 :::
 
 ## What will be provisioned on AWS
-Our pre-made Strapi template will create a new environment and automatically create a few components in the environment:
+Microtica's pre-made Strapi template will create a new environment and automatically create a few components in the environment:
 
 * **VPC** – VPC, subnets and networking.
 * **AppRunner** – Container infrastructure based on Fargate and application load balancer. This component will run the Strapi project.
