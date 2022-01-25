@@ -172,12 +172,12 @@ To update content-type relations, update the `server/content-types/<content-type
 :::strapi v3/v4 comparison
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In Strapi v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+In Strapi v4, the default configuration of a plugin is defined as an object in the `config` property found in the `strapi-server.js` entry file or in the `server/index.js` file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
 :::
 
 To handle default plugin configurations in Strapi v4:
 
-1. In the `strapi-server.js` file, create a `config` object.
+1. In the `server/index.js` file, create a `config` object.
 
 2. Within the `config` object:
    - Define a `default` key that takes an object to store the default configuration.
@@ -186,7 +186,7 @@ To handle default plugin configurations in Strapi v4:
 ::: details Example of a default plugin configuration
 
   ```jsx
-  // path: ./src/plugins/my-plugin/strapi-server.js
+  // path: ./src/plugins/my-plugin/server/index.js
 
   module.exports = () => {
   // … bootstrap, routes, controllers, etc.

@@ -303,32 +303,50 @@ Converting Strapi v3 models to v4 content-types also requires updating getters a
 ::: strapi v3/v4 comparison
 Strapi v3 plugins use a strict folder structure convention.
 
-In Strapi v4, the folder structure for plugins is flexible. However, each plugin needs at least a `strapi-server.js` entry file or a `strapi-admin.js` entry file. The 2 entry files are used to take advantage of, respectively, the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.html) for the back end of the plugin and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html) for the front end of the plugin, if interactions with the admin panel are required.
+In Strapi v4, the folder structure for plugins is flexible. However, each plugin needs at least a `strapi-server.js` entry file or a `strapi-admin.js` entry file. The 2 entry files are used to take advantage of, respectively, the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.html) for the back end of the plugin and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html) for the front end of the plugin.
 :::
 
 To update the plugin to Strapi v4:
 
-- If the plugin interacts with Strapi's backend, create the `strapi-server.js` back-end entry file at the root of the plugin folder. The file should require all necessary files and export the back-end plugin interface (see [migrating the back end of a plugin](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)).
+- If the plugin interacts with Strapi's backend, create the `strapi-server.js` back-end entry file at the root of the plugin folder. The file should require all necessary files and export the back-end plugin interface (see [migrating the back end of a plugin](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)). 
 
-  ::: details Example strapi-server.js entry file
+  ::: details Example strapi-server.js and server/index.js entry files
 
-    ```jsx
+    ```js
     // path: ./src/plugins/my-plugin/strapi-server.js
 
     "use strict";
 
-    const bootstrap = require("./server/bootstrap");
-    const contentTypes = require("./server/contentTypes");
-    const controllers = require("./server/contentTypes");
-    const services = require("./server/services");
-    const routes = require("./server/routes");
+    module.exports = require('./server');
+    ```
+
+    ```js
+    // path: ./src/plugins/my-plugin/server/index.js:
+
+    "use strict";
+
+    const register = require('./register');
+    const bootstrap = require('./bootstrap');
+    const destroy = require('./destroy');
+    const config = require('./config');
+    const contentTypes = require('./content-types');
+    const controllers = require('./controllers');
+    const routes = require('./routes');
+    const middlewares = require('./middlewares');
+    const policies = require('./policies');
+    const services = require('./services');
 
     module.exports = {
+      register,
       bootstrap,
-      contentTypes,
+      destroy,
+      config,
       controllers,
-      services,
       routes,
+      services,
+      contentTypes,
+      policies,
+      middlewares,
     };
     ```
 

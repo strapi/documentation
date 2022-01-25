@@ -94,7 +94,7 @@ module.exports = () => ({
 **Example:**
 
 ```js
-// path: ./src/plugins/my-plugin/strapi-server.js
+// path: ./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js
 
 const config = require('./config');
 
