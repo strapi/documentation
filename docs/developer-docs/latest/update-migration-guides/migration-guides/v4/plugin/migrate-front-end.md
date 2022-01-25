@@ -54,7 +54,7 @@ To update the front-end registration of a plugin to Strapi v4:
   import pluginId from './pluginId';
 
   const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
-  const name = pluginPkg.strapi.name;
+const { name } = pluginPkg.strapi;
 
   export default {
     register(app) {
