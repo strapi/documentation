@@ -213,9 +213,9 @@ Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content.sv
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
-4. Click **Save**.
-5. Go back to _Collection types - Category_, then click again on **Add new entry**.  
-6. Type `Brunch` in the _Name_ field, then click **Save**.
+3. Click **Save**.
+4. Go back to _Collection types - Category_, then click again on **Add new entry**.  
+5. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
@@ -314,7 +314,7 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 ## 🚀 Part A: Create a new project with Strapi starters
 
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Next, Nuxt).
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Nuxt).
 
 This quick start guide has been specifically tailored to use the [Next blog starter](https://strapi.io/starters/strapi-starter-next-js-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
 

@@ -84,7 +84,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
   send(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
@@ -97,7 +97,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
     // Return a promise of the function that sends the email.
     return transporter.sendMail(options);
   },
-});
+}));
 ```
 
 The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
