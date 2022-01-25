@@ -39,10 +39,6 @@ To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to
 
 ### Update imports automatically
 
-:::prerequisites
-!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
-:::
-
 ::: caution
 Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you've pushed your v3 plugin, and you are on a new branch.
 :::
@@ -71,10 +67,10 @@ If the plugin declares models, update the syntax for all getters from `strapi.mo
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-modify-source-code.md)!!!
 :::
 
-To update the syntax for content-types getters automatically, use the [`change-model-getters-to-content-types` codemod](https://github.com/strapi/codemods/blob/main/transforms/change-model-getters-to-content-types.js) by running the following command in a terminal:
+To update the syntax for content-types getters automatically, use the [`change-model-getters-to-content-types` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/change-model-getters-to-content-types.js) by running the following command in a terminal:
 
 ```jsx
-npx jscodeshift -t ./transforms/change-model-getters-to-content-types.js <path-to-file | path-to-folder>
+npx @strapi/codemods transform  change-model-getters-to-content-types [path-to-file | folder]
 ```
 
 The codemod replaces all instances of `strapi.models` with `strapi.contentTypes` in the indicated file or folder.

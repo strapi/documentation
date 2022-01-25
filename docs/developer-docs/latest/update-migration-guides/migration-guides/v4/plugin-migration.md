@@ -31,10 +31,6 @@ Some actions required for plugin migration can be performed by scripts that auto
 
 <br/>
 
-!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
-
-<br/>
-
 ::: strapi Codemods support & community contributions
 If you have any issues with the codemods or would like to contribute to the project please [create an issue](https://github.com/strapi/codemods/issues) or [open a pull request](https://github.com/strapi/codemods/pulls).
 :::

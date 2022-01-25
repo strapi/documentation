@@ -63,10 +63,6 @@ The folder structure of a Strapi v3 plugin can be migrated to a v4 plugin either
 
 ## Update the folder structure automatically
 
-:::prerequisites
-!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/codemod-prerequisites.md)!!!
-:::
-
 ::: caution
 The codemod creates a new Strapi v4 plugin, leaving the Strapi v3 plugin in place. We recommend confirming the v4 version of the plugin is working properly before deleting the v3 version.
 :::
@@ -74,8 +70,7 @@ The codemod creates a new Strapi v4 plugin, leaving the Strapi v3 plugin in plac
 The [`update-plugin-folder-structure` codemod](https://github.com/strapi/codemods/blob/main/migration-helpers/update-plugin-folder-structure.js) can be used to automatically update the folder structure of a plugin for Strapi v4. To execute the codemod, run the following commands in a terminal:
 
 ```sh
-cd <the-folder-where-the-strapi-codemods-repo-was-cloned>
-node ./migration-helpers/update-plugin-folder-structure.js <path-to-v3-plugin> <path-for-v4-plugin>
+npx @strapi/codemods migrate:plugin <path-to-v3-plugin> [path-for-v4-plugin]
 ```
 
 The codemod:
