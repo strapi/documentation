@@ -49,7 +49,7 @@ To update Strapi scoped packages automatically:
     npx @strapi/codemods migrate:dependencies [path-to-strapi-plugin]
     ```
 
-2. [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js)
+2. Use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js) by running the following command:
 
     ```sh
     npx @strapi/codemods transform update-strapi-scoped-imports [path-to-file | folder]
