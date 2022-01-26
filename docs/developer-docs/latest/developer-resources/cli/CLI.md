@@ -6,7 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. 
+
+::: note
+We recommend to install strapi only locally and never globally. The following documentation does not use any required node prefixes like `npm run` or `yarn`, but you should always prefix `strapi` with what fits best to your project setup, e.g. `npm run strapi new <name>`, `yarn strapi new <name>`
+:::
 
 ## strapi new
 
