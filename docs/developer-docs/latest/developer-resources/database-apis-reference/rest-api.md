@@ -99,7 +99,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::: tabs card
 
-::: tab Collection Type
+::: tab Collection type
 
 <div id="endpoint-table">
 
@@ -115,7 +115,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::
 
-::: tab Single Type
+::: tab Single type
 
 <div id="endpoint-table">
 
@@ -135,9 +135,9 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::: tabs card
 
-::: tab Collection Type
+::: tab Collection type
 
-`Restaurant` **Content Type**
+`Restaurant` **Content type**
 
 <div id="endpoint-table">
 
@@ -153,9 +153,9 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::
 
-::: tab Single Type
+::: tab Single type
 
-`Homepage` **Content Type**
+`Homepage` **Content type**
 
 <div id="endpoint-table">
 

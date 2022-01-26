@@ -37,9 +37,9 @@ STRAPI_CACHE_TIME=3600
 
 ## Get your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 ::: request Example GET request
 
@@ -57,7 +57,7 @@ $restaurants = $strapi->collection('restaurants', $sortKey = 'id', $sortOrder = 
 
 ## Accessing single type items
 
-You may also access Single Type items as follows:
+You may also access single type items as follows:
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
@@ -86,6 +86,6 @@ $entry = $strapi->entry('restaurants', $id = 5);
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Laravel. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your collection types in Strapi using Laravel. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
 There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).

@@ -497,11 +497,11 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Type Builder',
+      title: 'Content-type Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-          'Introduction to the Content-Type Builder',
+          'Introduction to the Content-type Builder',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
@@ -848,7 +848,7 @@ module.exports = {
                 link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
-                text: 'Content-Type Builder',
+                text: 'Content-type Builder',
                 link:
                   '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },

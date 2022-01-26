@@ -36,7 +36,7 @@ When using Cloudinary, you will be prompted to enter your account credentials as
 
 ## Running Strapi
 
-Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. <!-- Need more info here --> However, to add or edit content-types via the admin panel (see [Content-Type Builder](https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html) documentation), Strapi must be running locally in development mode.
+Your Strapi application on Render will be running in production mode, with `NODE_ENV=production`. <!-- Need more info here --> However, to add or edit content-types via the admin panel (see [Content-type Builder](https://strapi.io/documentation/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html) documentation), Strapi must be running locally in development mode.
 
 To run Strapi locally:
 

@@ -10,7 +10,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 - Framework tests suite
 - Filters in the Content Manager plugin
-- One way relation in the Content-Type Builder
+- One way relation in the Content-type Builder
 - GraphQL update: timestamp fields update and some bug fixes
 - Fix delete manyToMany relations with Mongoose
 

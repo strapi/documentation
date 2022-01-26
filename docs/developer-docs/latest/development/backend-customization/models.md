@@ -14,7 +14,7 @@ There are 2 different types of models in Strapi:
 - content-types, which can be collection types or single types, depending on how many entries they manage,
 - and components that are data structures re-usable in multiple content-types.
 
-If you are just starting out, it is convenient to generate some models with the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
+If you are just starting out, it is convenient to generate some models with the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
 
 ## Model creation
 
@@ -24,7 +24,7 @@ Content-types and components models are created and stored differently.
 
 Content-types in Strapi can be created:
 
-- with the [Content-Type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
+- with the [Content-type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
 - or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
 The content-types has the following models files:
@@ -36,7 +36,7 @@ These models files are stored in `./src/api/[api-name]/content-types/[content-ty
 
 ### Components
 
-Component models can't be created with CLI tools. Use the [Content-Type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
+Component models can't be created with CLI tools. Use the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
 
 Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
@@ -129,7 +129,7 @@ Basic validations can be applied to attributes using the following parameters:
 | `minLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
 | `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
 | `private`      | Boolean | If `true`, the attribute will be removed from the server response.<br/><br/>💡 This is useful to hide sensitive data. | `false` |
-| `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-Type Builder plugin.                         | `true`  |
+| `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-type Builder plugin.                         | `true`  |
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
