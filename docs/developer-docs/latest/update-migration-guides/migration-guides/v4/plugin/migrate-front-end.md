@@ -13,9 +13,9 @@ next: ./enable-plugin.md
 
 Migrating the front end of a plugin to Strapi v4 requires:
 
-- updating how the plugin's front-end is [registered](#register-the-plugin-with-the-admin-panel)
-- updating how the plugin is [added to the amin panel menu](#add-a-menu-link)
-- optionally, [registering translations](#register-translations)
+- updating how the plugin's front-end is [registered](#registering-the-plugin-with-the-admin-panel)
+- updating how the plugin is [added to the amin panel menu](#adding-a-menu-link)
+- optionally, [registering translations](#registering-translations)
 
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
 
@@ -37,10 +37,10 @@ In Strapi v4, the plugin is registered within the [`register()` lifecycle functi
 
 To update the front-end registration of a plugin to Strapi v4:
 
-1. (_optional_) If it does not already exist, create an `admin/src/index.js` file at the root of the plugin folder.
+1. If it does not already exist, create an `admin/src/index.js` file at the root of the plugin folder.
 2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` lifecycle function, passing the current Strapi application instance as an argument.
 3. Inside the `register()` lifecycle function body, call [the `registerPlugin()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
-4. Make sure that Strapi is aware of the plugin's front-end interface exported from `/admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
+4. Make sure that Strapi is aware of the plugin's front-end interface exported from `admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
 
     ```jsx
     module.exports = require('./admin/src').default;
@@ -158,7 +158,7 @@ export default {
 
 In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
 
-::: details Example of translation registrations
+::: details Example of translation registration
 
 ```jsx
 import { prefixPluginTranslations } from "@strapi/helper-plugin";

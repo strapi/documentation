@@ -26,9 +26,9 @@ Depending on these steps, some actions can only be done manually while others ca
 
 | Action                              | Migration type                                                                                             |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Update the folder structure         | [Automatic](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#update-the-folder-structure-automatically) or [manual](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#update-the-folder-structure-manually) |
+| Update the folder structure         | [Automatic](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#updating-folder-structure-automatically) or [manual](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#updating-folder-structure-manually) |
 | Migrate the back end of the plugin  | [Partially automatic](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md)                                      |
-| Migrate the front end of the plugin | [Manual](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md#migrate-the-front-end)                                                                      |
+| Migrate the front end of the plugin | [Manual](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md)                                                                      |
 | Enable the plugin                   | [Manual](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md)                                                                               |
 
 ::: strapi Codemods support & community contributions

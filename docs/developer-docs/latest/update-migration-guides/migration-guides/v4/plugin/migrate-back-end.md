@@ -12,18 +12,18 @@ canonicalUrl:
 
 Migrating the back end of a plugin to Strapi v4 requires:
 
-- updating [imports](#update-imports)
-- updating content-types [getters](#update-content-types-getters) and, optionally, [relations](#update-content-types-relations)
-- updating the [plugin configuration](#update-plugin-configuration)
+- updating [imports](#updating-imports)
+- updating content-types [getters](#updating-content-types-getters) and, optionally, [relations](#updating-content-types-relations)
+- updating the [plugin configuration](#updating-plugin-configuration)
 
-Some actions required to migrate the back end of a plugin can be performed by scripts that automatically modify code (codemods). The following table sums up the available options:
+Depending on these steps, some actions can only be done manually while others can be performed automatically by scripts that modify the code, which are called codemods. The following table lists available options for each step of the migration:
 
 | Action                         | Migration type                                                                                               |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| Update imports                 | [Automatic](#update-imports-automatically) or [manual](#update-imports-manually)                             |
-| Update content-types getters   | [Automatic](#update-content-types-getters-automatically) or [manual](#update-content-types-getters-manually) |
-| Update content-types relations | [Manual](#update-content-types-relations)                                                                    |
-| Update configuration           | [Manual](#update-configuration)                                                                              |
+| Update imports                 | [Automatic](#automatic-imports-update) or [manual](#manual-imports-update)                             |
+| Update content-types getters   | [Automatic](#automatic-content-types-getters-update) or [manual](#manual-content-types-getters-update) |
+| Update content-types relations | [Manual](#updating-content-types-relations)                                                                    |
+| Update configuration           | [Manual](#updating-plugin-configuration)                                                                              |
 
 ## Updating imports
 
@@ -33,12 +33,12 @@ Package names in Strapi v3 are prefixed by `strapi-`.
 Strapi v4 uses scoped imports.
 :::
 
-To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#update-imports-automatically) or [manually](#update-imports-manually).
+To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#automatic-imports-update) or [manually](#manual-imports-update).
 
 ### Automatic imports update
 
 ::: caution
-Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you've pushed your v3 plugin, and you are on a new branch.
+Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you have pushed your v3 plugin, and you are on a new branch.
 :::
 
 To update imports automatically, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
@@ -57,7 +57,7 @@ To update all imports manually, find any imports of Strapi packages (e.g. `strap
 Strapi v3 models have been renamed to [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) in Strapi v4.
 :::
 
-If the plugin declares models, update the syntax for all getters from `strapi.models` to `strapi.contentTypes`. The syntax can be updated [automatically](#update-content-types-getters-automatically) or [manually](#update-content-types-getters-manually).
+If the plugin declares models, update the syntax for all getters from `strapi.models` to `strapi.contentTypes`. The syntax can be updated [automatically](#automatic-content-types-getters-update) or [manually](#manual-content-types-getters-update).
 
 ### Automatic content-types getters update
 
@@ -84,7 +84,7 @@ Strapi v4 introduced new getters that can be used to refactor the plugin code fu
 ## Updating content-types relations
 
 ::: prerequisites
-Updating content-types relations to Strapi v4 requires that the v3 models have been converted to Strapi v4 content-types (see [converting models to content-types documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#convert-models-to-content-types)).
+Updating content-types relations to Strapi v4 requires that the v3 models have been converted to Strapi v4 content-types (see [converting models to content-types documentation](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md#converting-models-to-content-types)).
 :::
 
 ::: strapi v3/v4 comparison
@@ -172,7 +172,7 @@ To update content-type relations, update the `server/content-types/<content-type
 :::strapi v3/v4 comparison
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In Strapi v4, the default configuration of a plugin is defined as an object found in the `config.js` file or in the `config/index.js` file, these are then called from the entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
+In Strapi v4, the default configuration of a plugin is defined as an object found in the `config.js` file or in the `config/index.js` file. These are then called from the entry file (see [default plugin configuration documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)).
 :::
 
 To handle default plugin configurations in Strapi v4 the recommended way:
@@ -183,46 +183,46 @@ To handle default plugin configurations in Strapi v4 the recommended way:
    - Define a `default` key that takes an object to store the default configuration.
    - (_optional_) Add a `validator` key, which is a function taking the `config` as an argument.
 
-::: details Example of a default plugin configuration
+    ::: details Example of a default plugin configuration
 
-  ```jsx
-  // path: ./src/plugins/my-plugin/server/config/index.js
+      ```jsx
+      // path: ./src/plugins/my-plugin/server/config/index.js
 
-  module.exports = {
-    default: { optionA: true },
-    validator: (config) => {
-      if (typeof config.optionA !== 'boolean') {
-        throw new Error('optionA has to be a boolean');
+      module.exports = {
+        default: { optionA: true },
+        validator: (config) => {
+          if (typeof config.optionA !== 'boolean') {
+            throw new Error('optionA has to be a boolean');
+          }
+        },
       }
-    },
-  }
-  ```
+      ```
 
-:::
+    :::
 
-3. In the `server/index.js` file, import the config and export it.
+3. In the `server/index.js` file, import the configuration and export it.
 
-::: details Example of a default entry file
+    ::: details Example of a default entry file
 
-  ```jsx
-  // path: ./src/plugins/my-plugin/server/index.js
+      ```jsx
+      // path: ./src/plugins/my-plugin/server/index.js
 
-  // ...
-  const config = require('./config');
-  // ...
+      // ...
+      const config = require('./config');
+      // ...
 
-  module.exports = {
-    // ...
-    config,
-    // ...
-  };
-  ```
-:::
+      module.exports = {
+        // ...
+        config,
+        // ...
+      };
+      ```
+    :::
 
 4. Make sure that Strapi is aware of the plugin's back-end interface exported from `server/index.js` by adding the following line to the `<plugin-name>/strapi-server.js` entry file:
 
-  ```jsx
-  // path ./src/plugins/my-plugin/strapi-server.js
+    ```jsx
+    // path ./src/plugins/my-plugin/strapi-server.js
 
-  module.exports = require('./server');
-  ```
+    module.exports = require('./server');
+    ```

@@ -20,8 +20,8 @@ In Strapi v4, plugins are developed using a programmatic API, which gives flexib
 The folder structure of a Strapi v4 plugin should meet the following requirements:
 
 - The root of the plugin folder should include:
-  - a `strapi-server.js` entry file, if the plugin interacts with Strapi's back-end (see [Server API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md))
-  - a `strapi-admin.js` entry file, if the plugin interacts with Strapi's admin panel (see [Admin Panel API](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)).
+  - a `strapi-server.js` entry file, if the plugin interacts with Strapi's back-end (see [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
+  - a `strapi-admin.js` entry file, if the plugin interacts with Strapi's admin panel (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md)).
 
 - `strapi-admin.js` and `strapi-server.js` should export the plugin's interface.
 
@@ -56,7 +56,7 @@ my-plugin
 
 :::
 
-The folder structure of a Strapi v3 plugin can be migrated to a v4 plugin either [automatically](#update-the-folder-structure-automatically) or [manually](#update-the-folder-structure-manually).
+The folder structure of a Strapi v3 plugin can be migrated to a v4 plugin either [automatically](#updating-folder-structure-automatically) or [manually](#updating-folder-structure-manually).
 
 ## Updating folder structure automatically
 
@@ -82,7 +82,7 @@ npx @strapi/codemods migrate:plugin <path-to-v3-plugin> [path-for-v4-plugin]
 Manually updating the folder structure requires moving and updating the content of multiple files and folders. These steps are described in the following subsections.
 
 :::note
-The folder structure is given as an example, and files and folders can be organized freely as long as `strapi-server.js` and `strapi-admin.js` exist and import all the required files.
+The folder structure is given as an example, and files and folders can be organized freely as long as `strapi-server.js` or `strapi-admin.js` exist and export the plugin interface.
 :::
 
 ### Creating a `server` folder
@@ -99,7 +99,7 @@ mkdir server
 :::strapi v3/v4 comparison
 In Strapi v3, controllers, services, and middlewares of a plugin must follow a strict folder structure convention.
 
-In Strapi v4, the organization of files and folders for plugins is flexible. However, it is recommended to create dedicated folders for every type of back-end element (e.g. [controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers), [services](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#services), and [middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#middlewares)) inside a `server` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+In Strapi v4, the organization of files and folders for plugins is flexible. However, it is recommended to create dedicated folders for every type of back-end element (e.g. [controllers](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#controllers), [services](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#services), and [middlewares](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#middlewares)) inside a `server` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 :::
 
@@ -107,7 +107,9 @@ To update the controllers, services, and middlewares of a plugin to Strapi v4, c
 
 Plugin files and folders in Strapi v4 should meet 2 requirements:
 
-- Each file in the `server/<subfolder-name>` should export a function taking the `strapi` instance (object) as a parameter and returning an object.
+- Each file in the `server/<subfolder-name>/<element-name>` (e.g. `server/controllers/my-controller.js`) should:
+  * export a function taking the `strapi` instance (object) as a parameter
+  * and return an object.
 - Each of the `server/<subfolder-name>` folders should include an `index.js` file that exports all files in the folder.
 
 ::: details Example of files and folder for Strapi v4 plugin controllers
@@ -214,7 +216,7 @@ module.exports = [
 :::strapi v3/v4 comparison
 Strapi v3 declares policies for a plugin in a specific `config/policies` folder.
 
-In Strapi v4, the `config` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies) can be declared in dedicated files found under `server/policies`.
+In Strapi v4, the `config` folder does not necessarily exist for a plugin and [plugin policies](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#policies) can be declared in dedicated files found under `server/policies`.
 :::
 
 To update plugin policies to Strapi v4:
@@ -233,7 +235,7 @@ In Strapi v4, [plugin content-types](/developer-docs/latest/developer-resources/
 
 To convert Strapi v3 models to v4 content-types:
 
-1. Move the `models` folder under the `server/` folder and rename `models` to `content-types`:
+1. Move the `models` folder under the `server` folder and rename `models` to `content-types`:
 
     ```sh
     mv models/ server/content-types/
@@ -308,7 +310,7 @@ Converting Strapi v3 models to v4 content-types also requires updating getters a
 ::: strapi v3/v4 comparison
 Strapi v3 plugins use a strict folder structure convention.
 
-In Strapi v4, the folder structure for plugins is flexible. However, each plugin needs at least a `strapi-server.js` entry file or a `strapi-admin.js` entry file. The 2 entry files are used to take advantage of, respectively, the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.html) for the back end of the plugin and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html) for the front end of the plugin.
+In Strapi v4, the folder structure for plugins is flexible. However, each plugin needs at least a `strapi-server.js` entry file or a `strapi-admin.js` entry file. The 2 entry files are used to take advantage of, respectively, the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md) for the back end of the plugin and the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) for the front end of the plugin.
 :::
 
 To update the plugin to Strapi v4:
