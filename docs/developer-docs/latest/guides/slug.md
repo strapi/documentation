@@ -59,7 +59,7 @@ Here we will be able to setup the `slug` field.
 
 For that you will have to install `slugify` node module in your application.
 
-When it's done, you have to update the life cycle of the **Article** Content Type to auto complete the `slug` field.
+When it's done, you have to update the lifecycle of the **Article** Content Type to auto complete the `slug` field.
 
 **Path —** `./api/article/models/Article.js`
 

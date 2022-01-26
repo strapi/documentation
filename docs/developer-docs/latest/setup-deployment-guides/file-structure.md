@@ -60,7 +60,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │     └──── (api-name)
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
-│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#lifecycle-hooks">lifecyles.js</a>
+│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#lifecycle-hooks">lifecycles.js</a>
 │     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
 │     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
@@ -88,6 +88,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           │     └──── src
 │     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
 │     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#content-types">content-types</a>
 │     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers">controllers</a>
 │     │           │     └──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies">policies</a>
 │     │           ├ package.json
