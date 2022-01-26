@@ -142,7 +142,6 @@ export default {
 
     app.registerPlugin({
       description: pluginDescription,
-      icon,
       id: pluginId
       name
     });
