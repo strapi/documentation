@@ -10,7 +10,7 @@ canonicalUrl: http://docs.strapi.io/developer-docs/latest/update-migration-guide
 
 Migrating the back end of a plugin to Strapi v4 requires:
 
-- updating [imports](#updating-imports)
+- updating [Strapi packages](#updating-strapi-packages)
 - updating content-types [getters](#updating-content-types-getters) and, optionally, [relations](#updating-content-types-relations)
 - updating the [plugin configuration](#updating-plugin-configuration)
 
@@ -18,36 +18,49 @@ Depending on these steps, some actions can only be done manually while others ca
 
 | Action                         | Migration type                                                                                               |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| Update imports                 | [Automatic](#automatic-imports-update) or [manual](#manual-imports-update)                             |
+| Update Strapi packages                 | [Automatic](#automatic-strapi-packages-update) or [manual](#manual-strapi-packages-update)                             |
 | Update content-types getters   | [Automatic](#automatic-content-types-getters-update) or [manual](#manual-content-types-getters-update) |
 | Update content-types relations | [Manual](#updating-content-types-relations)                                                                    |
 | Update configuration           | [Manual](#updating-plugin-configuration)                                                                              |
 
-## Updating imports
+## Updating Strapi packages
 
 :::strapi v3/v4 comparison
 Package names in Strapi v3 are prefixed by `strapi-`.
 
-Strapi v4 uses scoped imports.
+Strapi v4 uses scoped packages.
 :::
 
-To migrate to Strapi v4, update all Strapi imports from `strapi-package-name` to `@strapi/package-name`. Imports can be updated [automatically](#automatic-imports-update) or [manually](#manual-imports-update).
+To migrate to Strapi v4, rename all Strapi packages from `strapi-package-name` to `@strapi/package-name`. This needs to be done in the `package.json` dependencies and anywhere the package is imported.
 
-### Automatic imports update
+Strapi scoped packages can be updated [automatically](#automatic-strapi-packages-update) or [manually](#manual-strapi-packages-update).
+
+### Automatic Strapi packages update
 
 ::: caution
 Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you have pushed your v3 plugin, and you are on a new branch.
 :::
 
-To update imports automatically, use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js) by running the following command in a terminal:
+To update Strapi scoped packages automatically:
 
-  ```sh
-  npx @strapi/codemods transform update-strapi-scoped-imports [path-to-file | folder]
-  ```
+1. Use the [`update-package-dependencies` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/migration-helpers/update-package-dependencies.js) by running the following command:
 
-### Manual imports update
+    ```sh
+    npx @strapi/codemods migrate:dependencies [path-to-strapi-plugin]
+    ```
 
-To update all imports manually, find any imports of Strapi packages (e.g. `strapi-package-name`) and rename them to `@strapi/package-name`.
+2. Use the [`update-strapi-scoped-imports` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/transforms/update-strapi-scoped-imports.js) by running the following command:
+
+    ```sh
+    npx @strapi/codemods transform update-strapi-scoped-imports [path-to-file | folder]
+    ```
+
+### Manual Strapi packages update
+
+To update Strapi scoped packages manually:
+
+1. Rename all Strapi packages (e.g. `strapi-package-name`) in `package.json` to `@strapi/package-name`
+2. Repeat for all instances where the package is imported.
 
 ## Updating content-types getters
 
