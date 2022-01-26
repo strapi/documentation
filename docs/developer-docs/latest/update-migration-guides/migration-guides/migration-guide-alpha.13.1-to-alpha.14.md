@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 **Here are the major changes:**
 
-- New configuration of the content manager
+- New configuration of the Content Manager
 - GraphQL Aggregation Feature
 - Email confirmation and block user feature
 
@@ -63,9 +63,9 @@ Then, delete your old `plugins` folder and replace it with the new one.
 
 <br>
 
-## Reset your content manager settings
+## Reset your Content Manager settings
 
-We added a new section in the content manager configurations. You are now able to customize the inputs displayed in the contribution view.
+We added a new section in the Content Manager configurations. You are now able to customize the inputs displayed in the contribution view.
 
 The stored data format has been changed. That is why you **will have** to **delete** in the `core_store` collection/table the entry with the `key` `plugin_content-manager_schema`.
 

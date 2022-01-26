@@ -133,7 +133,7 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 
 ### `errors`
 
-The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error not supposed to be exposed to the end-user will result in a 500 HTTP response.
+The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error not supposed to be exposed to the end user will result in a 500 HTTP response.
 
 The middleware doesn't have any configuration option.
 

@@ -49,7 +49,7 @@ const themeConfig = {
               link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
             },
             {
-              text: 'Content-Type Builder',
+              text: 'Content-type Builder',
               link:
                 '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
             },

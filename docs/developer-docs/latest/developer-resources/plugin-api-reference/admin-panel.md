@@ -487,17 +487,17 @@ const MyCompo = () => {
     createActionAllowedFields: [], // Array of fields that the user is allowed to edit
     formErrors: {}, // Object errors
     readActionAllowedFields: [], // Array of field that the user is allowed to edit
-    slug: 'api::address.address', // Slug of the content type
+    slug: 'api::address.address', // Slug of the content-type
     updateActionAllowedFields: [],
     allLayoutData: {
       components: {}, // components layout
-      contentType: {}, // content type layout
+      contentType: {}, // content-type layout
     },
     initialData: {},
     isCreatingEntry: true,
     isSingleType: true,
     status: 'resolved',
-    layout: {}, // Current content type layout
+    layout: {}, // Current content-type layout
     hasDraftAndPublish: true,
     modifiedData: {},
     onPublish: () => {},

@@ -28,8 +28,8 @@ Otherwise you can follow the basic [version update guide](/developer-docs/latest
 
 **Draft & Publish**
 
-The new **Draft & Publish** feature will add a `published_at` field to your **content types** if you enable the feature.
-If you have been using this field name on your **content types** you will need to first rename or delete it before being able to use the feature on those **content types**.
+The new **Draft & Publish** feature will add a `published_at` field to your **content-types** if you enable the feature.
+If you have been using this field name on your **content-types** you will need to first rename or delete it before being able to use the feature on those **content-types**.
 
 **Strapi-admin Translations**
 

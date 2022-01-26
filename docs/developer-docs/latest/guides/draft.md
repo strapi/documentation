@@ -22,9 +22,9 @@ But we don't want to use [parameters](/developer-docs/latest/developer-resources
 
 To be able to do that, you have first to understand some concepts.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content-type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -32,12 +32,12 @@ And that is what we will do to filter to `published` status by default.
 
 ## Example
 
-In our example we will use an Article content type. By default, when you fetch articles you will get all articles.
+In our example we will use an Article content-type. By default, when you fetch articles you will get all articles.
 Let's consider you don't want to expose articles that are in `draft` or `archive` status.
 
 To enforce this rule we will customize the action that fetches all articles to just fetch `published` articles.
 
-To follow the example you will have to create a content type `articles` and add the following field definitions:
+To follow the example you will have to create a content-type `articles` and add the following field definitions:
 
 - `string` attribute named `title`
 - `text` attribute named `content`
