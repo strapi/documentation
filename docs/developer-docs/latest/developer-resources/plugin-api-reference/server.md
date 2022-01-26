@@ -135,7 +135,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/content-types/index.js
+// path: ./src/plugins/my-plugin/server/content-types/index.js
 
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
@@ -147,7 +147,7 @@ module.exports = {
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/content-types/content-type-a.js
+// path: ./src/plugins/my-plugin/server/content-types/content-type-a.js
 
 module.exports = {
   info: {
@@ -191,6 +191,14 @@ An array of [routes](/developer-docs/latest/development/backend-customization/ro
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
+
 const routes = require('./routes');
 
 module.exports = () => ({
@@ -200,7 +208,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/routes/index.js
+// path: ./src/plugins/my-plugin/server/routes/index.js
 
 module.exports = [
   {
@@ -222,8 +230,17 @@ An object with the [controllers](/developer-docs/latest/development/backend-cust
 
 **Example:**
 
+
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
+
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
 
 const controllers = require('./controllers');
 
@@ -233,7 +250,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/controllers/index.js
+// path: ./src/plugins/my-plugin/server/controllers/index.js
 
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
@@ -245,7 +262,7 @@ module.exports = {
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/controllers/controller-a.js
+// path: ./src/plugins/my-plugin/server/controllers/controller-a.js
 
 module.exports = ({ strapi }) => ({
   doSomething(ctx) {
@@ -267,6 +284,14 @@ Services should be functions taking `strapi` as a parameter.
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
+
 const services = require('./services');
 
 module.exports = () => ({
@@ -275,7 +300,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/services/index.js
+// path: ./src/plugins/my-plugin/server/services/index.js
 
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
@@ -287,7 +312,7 @@ module.exports = {
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/services/service-a.js
+// path: ./src/plugins/my-plugin/server/services/service-a.js
 
 module.exports = ({ strapi }) => ({
   someFunction() {
@@ -307,6 +332,14 @@ An object with the [policies](/developer-docs/latest/development/backend-customi
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
+
 const policies = require('./policies');
 
 module.exports = () => ({
@@ -315,7 +348,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/policies/index.js
+// path: ./src/plugins/my-plugin/server/policies/index.js
 
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
@@ -327,7 +360,7 @@ module.exports = {
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/policies/policy-a.js
+// path: ./src/plugins/my-plugin/server/policies/policy-a.js
 
 module.exports = (policyContext, config, { strapi }) => {
     if (ctx.state.user && ctx.state.user.isActive) {
@@ -350,6 +383,14 @@ An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
+
 const middlewares = require('./middlewares');
 module.exports = () => ({
   middlewares,
@@ -357,7 +398,7 @@ module.exports = () => ({
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/middlewares/index.js
+// path: ./src/plugins/my-plugin/server/middlewares/index.js
 
 const middlewareA = require('./middleware-a');
 const middlewareB = require('./middleware-b');
@@ -369,7 +410,7 @@ module.exports = {
 ```
 
 ```js
-// path: ./src/plugins/my-plugin/middlewares/middleware-a.js
+// path: ./src/plugins/my-plugin/server/middlewares/middleware-a.js
 
 module.exports = (options, { strapi }) => {
  return async (ctx, next) => {
