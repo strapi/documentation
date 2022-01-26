@@ -123,7 +123,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     </code-group>
 
 ::: note NOTE
-To launch Strapi in watch mode without creating a user account first will open `Port: 1337` with a JSON format error. Creating a user on `Port: 8081` will remove this alert.
+Launching the Strapi server in watch mode without creating a user account first will open `localhost:1337` with a JSON format error. Creating a user on `localhost:8081` prevents this alert.
 :::
 
 Once this step is over all we need to do is to create our new WYSIWYG, which will replace the default one in the Content Manager plugin.
