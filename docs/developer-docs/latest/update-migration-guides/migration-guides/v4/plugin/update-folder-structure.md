@@ -1,11 +1,9 @@
 ---
 title: v4 Plugin Migration - Updating the folder structure - Strapi Developer Docs
-description:
-canonicalUrl:
+description: Migrate the folder structure of a Strapi plugin from v3.6.8 to v4.0.x with step-by-step instructions
+canonicalUrl: http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html
 sidebarDepth: 2
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 plugin migration: Updating the folder structure
 

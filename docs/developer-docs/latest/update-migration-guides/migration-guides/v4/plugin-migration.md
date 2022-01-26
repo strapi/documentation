@@ -1,11 +1,9 @@
 ---
 title: Plugin migration guide for v4 - Strapi Developer Docs
-description: Migrate your plugins from v3.6.8 to v4.0 with step-by-step instructions
+description: Migrate a Strapi plugin from v3.6.8 to v4.0.x with step-by-step instructions
 sidebarDepth: 2
-canonicalUrl:
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 plugin migration guide
 
