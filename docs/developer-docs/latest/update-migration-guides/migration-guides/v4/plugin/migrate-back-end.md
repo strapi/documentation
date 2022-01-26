@@ -31,7 +31,7 @@ Package names in Strapi v3 are prefixed by `strapi-`.
 Strapi v4 uses scoped packages.
 :::
 
-To migrate to Strapi v4, rename all Strapi packages from `strapi-package-name` to `@strapi/package-name`. You will need to do this in the `package.json` dependencies and anywhere the package is imported.
+To migrate to Strapi v4, rename all Strapi packages from `strapi-package-name` to `@strapi/package-name`. This needs to be done in the `package.json` dependencies and anywhere the package is imported.
 
 Strapi scoped packages can be updated [automatically](#automatic-strapi-packages-update) or [manually](#manual-strapi-packages-update).
 
