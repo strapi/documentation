@@ -127,6 +127,14 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
+"use strict";
+
+module.exports = require('./server');
+```
+
+```js
+// path: ./src/plugins/my-plugin/server/index.js
+
 const contentTypes = require('./content-types');
 
 module.exports = () => ({
