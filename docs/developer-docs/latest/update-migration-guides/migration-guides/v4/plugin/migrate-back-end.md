@@ -57,7 +57,10 @@ To update Strapi scoped packages automatically, run the following two commands i
 
 ### Manual Strapi packages update
 
-To update Strapi scoped packages manually, rename all Strapi packages (e.g. `strapi-package-name`) in the `package.json` to `@strapi/package-name`. Then find all instances where the package is imported and do the same.
+To update Strapi scoped packages manually:
+
+1. Rename all Strapi packages (e.g. `strapi-package-name`) in `package.json` to `@strapi/package-name`
+2. Repeat for all instances where the package is imported.
 
 ## Updating content-types getters
 
