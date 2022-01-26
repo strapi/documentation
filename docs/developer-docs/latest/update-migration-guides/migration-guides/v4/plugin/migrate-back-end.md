@@ -41,7 +41,7 @@ Strapi scoped packages can be updated [automatically](#automatic-strapi-packages
 Codemods modify the plugin source code. Before running a command, make sure you have initialized a git repo, the working tree is clean, you have pushed your v3 plugin, and you are on a new branch.
 :::
 
-To update Strapi scoped packages automatically, run the following two commands in a terminal:
+To update Strapi scoped packages automatically:
 
 1. [`update-pacakge-dependencies` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/migration-helpers/update-package-dependencies.js)
 
