@@ -43,7 +43,7 @@ Codemods modify the plugin source code. Before running a command, make sure you 
 
 To update Strapi scoped packages automatically:
 
-1. [`update-pacakge-dependencies` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/migration-helpers/update-package-dependencies.js)
+1. Use the [`update-package-dependencies` codemod](https://github.com/strapi/codemods/blob/main/lib/v4/migration-helpers/update-package-dependencies.js) by running the following command:
 
     ```sh
     npx @strapi/codemods migrate:dependencies [path-to-strapi-plugin]
