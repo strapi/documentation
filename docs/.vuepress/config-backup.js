@@ -1,3 +1,8 @@
+/**
+ * This file is the backyup the old config.js one.
+ * @Piwi & @DerrickMehaffy I'll let you decide if you want to keep it.
+ */
+
 const sidebar = {
   developer: [
     {
@@ -449,10 +454,10 @@ const sidebar = {
         ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
         // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
         // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-        // [
-        //   '/developer-docs/latest/guides/registering-a-field-in-admin',
-        //   'Registering a new field in the admin panel',
-        // ],
+        [
+          '/developer-docs/latest/guides/registering-a-field-in-admin',
+          'Registering a new field in the admin panel',
+        ],
         // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
         ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
@@ -492,11 +497,11 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Type Builder',
+      title: 'Content-type Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-          'Introduction to the Content-Type Builder',
+          'Introduction to the Content-type Builder',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
@@ -693,7 +698,6 @@ module.exports = {
   port: 8080,
   description: 'The headless CMS developers love.',
   base: '/',
-  plugins: plugins,
   head: [
     [
       'link',
@@ -844,7 +848,7 @@ module.exports = {
                 link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
-                text: 'Content-Type Builder',
+                text: 'Content-type Builder',
                 link:
                   '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },
@@ -874,8 +878,8 @@ module.exports = {
         ],
       },
       {
-        text: 'v3 Documentation',
-        link: 'https://docs-v3.strapi.io'
+        text: 'v3 documentation',
+        link: 'https://docs-v3.strapi.io',
       },
       {
         text: 'Ecosystem',
@@ -958,4 +962,5 @@ module.exports = {
       md.use(require('markdown-it-include'));
     },
   },
+  plugins: plugins,
 };

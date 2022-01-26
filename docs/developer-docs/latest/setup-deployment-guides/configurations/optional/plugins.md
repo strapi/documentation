@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Plugins configuration
 
-The configurations for all plugins are stored in `/config/plugins.js` (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Each plugin can be configured with the following available parameters:
+The configurations for all plugins are stored in `./config/plugins.js` (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Each plugin can be configured with the following available parameters:
 
 | Parameter                   | Description                                                                                                                                                            | Type    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |

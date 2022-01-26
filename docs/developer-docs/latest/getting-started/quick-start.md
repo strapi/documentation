@@ -149,15 +149,15 @@ The admin panel of Strapi runs at [http://localhost:1337/admin](http://localhost
 If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
-### Step 1: Create collection types with the Content-Type Builder
+### Step 1: Create collection types with the Content-type Builder
 
-The Content-Type Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
+The Content-type Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
 #### Create a "Restaurant" collection type
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -168,15 +168,15 @@ Your restaurants directory will eventually include many restaurants, so we need 
 9. Type `description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
-![GIF: Create Restaurant collection type in Content-Type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
+![GIF: Create Restaurant collection type in Content-type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
 
-Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
 
 #### Create a "Category" collection type
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
@@ -213,9 +213,9 @@ Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content.sv
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
-4. Click **Save**.
-5. Go back to _Collection types - Category_, then click again on **Add new entry**.  
-6. Type `Brunch` in the _Name_ field, then click **Save**.
+3. Click **Save**.
+4. Go back to _Collection types - Category_, then click again on **Add new entry**.  
+5. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
@@ -314,7 +314,7 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 ## 🚀 Part A: Create a new project with Strapi starters
 
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Next, Nuxt).
+Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Nuxt).
 
 This quick start guide has been specifically tailored to use the [Next blog starter](https://strapi.io/starters/strapi-starter-next-js-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
 

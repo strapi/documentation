@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 **Here are the major changes:**
 
 - Rename hook name
-- New settings for content manager plugin
+- New settings for Content Manager plugin
 
 **Useful links:**
 

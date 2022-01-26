@@ -1,19 +1,19 @@
 ---
 title: Fields for Content Types - Strapi User Guide
-description: Instructions to configure in the Content-Type Builder the fields that compose each content-type.
+description: Instructions to configure in the Content-type Builder the fields that compose each content-type.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/configuring-fields-content-type.html
 ---
 
-# Configuring fields for content types
+# Configuring fields for content-types
 
-::: callout The Content-Type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+::: callout The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 <br>
 :::
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content.md)).
 
-In the Content-Type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
+In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: note
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
@@ -391,7 +391,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
-When configuring a component through the Content-Type Builder, it is possible to either:
+When configuring a component through the Content-type Builder, it is possible to either:
 
 - create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-component)),
 - or use an existing one by clicking on *Use an existing component*.

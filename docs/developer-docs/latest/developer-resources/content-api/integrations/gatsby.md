@@ -46,9 +46,9 @@ yarn add gatsby-source-strapi
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::: api-call
 :::request Example GET request
@@ -129,9 +129,9 @@ const IndexPage = () => (
 export default IndexPage;
 ```
 
-Execute a `GET` request on the `category` Collection Type in order to fetch a specific category with all the associated restaurants.
+Execute a `GET` request on the `category` collection type in order to fetch a specific category with all the associated restaurants.
 
-Be sure that you activated the `findOne` permission for the `category` Collection Type.
+Be sure that you activated the `findOne` permission for the `category` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -306,5 +306,5 @@ Feel free to do the same for your restaurants!
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Gatsby.
+Here is how to request your collection types in Strapi using Gatsby.
 Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md).

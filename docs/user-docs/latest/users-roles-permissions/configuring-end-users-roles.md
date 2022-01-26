@@ -1,20 +1,20 @@
 ---
 title: Configure End-users Roles - Strapi User Guide
-description: Instructions to configure the end-users roles for a front-end application using the Users & Permissions plugin
+description: Instructions to configure the end-user roles for a front-end application using the Users & Permissions plugin
 canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html
 ---
 
-# Configuring end-users roles
+# Configuring end-user roles
 
 End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.
 
-With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end-users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-users accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-users roles and permissions are managed in the Settings interface.
+With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-user roles and permissions are managed in the Settings interface.
 
-The configurations of the end-users roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ subnavigation.
+The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ sub navigation.
 
 ![End-users roles interface](../assets/users-permissions/end-user_roles.png)
 
-The *Roles* sub-section of *Users & Permissions plugin* displays all created roles for the end-users of your Strapi application.
+The *Roles* sub-section of *Users & Permissions plugin* displays all created roles for the end users of your Strapi application.
 
 From this interface, it is possible to:
 
@@ -28,23 +28,23 @@ Click the search button ![Search icon](../assets/icons/search.svg) above the tab
 
 By default, 2 end-user roles are defined for any Strapi application:
 
-- Authenticated: for end-users to access content only if they are logged in to a front-end application.
-- Public: for end-users to access content without being logged in to a front-end application.
+- Authenticated: for end users to access content only if they are logged in to a front-end application.
+- Public: for end users to access content without being logged in to a front-end application.
 
 ::: note
-The end-user role attributed by default to all new end-users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
+The end-user role attributed by default to all new end users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
 :::
 
 ## Creating a new role
 
-On the top right side of the *Users & Permissions plugin > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for end-users of your Strapi application.
+On the top right side of the *Users & Permissions plugin > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for end users of your Strapi application.
 
 To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
 ## Deleting a role
 
-Although the 2 default end-users roles cannot be deleted, the other ones can, as long as no end-user still has this role attributed to their account.
+Although the 2 default end-user roles cannot be deleted, the other ones can, as long as no end user still has this role attributed to their account.
 
 To delete a role:
 
@@ -53,7 +53,7 @@ To delete a role:
 
 ## Editing a role
 
-![Configuring a role for end-users](../assets/users-permissions/end-user_roles-config.png)
+![Configuring a role for end users](../assets/users-permissions/end-user_roles-config.png)
 
 The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of a front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button ![Edit icon](../assets/icons/edit.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 

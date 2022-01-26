@@ -603,6 +603,12 @@ http
       - Port Range: `8080`
       - Source: `Custom` `0.0.0.0/0, ::/0`
     - Then `Save`
+  - If the `ufw` firewall is enabled, configure settings to include `port 8080` by running the following command:
+
+```bash
+sudo ufw allow 8080/tcp
+```
+  
 
 Earlier you setup `pm2` to start the services (your **Strapi project**) whenever the **EC2 instance** reboots or is started. You will now do the same for the `webhook` script.
 

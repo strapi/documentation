@@ -83,7 +83,7 @@ For security purposes, the DigitalOcean virtual machine hosting the Strapi appli
 
 The service user home directory is located at `/srv/strapi`. The actual Strapi application is located within this home directory at `/srv/strapi/strapi-development`.
 
-The Strapi application runs in the `development` environment to allow for creating content types. It is not recommended to use it directly in production. For staging and production environments, it's recommended to configure a private git repository to commit changes into, and create a new application directory within the service user's home (e.g. `/srv/strapi/strapi-production`).
+The Strapi application runs in the `development` environment to allow for creating content-types. It is not recommended to use it directly in production. For staging and production environments, it's recommended to configure a private git repository to commit changes into, and create a new application directory within the service user's home (e.g. `/srv/strapi/strapi-production`).
 
 To run the new `production` or `staging` environments you can refer to the [PM2 Documentation](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes)
 
