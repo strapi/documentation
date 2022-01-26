@@ -187,6 +187,10 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
+::: strapi Replacing the WYSIWYG
+The WYSIWYG editor can be replaced by taking advantage of the [register lifecycle](#register) (see [register a new field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
+:::
+
 ::: tip
 The admin panel supports dotenv variables.
 
