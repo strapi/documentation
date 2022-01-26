@@ -213,9 +213,9 @@ Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content.sv
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
-4. Click **Save**.
-5. Go back to _Collection types - Category_, then click again on **Add new entry**.  
-6. Type `Brunch` in the _Name_ field, then click **Save**.
+3. Click **Save**.
+4. Go back to _Collection types - Category_, then click again on **Add new entry**.  
+5. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
