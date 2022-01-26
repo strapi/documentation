@@ -163,7 +163,7 @@ module.exports = {
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
-    description: 'A regular content type',
+    description: 'A regular content-type',
     kind: 'collectionType',
   },
   options: {

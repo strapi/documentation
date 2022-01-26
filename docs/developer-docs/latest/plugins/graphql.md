@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 
 # GraphQL
 
-By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
 The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
@@ -489,7 +489,7 @@ module.exports = {
 
 The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares)).
 
-Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's `parent`, `args`, `context` and `info` objects as arguments.
+Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's [`parent`, `args`, `context` and `info` objects](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) as arguments.
 
 :::tip
 Middlewares with GraphQL can even act on nested resolvers, which offer a more granular control than with REST.
@@ -513,14 +513,26 @@ module.exports = {
              * Basic middleware example #1
              * Log resolving time in console
              */
-            async (next, parent, args, context, info ) => {
-              console.time('Start resolving categories');
-              console.timeEnd('Stop resolving categories');
+            async (next, parent, args, context, info) => {
+              console.time('Resolving categories');
+              
+              // call the next resolver
+              const res = await next(parent, args, context, info);
+              
+              console.timeEnd('Resolving categories');
 
               return res;
             },
             /**
              * Basic middleware example #2
+             * Enable server-side shared caching
+             */
+            async (next, parent, args, context, info) => {
+              info.cacheControl.setCacheHint({ maxAge: 60, scope: "PUBLIC" });
+              return next(parent, args, context, info);
+            },
+            /**
+             * Basic middleware example #3
              * change the 'name' attribute of parent with id 1 to 'foobar'
              */
             (resolve, parent, ...rest) => {

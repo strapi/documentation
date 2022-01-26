@@ -6,7 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. 
+
+::: note
+It is recommend to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
+:::
 
 ## strapi new
 
@@ -77,7 +81,7 @@ Allowed environment variables:
 | STRAPI_LOG_LEVEL | Values can be 'fatal', 'error', 'warn', 'info', 'debug', 'trace' | string | `debug` |
 | STRAPI_LOG_TIMESTAMP | Enables or disables the inclusion of a timestamp in the log message. Values can be `true` or `false` | string | `false`|
 | STRAPI_LOG_FORCE_COLOR | Values can be `true` or `false` | string | `true` |
-| STRAPI_LOG_PRETTY_PRINT | If pino-pretty module will be used to format logs. Values can be `true` or `false` | string | `true` |
+| STRAPI_LOG_PRETTY_PRINT | If `true` then pino-pretty module will be used to format logs. Values can be `true` or `false` | string | `true` |
 
 ## strapi build
 

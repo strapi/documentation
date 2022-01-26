@@ -14,7 +14,7 @@ In this guide we will see how you can customize the admin panel.
 For this example, we will see two things:
 
 1. The customization of the admin panel itself, by updating the content of the `/admin/` home page;
-2. How to update the interface of a plugin, by replacing the `date` format in the content manager list view.
+2. How to update the interface of a plugin, by replacing the `date` format in the Content Manager list view.
 
 First, you will have to read about [admin panel customization](/developer-docs/latest/development/admin-customization.md), it will help you understand how to customize all of your application.
 
@@ -136,7 +136,7 @@ npm run develop -- --watch-admin
 
 ::::
 
-If you visit the entry list view of your content type, nothing will have changed. And it's normal!
+If you visit the entry list view of your content-type, nothing will have changed. And it's normal!
 
 ### Customize the file
 

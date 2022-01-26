@@ -16,7 +16,7 @@ const user = [
       ],
       [
         '/user-docs/latest/content-manager/configuring-view-of-content-type',
-        'Configuring the views of a content type',
+        'Configuring the views of a content-type',
       ],
       ['/user-docs/latest/content-manager/writing-content', 'Writing content'],
       [
@@ -32,23 +32,23 @@ const user = [
   },
   {
     collapsable: false,
-    title: 'Content-Type Builder',
+    title: 'Content-type Builder',
     children: [
       [
         '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-        'Introduction to the Content-Type Builder',
+        'Introduction to the Content-type Builder',
       ],
       [
         '/user-docs/latest/content-types-builder/creating-new-content-type',
-        'Creating content types',
+        'Creating content-types',
       ],
       [
         '/user-docs/latest/content-types-builder/managing-content-types',
-        'Managing content types',
+        'Managing content-types',
       ],
       [
         '/user-docs/latest/content-types-builder/configuring-fields-content-type',
-        'Configuring fields for content types',
+        'Configuring fields for content-types',
       ],
     ],
   },
@@ -70,11 +70,11 @@ const user = [
       ],
       [
         '/user-docs/latest/users-roles-permissions/configuring-end-users-roles',
-        'Configuring end-users roles',
+        'Configuring end-user roles',
       ],
       [
         '/user-docs/latest/users-roles-permissions/managing-end-users',
-        'Managing end-users accounts',
+        'Managing end-user accounts',
       ],
     ],
   },

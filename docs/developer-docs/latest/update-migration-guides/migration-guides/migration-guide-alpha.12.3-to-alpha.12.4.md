@@ -8,9 +8,9 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 **Here are the major changes:**
 
-- Add search to content manager
+- Add search to Content Manager
 - Add bulk actions in content-manager
-- Add Enumeration type to Content-Type Builder
+- Add Enumeration type to Content-type Builder
 
 **Useful links:**
 

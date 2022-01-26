@@ -408,7 +408,7 @@ Some database changes have occured:
 
 Make sure to run those queries for the tables that exist in your database.
 
-_`Queries for a Restaurant content type`_
+_`Queries for a Restaurant content-type`_
 :::: tabs
 
 ::: tab Sqlite
@@ -541,7 +541,7 @@ WHERE related_type = 'groups_old_table_name';
 
 #### Mongo
 
-In `mongo` the relation between a content type and its components is held in an array of references. To know which component type it referes to, the array also contains a `kind` attribute containing the component Schema name.
+In `mongo` the relation between a content-type and its components is held in an array of references. To know which component type it referes to, the array also contains a `kind` attribute containing the component Schema name.
 
 **How to migrate**
 

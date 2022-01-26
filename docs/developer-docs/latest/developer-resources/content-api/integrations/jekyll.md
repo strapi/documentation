@@ -63,9 +63,9 @@ bundle install
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 ### Example
 
@@ -90,9 +90,9 @@ layout: default
 </div>
 ```
 
-Execute a `GET` request on the `category` Collection Type in order to fetch a specific category with all the associated restaurants.
+Execute a `GET` request on the `category` collection type in order to fetch a specific category with all the associated restaurants.
 
-Be sure that you activated the `findOne` permission for the `category` Collection Type.
+Be sure that you activated the `findOne` permission for the `category` collection type.
 
 ### Example
 
@@ -169,5 +169,5 @@ Feel free to do the same for your restaurants!
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Jekyll.
+Here is how to request your collection types in Strapi using Jekyll.
 Learn more about Jekyll with their [official documentation](https://jekyllrb.com/docs/).
