@@ -4,4 +4,13 @@
 .el-tabs__item:not(.is-disabled):hover
   color: $accentColor !important
 
+.sidebar-heading:not(.clickable)
+  opacity: 1 !important
+
+a
+  color: #6C36DB
+
+a.active.sidebar-link, a.sidebar-link:hover, a.sidebar-heading.clickable:hover
+  color: #6C36DB !important
+
 @import "strapi-custom-blocks.styl"

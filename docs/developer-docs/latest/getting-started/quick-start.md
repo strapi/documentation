@@ -75,6 +75,14 @@ next: ./troubleshooting
     color: #787878;
   }
 
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active):hover {
+    color: #6C36DB !important;
+  }
+
+  .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item.is-active {
+    color: #6C36DB !important;
+  }
+
   .image--50 {
     width: 50%;
   }
