@@ -6,16 +6,14 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Heroku
 
-!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
-
-This is a step-by-step guide for deploying a Strapi project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are provided instructions on how to get started.
+This is a step-by-step guide for deploying a Strapi v3 or v4 project on [Heroku](https://www.heroku.com/). Databases that work well with Strapi and Heroku are discussed in the instructions on how to get started.
 
 ## Heroku Install Requirements
 
 - You must have [Git installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 - You must have a [free Heroku account](https://signup.heroku.com/) before doing these steps.
 
-If you already have the Heroku CLI installed locally on your computer. Skip to [Login to Heroku](#_2-login-to-heroku-from-your-cli).
+If you already have the Heroku CLI installed locally on your computer, skip to [Login to Heroku](#_2-login-to-heroku-from-your-cli).
 
 ### 1. Heroku CLI Installation
 
@@ -85,7 +83,7 @@ yarn create strapi-app my-project --quickstart
 </code-group>
 
 ::: tip
-When you use `--quickstart` to create a Strapi project locally, a **SQLite database** is used which is not compatible with Heroku. Therefore, another database option [must be chosen](#_7-heroku-database-set-up).
+When you use `--quickstart` to create a Strapi project locally, a **SQLite database** is used which is not compatible with Heroku. Therefore, another [database option](#_7-heroku-database-set-up) must be chosen.
 :::
 
 ### 4. Update `.gitignore`
@@ -140,7 +138,7 @@ Your local development environment is now set-up and configured to work with Her
 
 ### 7. Heroku Database set-up
 
-Below you will find database options when working with Heroku. Please choose the correct database (e.g. PostgreSQL) and follow those instructions.
+Below you will find database options, when working with Heroku. Please choose the correct database (e.g. PostgreSQL) and follow those instructions.
 
 :::::: tabs card
 
@@ -343,7 +341,7 @@ heroku open
 
 ## File Uploads
 
-Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "Cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
+Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
 
 Due to Heroku's filesystem you will need to use an upload provider such as AWS S3, Cloudinary, or Rackspace. You can view the documentation for installing providers [here](/developer-docs/latest/plugins/upload.md#create-providers) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
 
