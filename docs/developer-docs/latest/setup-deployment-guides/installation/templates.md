@@ -63,7 +63,7 @@ To create a Strapi template, you need to publish a package that follows some rul
 
 * A template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
 
-* A template should follow a specific file structure, which can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
+* A template should follow a specific [file structure](#file-structure), which can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
 
     <code-group>
 
