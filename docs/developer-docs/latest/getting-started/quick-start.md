@@ -123,6 +123,10 @@ yarn create strapi-app my-project --quickstart
 
 </code-group>
 
+:::note
+The quick start installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/developer-docs/latest/setup-deployment-guides/installation/cli.md)).
+:::
+
 ### Step 2: Register the first administrator user
 
 Once the installation is complete, your browser automatically opens a new tab.
