@@ -81,9 +81,11 @@ To create a Strapi template, you need to publish a package that follows some rul
 
 You can add as many files as you want to the root of your template repository. But it must at least have `template` directory, a `package.json`, and a `template.json` file.
 
-The `template.json` is used to extend the Strapi app's default `package.json`. You can put all the properties that should overwrite the default `package.json` in a root `package` property. For example, a `template.json` might look like this:
+The `template.json` is used to extend the Strapi application's default `package.json`. All properties overwriting the default `package.json` should be included in a root `package` property:
 
 ```json
+// path: ./template.json
+
 {
   "package": {
     "dependencies": {
@@ -96,12 +98,12 @@ The `template.json` is used to extend the Strapi app's default `package.json`. Y
 }
 ```
 
-The `template` directory is where you can extend the file contents of a Strapi project. All the children are optional, you should only include the files that will overwrite the default Strapi app.
+The `template` directory is used to extend the file contents of a Strapi project and should only include the files that will overwrite the default Strapi app.
 
 Only the following contents are allowed inside the `template` directory:
 
 - `README.md`: the readme of an app made with this template
-- `.env.example`: to specify required environment variables
+- `.env.example` to specify required environment variables
 - `src/`
 - `data/` to store the data imported by a seed script
 - `public/` to serve files
