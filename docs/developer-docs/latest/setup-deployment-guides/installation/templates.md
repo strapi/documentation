@@ -109,7 +109,9 @@ Only the following contents are allowed inside the `template` directory:
 - `public/` to serve files
 - `scripts/` for custom scripts
 
+::: caution
 If any unexpected file or directory is found, the installation will crash.
+:::
 
 ### Step by step
 
