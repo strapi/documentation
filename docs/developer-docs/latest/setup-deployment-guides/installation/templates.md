@@ -6,13 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Templates
 
-A template is a pre-made Strapi configuration designed for a specific use case. It allows you to quickly bootstrap a custom Strapi app.
-
-Here are some things a template may configure for you:
-
-- Collection types and single types
-- Components and dynamic zones
-- Plugins to install, or custom plugins
+A template is a pre-made Strapi configuration designed for a specific use case. It allows bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md), [components](/developer-docs/latest/development/backend-customization/models.html#components-2) and [dynamic zones](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones), and [plugins](/developer-docs/latest/plugins/plugins-intro.html).
 
 :::note
 Templates and starters are not the same thing:
