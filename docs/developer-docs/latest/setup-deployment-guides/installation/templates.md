@@ -18,7 +18,7 @@ Templates and starters are not the same thing:
 
 ## Using a template
 
-You can use a template when creating a project with `create-strapi-app`.
+To create a new Strapi project based on a template, run the following command:
 
 :::: tabs
 
