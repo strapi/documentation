@@ -55,7 +55,7 @@ yarn create strapi-app my-project --template @strapi/template-blog
 
 :::
 
-You can use the `--template` option in combination with all other `create-strapi-app` options, like `--quickstart` or `--no-run`.
+The `--template` option can be used in combination with all other `create-strapi-app` options (e.g. `--quickstart` or `--no-run`).
 
 ## Creating a template
 
