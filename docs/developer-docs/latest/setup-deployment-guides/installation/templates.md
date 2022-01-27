@@ -61,31 +61,21 @@ The `--template` option can be used in combination with all other `create-strapi
 
 To create a Strapi template, you need to publish a package that follows some rules.
 
-First, a template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configs, like databases, or upload and email providers. This is to make sure that templates stay maintainable, and to avoid conflicts with other CLI options like `--quickstart`.
+* A template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
 
-Second, a template must follow the file structure detailed below.
+* A template should follow a specific file structure, which can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
 
-You can create this file structure by hand or generate it via the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate).
+    <code-group>
 
-:::: tabs
+    <code-block title="YARN">
+      yarn strapi templates:generate <path>
+    </code-block>
 
-::: tab yarn
+    <code-block title="NPM">
+      npx strapi templates:generate <path>
+    </code-block>
 
-```bash
-yarn strapi templates:generate <path>
-```
-
-:::
-
-::: tab npx
-
-```bash
-npx strapi templates:generate <path>
-```
-
-:::
-
-::::
+    </code-group>
 
 ### File structure
 
