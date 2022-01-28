@@ -12,7 +12,7 @@ A template is a pre-made Strapi configuration designed for a specific use case. 
 Templates and starters are not the same thing:
 
 - A **template** is a pre-made Strapi configuration. A template is not a configured application and cannot be run on its own since it lacks many files (e.g. database configurations, `package.json`, etc.). A template is only useful once applied on top of a default Strapi app via the CLI.
-- A _starter_ is a pre-made frontend application that consumes a Strapi API.
+- A **[starter](https://strapi.io/starters)** is a pre-made frontend application that consumes a Strapi API.
 
 :::
 
