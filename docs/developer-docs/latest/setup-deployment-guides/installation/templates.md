@@ -8,37 +8,26 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 A template is a pre-made Strapi configuration designed for a specific use case. It allows bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md), [components](/developer-docs/latest/development/backend-customization/models.html#components-2) and [dynamic zones](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones), and [plugins](/developer-docs/latest/plugins/plugins-intro.html).
 
-:::note
-Templates and starters are not the same thing:
-
+::: strapi Templates vs. starters
 - A **template** is a pre-made Strapi configuration. A template is not a configured application and cannot be run on its own since it lacks many files (e.g. database configurations, `package.json`, etc.). A template is only useful once applied on top of a default Strapi app via the CLI.
 - A **[starter](https://strapi.io/starters)** is a pre-made frontend application that consumes a Strapi API.
-
 :::
 
 ## Using a template
 
 To create a new Strapi project based on a template, run the following command:
 
-:::: tabs
+<code-group>
 
-::: tab yarn
+  <code-block title="YARN">
+    yarn create strapi-app my-project --template <template-package>
+  </code-block>
 
-```bash
-yarn create strapi-app my-project --template <template-package>
-```
+  <code-block title="NPM">
+    npx create-strapi-app@latest my-project --template <template-package>
+  </code-block>
 
-:::
-
-::: tab npx
-
-```bash
-npx create-strapi-app@latest my-project --template <template-package>
-```
-
-:::
-
-::::
+</code-group>
 
 npm is used to install template packages, so `<template-package>` can match [any format](https://docs.npmjs.com/cli/v8/commands/npm-install) supported by `npm install`. This includes npm packages, scoped packages, packages with a precise version or tag, and local directories for development.
 
@@ -46,11 +35,11 @@ npm is used to install template packages, so `<template-package>` can match [any
 For convenience, official Strapi templates also have a shorthand, making it possible to omit the `@strapi/template-` prefix from the template npm package name:
 
 ```bash
-# Shorthand
-yarn create strapi-app my-project --template blog
-
-# npm package name
+# use the full template name
 yarn create strapi-app my-project --template @strapi/template-blog
+
+# use the shorthand
+yarn create strapi-app my-project --template blog
 ```
 
 :::
@@ -65,7 +54,7 @@ To create a Strapi template, publish a package with the following requirements:
 
 * A template should follow a specific [file structure](#file-structure), which can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
 
-    <code-group>
+  <code-group>
 
     <code-block title="YARN">
       yarn strapi templates:generate <path>
@@ -75,7 +64,7 @@ To create a Strapi template, publish a package with the following requirements:
       npx strapi templates:generate <path>
     </code-block>
 
-    </code-group>
+  </code-group>
 
 ### File structure
 
