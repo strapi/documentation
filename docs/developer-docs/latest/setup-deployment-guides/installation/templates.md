@@ -79,7 +79,11 @@ To create a Strapi template, publish a package with the following requirements:
 
 ### File structure
 
-You can add as many files as you want to the root of your template repository. But it must at least have `template` directory, a `package.json`, and a `template.json` file.
+The root of the template repository can include as many files as necessary but must include at least:
+
+* a `template` folder, 
+* a `package.json` file,
+* and a `template.json` file.
 
 The `template.json` is used to extend the Strapi application's default `package.json`. All properties overwriting the default `package.json` should be included in a root `package` property:
 
