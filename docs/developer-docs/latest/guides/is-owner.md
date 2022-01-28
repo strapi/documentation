@@ -6,114 +6,210 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/is-owner.html
 
 # Create is owner policy
 
-This guide will explain how to restrict updating and deleting an entry to the User that created it.
+This guide will explain how to restrict finding, updating and deleting entries to the user that created them.
 
-You will have to modify the controllers of each Content-Type that you would like to enable owner-restricted API access.
+Three of Strapi's [backend customization features](/developer-docs/latest/development/backend-customization) are used to add this functionality to your application:
+
+- [Policies](/developer-docs/latest/development/backend-customization/middlewares.html) protect API routes and controllers from unauthorized users.
+- [Middlewares](/developer-docs/latest/development/backend-customization/middlewares.html) ensure that users are programmatically set as owners of newly created entries.
+- [Routes](/developer-docs/latest/development/backend-customization/routes.html) are configured to include custom policies and middlewares.
 
 ## Example
 
-For this example, we will create an **article** Content-Type.
+[Setup Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.html#preparing-the-installation) and create a [Content-type](/developer-docs/latest/development/backend-customization/models.html) named **Article**.
 
-Add a `text` field named `title` and a `relation` field to this Content-Type.
+Add a **text** field named `title` and a **relation** field to this model.
 
-The `relation` field is a **many-to-one** relation with User (from:users-permissions).<br>
-A User can have many Articles, but an Article can have only one User.<br>
-Name the field `author` for the Article Content-Type and `articles` on the User side.
+The relation field is a **many-to-one** relation with User (from:users-permissions).<br>
+A **User** can have many **Articles**, but an **Article** can only have one **User**.<br>
+Name the field `author` for the Article Content-type and `articles` on the User side.
 
-Create some Users and Articles, and now we are ready to start the customization.
-
-## Apply the author by default
+Now we are ready to create custom policies and middlewares and attach them to our API routes.
 
 When creating a new Article via `POST /api/articles` we must set the authenticated User as the article's author.
 
-We will [customize the `create` controller](https://docs.strapi.io/developer-docs/latest/development/backend-customization/controllers.html#extending-core-controllers) function of the Article API to do so.
+| Method   | URL                 | Controller | Policy  | Middleware |
+| -------- | ------------------- | ---------- | ------- | ---------- |
+| `GET`    | `/api/articles`     | find       | IsOwner | -          |
+| `GET`    | `/api/articles/:id` | findOne    | IsOwner | -          |
+| `POST`   | `/api/articles`     | create     | -       | SetOwner   |
+| `PUT`    | `/api/articles/:id` | update     | IsOwner | SetOwner   |
+| `DELETE` | `/api/articles/:id` | delete     | IsOwner | -          |
 
-> You must enable the permissions to **create, update** and **delete** Articles from Settings -> Users & Permissions Plugin -> Roles -> Authenticated
+</div>
 
-**Path —** `./src/api/article/controllers/article.js`
+:::: tabs card
 
-```js
+::: tab SetOwner
+
+[Create a global middleware](/developer-docs/latest/development/backend-customization/middlewares.html) using the CLI or by directly creating a javascript file in `./src/middlewares/`.
+
+<code-group>
+
+<code-block title="YARN">
+```bash
+yarn strapi generate middleware SetOwner new
+```
+</code-block>
+
+<code-block title="NPM">
+```BASH
+npm run strapi generate middleware SetOwner new
+```
+</code-block>
+
+</code-group>
+
+This function sets the current authenticated user as the owner of the entry that is being created or updated.
+
+`./src/middlewares/SetOwner.js`
+
+```javascript
+'use strict';
+const { yup } = require('@strapi/utils');
+
+const SetOwnerConfigSchema = yup.object({
+  field: yup.string().required('SetOwner middleware needs a "field" key in the configurations.'),
+  uid: yup.string().required('SetOwner middleware requires a "uid" key in the configurations.'),
+});
+
+/**
+ * `SetOwner` middleware.
+ */
+
+module.exports = (config, { strapi }) => {
+  return async (ctx, next) => {
+    try {
+      await SetOwnerConfigSchema.validate(config);
+      const { field, uid } = config;
+      const { id: userId } = ctx.state.user; // ctx.state.user contains the current authenticated user
+      ctx.request.body.data[field] = userId;
+      await next();
+      if (ctx.response.status == 200) {
+        const { id } = ctx.response.body.data; // ctx.response.body.data containts the just created/updated entity
+        await strapi.entityService.update(uid, id, { data: { [field]: userId } });
+      }
+    } catch (error) {
+      await ctx.forbidden(error);
+    }
+  };
+};
+```
+
+:::
+
+::: tab IsOwner
+
+[Create a global policy](/developer-docs/latest/development/backend-customization/policies.html) using the CLI or by directly creating a javascript file in `./src/policies/`.
+
+<code-group>
+
+<code-block title="YARN">
+```bash
+yarn strapi generate policy IsOwner new
+```
+</code-block>
+
+<code-block title="NPM">
+```BASH
+npm run strapi generate policy IsOwner new
+```
+</code-block>
+
+</code-group>
+
+This function protects routes and data from unauthorized users before the request reaches the controller.
+
+`./src/policies/IsOwner.js`
+
+```javascript
+'use strict';
+const { yup } = require('@strapi/utils');
+
+const IsOwnerConfigSchema = yup.object({
+  field: yup.string().required('IsOwner policy requires a "field" key in the configurations.'),
+  uid: yup.string().required('IsOwner policy requires a "uid" key in the configurations.'),
+});
+
+/**
+ * `IsOwner` policy.
+ */
+
+module.exports = async (ctx, config, { strapi }) => {
+  try {
+    await IsOwnerConfigSchema.validate(config);
+    const { field, uid } = config;
+    const { id: userId } = ctx.state.user;
+    const { id } = ctx.params;
+    if (id) {
+      const [entity] = await strapi.entityService.findMany(uid, {
+        filters: { id, [field]: userId },
+      });
+      return entity ? true : false;
+    } else {
+      ctx.request.query.filters = { ...ctx.request.query.filters, [field]: userId };
+      return true;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+```
+
+:::
+
+::::
+
+### Route Configuration
+
+The new policy and middleware can be associated with different [content-types](/developer-docs/latest/development/backend-customization/models.html#content-types) by [configuring their core routers](/developer-docs/latest/development/backend-customization/routes.html#configuring-core-routers).
+
+`./src/api/routes/article.js`
+
+```javascript
 'use strict';
 
 /**
- *  article controller
+ * article router.
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::article.article', {
-    async create(ctx) {
-        var { id } = ctx.state.user; //ctx.state.user contains the current authenticated user 
-        const response = await super.create(ctx);
-        const updatedResponse = await strapi.entityService
-            .update('api::article.article', response.data.id, { data: { author: id } })
-        return updatedResponse;
+const { createCoreRouter } = require('@strapi/strapi').factories;
+// Modify these to match your Content-type
+const uid = 'api::article.article';
+const field = 'author';
+// Only modify these if the middleware or policy name is different
+const SetOwner = {
+  name: 'global::SetOwner',
+  config: {
+    field,
+    uid,
+  },
+};
+const IsOwner = {
+  name: 'global::IsOwner',
+  config: {
+    field,
+    uid,
+  },
+};
+module.exports = createCoreRouter(uid, {
+  config: {
+    create: {
+      middlewares: [SetOwner],
     },
-}
-);
+    find: {
+      policies: [IsOwner],
+    },
+    findOne: {
+      policies: [IsOwner],
+    },
+    delete: {
+      policies: [IsOwner],
+    },
+    update: {
+      policies: [IsOwner],
+      middlewares: [SetOwner],
+    },
+  },
+});
 ```
-
-Now, when an article is created, the authenticated User is automatically set as author of the article.
-
-## Limit the delete and update
-
-Now we will restrict the update and delete controller of articles to only allow for the author to make changes.
-
-We will use the same concepts as previously.
-
-**Path —** `./src/api/article/controllers/article.js`
-
-```js
-'use strict';
-
-/**
- *  article controller
- */
-
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::article.article', {
-    async create(ctx) {
-        var { id } = ctx.state.user; //ctx.state.user contains the current authenticated user 
-        const response = await super.create(ctx);
-        const updatedResponse = await strapi.entityService
-            .update('api::article.article', response.data.id, { data: { author: id } })
-        return updatedResponse;
-    },
-    async update(ctx) {
-        var { id } = ctx.state.user
-        var [article] = await strapi.entityService
-            .findMany('api::article.article', {
-                filters: {
-                    id: ctx.request.params.id,
-                    author: id
-                }
-            })
-        if (article) {
-            const response = await super.update(ctx);
-            return response;
-        } else {
-            return ctx.unauthorized();
-        }
-    },
-    async delete(ctx) {
-        var { id } = ctx.state.user
-        var [article] = await strapi.entityService
-            .findMany('api::article.article', {
-                filters: {
-                    id: ctx.request.params.id,
-                    author: id
-                }
-            })
-        if (article) {
-            const response = await super.delete(ctx);
-            return response;
-        } else {
-            return ctx.unauthorized();
-        }
-    },
-}
-);
-```
-
-And tada! now the User that creates an article, will be set as the author, and is the only one who is able to update/delete the article.
