@@ -40,7 +40,7 @@ npx create-strapi-app@latest my-project --template <template-package>
 
 ::::
 
-Because we use npm to install template packages, `<template-package>` can match [any format](https://docs.npmjs.com/cli/v8/commands/npm-install) that you would give to `npm install`. This includes npm packages, scoped packages, packages with a precise version or tag, as well as local directories for development.
+npm is used to install template packages, so `<template-package>` can match [any format](https://docs.npmjs.com/cli/v8/commands/npm-install) supported by `npm install`. This includes npm packages, scoped packages, packages with a precise version or tag, and local directories for development.
 
 ::: tip
 For convenience, official Strapi templates also have a shorthand. It lets you omit the `@strapi/template-` prefix from the template npm package name. So the following commands are equivalent:
