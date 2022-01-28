@@ -59,7 +59,7 @@ The `--template` option can be used in combination with all other `create-strapi
 
 ## Creating a template
 
-To create a Strapi template, you need to publish a package that follows some rules.
+To create a Strapi template, publish a package with the following requirements:
 
 * A template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
 
