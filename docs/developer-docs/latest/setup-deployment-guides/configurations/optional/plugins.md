@@ -8,11 +8,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 The configurations for all plugins are stored in `./config/plugins.js` (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Each plugin can be configured with the following available parameters:
 
-| Parameter                   | Description                                                                                                                                                            | Type    |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `enabled`                   | Enable (`true`) or disable (`false`) an installed plugin                                                                                                               | Boolean |
-| `config`<br><br>_Optional_  | Used to override default plugin configuration ([defined in strapi-server.js](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)) | Object  |
-| `resolve`<br><br>_Optional_ | Path to the plugin's folder                                                                                                                                            | String  |
+| Parameter                  | Description                                                                                                                                                            | Type    |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `enabled`                  | Enable (`true`) or disable (`false`) an installed plugin                                                                                                               | Boolean |
+| `config`<br><br>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)) | Object  |
+| `resolve`<br> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
 ```js
 // path: ./config/plugins.js
@@ -46,8 +46,8 @@ If no specific configuration is required, a plugin can also be declared with the
 
 The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the following specific configuration options:
 
-| Parameter      | Description                                                                                                                                                                     | Type    | 
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------- |
+| Parameter      | Description                                                                                                                                                                     | Type      |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | `defaultLimit` | Default value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
 | `maxLimit`     | Maximum value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
 

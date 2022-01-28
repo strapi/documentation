@@ -9,16 +9,20 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) by default does not populate any relations, media fields, components, or dynamic zones. It will return all fields for the model and while populating.
 
+:::note
+Examples in this documentation use the [qs library](https://github.com/ljharb/qs) to generate URLs.
+:::
+
 ## Field selection
 
-Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/developer-docs/latest/development/backend-customization/models.md#model-attributes) are returned
+Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/developer-docs/latest/development/backend-customization/models.md#model-attributes) are returned:
 
 - String (string, text, richtext, enumeration, email, password, and uid)
 - Date (date, time, datetime, timestamp)
 - Number (integer, biginteger, float, decimal)
 - Generic (boolean, array, json)
 
-Field selection will not work on relational, media, component, or dynamic zone fields, to see how to properly populate these refer to the [population documentation](#population).
+Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, please refer to the [population documentation](#population).
 
 ::::api-call
 :::request Example request: Select only title & body fields
@@ -67,8 +71,8 @@ By default fields are selected except relations, media, dynamic zones, and compo
 
 Queries can accept a `populate` parameter to populate various field types:
 
-- [Relations & media fields](#relation-media-fields)
-- [Components & dynamic zones](#component-dynamic-zones)
+- [relations & media fields](#relation-media-fields)
+- [components & dynamic zones](#component-dynamic-zones)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
@@ -87,7 +91,13 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 If the users-permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. **If a role doesn't have access to a content-type it will not be populated.**
 :::
 
+:::note
+https://github.com/ljharb/qs
+:::
+
 #### Populate 1 level for all relations
+
+To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
 
 ::::api-call
 :::request Example request
@@ -151,6 +161,8 @@ await request(`/api/articles?${query}`);
 
 #### Populate 1 level: `categories`
 
+To populate only specific relations one-level deep, use the relation name (e.g. `categories`) in combination with the `populate` parameter:
+
 ::::api-call
 :::request Example request
 
@@ -202,6 +214,8 @@ await request(`/api/articles?${query}`);
 ::::
 
 #### Populate 2 levels: `author` and `author.company`
+
+To populate specific relations, one or several levels deep, use the LHS bracket notation for fields names in combination with the `populate` parameter. The [qs library](https://github.com/ljharb/qs) is helpful to build complex URLs:
 
 ::::api-call
 :::request Example request
