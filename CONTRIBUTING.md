@@ -91,7 +91,7 @@ The core team will review your pull request and will either merge it, request ch
     yarn dev
 
     # Launch only the developer docs
-    yarn dev:developer
+    yarn dev:dev
 
     # Launch only the user docs
     yarn dev:user
