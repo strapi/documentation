@@ -54,7 +54,7 @@ To configure and edit email templates:
 | Response email | (optional) Indicate the email address to which responses emails from the end users will be sent. |
 | Subject        | Write the subject of the email. Variables can be used (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#templating-emails)).             |
 
-4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#templating-emails)).
+4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [Developer documentation](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#templating-emails)).
 5. Click on the **Save** button.
 
 ## Configuring advanced settings
