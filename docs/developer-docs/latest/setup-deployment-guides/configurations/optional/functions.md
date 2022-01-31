@@ -27,7 +27,7 @@ It can be used to:
 - fill the database with some necessary data
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) feature
 
-The bootstrap function can be synchronous, asynchronous, or return a premise:
+The bootstrap function can be synchronous, asynchronous, or return a promise:
 
 **Synchronous function**
 
