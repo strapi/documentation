@@ -145,4 +145,5 @@ Before submitting an issue you need to make sure:
   - Questions should be directed at the following resources
     - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
     - Talk with other community members on our [Community Slack](https://slack.strapi.io)
-- Rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed
+
+Please note that rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed.
