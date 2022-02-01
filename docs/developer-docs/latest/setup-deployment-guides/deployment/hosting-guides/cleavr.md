@@ -7,6 +7,10 @@ description: Learn in this guide how to deploy your Strapi application to popula
 
 This guide explains how to deploy your Strapi projects to a VPS (virtual private server) using [Cleavr](https://cleavr.io).
 
+::: callout External link
+For further information about deploying Strapi on Cleavr, please visit the [official Cleavr guide](https://docs.cleavr.io/guides/strapi-cms).
+:::
+
 Cleavr is a server management console that integrates with multiple VPS providers (Hetzner, Linode, Vultr, DigitalOcean, UpCloud, AWS, and custom) and helps you configure servers to host and deploy your Strapi projects.
 
 Cleavr includes the following features:
@@ -16,10 +20,6 @@ Cleavr includes the following features:
 - Deploy code from GitHub, GitLab, and Bitbucket repositories
 - Auto-installs and configures PM2 (with cluster mode enabled)
 - GitHub Actions integration to build app with no additional configuration required
-
-::: tip
-For more information, consult [Cleavr's Strapi deployment guide](https://docs.cleavr.io/guides/strapi-cms)
-:::
 
 ::: prerequisites
 - Your [cleavr.io](https://cleavr.io) account is set up and connected to your VPS and VC providers
