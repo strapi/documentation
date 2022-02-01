@@ -11,11 +11,11 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In both Strapi v3 and v4, core API controllers are automatically generated when content-types are created and can be customized.
+In both Strapi v3 and v4, creating content-types automatically generates core API controllers. Controllers are JavaScript files that contain a list of methods, called actions.
 
-In Strapi v3, controllers are JavaScript files that export an object containing methods, called actions. Actions allow customizing controllers and are merged with the core API controllers.
+In Strapi v3, controllers export an object containing actions  that are merged with the existing actions of core API controllers, allowing customization.
 
-In Strapi v4, controllers are JavaScript files that export the result of a call to the [`createCoreController` factory function](/developer-docs/latest/development/backend-customization/controllers.md#implementation), with or without further customization.
+In Strapi v4, controllers export the result of a call to the [`createCoreController` factory function](/developer-docs/latest/development/backend-customization/controllers.md#implementation), with or without further customization.
 :::
 
 Migrating a controller to Strapi v4 consists in making sure the controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
@@ -24,7 +24,7 @@ Due to the differences between controllers implementation in Strapi v3 and v4, i
 
 A new controller can be created:
 
-- manually with the following procedure, starting at step 1
+- manually, starting at step 1 of the following procedure,
 - or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping directly to step 4 of the following procedure if controller customizations are required.
 
 To create a v4 controller:
@@ -43,7 +43,7 @@ To create a v4 controller:
     module.exports = createCoreController('api::api-name.content-type-name')
     ```
 
-4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument is an object containing methods, that can either be entirely new actions or replace or extend core API controllers actions (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
+4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument is an object containing methods, which can either be entirely new actions or replace or extend existing actions of core API controllers (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
 
 ::: details Example of a v4 controller without customization
 
@@ -65,7 +65,7 @@ To create a v4 controller:
   const { createCoreController } = require('@strapi/strapi').factories;
     
   module.exports = createCoreController('api::api-name.content-type-name', {
-    // overwrite the built-in find() method
+    // replace the find() action of the core API controller
     async find(ctx) {
       const { results } = await strapi.service('api::address.address').find();
   
@@ -79,7 +79,7 @@ To create a v4 controller:
 :::tip Customization tips
 
 * The `sanitizeInput` and `sanitizeOutput` utilities can be used in Strapi v4 and replace the `sanitizeEntity` utility from v3.
-* The original controller’s CRUD methods can be called using `super` (e.g. `super.find()`).
+* The original controller’s CRUD actions can be called using `super` (e.g. `super.find()`).
 
 More examples can be found in the [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#implementation).
 :::
