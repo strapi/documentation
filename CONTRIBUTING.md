@@ -120,9 +120,9 @@ Once your PR is validated, the Strapi team takes over and make sure your new con
 We have various types of documentation that are maintained on their own:
 
 - `developer-docs`
-  This documentation is tailored for developers and administrators and provide documentation on the technical aspects of Strapi
+  is tailored for developers and administrators and provide documentation on the technical aspects of Strapi
 - `user-docs`
-  This documentation is tailored for users and content-creators of Strapi and outline the user interface and usage of Strapi
+  is tailored for users and content-creators of Strapi and outline the user interface and usage of Strapi
 
 All v4 PRs should target the `main` branch.
 If you wish to update Strapi v3 documentation, target the `v3`.
