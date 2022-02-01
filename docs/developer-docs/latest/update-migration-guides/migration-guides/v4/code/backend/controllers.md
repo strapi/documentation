@@ -18,7 +18,16 @@ In Strapi v3, controllers are JavaScript files that export an object containing 
 In Strapi v4, controllers are JavaScript files that export the result of a call to the [`createCoreController` factory function](/developer-docs/latest/development/backend-customization/controllers.md#implementation), with or without further customization.
 :::
 
-To migrate a controller to Strapi v4:
+Migrating a controller to Strapi v4 consists in making sure the controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
+
+Due to the differences between controllers implementation in Strapi v3 and v4, it's recommended to create a new controller file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
+
+A new controller can be created:
+
+- manually with the following procedure, starting at step 1
+- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping directly to step 4 of the following procedure if controller customizations are required.
+
+To create a v4 controller:
 
 1. Create a `api/<api-name>/controllers/<controller-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
@@ -34,7 +43,7 @@ To migrate a controller to Strapi v4:
     module.exports = createCoreController('api::api-name.content-type-name')
     ```
 
-4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument is an object containing actions (see [controllers customization documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
+4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument is an object containing methods, that can either be entirely new actions or replace or extend core API controllers actions (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
 
 ::: details Example of a v4 controller without customization
 
