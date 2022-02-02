@@ -1,0 +1,20 @@
+name: Deploy Legacy v3 version
+on:
+  push:
+    branches:
+      - v3
+
+jobs:
+  deploy-legacy-v3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invalidate CloudFront Cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.LEGACY_V3_DISTRIBUTION }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.LEGACY_V3_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: Invalidate Algolia Search Cache
+      #   work in progress
