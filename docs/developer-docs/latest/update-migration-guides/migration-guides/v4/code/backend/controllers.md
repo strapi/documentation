@@ -18,7 +18,7 @@ In Strapi v3, controllers export an object containing actions  that are merged w
 In Strapi v4, controllers export the result of a call to the [`createCoreController` factory function](/developer-docs/latest/development/backend-customization/controllers.md#implementation), with or without further customization.
 :::
 
-Migrating a controller to Strapi v4 consists in making sure the controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
+Migrating a controller to Strapi v4 consists in making sure that each controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
 
 Due to the differences between controllers implementation in Strapi v3 and v4, it's recommended to create a new controller file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
@@ -31,13 +31,13 @@ To create a v4 controller:
 
 1. Create a `api/<api-name>/controllers/<controller-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-2. At the top of the `./src/api/<api-name>/controllers/<controller-name>.js` file, import the `createCoreController` factory function from the factories included with the core of Strapi:
+2. Copy and paste the following code at the top of the `./src/api/<api-name>/controllers/<controller-name>.js` file. The code imports the `createCoreController` factory function from the factories included with the core of Strapi:
 
     ```js
     const { createCoreController } = require('@strapi/strapi').factories;
     ```
 
-3. Export the result of a call to the `createCoreController` factory function, passing the unique identifier of the content-type (e.g. `api::api-name.content-type-name`) as an argument:
+3. Copy and paste the following code, replacing `api-name` and `content-type-name` with appropriate names. The code exports the result of a call to the `createCoreController` factory function, passing the unique identifier of the content-type (e.g. `api::api-name.content-type-name`) as an argument:
 
     ```js
     module.exports = createCoreController('api::api-name.content-type-name')
@@ -83,3 +83,5 @@ To create a v4 controller:
 
 More examples can be found in the [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#implementation).
 :::
+
+<!-- TODO: add a conclusion or links for other steps -->
