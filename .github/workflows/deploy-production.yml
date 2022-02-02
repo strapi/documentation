@@ -1,0 +1,20 @@
+name: Deploy Production version
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invalidate CloudFront Cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.PROD_DISTRIBUTION }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.PROD_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: Invalidate Algolia Search Cache
+      #   work in progress
