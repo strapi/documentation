@@ -14,13 +14,15 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 * You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
 :::
 
-## Azure Install Requirements
 
 - You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
 
 ## PaaS Deployment Guides
 
-There are three ways which you can deploy the Azure resources, via the [Azure Portal](#creating-resources-via-the-azure-portal), via the [Azure CLI](#creating-resources-via-the-azure-cli) or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
+There are 3 ways which you can deploy the Azure resources:
+- via the [Azure Portal](#creating-resources-via-the-azure-portal),
+- via the [Azure CLI](#creating-resources-via-the-azure-cli),
+- or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
 
 When Strapi is running in a PaaS hosting model, a custom storage provider will be required to avoid the transient disk of the PaaS model, [which is covered towards the end](#configure-strapi-for-azure-appservice).
 
@@ -97,12 +99,12 @@ Once all the resources are created, you will need to get the connection informat
 1. Navigate to the MySQL resource then **Settings** - **Connection security**
 1. Set `Allow access to Azure services` to `Yes` and click **Save**
 1. Navigate to **Overview** and copy _Server name_ and _Server admin login name_
-1. Open the [Azure Cloud Shell](https://shell.azure.com?WT.mc_id=javascript-37811-aapowell) and log into the `mysql` cli:
+1. Open the [Azure Cloud Shell](https://shell.azure.com?WT.mc_id=javascript-37811-aapowell) and log into the `mysql` CLI:
 
    - `mysql --host <server> --user <username> -p`
 
 1. Create a database for Strapi to use `CREATE DATABASE strapi;` then close the Cloud Shell
-   - Optional - create a separate non server admin user (see [this doc](https://docs.microsoft.com/azure/mysql/howto-create-users?tabs=single-server&WT.mc_id=javascript-37811-aapowell) for guidance)
+   - (_Optional_) - Create a separate non-server admin user (see [Azure documentation](https://docs.microsoft.com/azure/mysql/howto-create-users?tabs=single-server&WT.mc_id=javascript-37811-aapowell) for guidance)
 1. Navigate to the **Web App** you created and go to **Settings** - **Configuration**
 1. Create new application settings for the Database host, username and password (these will become the environment variables available to Strapi) and click _Save_
 
@@ -187,7 +189,10 @@ Azure AppService can be deployed to using CI/CD pipelines or via FTPS, refer to 
 
 As AppService is a PaaS hosting model, an upload provider will be required to save the uploaded assets to Azure Storage. Check out https://github.com/jakeFeldman/strapi-provider-upload-azure-storage for more details on using Azure Storage as an upload provider.
 
-_Note - for local development, you can either use the local disk upload provider, or the Azure Storage upload provider against the [Storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=visual-studio&WT.mc_id=javascript-37811-aapowell)._
+::: note
+
+For local development, you can either use the local disk upload provider, or the Azure Storage upload provider against the [Storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=visual-studio&WT.mc_id=javascript-37811-aapowell).
+:::
 
 To start the Node.js application, AppService will run the `npm start` command. As there is no guarantee that the symlinks created by `npm install` were preserved (in the case of an upload from a CI/CD pipeline) it is recommended that the `npm start` command directly references the Strapi entry point:
 
