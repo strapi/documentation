@@ -12,10 +12,8 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 ::: prerequisites
 * You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md)/
 * You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
-:::
-
-
-- You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+::: prerequisites
 
 ## PaaS Deployment Guides
 
@@ -36,16 +34,16 @@ In this section we'll use the Azure Portal to create the required resources to h
 
 1. Navigate to the [Azure Portal](https://portal.azure.com/?WT.mc_id=javascript-37811-aapowell)
 
-1. Click **Create a resource** and search for _Resource group_ from the provided search box
+2. Click **Create a resource** and search for _Resource group_ from the provided search box.
 
-1. Provide a name for your Resource Group, `my-strapi-app`, and select a region
+3. Provide a name for your Resource Group, `my-strapi-app`, and select a region.
 
-1. Click **Review + create** then **Create**
+4. Click **Review + create** then **Create**.
 
-1. Navigate to the Resource Group once it's created, click **Create resources**
+5. Navigate to the Resource Group once it's created, click **Create resources**.
    and search for _Web App_
 
-1. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the app:
+6. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the app:
 
    - _Name_ - `my-strapi-app`
    - _Publish_ - `Code`
@@ -53,26 +51,26 @@ In this section we'll use the Azure Portal to create the required resources to h
    - _Operating System_ - `Linux`
    - _Region_ - Select an appropriate region
 
-1. Use the _App Service Plan_ to select the appropriate Sku and size for the level fo scale your app will need (refer to [the Azure docs](https://azure.microsoft.com/pricing/details/app-service/windows/?WT.mc_id=javascript-37811-aapowell) for more information on the various Sku and sizes)
+7. Use the _App Service Plan_ to select the appropriate Sku and size for the level fo scale your app will need (refer to [the Azure docs](https://azure.microsoft.com/pricing/details/app-service/windows/?WT.mc_id=javascript-37811-aapowell) for more information on the various Sku and sizes).
 
-1. Click **Review + create** then **Create**
+8. Click **Review + create** then **Create**.
 
-1. Navigate back to the Resource Group and click **Create** then search for _Storage account_ and click **Create**
+9. Navigate back to the Resource Group and click **Create** then search for _Storage account_ and click **Create**.
 
-1. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
+10. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
 
    - _Name_ - `my-strapi-app`
    - _Region_ - Select an appropriate region
    - _Performance_ - `Standard`
    - _Redundancy_ - Select the appropriate level of redundancy for your files
 
-1. Click **Review + create** then **Create**
+11. Click **Review + create** then **Create**
 
-1. Navigate back to the Resource Group and click **Create** then search for _Azure Database for MySQL_ and click **Create**
+12. Navigate back to the Resource Group and click **Create** then search for _Azure Database for MySQL_ and click **Create**.
 
-1. Select _Single server_ for the service type
+13. Select _Single server_ for the service type.
 
-1. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
+14. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
 
    - _Name_ - `my-strapi-db`
    - _Data source_ - `None` (unless you're wanting to import from a backup)
@@ -80,7 +78,7 @@ In this section we'll use the Azure Portal to create the required resources to h
    - _Version_ - `5.7`
    - _Compute + storage_ - Select an appropriate scale for your requirements (Basic is adequate for many Strapi workloads)
 
-1. Enter a username and password for the _Administrator account_, click **Review + create** then **Create**
+15. Enter a username and password for the _Administrator account_, click **Review + create** then **Create**.
 
 #### Configuring the Resources
 
@@ -88,31 +86,31 @@ Once all the resources are created, you will need to get the connection informat
 
 ##### Configure the Storage Account
 
-1. Navigate to the Storage Account resource, then **Data storage** - **Containers**
-1. Create a new Container, provide a _Name_, `strapi-uploads`, and set _Public access level_ to `Blob`, then click **Create**
-1. Navigate to **Security + networking** - **Access keys**, copy the _Storage account name_ and _key1_
-1. Navigate to the **Web App** you created and go to **Settings** - **Configuration**
-1. Create new application settings for the Storage account, storage account key and container name (these will become the environment variables available to Strapi) and click _Save_
+1. Navigate to the Storage Account resource, then **Data storage** - **Containers**.
+2. Create a new Container, provide a _Name_, `strapi-uploads`, and set _Public access level_ to `Blob`, then click **Create**.
+3. Navigate to **Security + networking** - **Access keys**, copy the _Storage account name_ and _key1_.
+4. Navigate to the **Web App** you created and go to **Settings** - **Configuration**.
+5. Create new application settings for the Storage account, storage account key and container name (these will become the environment variables available to Strapi) and click _Save_.
 
 ##### Configure MySQL
 
-1. Navigate to the MySQL resource then **Settings** - **Connection security**
-1. Set `Allow access to Azure services` to `Yes` and click **Save**
-1. Navigate to **Overview** and copy _Server name_ and _Server admin login name_
-1. Open the [Azure Cloud Shell](https://shell.azure.com?WT.mc_id=javascript-37811-aapowell) and log into the `mysql` CLI:
+1. Navigate to the MySQL resource then **Settings** - **Connection security**.
+2. Set `Allow access to Azure services` to `Yes` and click **Save**.
+3. Navigate to **Overview** and copy _Server name_ and _Server admin login name_.
+4. Open the [Azure Cloud Shell](https://shell.azure.com?WT.mc_id=javascript-37811-aapowell) and log into the `mysql` CLI:
 
    - `mysql --host <server> --user <username> -p`
 
-1. Create a database for Strapi to use `CREATE DATABASE strapi;` then close the Cloud Shell
+5. Create a database for Strapi to use `CREATE DATABASE strapi;` then close the Cloud Shell.
    - (_Optional_) - Create a separate non-server admin user (see [Azure documentation](https://docs.microsoft.com/azure/mysql/howto-create-users?tabs=single-server&WT.mc_id=javascript-37811-aapowell) for guidance)
-1. Navigate to the **Web App** you created and go to **Settings** - **Configuration**
-1. Create new application settings for the Database host, username and password (these will become the environment variables available to Strapi) and click _Save_
+6. Navigate to the **Web App** you created and go to **Settings** - **Configuration**.
+7. Create new application settings for the Database host, username and password (these will become the environment variables available to Strapi) and click _Save_.
 
 ### Creating Resources via the Azure CLI
 
 In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/?WT.mc_id=javascript-37811-aapowell) to create the required resources. This will assume you have some familiarity with the Azure CLI and how to find the right values.
 
-1. Create a new Resource Group
+1. Create a new Resource Group.
 
    ```bash
    rgName=my-strapi-app
@@ -120,21 +118,21 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az group create --name $rgName --location $location
    ```
 
-1. Create a new Linux App Service Plan (ensure you change the `number-of-workers` and `sku` to meet your scale requirements)
+2. Create a new Linux App Service Plan (ensure you change the `number-of-workers` and `sku` to meet your scale requirements).
 
    ```bash
    appPlanName=strapi-app-service-plan
    az appservice plan create --resource-group $rgName --name $appPlanName --is-linux --number-of-workers 4 --sku S1 --location $location
    ```
 
-1. Create a Web App running Node.js 14
+3. Create a Web App running Node.js 14.
 
    ```bash
    webAppName=my-strapi-app
    az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|10.14"
    ```
 
-1. Create a Storage Account
+4. Create a Storage Account.
 
    ```bash
    saName=mystrapiapp
@@ -148,7 +146,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az storage container create --name $container --public-access blob --access-key $saKey --account-name $saName
    ```
 
-1. Create a MySQL database
+5. Create a MySQL database.
 
    ```bash
    serverName=my-strapi-db
@@ -166,7 +164,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-range 0.0.0.0 --end-ip-range 0.0.0.0
    ```
 
-1. Add configuration values to the Web App
+6. Add configuration values to the Web App.
 
    ```bash
    az webapp config appsettings set --resource-group $rgName --name $webAppName --setting STORAGE_ACCOUNT=$saName
@@ -190,7 +188,6 @@ Azure AppService can be deployed to using CI/CD pipelines or via FTPS, refer to 
 As AppService is a PaaS hosting model, an upload provider will be required to save the uploaded assets to Azure Storage. Check out https://github.com/jakeFeldman/strapi-provider-upload-azure-storage for more details on using Azure Storage as an upload provider.
 
 ::: note
-
 For local development, you can either use the local disk upload provider, or the Azure Storage upload provider against the [Storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=visual-studio&WT.mc_id=javascript-37811-aapowell).
 :::
 
@@ -206,10 +203,10 @@ To start the Node.js application, AppService will run the `npm start` command. A
 
 Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/services/postgresql/).
 
-### Azure Install Requirements
-
-- You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
-- An SSH key to access the virtual machine
+::: prerequisites
+* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+* An SSH key to access the virtual machine
+::: prerequisites
 
 ### Create a Virtual Machine
 
