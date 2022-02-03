@@ -18,6 +18,7 @@ jobs:
           timeout: 300 # wait 5 minutes before failing
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
+        id: invalid-cloudfront-prod
         env:
           DISTRIBUTION: ${{ secrets.PROD_DISTRIBUTION }}
           PATHS: "/*"
