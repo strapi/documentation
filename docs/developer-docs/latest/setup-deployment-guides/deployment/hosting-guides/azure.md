@@ -7,7 +7,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 # Azure
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
-This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/) using Platform-as-a-Service (PaaS). If you're interested in using Infrastructre-as-a-Service (IaaS) refer to [IaaS deployment guide](#iaas-deployment-guide) further down. Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md) and have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
+This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/) using Platform-as-a-Service (PaaS). If you're interested in using Infrastructure-as-a-Service (IaaS) refer to [IaaS deployment guide](#iaas-deployment-guide).
+
+::: prerequisites
+* You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md)/
+* You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
+:::
 
 ## Azure Install Requirements
 
