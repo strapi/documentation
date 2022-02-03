@@ -8,6 +8,14 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for Vercel deploy to complete
+        uses: UnlyEd/github-action-await-vercel@v1.2.14
+        id: await-vercel-prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: ${{ secrets.VERCEL_DOMAIN_PROD }}
+          timeout: 300 # wait 5 minutes before failing
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         env:
