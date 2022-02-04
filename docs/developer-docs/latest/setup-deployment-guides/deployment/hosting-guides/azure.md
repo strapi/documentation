@@ -13,7 +13,7 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 * You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md)/
 * You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
 * You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
-::: prerequisites
+:::
 
 ## PaaS Deployment Guides
 
@@ -206,7 +206,7 @@ Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/servic
 ::: prerequisites
 * You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
 * An SSH key to access the virtual machine
-::: prerequisites
+:::
 
 ### Create a Virtual Machine
 
