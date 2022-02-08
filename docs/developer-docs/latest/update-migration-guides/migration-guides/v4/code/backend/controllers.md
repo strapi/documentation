@@ -18,7 +18,7 @@ In Strapi v3, controllers export an object containing actions  that are merged w
 In Strapi v4, controllers export the result of a call to the [`createCoreController` factory function](/developer-docs/latest/development/backend-customization/controllers.md#implementation), with or without further customization.
 :::
 
-Migrating a controller to Strapi v4 consists in making sure that each controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
+Migrating [controllers](/developer-docs/latest/development/backend-customization/controllers.md) to Strapi v4 consists in making sure that each controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
 
 Due to the differences between controllers implementation in Strapi v3 and v4, it's recommended to create a new controller file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
@@ -86,8 +86,8 @@ To create a v4 controller:
 
 :::tip Customization tips
 
-- The `sanitizeInput` and `sanitizeOutput` utilities can be used in Strapi v4 and replace the `sanitizeEntity` utility from v3.
 - The original controller’s CRUD actions can be called using `super` (e.g. `super.find()`).
+- The `sanitizeInput` and `sanitizeOutput` utilities can be used in Strapi v4 and replace the `sanitizeEntity` utility from v3.
 
 More examples can be found in the [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#implementation).
 :::
