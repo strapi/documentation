@@ -25,7 +25,7 @@ Due to the differences between services implementation in Strapi v3 and v4, it's
 A new service can be created:
 
 - manually, starting at step 1 of the following procedure,
-- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping directly to step 4 of the following procedure if service customizations are required.
+- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping to step 2 of the following procedure.
 
 To create a v4 service:
 
