@@ -43,7 +43,7 @@ To create a v4 controller:
     module.exports = createCoreController('api::api-name.content-type-name')
     ```
 
-4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument is an object containing methods, which can either be entirely new actions or replace or extend existing actions of core API controllers (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
+4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument can be either an object or a function returning an object. The object contains methods, which can either be entirely new actions or replace or extend existing actions of core API controllers (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
 
 ::: details Example of a v4 controller without customization
 
