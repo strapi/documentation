@@ -16,7 +16,7 @@ Once a route exists, reaching it executes some code handled by a controller (see
 
 ## Implementation
 
-Implementing a new route consists in defining it in a router file within the `.src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Implementing a new route consists in defining it in a router file within the `./src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 There are 2 different router file structures, depending on the use case:
 
