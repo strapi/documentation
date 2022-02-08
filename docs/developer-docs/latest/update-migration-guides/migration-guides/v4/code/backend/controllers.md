@@ -86,8 +86,8 @@ To create a v4 controller:
 
 :::tip Customization tips
 
-* The `sanitizeInput` and `sanitizeOutput` utilities can be used in Strapi v4 and replace the `sanitizeEntity` utility from v3.
-* The original controller’s CRUD actions can be called using `super` (e.g. `super.find()`).
+- The `sanitizeInput` and `sanitizeOutput` utilities can be used in Strapi v4 and replace the `sanitizeEntity` utility from v3.
+- The original controller’s CRUD actions can be called using `super` (e.g. `super.find()`).
 
 More examples can be found in the [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#implementation).
 :::
