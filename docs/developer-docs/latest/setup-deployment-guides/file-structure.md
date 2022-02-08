@@ -65,7 +65,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
 │     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routing.html">routes</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routes.html">routes</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
 │     │           └ index.js
 │     ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">components</a>
