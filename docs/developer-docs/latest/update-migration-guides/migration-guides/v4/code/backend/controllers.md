@@ -1,10 +1,8 @@
 ---
 title: v4 code migration - Controllers - Strapi Developer Docs
 description: Migrate controllers of a Strapi application from v3.6.8 to v4.0.x
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 code migration: Updating controllers
 
