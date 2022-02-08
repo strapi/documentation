@@ -63,15 +63,23 @@ To create a v4 controller:
   // path: ./src/api/<content-type-name>/controllers/<controller-name>.js
 
   const { createCoreController } = require('@strapi/strapi').factories;
-    
-  module.exports = createCoreController('api::api-name.content-type-name', {
-    // replace the find() action of the core API controller
+
+  module.exports = createCoreController('api::api-name.content-type-name', ({ strapi }) => ({
+  // wrap a core action, leaving core logic in place
     async find(ctx) {
-      const { results } = await strapi.service('api::address.address').find();
-  
-      ctx.body = await this.sanitizeOutput(results);
+      // some custom logic here
+      ctx.query = { ...ctx.query, local: 'en' }
+
+      // calling the default core action with super
+      const { data, meta } = await super.find(ctx);
+
+      // some more custom logic
+      meta.date = Date.now()
+
+      return { data, meta };
     },
-  });
+  }));
+
   ```
 
 :::
