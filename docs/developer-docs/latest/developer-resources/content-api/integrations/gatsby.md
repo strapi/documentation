@@ -58,14 +58,19 @@ query {
   allStrapiRestaurant {
     edges {
       node {
-        strapiId
-        name
-        description
+        data {
+          id
+          attributes {
+            name
+            description
+          }
+        }
       }
     }
   }
 }
 ```
+
 :::
 
 :::response Example response
@@ -77,9 +82,17 @@ query {
       "edges": [
         {
           "node": {
-            "strapiId": 1,
-            "name": "Biscotte Restaurant",
-            "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            "data":[
+              {
+                "id": 1,
+                {
+                  "attributes": {
+                    "name": "Biscotte Restaurant",
+                    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+                  }
+                }
+              }
+            ]
           }
         }
       ]
@@ -87,6 +100,7 @@ query {
   }
 }
 ```
+
 :::
 ::::
 
@@ -104,9 +118,13 @@ const query = graphql`
     allStrapiRestaurant {
       edges {
         node {
-          strapiId
-          name
-          description
+          data {
+            id
+            attributes {
+              name
+              description
+            }
+          }
         }
       }
     }
@@ -118,8 +136,8 @@ const IndexPage = () => (
     query={query}
     render={data => (
       <ul>
-        {data.allStrapiRestaurant.edges.map(restaurant => (
-          <li key={restaurant.node.strapiId}>{restaurant.node.name}</li>
+        {data.allStrapiRestaurant.edges[0].node.data.map(restaurant => (
+          <li key={restaurant.id}>{restaurant.attributes.name}</li>
         ))}
       </ul>
     )}
@@ -138,12 +156,16 @@ Be sure that you activated the `findOne` permission for the `category` collectio
 
 ```graphql
 query {
-  strapiCategory(strapiId: { eq: 1 }) {
-    strapiId
-    name
-    restaurants {
-      name
-      description
+  strapiCategory(data: { elemMatch: { id: { eq: 1 } } }) {
+    data {
+      id
+      atrributes {
+        name
+        restaurants {
+          name
+          description
+        }
+      }
     }
   }
 }
@@ -157,12 +179,18 @@ query {
 {
   "data": {
     "strapiCategory": {
-      "id": "1",
-      "name": "French Food",
-      "restaurants": [
+      "data": [
         {
-          "name": "Biscotte Restaurant",
-          "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+          "id": 1,
+          "attributes": {
+            "name": "French Food",
+            "restaurants": [
+              {
+                "name": "Biscotte Restaurant",
+                "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+              }
+            ]
+          }
         }
       ]
     }
@@ -170,6 +198,7 @@ query {
   "extensions": {}
 }
 ```
+
 :::
 ::::
 
@@ -184,13 +213,17 @@ import { StaticQuery, graphql } from 'gatsby';
 
 const query = graphql`
   query {
-    strapiCategory(strapiId: { eq: 1 }) {
-      id
-      name
-      restaurants {
+    strapiCategory(data: { elemMatch: { id: { eq: 1 } } }) {
+      data {
         id
-        name
-        description
+        atrributes {
+          name
+          restaurants {
+            id
+            name
+            description
+          }
+        }
       }
     }
   }
@@ -201,9 +234,9 @@ const IndexPage = () => (
     query={query}
     render={data => (
       <div>
-        <h1>{data.strapiCategory.name}</h1>
+        <h1>{data.strapiCategory.data[0].attributes.name}</h1>
         <ul>
-          {data.strapiCategory.restaurants.map(restaurant => (
+          {data.strapiCategory.data[0].attributes.restaurants.map(restaurant => (
             <li key={restaurant.id}>{restaurant.name}</li>
           ))}
         </ul>
