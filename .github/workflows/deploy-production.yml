@@ -9,15 +9,22 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Vercel deployment URL
+        id: get-url-prod
+        uses: dorshinar/get-deployment-url@master
+        timeout-minutes: 5
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          retryInterval: 3000
       - name: Wait for Vercel deploy to complete
         uses: UnlyEd/github-action-await-vercel@v1.2.14
         id: await-vercel-prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          deployment-url: ${{ secrets.VERCEL_DOMAIN_PROD }}
+          deployment-url: ${{ steps.get-url-prod.outputs.deployment }}
           timeout: 300 # wait 5 minutes before failing
-      - name: Debug Testing
+      - name: Output debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
