@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 <!---
 Add 2-3 sentences summarizing the purpose of the migration
 --->
-The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds and configures the session middleware, which is required for the [Users & Permissions providers](https://docs.strapi.io/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections: 
+The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds and configures the `session` middleware, which is required for the [Users & Permissions providers](https://docs.strapi.io/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections: 
   - upgrading the application dependencies
   - migrating the breaking changes to the middleware
   - reinitializing the application
