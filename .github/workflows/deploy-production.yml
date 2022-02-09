@@ -3,12 +3,12 @@ on:
   push:
     branches:
       - production
-      - main
 
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
+      # Need to get actual deployment URL and not previous one
       - name: Get Vercel deployment URL
         id: get-url-prod
         uses: zentered/vercel-preview-url@v1.0.6
@@ -16,6 +16,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           vercel_team_id: 'strapijs'
+      # Waits for Vercel to finish building the docs
       - name: Wait for Vercel deploy to complete
         uses: UnlyEd/github-action-await-vercel@v1.2.14
         id: await-vercel-prod
@@ -24,8 +25,10 @@ jobs:
         with:
           deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
           timeout: 300 # wait 5 minutes before failing
+      # Outputs the current URL and confirms ready status (for debugging purposes)
       - name: Output debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
+      # Clears Cloudfront cache
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         id: invalid-cloudfront-prod
