@@ -13,7 +13,7 @@ jobs:
         id: get-url-prod
         uses: zentered/vercel-preview-url@v1.0.6
         env:
-          token: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           vercel_team_id: 'strapijs'
           vercel_project_id: 'documentation'
