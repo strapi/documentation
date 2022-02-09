@@ -39,7 +39,7 @@ Version-specific migration steps go here
 -->
 ### Migration steps to repair breaking changes
 
-Add the middleware `strapi::session` to the array in the config file `path: ./config/middlewares.js`. 
+Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`. 
 
 ```jsx
 // path: ./config/middlewares.js
