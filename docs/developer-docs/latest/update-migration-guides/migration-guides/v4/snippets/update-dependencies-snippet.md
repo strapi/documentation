@@ -5,7 +5,7 @@ Stop the server before starting the upgrade.
 Upgrade all of the Strapi packages in the `package.json` to `4.0.6`:
 
 ```jsx
-// path: ./package.json
+// path: package.json
 {
   // ...
   "dependencies": {
