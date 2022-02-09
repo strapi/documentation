@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - production
+      - main
 
 jobs:
   deploy-prod:
@@ -16,6 +17,8 @@ jobs:
         with:
           deployment-url: ${{ secrets.VERCEL_DOMAIN_PROD }}
           timeout: 300 # wait 5 minutes before failing
+      - name: Debug Testing
+        run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         id: invalid-cloudfront-prod
