@@ -13,4 +13,4 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 Migrating the backend of a Strapi application to v4 requires:
 
 * updating [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md)
-
+* updating [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)
