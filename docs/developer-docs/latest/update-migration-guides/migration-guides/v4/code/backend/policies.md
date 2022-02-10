@@ -16,12 +16,12 @@ In both Strapi v3 and v4, policies handle authorization. Policies can be global 
 
 In Strapi v3, policies are Koa middlewares accepting or rejecting requests based on the REST context. As middlewares, v3 policies always receive a Koa context, either coming from the REST request or built from the GraphQL resolver arguments.
 
-In Strapi v4, [policies](/developer-docs/latest/development/backend-customization/policies.md#policies) are functions that should return `true` or `undefined` for the request to be accepted. v4 policies are given a custom context based on where the policy has been called from (e.g. a REST controller’s action or a GraphQL resolver).
+In Strapi v4, [policies](/developer-docs/latest/development/backend-customization/policies.md#policies) are functions that should return `true` or `undefined` for the request to be accepted. v4 policies receive a custom context based on where the policy has been called from (e.g. a REST controller’s action or a GraphQL resolver).
 :::
 
 To migrate a policy to Strapi v4:
 
-1. Declare the policy in the appropriate folder, depending on the policy scope:
+1. Move the policy file in the appropriate folder, depending on the policy scope:
   
     | Policy scope      | Folder                                                                                                                                                                                                           |
     | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
