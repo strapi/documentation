@@ -28,9 +28,13 @@ Migrating GraphQL resolvers to Strapi v4 requires:
 The entire logic for Strapi v4 GraphQL resolvers doesn’t need to be in the `register` method of `./src/index.js` but it should be referenced from there.
 :::
 
-The following documentation provides use case examples of transforming Strapi v3 code to Strapi v4 code that uses the GraphQL extension service. The service allows adding new definitions for types, queries, and mutations, replacing resolvers, disabling APIs and fields from APIs, and adding policies, middlewares and authorization.
+The following documentation provides use case examples of transforming Strapi v3 code to Strapi v4 code that uses the GraphQL extension service. The GraphQL extension service allows adding new definitions for types, queries, and mutations, replacing resolvers, disabling APIs and fields from APIs, and adding policies, middlewares and authorization.
 
-## Adding new types definitions
+## Adding new definitions
+
+Adding new [types](#types), [queries](#queries) or [mutations](#mutations) definitions in Strapi v4 is done through the `use()` method of the [GraphQL extension service](/developer-docs/latest/plugins/graphql.md#extending-the-schema).
+
+### Types
 
 The following code example adds a new `MyEnum` type definition to Strapi v3:
 
@@ -48,7 +52,7 @@ module.exports = {
 }
 ```
 
-This should be replaced by the following code in Strapi v4:
+The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
 ```jsx
 // path: ./src/index.js
@@ -337,19 +341,14 @@ module.exports = {
 ```
 
 :::tip
-More disabling possibilities can be found in the [disabling operations in the Shadow CRUD](/developer-docs/latest/plugins/graphql.md#disabling-operations-in-the-shadow-crud) documentation.
+More disabling possibilities can be found in the [GraphQL plugin documentation](/developer-docs/latest/plugins/graphql.md#disabling-operations-in-the-shadow-crud).
 :::
 
 ***
 
-<aside>
-💡 Same as the two last items, it could be a good idea to link the customization documentation at the right place for the 3 following topics (since they all resolve around the `resolversConfig` anyway)
-
-</aside>
-
 ## Adding policies
 
-In Strapi v3, policies applied to a resolver are defined either for the REST controller or in the `schema.graphql.js` customization file.
+In Strapi v3, policies applied to a resolver are defined either for the REST controller or in the `schema.graphql.js` customization file:
 
 ```jsx
 // path: `./api/foo/config/schema.graphql.js`
@@ -357,7 +356,7 @@ In Strapi v3, policies applied to a resolver are defined either for the REST con
 module.exports = {
   resolver: {
     Query: {
-      foos: {
+      findItems: {
         policies: ['admin::isAuthenticatedAdmin'],
       },
     },
@@ -365,7 +364,7 @@ module.exports = {
 };
 ```
 
-In Strapi v4, policies applied to a resolver are explicitly defined (see [GraphQL policies documentation](/developer-docs/latest/plugins/graphql.md#policies)) and applied through the GraphQL extension service:
+In Strapi v4, policies applied to a resolver are explicitly defined in a `resolversConfig` object (see [GraphQL policies documentation](/developer-docs/latest/plugins/graphql.md#policies)) and applied through the GraphQL extension service. The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
 ```jsx
 // path: ./src/index.js
@@ -393,7 +392,7 @@ Strapi v4 policies are not inherited from controllers anymore since the resolver
 
 In Strapi v3, middlewares applied to a resolver are inherited from middlewares associated to the REST controller.
 
-In Strapi v4, middlewares applied to a resolver are explicitly defined (see [GraphQL middlewares documentation](/developer-docs/latest/plugins/graphql.md#middlewares)) and applied through the GraphQL extension service:
+In Strapi v4, middlewares applied to a resolver are explicitly defined in a `resolversConfig` object (see [GraphQL middlewares documentation](/developer-docs/latest/plugins/graphql.md#middlewares)) and applied through the GraphQL extension service:
 
 ```jsx
 // path: ./src/index.js
@@ -420,4 +419,4 @@ module.exports = {
 
 ## Adding authorization
 
-The resolvers automatically generated in Strapi v4 are protected by authorization strategies. The actions can be customized and the authorization can be disabled (see [GraphQL authorization documentation](/developer-docs/latest/plugins/graphql.md#authorization-configuration)).
+The resolvers automatically generated in Strapi v4 are protected by authorization strategies. The actions can be customized and the authorization can be disabled through the `resolversConfig` object (see [GraphQL authorization documentation](/developer-docs/latest/plugins/graphql.md#authorization-configuration)).
