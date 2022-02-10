@@ -63,14 +63,17 @@ To create a v4 router file:
 
   const { createCoreRouter } = require('@strapi/strapi').factories;
 
-  module.exports = createCoreRouter('api::foo.foo', {
+  module.exports = createCoreRouter('api::api-name.content-type-name', {
+   // creates an object with the basic CRUD configuration
     // ...
     config: {
       find: {
+        // disables authorization requirement for the `find` route
         policies: ['admin::isAuthenticatedAdmin'],
         // here you can also customize auth & middlewares
       },
     },
+    // disables every action except `find` and `findOne`.
     only: ['find', 'findOne'],
   });
 
@@ -78,11 +81,3 @@ To create a v4 router file:
 
 :::
 
-:::tip Customization tips
-
-- The original controller’s CRUD actions can be called using `super` (e.g. `super.find()`).
-
-More examples can be found in the [routes implementation documentation](/developer-docs/latest/development/backend-customization/routes.md#implementation).
-:::
-
-<!-- TODO: add a conclusion or links for other steps -->
