@@ -1,6 +1,5 @@
 ## Reinitializing the application 
-Rebuild the administration panel with `YARN` or `NPM` <br>
-Start the application with `YARN` or `NPM`
+Rebuild the administration panel and start the application with `YARN` or `NPM`:
 
 <code-group>
 
