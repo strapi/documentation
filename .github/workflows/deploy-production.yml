@@ -13,7 +13,7 @@ jobs:
       # Need to get actual deployment URL and not previous one
       - name: Get Vercel deployment URL
         id: get-url-prod
-        uses: derrickmehaffy/vercel-preview-url@master
+        uses: derrickmehaffy/vercel-preview-url@main
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
