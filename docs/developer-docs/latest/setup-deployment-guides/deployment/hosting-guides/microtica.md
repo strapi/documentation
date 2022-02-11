@@ -30,7 +30,7 @@ Microtica's pre-made Strapi template will create a new environment and automatic
 The Strapi template uses an Amazon EFS file system to store the persistent Strapi files:
 
 * image uploads – media files storage
-* api folder – only for the standalone setup where you don’t have your source code connected via Git (default). In this guide we will explain how you can deploy your existing Strapi project
+* API folder – only for the standalone setup where the source code is not connected via git (default). This guide explains how to deploy an existing Strapi project.
 * data folder – store the sqlite data file, if database client is `sqlite` (default)
 
 The data stored in these folders will persist on subsequent deployments, application restarts or even if you kill the container completely.
