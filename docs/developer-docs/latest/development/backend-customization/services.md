@@ -84,7 +84,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+module.exports = createCoreService('api::email.email', ({ strapi }) => ({
   send(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
@@ -105,7 +105,7 @@ The service is now available through the `strapi.service('api::email.email').sen
 ```js
 // path: ./src/api/user/controllers/user.js
 
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+module.exports = createCoreController('api::user.user', ({ strapi }) =>  ({
   // GET /hello
   async signup(ctx) {
     const { userData } = ctx.body;
