@@ -21,7 +21,7 @@ In Strapi v4, webpack v5 is used, and only `./src/admin/app.js` and the files un
 Webpack plugins and loaders should be upgraded to the latest version before migrating.
 :::
 
-To update the webpack configuration to Strapi v4:
+To update the [webpack](https://webpack.js.org/) configuration to Strapi v4:
 
 1. Rename the `./src/admin/webpack.config.example.js` to `./src/admin/webpack.config.js`.
 2. Copy the content of `./admin/admin.config.js` from the Strapi v3 application to `./src/admin/webpack.config.js`.
