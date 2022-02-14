@@ -318,7 +318,6 @@ module.exports = {
     },
   },
 };
-};
 ```
 
 Strapi v4 uses programmatic APIs to disable queries, mutation, actions or fields. The Strapi v3 code example above should be replaced by the following code in Strapi v4:
