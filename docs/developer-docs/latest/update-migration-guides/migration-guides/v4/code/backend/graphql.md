@@ -143,18 +143,16 @@ module.exports = {
 
 * In Strapi v4, REST controllers and GraphQL resolvers are not coupled anymore. The business logic is implemented in services and called either from the controller or the resolver. This approach keeps the business logic in one place so both REST and GraphQL can be customized the way you want.
 
-* The service that Strapi provides to perform queries is called the [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) and is available with `strapi.entityService`.
-
 * In Strapi v4, it’s not recommended to reference a REST controller directly from the GraphQL resolver. However, you can still call it programmatically from the resolver definition.
 :::
 
 ::: tip
-To create queries or mutations with simple logic, use Strapi's [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md), which is built on top of the Query Engine API.
+The service that Strapi provides to perform queries is called the [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) and is available with `strapi.entityService`. It can be used to create queries or mutations.
 :::
 
 ### Mutations
 
-The following code example adds a new mutation to Strapi v3:
+The following code example adds a new mutation definition to Strapi v3:
 
 ```jsx
 // path: `./api/foo/config/schema.graphql.js`
@@ -217,7 +215,7 @@ module.exports = {
 ```
 
 ::: tip
-To create queries or mutations with simple logic, use Strapi's [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md), which is built on top of the Query Engine API.
+The service that Strapi provides to perform queries is called the [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) and is available with `strapi.entityService`. It can be used to create queries or mutations.
 :::
 
 ## Replacing resolvers
@@ -320,7 +318,7 @@ module.exports = {
 };
 ```
 
-Strapi v4 uses programmatic APIs to disable queries, mutation, actions or fields. The Strapi v3 code example above should be replaced by the following code in Strapi v4:
+Strapi v4 uses programmatic APIs to [disable queries, mutation, actions or fields](/developer-docs/latest/plugins/graphql.md#disabling-operations-in-the-shadow-crud). The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
 ```jsx
 // path: ./src/index.js
@@ -336,10 +334,6 @@ module.exports = {
   }
 }
 ```
-
-:::tip
-More disabling possibilities can be found in the [GraphQL plugin documentation](/developer-docs/latest/plugins/graphql.md#disabling-operations-in-the-shadow-crud).
-:::
 
 ***
 
@@ -389,7 +383,7 @@ Strapi v4 policies are not inherited from controllers anymore since the resolver
 
 In Strapi v3, middlewares applied to a resolver are inherited from middlewares associated to the REST controller.
 
-In Strapi v4, middlewares applied to a resolver are explicitly defined in a `resolversConfig` object (see [GraphQL middlewares documentation](/developer-docs/latest/plugins/graphql.md#middlewares)) and applied through the GraphQL extension service:
+In Strapi v4, middlewares applied to a resolver are explicitly [defined in a `resolversConfig` object](/developer-docs/latest/plugins/graphql.md#middlewares) and applied through the GraphQL extension service:
 
 ```jsx
 // path: ./src/index.js
