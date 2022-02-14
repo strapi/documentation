@@ -1,11 +1,9 @@
 ---
 title: Code migration - GraphQL resolvers - Strapi Developer Docs
 description: Migrate GraphQL resolvers from Strapi v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html
 sidebarDepth: 3
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 code migration: Updating GraphQL resolvers
 
