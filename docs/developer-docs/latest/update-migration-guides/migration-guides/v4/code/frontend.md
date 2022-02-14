@@ -16,4 +16,4 @@ This guide is not an exhaustive resource for the v4 front end customization feat
 
 Migrating the front end of a Strapi application requires:
 
-- [](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/filename.md)
+- [updating the webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)
