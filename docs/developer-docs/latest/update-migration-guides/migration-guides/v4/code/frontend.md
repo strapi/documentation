@@ -9,3 +9,7 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 # v4 code migration: Update the front end
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
+
+Migrating the front end of a Strapi application requires:
+
+- [updating translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
