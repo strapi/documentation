@@ -53,7 +53,7 @@ jobs:
 
       # Outputs parsed Algolia Config (for debugging purposes)
       - name: Output Algolia debug status
-        run: "echo ${{ steps.algolia_config.outputs.config }}"
+        run: "echo ${{ steps.get-algolia-config-v3.outputs.config }}"
 
       # Updates the Algolia Search indexes
       # - name: Invalidate Algolia Search Cache
