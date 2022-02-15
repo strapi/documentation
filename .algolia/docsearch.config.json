@@ -1,5 +1,5 @@
 {
-  "index_name": "documentation",
+  "index_name": "docs-v3",
   "start_urls": [
     "https://docs-v3.strapi.io"
   ],
