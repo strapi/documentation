@@ -16,4 +16,4 @@ This guide is not an exhaustive resource for the v4 front end customization feat
 
 Depending on the level of customization applied to the admin panel, migrating the front end of a Strapi application to v4 might require:
 
-- [](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/filename.md)
+- [updating theme customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.md)
