@@ -37,7 +37,7 @@ To update the [webpack](https://webpack.js.org/) configuration to Strapi v4:
 
 module.exports = (config, webpack) => {
   // Note: we provide webpack above so you should not `require` it
-  // Perform customizations to webpack config
+  // Perform customizations to webpack configuration
   config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
   // Important: return the modified configuration
   return config;
