@@ -1,7 +1,7 @@
 ---
 title: Code migration - Theming - Strapi Developer Docs
 description: Migrate theme customizations from Strapi v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html
 ---
 
 # v4 code migration: Updating theme customizations
@@ -9,9 +9,9 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In Strapi v3, theme customisation is not properly supported.
+In Strapi v3, theme customization is not properly supported.
 
-Strapi v4 introduces a [new design system](https://design-system.strapi.io/) with a brand new theme which is fully customisable.
+Strapi v4 introduces the [Strapi Design System](https://design-system.strapi.io/) with a brand new theme which is fully customisable.
 
 :::
 
