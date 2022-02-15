@@ -11,7 +11,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 ::: strapi v3/v4 comparison
 In Strapi v3, file replacement is supported to customize the front end of a Strapi application. To modify the translations of an application, original core files can be directly replaced with custom files.
 
-In Strapi v4, file replacement is no longer supported. To customize the front end and extend translations, [dedicated extension APIs](/developer-docs/latest/development/admin-customization.md#configuration-options) should be used.
+In Strapi v4, file replacement is no longer supported. To extend translations, [dedicated extension APIs](/developer-docs/latest/development/admin-customization.md#configuration-options) should be used.
 :::
 
 To update translations to Strapi v4:
