@@ -1,7 +1,7 @@
 ---
 title: Code migration - WYSIWYG customizations - Strapi Developer Docs
 description: Migrate WYSIWYG customizations from Strapi v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html
 ---
 
 <!-- TODO: update SEO -->
@@ -11,9 +11,9 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In Strapi v3, the WYSIWYG is customised by overriding the original component using the file extensions.
+In Strapi v3, the WYSIWYG is customised by overriding the original component using file replacement.
 
-In Strapi v4, file replacement is no longer supported. To customize the default WYSIWYG, the new Field API should be used with the [extensions system](/developer-docs/latest/development/admin-customization.md#extension).
+In Strapi v4, file replacement is no longer supported. To customize the default WYSIWYG, the new `addFields()` method should be used with the [extensions system](/developer-docs/latest/development/admin-customization.md#extension).
 
 :::
 
@@ -29,7 +29,7 @@ To port WYSIWYG customizations to Strapi v4:
 
 5. In `./src/admin/app.js`:
 
-    * Import the WYSIWYG component created at step 3.
+    * Import the new WYSIWYG component created at step 3.
     * Inject the new WYSIWYG component by using the `addFields()` method inside the `bootstrap` lifecycle of the application. `addFields()` accepts an object with 2 properties: set `type` to `'wysiwyg'` and `Component` to the name of the imported WYSIWYG component.
 
     ```js
@@ -45,8 +45,7 @@ To port WYSIWYG customizations to Strapi v4:
     ```
 
 :::tip Customization tip
-The WYSIWYG can also be replaced by creating a plugin that add new fields (see [step-by-step guide using CKEditor](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
+The WYSIWYG can also be replaced by creating a plugin that adds new fields (see [step-by-step guide using CKEditor](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
 :::
-
 
 <!-- TODO: add conclusion or next steps -->
