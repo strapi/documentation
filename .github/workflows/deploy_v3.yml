@@ -56,10 +56,10 @@ jobs:
         run: "echo ${{ steps.get-algolia-config-v3.outputs.config }}"
 
       # Updates the Algolia Search indexes
-      # - name: Invalidate Algolia Search Cache
-      #   uses: signcl/docsearch-scraper-action@master
-      #   id: update-algolia-index-v3
-      #   env:
-      #     APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
-      #     API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-      #     CONFIG: ${{ steps.algolia_config.outputs.config }}
+      - name: Invalidate Algolia Search Cache
+        uses: signcl/docsearch-scraper-action@master
+        id: update-algolia-index-v3
+        env:
+          APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          CONFIG: ${{ steps.get-algolia-config-v3.outputs.config }}
