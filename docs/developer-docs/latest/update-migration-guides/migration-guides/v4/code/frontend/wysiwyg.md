@@ -4,8 +4,6 @@ description: Migrate WYSIWYG customizations from Strapi v3.6.8 to v4.0.x with st
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html
 ---
 
-<!-- TODO: update SEO -->
-
 # v4 code migration: Updating WYSIWYG customizations
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
