@@ -1,0 +1,51 @@
+name: Deploy Legacy v3 version
+on:
+  push:
+    branches:
+      - v3
+
+jobs:
+  deploy-v3:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Need to get actual deployment URL and not previous one
+      - name: Get Vercel deployment URL
+        id: get-url-v3
+        uses: derrickmehaffy/vercel-preview-url@main
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_team_id: 'strapijs'
+          vercel_target: 'preview'
+          vercel_app: 'documentation'
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # Waits for Vercel to finish building the docs
+      - name: Wait for Vercel deploy to complete
+        uses: UnlyEd/github-action-await-vercel@v1.2.14
+        id: await-vercel-v3
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: ${{ steps.get-url-v3.outputs.preview_url }}
+          timeout: 300 # wait 5 minutes before failing
+
+      # Outputs the current URL and confirms ready status (for debugging purposes)
+      - name: Output debug status
+        run: "echo The deployment at ${{ fromJson(steps.await-vercel-v3.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-v3.outputs.deploymentDetails).readyState }}"
+
+      # Clears Cloudfront cache
+      - name: Invalidate CloudFront Cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        id: invalid-cloudfront-v3
+        env:
+          DISTRIBUTION: ${{ secrets.LEGACY_V3_DISTRIBUTION }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.LEGACY_V3_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Updates the Algolia Search indexes
+      # - name: Invalidate Algolia Search Cache
+      #   work in progress
