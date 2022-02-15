@@ -32,7 +32,7 @@ jobs:
           timeout: 300 # wait 5 minutes before failing
 
       # Outputs the current URL and confirms ready status (for debugging purposes)
-      - name: Output debug status
+      - name: Output Vercel debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-v3.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-v3.outputs.deploymentDetails).readyState }}"
 
       # Clears Cloudfront cache
@@ -46,6 +46,20 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      # Gets the Algolia Config
+      - name: Get docsearch config and parse into a variable
+        id: get-algolia-config-v3
+        run: echo "::set-output name=config::$(curl ${{ secrets.LEGACY_V3_ALGOLIA_CONFIG_URL }} | jq -r tostring)"
+
+      # Outputs parsed Algolia Config (for debugging purposes)
+      - name: Output Algolia debug status
+        run: "echo ${{ steps.algolia_config.outputs.config }}"
+
       # Updates the Algolia Search indexes
       # - name: Invalidate Algolia Search Cache
-      #   work in progress
+      #   uses: signcl/docsearch-scraper-action@master
+      #   id: update-algolia-index-v3
+      #   env:
+      #     APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
+      #     API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+      #     CONFIG: ${{ steps.algolia_config.outputs.config }}
