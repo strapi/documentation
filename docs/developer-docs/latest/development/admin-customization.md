@@ -241,7 +241,19 @@ The default [Strapi theme](https://github.com/strapi/design-system/tree/main/pac
 
 ### WYSIWYG editor
 
-To change the current WYSIWYG, you can either install a third-party plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
+To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md)) or take advantage of the [bootstrap lifecycle](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap):
+
+```js
+// path:src/admin/app.js
+
+import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
+
+export default {
+  bootstrap(app) {
+    app.addFields({ type: 'wysiwyg', Component: MyNewWYSIGWYG });
+  },
+};
+```
 
 ### 'Forgotten password' email
 
