@@ -43,3 +43,10 @@ To port WYSIWYG customizations to Strapi v4:
       },
     };
     ```
+
+:::tip Customization tip
+The WYSIWYG can also be replaced by creating a plugin that add new fields (see [step-by-step guide using CKEditor](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
+:::
+
+
+<!-- TODO: add conclusion or next steps -->
