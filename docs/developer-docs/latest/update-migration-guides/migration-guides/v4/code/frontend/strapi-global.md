@@ -1,10 +1,10 @@
 ---
 title: Code migration - Strapi global variable - Strapi Developer Docs
-description: Migrate  customizations from Strapi v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html
+description: Migrate calls to the strapi global variable from Strapi v3.6.8 to v4.0.x with step-by-step instructions
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html
 ---
 
-# v4 code migration: Updating Strapi global variable calls
+# v4 code migration: Updating `strapi` global variable calls
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
@@ -16,7 +16,7 @@ In Strapi v4, `strapi.notification`, `strapi.lockApp` and `strapi.unlockApp` are
 
 To migrate to Strapi v4:
 
-1. Remove calls to `strapi.notification`, `strapi.lockApp` and `strapi.unlockApp`.
+1. Remove all calls to `strapi.notification`, `strapi.lockApp` and `strapi.unlockApp` from the code.
 
 2. Adapt your code, using the following table to find Strapi v4 hooks equivalent to Strapi v3 features. All hooks are provided by the `@strapi/helper-plugin` module:
 
@@ -27,7 +27,7 @@ To migrate to Strapi v4:
     | `strapi.unlockApp` calls    | `unlockApp` method from the `useOverlayBlocker` hook |
     | `strapi.backendUrl` calls   | (still exists in Strapi v4)                          |
 
-The following examples should help you get started using the `useNotification` and `lockApp`/`unlockApp` methods:
+The following examples should help you get started using the `useNotification` hook and `lockApp`/`unlockApp` methods:
 
 ::: details Example of using the useNotification hook in Strapi v4
 
@@ -72,7 +72,7 @@ const HomePage = () => {
 
 :::
 
-::: details Example of using the lockApp and unlockApp methods from the useOverlayBlocker hook in Strapi v4
+::: details Example of using the lockApp and unlockApp methods in Strapi v4
 
 ```js
 // path: ./src/plugins/<my-plugin>/admin/*.js
@@ -102,7 +102,7 @@ const myHelper = () => {
 
 <br/>
 
-The `@strapi/helper-plugin` v4 module features a [Storybook](https://storybook.js.org/) instance. The Storybook instance provides further documentation about the internal components specifically targeted for the Strapi admin panel. This includes information about the `useNotification` hook. To access the documentation included with `@strapi/helper-plugin`:
+The `@strapi/helper-plugin` module provided with Strapi v4 features a [Storybook](https://storybook.js.org/) instance. The Storybook instance can be run to display further documentation about the internal components specifically targeted for the Strapi admin panel. This includes information about the `useNotification` hook. To access the documentation included with `@strapi/helper-plugin`:
 
 1. Clone the Strapi repository:
 
