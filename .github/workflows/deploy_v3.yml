@@ -49,7 +49,7 @@ jobs:
       # Gets the Algolia Config
       - name: Get docsearch config and parse into a variable
         id: get-algolia-config-v3
-        run: echo "::set-output name=config::$(curl ${{ secrets.LEGACY_V3_ALGOLIA_CONFIG_URL }} | jq -r tostring)"
+        run: echo "::set-output name=config::$(curl -s https://raw.githubusercontent.com/strapi/documentation/v3/.algolia/docsearch.config.json | jq -r tostring)"
 
       # Outputs parsed Algolia Config (for debugging purposes)
       - name: Output Algolia debug status
