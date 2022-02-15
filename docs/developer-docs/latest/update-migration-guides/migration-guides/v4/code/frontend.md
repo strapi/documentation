@@ -10,6 +10,10 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
-Migrating the front end of a Strapi application requires:
+:::note
+This guide is not an exhaustive resource for the v4 front end customization features, which are described in the [admin panel customization](/developer-docs/latest/development/admin-customization.md) documentation.
+:::
+
+Depending on the level of customization applied to the admin panel, migrating the front end of a Strapi application to v4 might require:
 
 - [updating translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
