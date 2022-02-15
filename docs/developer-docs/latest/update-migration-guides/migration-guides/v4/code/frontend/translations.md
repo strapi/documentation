@@ -1,5 +1,5 @@
 ---
-title: ICode migration - Translations - Strapi Developer Docs
+title: Code migration - Translations - Strapi Developer Docs
 description: Migrate translations from Strapi v3.6.8 to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html
 ---
