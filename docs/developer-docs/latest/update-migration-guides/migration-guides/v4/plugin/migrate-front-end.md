@@ -9,12 +9,13 @@ next: ./enable-plugin.md
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
-Migrating the front end of a plugin to Strapi v4 requires:
+Migrating the front end of a plugin to Strapi v4 might require:
 
 - updating how the plugin's front-end is [registered](#registering-the-plugin-with-the-admin-panel)
 - updating how the plugin is [added to the amin panel menu](#adding-a-menu-link)
 - updating how the plugin [adds settings to the admin panel](#adding-settings)
-- optionally, [registering translations](#registering-translations)
+- updating how the plugin [adds reducers](#adding-reducers)
+- [registering translations](#registering-translations)
 
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
 
