@@ -450,15 +450,7 @@ const developer = [
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md', 'Enabling a plugin'],
                 ]
               },
-              {
-                title: 'Code migration guide',
-                path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html',
-                collapsable: true,
-                children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md', 'Updating the back end'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md', 'Updating the front end'],
-                ]
-              }
+              // ['', 'Code migration guide'],
               // ['', 'Data migration guide'],
             ]
           },
