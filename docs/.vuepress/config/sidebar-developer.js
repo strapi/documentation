@@ -449,7 +449,7 @@ const developer = [
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md', 'Migrating the front end'],
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md', 'Enabling a plugin'],
                 ]
-              },
+              }
               // ['', 'Code migration guide'],
               // ['', 'Data migration guide'],
             ]
