@@ -61,5 +61,6 @@ module.exports = () => ({
       defaultLimit: 10,
       maxLimit: 20
     }
+  }
 })
 ```
