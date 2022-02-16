@@ -1,5 +1,5 @@
-## Reinitializing the application 
-Rebuild the administration panel and start the application with `YARN` or `NPM`:
+### Reinitializing the application 
+Rebuild the administration panel and start the application:
 
 <code-group>
 
