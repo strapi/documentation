@@ -13,6 +13,7 @@ Migrating the front end of a plugin to Strapi v4 requires:
 
 - updating how the plugin's front-end is [registered](#registering-the-plugin-with-the-admin-panel)
 - updating how the plugin is [added to the amin panel menu](#adding-a-menu-link)
+- updating how the plugin [adds settings to the admin panel](#adding-settings)
 - optionally, [registering translations](#registering-translations)
 
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
@@ -151,6 +152,70 @@ export default {
 
 :::
 
+## Adding settings
+
+::: strapi v3/v4 comparison
+
+A Strapi v3 plugin adds a settings section by exporting a `settings` property during the plugin registration.
+
+In Strapi v4, a plugin adds a settings section using the [Settings API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#settings-api).
+:::
+
+To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appopriate Settings API method to use, and click on the method name to go to its dedicated documentation:
+
+| Action     | Method |
+|-----|----|
+| Simultaneously create a new settings section<br/> _and_ define new links to include in this section | [`createSettingsSection()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#createsettingsection) |
+| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslink)</li><li>[`addSettingsLinks()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslinks)</li></ul> |
+
+::: details Example of creating a new settings section
+
+```js
+// path: ./src/plugins/my-plugin/admin/src/index.js
+
+import getTrad from './utils/getTrad';
+
+register(app) {
+  // Create the plugin's settings section
+  app.createSettingSection(
+    // created section
+    {
+      id: pluginId,
+      intlLabel: {
+        id: getTrad('Settings.section-label'),
+        defaultMessage: 'My plugin settings',
+      },
+    },
+    // links
+    [
+      {
+        intlLabel: {
+          id: 'settings.page',
+          defaultMessage: 'Setting page 1',
+        },
+        id: 'settings',
+        to: `/settings/my-plugin/`,
+        Component: async () => {
+          const component = await import(
+            /* webpackChunkName: "my-plugin-settings-page" */ './pages/Settings'
+          );
+
+          return component;
+        },
+        permissions: [],
+      },
+
+    ]
+  );
+
+  app.registerPlugin({
+    id: pluginId,
+    name,
+  });
+},
+```
+
+:::
 ## Registering translations
 
 In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
