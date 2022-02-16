@@ -217,6 +217,51 @@ register(app) {
 ```
 
 :::
+
+## Adding reducers
+
+::: strapi v3/v4 comparison
+
+A Strapi v3 plugin adds reducers by exporting a `reducers` property during the plugin registration.
+
+In Strapi v4, a plugin adds reducers programmatically using the [Reducers API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#reducers-api).
+:::
+
+To migrate to Strapi v4, make sure reducers are added programmatically with the `addReducers()` method.
+
+<!-- ? did the reducers format change in v4? since it's not documented in Strapi v3, I can't compare… 😅  ? -->
+
+::: details Example of adding reducers
+
+```js
+// path: ./src/plugins/my-plugin/admin/src/index.js
+
+import myReducer from './components/MyCompo/reducer';
+import myReducer1 from './components/MyCompo1/reducer';
+import pluginId from './pluginId';
+
+const reducers = {
+  [`${pluginId}_reducer`]: myReducer,
+  [`${pluginId}_reducer1`]: myReducer1,
+};
+
+export default {
+  register(app) {
+    app.addReducers(reducers);
+
+    app.registerPlugin({
+      id: pluginId,
+      initializer: Initializer,
+      isReady: false,
+      name,
+    });
+  },
+ }
+}
+```
+
+:::
+
 ## Registering translations
 
 In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
