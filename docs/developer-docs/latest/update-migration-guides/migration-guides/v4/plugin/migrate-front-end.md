@@ -80,7 +80,7 @@ const { name } = pluginPkg.strapi;
 ::: strapi v3/v4 comparison
 A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
 
-In Strapi v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
+In Strapi v4, a plugin adds a link to the menu programmatically with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
 :::
 
 To migrate to Strapi v4, pass the `menu` key from the Strapi v3 configuration object to `app.addMenuLink()` with the following properties updated:
@@ -159,7 +159,7 @@ export default {
 
 A Strapi v3 plugin adds a settings section by exporting a `settings` property during the plugin registration.
 
-In Strapi v4, a plugin adds a settings section using the [Settings API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#settings-api).
+In Strapi v4, a plugin adds a settings section programmatically using the [Settings API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#settings-api).
 :::
 
 To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appopriate Settings API method to use, and click on the method name to go to its dedicated documentation:
