@@ -15,6 +15,7 @@ Migrating the front end of a plugin to Strapi v4 might require:
 - updating how the plugin is [added to the amin panel menu](#adding-a-menu-link)
 - updating how the plugin [adds settings to the admin panel](#adding-settings)
 - updating how the plugin [adds reducers](#adding-reducers)
+- updating how the plugin [injects components to the Content Manager](#adding-injection-zones)
 - [registering translations](#registering-translations)
 
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
@@ -257,6 +258,38 @@ export default {
     });
   },
  }
+}
+```
+
+:::
+
+## Adding injection zones
+
+::: strapi v3/v4 comparison
+A Strapi v3 plugin can inject components into the Content Manager's Edit view, using the `registerField()` method or the `useStrapi` hook within the `Initializer` component.
+
+In Strapi v4, a plugin can inject components into several locations of the Content Manager using the [Injection Zones API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#injection-zones-api).
+:::
+
+To migrate to Strapi v4, make sure components are injected using Strapi v4 [Injection Zones API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#injection-zones-api). Depending on where the component should be injected, use:
+
+- either the `injectContentManagerComponent()` method to inject into [predefined injection zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#using-predefined-injection-zones) of the Content Manager
+- or the `injectComponent()` method to inject into [custom zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#creating-a-custom-injection-zone)
+
+::: details Example of injecting a component into the Content Manager's Edit view
+
+```jsx
+// path:  ./src/plugins/my-plugin/admin/src/index.js
+
+import Link from './components/Link'
+
+export default {
+  bootstrap(app){
+    app.injectContentManagerComponent('editView', 'right-links', {
+      name: 'content-type-builder.link',
+      Component: Link,
+    });
+  }
 }
 ```
 
