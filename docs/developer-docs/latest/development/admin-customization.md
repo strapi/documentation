@@ -233,7 +233,7 @@ To disable notifications about new Strapi releases, set the `config.notification
 
 To extend the theme, use the `config.theme` key.
 
-::: Strapi Design System
+::: strapi Strapi Design System
 The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`.
 :::
 
