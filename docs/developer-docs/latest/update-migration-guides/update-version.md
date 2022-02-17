@@ -24,6 +24,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 
 ```jsx
 // path: package.json
+
 {
   // ...
   "dependencies": {
