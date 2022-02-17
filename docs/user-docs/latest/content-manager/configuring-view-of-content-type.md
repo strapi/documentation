@@ -97,7 +97,7 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 | Description     | Write a description for the field, to help other administrators fill it properly.         |
 | Placeholder     | Write the placeholder that should be displayed by default in the field.                   |
 | Editable field  | Click on **ON** or **OFF** to able or disable the edition of the field by administrators. |
-| Size            | Select the size in which the field should be displayed in the content manager             |
+| Size            | Select the size in which the field should be displayed in the Content Manager. Note that this setting is neither available for JSON and Rich Text fields, nor dynamic zones and components. |
 
 4. Click on the **Save** button.
 
