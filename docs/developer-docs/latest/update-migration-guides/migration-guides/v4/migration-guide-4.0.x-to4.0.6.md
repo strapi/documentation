@@ -46,8 +46,7 @@ module.exports = [
 ```
 
 
-2. Configure the session middleware by adding the key settings to the `server.js` config file. <br>
-For more information about session middleware and key settings please see [koa-session](https://github.com/koajs/session/blob/master/Readme.md).
+2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information).
  
 
 ```jsx
