@@ -47,6 +47,7 @@ If the operation does not work, try removing the `yarn.lock` or `package-lock.js
 :::
 
 ### Reinitializing the application 
+
 Rebuild the administration panel and start the application:
 
 <code-group>
