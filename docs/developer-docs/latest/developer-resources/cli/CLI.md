@@ -71,7 +71,7 @@ This command is there to run a Strapi application without restarts and file writ
 Certain features are disabled in the `strapi start` mode because they require application restarts.
 
 - **strapi start --no-migrate**<br/>
-  Skips migrations which are normally run when the application boots up to sync content-types and any user-generated migrations. If `--no-migrate` option is passed, migrations must be run separately with the `strapi migrate` command.
+  Skip migrations which are normally run when the application boots up to sync content-types and any user-generated migrations. If `--no-migrate` option is passed, migrations must be run separately with the `strapi migrate` command.
 
 
 Allowed environment variables:
