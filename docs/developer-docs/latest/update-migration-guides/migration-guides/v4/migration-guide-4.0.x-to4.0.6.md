@@ -51,6 +51,7 @@ module.exports = [
 
 ```jsx
 // path: ./config/server.js
+
   // ...
   app: {
     keys: env.array("APP_KEYS", ["testKey1", "testKey2"]),
