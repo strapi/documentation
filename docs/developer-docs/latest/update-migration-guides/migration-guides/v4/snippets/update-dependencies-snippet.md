@@ -6,6 +6,7 @@ Stop the server before starting the upgrade.
 
 ```jsx
 // path: package.json
+
 {
   // ...
   "dependencies": {
