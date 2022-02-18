@@ -58,7 +58,7 @@ module.exports = [
   },
 // ...
 ```
-::: details Example of the updated file:
+::: details Example of the updated file
 ```jsx
 // path: ./config/server.js
 
