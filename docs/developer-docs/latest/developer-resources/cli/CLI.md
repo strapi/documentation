@@ -85,7 +85,7 @@ Allowed environment variables:
 
 ## strapi migrate
 
-Run any migrations, including syncing DB schema to content-type changes or migrations in the `database/migrations` directory.
+Run any migrations, including syncing the database schema to content-type changes or migrations in the `database/migrations` directory.
 
 ## strapi build
 
