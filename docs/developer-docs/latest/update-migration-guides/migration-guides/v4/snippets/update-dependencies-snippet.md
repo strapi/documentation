@@ -2,7 +2,7 @@
 Stop the server before starting the upgrade. 
 :::
 
-1. Upgrade all of the Strapi packages in the `package.json` to `4.0.6`:
+1. Upgrade all of the Strapi packages in the `package.json` to `4.0.7`:
 
 ```jsx
 // path: package.json
@@ -10,10 +10,10 @@ Stop the server before starting the upgrade.
 {
   // ...
   "dependencies": {
-    "@strapi/plugin-documentation": "4.0.6",
-    "@strapi/plugin-i18n": "4.0.6",
-    "@strapi/plugin-users-permissions": "4.0.6",
-    "@strapi/strapi": "4.0.6"
+    "@strapi/strapi": "4.0.7",
+    "@strapi/plugin-users-permissions": "4.0.7",
+    "@strapi/plugin-i18n": "4.0.7",
+    "sqlite3": "5.0.2"
     // ...
   }
 }

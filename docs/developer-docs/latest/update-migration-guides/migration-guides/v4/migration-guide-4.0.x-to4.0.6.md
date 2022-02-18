@@ -24,7 +24,7 @@ The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.
 
 
 
-### Migration steps to repair breaking changes
+### Fixing the breaking changes
 
 1. Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`: 
 
