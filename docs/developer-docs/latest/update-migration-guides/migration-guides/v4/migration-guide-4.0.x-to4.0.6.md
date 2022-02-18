@@ -13,7 +13,7 @@ The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.
 
 
 :::caution
- [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code, will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the app.
+ [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code, will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
 
