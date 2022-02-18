@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 ## Upgrade Strapi version
 
-Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel.  
+Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md) are provided whenver a new Strapi version includes breaking changes. 
 
 :::caution
  [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
@@ -28,10 +28,10 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 {
   // ...
   "dependencies": {
-    "@strapi/plugin-documentation": "4.0.7",
-    "@strapi/plugin-i18n": "4.0.7",
+    "@strapi/strapi": "4.0.7",
     "@strapi/plugin-users-permissions": "4.0.7",
-    "@strapi/strapi": "4.0.7"
+    "@strapi/plugin-i18n": "4.0.7",
+    "sqlite3": "5.0.2"
     // ...
   }
 }
@@ -40,11 +40,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 
 2. Save the edited `package.json` file.
 
-3. Run either `yarn` or `npm install` to install the upgraded version.
-
-::: tip
-If the operation does not work, try removing the `yarn.lock` or `package-lock.json` files. If that does not work, remove the `node_modules` folder and try again.
-:::
+3. !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Install-npm-yarn)!!!
 
 ### Reinitializing the application 
 
