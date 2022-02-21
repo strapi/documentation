@@ -67,7 +67,7 @@ For example upgrading from `4.0.0` to `4.0.1`:
 After editing the file run either `yarn install` or `npm install` to install the specified version.
 
 ::: tip
-If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again..
+If you meet permission error, try `sudo yarn install` or `sudo npm install` instead. If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again..
 :::
 
 ## Rebuild your administration panel
