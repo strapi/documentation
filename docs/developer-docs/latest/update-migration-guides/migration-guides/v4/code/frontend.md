@@ -20,3 +20,4 @@ Depending on the level of customization applied to the admin panel, migrating th
 - [updating translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
 - [updating the webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)
 - [updating theme customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.md)
+- [update calls to the `strapi` global variable](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.md) to handle notifications and freeze user interactions
