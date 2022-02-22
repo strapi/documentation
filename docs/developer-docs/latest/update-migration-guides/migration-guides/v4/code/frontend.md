@@ -1,10 +1,9 @@
 ---
 title: Front-end code migration - Strapi Developer Docs
-description: Migrate the front end of a Strapi application from v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+description: Migrate the front end of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html
 ---
 
-<!-- TODO: update SEO -->
 
 # v4 code migration: Update the front end
 
