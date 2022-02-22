@@ -4,7 +4,7 @@ description: The following documentation covers how to upgrade your application 
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html
 ---
 
-## Upgrade Strapi version
+# Upgrade Strapi version
 
 Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md) are provided whenver a new Strapi version includes breaking changes. 
 
