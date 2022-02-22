@@ -100,7 +100,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 - [session](#session),
 
 ::: caution
-The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`', `body`, `public`, `favicon`. They should not be removed as it will throw an error.
+The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `favicon`. They should not be removed as it will throw an error.
 :::
 
 ### `body`
@@ -210,7 +210,7 @@ The `query` middleware is a query parser based on [qs](https://github.com/ljharb
 
 The `response-time` middleware enables the `X-Response-Time` (in milliseconds) for the response header.
 
-The middleware doesn't have any configuration option.
+The middleware doesn't have any configuration options.
 
 ### `public`
 
