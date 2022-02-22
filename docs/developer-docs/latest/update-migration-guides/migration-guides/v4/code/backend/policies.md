@@ -1,6 +1,6 @@
 ---
 title: v4 code migration - Policies - Strapi Developer Docs
-description: Migrate policies from Strapi v3.6.8 to Strapi v4.0.x with step-by-step instructions
+description: Migrate policies from Strapi v3.6.x to Strapi v4.0.x with step-by-step instructions
 canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
 ---
 

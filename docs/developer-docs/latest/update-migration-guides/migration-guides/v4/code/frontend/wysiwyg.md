@@ -1,6 +1,6 @@
 ---
 title: Code migration - WYSIWYG customizations - Strapi Developer Docs
-description: Migrate WYSIWYG customizations from Strapi v3.6.8 to v4.0.x with step-by-step instructions
+description: Migrate WYSIWYG customizations from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html
 ---
 

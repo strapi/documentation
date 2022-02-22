@@ -1,6 +1,6 @@
 ---
 title: v4 Plugin Migration - Migrating the front end - Strapi Developer Docs
-description: Migrate the front end of a Strapi plugin from v3.6.8 to v4.0.x with step-by-step instructions
+description: Migrate the front end of a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html
 next: ./enable-plugin.md
 ---
