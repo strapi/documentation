@@ -457,10 +457,16 @@ const developer = [
                 children: [
                   {
                     title: 'Updating the back end',
-                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.html',
                     collapsable: true,
                     children: [
-                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md', 'GraphQL resolvers'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html', 'Routes'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html', 'Policies'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.html', 'Route middlewares'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html', 'Controllers'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html', 'Services'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html', 'Dependencies'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html', 'GraphQL resolvers'],
                     ]
                   },
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md', 'Updating the front end'],
