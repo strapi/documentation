@@ -12,7 +12,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
  [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
-### Upgrading the dependencies
+## Upgrading the dependencies
 
 ::: prerequisites
 - Stop the server before starting the upgrade.
@@ -42,7 +42,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 
 3. !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Install-npm-yarn)!!!
 
-### Reinitializing the application 
+## Reinitializing the application 
 
 Rebuild the administration panel and start the application:
 
