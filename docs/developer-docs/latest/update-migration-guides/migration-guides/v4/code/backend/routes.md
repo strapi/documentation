@@ -18,13 +18,7 @@ In Strapi v4, routes are defined in JavaScript files, called router files, that 
 
 Migrating [routes](/developer-docs/latest/development/backend-customization/routes.md) to Strapi v4 consists in making sure that each router file uses the `createCoreRouter` factory function introduced in v4.
 
-Due to the differences between routes implementation in Strapi v3 and v4, it's recommended to create a new router file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
-
-A new router file can be created:
-
-- manually, starting at step 1 of the following procedure,
-- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping to step 2 of the following procedure.
-<!-- ? I noticed the strapi generate CLI generates an empty router and not a call to createCoreRouter, is it intended ? -->
+Due to the differences between routes implementation in Strapi v3 and v4, it's recommended to create a new router file, then optionally bring existing v3 customizations into the new file and adapt them when necessary. If you didn't create any custom routes or customize the default routes, the step 4 of the following procedure is not required.
 
 To create a v4 router file:
 
