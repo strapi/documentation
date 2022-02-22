@@ -19,3 +19,4 @@ Depending on the level of customization applied to the admin panel, migrating th
 - [updating WYSIWYG customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.md)
 - [updating translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
 - [updating the webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)
+- [updating theme customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.md)
