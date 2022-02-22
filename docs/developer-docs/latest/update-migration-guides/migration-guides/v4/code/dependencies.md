@@ -13,7 +13,7 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 :::strapi v3/v4 comparison
 In Strapi v3, Strapi package names were prefixed with `strapi-`.
 
-Strapi v4 uses scoped packages.
+Strapi v4 uses scoped packages, prefixed with `@strapi/`.
 :::
 
 To migrate dependencies to Strapi v4, update all references to Strapi packages using the new names found in the following table, and make sure the version number in `package.json` is up-to-date.
