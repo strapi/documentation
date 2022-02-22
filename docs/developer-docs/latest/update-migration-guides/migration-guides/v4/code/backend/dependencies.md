@@ -1,7 +1,7 @@
 ---
 title: Code migration - Dependencies - Strapi Developer Docs
-description: Migrate your dependencies from Strapi v3.6.8 to v4.0.x with step-by-step instructions
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+description: Migrate your dependencies from Strapi v3.6.x to v4.0.x with step-by-step instructions
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html
 ---
 
 <!-- TODO: update SEO -->
@@ -65,6 +65,6 @@ Some packages, identified with the ❌  emoji, have been removed from Strapi v4 
 
 Example:
 
-If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-upload”: “3.6.8”` dependency declaration, and the migration targets Strapi v4.0.7, the dependency declaration should be replaced with `“@strapi/plugin-upload”: “4.0.7”`.
+If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-upload”: “3.6.x”` dependency declaration, and the migration targets Strapi v4.0.7, the dependency declaration should be replaced with `“@strapi/plugin-upload”: “4.0.7”`.
 
 <!-- TODO: add a conclusion or links for other steps -->
