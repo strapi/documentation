@@ -14,12 +14,12 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 This guide is not an exhaustive resource for the v4 back-end customization features, which are described in the [back-end customization](/developer-docs/latest/development/backend-customization.md) documentation.
 :::
 
-Migrating the backend of a Strapi application to v4 requires:
+Migrating the back end of a Strapi application to v4 requires updating:
 
-* updating [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)
-* updating [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md)
-* updating [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md)
-* updating [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md)
-* updating [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md)
-* updating [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/dependencies.md)
-* updating [GraphQL resolvers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md)
+* [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)
+* [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md)
+* [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md)
+* [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md)
+* [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md)
+* [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/dependencies.md)
+* [GraphQL resolvers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md)
