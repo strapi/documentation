@@ -22,4 +22,5 @@ Migrating the backend of a Strapi application to v4 requires:
 * updating [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)
 * updating [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md)
 * updating [GraphQL resolvers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md)
+* updating [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md)
 
