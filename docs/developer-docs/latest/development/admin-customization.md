@@ -292,6 +292,7 @@ In order to extend the usage of webpack v5, define a function that extends its c
 
 ```js
 module.exports = {
+  // WARNING: the admin panel now uses webpack 5 to bundle the application.
   webpack: (config, webpack) => {
     // Note: we provide webpack above so you should not `require` it
 
