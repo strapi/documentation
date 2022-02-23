@@ -8,9 +8,36 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 
 # v4 code migration guide
 
-The goal of this guide is to get a v3 application up and running on v4 by resolving breaking changes.
+Strapi v4 introduces breaking changes that requires manually updating large portions of the codebase of an existing Strapi project.
 
-Migrating a Strapi application from v3.6.x to v4.0.x consists in the following steps:
+This guide covers migrating both [the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) and [the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md) of a Strapi v3.6.x application to Strapi 4.0.x. and is built around small independent topics. 
 
-* [migrate the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md)
-* [migrate the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md)
+::: prerequisites
+Migrating the back end code of a Strapi application is a prerequisite to migrating the front end.
+:::
+
+For each topic covered, this guide is designed to:
+
+* help you understand the main differences between Strapi v3 and v4,
+* help you resolve breaking changes by migrating built-in code to Strapi v4,
+* and, whenever possible, offer some clues and starting points on how to migrate custom code.
+
+The following topics are covered by this guide, and you can either click on a specific topic to jump to the dedicated migration documentation or click on a scope to read a more general introduction for the back end or the front end migration:
+
+| Scope                    | Topic                                                                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Back end code migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md)  | <ul><li>[Routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)</li><li>[Policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md)</li><li>[Route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md)</li><li>[Controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md)</li><li>[Services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md)</li><li>[Dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/dependencies.md)</li><li>[GraphQL resolvers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md)</li></ul> |
+| [Front end code migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md) | <ul><li>[WYSIWYG customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.md)</li><li>[Translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)</li><li>[Webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)</li><li>[Theme customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.md)</li><li>[Calls to the `strapi` global variable](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.md)</li></ul> |
+
+::: note
+The following topics are not extensively covered in this code migration guide, but Strapi v4 also introduces:
+
+* a new [file structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) for the project,
+* fully rewritten [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs,
+* the new [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) APIs,
+* and new [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md), including splitting the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) configurations and adding the support for [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md).
+:::
+
+::: strapi Need more help
+Feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
+:::
