@@ -34,6 +34,22 @@ module.exports = [
   'strapi::cors',
   'strapi::body',
   'strapi::errors',
+  {
+    // configure default middlewares
+    // @see https://github.com/strapi/strapi/tree/master/packages/core/strapi/lib/middlewares
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': ["'self'", 'data:', 'blob:'],
+          'media-src': ["'self'", 'data:', 'blob:'],
+          upgradeInsecureRequests: null,
+        },
+      }
+    },
+  },
   // ...
   'my-custom-node-module', // custom middleware that does not require any configuration
   {
