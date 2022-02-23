@@ -17,7 +17,9 @@ Using optional Strapi features can provide some more filters:
 
 Queries can accept a `filters` parameter with the following syntax:
 
-`GET /api/:pluralApiId?filters[field][operator]=value`
+```rest
+GET /api/:pluralApiId?filters[field][operator]=value
+```
 
 The following operators are available:
 

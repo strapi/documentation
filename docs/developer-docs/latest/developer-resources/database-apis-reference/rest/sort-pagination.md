@@ -13,6 +13,10 @@ The [REST API](/developer-docs/latest/developer-resources/database-apis-referenc
 
 Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntax:
 
+```rest
+GET /api/:pluralApiId?sort=value
+```
+
 ### Sort using 2 fields
 
 ::::api-call
