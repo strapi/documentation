@@ -34,8 +34,9 @@ To migrate a policy to Strapi v4:
 ::: note
 In Strapi v4, depending on whether the policy is applied to REST or GraphQL, the function has access to different contexts, and you can tell by checking the `policyContext.type` which will be either `koa` for REST or `graphql` for GraphQL:
 
-- Both REST and GraphQL contexts have access to the `request`/`req`, `response`/`res`, `app`, `type`, `state`, and various other attributes.
-- The GraphQL context has access to `parent`, `args`, `context`, `info` & `http` (which contains the Koa context) (see [GraphQL customization](http://localhost:8080/developer-docs/latest/plugins/graphql.html#custom-configuration-for-resolvers) documentation).
+- Both REST and GraphQL contexts have access to the `is`, `type`, and `state`
+- The REST context have access to the destructed Koa context
+- The GraphQL context has access to `parent`, `args`, `context` (which is the GraphQL Context), `info` & `http` (which contains the Koa context) (see [GraphQL customization](http://localhost:8080/developer-docs/latest/plugins/graphql.html#custom-configuration-for-resolvers) documentation).
 
 :::
 
@@ -59,7 +60,7 @@ To update this policy to v4, replace it with the following code:
   
   ```jsx
   module.exports = (policyContext, config, { strapi }) => {
-    if (context.state.user) { // if a session is open
+    if (policyContext.state.user) { // if a session is open
       // go to next policy or reach the controller's action
       return true;
     }
@@ -68,7 +69,7 @@ To update this policy to v4, replace it with the following code:
   };
   ```
 
-The v4 policy uses the `context.state` variable, accessible to both REST and GraphQL.
+The v4 policy uses the `policyContext.state` variable, accessible to both REST and GraphQL.
 
 :::
 
@@ -99,13 +100,25 @@ module.exports = (policyContext, config, { strapi }) => {
 
 :::
 
+::: details Example: Authorize only for a specific entity (REST)
+
+The following policy code can be used to authorize only targeting a specific entity:
+
+```jsx
+module.exports = (policyContext, config, { strapi }) => {
+  return policyContext.params.id === 5;
+};
+```
+
+:::
+
 ::: details Example: Authorize field resolvers only for a specific entity (GraphQL)
 
 The following policy code can be used to authorize field resolvers only targeting a specific entity:
 
 ```jsx
 module.exports = (policyContext, config, { strapi }) => {
-  return typeof context.parent === 'object' && context.parent.id === 5;
+  return typeof policyContext.parent === 'object' && policyContext.parent.id === 5;
 };
 ```
 
