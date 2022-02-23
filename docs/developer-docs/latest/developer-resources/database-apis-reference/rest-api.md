@@ -34,6 +34,8 @@ Use `qs` directly to generate complex queries instead of creating them manually.
 :::details Example using qs
 
 ```js
+// GET /api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
+
 const qs = require('qs');
 const query = qs.stringify({
   sort: ['title:asc'],
@@ -55,7 +57,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/books?${query}`);
-// GET /api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
 ```
 
 :::

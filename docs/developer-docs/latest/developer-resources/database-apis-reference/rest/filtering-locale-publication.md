@@ -48,6 +48,8 @@ The following operators are available:
 ::::api-call
 :::request Example request
 
+`GET /api/users?filters[username][$eq]=John`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -61,7 +63,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/users?${query}`);
-// GET /api/users?filters[username][$eq]=John
 ```
 
 :::
@@ -91,6 +92,8 @@ await request(`/api/users?${query}`);
 ::::api-call
 :::request Example request
 
+`GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -104,7 +107,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/restaurants?${query}`);
-// GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8
 ```
 
 :::
@@ -156,6 +158,8 @@ Complex filtering is combining multiple filters utilizing advanced methods such 
 ::::api-call
 :::request Example request: Find books with 2 possible dates & a specific author
 
+`GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[author][name][$eq]=Kai%20doe`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -183,7 +187,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/books?${query}`);
-// GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[author][name][$eq]=Kai%20doe
 ```
 
 :::
@@ -226,6 +229,8 @@ Deep filtering is filtering on a relation's fields.
 ::::api-call
 :::request Example request: Find restaurants owned by a chef who belongs to a 5-star restaurant
 
+`GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -243,7 +248,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/restaurants?${query}`);
-// GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5
 ```
 
 :::
@@ -317,6 +321,8 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 ::::api-call
 :::request Example request: Get both published and draft articles
 
+`GET /api/articles?publicationState=preview`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -326,7 +332,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?publicationState=preview
 ```
 
 :::
@@ -369,6 +374,8 @@ To retrieve only draft entries, combine the `preview` publication state and the 
 :::details Example using qs
 
 ```js
+// GET /api/articles?publicationState=preview&filters[publishedAt][$null]=true
+
 const qs = require('qs');
 const query = qs.stringify({
   publicationState: 'preview',
@@ -382,7 +389,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?publicationState=preview&filters[publishedAt][$null]=true
 ```
 
 :::

@@ -27,6 +27,8 @@ Field selection does not work on relational, media, component, or dynamic zone f
 ::::api-call
 :::request Example request: Select only title & body fields
 
+`GET /api/users?fields[0]=title&fields[1]=body`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -36,7 +38,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/users?${query}`);
-// GET /api/users?fields[0]=title&fields[1]=body
 ```
 
 :::
@@ -102,6 +103,8 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate=%2A`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -111,7 +114,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate=%2A
 ```
 
 :::
@@ -166,6 +168,8 @@ To populate only specific relations one-level deep, use the relation name (e.g. 
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate[0]=categories`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -175,7 +179,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate[0]=categories
 ```
 
 :::
@@ -220,6 +223,8 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate[author][populate][0]=company`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -233,7 +238,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate[author][populate][0]=company
 ```
 
 :::
@@ -287,6 +291,8 @@ The `population` parameter is used to explicitly define which Dynamic zones, com
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate[0]=seoData&populate[1]=seoData.sharedImage&populate[2]=seoData.sharedImage.media`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -300,7 +306,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate[0]=seoData&populate[1]=seoData.sharedImage&populate[2]=seoData.sharedImage.media
 ```
 
 :::
@@ -354,6 +359,8 @@ await request(`/api/articles?${query}`);
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate[testDZ][populate]=%2A`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -367,7 +374,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate[testDZ][populate]=%2A
 ```
 
 :::
@@ -419,6 +425,8 @@ By utilizing the `population` operator it's possible to combine other operators 
 ::::api-call
 :::request Example request
 
+`GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -433,7 +441,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
 ```
 
 :::
@@ -474,6 +481,8 @@ await request(`/api/articles?${query}`);
 ::::api-call
 :::request Example request
 
+`GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -492,7 +501,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
 ```
 
 :::

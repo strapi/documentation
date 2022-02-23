@@ -18,6 +18,8 @@ Queries can accept a `sort` parameter that allows sorting on one or multiple fie
 ::::api-call
 :::request Example request
 
+`GET /api/articles?sort[0]=title&sort[1]=slug`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -27,7 +29,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?sort[0]=title&sort[1]=slug
 ```
 
 :::
@@ -70,6 +71,8 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 ::::api-call
 :::request Example request
 
+`GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -79,7 +82,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc
 ```
 
 :::
@@ -139,6 +141,8 @@ To paginate results by page, use the following parameters:
 :::: api-call
 ::: request Example request: Select only 10 entries on page 1
 
+`GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -151,7 +155,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?pagination[page]=1&pagination[pageSize]=10
 ```
 
 :::
@@ -193,6 +196,8 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 :::: api-call
 ::: request Example request
 
+`GET /api/articles?pagination[start]=0&pagination[limit]=10`
+
 ```js
 const qs = require('qs');
 const query = qs.stringify({
@@ -205,7 +210,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?pagination[start]=0&pagination[limit]=10
 ```
 
 :::
