@@ -35,6 +35,7 @@ The following topics are not extensively covered in this code migration guide, b
 * a new [file structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) for the project,
 * fully rewritten [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs,
 * the new [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) APIs,
+* the [Strapi Design System](https://design-system.strapi.io/) which is used to build the new user interface of Strapi v4,
 * and new [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md), including splitting the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) configurations and adding the support for [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md).
 :::
 

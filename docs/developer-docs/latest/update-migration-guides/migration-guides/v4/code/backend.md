@@ -4,8 +4,6 @@ description: Migrate the back end of a Strapi application from v3.6.x to v4.0.x 
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.html
 ---
 
-<!-- TODO: update SEO -->
-
 # v4 code migration: Back end overview
 
 This back-end code migration overview is part of the [v4 code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md).
@@ -29,5 +27,7 @@ Optionally, depending on your usage of these features in Strapi v3, you might al
 * [GraphQL resolvers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md)
 
 :::note
-The dedicated short guides listed in this back-end code migration guide are not exhaustive resources for the v4 back-end customization features, which are described in the [back-end customization](/developer-docs/latest/development/backend-customization.md) documentation.
+The dedicated short guides listed in this back end code migration guide are not exhaustive resources for the v4 back end customization features, which are described in the [back end customization](/developer-docs/latest/development/backend-customization.md) documentation.
 :::
+
+Once the back end of Strapi has been migrated to v4, you can proceed to migrating the [front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md).
