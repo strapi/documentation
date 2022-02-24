@@ -85,11 +85,11 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 ### Edit view display
 
 1. In the edit view of your content-type, click on the **Configure the view** button.
-2. In the View area, define what fields to display in the list view table, and in what order:
+2. In the View area, define what fields to display in the list view table, in what order and what size:
    - Click the add button ![Add icon](../assets/icons/add_icon.svg) to add a new field.
    - Click the delete button ![Clear icon](../assets/icons/clear.svg) to remove a field.
    - Click the reorder button ![Drag icon](../assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](../assets/icons/edit.svg) to access its available own settings:
+3. Click the edit button ![Edit icon](../assets/icons/edit.svg) of a field to access its available settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
@@ -97,6 +97,7 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 | Description     | Write a description for the field, to help other administrators fill it properly.         |
 | Placeholder     | Write the placeholder that should be displayed by default in the field.                   |
 | Editable field  | Click on **ON** or **OFF** to able or disable the edition of the field by administrators. |
+| Size            | Select the size in which the field should be displayed in the Content Manager. Note that this setting is neither available for JSON and Rich Text fields, nor dynamic zones and components. |
 
 4. Click on the **Save** button.
 

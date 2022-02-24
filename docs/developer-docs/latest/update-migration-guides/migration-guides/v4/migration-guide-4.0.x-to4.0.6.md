@@ -4,25 +4,29 @@ description: Learn how you can migrate your Strapi application from 4.0.5 to 4.0
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to4.0.6.html
 ---
 
-# Migration guide from 4.0.5 to 4.0.6
+# v4.0.x to v4.0.6 migration guide
 
-**Make sure your server is not running until the end of the migration**
+The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The upgrade is required for the [Users & Permissions providers](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections: 
+  - upgrading the application dependencies
+  - migrating the breaking changes to the middleware
+  - reinitializing the application
 
-:::warning
-If you are using **extensions** to create custom code or modifying existing code, you will need to update your code and compare your version to the new changes on the repository.
-<br>
-Not updating your **extensions** can break your app in unexpected ways that we cannot predict.
+
+:::caution
+ [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code, will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
-## Migration
 
-### 1. Update the application dependencies
+### Upgrading the application dependencies
 
-First, update the application dependencies as usual by following the basic [version update guide](../../update-version.md).
 
-### 2. Add session middleware
+!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/update-dependencies-snippet.md)!!!
 
-In order for the the Users & Permissions providers to function properly the session middleware is required. To enable this middleware you will need to add it to your `middlewares.js` config file:
+
+
+### Fixing the breaking changes
+
+1. Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`: 
 
 ```jsx
 // path: ./config/middlewares.js
@@ -41,10 +45,20 @@ module.exports = [
 ];
 ```
 
-### 3. Configure session middleware
 
-The session middleware requires some keys to secure the cookies and encrypt data, for more information on how this works please see [koa-session](https://github.com/koajs/session/blob/master/Readme.md). In order to properly configure the middleware you will need to add these key settings to your `server.js` config file:
+2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information).
+ 
 
+```jsx
+// path: ./config/server.js
+
+  // ...
+  app: {
+    keys: env.array("APP_KEYS", ["testKey1", "testKey2"]),
+  },
+// ...
+```
+::: details Example of the updated file
 ```jsx
 // path: ./config/server.js
 
@@ -57,11 +71,12 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+:::
 
 :::: warning
-It is not recommended to statically set these keys while in a deployed environment, using either a `.env` file or environment variables is recommended.
+It is a security risk to expose static session middleware keys in a deployed environment. An `.env` file or environment variables should be used instead.
 
-::: details Example: Sessions keys in `.env` file
+::: details Example: sessions keys in .env file
 
 ```js
 APP_KEYS=[someSecret, anotherSecret, additionalSecrets]
@@ -75,4 +90,6 @@ APP_KEYS=someSecret,anotherSecret,additionalSecrets
 ::::
 
 
-🎉 Congrats, your application has been migrated!
+!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Rebuild-and-start-snippet.md)!!!
+
+
