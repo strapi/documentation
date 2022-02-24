@@ -123,3 +123,7 @@ module.exports = (context, config, { strapi }) => {
 ```
 
 :::
+
+::: strapi Next steps
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md) and [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md).
+:::
