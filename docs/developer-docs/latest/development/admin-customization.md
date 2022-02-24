@@ -79,9 +79,15 @@ module.exports = ({ env }) => ({
 
 ### Configuration options
 
+::: prerequisites
+Before configuring any admin panel customization option, make sure to:
+- rename the default `app.example.js` file into `app.js`,
+- and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/developer-docs/latest/development/plugins-extension.md)).
+:::
+
 The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
 
-Any file used by the `config` object (e.g. a custom logo) should be placed in the `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
+Any file used by the `config` object (e.g. a custom logo) should be placed in a `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
 
 The `config` object accepts the following parameters:
 
@@ -287,6 +293,10 @@ module.exports = {
 ```
 
 ### Webpack configuration
+
+::: prerequisites
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.js` before customizing webpack.
+:::
 
 In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
 
