@@ -162,6 +162,10 @@ const sidebar = {
                   '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                   'Render',
                 ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/microtica.md',
+                  'Microtica',
+                ],
               ],
               sidebarDepth: 2,
             },

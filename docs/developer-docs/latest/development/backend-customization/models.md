@@ -554,14 +554,14 @@ Each event listener is called sequentially. They can be synchronous or asynchron
 // ./src/api/[api-name]/content-types/restaurant/lifecycles.js
 
 module.exports = {
-  beforeCreate(event: Event) {
+  beforeCreate(event) {
     const { data, where, select, populate } = event.params;
 
     // let's do a 20% discount everytime
     event.params.data.price = event.params.data.price * 0.8;
   },
 
-  afterCreate(event: Event) {
+  afterCreate(event) {
     const { result, params } = event;
 
     // do something to the result;
@@ -578,13 +578,13 @@ Using the database layer API, it's also possible to register a subscriber and li
 strapi.db.lifecycles.subscribe({
   models: [], // optional;
 
-  beforeCreate(event: Event) {
+  beforeCreate(event) {
     const { data, where, select, populate } = event.params;
 
     event.state = 'doStuffAfterWards';
   },
 
-  afterCreate(event: Event) {
+  afterCreate(event) {
     if (event.state === 'doStuffAfterWards') {
     }
 
