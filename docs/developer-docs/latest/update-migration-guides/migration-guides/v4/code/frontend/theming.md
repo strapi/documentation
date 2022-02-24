@@ -40,5 +40,3 @@ export default {
 ::: tip Customization tips
 The [Strapi Design System](https://design-system.strapi.io/) is fully customizable.
 :::
-
-<!-- TODO: add conclusion or next steps -->

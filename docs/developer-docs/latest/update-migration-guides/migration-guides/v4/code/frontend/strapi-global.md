@@ -126,6 +126,3 @@ The `@strapi/helper-plugin` module provided with Strapi v4 features a [Storybook
 ::: tip
 When running the Storybook instance provided with the `@strapi/helper-plugin`, the documentation for the `useNotification` hook can be found at [http://localhost:6006/?path=/story/hooks-usenotification--page](http://localhost:6006/?path=/story/hooks-usenotification--page).
 :::
-
-
-<!-- TODO: add conclusion or next steps -->

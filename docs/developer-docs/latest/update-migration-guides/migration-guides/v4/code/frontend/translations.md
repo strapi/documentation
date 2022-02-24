@@ -46,5 +46,3 @@ export default {
 };
 
 ```
-
-<!-- TODO: add conclusion or next steps -->

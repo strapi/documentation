@@ -1,10 +1,8 @@
 ---
 title: v4 code migration - Services - Strapi Developer Docs
 description: Migrate services of a Strapi application from v3.6.x to v4.0.x
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 code migration: Updating services
 

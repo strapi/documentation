@@ -4,8 +4,6 @@ description: Migrate webpack configuration from Strapi v3.6.x to v4.0.x with ste
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html
 ---
 
-<!-- TODO: update SEO -->
-
 # v4 code migration: Updating the webpack configuration
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
