@@ -40,9 +40,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 3. After editing the file run either `yarn install` or `npm install` to install the specified version.
 
 ::: tip
-If the operation does not work due to a permissions error try `sudo yarn install` or `sudo npm install` instead. If the operation is still not successful, try removing the `yarn.lock` or `package-lock.json` files. Finally, remove the `node_modules` folder and try again.
-:::
-
+If the operation does not work try removing the `yarn.lock` or `package-lock.json` files. If the operation is still not successful, remove the `node_modules` folder and try again.
 :::
 
 ## Reinitializing the Strapi application
