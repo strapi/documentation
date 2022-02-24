@@ -1,10 +1,8 @@
 ---
 title: v4 code migration - Policies - Strapi Developer Docs
 description: Migrate policies from Strapi v3.6.x to Strapi v4.0.x with step-by-step instructions
-canonicalUrl:  Used by Google to index page, should start with https://docs.strapi.io/ — delete this comment when done [paste final URL here]
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html
 ---
-
-<!-- TODO: update SEO -->
 
 # v4 code migration: Updating policies
 
@@ -12,7 +10,7 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 
 ::: strapi v3/v4 comparison
 
-In both Strapi v3 and v4, policies handle authorization. Policies can be global or scoped (i.e. applied to a specific API or plugin) and can be applied to REST controller's actions or to GraphQL resolvers.
+In both Strapi v3 and v4, policies handle authorization. Policies can be global or scoped (i.e. applied to a specific API or plugin) and can be applied to REST controllers actions or to GraphQL resolvers.
 
 In Strapi v3, policies are Koa middlewares accepting or rejecting requests based on the REST context. As middlewares, v3 policies always receive a Koa context, either coming from the REST request or built from the GraphQL resolver arguments.
 
@@ -31,19 +29,10 @@ To migrate a policy to Strapi v4:
 
 2. (_optional_) Update the policy code. Strapi v4 policies are functions returning `true` or `undefined` to authorize the request.
 
-::: note
-In Strapi v4, depending on whether the policy is applied to REST or GraphQL, the function has access to different contexts:
-
-- Both REST and GraphQL contexts have access to the `is(type: string): boolean`, `type: string`, and `state: object` attributes.
-- The GraphQL context has access to `parent`, `args`, `context`, `info` & `http` (which contains the Koa context) (see [GraphQL customization](http://localhost:8080/developer-docs/latest/plugins/graphql.html#custom-configuration-for-resolvers) documentation).
-- With REST requests, the controller context is merged with the policy context.
-
-:::
-
 Migrating a policy code depends on the code itself and this migration guide can't cover every existing use case. The following examples cover some common use cases of v4 policies working with both REST and GraphQL APIs or specifically with one of these APIs. These examples can be used for global, API-related, or plugin-related policies.
 
 ::: details Example: Authorize only logged in users (REST and GraphQL)
-    
+
 The following v3 policy authorizes only logged in users:
   
   ```jsx
@@ -122,6 +111,14 @@ module.exports = (context, config, { strapi }) => {
 };
 ```
 
+:::
+
+::: note NOTES
+In Strapi v4, depending on whether the policy is applied to REST or GraphQL, the function has access to different contexts:
+
+- Both REST and GraphQL contexts have access to the `is(type: string): boolean`, `type: string`, and `state: object` attributes.
+- The GraphQL context has access to `parent`, `args`, `context`, `info` & `http` (which contains the Koa context) (see [GraphQL customization](http://localhost:8080/developer-docs/latest/plugins/graphql.html#custom-configuration-for-resolvers) documentation).
+- With REST requests, the controller context is merged with the policy context.
 :::
 
 ::: strapi Next steps

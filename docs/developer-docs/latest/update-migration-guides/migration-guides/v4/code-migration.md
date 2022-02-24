@@ -8,7 +8,7 @@ canonicalUrl:  Used by Google to index page, should start with https://docs.stra
 
 # v4 code migration guide
 
-Strapi v4 introduces breaking changes that requires manually updating large portions of the codebase of an existing Strapi project.
+Strapi v4 introduces breaking changes that require manually updating the codebase of an existing Strapi project.
 
 This guide covers migrating both [the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) and [the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md) of a Strapi v3.6.x application to Strapi 4.0.x. and is built around small independent topics. 
 
@@ -36,9 +36,9 @@ The following topics are not extensively covered in this code migration guide, b
 * fully rewritten [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs,
 * the new [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) APIs,
 * the [Strapi Design System](https://design-system.strapi.io/) which is used to build the new user interface of Strapi v4,
-* and new [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md), including splitting the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) configurations and adding the support for [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md).
+* and new [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md), including splitting the [server](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin panel](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) configurations and adding support for [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md).
 :::
 
-::: strapi Need more help
+::: strapi Need more help?
 Feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::

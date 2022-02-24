@@ -6,12 +6,12 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4 code migration: Back end overview
 
-This back-end code migration overview is part of the [v4 code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md).
+This back end code migration overview is part of the [v4 code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md).
 
 Most of the back end of Strapi has been entirely rewritten in Strapi v4:
 
 * The core features of a Strapi v4 server (routes, policies, controllers, and services) use factory functions. The new files can be easily created with the [interactive `strapi generate` CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
-* There is a clear distinction in Strapi v4 between policies and middlewares, which leads to the introduction of route middlewares.
+* There is a clear distinction in Strapi v4 between [policies](/developer-docs/latest/development/backend-customization/policies.md) and [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md), which leads to the introduction of [route middlewares](/developer-docs/latest/development/backend-customization/routes.md#middlewares).
 
 Migrating the back end of a Strapi application to v4 requires updating all of these core features:
 

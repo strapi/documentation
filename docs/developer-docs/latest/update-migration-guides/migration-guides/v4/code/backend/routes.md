@@ -16,7 +16,7 @@ In Strapi v3, routes are defined in JSON files that export an object with a `rou
 In Strapi v4, routes are defined in JavaScript files, called router files. 2 types of v4 router files coexist:
 
 * core router files export the result of a call to the [`createCoreRouter` factory function](/developer-docs/latest/development/backend-customization/routes.md#configuring-core-routers) introduced in Strapi v4
-* [custom router files](/developer-docs/latest/development/backend-customization/routes.md#creating-custom-routers) have a structure similar to Strapi v3.
+* [custom router files](/developer-docs/latest/development/backend-customization/routes.md#creating-custom-routers) have a structure similar to Strapi v3 routes.
 :::
 
 Migrating [routes](/developer-docs/latest/development/backend-customization/routes.md) depends on whether you want to [configure core routers](#migrating-core-routers) or [migrate custom routers](#migrating-custom-routers).

@@ -9,7 +9,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In Strapi v3, policies are also used as route middlewares to make changes to the request or response payload or to wrap a controller with extra functionalities.
+In Strapi v3, policies are also used as route middlewares to make changes to the request or response payload or to wrap a controller with extra logic.
 
 In Strapi v4, there is a clear distinction between [policies](/developer-docs/latest/development/backend-customization/policies.md#implementation), which are used for authorization and validation, and [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md), which are used for extra logic, wrapping, and customization.
 :::

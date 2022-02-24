@@ -32,7 +32,7 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 ## v3 to v4 migration guide
 
 ::: callout 🚧 Upcoming migration guides
-This section is still a work in progress and will continue to be updated and improved. The code and data migration guides will be released in March 2022. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
+This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
 Migrating from v3.6.9 to v4.0.x revolves around 3 topics:

@@ -13,7 +13,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 ::: strapi v3/v4 comparison
 In both Strapi v3 and v4, the webpack configuration is customizable.
 
-In Strapi v4, webpack v5 is used, and only `./src/admin/app.js` and the files under the `./src/admin/extensions` folder are being watched by the webpack dev server (see [admin panel customization](/developer-docs/latest/development/admin-customization.md#webpack-configuration) documentation).
+In Strapi v4, [webpack v5](https://webpack.js.org/migrate/5/) is used, and only `./src/admin/app.js` and the files under the `./src/admin/extensions` folder are being watched by the webpack dev server (see [admin panel customization](/developer-docs/latest/development/admin-customization.md#webpack-configuration) documentation).
 
 :::
 
