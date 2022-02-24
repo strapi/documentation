@@ -1,14 +1,14 @@
 ---
 title: Field Registering - Strapi Developer Docs
-description: Learn in this guide how you can create a new Field for your administration panel.
+description: Learn in this guide how you can create a new Field for your admin panel.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/registering-a-field-in-admin.html
 ---
 
-# Creating a new Field in the administration panel
+# Creating a new WYSIWYG field in the admin panel
 
-In this guide we will see how you can create a new Field for your administration panel.
+In this guide we will see how you can create a new field for the admin panel.
 
-For this example, we will see how to change the WYSIWYG with [CKEditor](https://ckeditor.com/ckeditor-5/) in the Content Manager plugin by creating a new plugin that will add a new field in your application.
+For this example, we will replace the default WYSIWYG with [CKEditor](https://ckeditor.com/ckeditor-5/) in the Content Manager by creating a new plugin that will add a new field in your application.
 
 ## Setting up the plugin
 
@@ -63,6 +63,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
     cd my-app
     npm run strapi generate
     ```
+
     Choose "plugin" from the list, press Enter and name the plugin `wysiwyg`.
 
     :::
@@ -126,7 +127,7 @@ For this example, we will see how to change the WYSIWYG with [CKEditor](https://
 Launching the Strapi server in watch mode without creating a user account first will open `localhost:1337` with a JSON format error. Creating a user on `localhost:8081` prevents this alert.
 :::
 
-Once this step is over all we need to do is to create our new WYSIWYG, which will replace the default one in the Content Manager plugin.
+We now need to create our new WYSIWYG, which will replace the default one in the Content Manager.
 
 ## Creating the WYSIWYG
 
@@ -184,6 +185,7 @@ MediaLib.propTypes = {
 
 export default MediaLib;
 ```
+
 :::
 
 ::: details Example of an Editor component using CKEditor as the WYSIWYG editor:
