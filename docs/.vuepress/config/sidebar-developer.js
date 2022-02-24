@@ -452,6 +452,7 @@ const developer = [
               },
               {
                 title: 'Code migration guide',
+                initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html',
                 collapsable: true,
                 children: [
@@ -469,7 +470,18 @@ const developer = [
                       ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html', 'GraphQL resolvers'],
                     ]
                   },
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md', 'Updating the front end'],
+                  {
+                    title: 'Updating the front end',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html',
+                    collapsable: true,
+                    children: [
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html', 'WYSIWYG customization'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html', 'Translations'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html', 'Webpack configuration'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html', 'Theme customizations'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html', 'Strapi global variable calls'],
+                    ]
+                  }
                 ]
               }
               // ['', 'Data migration guide'],
