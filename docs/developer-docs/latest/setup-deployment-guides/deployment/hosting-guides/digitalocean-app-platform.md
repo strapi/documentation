@@ -29,29 +29,25 @@ To deploy your Strapi app, you will need to create a database configuration file
 You will configure a database for production. With the setup below, you will only need to set an environment variable for the `DATABASE_URL` to connect to your PostgreSQL database. First, install the [pg-connection-string](https://www.npmjs.com/package/pg-connection-string) package (with `npm install pg-connection-string` or `yarn add pg-connection-string`) then add the following to `config/env/production/database.js`:
 
 ```javascript
-const parse = require('pg-connection-string').parse;
-const config = parse(process.env.DATABASE_URL);
+const parse = require('pg-connection-string').parse
+const config = parse(process.env.DATABASE_URL)
 
-module.exports = () => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
-        host: config.host,
-        port: config.port,
-        database: config.database,
-        username: config.user,
-        password: config.password,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: config.host,
+      port: config.port,
+      database: config.database,
+      user: config.user,
+      password: config.password,
+      ssl: {
+        rejectUnauthorized: false,
       },
-      options: {},
     },
+    debug: false,
   },
-});
+})
 ```
 
 Your application is now ready to deploy to DigitalOcean App Platform.
