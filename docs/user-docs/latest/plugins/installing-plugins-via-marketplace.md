@@ -4,26 +4,44 @@ description: Instructions to install new plugins in a Strapi application via the
 canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html
 ---
 
-# Installing plugins via the Marketplace
+# Marketplace plugins
 
-::: callout 🚧 The Marketplace is currently not available for v4. It will be back soon, stay tuned!
+<!--::: callout 🚧 The Marketplace is currently not available for v4. It will be back soon, stay tuned!
 In the meantime, plugins can be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
-:::
+::: -->
 
-The Marketplace is a section of the admin panel that lists all plugins that can be installed in a Strapi application. The Marketplace is accessible from ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ in the main navigation of the admin panel.
+The Marketplace contains optional plugins built to customize and extend the default Strapi installation. Plugins are listed the in-app Marketplace, which is located in the admin panel, noted by the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_.Plugins are also discoverable through the [web Marketplace](https://market.strapi.io/). Marketplace plugins are installed using the CLI (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
+
+## The in-app Marketplace interface
+
+![The Marketplace interface](../assets/plugins/marketplace-v4.png)
+
+The Marketplace displays the available plugins on individual cards containing:
+
+- the plugin name
+- the plugin description
+- a _learn more_ link for additional information, including detailed implimentation instructions.
+- a button to copy the install command
+- a badge indicating if the plugin is ![made by Strapi]((../assets/icons/icon_official.svg)) or validated by Strapi
+
+The Marketplace plugins are searchable, and can be filtered by types, plugins, made by Strapi, and Strapi validated.  
+<!-- add icons for badges in-line with the bullet point above -->
+
+## Installing Marketplace plugins
+
+To install a new plugin via the Marketplace:
+
+1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
+2. Choose an available plugin and click on the `Copy install command` button.
+3. Switch to your CLI application and navigate to the Strapi application directory.
+4. Paste the copied install command and press enter/return.
+5. Follow any plugin-specific implimentation instructions.
+
+## Uninstalling Marketplace plugins
 
 <!--
 
-::: note
-Plugins can also be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
-:::
-
-![Interface of the Marketplace](../assets/plugins/marketplace.png)
-
-The Marketplace displays each available plugin in a box, which contains:
-- the name of the plugin,
-- the description of the plugin,
-- indications on the current status of the plugin:
+indications on the current status of the plugin:
    - "Compatible with your app": indicates that the plugin is not installed yet but can be installed on your Strapi application
    - "Already installed": indicates that the plugin is already installed and available in your Strapi application
 
