@@ -453,9 +453,17 @@ const developer = [
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md', 'Migrating the front end'],
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md', 'Enabling a plugin'],
                 ]
-              }
+              },
               // ['', 'Code migration guide'],
-              // ['', 'Data migration guide'],
+              {
+                title: 'Data migration guide',
+                path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html',
+                collapsable: true,
+                children: [
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4'],
+                  // ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v4'],
+                ]
+              }
             ]
           },
           ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-stable-guides', 'v3 stable'],
