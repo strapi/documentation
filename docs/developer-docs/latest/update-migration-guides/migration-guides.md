@@ -39,7 +39,7 @@ Migrating from v3.6.9 to v4.0.x revolves around 3 topics:
 
 - The [plugin migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.md) helps migrating a plugin to v4.
 - The code migration guide _(coming soon!)_ helps migrating the built-in back-end and front-end code of the Strapi application to v4.
-- The data migration guide _(coming soon!)_ helps migrating the database content to v4.
+- The [data migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.md) helps migrating the database content to v4.
 
 ## v3 stable migration guides
 
