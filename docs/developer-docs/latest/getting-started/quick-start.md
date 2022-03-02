@@ -135,7 +135,7 @@ By completing the form, you create your own account. Once done, you become the f
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![Admin panel screenshot: dashboard](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
+![Admin panel screenshot: dashboard](../assets/quick-start-guide/qsg-handson-part1-01-admin_panel_2.png)
 
 ::: callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
@@ -172,7 +172,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 9. Type `description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
-![GIF: Create Restaurant collection type in Content-type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
+![GIF: Create Restaurant collection type in Content-type Builder](../assets/quick-start-guide/qsg-handson-restaurant_2.gif)
 
 Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
 

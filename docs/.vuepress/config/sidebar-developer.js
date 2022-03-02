@@ -157,6 +157,10 @@ const developer = [
                 '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                 'Render',
               ],
+              [
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/microtica.md',
+                'Microtica',
+              ],
             ],
             sidebarDepth: 2,
           },
@@ -455,7 +459,14 @@ const developer = [
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html',
                 collapsable: true,
                 children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md', 'Updating the back end'],
+                  {
+                    title: 'Updating the back end',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md',
+                    collapsable: true,
+                    children: [
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md', 'GraphQL resolvers'],
+                    ]
+                  },
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md', 'Updating the front end'],
                 ]
               }
@@ -486,7 +497,7 @@ const developer = [
       // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
       [
         '/developer-docs/latest/guides/registering-a-field-in-admin',
-        'Registering a new field in the admin panel',
+        'New WYSIWYG field in admin panel',
       ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
       ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],

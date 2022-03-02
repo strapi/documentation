@@ -387,7 +387,7 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
 
 ```js
-//path: ./config/plugins.js
+// path: ./config/plugins.js
 
 module.exports = ({ env })=>({
   upload: {
@@ -411,7 +411,7 @@ When using community providers, pass the full package name to the `provider` key
 :::
 
 ```js
-//path: ./config/plugins.js
+// path: ./config/plugins.js
 
 module.exports = ({ env }) => ({
   // ...
@@ -448,7 +448,7 @@ You can set a specific configuration in the `./config/env/{env}/plugins.js` conf
 
 You can create a Node.js module to implement a custom provider. Read the official documentation [here](https://docs.npmjs.com/creating-node-js-modules).
 
-Your provider need to export the following interface:
+Your provider needs to export the following interface:
 
 ```js
 module.exports = {
@@ -458,6 +458,11 @@ module.exports = {
     return {
       upload(file) {
         // upload the file in the provider
+        // file content is accessible by `file.buffer`
+      },
+      uploadStream(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.stream`
       },
       delete(file) {
         // delete the file in the provider
@@ -467,27 +472,48 @@ module.exports = {
 };
 ```
 
+:::tip
+For performance reasons, the upload plugin will only use the `uploadStream` function if it exists, otherwise it will fallback on the `upload` function.
+:::
+
 You can then publish it to make it available to the community.
 
 ### Create a local provider
 
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
-1. Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
+1. Create a `./providers/upload-{provider-name}` folder in your root application folder.
 2. Create your provider as explained in the [documentation](#create-providers) above.
-3. Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
+3. Update your `package.json` to link your `upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider:
 
 ```json
-//path: ./package.json
+// path: ./package.json
 
 {
   ...
   "dependencies": {
     ...
-    "strapi-provider-upload-{provider-name}": "file:providers/strapi-provider-upload-{provider-name}"
+    "@strapi/provider-upload-{provider-name}": "file:providers/upload-{provider-name}"
     ...
   }
 }
 ```
 
-4. Finally, run `yarn install` or `npm install` to install your new custom provider.
+4. Update the Upload plugin configuration:
+
+```js
+// path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: '{provider-name}',
+      providerOptions: {},
+    },
+  },
+  // ...
+});
+```
+
+5. Run `yarn install` or `npm install` to install your new custom provider.

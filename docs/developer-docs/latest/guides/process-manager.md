@@ -9,11 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/process-manage
 
 !!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
-In this guide we will see how you can start a Strapi application using a process manager.
-
-::: tip
-In this example we will use [PM2](https://pm2.keymetrics.io/).
-:::
+In this guide we will see how you can start a Strapi application using a process manager. We will use [PM2](https://pm2.keymetrics.io/) in this example.
 
 ## Install PM2
 
@@ -21,21 +17,21 @@ PM2 allows you to keep your Strapi project alive and to reload it without downti
 
 You will install PM2 globally
 
-:::: tabs card
+<code-group>
 
-::: tab yarn
+<code-block title="YARN">
 ```sh
 yarn global add pm2
 ```
-:::
+</code-block>
 
-::: tab npm
+<code-block title="NPM">
 ```sh
 npm install pm2 -g
 ```
-:::
+</code-block>
 
-::::
+</code-group>
 
 ## Basic usage
 
@@ -47,9 +43,9 @@ But here we are facing an issue. In your project you don't have a `.js` file to 
 
 So first let's create a `server.js` file that will let you run the `pm2` command.
 
-**Path —** `./server.js`
-
 ```js
+// path: `./server.js`
+
 const strapi = require('@strapi/strapi');
 strapi().start();
 ```
@@ -58,7 +54,7 @@ Now you will be able to start your server by running `pm2 start server.js`.
 
 ### Starting with strapi command
 
-By default there is two important commands.
+By default there are 2 important commands.
 
 - `yarn develop` to start your project in development mode.
 - `yarn start` to start your app for production.
