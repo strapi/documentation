@@ -459,7 +459,14 @@ const developer = [
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html',
                 collapsable: true,
                 children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md', 'Updating the back end'],
+                  {
+                    title: 'Updating the back end',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md',
+                    collapsable: true,
+                    children: [
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.md', 'GraphQL resolvers'],
+                    ]
+                  },
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md', 'Updating the front end'],
                 ]
               }
