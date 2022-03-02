@@ -60,7 +60,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
     repeatableComponent: {
       fields: ['someAttributeName'],
-      orderBy: ['someAttributeName'],
+      sort: ['someAttributeName'],
       populate: {
         componentRelationA: true,
       },
