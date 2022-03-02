@@ -119,19 +119,14 @@ Once your PR is validated, the Strapi team takes over and make sure your new con
 
 We have various types of documentation that are maintained on their own:
 
-- **developer-docs**
-  - This documentation is tailored for developers and administrators and provide documentation on the technical aspects of Strapi
-- **user-docs**
-  - This documentation is tailored for users and content-creators of Strapi and outline the user interface and usage of Strapi
+- `developer-docs`
+  is tailored for developers and administrators and provide documentation on the technical aspects of Strapi
+- `user-docs`
+  is tailored for users and content-creators of Strapi and outline the user interface and usage of Strapi
 
-We have a few primary branches that are used for different purposes:
+All v4 PRs should target the `main` branch.
+If you wish to update Strapi v3 documentation, target the `v3`.
 
-- **main**
-  - This branch is used to store the current version of the documentation, all PRs should target this branch
-- **docs/\***
-  - This collection of branches is for current work in progress changes, Strapi team members push our changes here to make PRs against the documentation branch
-- **feature/\***
-  - This is a collection of branches used as documentation for features currently in development in the main [strapi/strapi](https://github.com/strapi/strapi) repo
 
 ### Reporting an issue
 
@@ -150,4 +145,5 @@ Before submitting an issue you need to make sure:
   - Questions should be directed at the following resources
     - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
     - Talk with other community members on our [Community Slack](https://slack.strapi.io)
-- Rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed
+
+Please note that rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed.
