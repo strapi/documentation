@@ -124,7 +124,7 @@ const plugins = [
   [
     'vuepress-plugin-container',
     {
-      type: 'column-wrapper',
+      type: 'columns',
       defaultTitle: '',
     },
   ],
@@ -145,7 +145,7 @@ const plugins = [
   [
     'vuepress-plugin-container',
     {
-      type: 'grid-wrapper',
+      type: 'grid',
       defaultTitle: '',
     },
   ],  [
