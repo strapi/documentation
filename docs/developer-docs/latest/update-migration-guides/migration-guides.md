@@ -3,29 +3,29 @@ title: Migrate Guides - Strapi Developer Documentation
 description: All the migration guides for a Strapi application.
 ---
 
-# Migrations guides
+# Migration guides
 
-## Instructions
-
-When upgrading your application you will need to follow every migration guide between your current version and the one you are upgrading to. 
-
-::: tip TIP
-If there is no specific migration guide for your version step(s), you should follow the general [Update Strapi guide](update-version.md).
+:::strapi Looking for the v3 to v4 migration guide?
+The v3 to v4 migration guides are located in the [v4 documentation](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guide)
 :::
 
-**Pay special attention to the [note](update-version.md#extensions) about upgrading if you are using the extensions system.**
+Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order. If there is no specific migration guide between your current version and the latest release follow the [Update Strapi guide](update-version.md).
 
-**Example**
+:::caution
+ [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
+:::
 
-If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to follow the following guides:
+::: tip
 
-1. Migration guide from 3.2.3 to 3.2.4.
-2. Migration guide from 3.2.5 to 3.3.0.
-3. Migration guide from 3.3.x to 3.4.0.
-4. Migration guide from 3.4.x to 3.4.4.
-5. [Update Strapi guide.](update-version.md)
+Upgrading from `3.2.5` to `3.6.9`requires executing all of the guides in the listed order:
 
-## V3 guides
+1. Migration guide from 3.2.5 to 3.3.0.
+2. Migration guide from 3.3.x to 3.4.0.
+3. Migration guide from 3.4.x to 3.4.4.
+4. [Update Strapi guide.](update-version.md)
+:::
+
+## v3 stable guides
 
 - [Migration guide from 3.4.x to 3.4.4](migration-guides/migration-guide-3.4.x-to-3.4.4.md)
 - [Migration guide from 3.3.x to 3.4.0](migration-guides/migration-guide-3.3.x-to-3.4.0.md)
@@ -34,14 +34,15 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 - [Migration guide from 3.1.x to 3.2.3](migration-guides/migration-guide-3.1.x-to-3.2.x.md)
 - [Migration guide from 3.0.x to 3.1.x](migration-guides/migration-guide-3.0.x-to-3.1.x.md)
 
-## Beta guides
+## v3 early stage guides
 
 ::: warning
 
-The Strapi Beta version is no longer supported, you should upgrade to the V3 Stable.
-If you have issues upgrading, it's our general recommendation to create a new project.
+The Strapi alpha ands beta versions are no longer supported, and users should upgrade to v3 stable or v4.
+If there are issues upgrading, it is generally recommended to create a new project.
 
 :::
+::::details v3 beta migration guides
 
 - [Migration guide from beta.20+ to stable](migration-guides/migration-guide-beta.20-to-3.0.0.md)
 - [Migration guide from beta.19.4+ to beta.20](migration-guides/migration-guide-beta.19-to-beta.20.md)
@@ -51,14 +52,9 @@ If you have issues upgrading, it's our general recommendation to create a new pr
 - [Migration guide from beta.16+ to beta.17.4](migration-guides/migration-guide-beta.16-to-beta.17.4.md)
 - [Migration guide from beta.15 to beta.16](migration-guides/migration-guide-beta.15-to-beta.16.md)
 
-## Alpha guides
+::::
 
-::: warning
-
-The Strapi Alpha version is no longer supported, you should upgrade to the V3 Stable.
-If you have issues upgrading, it's our general recommendation to create a new project.
-
-:::
+:::details v3 alpha migration guides
 
 - [Migrating from v1 to v3](migration-guides/migration-guide-1-to-3.md)
 - [Migration guide from alpha.7.4 to alpha.8](migration-guides/migration-guide-alpha.7.4-to-alpha.8.md)
@@ -93,3 +89,4 @@ If you have issues upgrading, it's our general recommendation to create a new pr
 - [Migration guide from alpha.24 to alpha.25](migration-guides/migration-guide-alpha.24-to-alpha.25.md)
 - [Migration guide from alpha.25 to alpha.26](migration-guides/migration-guide-alpha.25-to-alpha.26.md)
 - [Migration guide from alpha.26 to beta](migration-guides/migration-guide-alpha.26-to-beta.md)
+:::
