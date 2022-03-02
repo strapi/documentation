@@ -16,4 +16,5 @@ This guide is not an exhaustive resource for the v4 front end customization feat
 
 Depending on the level of customization applied to the admin panel, migrating the front end of a Strapi application to v4 might require:
 
+- [updating the webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)
 - [updating translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
