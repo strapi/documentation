@@ -33,7 +33,7 @@ const themeConfig = {
             },
             {
               text: 'Developer Resources',
-              link: '/developer-docs/latest/developer-resources/content-api/content-api.html',
+              link: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
             },
           ],
         },
