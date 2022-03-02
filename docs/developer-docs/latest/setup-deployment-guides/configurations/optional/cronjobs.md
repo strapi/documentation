@@ -58,9 +58,10 @@ module.exports = {
 };
 ```
 
-If the cron job is required to run based on a specific timezone, configure it like the following:
+If the cron job requires running on a specific timezone:
 
 ```js
+// path: ./config/cron-tasks.js
 module.exports = {
    /**
    * Cron job with timezone example.
@@ -68,13 +69,15 @@ module.exports = {
    * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
-  '0 0 1 * * 1': {
-    task: ({ strapi }) => { /* Add your own logic here */ },
-    options: {
-      tz: 'Asia/Dhaka',
-    },
-  },
-};
+  
+myJob: {
+     task: ({ strapi }) => {/* Add your own logic here */ },
+     options: {
+        rule: '0 0 1 * * 1',
+        tz: 'Asia/Dhaka',
+     },
+   },
+ };
 ```
 
 ## Enabling cron jobs

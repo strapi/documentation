@@ -227,6 +227,28 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 </div>
 
 <div>
+	<InstallLink link="deployment/hosting-guides/cleavr.html">
+    <template #icon>
+        <svg width="200" height="200" viewBox="0 0 165 119" xmlns="http://www.w3.org/2000/svg">
+            <g id="Artboard-9" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="SVG-Layer" transform="translate(3.000000, 0.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <g id="Group">
+                        <path d="M134.86,25.668 C123.972,17.616 113.18,9.562 103.6,0 L42.4961,61 C52.0761,70.56 60.244,81.534 68.412,92.506 C94.428,74.486 123.872,39.256 134.864,25.668 L134.86,25.668 Z M99.872,14.998 C99.513,14.6425 99.227,14.2193 99.032,13.7527 C98.837,13.2862 98.737,12.7856 98.737,12.28 C98.737,11.7744 98.837,11.2738 99.032,10.8073 C99.227,10.3407 99.513,9.9175 99.872,9.562 C100.229,9.2031 100.653,8.9183 101.121,8.724 C101.588,8.5296 102.089,8.4296 102.595,8.4296 C103.101,8.4296 103.602,8.5296 104.07,8.724 C104.537,8.9183 104.961,9.2031 105.318,9.562 C105.678,9.9175 105.963,10.3407 106.158,10.8073 C106.353,11.2738 106.453,11.7744 106.453,12.28 C106.453,12.7856 106.353,13.2862 106.158,13.7527 C105.963,14.2193 105.678,14.6425 105.318,14.998 C104.574,15.6779 103.603,16.055 102.595,16.055 C101.587,16.055 100.616,15.6779 99.872,14.998 Z" id="Shape"></path>
+                        <path d="M143.836,47.108 C147.97,42.176 147.668,35.23 143.23,31.908 C140.408,29.796 137.684,27.682 134.862,25.668 C123.87,39.358 94.426,74.488 68.41,92.506 C70.426,95.224 69.418,93.512 71.434,96.23 C74.762,100.658 81.72,100.86 86.66,96.734 C106.122,80.226 127.3,66.636 143.836,47.108 Z" id="Shape"></path>
+                        <path d="M11.4123,115.456 L0.6203,104.686 C-0.0857,103.98 -0.0857,102.974 0.6203,102.27 L42.4683,60.496 C43.1723,59.792 44.1823,59.792 44.8883,60.496 L55.6763,71.266 C56.382,71.972 56.382,72.978 55.6763,73.682 L13.8323,115.456 C13.1263,116.16 12.0163,116.16 11.4123,115.456 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </svg>    
+    </template>
+		<template #title>Cleavr</template>
+		<template #description>
+			Step by step guide for deploying to popular VPS providers using Cleavr
+		</template>
+	</InstallLink>
+</div>
+
+<div>
 	<InstallLink link="deployment/hosting-guides/digitalocean-app-platform.html">
 		<template #icon>
 			<svg width="178" height="177" viewBox="0 0 178 177" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd"><path d="M89 176.5v-34.2c36.2 0 64.3-35.9 50.4-74-5.1-14-16.4-25.3-30.5-30.4-38.1-13.8-74 14.2-74 50.4H.8C.8 30.6 56.6-14.4 117.1 4.5c26.4 8.3 47.5 29.3 55.7 55.7 18.9 60.5-26.1 116.3-83.8 116.3z" fill-rule="nonzero"></path><path d="M89.1 142.5H55v-34.1h34.1zM55 168.6H28.9v-26.1H55zM28.9 142.5H7v-21.9h21.9v21.9z"></path></g></svg>
@@ -294,6 +316,18 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 		<template #title>Qovery</template>
 		<template #description>
 			Step by step guide for deploying on Qovery
+		</template>
+	</InstallLink>
+</div>
+
+<div>
+	<InstallLink link="deployment/hosting-guides/microtica.html">
+    <template #icon>
+      <svg width="114" height="113" viewBox="0 0 114 113" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M57.0999 0.200012C25.8999 0.200012 0.699951 25.5 0.699951 56.6C0.699951 87.7 25.9999 113 57.0999 113C88.1999 113 113.5 87.7 113.5 56.6C113.5 25.5 88.2999 0.200012 57.0999 0.200012ZM88.1 83.2C88.1 83.2 87.5 76.6 84.6 71.6C81 65.3 74.5 62.9 69.5 68.6C61.7 77.4 60.7 84.1 51.4 83C41.8 81.9 30.1999 53.8 23.7999 84.2C23.7999 84.2 16.6 76.6 15.7 62.7C15.4 56 17.9999 49 24.7999 45.9C34.9 41.3 40.5999 52.1 46.2999 50.9C54.0999 49.3 50.9 40.1 58 29.9C67.8 15.9 89 27.1 94.2 42C102.6 66.2 88.1 83.2 88.1 83.2Z" fill="white"/></svg>
+    </template>
+		<template #title>Microtica</template>
+		<template #description>
+			Deploy on your AWS account with Microtica
 		</template>
 	</InstallLink>
 </div>

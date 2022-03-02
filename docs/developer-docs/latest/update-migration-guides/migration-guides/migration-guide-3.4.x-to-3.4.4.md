@@ -22,7 +22,7 @@ First, update the application dependencies as usual by following the basic [vers
 
 ### 2. Migrate Instagram Login Config
 
-If you use or plan to use the **Instagram login**, this migration is **required**. Otherwise it is just recommended to do it (in case you use it one day).
+If you use or plan to use the Instagram login, this migration is required. Otherwise it is just recommended to do it (in case you use it one day).
 
 Recently Instagram shutdown their API in favor of a new one (see [https://www.instagram.com/developer/](https://www.instagram.com/developer/)). As a result, the scope Strapi uses for the instagram API has to be updated.
 
@@ -76,4 +76,4 @@ Recently Instagram shutdown their API in favor of a new one (see [https://www.in
 
 
 
-🎉 Congrats, your application has been migrated!
+
