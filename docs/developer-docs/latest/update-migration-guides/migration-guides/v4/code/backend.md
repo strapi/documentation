@@ -17,5 +17,5 @@ This guide is not an exhaustive resource for the v4 back-end customization featu
 Migrating the backend of a Strapi application to v4 requires:
 
 * updating [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md)
-
+* updating [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)
 * updating [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md)
