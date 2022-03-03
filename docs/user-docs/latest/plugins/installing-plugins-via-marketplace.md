@@ -27,11 +27,11 @@ The Marketplace displays all available v4 plugins on individual cards containing
 
 - the plugin name
 - the plugin description
-- a _learn more_ link for additional information, including detailed implimentation instructions.
+- a _learn more_ link for additional information, including detailed implementation instructions.
 - a button to copy the install command
 - a badge indicating if the plugin is _made by Strapi_ ![made by Strapi icon](../assets/icons/official-market.svg) or _verified by Strapi_ ![verified by Strapi icon](../assets/icons/verified-marketplace.svg)
 
-The Marketplace plugins are searchable, and can be filtered by types, plugins, made by Strapi, and Strapi validated.  
+The Marketplace plugins are searchable, and can be filtered by types, plugins, made by Strapi, and verified by Strapi.  
 
 ## Installing Marketplace plugins
 
@@ -40,7 +40,7 @@ To install a new plugin via the Marketplace:
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
 2. Choose an available plugin and click on the `Copy install command` button.
 3. Switch to your CLI application and navigate to the Strapi application directory.
-4. Paste the copied install command and press enter/return.
+4. Paste  and execute the copied install command.
 5. Follow any plugin-specific implimentation instructions.
 
 <!--
