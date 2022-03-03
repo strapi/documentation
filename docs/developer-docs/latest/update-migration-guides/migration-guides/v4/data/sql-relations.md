@@ -15,10 +15,10 @@ This documentation is part of the [SQL migration guide](/developer-docs/latest/u
 
 In Strapi v3, only many-to-many relations (both bidirectional and unidirectional) and polymorphic relations trigger the creation of SQL join tables.
 
-In Strapi v4, every type of relationship between 2 entities triggers the creation of a SQL join table.
+In Strapi v4, every type of [relation](/developer-docs/latest/development/backend-customization/models.md#relations) between 2 entities triggers the creation of a SQL join table.
 :::
 
-Strapi v4 supports the following types of [relations](/developer-docs/latest/development/backend-customization/models.md#relations):
+<!-- Strapi v4 supports the following types of [relations](/developer-docs/latest/development/backend-customization/models.md#relations):
 
 * [one-to-one](#one-to-one-relations-1-1),
 * [one-to-many](#one-to-many-relations-1-n),
@@ -28,23 +28,12 @@ Strapi v4 supports the following types of [relations](/developer-docs/latest/dev
 * [many-way](#many-way-relations-unidirectional-n-n),
 * [polymorphic](#polymorphic-relations),
 * [circular](#circular-relations),
-* and [relations to components](#relations-to-components).
+* and [relations to components](#relations-to-components). -->
 
-This documentation is built around an example using 2 different database entities: `article` and `category`. The example simulates adding a relation to the `article` entity pointing towards the `category` entity. For each relation type supported, the following sections illustrate:
+This documentation is built around an example using 2 different database entities: `article` and `category`. The example simulates adding a relation to the `article` entity pointing towards the `category` entity. For each relation type, the following sections illustrate:
 
-- the definition of [attributes in the schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) of each entity's model
+- the definition of attributes in the [model schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) for each entity's model
 - and the entity relationship diagrams.
-
-::: note NOTES
-
-* A one-to-many relationship means a relationship where one `article` entity has several `category` entities linked to it.
-
-* In schema definitions for [bidirectional relations](/developer-docs/latest/development/backend-customization/models.md#relations):
-
-  * `inversedBy` is defined on the owning side of the relation
-  * `mappedBy` is defined on the inversed side of the relation
-
-:::
 
 ::: details Legend for entity relationship diagrams
 Entity relationship diagrams use the following color code:
@@ -63,7 +52,7 @@ Entity relationship diagrams also use the following abbreviations:
 
 :::
 
-### One-to-one relations (1-1)
+## One-to-one relations (1-1)
 
 :::: grid Model schemas (attributes only):
 ::: grid-top-left Strapi v3
@@ -122,7 +111,7 @@ Entity relationship diagrams also use the following abbreviations:
 
 ::::
 
-**Database structure**:
+**Database structures**:
 
 :::: columns
 ::: column-left Strapi v3
@@ -134,7 +123,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### One-to-many relations (1-N)
+## One-to-many relations (1-N)
 
 :::: grid Model schemas (attributes only):
 ::: grid-top-left Strapi v3
@@ -192,7 +181,7 @@ Entity relationship diagrams also use the following abbreviations:
 
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 
@@ -205,7 +194,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### Many-to-one relations (N-1)
+## Many-to-one relations (N-1)
 
 :::: grid Model schemas (attributes only):
 ::: grid-top-left Strapi v3
@@ -259,7 +248,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 
@@ -272,7 +261,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### Many-to-many relations (N-N)
+## Many-to-many relations (N-N)
 
 :::: grid Model schemas (attributes only):
 ::: grid-top-left Strapi v3
@@ -331,7 +320,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 ::: column-left Strapi v3
@@ -342,7 +331,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### One-way relations (unidirectional N-1)
+## One-way relations (unidirectional N-1)
 
 **Model schemas (attributes only):**
 
@@ -372,7 +361,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 ::: column-left Strapi v3
@@ -383,7 +372,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### Many-way relations (unidirectional N-N)
+## Many-way relations (unidirectional N-N)
 
 **Model schemas (attributes only):**
 :::: columns
@@ -412,7 +401,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 ::: column-left Strapi v3
@@ -423,7 +412,7 @@ Entity relationship diagrams also use the following abbreviations:
 :::
 ::::
 
-### Polymorphic relations
+## Polymorphic relations
 
 ::: strapi v3 / v4 comparison
 In Strapi v3, table names for polymorphic relations end with `_morph` (singular), and the `attribute_type` points to an entity name.
@@ -491,7 +480,7 @@ In Strapi v4, a morph table is created for every entity/morph relation defined i
 Polymorphic relations should always have `“configurable”: false` defined in the attributes of the schema to prevent their modification in the admin panel.
 :::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 ::: column-left Strapi v3
@@ -502,19 +491,19 @@ Polymorphic relations should always have `“configurable”: false` defined in 
 :::
 ::::
 
-### Circular relations
+## Circular relations
 
 Circular relations are relations that point to the same entity (e.g. `article` → `article`). In the schema definitions, circular relations are defined the same way as other relations.
 
 In Strapi v4, `entity_id` and `inv_entity_id` are used to differentiate the relation to the initial entry from the related entry in the SQL join table.
 
-**Database structure example in Strapi v4**:
+**Database structures example in Strapi v4**:
 
 ![v4-circular-many-many.png](./assets/v4-circular-many-many.png)
 
-### Relations to components
+## Relations to components
 
-The schema definition of components is the same in Strapi v3 and Strapi v4.
+The schema definition for components is the same in Strapi v3 and in Strapi v4, but database structures differ.
 
 **Model schemas (attributes only):**
 
@@ -539,7 +528,7 @@ The schema definition of components is the same in Strapi v3 and Strapi v4.
 :::
 ::::
 
-**Database structure:**
+**Database structures:**
 
 :::: columns
 ::: column-left Strapi v3
