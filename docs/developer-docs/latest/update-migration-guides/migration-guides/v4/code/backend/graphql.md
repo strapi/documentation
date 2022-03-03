@@ -13,7 +13,7 @@ sidebarDepth: 3
 
 In Strapi v3, GraphQL resolvers are either automatically bound to REST controllers (from the core API) or customized using the `./api/<api-name>/config/schema.graphql.js` files.
 
-In Strapi v4, [GraphQL](/developer-docs/latest/plugins/graphql.html#graphql) dedicated core resolvers are automatically created for the basic CRUD operations for each API. Additional resolvers can be [customized programmatically](/developer-docs/latest/plugins/graphql.html#customization) using GraphQL’s extension service, accessible using `strapi.plugin(’graphql’).service(’extension’)`.
+In Strapi v4, [GraphQL](/developer-docs/latest/plugins/graphql.md) dedicated core resolvers are automatically created for the basic CRUD operations for each API. Additional resolvers can be [customized programmatically](/developer-docs/latest/plugins/graphql.md#customization) using GraphQL’s extension service, accessible using `strapi.plugin(’graphql’).service(’extension’)`.
 
 :::
 
