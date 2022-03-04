@@ -15,7 +15,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins
 The Marketplace contains optional plugins built to customize the core Strapi installation. The in-app Marketplace is located in the admin panel, indicated by the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. Marketplace plugins are installed using the CLI (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
 
 ::: tip
-The in-app Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverable in the [web Marketplace](https://market.strapi.io/). 
+The in-app Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverable in the [Strapi Market](https://market.strapi.io/).
 
 :::
 
