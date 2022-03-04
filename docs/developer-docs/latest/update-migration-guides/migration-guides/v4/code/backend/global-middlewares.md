@@ -5,3 +5,9 @@ canonicalUrl:
 ---
 
 # v4 code migration: Updating global middlewares
+
+!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
+
+::: strapi v3/v4 comparison
+
+:::
