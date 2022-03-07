@@ -14,11 +14,12 @@ In Strapi v3, Strapi package names were prefixed with `strapi-`.
 Strapi v4 uses scoped packages, prefixed with `@strapi/`.
 :::
 
-To migrate dependencies to Strapi v4, update all references to Strapi packages using the new names found in the following table, and make sure the version number in `package.json` is up-to-date.
+To migrate dependencies to Strapi v4, update references to Strapi packages using the new names found in the following table, and make sure the version number in `package.json` is up-to-date.
 
-Packages with a ✨ emoji before their name have a new name in Strapi v4.
+The table highlights new and removed packages:
 
-Some packages, identified with the ❌  emoji, have been removed from Strapi v4 and all references to these packages should be removed from the code.
+* Packages with a ✨ emoji before their name have a new name in Strapi v4.
+* Some packages, identified with the ❌  emoji, have been removed from Strapi v4 and all references to these packages should be removed from the code.
 
 | Package name in Strapi v3          | Package name in Strapi v4             |
 | ---------------------------------- | ------------------------------------- |
@@ -61,8 +62,7 @@ Some packages, identified with the ❌  emoji, have been removed from Strapi v4 
 | strapi-hook-ejs                    | ❌ (removed from v4)                   |
 | strapi-middleware-views            | ❌ (removed from v4)                   |
 
-Example:
-
+::: details Example of updating a dependency to Strapi v4:
 If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-upload”: “3.6.x”` dependency declaration, and the migration targets Strapi v4.0.7, the dependency declaration should be replaced with `“@strapi/plugin-upload”: “4.0.7”`.
+:::
 
-<!-- TODO: add a conclusion or links for other steps -->

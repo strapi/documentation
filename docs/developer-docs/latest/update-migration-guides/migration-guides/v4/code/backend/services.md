@@ -20,12 +20,11 @@ Migrating a [service](/developer-docs/latest/development/backend-customization/s
 
 Due to the differences between services implementation in Strapi v3 and v4, it's recommended to create a new service file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
-A new service can be created:
+::: note
+The service file can be created automatically with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
+:::
 
-- manually, starting at step 1 of the following procedure,
-- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping to step 2 of the following procedure.
-
-To create a v4 service:
+To create a Strapi v4 service:
 
 1. Create a `api/<api-name>/services/<service-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
