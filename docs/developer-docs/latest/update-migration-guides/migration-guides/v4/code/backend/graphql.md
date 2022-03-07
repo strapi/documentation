@@ -34,6 +34,8 @@ Adding new [types](#types), [queries](#queries) or [mutations](#mutations) defin
 
 ### Types
 
+**Strapi v3**:
+
 The following code example adds a new `MyEnum` type definition to Strapi v3:
 
 ```jsx
@@ -49,6 +51,8 @@ module.exports = {
   `,
 }
 ```
+
+**Strapi v4**:
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
@@ -77,6 +81,8 @@ It's recommended to use the [nexus](https://nexusjs.org/) definition instead of 
 
 ### Queries
 
+**Strapi v3**:
+
 The following code example adds a new query definition to Strapi v3:
 
 ```jsx
@@ -101,6 +107,8 @@ module.exports = {
   },
 }
 ```
+
+**Strapi v4**:
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
@@ -152,6 +160,8 @@ The service that Strapi provides to perform queries is called the [Entity Servic
 
 ### Mutations
 
+**Strapi v3**:
+
 The following code example adds a new mutation definition to Strapi v3:
 
 ```jsx
@@ -176,6 +186,8 @@ module.exports = {
   }
 }
 ```
+
+**Strapi v4**:
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
@@ -219,6 +231,8 @@ The service that Strapi provides to perform queries is called the [Entity Servic
 :::
 
 ## Replacing resolvers
+
+**Strapi v3**:
 
 Strapi v3 offers 2 ways of replacing the behavior of a query or mutation resolver: have the resolver point to a REST controller, or create a new custom GraphQL resolver then associate the resolver to an existing query or mutation.
 
@@ -270,6 +284,8 @@ Strapi v3 offers 2 ways of replacing the behavior of a query or mutation resolve
 
   :::
 
+**Strapi v4**:
+
 In Strapi v4, the recommended way to replace or customize a resolver is to use [the `resolvers` field](/developer-docs/latest/plugins/graphql.md#extending-the-schema) of the new GraphQL extension service:
 
 ```jsx
@@ -297,6 +313,8 @@ module.exports = {
 
 ## Disabling APIs and fields from APIs
 
+**Strapi v3**:
+
 In Strapi v3, a query resolver, a mutation resolver or a field is disabled by setting it to `false`:
 
 ```jsx
@@ -317,6 +335,8 @@ module.exports = {
   },
 };
 ```
+
+**Strapi v4**:
 
 Strapi v4 uses programmatic APIs to [disable queries, mutation, actions or fields](/developer-docs/latest/plugins/graphql.md#disabling-operations-in-the-shadow-crud). The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
@@ -339,6 +359,8 @@ module.exports = {
 
 ## Adding policies
 
+**Strapi v3**:
+
 In Strapi v3, policies applied to a resolver are defined either for the REST controller or in the `schema.graphql.js` customization file:
 
 ```jsx
@@ -354,6 +376,8 @@ module.exports = {
   },
 };
 ```
+
+**Strapi v4**:
 
 In Strapi v4, policies applied to a resolver are explicitly defined in a `resolversConfig` object (see [GraphQL policies documentation](/developer-docs/latest/plugins/graphql.md#policies)) and applied through the GraphQL extension service. The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 

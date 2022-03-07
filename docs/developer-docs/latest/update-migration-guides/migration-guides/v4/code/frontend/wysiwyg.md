@@ -25,7 +25,7 @@ To migrate WYSIWYG customizations to Strapi v4:
 
 4. Rename the `./src/admin/app.example.js` file from Strapi v3 to `./src/admin/app.js`.
 
-5. Update `./src/admin/app.js` with all of the following modifications:
+5. Update `./src/admin/app.js` with the following modifications:
 
     * Import the new WYSIWYG component created at step 3.
     * Inject the new WYSIWYG component by using the `addFields()` method inside the `bootstrap` lifecycle of the application. `addFields()` accepts an object with 2 properties: set `type` to `'wysiwyg'` and `Component` to the name of the imported WYSIWYG component.

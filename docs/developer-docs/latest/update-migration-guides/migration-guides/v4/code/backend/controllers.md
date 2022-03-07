@@ -20,11 +20,9 @@ Migrating [controllers](/developer-docs/latest/development/backend-customization
 
 Due to the differences between controllers implementation in Strapi v3 and v4, it's recommended to create a new controller file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
-A new controller can be created:
-
-- manually, starting at step 1 of the following procedure,
-- or automatically, using the [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) then jumping to step 2 of the following procedure.
-<!-- ? I noticed the strapi generate CLI generates an empty controller and not a call to createCoreController, is it intended ? -->
+::: note
+The controller file can be created automatically with the [interactive CLI command `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
+:::
 
 To create a v4 controller:
 

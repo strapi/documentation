@@ -16,7 +16,7 @@ In Strapi v4, [webpack v5](https://webpack.js.org/migrate/5/) is used, and only 
 :::
 
 ::: prerequisites
-Webpack plugins and loaders should be upgraded to the latest version before migrating.
+Make sure webpack plugins and loaders are upgraded to the latest version before migrating.
 :::
 
 To update the [webpack](https://webpack.js.org/) configuration to Strapi v4:

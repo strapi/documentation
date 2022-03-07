@@ -104,6 +104,7 @@ To migrate depdencies to Strapi v4, many packages no longer need to be defined m
 - Packages with a ✨ emoji before their name have a new name in v4 but do not need to be defined in your `package.json`
 - Packages identified with the ❌  emoji have been removed from v4 and all references to these packages should be removed from the code.
 
+
 | Package name in Strapi v3          | Package name in Strapi v4             |
 | ---------------------------------- | ------------------------------------- |
 | strapi                             | ❗ @strapi/strapi                      |
@@ -145,8 +146,7 @@ To migrate depdencies to Strapi v4, many packages no longer need to be defined m
 | strapi-hook-ejs                    | ❌ (removed from v4)                   |
 | strapi-middleware-views            | ❌ (removed from v4)                   |
 
-Example:
-
+::: details Example of updating a dependency to Strapi v4:
 If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-users-permissions”: “3.6.x”` dependency declaration, and the migration targets Strapi v4.1.2, the dependency declaration should be replaced with `“@strapi/plugin-users-permissions”: “4.1.2”`.
+:::
 
-<!-- TODO: add a conclusion or links for other steps -->
