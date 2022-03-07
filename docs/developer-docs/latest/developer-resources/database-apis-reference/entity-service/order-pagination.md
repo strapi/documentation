@@ -43,7 +43,7 @@ strapi.entityService.findMany('api::article.article', {
 });
 
 // multiple with direction
-strapi.entityService(.findMany('api::article.article', {
+strapi.entityService.findMany('api::article.article', {
   sort: [{ title: 'asc' }, { publishedAt: 'desc' }],
 });
 ```
