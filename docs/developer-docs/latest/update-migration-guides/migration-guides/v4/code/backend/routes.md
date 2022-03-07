@@ -89,8 +89,8 @@ Custom routers in Strapi v4 are JavaScript files that export an array of objects
 
 To migrate a custom router to Strapi v4:
 
-1. Create a `api/<api-name>/routes/<router-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
-2. Make sure this `./src/api/<api-name>/routes/<router-name>.js` file exports an object:
+1. Create a `api/<api-name>/routes/<custom-router-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+2. Make sure this `./src/api/<api-name>/routes/<custom-router-name>.js` file exports an object:
 
     ```js
     // path: ./src/api/<api-name>/routes/<router-name>.js
