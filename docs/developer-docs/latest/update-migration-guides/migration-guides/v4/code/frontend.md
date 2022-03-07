@@ -17,6 +17,8 @@ Make sure to entirely [migrate the back end](/developer-docs/latest/update-migra
 
 Migrating the front end of a Strapi application to Strapi v4 depends on whether your project added customizations to the admin panel or not.
 
+## Migrating the admin panel without customizations
+
 If the admin panel was not customized, the migration process consists in the following steps:
 
 1. Delete the `./admin` folder of the project.
@@ -24,6 +26,8 @@ If the admin panel was not customized, the migration process consists in the fol
 2. Run `yarn strapi build` (or `npm run strapi build`) to rebuild the admin panel.
 
 3. Start the server with `yarn develop` (or `npm run develop`) to make sure the admin panel is working properly.
+
+## Migrating the admin panel without customizations
 
 If you customized the Strapi v3 admin panel using the file replacement system, please check if this customization is still available in Strapi v4. The [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md) lists every possible customization in Strapi v4.
 

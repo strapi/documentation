@@ -25,7 +25,7 @@ To migrate to Strapi v4:
     | `strapi.notification` calls | `useNotification` hook                               |
     | `strapi.lockApp` calls      | `lockApp` method from the `useOverlayBlocker` hook   |
     | `strapi.unlockApp` calls    | `unlockApp` method from the `useOverlayBlocker` hook |
-    | `strapi.backendUrl` calls   | (still exists in Strapi v4)                          |
+    | `strapi.backendUrl` calls   | `strapi.backendUrl` calls _(still exist in Strapi v4)_  |
 
 The following examples should help you get started using the `useNotification` hook and `lockApp`/`unlockApp` methods:
 
@@ -100,7 +100,7 @@ const myHelper = () => {
 
 :::
 
-<br/>
+## Using the `@strapi/helper-plugin` Storybook
 
 The `@strapi/helper-plugin` module provided with Strapi v4 features a [Storybook](https://storybook.js.org/) instance. The Storybook instance can be run to display further documentation about the internal components specifically targeted for the Strapi admin panel. This includes information about the `useNotification` hook. To access the documentation included with `@strapi/helper-plugin`:
 
