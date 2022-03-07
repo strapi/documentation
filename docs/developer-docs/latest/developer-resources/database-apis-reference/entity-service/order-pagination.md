@@ -20,12 +20,12 @@ To order results by a single field, just pass it to the `sort` parameter:
 - or as an object to define both the field name and the order (i.e. `'asc'` for ascending order or `'desc'` for descending order)
 
 ```js
-strapi.entityService('api::article.article').findMany({
+strapi.entityService.findMany('api::article.article', {
   sort: 'id',
 });
 
 // single with direction
-strapi.entityService('api::article.article').findMany({
+strapi.entityService.findMany('api::article.article', {
   sort: { id: 'desc' },
 });
 ```
@@ -38,12 +38,12 @@ To order results by multiple fields, pass the fields as an array to the `sort` p
 - or as an array of objects to define both the field name and the order (i.e. `'asc'` for ascending order or `'desc'` for descending order)
 
 ```js
-strapi.entityService('api::article.article').findMany({
+strapi.entityService.findMany('api::article.article', {
   sort: ['publishDate', 'name'],
 });
 
 // multiple with direction
-strapi.entityService('api::article.article').findMany({
+strapi.entityService(.findMany('api::article.article', {
   sort: [{ title: 'asc' }, { publishedAt: 'desc' }],
 });
 ```
@@ -53,7 +53,7 @@ strapi.entityService('api::article.article').findMany({
 Fields can also be sorted based on fields from relations:
 
 ```js
-strapi.entityService('api::article.article').findMany({
+strapi.entityService.findMany('api::article.article', {
   sort: {
     author: {
       name: 'asc',
@@ -67,7 +67,7 @@ strapi.entityService('api::article.article').findMany({
 To paginate results returned by the Entity Service API, use the `start` and `limit` parameters:
 
 ```js
-strapi.entityService('api::article.article').findMany({
+strapi.entityService.findMany('api::article.article', {
   start: 10,
   limit: 15,
 });
