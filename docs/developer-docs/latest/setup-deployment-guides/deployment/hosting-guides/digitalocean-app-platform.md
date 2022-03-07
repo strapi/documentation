@@ -24,30 +24,41 @@ Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/in
 
 ## Configure Your Strapi Project for Deployment
 
-To deploy your Strapi app, you will need to create a database configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
+To deploy your Strapi app, you will need to update the exisiting databse configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 
-You will configure a database for production. With the setup below, you will only need to set an environment variable for the `DATABASE_URL` to connect to your PostgreSQL database. First, install the [pg-connection-string](https://www.npmjs.com/package/pg-connection-string) package (with `npm install pg-connection-string` or `yarn add pg-connection-string`) then add the following to `config/env/production/database.js`:
+You will configure a database for production. First, install the [pg](https://www.npmjs.com/package/pg) package (with `npm install pg --save` or `yarn add pg`) then add the following to `config/database.js`:
 
 ```javascript
-const parse = require('pg-connection-string').parse
-const config = parse(process.env.DATABASE_URL)
-
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'postgres',
-    connection: {
-      host: config.host,
-      port: config.port,
-      database: config.database,
-      user: config.user,
-      password: config.password,
-      ssl: {
-        rejectUnauthorized: false,
+module.exports = ({ env }) => {
+  if (env('NODE_ENV') === 'production') {
+    return {
+      connection: {
+        client: 'postgres',
+        connection: {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: env('DATABASE_PASSWORD', 'strapi'),
+          ssl: {
+            rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false),
+          },
+        },
+        debug: false,
       },
-    },
-    debug: false,
-  },
-})
+    };
+  }
+
+  return {
+    connection: {
+      client: 'sqlite',
+      connection: {
+        filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+      },
+      useNullAsDefault: true,
+    }
+  }  
+};
 ```
 
 Your application is now ready to deploy to DigitalOcean App Platform.
@@ -70,7 +81,11 @@ Choose your repository, your branch, and keep "Autodeploy code changes" checked 
 
 Here you will configure how DigitalOcean App Platform deploys your Strapi app. You can leave most things default. The only things you need to change are shown below:
 
-- **Environment Variables**: Add `DATABASE_URL`: `${db.DATABASE_URL}`
+- **Environment Variables**: Add `DATABASE_HOST`: `${db.HOSTNAME}`
+- **Environment Variables**: Add `DATABASE_PORT`: `${db.PORT}`
+- **Environment Variables**: Add `DATABASE_NAME`: `${db.DATABASE}`
+- **Environment Variables**: Add `DATABASE_USERNAME`: `${db.USERNAME}`
+- **Environment Variables**: Add `DATABASE_PASSWORD`: `${db.PASSWORD}`
 - **Build Command**: `NODE_ENV=production npm run build`
 - **Run Command**: `NODE_ENV=production npm start`
 
@@ -78,7 +93,7 @@ Here you will configure how DigitalOcean App Platform deploys your Strapi app. Y
 
 Click on the Add a Database button. You can create a development PostgreSQL database while testing your application. Alternatively, you can add a Managed Database that you have created.
 
-Name your database (default name is `db`). Whatever you name your database here is what you should use in the environment variables in Step 5 above. For instance, we name the database `db` and we use the environment variable value: `${db.DATABASE_URL}`
+Name your database (default name is `db`). Whatever you name your database here is what you should use in the environment variables in Step 5 above. For instance, we name the database `db` and we use the environment variable value: `${db.DATABASE_HOST}`
 
 Click "Next".
 ### Step 7. Add Strapi Upload Provider for Digital Ocean Spaces
