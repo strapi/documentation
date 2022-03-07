@@ -5,12 +5,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 ---
 
 # Azure
-!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
 This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/) using Platform-as-a-Service (PaaS). If you're interested in using Infrastructure-as-a-Service (IaaS) refer to [IaaS deployment guide](#iaas-deployment-guide).
 
 ::: prerequisites
-* You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md)/
+
+* You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md).
 * You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
 * You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
 :::
@@ -18,9 +18,10 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 ## PaaS Deployment Guides
 
 There are 3 ways which you can deploy the Azure resources:
-- via the [Azure Portal](#creating-resources-via-the-azure-portal),
-- via the [Azure CLI](#creating-resources-via-the-azure-cli),
-- or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
+
+* via the [Azure Portal](#creating-resources-via-the-azure-portal),
+* via the [Azure CLI](#creating-resources-via-the-azure-cli),
+* or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
 
 When Strapi is running in a PaaS hosting model, a custom storage provider will be required to avoid the transient disk of the PaaS model, [which is covered towards the end](#configure-strapi-for-azure-appservice).
 
