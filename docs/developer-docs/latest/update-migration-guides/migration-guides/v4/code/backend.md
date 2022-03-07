@@ -17,7 +17,7 @@ Most of the back end of Strapi has been entirely rewritten in Strapi v4:
 Migrating the back end of a Strapi application to v4 requires updating all of these core features:
 
 <!-- TODO: - [file structure]() -->
-- file structure: Guide coming soon, we recommend you checkout the [Strapi codemods tooling](https://github.com/strapi/codemods)
+- file structure: guide coming soon, we recommend you checkout the [Strapi codemods tooling](https://github.com/strapi/codemods)
 - [configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md)
 - [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md)
 - [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md)

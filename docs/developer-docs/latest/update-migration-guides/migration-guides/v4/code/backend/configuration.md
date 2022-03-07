@@ -1,26 +1,14 @@
 ---
 title: Code migration - Configuration - Strapi Developer Docs
 description: Migrate your configuration from Strapi v3.6.x to v4.1.x with step-by-step instructions
-canonicalUrl:  
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.html
+next: ./dependencies.md
+sidebarDepth: 3
 ---
 
-# v4 code migration: Updating configuration  <!-- omit in toc -->
+# v4 code migration: Updating configuration
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
-
-- [New and existing files and folders](#new-and-existing-files-and-folders)
-  - [New File: `admin.js`](#new-file-adminjs)
-  - [Existing File: `api.js`](#existing-file-apijs)
-  - [New File: `cron-tasks.js`](#new-file-cron-tasksjs)
-  - [Existing File: `database.js`](#existing-file-databasejs)
-  - [Existing File: `middlewares.js`](#existing-file-middlewaresjs)
-  - [Existing File: `plugins.js`](#existing-file-pluginsjs)
-  - [Existing File: `server.js`](#existing-file-serverjs)
-- [Moved and removed files and folders](#moved-and-removed-files-and-folders)
-  - [Custom functions folder](#custom-functions-folder)
-  - [Bootstrap](#bootstrap)
-  - [Cron](#cron)
-  - [Responses](#responses)
 
 ## New and existing files and folders
 
@@ -191,11 +179,15 @@ module.exports = ({ env }) => ({
 
 For more information or other database configurations, please see the [database configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md#configuration-structure) section.
 
-### Existing File: `middlewares.js`
+### Renamed File: `middlewares.js`
 
 Middlewares in Strapi v4 have been entirely overhauled and the older format of load order, before, and after has been replaced with a simple array to simplify managing load order. Likewise the configuration structure has been simplified allowing for easier ways to handle custom configurations.
 
-::: note Security Middlewares
+::: note
+The file name has been changed in order to cut down on confusion. The Strapi v3 `middleware.js` file has now been renamed to `middlewares.js` in Strapi v4
+:::
+
+::: caution Security Middlewares
 Various security middlewares from Strapi v3 have been removed and replaced with [koa-helmet](https://www.npmjs.com/package/koa-helmet) which is a Koa.js wrapper for [helmet](https://github.com/helmetjs/helmet). This one package now replaces all security middlewares except for `cors`.
 :::
 
@@ -364,3 +356,7 @@ For more information on configuring crontab tasks please see the [cron jobs](/de
 Due to the standardization of the response and error handling structure in Strapi v4, it's no longer possible to customize the response structure or add custom response structures.
 
 For custom error messages please see the [error handling](/developer-docs/latest/developer-resources/error-handling.md) section or the [requests & responses](/developer-docs/latest/development/backend-customization/requests-responses.md) section.
+
+::: strapi Next steps
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md), [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schemas](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
+:::

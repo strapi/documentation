@@ -27,13 +27,14 @@ If the admin panel was not customized, the migration process consists in the fol
 
 3. Start the server with `yarn develop` (or `npm run develop`) to make sure the admin panel is working properly.
 
-## Migrating the admin panel without customizations
+## Migrating the admin panel with customizations
 
 If you customized the Strapi v3 admin panel using the file replacement system, please check if this customization is still available in Strapi v4. The [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md) lists every possible customization in Strapi v4.
 
 If some of the customizations you applied in Strapi v3 are not available in Strapi v4, the recommended way to add them back is to fork the customized package and install it in your application instead of the corresponding default Strapi package.
 
 The following specific guides also cover the migration of some dedicated customizations:
+
 - [WYSIWYG customizations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.md)
 - [translations](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.md)
 - [webpack configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.md)
@@ -41,6 +42,8 @@ The following specific guides also cover the migration of some dedicated customi
 - [calls to the `strapi` global variable](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.md) (e.g. to handle notifications and freeze user interactions)
 
 :::note NOTES
-* Strapi v4 admin panel can also be extended, either by a plugin using the new [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) or by taking advantage of the [extensions](/developer-docs/latest/development/admin-customization.md#extension) system.
-* Another difference between Strapi v3 and v4 is that the configuration of the admin panel in Strapi v4 is declared in a [specific `./config/admin.js` configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md).
+
+- Strapi v4 admin panel can also be extended, either by a plugin using the new [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md) or by taking advantage of the [extensions](/developer-docs/latest/development/admin-customization.md#extension) system.
+- Another difference between Strapi v3 and v4 is that the configuration of the admin panel in Strapi v4 is declared in a [specific `./config/admin.js` configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md).
+
 :::

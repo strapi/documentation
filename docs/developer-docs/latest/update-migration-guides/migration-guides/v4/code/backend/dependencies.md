@@ -2,6 +2,7 @@
 title: Code migration - Dependencies - Strapi Developer Docs
 description: Migrate your dependencies from Strapi v3.6.x to v4.1.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html
+next: ./routes.md
 ---
 
 # v4 code migration: Updating dependencies
@@ -150,3 +151,6 @@ To migrate dependencies to Strapi v4, many packages no longer need to be defined
 If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-users-permissions”: “3.6.x”` dependency declaration, and the migration targets Strapi v4.1.2, the dependency declaration should be replaced with `“@strapi/plugin-users-permissions”: “4.1.2”`.
 :::
 
+::: strapi Next steps
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md), [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schemas](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
+:::

@@ -28,7 +28,7 @@ The [`strapi generate` interactive CLI](/developer-docs/latest/developer-resourc
 The following Strapi v3 policy acts as a middleware:
 
 ```js
-// path: ./src/api/api-name/policies/my-policy.js
+// path: ./api/api-name/config/policies/my-policy.js
 
 module.exports = async (ctx, next) => {
   const start = Date.now();
@@ -58,8 +58,4 @@ module.exports = (config, { strapi }) => {
 };
 ```
 
-:::
-
-::: strapi Next steps
-[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md) and [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md).
 :::

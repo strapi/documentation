@@ -1,7 +1,8 @@
 ---
 title: v4 code migration - Controllers - Strapi Developer Docs
 description: Migrate controllers of a Strapi application from v3.6.x to v4.0.x
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html
+canonicalUrl:  https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html
+next: ./services.md
 ---
 
 # v4 code migration: Updating controllers
@@ -90,5 +91,5 @@ More examples can be found in the [controllers implementation documentation](/de
 :::
 
 ::: strapi Next steps
-[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md), [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md) and [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md).
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md), [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md), [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schemas](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
 :::

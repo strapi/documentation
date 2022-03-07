@@ -125,7 +125,3 @@ In Strapi v4, depending on whether the policy is applied to REST or GraphQL (use
 
 You can use `policyContext.type`, which value is either `koa` for REST or `graphql` for the GraphQL plugin, to determine the type of context the policy uses.
 :::
-
-::: strapi Next steps
-[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md) and [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md).
-:::
