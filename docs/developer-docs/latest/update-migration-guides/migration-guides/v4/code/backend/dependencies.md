@@ -15,7 +15,7 @@ Strapi v4 uses scoped packages, prefixed with `@strapi/`.
 :::
 
 <!-- To migrate dependencies to Strapi v4, update all references to Strapi packages using the new names found in the following table, and make sure the version number in `package.json` is up-to-date. -->
-To migrate depdencies to Strapi v4, many packages no longer need to be defined manually in the `package.json`, below you will see a comparison of a v3 `package.json` vs a v4 `package.json`. All Strapi package versions from the `@strapi/` prefix scope should be the same version.
+To migrate dependencies to Strapi v4, many packages no longer need to be defined manually in the `package.json`, below you will see a comparison of a v3 `package.json` vs a v4 `package.json`. All Strapi package versions from the `@strapi/` prefix scope should be the same version.
 
 ::: details v3 package.json example
 

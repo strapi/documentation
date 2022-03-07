@@ -4,9 +4,23 @@ description: Migrate your configuration from Strapi v3.6.x to v4.1.x with step-b
 canonicalUrl:  
 ---
 
-# v4 code migration: Updating configuration
+# v4 code migration: Updating configuration  <!-- omit in toc -->
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
+
+- [New and existing files and folders](#new-and-existing-files-and-folders)
+  - [New File: `admin.js`](#new-file-adminjs)
+  - [Existing File: `api.js`](#existing-file-apijs)
+  - [New File: `cron-tasks.js`](#new-file-cron-tasksjs)
+  - [Existing File: `database.js`](#existing-file-databasejs)
+  - [Existing File: `middlewares.js`](#existing-file-middlewaresjs)
+  - [Existing File: `plugins.js`](#existing-file-pluginsjs)
+  - [Existing File: `server.js`](#existing-file-serverjs)
+- [Moved and removed files and folders](#moved-and-removed-files-and-folders)
+  - [Custom functions folder](#custom-functions-folder)
+  - [Bootstrap](#bootstrap)
+  - [Cron](#cron)
+  - [Responses](#responses)
 
 ## New and existing files and folders
 
@@ -116,49 +130,140 @@ For more information please see the [cron jobs](/developer-docs/latest/setup-dep
 With Strapi v4, MongoDB databases are no longer supported and you will be required to migrate to a compatible SQL database to use Strapi v4!
 :::
 
-::: details v3 database.js example
+Due to the complete rewrite of the database and query layers within Strapi v4 the entire structure of the `database.js` file has changed. Multi-database support has been dropped and thus there is no more `defaultConnection`. Instead the two primary objects are `connection` which is passed to the database connection manager package [Knex.js](https://github.com/knex/knex) and `settings` which is for Strapi specific settings.
+
+::: note
+Pay careful attention to the fact that certain key names have changed such as `username` is now `user`.<br>
+We no longer abstract these names and use the native Knex.js key names.
+:::
+
+::: details v3 database.js example - PostgreSQL
 
 ```jsx
-
+module.exports = ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'strapi'),
+        username: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        schema: env('DATABASE_SCHEMA', 'public'), // Not Required
+        ssl: {
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        },
+      },
+      options: {},
+    },
+  },
+});
 ```
 
 :::
 
-::: details v4 database.js example
+::: details v4 database.js example - PostgreSQL
 
 ```jsx
-
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: env('DATABASE_HOST', '127.0.0.1'),
+      port: env.int('DATABASE_PORT', 5432),
+      database: env('DATABASE_NAME', 'strapi'),
+      user: env('DATABASE_USERNAME', 'strapi'),
+      password: env('DATABASE_PASSWORD', 'strapi'),
+      schema: env('DATABASE_SCHEMA', 'public'), // Not Required
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+      },
+    },
+    debug: false,
+  },
+});
 ```
 
 :::
 
-For more information please see the [database configuration]() section.
+For more information or other database configurations, please see the [database configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md#configuration-structure) section.
 
 ### Existing File: `middlewares.js`
+
+Middlewares in Strapi v4 have been entirely overhauled and the older format of load order, before, and after has been replaced with a simple array to simplify managing load order. Likewise the configuration structure has been simplified allowing for easier ways to handle custom configurations.
+
+::: note Security Middlewares
+Various security middlewares from Strapi v3 have been removed and replaced with [koa-helmet](https://www.npmjs.com/package/koa-helmet) which is a Koa.js wrapper for [helmet](https://github.com/helmetjs/helmet). This one package now replaces all security middlewares except for `cors`.
+:::
 
 ::: details v3 middlewares.js example
 
 ```jsx
-
+module.exports = {
+  //...
+  settings: {
+    cors: {
+      origin: ['http://localhost', 'https://mysite.com', 'https://www.mysite.com'],
+    },
+  },
+  // ...
+};
 ```
 
 :::
 
-::: details v4 middlewares.js example
+:::: details v4 middlewares.js example
+
+::: caution
+Various middlewares in this list are **required** and during configuration you need to replace the string with the object format. For more information refer to the [middlewares configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#optional-configuration) section.
+:::
 
 ```jsx
-
+module.exports = [
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: ['http://localhost', 'https://mysite.com', 'https://www.mysite.com'],
+    }
+  },
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
 ```
 
-:::
+::::
 
-For more information please see the [middlewares configuration]() section.
+For more information please see the [middlewares configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#optional-configuration) section.
 
 ### Existing File: `plugins.js`
+
+Plugins in Strapi v4 can now be enabled/disabled and have custom resolve locations in addition to custom configuration options. You will need to migrate the below file structure and move custom configurations into a nested `config` object. For specific plugin configurations you should review the plugin's `readme.md` or documentation.
+
+::: note
+Strapi v3 plugins **may not work** with Strapi v4, if you are a plugin developer wanting to upgrade your plugin to work properly with Strapi v4 we invite you to check the [plugins development](/developer-docs/latest/development/plugins-development.md) section or the [Strapi codemods](https://github.com/strapi/codemods) repo to help you upgrade.
+:::
 
 ::: details v3 plugins.js example
 
 ```jsx
+module.exports = ({ env }) => ({
+  // ...
+  sentry: {
+    dsn: env('SENTRY_DSN'),
+    sendMetadata: true,
+  },
+  // ...
+});
 
 ```
 
@@ -167,12 +272,30 @@ For more information please see the [middlewares configuration]() section.
 ::: details v4 plugins.js example
 
 ```jsx
+module.exports = ({ env }) => ({
+  sentry: {
+    enabled: true,
+    resolve: './src/plugins/my-sentry-fork',
+    config: {
+      dsn: env('SENTRY_DSN'),
+      sendMetadata: true,
+      myCustomSetting: false,
+    },
+  },
+  graphql: {
+    enabled: true,
+    config: {
+      defaultLimit: 10,
+      maxLimit: 20,
+    },
+  },
+});
 
 ```
 
 :::
 
-For more information please see the [plugin configuration]() section.
+For more information please see the [plugin configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) section.
 
 ### Existing File: `server.js`
 
@@ -181,6 +304,8 @@ Functionally nothing major has changed for the `server.js` configuration file ex
 - `admin.*`: All admin related settings have been moved to the [`admin.js` file](#new-file-admin-js)
 - `cron.*`: Cron based tasks now can be directly referenced in this file or imported from any other custom files. See more information in the [`cron-tasks.js` file](#new-file-cron-tasks-js)
 - `app.keys`: New configuration for the refactored [Session Middleware](), used to create secure session keys
+
+<!-- TODO: Need to add session middleware documentation -->
 
 ::: details v3 server.js example
 
