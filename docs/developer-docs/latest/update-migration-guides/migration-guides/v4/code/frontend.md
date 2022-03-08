@@ -27,7 +27,7 @@ If the admin panel was not customized, the migration process consists in the fol
 
 3. Start the server with `yarn develop` (or `npm run develop`) to make sure the admin panel is working properly.
 
-## Migrating the admin panel without customizations
+## Migrating the admin panel with customizations
 
 If you customized the Strapi v3 admin panel using the file replacement system, please check if this customization is still available in Strapi v4. The [admin panel customization documentation](/developer-docs/latest/development/admin-customization.md) lists every possible customization in Strapi v4.
 
