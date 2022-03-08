@@ -9,9 +9,9 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-Between Strapi v3 and v4 there has only been small modifications made to the structure of a global middleware, allowing for additional config parameters to be passed without the need to manually pull in the configuration via the Strapi api.
+Strapi v4 only introduces small modifications to the structure of a global middleware, allowing for additional configuration parameters to be passed without the need to manually pull in the configuration via the Strapi API.
 
-The configuration of middlewares has changed and that is covered in the [configuration migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md#existing-file-middlewaresjs) part of this guide.
+The configuration of middlewares has changed (see [configuration migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md#existing-file-middlewaresjs)).
 :::
 
 The [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) is the recommended way to create a new middleware:
@@ -20,7 +20,7 @@ The [`strapi generate` interactive CLI](/developer-docs/latest/developer-resourc
 2. Using the interactive CLI, choose where the middleware should apply and give it a name.
 3. Add customizations to the generated file.
 
-::: details Example of a Strapi v3 middleware converted to v4
+::: details Example of a Strapi v3 middleware converted to v4:
 
 ```js
 // path: ./my-custom-packages/my-custom-middleware/lib/index.js
@@ -35,7 +35,7 @@ module.exports = async (ctx, next) => {
 };
 ```
 
-It should be converted to a Strapi v4 middleware using the following code:
+The Strapi v3 global middleware example above should be converted to a Strapi v4 middleware using the following code:
 
 ```jsx
 
