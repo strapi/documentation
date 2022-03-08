@@ -291,17 +291,20 @@ const myComponent = async () => {
 export default {
   register(app) {
     app.createSettingSection(
-	   { id: String, intlLabel: { id: String, defaultMessage: String }, // Section to create
-		 [ // links
-			 {
-			   intlLabel: { id: String, defaultMessage: String },
-			   id: String,
-			   to: String,
-			   Component: myComponent,
-			   permissions: Object[]
-		 ] 
-  }
-}
+      { id: String, intlLabel: { id: String, defaultMessage: String } }, // Section to create
+      [
+        // links
+        {
+          intlLabel: { id: String, defaultMessage: String },
+          id: String,
+          to: String,
+          Component: myComponent,
+          permissions: Object[],
+        },
+      ]
+    );
+  },
+};
 ```
 
 #### addSettingsLink()
