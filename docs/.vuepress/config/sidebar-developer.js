@@ -438,9 +438,10 @@ const developer = [
         path: '/developer-docs/latest/update-migration-guides/migration-guides.html',
         collapsable: true,
         children: [
+          ['/developer-docs/latest/update-migration-guides/migration-guides.html#v4-guides', 'v4 migration guides'],
           {
-            title: 'v4 stable',
-            path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v4-stable-guides',
+            title: 'v3 to v4 migration guides',
+            path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guides',
             collapsable: true,
             children: [
               {
@@ -494,9 +495,9 @@ const developer = [
               // ['', 'Data migration guide'],
             ]
           },
-          ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-stable-guides', 'v3 stable'],
-        ]
-      }
+          // ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides', 'v3 migration guides'], // commented out as it creates a "visual bug" and this is just a link to v3 docs after all
+        ],
+      },
     ],
   },
   {
