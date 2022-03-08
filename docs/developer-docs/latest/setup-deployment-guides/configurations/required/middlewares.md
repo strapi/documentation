@@ -61,8 +61,6 @@ If you aren't sure where to place a middleware in the stack, add it to the end o
 
 Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
 
-<!-- ? is it `app::` or `global::` for 'global' (i.e. application-level) middlewares? Or are these 2 different things? Wondering because I can find `app::` in [this part of the RFC](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#loading-middlwares) and `global::` in [this other part](https://github.com/strapi/strapi-v4-rfc/blob/master/docs/strapi/api/middlewares.md#implementation) 🤔 -->
-
 | Middleware type   | Origin                                                                                                                                                                                                                                  | Naming convention                                                                                                    |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Internal          | Built-in middlewares (i.e. included with Strapi), automatically loaded                                                                                                                                                                  | `strapi::middleware-name`                                                                                            |
@@ -97,7 +95,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 - responses, which handle the [responses](/developer-docs/latest/development/backend-customization/requests-responses.md),
 - [public](#public),
 - [security](#security),
-- [session](#session),
+- and [session](#session).
 
 ::: caution
 The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `favicon`. They should not be removed as it will throw an error.
@@ -135,7 +133,7 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 
 ### `errors`
 
-The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error that is not supposed to be exposed to the end user will result in a 500 HTTP response.
+The errors middleware handles [errors](/developer-docs/latest/developer-resources/error-handling.md) thrown by the code. Based on the type of error it sets the appropriate HTTP status to the response. By default, any error not supposed to be exposed to the end user will result in a 500 HTTP response.
 
 The middleware doesn't have any configuration option.
 
@@ -244,12 +242,12 @@ The `session` middleware allows the use of cookie-based sessions, based on [koa-
 | Option       | Description                                                                                                                                                                       | Type                     | Default value                           |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | --------------------------------------- |
 | `key`        | Cookie key                                                                                                                                                                        | `String`                 | `'koa.sess'`                            |
-| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. 'session' will result in a cookie that expires when session/browser is closed.                                                  | `Integer` or `'session'` | `86400000`                              |
+| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. `'session'` will result in a cookie that expires when the session or browser is closed.                                                  | `Integer` or `'session'` | `86400000`                              |
 | `autoCommit` | Automatically commit headers                                                                                                                                                      | `Boolean`                | `true`                                  |
 | `overwrite`  | Can overwrite or not                                                                                                                                                              | `Boolean`                | `true`                                  |
-| `httpOnly`   | Is httpOnly or not. A cookie with the HttpOnly attribute is inaccessible to the JavaScript Document.cookie API. Using httpOnly helps mitigate cross-site scripting (XSS) attacks. | `Boolean`                | `true`                                  |
+| `httpOnly`   | Is httpOnly or not. A cookie with the `HttpOnly` attribute is inaccessible to the JavaScript [`Document.cookie API`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie). Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks. | `Boolean`                | `true`                                  |
 | `signed`     | Sign the cookies                                                                                                                                                                  | `Boolean`                | `true`                                  |
-| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown.                                | `Boolean`                | `false`                                 |
-| `renew`      | Renew session when session is nearly expired, so the user keeps being logged in.                                                                                                  | `Boolean`                | `false`                                 |
-| `secure`     | Force the use of https                                                                                                                                                            | `Boolean`                | `true` in production, `false` otherwise |
+| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original `maxAge` value, resetting the expiration countdown.                                | `Boolean`                | `false`                                 |
+| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                                                                                                  | `Boolean`                | `false`                                 |
+| `secure`     | Force the use of HTTPS                                                                                                                                                            | `Boolean`                | `true` in production, `false` otherwise |
 | `sameSite`   | Restrict the cookies to a first-party or same-site context                                                                                                                        | `String`                 | `null`                                  |
