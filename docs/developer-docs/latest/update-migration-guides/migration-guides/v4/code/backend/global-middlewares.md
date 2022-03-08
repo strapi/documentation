@@ -11,7 +11,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 ::: strapi v3/v4 comparison
 Strapi v4 only introduces small modifications to the structure of a global middleware, allowing for additional configuration parameters to be passed without the need to manually pull in the configuration via the Strapi API.
 
-The configuration of middlewares has changed (see [configuration migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md#existing-file-middlewaresjs)).
+The configuration of middlewares has changed (see [configuration migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md#middlewares-configuration)).
 :::
 
 The [`strapi generate` interactive CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) is the recommended way to create a new middleware:

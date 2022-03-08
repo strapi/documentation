@@ -197,7 +197,7 @@ To convert Strapi v3 model lifecycle hooks to v4 lifecycle hooks:
 
     :::
 
-3. Refactor the model lifecycle hooks to use the new input variables (see [hook `event` object documentation](/developer-docs/latest/development/backend-customization/models.hmd#hook-event-object)):
+3. Refactor the model lifecycle hooks to use the new input variables (see [hook `event` object documentation](/developer-docs/latest/development/backend-customization/models.md#hook-event-object)):
 
   * All Strapi v3 `params` are placed in an `event` object in Strapi v4 (e.g. `event.params`).
   * Nested inside of this params object, you have access to `data`, `select` (also known as fields), `where` (also known as filters), `orderBy` (also known as sort), `limit`, `offset`, and `populate`.

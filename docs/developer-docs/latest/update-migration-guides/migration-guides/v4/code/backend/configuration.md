@@ -107,8 +107,7 @@ The [server configuration](/developer-docs/latest/setup-deployment-guides/config
 
 - All admin panel-related settings (i.e. `admin.*` keys) are in the [`admin.js` file](#admin-panel-configuration).
 - CRON tasks (configured with `cron.*` keys) can be directly referenced in the `./config/server.js` or imported from any other custom files (see [`cron-tasks.js` file](#cron-tasks)).
-- `app.keys` is a new configuration option for the refactored [session middleware]() and is used to create secure session keys.
-<!-- TODO: add link to session middleware documentation once merged -->
+- `app.keys` is a new configuration option for the refactored [session middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#session) and is used to create secure session keys.
 
 ::: details Example of a Strapi v3 server configuration:
 
