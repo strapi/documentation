@@ -15,12 +15,15 @@ In Strapi v3, Strapi package names were prefixed with `strapi-`.
 Strapi v4 uses scoped packages, prefixed with `@strapi/`.
 :::
 
-<!-- To migrate dependencies to Strapi v4, update all references to Strapi packages using the new names found in the following table, and make sure the version number in `package.json` is up-to-date. -->
-To migrate dependencies to Strapi v4, many packages no longer need to be defined manually in the `package.json`, below you will see a comparison of a v3 `package.json` vs a v4 `package.json`. All Strapi package versions from the `@strapi/` prefix scope should be the same version.
+In Strapi v4, many packages no longer need to be defined manually in the `package.json`.
 
-::: details v3 package.json example
+The following examples show a comparison of a Strapi v3 `package.json` and a Strapi v4 `package.json`. All Strapi package versions from the `@strapi/` prefix scope should be the same version.
+
+::: details Example of a Strapi v3 package.json file:
 
 ```json
+// path: package.json
+
 {
   "name": "strapi-v3-project",
   "private": true,
@@ -63,9 +66,11 @@ To migrate dependencies to Strapi v4, many packages no longer need to be defined
 
 :::
 
-::: details v4 package.json example
+::: details Example of a Strapi v4 package.json file:
 
 ```json
+// path: package.json
+
 {
   "name": "strapi-v4-project",
   "private": true,
@@ -100,11 +105,12 @@ To migrate dependencies to Strapi v4, many packages no longer need to be defined
 
 :::
 
-- Packages with a ❗ emoji before their name are required and need to be defined in your `package.json`
-- Packages with a 🔌 emoji before their name are optional plugins/providers that can be installed or removed as needed
-- Packages with a ✨ emoji before their name have a new name in v4 but do not need to be defined in your `package.json`
-- Packages identified with the ❌  emoji have been removed from v4 and all references to these packages should be removed from the code.
+The following table highlights new and removed packages:
 
+- Packages with a ❗ emoji before their name are required and need to be defined in the `package.json` file.
+- Packages with a 🔌 emoji before their name are optional plugins/providers that can be installed or removed as needed.
+- Packages with a ✨ emoji before their name have a new name in Strapi v4 but do not need to be defined in your `package.json`.
+- Packages identified with the ❌  emoji have been removed from Strapi v4 and all references to these packages should be removed from the code.
 
 | Package name in Strapi v3          | Package name in Strapi v4             |
 | ---------------------------------- | ------------------------------------- |
