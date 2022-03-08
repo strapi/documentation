@@ -10,7 +10,7 @@ sidebarDepth: 3
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
-Strapi v4 introduces several types of changes to configurations, which includes new files, moved or restructured files, and removed features. Only the database, server, admin panel and middlewares configuration are required in Strapi v4. The following table gives a high-level overview of the changes, and you can click on a specific topic to read more information:
+Strapi v4 introduces several types of changes to configurations, which includes new files, moved or restructured files, and removed features. The following table gives a high-level overview of the changes, and you can click on a specific topic to read more information:
 
 | Configuration topic     | Type of change in Strapi v4 vs. v3                                      | File name in Strapi v4 |
 | ----------------------- | ----------------------------------------------------------------------- | ---------------------- |
@@ -18,10 +18,10 @@ Strapi v4 introduces several types of changes to configurations, which includes 
 | [Server](#server-configuration)                  | Changes to an existing Strapi v3 file                                   | `server.js`            |
 | [Admin panel](#admin-panel-configuration)             | New file in Strapi v4                                                   | `admin.js`             |
 | [Middlewares](#middlewares-configuration)             | Changes to an existing Strapi v3 file                                   | `middlewares.js`       |
-| [CRON tasks](#cron-tasks)<br/>(_optional_)              | New file in Strapi v4                                                   | `cron-tasks.js`        |
-| [API](#api-configuration)<br/>(_optional_)                     | Changes to an existing Strapi v3 file                                   | `api.js`               |
-| [Plugins](#plugins-configuration)<br/>(_optional_)                 | Changes to an existing Strapi v3 file                                   | `plugins.js`           |
-| [Bootstrap](#bootstrap)<br/>(_optional_)               | Now defined in the global `./src/index.js` file  | -                      |
+| [CRON tasks](#cron-tasks)<br/>              | New file in Strapi v4                                                   | `cron-tasks.js`        |
+| [API](#api-configuration)<br/>                     | Changes to an existing Strapi v3 file                                   | `api.js`               |
+| [Plugins](#plugins-configuration)<br/>                 | Changes to an existing Strapi v3 file                                   | `plugins.js`           |
+| [Bootstrap](#bootstrap)<br/>               | Now defined in the global `./src/index.js` file  | -                      |
 | [Custom functions folder](#custom-functions-folder) | Feature removed from Strapi v4                                          | -                      |
 | [Custom responses](#custom-responses)        | Feature removed from Strapi v4                                          | -                      |
 
@@ -258,7 +258,7 @@ In Strapi v4, the `config/functions` folder [does not exist anymore](#custom-fun
 
 ## API configuration
 
-The [API configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) options are the similar in Strapi v3 and v4, with the exception of the following keys:
+The [API configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) options are similar in Strapi v3 and v4, with the exception of the following keys:
 
 - `rest.defaultLimit` is `25` by default (instead of `100` in Strapi v3)
 - `rest.maxLimit` is `100` by default (instead of `null` in Strapi v3)
@@ -393,5 +393,5 @@ For custom error messages, please refer to the [error handling](/developer-docs/
 <br/>
 
 ::: strapi Next steps
-[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md), [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schemas](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md), [routes](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schema](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
 :::
