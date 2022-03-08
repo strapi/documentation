@@ -64,6 +64,7 @@ To modify your user information:
 | Email                 | Write your complete email address in the textbox.                                                       |
 | Username              | (optional) Write a username in the textbox.                                                             |
 | Interface language    | Among the drop-down list, choose a language for your Strapi application interface.                      |
+| Interface mode        | Choose either "Light mode" or "Dark mode" for your Strapi application interface. Note that the default Strapi interface mode depends on your browser's mode. |
 
 4. Click on the **Save** button.
 
