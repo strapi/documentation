@@ -25,11 +25,11 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 4. Migration guide from 3.4.x to 3.4.4.
 5. [Update Strapi guide.](update-version.md)-->
 
-## v4 stable guides
+## v4 migration guides
 
 - [Migration guide from 4.0.x to 4.0.6](migration-guides/v4/migration-guide-4.0.x-to4.0.6.md)
 
-## v3 to v4 migration guide
+## v3 to v4 migration guides
 
 ::: callout 🚧 Upcoming migration guides
 This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
@@ -41,6 +41,6 @@ Migrating from v3.6.9 to v4.0.x revolves around 3 topics:
 - The [code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md) helps migrating the built-in back-end and front-end code of the Strapi application to v4.
 - The data migration guide _(coming soon!)_ helps migrating the database content to v4.
 
-## v3 stable migration guides
+## v3 migration guides
 
 v3 migration guides are available in the [v3 documentation](https://docs-v3.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides).

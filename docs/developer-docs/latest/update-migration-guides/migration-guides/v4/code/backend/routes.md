@@ -2,6 +2,7 @@
 title: v4 code migration - Routes - Strapi Developer Docs
 description: Migrate routes of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html
+next: ./controllers.md
 ---
 
 # v4 code migration: Updating routes
@@ -88,8 +89,8 @@ Custom routers in Strapi v4 are JavaScript files that export an array of objects
 
 To migrate a custom router to Strapi v4:
 
-1. Create a `api/<api-name>/routes/<router-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
-2. Make sure this `./src/api/<api-name>/routes/<router-name>.js` file exports an object:
+1. Create a `api/<api-name>/routes/<custom-router-name>.js` file inside the `./src` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+2. Make sure this `./src/api/<api-name>/routes/<custom-router-name>.js` file exports an object:
 
     ```js
     // path: ./src/api/<api-name>/routes/<router-name>.js
@@ -135,5 +136,5 @@ module.exports = {
 :::
 
 ::: strapi Next steps
-[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [policies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.md), [route middlewares](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md) and [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md).
+[Migrating the back end code](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.md), [dependencies](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.md), [controllers](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.md), [services](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.md), and [content-type schemas](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.md).
 :::
