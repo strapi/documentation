@@ -21,7 +21,7 @@ Strapi v4 introduces several types of changes to configurations, which includes 
 | [CRON tasks](#cron-tasks)                 | New file in Strapi v4                                                   | `cron-tasks.js`        |
 | [API](#api-configuration)                 | Changes to an existing Strapi v3 file                                   | `api.js`               |
 | [Plugins](#plugins-configuration)         | Changes to an existing Strapi v3 file                                   | `plugins.js`           |
-| [Bootstrap function](#bootstrap-function) | Now defined in the global `./src/index.js` file                         | -                      |
+| [Bootstrap function](#bootstrap-function) | Now defined in the global `src/index.js` file                         | -                      |
 | [Custom functions folder](#custom-functions-folder) | Feature removed from Strapi v4                                | -                      |
 | [Custom responses](#custom-responses)     | Feature removed from Strapi v4                                          | -                      |
 
