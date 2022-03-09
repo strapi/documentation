@@ -31,11 +31,11 @@ If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to f
 
 ## v3 to v4 migration guides
 
-::: callout 🚧 Upcoming migration guides
+::: callout 🚧  Migration guides
 This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
-Migrating from v3.6.9 to v4.0.x revolves around 3 topics:
+Migrating from v3.6.x to v4.1.x revolves around 3 topics:
 
 - The [plugin migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.md) helps migrating a plugin to v4.
 - The [code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md) helps migrating the built-in back-end and front-end code of the Strapi application to v4.
