@@ -417,9 +417,7 @@ Both the `injectComponent()` and `injectContentManagerComponent()` methods accep
 | --------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | first argument  | String | The view where the component is injected
 | second argument | String | The zone where the component is injected
-| third argument  | Object | An object with the following keys:<ul><li>`name` (string) the name of the component</li><li>`Component` (function) A function to returns the content to be injected</li></ul> |
-
-<!-- ? is Component a function or could it be something else? I see inconsistencies between the example in this documentation and the notes I received from devs :thinking-face: ? -->
+| third argument  | Object | An object with the following keys:<ul><li>`name` (string): the name of the component</li><li>`Component` (function or class): the React component to be injected</li></ul> |
 
 ::: details Example: Inject a component in the informations box of the Edit View of the Content Manager:
 
