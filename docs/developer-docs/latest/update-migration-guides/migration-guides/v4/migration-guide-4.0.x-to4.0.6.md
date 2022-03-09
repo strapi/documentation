@@ -17,14 +17,11 @@ The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.
 :::
 
 
-### Upgrading the application dependencies
-
+## Upgrading the application dependencies
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/update-dependencies-snippet.md)!!!
 
-
-
-### Fixing the breaking changes
+## Fixing the breaking changes
 
 1. Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`: 
 
@@ -45,10 +42,8 @@ module.exports = [
 ];
 ```
 
-
 2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information).
  
-
 ```jsx
 // path: ./config/server.js
 
@@ -58,7 +53,9 @@ module.exports = [
   },
 // ...
 ```
+
 ::: details Example of the updated file
+
 ```jsx
 // path: ./config/server.js
 
@@ -71,6 +68,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 :::
 
 :::: warning
@@ -89,7 +87,4 @@ APP_KEYS=someSecret,anotherSecret,additionalSecrets
 :::
 ::::
 
-
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Rebuild-and-start-snippet.md)!!!
-
-
