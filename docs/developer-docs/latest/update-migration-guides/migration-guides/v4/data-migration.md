@@ -7,11 +7,14 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4 data migration guide
 
-The goal of this guide is to cover how data can be migrated from Strapi v3 to Strapi v4. Strapi v4 introduced breaking changes in the database structure that requires manually updating the database for now. Scripts will be available soon to help you automate some of the steps.
+The goal of this guide is to cover how data can be migrated from Strapi v3 to Strapi v4.
 
-This guide covers:
+Strapi v4 introduced breaking changes in the database layer, which requires manually migrating the data. The data migration should be done manually for now, but scripts will be available soon to help automate some of the migration steps.
 
-* [migrating a SQL database from Strapi v3 to Strapi v4](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md)
-* migrating from a MongoDB database with Strapi v3 to a SQL database with Strapi v3
+This guide covers [migrating a SQL database from Strapi v3 to Strapi v4](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md).
 
-Strapi v4 does not support MongoDB databases. Migrating a Strapi v3 project with a MongoDB database to Strapi v4 is a 2-step process: first migrate from Mongo to SQL with Strapi v3, then migrate the SQL database from Strapi v3 to Strapi v4.
+Strapi v4 does not support MongoDB databases. Migrating a Strapi v3 project with a MongoDB database to Strapi v4 is a 2-step process:
+
+1. migrate from MongoDB to SQL with Strapi v3 (see [migrating from MongoDB to SQL](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md))
+2. migrate the SQL database from Strapi v3 to Strapi v4.
+
