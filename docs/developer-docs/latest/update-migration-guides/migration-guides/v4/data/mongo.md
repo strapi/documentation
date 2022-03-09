@@ -1,8 +1,7 @@
 ---
 title: Migrate from MongoDB to SQL with Strapi v3 - Strapi Developer Docs
 description: Migrate from a MongoDB to a SQL database in Strapi v3
-sidebarDepth: 3
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.html
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html
 ---
 
 <!-- TODO: update SEO -->
