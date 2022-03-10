@@ -33,7 +33,7 @@ To install a new plugin via the Marketplace:
 
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
 2. Choose an available plugin and click on the _Copy install command_ button.
-3. Switch to your CLI application and navigate to the Strapi application directory.
+3. Switch to your terminal and navigate to the Strapi application directory.
 4. Paste and execute the copied install command.
 5. Follow any plugin-specific implimentation instructions.
 
