@@ -1,6 +1,6 @@
 ---
 title: Code migration - Content-Type Schema - Strapi Developer Docs
-description: Migrate your content-types from Strapi v3.6.x to v4.1.x with step-by-step instructions
+description: Migrate your content-types from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html
 sidebarDepth: 3
 ---
