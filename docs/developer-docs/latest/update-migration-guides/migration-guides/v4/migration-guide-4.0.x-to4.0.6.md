@@ -6,16 +6,15 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.0.6 migration guide
 
-The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The upgrade is required for the [Users & Permissions providers](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections: 
-  - upgrading the application dependencies
-  - migrating the breaking changes to the middleware
-  - reinitializing the application
+The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The upgrade is required for the [Users & Permissions providers](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections:
 
+- upgrading the application dependencies
+- migrating the breaking changes to the middleware
+- reinitializing the application
 
 :::caution
  [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code, will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
-
 
 ## Upgrading the application dependencies
 
@@ -23,7 +22,7 @@ The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.
 
 ## Fixing the breaking changes
 
-1. Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`: 
+1. Add the `strapi::session` middleware to the array in the middleware configuration file `./config/middlewares.js`:
 
 ```jsx
 // path: ./config/middlewares.js
@@ -43,7 +42,7 @@ module.exports = [
 ```
 
 2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information).
- 
+
 ```jsx
 // path: ./config/server.js
 
@@ -67,6 +66,7 @@ module.exports = ({ env }) => ({
   },
   // ...
 });
+
 ```
 
 :::
