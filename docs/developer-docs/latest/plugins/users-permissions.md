@@ -847,6 +847,10 @@ create: async ctx => {
 
 ## Adding a new provider (to your project)
 
+::: caution
+This documentation is not up-to-date with Strapi v4 and is a work in progress. In the meantime, [contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
+:::
+
 **[Grant](https://github.com/simov/grant) supplies configuration for a number of commonly used OAuth providers. [Custom](https://github.com/simov/grant#misc-custom-providers) providers are also supported**. <br> You can view and try out the 200+ supported providers here: [OAuth Playground](https://grant.outofindex.com/).
 
 ### Prepare your files
