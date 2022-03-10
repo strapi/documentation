@@ -17,13 +17,17 @@ The Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverabl
 
 ![The Marketplace interface](../assets/plugins/marketplace-v4.png)
 
-Plugins can be discovered by searching or browsing. The search bar (1) displays find as you type results that search the plugin name and description. Plugins are displayed on individual cards containing:
+::: tip
+The search bar displays find as you type results that search the plugin name and description. 
+:::
+
+Plugins are displayed on individual cards containing:
 
 - the plugin name
 - the plugin description
-- a _learn more_ link (2) for additional information, including detailed implementation instructions
-- a button (3) to copy the install command to the local clipboard
-- a badge indicating if the plugin is _made by Strapi_ ![made by Strapi icon](../assets/icons/official-market.svg) (4) or _verified by Strapi_ ![verified by Strapi icon](../assets/icons/verified-marketplace.svg) (5)
+- a _Learn more_ link for additional information, including detailed implementation instructions
+- a button to copy the install command to the local clipboard
+- a badge indicating if the plugin is _made by Strapi_ ![made by Strapi icon](../assets/icons/official-market.svg) or _verified by Strapi_ ![verified by Strapi icon](../assets/icons/verified-marketplace.svg)
 
 ## Installing Marketplace plugins
 
