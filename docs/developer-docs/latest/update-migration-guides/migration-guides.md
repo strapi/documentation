@@ -15,16 +15,6 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
  [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
-<!--**Example**
-
-If you were to upgrade your version from `3.2.3` to `3.6.1`, you would have to follow the following guides:
-
-1. Migration guide from 3.2.3 to 3.2.4.
-2. Migration guide from 3.2.5 to 3.3.0.
-3. Migration guide from 3.3.x to 3.4.0.
-4. Migration guide from 3.4.x to 3.4.4.
-5. [Update Strapi guide.](update-version.md)-->
-
 ## v4 migration guides
 
 - [Migration guide from 4.0.x to 4.0.6](migration-guides/v4/migration-guide-4.0.x-to4.0.6.md)
