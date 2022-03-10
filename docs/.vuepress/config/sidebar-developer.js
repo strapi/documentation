@@ -491,9 +491,17 @@ const developer = [
                     ]
                   }
                 ]
+              },
+              {
+                title: 'Data migration guide',
+                path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html',
+                collapsable: true,
+                children: [
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md', 'SQL relations cheatsheet'],
+                  // ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v4'],
+                ]
               }
-              // ['', 'Code migration guide'],
-              // ['', 'Data migration guide'],
             ]
           },
           // ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides', 'v3 migration guides'], // commented out as it creates a "visual bug" and this is just a link to v3 docs after all
