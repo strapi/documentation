@@ -168,8 +168,8 @@ To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the f
 
 | Action     | Method |
 |-----|----|
-| Create a new settings section<br/> and define new links to include in this section | [`createSettingsSection()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#createsettingsection) |
-| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslink)</li><li>[`addSettingsLinks()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslinks)</li></ul> |
+| Create a new settings section<br/> and define new links to include in this section | [`createSettingsSection()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#createsettingsection) |
+| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#addsettingslink)</li><li>[`addSettingsLinks()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#addsettingslinks)</li></ul> |
 
 ::: details Example of creating a new settings section
 

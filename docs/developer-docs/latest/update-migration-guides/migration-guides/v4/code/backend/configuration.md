@@ -368,7 +368,7 @@ For specific plugin configurations, please refer to the dedicated plugin's docum
 
 ## Custom functions folder
 
-The `config/functions` folder and all of its content no longer exist in Strapi v4. [The `bootstrap.js` file](#bootstrap) and [CRON tasks](#cron-tasks) have their own dedicated configuration options but global functions are no longer automatically added to the Strapi internal API.
+The `config/functions` folder and all of its content no longer exist in Strapi v4. [The `bootstrap.js` file](#bootstrap-function) and [CRON tasks](#cron-tasks) have their own dedicated configuration options but global functions are no longer automatically added to the Strapi internal API.
 
 When creating universal utility functions in Strapi v4, it's recommended to:
 
