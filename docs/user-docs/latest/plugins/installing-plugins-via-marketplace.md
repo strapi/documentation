@@ -15,7 +15,7 @@ The Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverabl
 
 ![The Marketplace interface](../assets/plugins/marketplace-v4.png)
 
-Plugins are displayed on individual cards containing:
+In the Marketplace, plugins are displayed on individual cards containing:
 
 - the plugin name 
 - the plugin description
