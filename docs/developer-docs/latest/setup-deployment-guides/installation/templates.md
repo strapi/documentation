@@ -86,7 +86,7 @@ You can create this file structure by hand or generate it via the [CLI](/develop
 ::: tab yarn
 
 ```bash
-yarn strapi templates:generate <path>
+yarn strapi generate:template <path>
 ```
 
 :::
@@ -94,7 +94,7 @@ yarn strapi templates:generate <path>
 ::: tab npx
 
 ```bash
-npx strapi templates:generate <path>
+npx strapi generate:template <path>
 ```
 
 :::
