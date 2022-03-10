@@ -24,7 +24,7 @@ Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/in
 
 ## Configure Your Strapi Project for Deployment
 
-To deploy your Strapi app, you will need to update the exisiting databse configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
+To deploy your Strapi app, you will need to update the exisiting database configuration file. You will be using PostgreSQL for this example but you are able to connect to any of the [databases](https://docs.digitalocean.com/products/databases/) provided by DigitalOcean and [supported by Strapi](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 
 You will configure a database for production. First, install the [pg](https://www.npmjs.com/package/pg) package (with `npm install pg --save` or `yarn add pg`) then add the following to `config/database.js`:
 
