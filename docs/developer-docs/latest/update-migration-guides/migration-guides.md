@@ -7,8 +7,6 @@ sidebarDepth: 0
 
 # Migration guides
 
-## Instructions
-
 Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order. If there is no specific migration guide between your current version and the latest release follow the [Update Strapi guide](update-version.md).
 
 :::caution
