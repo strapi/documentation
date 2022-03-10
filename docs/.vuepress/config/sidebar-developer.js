@@ -492,6 +492,7 @@ const developer = [
                   }
                 ]
               }
+              // ['', 'Code migration guide'],
               // ['', 'Data migration guide'],
             ]
           },

@@ -1,6 +1,6 @@
 ---
 title: v4 Plugin Migration - Migrating the front end - Strapi Developer Docs
-description: Migrate the front end of a Strapi plugin from v3.6.8 to v4.0.x with step-by-step instructions
+description: Migrate the front end of a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html
 next: ./enable-plugin.md
 ---
@@ -9,11 +9,15 @@ next: ./enable-plugin.md
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/plugin-migration-intro.md)!!!
 
-Migrating the front end of a plugin to Strapi v4 requires:
+Migrating the front end of a plugin to Strapi v4 might require:
 
 - updating how the plugin's front-end is [registered](#registering-the-plugin-with-the-admin-panel)
 - updating how the plugin is [added to the amin panel menu](#adding-a-menu-link)
-- optionally, [registering translations](#registering-translations)
+- updating how the plugin [adds settings to the admin panel](#adding-settings)
+- updating how the plugin [adds reducers](#adding-reducers)
+- updating how the plugin [injects components to the Content Manager](#adding-injection-zones)
+- updating how the plugin [uses the admin panel `Initializer` component](#using-the-initializer-component)
+- [registering translations](#registering-translations)
 
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
 
@@ -78,7 +82,7 @@ const { name } = pluginPkg.strapi;
 ::: strapi v3/v4 comparison
 A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
 
-In Strapi v4, a plugin adds a link to the menu with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
+In Strapi v4, a plugin adds a link to the menu programmatically with the [`addMenuLink()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#menu-api) called in the `register` lifecycle. 
 :::
 
 To migrate to Strapi v4, pass the `menu` key from the Strapi v3 configuration object to `app.addMenuLink()` with the following properties updated:
@@ -151,6 +155,201 @@ export default {
 
 :::
 
+## Adding settings
+
+::: strapi v3/v4 comparison
+
+A Strapi v3 plugin adds a settings section by exporting a `settings` property during the plugin registration.
+
+In Strapi v4, a plugin adds a settings section programmatically using the [Settings API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#settings-api).
+:::
+
+To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appopriate Settings API method to use, and click on the method name to go to its dedicated documentation:
+
+| Action     | Method |
+|-----|----|
+| Create a new settings section<br/> and define new links to include in this section | [`createSettingsSection()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#createsettingsection) |
+| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslink)</li><li>[`addSettingsLinks()`](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#addsettingslinks)</li></ul> |
+
+::: details Example of creating a new settings section
+
+```js
+// path: ./src/plugins/my-plugin/admin/src/index.js
+
+import getTrad from './utils/getTrad';
+
+register(app) {
+  // Create the plugin's settings section
+  app.createSettingSection(
+    // created section
+    {
+      id: pluginId,
+      intlLabel: {
+        id: getTrad('Settings.section-label'),
+        defaultMessage: 'My plugin settings',
+      },
+    },
+    // links
+    [
+      {
+        intlLabel: {
+          id: 'settings.page',
+          defaultMessage: 'Setting page 1',
+        },
+        id: 'settings',
+        to: `/settings/my-plugin/`,
+        Component: async () => {
+          const component = await import(
+            /* webpackChunkName: "my-plugin-settings-page" */ './pages/Settings'
+          );
+
+          return component;
+        },
+        permissions: [],
+      },
+
+    ]
+  );
+
+  app.registerPlugin({
+    id: pluginId,
+    name,
+  });
+},
+```
+
+:::
+
+## Adding reducers
+
+::: strapi v3/v4 comparison
+
+A Strapi v3 plugin adds reducers by exporting a `reducers` property during the plugin registration.
+
+In Strapi v4, a plugin adds reducers programmatically using the [Reducers API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#reducers-api).
+:::
+
+To migrate to Strapi v4, make sure reducers are added programmatically with the `addReducers()` method.
+
+::: details Example of adding reducers
+
+```js
+// path: ./src/plugins/my-plugin/admin/src/index.js
+
+import myReducer from './components/MyCompo/reducer';
+import myReducer1 from './components/MyCompo1/reducer';
+import pluginId from './pluginId';
+
+const reducers = {
+  [`${pluginId}_reducer`]: myReducer,
+  [`${pluginId}_reducer1`]: myReducer1,
+};
+
+export default {
+  register(app) {
+    app.addReducers(reducers);
+
+    app.registerPlugin({
+      id: pluginId,
+      name,
+    });
+  },
+ }
+}
+```
+
+:::
+
+## Adding injection zones
+
+::: strapi v3/v4 comparison
+A Strapi v3 plugin can inject components into the Content Manager's Edit view, using the `registerField()` method or the `useStrapi` hook within the `Initializer` component.
+
+In Strapi v4, a plugin can inject components into several locations of the Content Manager using the [Injection Zones API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#injection-zones-api).
+:::
+
+To migrate to Strapi v4, make sure components are injected using Strapi v4 [Injection Zones API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#injection-zones-api). Depending on where the component should be injected, use:
+
+- either the `injectContentManagerComponent()` method to inject into [predefined injection zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#using-predefined-injection-zones) of the Content Manager
+- or the `injectComponent()` method to inject into [custom zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#creating-a-custom-injection-zone)
+
+::: details Example of injecting a component into the Content Manager's Edit view
+
+```jsx
+// path:  ./src/plugins/my-plugin/admin/src/index.js
+
+import pluginId from './pluginId;
+import Link from './components/Link'
+
+export default {
+  bootstrap(app){
+    // insert a link in the 'right-links' zone of the Content Manager's edit view
+    app.injectContentManagerComponent('editView', 'right-links', {
+      name: `${pluginId}-link`,
+      Component: Link,
+    });
+  }
+}
+```
+
+:::
+
+## Using the `Initializer` component
+
+::: strapi v3/v4 comparison
+In both Strapi v3 and v4, the `Initializer` component is generated by default when a plugin is created. `Initializer` could be used to execute some logic when the application is loading, for instance to dispatch an action after the user logs in into the admin panel.
+
+In Strapi v4, the `Initializer` component code has changed and uses the `useRef` and `useEffect`  React hooks to dispatch actions.
+:::
+
+The Initializer component is useful to store a global state in the application, which will be loaded before the application is rendered using Redux. To make sure the Initializer component is mounted in the application, set the `isReady` key to `false` when registering the plugin with `registerPlugin()`.
+
+To migrate to Strapi v4, make sure the plugin uses the latest `Initializer` code, which can be copied and pasted from the following code example:
+
+```jsx
+// path: ./src/plugins/my-plugin/admin/src/components/Initializer/index.js
+
+import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import pluginId from '../../pluginId';
+
+const Initializer = ({ setPlugin }) => {
+  const ref = useRef();
+  ref.current = setPlugin;
+
+  useEffect(() => {
+    ref.current(pluginId);
+  }, []);
+
+  return null;
+};
+
+Initializer.propTypes = {
+  setPlugin: PropTypes.func.isRequired,
+};
+
+export default Initializer;
+```
+
+::: details Example of registering a plugin that uses the new Initializer component
+
+```js
+// path: ./src/-plugins/my-plugin/admin/src/index.js
+
+export default {
+  register(app) {
+    app.registerPlugin({
+      id: pluginId,
+      initializer: Initializer,
+      isReady: false, // ensures the Initializer component is mounted in the application
+      name,
+    });
+  },
+ }
+}
+```
+
+:::
 ## Registering translations
 
 In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#async-function) for registering translation files.
