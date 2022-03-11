@@ -254,7 +254,7 @@ export default {
       name,
     });
   },
- }
+};
 }
 ```
 
