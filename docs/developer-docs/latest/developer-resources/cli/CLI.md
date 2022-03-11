@@ -174,6 +174,29 @@ When running the restore command, you can choose from three different strategies
 - **merge**: Will create missing keys and merge existing keys with their new value.
 - **keep**: Will create missing keys and keep existing keys as is.
 
+## strapi admin:create-user
+
+**Alias** `admin:create`
+
+Creates an administrator.
+You can pass the administrator's first name, last name, email and password as options or set them interactively if you call the command without passing the options.
+
+**Example**
+
+```bash
+strapi admin:create-user --firstname=Gordon --lastname=Strapisay --email=chef@strapi.io --password=Gourmet1234
+```
+
+**Options**
+
+| Option          | Type   | Description                        | Required |
+| --------------- | ------ | ---------------------------------- | -------- |
+| -f, --firstname | string | The administrator's first name     | Yes      |
+| -l, --lastname  | string | The administrator's last name      | No       |
+| -e, --email     | string | The administrator's email          | Yes      |
+| -p, --password  | string | New password for the administrator | No       |
+| -h, --help      |        | display help for command           |          |
+
 ## strapi admin:reset-user-password
 
 **Alias** `admin:reset-password`
