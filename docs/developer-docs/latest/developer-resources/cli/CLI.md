@@ -179,12 +179,14 @@ When running the restore command, you can choose from three different strategies
 **Alias** `admin:create`
 
 Creates an administrator.
-You can pass the administrator's first name, last name, email and password as options or set them interactively if you call the command without passing the options.
+Administrator's first name, last name, email, and password can be:
+- Passed as options
+- Set interactively if you call the command without passing any option
 
 **Example**
 
 ```bash
-strapi admin:create-user --firstname=Gordon --lastname=Strapisay --email=chef@strapi.io --password=Gourmet1234
+strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
 ```
 
 **Options**
