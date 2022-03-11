@@ -6,25 +6,29 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins
 
 # Managing Marketplace plugins
 
-The Marketplace contains optional plugins built to customize the core Strapi installation. The Marketplace is located in the admin panel, indicated by the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. Marketplace plugins are installed using the CLI (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
+The Marketplace is where users can find additional plugins to customize Strapi applications. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins, link to detailed plugin descriptions and submit new plugins. This documentation describes how to navigate the Marketplace and how to install Marketplace plugins.
 
+::: caution
+ v3 and v4 plugins are not cross-compatible.
+:::
+<!-- Is it better to keep these two callouts separate or combine them into the caution callout? -->
 ::: note
-The Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverable in the [Strapi Market](https://market.strapi.io/). v3 and v4 plugins are not cross-compatible.
-
+The Marketplace displays only v4 plugins. Both v3 and v4 plugins are discoverable in the [Strapi Market](https://market.strapi.io/).
 :::
 
 ![The Marketplace interface](../assets/plugins/marketplace-v4.png)
 
-In the Marketplace, plugins are displayed on individual cards containing:
+Plugins are displayed on individual cards containing:
 
-- the plugin name 
+- the plugin name, sometimes followed by either of the following badges:
+   - ![made by Strapi icon](../assets/icons/official-market.svg) to indicate the plugin is made by Strapi,
+   - ![verified by Strapi icon](../assets/icons/verified-marketplace.svg) to indicate the plugin was verified by Strapi.
 - the plugin description
-- a **Learn more** link for additional information, including detailed implementation instructions
-- a button to copy the install command to the local clipboard
-- a badge indicating if the plugin is _made by Strapi_ ![made by Strapi icon](../assets/icons/official-market.svg) or _verified by Strapi_ ![verified by Strapi icon](../assets/icons/verified-marketplace.svg)
+- a **Learn more** button for additional information, including detailed implementation instructions
+- a **Copy install command** button to copy the plugin installation command to the local clipboard
 
 ::: tip
-The search bar displays find as you type results that search the plugin name and description. 
+The search bar displays find as you type results that search the plugin name and description.
 :::
 
 ## Installing Marketplace plugins
@@ -32,11 +36,7 @@ The search bar displays find as you type results that search the plugin name and
 To install a new plugin via the Marketplace:
 
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
-2. Choose an available plugin and click on the _Copy install command_ button.
-3. Switch to your terminal and navigate to the Strapi application directory.
+2. Choose an available plugin and click on the **Copy install command** button.
+3. Switch to your teminal and navigate to the Strapi application directory.
 4. Paste and execute the copied install command.
 5. Follow any plugin-specific implimentation instructions.
-
-## Submitting a plugin
-
-A link for submitting a plugin is located in the top right corner of the admin panel. Plugin authors should read the [guidelines](https://strapi.io/strapi-market-guidelines) before submission.
