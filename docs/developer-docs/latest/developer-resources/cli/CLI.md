@@ -181,7 +181,7 @@ When running the restore command, you can choose from three different strategies
 Creates an administrator.
 Administrator's first name, last name, email, and password can be:
 - passed as options
-- set interactively if you call the command without passing any option
+- or set interactively if you call the command without passing any option.
 
 **Example**
 
