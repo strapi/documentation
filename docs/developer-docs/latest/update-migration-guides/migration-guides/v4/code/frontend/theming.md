@@ -9,7 +9,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In Strapi v3, theme customization is not supported as deeply as in Strapi v4.
+In Strapi v3, theme customization was not supported.
 
 Strapi v4 introduces the [Strapi Design System](https://design-system.strapi.io/) with a brand new theme for the admin panel.
 
