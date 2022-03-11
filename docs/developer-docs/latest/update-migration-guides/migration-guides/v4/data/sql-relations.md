@@ -480,6 +480,11 @@ In Strapi v4, a morph table is created for every entity/morph relation defined i
 :::
 ::::
 
+<!-- Don't remove these line breaks or the text will overlap with the grid. We'll fix the CSS later on :D  -->
+<br/>
+<br/>
+<br/>
+
 **Database structures:**
 
 :::: columns
