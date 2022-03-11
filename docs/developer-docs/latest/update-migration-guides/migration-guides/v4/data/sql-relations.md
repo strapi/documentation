@@ -420,6 +420,10 @@ In Strapi v3, table names for polymorphic relations end with `_morph` (singular)
 In Strapi v4, table names for polymorphic relations end with `_morphs` (plural), and the `attribute_type` must point to an entity unique identifier.
 :::
 
+::: caution
+Polymorphic relations should always have `“configurable”: false` defined in the attributes of the schema to prevent their modification in the admin panel.
+:::
+
 :::: grid Model schemas (attributes only):
 ::: grid-top-left Strapi v3
 `article/article.settings.json`
@@ -475,10 +479,6 @@ In Strapi v4, a morph table is created for every entity/morph relation defined i
 
 :::
 ::::
-
-::: caution
-Polymorphic relations should always have `“configurable”: false` defined in the attributes of the schema to prevent their modification in the admin panel.
-:::
 
 **Database structures:**
 
