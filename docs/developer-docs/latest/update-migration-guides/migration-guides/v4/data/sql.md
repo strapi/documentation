@@ -25,17 +25,25 @@ Changes in column casing and timestamps columns can affect all tables.
 
 ### Column name casing
 
+::: strapi v3 / v4 comparison
 In Strapi v3, column names can have different casings (e.g. `PascalCase`, `camelCase`, and `snake_case`).
 
-In Strapi v4, every column name should use `snake_case`. Attributes defined in another casing in the model schema will have their name automatically transformed to `snake_case` when communicating with the database layer.
+In Strapi v4, every column name should use `snake_case`.
+:::
+
+To migrate to Strapi v4, make sure all column names use `snake_case`. Attributes defined in another casing in the model schema will have their name automatically transformed to `snake_case` when communicating with the database layer.
 
 ### Timestamps columns
 
+::: strapi v3 / v4 comparison
 Timestamps columns refer to the `created_at` and `updated_at` columns.
 
 In Strapi v3, timestamps columns are given a default value (i.e. `CURRENT_TIMESTAMP`) directly by the database layer.
 
-In Strapi v4, timestamps columns can't be renamed or disabled. Timestamps with custom column names should be migrated to the `created_at` and `updated_at` fields, and the default value must be removed from the table structure.
+In Strapi v4, timestamps columns can't be renamed or disabled. 
+:::
+
+To migrate to Strapi v4, migrate timestamps with custom column names to the `created_at` and `updated_at` fields, and remove the default value from the table structure.
 
 ## Changes impacting Strapi built-in tables
 
