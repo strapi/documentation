@@ -129,7 +129,7 @@ To do so, you will have to fetch `/articles` route in **GET**.
 ```js
 import axios from 'axios';
 
-const { data } = await axios.get('http://localhost:1337/articles');
+const { data } = await axios.get('http://localhost:1337/api/articles');
 
 console.log(data);
 ```
@@ -141,7 +141,7 @@ You should use the `JWT` in the request to say that you can access to this data 
 ```js
 import axios from 'axios';
 
-const { data } = await axios.get('http://localhost:1337/articles', {
+const { data } = await axios.get('http://localhost:1337/api/articles', {
   headers: {
     Authorization:
       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU',
@@ -155,16 +155,18 @@ And tada you have access to the data.
 
 ### Create an Article
 
-To do so, you will have to request the `/articles` route in **POST**.
+To do so, you will have to request the `/api/articles` route in **POST**.
 
 ```js
 import axios from 'axios';
 
 const { data } = await axios.post(
-      'http://localhost:1337/articles',
+      'http://localhost:1337/api/articles',
       {
-        title: 'my article',
-        content: 'my super article content',
+        data: {
+          title: 'my article',
+          content: 'my super article content',
+        }
       },
       {
         headers: {
