@@ -159,8 +159,8 @@ Basic validations can be applied to attributes using the following parameters:
 
 #### Database validations and settings
 
-:::caution 🚧 This API is considered unstable for now.
-These settings **should not** be used unless you understand that their usage may break certain features. At this time there are no plans to make these options stable. By using these features, you do so at your own risk as they are designed to be used by those with a good understanding of the drawbacks.
+:::caution 🚧 This API is considered experimental.
+These settings should be reserved to an advanced usage, as they might break some features. There are no plans to make these settings stable.
 :::
 
 Database validations and settings are custom options passed directly onto the `tableBuilder` Knex.js function during schema migrations. Database validations allow for an advanced degree of control for setting custom column settings. The following options are set in a `column: {}` object per attribute:
