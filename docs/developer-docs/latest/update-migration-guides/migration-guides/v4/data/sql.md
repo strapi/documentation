@@ -97,7 +97,7 @@ Strapi v4 introduces breaking changes that impact the table names, column names 
 
 ### Users and Permissions plugin
 
-The tables and database structure used by the [Users & Permissions plugin](0/developer-docs/latest/plugins/users-permissions.md) are different in Strapi v3 and Strapi v4:
+The tables and database structure used by the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) are different in Strapi v3 and Strapi v4:
 
 :::: columns
 ::: column-left Strapi v3
