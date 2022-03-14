@@ -135,7 +135,7 @@ Basic validations can be applied to attributes using the following parameters:
 // ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
-  ...
+  // ...
   "attributes": {
     "title": {
       "type": "string",
@@ -152,7 +152,65 @@ Basic validations can be applied to attributes using the following parameters:
       "type": "uid",
       "targetField": "title"
     }
-    ...
+    // ...
+  }
+}
+```
+
+#### Database validations and settings
+
+:::caution 🚧 This API is considered experimental.
+These settings should be reserved to an advanced usage, as they might break some features. There are no plans to make these settings stable.
+:::
+
+Database validations and settings are custom options passed directly onto the `tableBuilder` Knex.js function during schema migrations. Database validations allow for an advanced degree of control for setting custom column settings. The following options are set in a `column: {}` object per attribute:
+
+| Parameter     | Type    | Description                                                                                   | Default |
+| ------------- | ------- | --------------------------------------------------------------------------------------------- | ------- |
+| `name`        | string  | Changes the name of the column in the database                                                | -       |
+| `defaultTo`   | string  | Sets the database `defaultTo`, typically used with `notNullable`                              | -       |
+| `notNullable` | boolean | Sets the database `notNullable`, ensures that columns cannot be null                          | `false` |
+| `unsigned`    | boolean | Only applies to number columns, removes the ability to go negative but doubles maximum length | `false` |
+| `unique`      | boolean | Enforces database level unique, caution when using with draft & publish feature               | `false` |
+| `type`        | string  | Changes the database type, if `type` has arguments, you should pass them in `args`            | -       |
+| `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
+
+```json
+// ./src/api/[api-name]/content-types/restaurant/schema.json
+
+{
+  // ...
+  "attributes": {
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 99,
+      "unique": true,
+      "column": {
+        "unique": true // enforce database unique also
+      }
+    },
+    "description": {
+      "default": "My description",
+      "type": "text",
+      "required": true,
+      "column": {
+        "defaultTo": "My description", // set database level default
+        "notNullable": true // enforce required at database level, even for drafts
+      }
+    },
+    "rating": {
+      "type": "decimal",
+      "default": 0,
+      "column": {
+        "defaultTo": 0,
+        "type": "decimal", // using the native decimal type but allowing for custom precision
+        "args": [
+          6,1 // using custom precision and scale
+        ]
+      }
+    }
+    // ...
   }
 }
 ```
