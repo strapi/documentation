@@ -244,7 +244,7 @@ Entity relationship diagrams also use the following abbreviations:
 ![v3-many-to-one.png](./assets/v3-many-to-one.png)
 
 :::
-::: column-right Strapi V4
+::: column-right Strapi v4
 ![v4-many-to-one.png](./assets/v4-many-to-one.png)
 :::
 ::::
