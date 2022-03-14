@@ -11,14 +11,10 @@ Strapi is built around different types of plugins. Core plugins are essential fo
 ::: note
 Core plugins which include the Content Manager and the Content-type Builder are documented in their own sections of the user guide as they are quite specific (see [Introduction to the Content Manager](../content-manager/introduction-to-content-manager.md) and [Introduction to the Content-type Builder](../content-types-builder/introduction-to-content-types-builder.md)). This Plugins section focuses on how to manage plugins in general and provides documentation for the other, non-core plugins.
 :::
-![Plugins settings](../assets/plugins/plugins-settings.png)
 
  From the admin panel, administrators are allowed to:
 
-- manage pre-installed plugins in ![Settings icon](../assets/icons/settings.svg) _Settings_
-- discover additional plugins in the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_
+- discover additional plugins in the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ (see [Managing Marketplace plugins](/user-docs/latest/plugins/installing-plugins-via-marketplace.md))
 - review the currently installed plugins in ![Plugins icon](../assets/icons/plugins.svg) _Plugins_
 
-::: note
-[Marketplace plugins](../plugins/installing-plugins-via-marketplace.md) are installed and deleted from the user's terminal.
-:::
+![Plugins settings](../assets/plugins/plugins-settings.png)

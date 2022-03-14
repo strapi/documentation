@@ -85,7 +85,7 @@ const user = [
       ['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
       [
         '/user-docs/latest/plugins/installing-plugins-via-marketplace',
-        'Marketplace plugins',
+        'Managing Marketplace plugins',
       ],
       ['/user-docs/latest/plugins/strapi-plugins', 'List of Strapi plugins'],
     ],
