@@ -272,35 +272,6 @@ const developer = [
             'GraphQL API',
           ],
           {
-            title: 'Query Engine API',
-            path:
-              '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
-            collapsable: true,
-            // sidebarDepth: 3,
-            children: [
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
-                'Single Operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
-                'Bulk Operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
-                'Filtering',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
-                'Populating',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
-                'Ordering & pagination',
-              ],
-            ],
-          },
-          {
             title: 'Entity Service API',
             path:
               '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
@@ -339,6 +310,35 @@ const developer = [
               [
                 '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
                 'Admin Panel API for plugins',
+              ],
+            ],
+          },
+          {
+            title: 'Query Engine API',
+            path:
+              '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+            collapsable: true,
+            // sidebarDepth: 3,
+            children: [
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+                'Single Operations',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+                'Bulk Operations',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+                'Filtering',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+                'Populating',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+                'Ordering & pagination',
               ],
             ],
           },
