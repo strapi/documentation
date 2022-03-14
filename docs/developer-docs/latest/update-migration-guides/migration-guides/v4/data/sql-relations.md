@@ -18,18 +18,6 @@ In Strapi v3, only many-to-many relations (both bidirectional and unidirectional
 In Strapi v4, every type of [relation](/developer-docs/latest/development/backend-customization/models.md#relations) between 2 entities triggers the creation of a SQL join table.
 :::
 
-<!-- Strapi v4 supports the following types of [relations](/developer-docs/latest/development/backend-customization/models.md#relations):
-
-* [one-to-one](#one-to-one-relations-1-1),
-* [one-to-many](#one-to-many-relations-1-n),
-* [many-to-one](#many-to-one-relations-n-1),
-* [many-to-many](#many-to-many-relations-n-n),
-* [one-way](#one-way-relations-unidirectional-n-1),
-* [many-way](#many-way-relations-unidirectional-n-n),
-* [polymorphic](#polymorphic-relations),
-* [circular](#circular-relations),
-* and [relations to components](#relations-to-components). -->
-
 This documentation is built around an example using 2 different database entities: `article` and `category`. The example simulates adding a relation to the `article` entity pointing towards the `category` entity. For each relation type, the following sections illustrate:
 
 - the definition of attributes in the [model schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) for each entity's model
@@ -256,7 +244,7 @@ Entity relationship diagrams also use the following abbreviations:
 ![v3-many-to-one.png](./assets/v3-many-to-one.png)
 
 :::
-::: column-right Strapi V4
+::: column-right Strapi v4
 ![v4-many-to-one.png](./assets/v4-many-to-one.png)
 :::
 ::::
