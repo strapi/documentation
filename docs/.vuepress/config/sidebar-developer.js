@@ -272,6 +272,34 @@ const developer = [
             'GraphQL API',
           ],
           {
+            title: 'Entity Service API',
+            path:
+              '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+            collapsable: true,
+            children: [
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+                'CRUD operations',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+                'Filters',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+                'Populate',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+                'Ordering & pagination',
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+                'Components and dynamic zones',
+              ],
+            ],
+          },
+          {
             title: 'Query Engine API',
             path:
               '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
@@ -300,34 +328,7 @@ const developer = [
               ],
             ],
           },
-          {
-            title: 'Entity Service API',
-            path:
-              '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
-            collapsable: true,
-            children: [
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
-                'CRUD operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
-                'Filters',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
-                'Populate',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
-                'Ordering & pagination',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
-                'Components and dynamic zones',
-              ],
-            ],
-          },
+
           {
             title: 'Plugin APIs Reference',
             collapsable: true,
