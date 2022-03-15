@@ -43,7 +43,7 @@ To create a Strapi v4 service:
 
 4. (_optional_) To customize the service, pass a second argument to the `createCoreService` factory function. This argument can be either an object or a function returning an object. The object contains methods, which can either be entirely new actions or replace or extend existing actions of core API controllers (see [services implementation documentation](/developer-docs/latest/development/backend-customization/services.md#implementation)).
 
-::: details Example of a v4 service without customization
+::: details Example of a v4 service without customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/services/<service-name>.js
@@ -55,7 +55,7 @@ To create a Strapi v4 service:
 
 :::
 
-::: details Example of a v4 service with customization
+::: details Example of a v4 service with customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/services/<service-name>.js

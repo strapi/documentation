@@ -29,7 +29,7 @@ To migrate to Strapi v4:
 
 The following examples should help you get started using the `useNotification` hook and `lockApp`/`unlockApp` methods:
 
-::: details Example of using the useNotification hook in Strapi v4
+::: details Example of using the useNotification hook in Strapi v4:
 
 ```js
 // path: ./src/plugins/<my-plugin>/admin/*.js
@@ -72,7 +72,7 @@ const HomePage = () => {
 
 :::
 
-::: details Example of using the lockApp and unlockApp methods in Strapi v4
+::: details Example of using the lockApp and unlockApp methods in Strapi v4:
 
 ```js
 // path: ./src/plugins/<my-plugin>/admin/*.js
@@ -88,7 +88,7 @@ const { lockApp, unlockApp } = useOverlayBlocker();
 
 :::
 
-::: details Example of logging the backend URL value in Strapi v4
+::: details Example of logging the backend URL value in Strapi v4:
 
 ```js
 // path: ./src/plugins/<my-plugin>/*.js

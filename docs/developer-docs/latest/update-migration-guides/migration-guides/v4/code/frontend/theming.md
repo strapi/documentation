@@ -20,7 +20,7 @@ To customize the theme in Strapi v4:
 1. Rename the `./src/admin/app.example.js` file to `./src/admin/app.js`.
 2. In `./src/admin/app.js`, declare new key/value pairs in the `config.theme` object, updating the design elements (e.g. colors, shadows, sizes) of the [default theme](https://github.com/strapi/design-system/blob/main/packages/strapi-design-system/src/themes/light-theme.js).
 
-::: details Example of theme customization in Strapi v4
+::: details Example of theme customization in Strapi v4:
 
 ```js
 // path: ./src/admin/app.js
@@ -37,6 +37,6 @@ export default {
 
 :::
 
-::: tip Customization tips
+::: tip Customization tip
 The [Strapi Design System](https://design-system.strapi.io/) is fully customizable.
 :::

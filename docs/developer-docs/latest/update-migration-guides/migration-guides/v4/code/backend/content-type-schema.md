@@ -185,7 +185,7 @@ To convert Strapi v3 model lifecycle hooks to v4 lifecycle hooks:
 
     :::
 
-    ::: details Example of a Strapi v4 lifecycles file
+    ::: details Example of a Strapi v4 lifecycles file:
 
     ```jsx
     module.exports = {

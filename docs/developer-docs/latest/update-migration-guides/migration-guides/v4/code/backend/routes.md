@@ -46,7 +46,7 @@ To create a v4 core router file:
 
 4. (_optional_) To configure the router, pass a second argument to the `createCoreRouter` factory function. This argument can be either an object or a function returning an object. The object contains methods, which can either be entirely new actions or replace or extend existing actions of core API routes (see [routes implementation documentation](/developer-docs/latest/development/backend-customization/routes.md#implementation)).
 
-::: details Example of a Strapi v4 core router without customization
+::: details Example of a Strapi v4 core router without customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/routes/<router-name>.js
@@ -58,7 +58,7 @@ To create a v4 core router file:
 
 :::
 
-::: details Example of a Strapi v4 core router with customization
+::: details Example of a Strapi v4 core router with customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/routes/<router-name>.js
@@ -103,7 +103,7 @@ To migrate a custom router to Strapi v4:
 3. Copy and paste the `routes` array declared in the Strapi v3 JSON file into the object exported by the Strapi v4 file.
 4. Convert the exported object in Strapi v4 to a cleaner JavaScript format, removing all `"` on keys from the Strapi v3 JSON format (e.g. `"method"` → `method`, `"path"` → `path`).
 
-::: details Example of a Strapi v4 custom router
+::: details Example of a Strapi v4 custom router:
 
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.js

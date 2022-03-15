@@ -43,7 +43,7 @@ To create a v4 controller:
 
 4. (_optional_) To customize controller actions, pass a second argument to the `createCoreController` factory function. This argument can be either an object or a function returning an object. The object contains methods, which can either be entirely new actions or replace or extend existing actions of core API controllers (see [controllers implementation documentation](/developer-docs/latest/development/backend-customization/controllers.md#adding-a-new-controller)).
 
-::: details Example of a v4 controller without customization
+::: details Example of a v4 controller without customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/controllers/<controller-name>.js
@@ -55,7 +55,7 @@ To create a v4 controller:
 
 :::
 
-::: details Example of a v4 controller with customization
+::: details Example of a v4 controller with customization:
 
   ```jsx
   // path: ./src/api/<content-type-name>/controllers/<controller-name>.js
@@ -63,7 +63,7 @@ To create a v4 controller:
   const { createCoreController } = require('@strapi/strapi').factories;
 
   module.exports = createCoreController('api::api-name.content-type-name', ({ strapi }) => ({
-  // wrap a core action, leaving core logic in place
+    // wrap a core action, leaving core logic in place
     async find(ctx) {
       // some custom logic here
       ctx.query = { ...ctx.query, local: 'en' }
