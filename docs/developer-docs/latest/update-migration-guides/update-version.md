@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # Upgrade Strapi version
 
-Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md) are provided whenver a new Strapi version includes breaking changes. 
+Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md) are provided whenver a new Strapi version includes breaking changes.
 
 :::caution
  [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
@@ -15,10 +15,10 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 ## Upgrading the dependencies
 
 ::: prerequisites
-- Stop the server before starting the upgrade.
-- Confirm there are no [migrations](/developer-docs/latest/update-migration-guides/migration-guides.md) between the current and ultimate Strapi versions. 
-:::
 
+- Stop the server before starting the upgrade.
+- Confirm there are no [migrations](/developer-docs/latest/update-migration-guides/migration-guides.md) between the current and ultimate Strapi versions.
+:::
 
 1. Upgrade all of the Strapi packages in the `package.json`.
 
