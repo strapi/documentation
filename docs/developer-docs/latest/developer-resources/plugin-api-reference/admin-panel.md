@@ -414,6 +414,14 @@ A plugin has 2 different ways of injecting a component:
 * to inject a component from a plugin into another plugin's injection zones, use the `injectComponent()` function
 * to specifically inject a component into one of the Content Manager's [predefined injection zones](#using-predefined-injection-zones), use the `injectContentManagerComponent()` function instead
 
+Both the `injectComponent()` and `injectContentManagerComponent()` methods accept the following arguments:
+
+| Argument        | Type   | Description                                                                                                                                                                   |
+| --------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| first argument  | String | The view where the component is injected
+| second argument | String | The zone where the component is injected
+| third argument  | Object | An object with the following keys:<ul><li>`name` (string): the name of the component</li><li>`Component` (function or class): the React component to be injected</li></ul> |
+
 ::: details Example: Inject a component in the informations box of the Edit View of the Content Manager:
 
 ```jsx
@@ -427,6 +435,7 @@ export default {
   });
 }
 ```
+
 :::
 
 ::: details Example: Creating a new injection zone and injecting it from a plugin to another one:
