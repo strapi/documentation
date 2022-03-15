@@ -8,7 +8,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 Strapi v4 introduces breaking changes that require manually updating the codebase of an existing Strapi project.
 
-This guide covers migrating both [the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) and [the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md) of a Strapi v3.6.x application to Strapi 4.0.x. and is built around small independent topics.
+This guide covers migrating both [the back end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.md) and [the front end](/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.md) of a Strapi v3.6.x application to Strapi v4.0.x. and is built around small independent topics.
 
 ::: prerequisites
 Migrating the back end code of a Strapi application is a prerequisite to migrating the front end.
