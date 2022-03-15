@@ -438,11 +438,59 @@ const developer = [
         path: '/developer-docs/latest/update-migration-guides/migration-guides.html',
         collapsable: true,
         children: [
+          ['/developer-docs/latest/update-migration-guides/migration-guides.html#v4-guides', 'v4 migration guides'],
           {
-            title: 'v4',
-            path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v4-stable-guides',
+            title: 'v3 to v4 migration guides',
+            path: '/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guides',
             collapsable: true,
             children: [
+              {
+                title: 'Code migration guide',
+                initialOpenGroupIndex: -1, // make sure that no subgroup is expanded by default
+                path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html',
+                collapsable: true,
+                children: [
+                  {
+                    title: 'Updating the back end',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.html',
+                    collapsable: true,
+                    children: [
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.html', 'Configurations'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html', 'Dependencies'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html', 'Routes'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html', 'Controllers'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html', 'Services'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html', 'Content-type schema'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html', 'Policies'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.html', 'Route middlewares'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html', 'Global middlewares'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html', 'GraphQL'],
+                    ]
+                  },
+                  {
+                    title: 'Updating the front end',
+                    path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html',
+                    collapsable: true,
+                    children: [
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html', 'WYSIWYG customization'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html', 'Translations'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html', 'Webpack configuration'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html', 'Theme customizations'],
+                      ['/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html', 'Strapi global variable calls'],
+                    ]
+                  }
+                ]
+              },
+              {
+                title: 'Data migration guide',
+                path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html',
+                collapsable: true,
+                children: [
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md', 'SQL relations cheatsheet'],
+                  // ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v4'],
+                ],
+              },
               {
                 title: 'Plugin migration guide',
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html',
@@ -453,14 +501,12 @@ const developer = [
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md', 'Migrating the front end'],
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md', 'Enabling a plugin'],
                 ]
-              }
-              // ['', 'Code migration guide'],
-              // ['', 'Data migration guide'],
+              },
             ]
           },
-          ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-stable-guides', 'v3 stable'],
-        ]
-      }
+          // ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides', 'v3 migration guides'], // commented out as it creates a "visual bug" and this is just a link to v3 docs after all
+        ],
+      },
     ],
   },
   {

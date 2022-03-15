@@ -11,7 +11,7 @@ Services are a set of reusable functions. They are particularly useful to respec
 
 ## Implementation
 
-Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated services](#extending-core-services).
+Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core services and allows building custom ones or [extend or replace the generated services](#extending-core-services).
 
 ### Adding a new service
 

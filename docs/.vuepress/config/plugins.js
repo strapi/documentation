@@ -121,4 +121,56 @@ const plugins = [
       defaultTitle: 'Response',
     },
   ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'columns',
+      defaultTitle: '',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'column-left',
+      defaultTitle: '',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'column-right',
+      defaultTitle: '',
+    },
+  ],
+  [
+    'vuepress-plugin-container',
+    {
+      type: 'grid',
+      defaultTitle: '',
+    },
+  ],  [
+    'vuepress-plugin-container',
+    {
+      type: 'grid-top-left',
+      defaultTitle: '',
+    },
+  ],  [
+    'vuepress-plugin-container',
+    {
+      type: 'grid-top-right',
+      defaultTitle: '',
+    },
+  ],  [
+    'vuepress-plugin-container',
+    {
+      type: 'grid-bottom-left',
+      defaultTitle: '',
+    },
+  ],  [
+    'vuepress-plugin-container',
+    {
+      type: 'grid-bottom-right',
+      defaultTitle: '',
+    },
+  ],
 ];
