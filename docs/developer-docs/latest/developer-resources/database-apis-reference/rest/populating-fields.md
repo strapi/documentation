@@ -412,7 +412,13 @@ await request(`/api/articles?${query}`);
 
 ### Combining Population with other operators
 
-By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. 
+
+:::caution
+The population and pagination operators cannot be combined.
+:::
+
+See the following complex population examples:
 
 #### Populate with field selection
 
