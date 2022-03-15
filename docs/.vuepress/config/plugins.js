@@ -10,12 +10,13 @@ const checklinksIgnoredFiles = [
   /**
    * Files below give false positives
    */
-  './developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
   './developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
   './developer-docs/latest/development/backend-customization/models.md',
   './developer-docs/latest/guides/count-graphql.md', // might be removed once GraphQL customization is ready
   './developer-docs/latest/setup-deployment-guides/configurations.md', // the script thinks filename[]() at line 977 is a real link
   './developer-docs/latest/development/backend-customization/webhooks.md', // 'missing" links are in commented part of file
+  './developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', // hidden file for now
+  './developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md', // VuePress thinks hash is missing but it's not
 ];
 
 const plugins = [
