@@ -265,13 +265,11 @@ The [API configuration](/developer-docs/latest/setup-deployment-guides/configura
 
 The API configuration is optional.
 
-:::: details Example of a Strapi v3 API configuration:
-
-::: tip
-This configuration is entirely optional and does not need to be migrated.
-:::
+::: details Example of a Strapi v3 API configuration:
 
 ```jsx
+// path: ./config/api.js
+
 module.exports = ({ env }) => ({
   responses: {
     privateAttributes: ['created_at'],
@@ -283,14 +281,13 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::::
-
-:::: details Example of a Strapi v4 API configuration:
-
-::: tip
 :::
 
-```jsx
+::: details Example of a Strapi v4 API configuration:
+
+```js
+// path: ./config/api.js
+
 module.exports = ({ env }) => ({
   responses: {
     privateAttributes: ['createdAt'],
@@ -303,7 +300,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::::
+:::
 
 ## Plugins configuration
 

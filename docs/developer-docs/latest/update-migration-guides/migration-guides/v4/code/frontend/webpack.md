@@ -24,7 +24,7 @@ To update the [webpack](https://webpack.js.org/) configuration to Strapi v4:
 1. Rename the `./src/admin/webpack.config.example.js` to `./src/admin/webpack.config.js`.
 2. Copy the content of `./admin/admin.config.js` from the Strapi v3 application to `./src/admin/webpack.config.js`.
 
-::: details Example of a webpack configuration file in Strapi v4
+::: details Example of a webpack configuration file in Strapi v4:
 
 ```js
 // path: ./src/admin/webpack.config.js

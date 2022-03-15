@@ -58,6 +58,16 @@ module.exports = [
 ```jsx
 // path: ./config/server.js
 
+  // ...
+  app: {
+    keys: env.array("APP_KEYS", ["testKey1", "testKey2"]),
+  },
+// ...
+```
+::: details Example of the updated file
+```jsx
+// path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -68,6 +78,7 @@ module.exports = ({ env }) => ({
 });
 
 ```
+:::
 
 :::
 

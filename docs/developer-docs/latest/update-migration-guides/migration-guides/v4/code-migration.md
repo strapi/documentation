@@ -32,7 +32,7 @@ The following topics are not extensively covered in this code migration guide, b
 
 - a new [file structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) for the project, which can be migrated with the help of [Strapi codemods](https://github.com/strapi/codemods/),
 - fully rewritten [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs,
-- the new [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) APIs,
+- the new [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) and [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) APIs,
 - and the [Strapi Design System](https://design-system.strapi.io/) which is used to build the new user interface of Strapi v4.
 
 :::
