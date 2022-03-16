@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 The `./config/server.js` is used to define server configuration for the Strapi application.
 
 ::: caution
- Changes to the server.js file require rebuilding the admin panel. After saving the modified file run either `yarn build` or `npm run build`in the terminal to implement the changes. 
+Changes to the `server.js` file require rebuilding the admin panel. After saving the modified file run either `yarn build` or `npm run build` in the terminal to implement the changes. 
  ::: 
 
 ## Available options
