@@ -193,5 +193,48 @@
         .custom-block-title
           border-radius: 0 12px 0 0
 
+  &.columns
+    @media (min-width: 1200px)
+      display: flex
+      justify-content: space-between
+
+    > .column-left
+    > .column-right
+      @media (min-width: 1200px)
+        flex: 0 0 40%
+        max-width: 40%
+
+  &.grid
+    @media (min-width: 1200px)
+      display: grid
+      grid-template: 1fr 50% / 1fr 50%
+      grid-column-gap: 40px
+      margin-bottom: 20px
+
+    > .custom-block-title
+      grid-row: 1
+      grid-column: 1 / 3
+
+  &.grid-top-left
+    @media (min-width: 1200px)
+      grid-row: 2
+      grid-column: 1
+
+  &.grid-top-right
+    @media (min-width: 1200px)
+      grid-row: 2
+      grid-column: 2
+
+  &.grid-bottom-left
+    @media (min-width: 1200px)
+      grid-row: 3
+      grid-column: 1
+
+  &.grid-bottom-right
+    @media (min-width: 1200px)
+      grid-row: 3
+      grid-column: 2
+
 .custom-block.details
   color rgb(44, 62, 80)
+
