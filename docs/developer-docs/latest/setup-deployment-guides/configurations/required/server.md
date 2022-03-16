@@ -8,6 +8,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 The `./config/server.js` is used to define server configuration for the Strapi application.
 
+::: caution
+ Changes to the server.js file require rebuilding the admin panel. After saving the modified file run either `yarn build` or `npm run build`in the terminal to implement the changes. 
+ ::: 
+
 ## Available options
 
 The `./config/server.js` file can include the following parameters:
@@ -46,6 +50,9 @@ The default configuration created with any new project should at least include t
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
 });
 ```
 
@@ -61,6 +68,9 @@ The following is an example of a full configuration file. Not all of these keys 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
