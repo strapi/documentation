@@ -230,13 +230,29 @@ heroku config:set NODE_ENV=production
 
 ### 5. Create your Strapi server config for production
 
-Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`. 
 
 `Path: ./config/env/production/server.js`
 
 ```js
 module.exports = ({ env }) => ({
   url: env('MY_HEROKU_URL'),
+});
+```
+
+You will also need at least two of the `API_KEYS` found in the `.env` environment variable. Each key is seperated by comma.
+`Path: ./my-project/`. 
+
+Add this `API_KEYS` and a `proxy: true` as well to the newly created `server.js`
+`Path: ./config/env/production/server.js`
+
+```js
+module.exports = ({ env }) => ({
+  proxy: true,
+  url: env('MY_HEROKU_URL'),
+  app: { 
+    keys: env.array('APP_KEYS', ['app_key_one', 'app_key-two']
+  },
 });
 ```
 
