@@ -8,6 +8,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 The `./config/server.js` is used to define server configuration for the Strapi application.
 
+::: caution
+Changes to the `server.js` file require rebuilding the admin panel. After saving the modified file run either `yarn build` or `npm run build` in the terminal to implement the changes. 
+ ::: 
+
 ## Available options
 
 The `./config/server.js` file can include the following parameters:
@@ -16,8 +20,9 @@ The `./config/server.js` file can include the following parameters:
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                                                                                                 | Type              | Default                                                                                                                          |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `host`<br/><br/>❗️ _Mandatory_                                 | Host name                                                                                                                                                                                                                                                                                                                                                                   | string            | `localhost`                                                                                                                      |
-| `port`<br/><br/>❗️ _Mandatory_                                  | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer           | `1337`                                                                                                                           |
+| `host`<br/><br/>❗️ _Mandatory_                                 | Host name                                                                                                                                                                                                                                                                                                                                             | string            | `localhost`                                                                                                                      |
+| `port`<br/><br/>❗️ _Mandatory_                                  | Port on which the server should be running.                                                                                                                                                                                                                                                                                                          | integer           | `1337`                                                                                                    
+| `app.keys`<br/><br/>❗️ _Mandatory_                              | Declare session keys (based on [Koa session](https://github.com/koajs/session/blob/master/Readme.md)), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                  | string            | `undefined`    
 | `socket`                                | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer | `/tmp/nginx.socket`                                                                                                              |
 | `emitErrors`                            | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean           | `false`                                                                                                                          |
 | `url`                                   | Public url of the server. Required for many different features (ex: reset password, third login providers etc.). Also enables proxy support such as Apache or Nginx, example: `https://mywebsite.com/api`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                            | string            | `''`                                                                                                                             |
@@ -46,6 +51,9 @@ The default configuration created with any new project should at least include t
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
 });
 ```
 
@@ -61,6 +69,9 @@ The following is an example of a full configuration file. Not all of these keys 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
