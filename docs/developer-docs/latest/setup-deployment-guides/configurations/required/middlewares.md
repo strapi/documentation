@@ -37,8 +37,8 @@ module.exports = [
   // ...
   'my-custom-node-module', // custom middleware that does not require any configuration
   {
-    // custom resolve to find a package or a path
-    resolve: 'my-custom-node-module',
+    // custom name to find a package or a path
+    name: 'my-custom-node-module',
     config: {
       foo: 'bar',
     },
