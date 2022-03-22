@@ -104,6 +104,116 @@ In addition to all the content-types that have been renamed (see [table names ch
 | `application`    | `api`            |
 | `plugins`        | `plugin`         |
 
+The following tables list the mapping of all permissions between Strapi v3 and Strapi v4:
+
+::: details Permission mapping for an example "restaurant" API
+| Strapi v3 type | Strapi v3 controller | Strapi v3 action   | Strapi v4 action                              |
+| -------------- | -------------------- | ------------------ | --------------------------------------------- |
+| application    | restaurant           | count              | (deleted)                                     |
+| application    | restaurant           | create             | api::restaurant.restaurant.create             |
+| application    | restaurant           | delete             | api::restaurant.restaurant.delete             |
+| application    | restaurant           | find               | api::restaurant.restaurant.find               |
+| application    | restaurant           | findone            | api::restaurant.restaurant.findOne            |
+| application    | restaurant           | update             | api::restaurant.restaurant.update             |
+| application    | restaurant           | createlocalization | api::restaurant.restaurant.createLocalization |
+:::
+
+::: details Permission mapping for the Users & Permission plugin
+| Strapi v3 type    | Strapi v3 controller | Strapi v3 action       | Strapi v4 action                                     |
+| ----------------- | -------------------- | ---------------------- | ---------------------------------------------------- |
+| users-permissions | auth                 | callback               | plugin::users-permissions.auth.callback              |
+| users-permissions | auth                 | connect                | plugin::users-permissions.auth.connect               |
+| users-permissions | auth                 | emailconfirmation      | plugin::users-permissions.auth.emailConfirmation     |
+| users-permissions | auth                 | forgotpassword         | plugin::users-permissions.auth.forgotPassword        |
+| users-permissions | auth                 | register               | plugin::users-permissions.auth.register              |
+| users-permissions | auth                 | resetpassword          | plugin::users-permissions.auth.resetPassword         |
+| users-permissions | auth                 | sendemailconfirmation  | plugin::users-permissions.auth.sendEmailConfirmation |
+| users-permissions | user                 | count                  | plugin::users-permissions.user.count                 |
+| users-permissions | user                 | create                 | plugin::users-permissions.user.create                |
+| users-permissions | user                 | destroy                | plugin::users-permissions.user.destroy               |
+| users-permissions | user                 | destroyall             | (deleted)                                            |
+| users-permissions | user                 | find                   | plugin::users-permissions.user.find                  |
+| users-permissions | user                 | findone                | plugin::users-permissions.user.findOne               |
+| users-permissions | user                 | me                     | plugin::users-permissions.user.me                    |
+| users-permissions | user                 | update                 | plugin::users-permissions.user.update                |
+| users-permissions | userspermissions     | getrole                | plugin::users-permissions.role.getRole               |
+| users-permissions | userspermissions     | getroles               | plugin::users-permissions.role.getRoles              |
+| users-permissions | userspermissions     | createrole             | plugin::users-permissions.role.createRole            |
+| users-permissions | userspermissions     | deleterole             | plugin::users-permissions.role.deleteRole            |
+| users-permissions | userspermissions     | updaterole             | plugin::users-permissions.role.updateRole            |
+| users-permissions | userspermissions     | getpermissions         | plugin::users-permissions.permissions.getPermissions |
+| users-permissions | userspermissions     | getadvancedsettings    | (deleted)                                            |
+| users-permissions | userspermissions     | customroute            | (deleted)                                            |
+| users-permissions | userspermissions     | getemailtemplate       | (deleted)                                            |
+| users-permissions | userspermissions     | getpolicies            | (deleted)                                            |
+| users-permissions | userspermissions     | getproviders           | (deleted)                                            |
+| users-permissions | userspermissions     | getroutes              | (deleted)                                            |
+| users-permissions | userspermissions     | index                  | (deleted)                                            |
+| users-permissions | userspermissions     | searchusers            | (deleted)                                            |
+| users-permissions | userspermissions     | updateadvancedsettings | (deleted)                                            |
+| users-permissions | userspermissions     | updateemailtemplate    | (deleted)                                            |
+| users-permissions | userspermissions     | updateproviders        | (deleted)                                            |
+:::
+
+::: details Permission mapping for the i18n plugin
+| Strapi v3 type | Strapi v3 controller | Strapi v3 action          | Strapi v4 action                 |
+| -------------- | -------------------- | ------------------------- | -------------------------------- |
+| i18n           | content-types        | getnonlocalizedattributes | (deleted)                        |
+| i18n           | iso-locales          | listisolocales            | (deleted)                        |
+| i18n           | locales              | createlocale              | (deleted)                        |
+| i18n           | locales              | deletelocale              | (deleted)                        |
+| i18n           | locales              | listlocales               | plugin::i18n.locales.listLocales |
+| i18n           | locales              | updatelocale              | (deleted)                        |
+:::
+
+::: details Permission mapping for the Documentation plugin
+All deleted
+:::
+
+::: details Permission mapping for the Content-Type Builder
+| Strapi v3 type       | Strapi v3 controller | Strapi v3 action  | Strapi v4 action                                           |
+| -------------------- | -------------------- | ----------------- | ---------------------------------------------------------- |
+| content-type-builder | builder              | getreservednames  | (deleted)                                                  |
+| content-type-builder | componentcategories  | deletecategory    | (deleted)                                                  |
+| content-type-builder | componentcategories  | editcategory      | (deleted)                                                  |
+| content-type-builder | components           | createcomponent   | (deleted)                                                  |
+| content-type-builder | components           | deletecomponent   | (deleted)                                                  |
+| content-type-builder | components           | getcomponent      | plugin::content-type-builder.components.getComponent       |
+| content-type-builder | components           | getcomponents     | plugin::content-type-builder.components.getComponents      |
+| content-type-builder | components           | updatecomponent   | (deleted)                                                  |
+| content-type-builder | connections          | getconnections    | (deleted)                                                  |
+| content-type-builder | contenttypes         | createcontenttype | (deleted)                                                  |
+| content-type-builder | contenttypes         | deletecontenttype | (deleted)                                                  |
+| content-type-builder | contenttypes         | getcontenttype    | plugin::content-type-builder.content-types.getContentType  |
+| content-type-builder | contenttypes         | getcontenttypes   | plugin::content-type-builder.content-types.getContentTypes |
+| content-type-builder | contenttypes         | updatecontenttype | (deleted)                                                  |
+:::
+
+::: details Permission mapping for the Content Manager
+All deleted
+:::
+
+::: details Permission mapping for the Upload plugin
+| Strapi v3 type | Strapi v3 controller | Strapi v3 action | Strapi v4 action                   |
+| -------------- | -------------------- | ---------------- | ---------------------------------- |
+| upload         | upload               | count            | plugin::upload.content-api.count   |
+| upload         | upload               | destroy          | plugin::upload.content-api.destroy |
+| upload         | upload               | find             | plugin::upload.content-api.find    |
+| upload         | upload               | findone          | plugin::upload.content-api.findOne |
+| upload         | upload               | getsettings      | (deleted)                          |
+| upload         | upload               | search           | (deleted)                          |
+| upload         | upload               | updatesettings   | (deleted)                          |
+| upload         | upload               | upload           | plugin::upload.content-api.upload  |
+:::
+
+::: details Permission mapping for the Email plugin
+| Strapi v3 type | Strapi v3 controller | Strapi v3 action | Strapi v4 action         |
+| -------------- | -------------------- | ---------------- | ------------------------ |
+| email          | email                | getsettings      | (deleted)                |
+| email          | email                | send             | plugin::email.email.send |
+| email          | email                | test             | (deleted)                |
+:::
+
 ## Changes impacting Strapi plugins
 
 Strapi v4 introduces breaking changes that impact the table names, column names and database structures used by the [Users & Permissions](#users-and-permissions-plugin), [Upload](#upload-plugin) and [Internationalization (i18n)](#internationalization-i18n-plugin) plugins.
