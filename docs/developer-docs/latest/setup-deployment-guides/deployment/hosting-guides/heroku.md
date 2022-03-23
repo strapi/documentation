@@ -237,6 +237,10 @@ Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-
 ```js
 module.exports = ({ env }) => ({
   url: env('MY_HEROKU_URL'),
+  proxy: true,
+  app: {
+    keys: env.array("APP_KEYS", ["DATABASE_URL", "MY_HEROKU_URL", "NODE_ENV"]),
+  }
 });
 ```
 
