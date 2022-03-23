@@ -45,7 +45,7 @@ module.exports = ({ env }) => ({
 A provider's configuration is a JavaScript object built with the following properties:
 
 | Name             | Required | Type     | Description                                                                                                            |
-| ---------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+|------------------|----------|----------|------------------------------------------------------------------------------------------------------------------------|
 | `uid`            | true     | string   | The UID of the strategy. It must match the strategy's name                                                             |
 | `displayName`    | true     | string   | The name that will be used on the login page to reference the provider                                                 |
 | `icon`           | false    | string   | An image URL. If specified, it will replace the displayName on the login page                                          |
@@ -136,43 +136,38 @@ yarn add passport-google-oauth2
 ```jsx
 // path: ./config/admin.js
 
-'use strict';
-
-const GoogleStrategy = require('passport-google-oauth2');
+const GoogleStrategy = require("passport-google-oauth2");
 
 module.exports = ({ env }) => ({
-  // ...
-  admin: {
+  auth: {
     // ...
-    auth: {
-      /// ...
-      providers: [
-        {
-          uid: 'google',
-          displayName: 'Google',
-          icon: 'https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png',
-          createStrategy: strapi =>
-            new GoogleStrategy(
-              {
-                clientID: env('GOOGLE_CLIENT_ID'),
-                clientSecret: env('GOOGLE_CLIENT_SECRET'),
-                scope: [
-                  'https://www.googleapis.com/auth/userinfo.email',
-                  'https://www.googleapis.com/auth/userinfo.profile',
-                ],
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('google'),
-              },
-              (request, accessToken, refreshToken, profile, done) => {
-                done(null, {
-                  email: profile.email,
-                  firstname: profile.given_name,
-                  lastname: profile.family_name,
-                });
-              }
-            ),
-        },
-      ],
-    },
+    providers: [
+      {
+        uid: "google",
+        displayName: "Google",
+        icon: "https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png",
+        createStrategy: (strapi) =>
+          new GoogleStrategy(
+            {
+              clientID: env("GOOGLE_CLIENT_ID"),
+              clientSecret: env("GOOGLE_CLIENT_SECRET"),
+              scope: [
+                "https://www.googleapis.com/auth/userinfo.email",
+                "https://www.googleapis.com/auth/userinfo.profile",
+              ],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("google"),
+            },
+            (request, accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                firstname: profile.given_name,
+                lastname: profile.family_name,
+              });
+            }
+          ),
+      },
+    ],
   },
 });
 ```
@@ -180,7 +175,6 @@ module.exports = ({ env }) => ({
 :::
 
 #### Github
-
 
 Using: [passport-github](https://github.com/cfsghost/passport-github)
 
@@ -205,41 +199,37 @@ yarn add passport-github2
 ```jsx
 // path: ./config/admin.js
 
-'use strict';
-
-const GithubStrategy = require('passport-github2');
+const GithubStrategy = require("passport-github2");
 
 module.exports = ({ env }) => ({
-  // ...
-  admin: {
+  auth: {
     // ...
-    auth: {
-      // ...
-      providers: [
-        {
-          uid: 'github',
-          displayName: 'Github',
-          icon: 'https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png',
-          createStrategy: strapi =>
-            new GithubStrategy(
-              {
-                clientID: env('GITHUB_CLIENT_ID'),
-                clientSecret: env('GITHUB_CLIENT_SECRET'),
-                scope: ['user:email'],
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('github'),
-              },
-              (accessToken, refreshToken, profile, done) => {
-                done(null, {
-                  email: profile.emails[0].value,
-                  username: profile.username,
-                });
-              }
-            ),
-        },
-      ],
-    },
+    providers: [
+      {
+        uid: "github",
+        displayName: "Github",
+        icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
+        createStrategy: (strapi) =>
+          new GithubStrategy(
+            {
+              clientID: env("GITHUB_CLIENT_ID"),
+              clientSecret: env("GITHUB_CLIENT_SECRET"),
+              scope: ["user:email"],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("github"),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.emails[0].value,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
   },
 });
+
 ```
 
 :::
@@ -269,39 +259,36 @@ yarn add passport-discord
 ```jsx
 // path: ./config/admin.js
 
-'use strict';
-
-const DiscordStrategy = require('passport-discord');
+const DiscordStrategy = require("passport-discord");
 
 module.exports = ({ env }) => ({
-  // ...
-  admin: {
+  auth: {
     // ...
-    auth: {
-      // ...
-      providers: [
-        {
-          uid: 'discord',
-          displayName: 'Discord',
-          icon: 'https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png',
-          createStrategy: strapi =>
-            new DiscordStrategy(
-              {
-                clientID: env('DISCORD_CLIENT_ID'),
-                clientSecret: env('DISCORD_SECRET'),
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('discord'),
-                scope: ['identify', 'email'],
-              },
-              (accessToken, refreshToken, profile, done) => {
-                done(null, {
-                  email: profile.email,
-                  username: `${profile.username}#${profile.discriminator}`,
-                });
-              }
-            ),
-        },
-      ],
-    },
+    providers: [
+      {
+        uid: "discord",
+        displayName: "Discord",
+        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
+        createStrategy: (strapi) =>
+          new DiscordStrategy(
+            {
+              clientID: env("DISCORD_CLIENT_ID"),
+              clientSecret: env("DISCORD_SECRET"),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "discord"
+                ),
+              scope: ["identify", "email"],
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: `${profile.username}#${profile.discriminator}`,
+              });
+            }
+          ),
+      },
+    ],
   },
 });
 ```
@@ -333,45 +320,103 @@ yarn add passport-azure-ad-oauth2 jsonwebtoken
 ```jsx
 // path: ./config/admin.js
 
-'use strict';
-
-const AzureAdOAuth2Strategy = require('passport-azure-ad-oauth2');
-const jwt = require('jsonwebtoken');
+const AzureAdOAuth2Strategy = require("passport-azure-ad-oauth2");
+const jwt = require("jsonwebtoken");
 
 module.exports = ({ env }) => ({
-  // ...
-  admin: {
+  auth: {
     // ...
-    auth: {
-      // ...
-      providers: [
-        {
-          uid: 'azure_ad_oauth2',
-          displayName: 'Microsoft',
-          icon:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png',
-          createStrategy: strapi =>
-            new AzureAdOAuth2Strategy(
-              {
-                clientID: env('MICROSOFT_CLIENT_ID', ''),
-                clientSecret: env('MICROSOFT_CLIENT_SECRET', ''),
-                scope: ['user:email'],
-                tenant: env('MICROSOFT_TENANT_ID', ''),
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL(
-                  'azure_ad_oauth2'
+    providers: [
+      {
+        uid: "azure_ad_oauth2",
+        displayName: "Microsoft",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
+        createStrategy: (strapi) =>
+          new AzureAdOAuth2Strategy(
+            {
+              clientID: env("MICROSOFT_CLIENT_ID", ""),
+              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
+              scope: ["user:email"],
+              tenant: env("MICROSOFT_TENANT_ID", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "azure_ad_oauth2"
                 ),
-              },
-              (accessToken, refreshToken, params, profile, done) => {
-                var waadProfile = jwt.decode(params.id_token, '', true);
-                done(null, {
-                  email: waadProfile.upn,
-                  username: waadProfile.upn,
-                });
-              }
-            ),
-        },
-      ],
-    },
+            },
+            (accessToken, refreshToken, params, profile, done) => {
+              var waadProfile = jwt.decode(params.id_token, "", true);
+              done(null, {
+                email: waadProfile.upn,
+                username: waadProfile.upn,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+```
+
+:::
+
+#### Keycloak (OpenID Connect)
+
+Using: [passport-keycloak-oauth2-oidc](https://www.npmjs.com/package/passport-keycloak-oauth2-oidc)
+
+<code-group>
+
+<code-block title="NPM">
+```sh
+npm install --save passport-keycloak-oauth2-oidc
+```
+</code-block>
+
+<code-block title="YARN">
+```sh
+yarn add passport-keycloak-oauth2-oidc
+```
+</code-block>
+
+</code-group>
+
+::: details Configuration example for Keycloak (OpenID Connect):
+
+```jsx
+// path: ./config/admin.js
+
+const KeyCloakStrategy = require("passport-keycloak-oauth2-oidc");
+
+module.exports = ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "keycloak",
+        displayName: "Keycloak",
+        icon: "https://raw.githubusercontent.com/keycloak/keycloak-admin-ui/main/themes/keycloak/logo.svg",
+        createStrategy: (strapi) =>
+          new KeyCloakStrategy(
+            {
+              clientID: env("KEYCLOAK_CLIENT_ID", ""),
+              realm: env("KEYCLOAK_REALM", ""),
+              publicClient: env.bool("KEYCLOAK_PUBLIC_CLIENT", false),
+              clientSecret: env("KEYCLOAK_CLIENT_SECRET", ""),
+              sslRequired: env("KEYCLOAK_SSL_REQUIRED", "external"),
+              authServerURL: env("KEYCLOAK_AUTH_SERVER_URL", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "keycloak"
+                ),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
   },
 });
 ```
@@ -403,41 +448,35 @@ yarn add passport-okta-oauth20
 ```jsx
 // path: ./config/admin.js
 
-'use strict';
-
-const OktaOAuth2Strategy = require('passport-okta-oauth20').Strategy;
+const OktaOAuth2Strategy = require("passport-okta-oauth20").Strategy;
 
 module.exports = ({ env }) => ({
-  // ...
-  admin: {
+  auth: {
     // ...
-    auth: {
-      // ...
-      providers: [
-        {
-          uid: 'okta',
-          displayName: 'Okta',
-          icon:
-            'https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png',
-          createStrategy: strapi =>
-            new OktaOAuth2Strategy(
-              {
-                clientID: env('OKTA_CLIENT_ID'),
-                clientSecret: env('OKTA_CLIENT_SECRET'),
-                audience: env('OKTA_DOMAIN'),
-                scope: ['openid', 'email', 'profile'],
-                callbackURL: strapi.admin.services.passport.getStrategyCallbackURL('okta'),
-              },
-              (accessToken, refreshToken, profile, done) => {
-                done(null, {
-                  email: profile.email,
-                  username: profile.username,
-                });
-              }
-            ),
-        },
-      ],
-    },
+    providers: [
+      {
+        uid: "okta",
+        displayName: "Okta",
+        icon: "https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png",
+        createStrategy: (strapi) =>
+          new OktaOAuth2Strategy(
+            {
+              clientID: env("OKTA_CLIENT_ID"),
+              clientSecret: env("OKTA_CLIENT_SECRET"),
+              audience: env("OKTA_DOMAIN"),
+              scope: ["openid", "email", "profile"],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("okta"),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
   },
 });
 ```
@@ -489,9 +528,6 @@ It contains the created user (`event.user`), and the provider used to make the r
 // path: ./config/admin.js
 
 module.exports = () => ({
-  // ...
-  admin: {
-    // ...
     auth: {
       // ...
       events: {
@@ -507,6 +543,5 @@ module.exports = () => ({
         },
       },
     },
-  },
 });
 ```
