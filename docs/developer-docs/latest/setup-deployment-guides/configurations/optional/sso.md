@@ -105,7 +105,7 @@ You can also use services such as Okta and Auth0 as bridge services.
 
 To configure a provider, follow the procedure below:
 
-1. Make sure to import your strategy in your server configuration file, either from an installed package or a local file.
+1. Make sure to import your strategy in your admin configuration file, either from an installed package or a local file.
 2. You'll need to add a new item to the `auth.providers` array in your admin panel configuration that will match the [format given above](#setting-up-provider-configuration)
 3. Restart your application, the provider should appear on your admin login page.
 
