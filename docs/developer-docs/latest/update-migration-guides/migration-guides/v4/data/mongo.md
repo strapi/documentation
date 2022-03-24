@@ -12,37 +12,39 @@ Strapi v4 does not support MongoDB databases (see [blog post announcement](https
 
 If your Strapi v3 project uses a MongoDB database, migrating from Strapi v3 to Strapi v4 is a 2-step process: first, migrate from MongoDB to SQL within Strapi v3, and then migrate the SQL database from Strapi v3 to Strapi v4.
 
-Migrating from MongoDB to SQL with Strapi v3 can be done with the following procedure:
+Migrating from MongoDB to SQL with Strapi v3 requires:
 
-1. [Prepare the migration locally](#prepare-the-migration-locally).
-2. [Migrate the data locally](#migrate-the-data-locally).
-3. [Migrate the local data to production](#migrate-the-local-data-to-production).
+1. [preparing the migration locally](#prepare-the-migration-locally),
+2. [migrating the data locally](#migrate-the-data-locally),
+3. [migrating the local data to production](#migrate-the-local-data-to-production).
 
 ## Prepare the migration locally
 
 To prepare the migration locally:
 
-1. Dump the MongoDB database and load it locally.
-2. (_optional, only if not migrating to SQLite_) Create a SQL database locally  *(recommend using docker and shared volumes)*
+1. Dump the MongoDB database (see [MongoDB official documentation](https://www.mongodb.com/docs/database-tools/mongodump/)) and load it locally.
+2. (_optional, only if not migrating to SQLite_) Create a SQL database locally.
 
     ::: tip
     To avoid installing SQL and MongoDB on your computer, you can setup the local Mongo and SQL databases using a [Docker](https://hub.docker.com/) image.
 
     :::
 
-3. Switch the app connector to bookshelf and configure it with the previously created databases:
+3. Switch the application connector to bookshelf and configure it with the previously created databases:
 
     a. Add the required dependencies:
 
     ```bash
     
+    ## install the bookshelf connector
     npm install strapi-connector-bookshelf@3.6.9 knex@0.21.19
-    # install the appropriate db driver
-    # sqlite
+
+    # install the appropriate database driver
+    # for SQLite
     npm install sqlite3@5.0.2
-    # pg
+    # for PostgreSQL
     npm install pg@8.7.3
-    # MySQL
+    # for MySQL
     npm install mysql@2.18.1
     ```
 
@@ -152,6 +154,14 @@ To prepare the migration locally:
 
     </code-block>
 
+    <code-block title="PostgreSQL">
+
+    ```sql
+    TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
+    ```
+
+    </code-block>
+
     <code-block title="MySQL">
 
     ```sql
@@ -165,27 +175,20 @@ To prepare the migration locally:
     ```
 
     </code-block>
-    <code-block title="PostgreSQL">
-
-    ```sql
-    TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
-    ```
-
-    </code-block>
     </code-group>
 
 ## Migrate the data locally
 
 To migrate the data locally:
 
-* either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)), by respecting the following advices: 
+* either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)), using the following advices:
 
   - On the 1st pass:
-    - Create all the entries without relations/components links
-    - Create a mapping from MongoDB ids to SQL ids
+    - Create all the entries without relations/components links.
+    - Create a mapping from MongoDB ids to SQL ids.
   - and on the 2nd pass, create the relations/components links based on the MongoDB to SQL ids mapping.
 
-* or use a migration tool like in [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)).
+* or use a migration tool, like [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)).
 
 ## Migrate the local data to production
 
@@ -202,4 +205,3 @@ To migrate the local data to the production database:
 ::: strapi Next steps
 If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md).
 :::
-    
