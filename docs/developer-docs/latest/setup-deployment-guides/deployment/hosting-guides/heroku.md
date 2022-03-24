@@ -242,8 +242,6 @@ module.exports = ({ env }) => ({
 
 You will also need at least two of the `APP_KEYS` found in the default `.env` environment variable. Each key is seperated by a comma.
 
-`Path: ./my-project/`
-
 Add this `APP_KEYS` and a `proxy: true` as well to the newly created `server.js`
 
 ```js
