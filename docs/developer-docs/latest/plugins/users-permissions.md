@@ -67,11 +67,11 @@ axios
       Authorization: `Bearer ${token}`,
     },
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Data: ', response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -87,7 +87,6 @@ Available options:
 - `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables).
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
-
 
 ```js
 // path: ./config/plugins.js
@@ -126,13 +125,13 @@ axios
     email: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -155,13 +154,13 @@ axios
     identifier: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -758,10 +757,10 @@ axios
   .post('http://localhost:1337/api/auth/forgot-password', {
     email: 'user@strapi.io', // user's email
   })
-  .then(response => {
+  .then((response) => {
     console.log('Your user received an email');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('An error occurred:', error.response);
   });
 ```
@@ -783,10 +782,10 @@ axios
     password: 'userNewPassword',
     passwordConfirmation: 'userNewPassword',
   })
-  .then(response => {
+  .then((response) => {
     console.log("Your user's password has been reset.");
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('An error occurred:', error.response);
   });
 ```
@@ -801,7 +800,7 @@ In production, make sure the `url` config property is set. Otherwise the validat
 
 After having registered, if you have set **Enable email confirmation** to **ON**, the user will receive a confirmation link by email. The user has to click on it to validate his/her registration.
 
-_Example of the confirmation link:_ `https://yourwebsite.com/auth/email-confirmation?confirmation=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTk0OTgxMTE3LCJleHAiOjE1OTc1NzMxMTd9.0WeB-mvuguMyr4eY8CypTZDkunR--vZYzZH6h6sChFg`
+_Example of the confirmation link:_ `https://yourwebsite.com/api/auth/email-confirmation?confirmation=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTk0OTgxMTE3LCJleHAiOjE1OTc1NzMxMTd9.0WeB-mvuguMyr4eY8CypTZDkunR--vZYzZH6h6sChFg`
 
 If needed, you can re-send the confirmation email by making the following request.
 
@@ -813,10 +812,10 @@ axios
   .post(`http://localhost:1337/api/auth/send-email-confirmation`, {
     email: 'user@strapi.io', // user's email
   })
-  .then(response => {
+  .then((response) => {
     console.log('Your user received an email');
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('An error occurred:', error.response);
   });
 ```
@@ -830,7 +829,7 @@ The `user` object is available to successfully authenticated requests.
 - The authenticated `user` object is a property of `ctx.state`.
 
 ```js
-create: async ctx => {
+create: async (ctx) => {
   const { id } = ctx.state.user;
 
   const depositObj = {
