@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.0.6 migration guide
 
-The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](https://github.com/koajs/session/blob/master/Readme.md) and is necessary to fix the login provider feature of the Users & Permissions plugin. Additionally, password protection in the Documentation plugin uses the `session` middleware. The upgrade is required for the [Users & Permissions providers](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md) to function properly, secure cookies, and encrypt data. The migration guide consists of 3 sections:
+The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](https://github.com/koajs/session/blob/master/Readme.md) and is necessary to fix the login provider feature of the Users & Permissions plugin. Additionally, password protection in the Documentation plugin uses the `session` middleware. The migration guide consists of 3 sections:
 
 - upgrading the application dependencies
 - migrating the breaking changes to the middleware
@@ -41,19 +41,20 @@ module.exports = [
 ];
 ```
 
-2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information).
+2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information). The secrets are typically stored in `.env` during development. In most use cases the keys will be different for each environment. For example, a different set of keys should be used for the production and the development environments. Storing default keys in the config file is not recommended.
 
 ```jsx
 // path: ./config/server.js
 
   // ...
   app: {
-    keys: env.array("APP_KEYS", ["testKey1", "testKey2"]),
+    keys: env.array("APP_KEYS"),
   },
 // ...
 ```
 
 ::: details Example of the updated file
+
 ```jsx
 // path: ./config/server.js
 
@@ -61,15 +62,14 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   app: {
-    keys: env.array("APP_KEYS", ["testKey1", "testKey2"]),
+    keys: env.array("APP_KEYS"),
   },
   // ...
 });
 
 ```
+
 :::
-
-
 
 :::: warning
 It is a security risk to expose static session middleware keys in a deployed environment. An `.env` file or environment variables should be used instead.
