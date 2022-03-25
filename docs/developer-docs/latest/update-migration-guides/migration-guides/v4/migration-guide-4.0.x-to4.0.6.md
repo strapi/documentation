@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.0.6 migration guide
 
-The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](https://github.com/koajs/session/blob/master/Readme.md) and is necessary to fix the login provider feature of the Users & Permissions plugin. Additionally, password protection in the Documentation plugin uses the `session` middleware. The migration guide consists of 3 sections:
+The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#session) and is necessary to fix the login provider feature of the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md). Additionally, password protection in the [Documentation plugin](/developer-docs/latest/plugins/documentation.md) uses the `session` middleware. The migration guide consists of 3 sections:
 
 - upgrading the application dependencies
 - migrating the breaking changes to the middleware
@@ -41,7 +41,7 @@ module.exports = [
 ];
 ```
 
-2. Configure the session middleware by adding the key settings to the `server.js` configuration file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information). The secrets are typically stored in `.env` during development. In most use cases the keys will be different for each environment. For example, a different set of keys should be used for the production and the development environments. Storing default keys in the configuration file is not recommended.
+2. Configure the session middleware by adding the key settings to the `server.js` configuration file (see [session middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#session) for more information). The secrets are typically stored in `.env` during development. In most use cases the keys will be different for each environment. For example, a different set of keys should be used for the production and the development environments. Storing default keys in the configuration file is not recommended.
 
 ```jsx
 // path: ./config/server.js
