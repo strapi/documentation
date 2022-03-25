@@ -432,7 +432,8 @@ export default {
     app.injectContentManagerComponent('editView', 'informations', {
       name: 'my-plugin-my-compo',
       Component: () => 'my-compo',
-  });
+    });
+  }
 }
 ```
 
