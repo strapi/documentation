@@ -49,9 +49,10 @@ To prepare the migration locally:
     ```
 
     b. Update the configuration in  `./config/database.js`:
-    
+
     :::: columns
     ::: column-left Before, with a MongoDB database:
+
     ```jsx
     // before
     {
@@ -71,7 +72,7 @@ To prepare the migration locally:
     :::
     ::: column-right After, with a SQL database:
     <br/>
-    
+
     <code-group>
 
     <code-block title="SQLite">
@@ -85,13 +86,13 @@ To prepare the migration locally:
         filename: '.tmp/data.db',
       },
       options: {
-        // debug: true,
         useNullAsDefault: true,
       },
     }
     ```
+
     </code-block>
-    
+
     <code-block title="PostgreSQL">
     ```js
     // after
@@ -112,7 +113,7 @@ To prepare the migration locally:
     </code-block>
 
     <code-block title="MySQL">
-    
+
     ```js
     // after
     {
@@ -181,14 +182,14 @@ To prepare the migration locally:
 
 To migrate the data locally:
 
-* either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)), using the following advices:
+- either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)), using the following advices:
 
   - On the 1st pass:
     - Create all the entries without relations/components links.
     - Create a mapping from MongoDB ids to SQL ids.
   - and on the 2nd pass, create the relations/components links based on the MongoDB to SQL ids mapping.
 
-* or use a migration tool, like [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)).
+- or use a migration tool, like [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md)).
 
 ## Migrate the local data to production
 
