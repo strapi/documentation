@@ -41,7 +41,7 @@ module.exports = [
 ];
 ```
 
-2. Configure the session middleware by adding the key settings to the `server.js` config file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information). The secrets are typically stored in `.env` during development. In most use cases the keys will be different for each environment. For example, a different set of keys should be used for the production and the development environments. Storing default keys in the config file is not recommended.
+2. Configure the session middleware by adding the key settings to the `server.js` configuration file (see [koa-session](https://github.com/koajs/session/blob/master/Readme.md) for more information). The secrets are typically stored in `.env` during development. In most use cases the keys will be different for each environment. For example, a different set of keys should be used for the production and the development environments. Storing default keys in the configuration file is not recommended.
 
 ```jsx
 // path: ./config/server.js
