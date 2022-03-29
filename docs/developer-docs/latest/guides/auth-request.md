@@ -6,8 +6,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/auth-request.h
 
 # Authenticated request
 
-!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
-
 In this guide you will see how you can request the API as an authenticated user.
 
 ## Introduction
