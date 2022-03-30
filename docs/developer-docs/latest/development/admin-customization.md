@@ -277,7 +277,6 @@ module.exports = ({ env }) => ({
     replyTo: 'support@mywebsite.fr',
     emailTemplate: forgotPasswordTemplate,
   },
-  },
   // ...
 });
 ```
