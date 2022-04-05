@@ -330,7 +330,7 @@ module.exports = ({ env }) => ({
 Path: `./my-project/`.
 
 ```bash
-npm install strapi-provider-upload-aws-s3
+npm install @strapi/provider-upload-aws-s3
 ```
 
 To enable and configure the provider, create or edit the file at `./config/plugins.js`.
