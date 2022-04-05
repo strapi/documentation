@@ -6,21 +6,15 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/strapi-plugins.htm
 
 # List of Strapi plugins
 
-<!--
-::: callout 🚧 This section of the user guide is a work in progress. Stay tuned!
-<br>
-:::
--->
+This section provides a reference guide to the pre-installed and the additional Strapi plugins, which are available in the Marketplace. Regardless of the type, plugins are the fastest way to expand the functionality of your Strapi application. Additional documentation on plugins is provided in the relevent sections of the User guide and the Developer documention, however, A brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
 
-This section provides a reference guide to the default and the additional Strapi plugins, which are available in the Marketplace. A brief plugin description and how the installed plugin works and how the admin panel changes is provided.
-
-<!--No matter if they are installed by default, or additional, Strapi plugins allow to expand your application by adding more options and possibilities. All options are documented in their right places throughout the user guide. However, you can use the following documentation as a reference guide to know which Strapi plugins are available, how they work and which options they add to your Strapi application. -->
+Some plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), and are marked with  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
 
 ::: tip
-Some Strapi Starters and Templates might have additionl plugins beyond the default plugins listed below. 
+Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
 :::
 
-## Default plugins
+## Pre-installed plugins
 
 ### <img width="28" src="../assets/plugins/icon_i18n-plugin.png"> Internationalization plugin
 
@@ -30,19 +24,23 @@ This plugin is used to manage content in different languages, called "locales". 
 
 - define which locales should be available in the Strapi application,
 - define which content-types and fields can be translated in different locales, or should only be available in the default locale,
-- translate content and manage it each locale at a time. <!--what does this mean? -->
+- translate content and manage each locale individually.
 
-The Internationalization plugin impacts several parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
+The Internationalization plugin affects several parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
 | Section impacted | Options and settings                                                                                    |
 |------------------|---------------------------------------------------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted form the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring role's permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted form the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring role's permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li> <br> <li> Addition of role-based permissions setttings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/></li></ul> |
 | Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localisation/translation of the Content-type (see [Creating a new content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localisation/translation of the Content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/latest/content-manager/translating-content.md)).</li></ul> |
 
 <!-- Add RBAC features-->
 
 ### <img width="28" src="../assets/plugins/icon_up-plugin.png"> Users & Permissions plugin
+
+:::note
+[API tokens]() are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation in the near future.
+:::
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
@@ -64,9 +62,9 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 <!-- Add RBAC features above-->
 
 ### Email plugin
-The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is configured through the ./config/plugins.js file, however users can test the plugin settings in the Strapi admin panel. From the admin panel a user can:
 
-more information is available in the [Developer Documentation](https://docs.strapi.io/developer-docs/latest/plugins/email.html)
+The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is configured through the ./config/plugins.js file, however users can test email delivery by clicking on Settings in the main navigation and then configuration under the email plugin heading. 
+More information about the email plugin is available in the [Developer Documentation](https://docs.strapi.io/developer-docs/latest/plugins/email.html)
 
 ### GraphQL
 
@@ -78,8 +76,12 @@ The media library is installed by default in each Strapi application.
 
 - link from main panel 
 - RBAC <!-- need to upgrade licence to test this feature -->
-- 
-- 
+- in content type builder add media component (link to content-type stuff)
+- Content manager (allows for uploading content to am entry )
+
+:::note
+Drag and drop media uploads on the entry page are not currently functional. A user must click on the media field to open a dialog box, where you can select existing assets or upload new assets.
+:::
 
 ## Additional plugins
 
@@ -93,7 +95,7 @@ When the Documentation plugin is installed it is available in the admin panel, u
 - regenerate the documentation
 - restrict access to the documentation endpoint
 
-The Documentation plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed. Some options are only available with an enterprise edition license (marked by <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/>).
+The Documentation plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
 | Section impacted    | Options and settings         |
 |------------------|---------------------------------------------------------------------------------------------------------|
@@ -102,7 +104,10 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 
 ### Gatsby preview
-The Gatsby preview plugin is available in the in-app Marketplace, allows applications with Gatsby Cloud accounts to preview the application. The plugin adds GATSBY PREVIEW PLUGIN in the settings menu and adds a Gatsby preview button in the right side nav in the Content Manager.
+The Gatsby preview plugin is available in the in-app Marketplace, allows applications with Gatsby Cloud accounts to preview the application. The plugin adds:
+
+- GATSBY PREVIEW PLUGIN in the settings menu
+- a Gatsby preview button TO the right side nav in the Content Manager
   
   | Section impacted    | Options and settings         |
 |------------|-----------------|
@@ -118,18 +123,18 @@ The Gatsby preview plugin is available in the in-app Marketplace, allows applica
 
 
 ### SEO
-The Strapi SEO plugin is designed to make your application SEO-friendly. The plugin allows for: 
+The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation menu. <!-- add assets--> The plugin is configured from the main navigation menu. The plugin allows for:
 
 - importation of default Strapi seo and meta-social components
 - manage the meta title, meta description, and preview the content
 - manage social tags for Facebook and Twitter
-- SEO analysis of the application content 
+- SEO analysis of the application content
 
 <!-- table here -->
 - adds SEO to the nav panel
-- adds SEO component to selected collection types 
+- adds SEO component to selected collection types
 - lots of detail inside the content manager once it is setup
-- how much detail to add here, and where else would it be documented? 
+- how much detail to add here, and where else would it be documented?
 
 
 ### Sentry
