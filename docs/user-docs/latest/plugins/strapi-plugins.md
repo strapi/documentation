@@ -64,15 +64,19 @@ More information about the email plugin is available in the [Developer Documenta
 
 ### <img width="28" src="../assets/plugins/MediaLibPlugin.png"> Media library plugin
 
-The Media Library plugin is installed by default in each Strapi application and is accessible in the main navigation panel.
+The Media Library plugin is installed by default in each Strapi application and is accessible in the main navigation panel. The media Library allows users to:
 
-- link from main panel
-- in content type builder add media component (link to content-type stuff)
-- Content manager (allows for uploading content to am entry )
+- upload media
+- download media
+- crop images
+- change file names, alternative text, and captions
 
-| Section impacted | Options and settings                                                                                    |
-|------------------|---------------------------------------------------------------------------------------------------------|
-Settings      | <ul><li>Addition of role-based permissions setttings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul> |
+Media assets can be manipulated through the main navigation or inside media fields in the Content Manager. In addition to the Media Library in the main navigation, the Media Library Plugin affects other parts of the administration panel:
+
+| Section impacted | Options and settings                                                |
+|------------------|---------------------------------------------------------------------|
+| Main Navigation    | <ul> Addition of the Media Library to the main navigation. From the Media Library assets can be uploaded, downloaded, meta data edited, and images can be cropped. </ul>|
+|Settings      | <ul> <li> Addition of booleans for: <ul> <li>responsive friendly upload</li> <li>size optimization</li><li>auto orientation</li></ul> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Media Library* </li><li>Addition of role-based permissions setttings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul><li>Addition of role-based permissions setttings where the access to the Media Library and Media Library functions can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Plugins* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li> |
 
 :::note
 Drag and drop media uploads on the entry page are not currently functional. A user must click on the media field to open a dialog box, where you can select existing assets or upload new assets.
@@ -82,9 +86,7 @@ Drag and drop media uploads on the entry page are not currently functional. A us
 
 ### <img width="28" src="../assets/plugins/Documentation-swagger.png"> Documentation
 
-The Documentation plugin is available from the [Strapi Market](https://market.strapi.io)  or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1.  
-
-When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin allows you to:
+The Documentation plugin is available from the [Strapi Market](https://market.strapi.io)  or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin allows you to:
 
 - open the API documentation
 - regenerate the documentation
@@ -99,7 +101,7 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 ### <img width="28" src="../assets/plugins/Gatsby_Monogram.png"> Gatsby preview
 
-The Gatsby preview plugin is available from the in-app Marketplace, and allows applications with Gatsby Cloud accounts to preview the application. The plugin adds:
+The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end and is available from the [Strapi Market](https://market.strapi.io) or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). The plugin adds:
 
 - a Gatsby Preview Plugin section in the Settings menu,
 - a **Gatsby preview** button to the right-side navigation in the Content Manager.
@@ -120,7 +122,7 @@ There is no access to the GraphQL plugin in the admin panel. Users can confirm t
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation menu. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the _SEO_ link in the main navigation a list of Collection Types and Single Types is available. The plugin is configured from the main navigation menu. The plugin allows for:
+The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation menu. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows for:
 
 - importation of default Strapi seo and meta-social components
 - manage the meta title, meta description, and preview the content
@@ -138,4 +140,3 @@ Please see the plugin documentation in the [Strapi Market](https://market.strapi
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
 There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
--->
