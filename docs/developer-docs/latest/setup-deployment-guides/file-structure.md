@@ -33,6 +33,8 @@ my-project
 
 The default structure of a Strapi project created without the starter CLI looks like the following:
 
+:::: tabs card
+::: tab JavaScript
 <pre>
   <code>
 . <span class="token comment"># root of the application</span>
@@ -101,3 +103,84 @@ The default structure of a Strapi project created without the starter CLI looks 
 └ package.json
   </code>
 </pre>
+
+:::
+
+::: tab TypeScript
+<pre>
+  <code>
+# TS project
+. # root of the application
+├──── .cache # files used to build the admin panel
+├──── .tmp
+├──── config # API configurations
+│     ├ api.ts
+│     ├ admin.ts
+│     ├ cron-tasks.ts
+│     ├ database.ts
+│     ├ middlewares.ts
+│     ├ plugins.ts
+│     └ server.ts
+├──── database
+│     └──── migrations
+├──── dist # build of the backend
+│     └──── build # build of the admin panel
+├──── node_modules # npm packages used by the project
+├──── public # files accessible to the outside world
+│     └──── uploads
+├──── src
+│     ├──── admin # admin customization files
+│           ├──── extensions # files to extend the admin panel
+│     │     ├ app.example.tsx
+│     │     └ webpack.config.js
+│     ├──── api # business logic of the project split into subfolders per API
+│     │     └──── (api-name)
+│     │           ├──── content-types
+│     │           │     └──── (content-type-name)
+│     │           │           └ lifecycles.ts
+│     │           │           └ schema.json
+│     │           ├──── controllers
+│     │           ├──── middlewares
+│     │           ├──── policies
+│     │           ├──── routes
+│     │           ├──── services
+│     │           └ index.ts
+│     ├──── components
+│     │     └──── (category-name)
+│     │           ├ (componentA).json
+│     │           └ (componentB).json
+│     ├──── extensions # files to extend installed plugins
+│     │     └──── (plugin-to-be-extended)
+│     │           ├──── content-types
+│     │           │     └──── (content-type-name)
+│     │           │           └ schema.json
+│     │           └ strapi-server.js
+│     ├──── middlewares
+│     │     └──── (middleware-name)
+│     │           ├ defaults.json
+│     │           └ index.ts
+│     ├──── plugins # local plugins files
+│     │     └──── (plugin-name)
+│     │           ├──── admin
+│     │           │     └──── src
+│     │           │           └ index.tsx
+│     │           │           └ pluginId.ts
+│     │           ├──── server
+│     │           │     ├──── content-types
+│     │           │     ├──── controllers
+│     │           │     └──── policies
+│     │           ├ package.json
+│     │           ├ strapi-admin.js
+│     │           └ strapi-server.js
+│     ├─── policies
+│     └ index.ts # include register(), bootstrap() and destroy() functions
+├ .env
+├ tsconfig-admin.json # NOTE: Location and name might change
+├ tsconfig-server.json # NOTE: Location and name might change
+└ package.json
+
+  </code>
+</pre>
+:::
+
+::::
