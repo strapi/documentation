@@ -101,19 +101,13 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 ### <img width="28" src="../assets/plugins/Gatsby_Monogram.png"> Gatsby preview
 
-The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end and is available from the [Strapi Market](https://market.strapi.io) or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). The plugin adds:
-
-- a Gatsby Preview Plugin section in the Settings menu,
-- a **Gatsby preview** button to the right-side navigation in the Content Manager.
+The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end and is available from the [Strapi Market](https://market.strapi.io) or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). More information about the plugin is available on the [Gatsby preview plugin page](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview).
 
 | Section impacted    | Options and settings         |
 |------------|-----------------|
-| Settings     | Addition of the Gatsby preview plugin section in the Settings sub navigation. |
-| Content Manager     | Item 2                 |
+| Settings     |  Addition of the Gatsby preview plugin section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync url</li> </ul> |
+| Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation                  |
 
-- settings for which content types
-- settings to add the link to gatsby
-- Xno changes to the RBAC
 
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
 
