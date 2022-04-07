@@ -683,7 +683,6 @@ const { isDraft } = require('strapi-utils').contentTypes;
 
 - `isDraft`: This function checks if the entry is a draft.
 
-
 ##### Collection Type
 
 :::: tabs card
@@ -1525,13 +1524,13 @@ const result = await knex('restaurants')
   .whereNot('cities.published_at', null)
   .join('chefs', 'restaurants.id', 'chefs.restaurant_id')
   .select('restaurants.name as restaurant')
-  .select('chef.name as chef')
+  .select('chef.name as chef');
 
 // Lodash's groupBy method can be used to
 // return a grouped key-value object generated from
 // the response
 
-return (_.groupBy(result, 'chef'));
+return _.groupBy(result, 'chef');
 ```
 
 **We strongly suggest to sanitize any strings before making queries to the DB**
@@ -2556,10 +2555,10 @@ _Parameters:_
 
 _Parameters:_
 
-| Name   | Type   | Description                  |
-| ------ | ------ | ---------------------------- |
-| result | Object | Deleted entry                |
-| params | Object | Find params _(e.g: filters)_ |
+| Name   | Type                    | Description                                                    |
+| ------ | ----------------------- | -------------------------------------------------------------- |
+| result | Object / Array{Objects} | Deleted entry or an array of entries _(in case of bulkDelete)_ |
+| params | Object                  | Find params _(e.g: filters)_                                   |
 
 :::
 
