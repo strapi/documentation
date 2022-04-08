@@ -21,7 +21,7 @@ https://laravel.com/docs/9.x/http-client#macros :
 
 In App\Providers\AppServiceProvider (or your ServiceProvider) :
 
-````php
+```php
 use Illuminate\Support\Facades\Http;
  
 /**
@@ -37,11 +37,11 @@ public function boot()
         ])->baseUrl(env('STRAPI_URL')); # Base url of your strapi app
     });
 }
-````
+```
 
 Once your macro has been configured, you may invoke it from anywhere in your application to create a pending request with the specified configuration:
 
-````php
+```php
 # Access to GraphQL
 $response = Http::strapi()->post('graphql', ['query' => $gqlQuery, 'variables' => $variables]); 
 #Tip you might include a .gql file here using $gqlQuery = include('gqlQuery.gql')
