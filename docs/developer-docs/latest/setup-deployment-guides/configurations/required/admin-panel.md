@@ -42,7 +42,7 @@ The `./config/admin.js` file should at least include a minimal configuration wit
 :::
 
 :::: tabs card
-::: tab Minimal configuration
+::: tab Minimal configuration JavaScript
 
 The default configuration created with any new project should at least include the following:
 
@@ -61,7 +61,7 @@ module.exports = ({ env }) => ({
 
 :::
 
-::: tab Full configuration
+::: tab Full configuration JavaScript
 
 ```js
 // path: ./config/admin.js
@@ -101,4 +101,64 @@ module.exports = ({ env }) => ({
 ```
 
 :::
+
+::: tab Minimal configuration TypeScript
+
+```js
+// path: ./config/admin.ts
+
+module.exports = ({ env }) => ({
+  apiToken: {
+    salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auth: {
+    secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+  },
+});
+```
+
+:::
+
+::: tab Full configuration TypeScript
+
+```js
+// path: ./config/admin.js
+
+module.exports = ({ env }) => ({
+  apiToken: {
+    salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auth: {
+    events: {
+      onConnectionSuccess(e) {
+        console.log(e.user, e.provider);
+      },
+      onConnectionError(e) {
+        console.error(e.error, e.provider);
+      },
+    },
+    options: {
+      expiresIn: "7d",
+    },
+    secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+  },
+  url: env('PUBLIC_ADMIN_URL', '/dashboard'),
+  autoOpen: false,
+  watchIgnoreFiles: [
+    './my-custom-folder', // Folder
+    './scripts/someScript.sh', // File
+  ],
+  host: 'localhost', // Only used for --watch-admin
+  port: 8003, // Only used for --watch-admin
+  serveAdminPanel: env.bool('SERVE_ADMIN', true),
+  forgotPassword: {
+    from: 'no-reply@example.com',
+    replyTo: 'no-reply@example.com',
+  },
+});
+```
+
+:::
+
 ::::
+<!-- Change the tab headers to make it fit on the screen all at the same time.-->
