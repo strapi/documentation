@@ -6,15 +6,53 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with Laravel
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
 Should you wish to use standalone PHP, you may also be interested in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
 
-This guide assumes you already have [Laravel installed](https://laravel.com/docs/8.x/installation) and are familiar with the basics of the framework.
+This guide assumes you already have [Laravel installed](https://laravel.com/docs/9.x/installation) and are familiar with the basics of the framework.
+
+
+## Using the native Laravel Http Client
+
+Following the official Laravel documentation, you can easily make a Strapi Macro to integrated it to the Http client from Laravel : 
+
+https://laravel.com/docs/9.x/http-client#macros : 
+
+In App\Providers\AppServiceProvider (or your ServiceProvider) :
+
+````php
+use Illuminate\Support\Facades\Http;
+ 
+/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    Http::macro('strapi', function () {
+        return Http::withHeaders([
+            'Authorization' => 'Bearer '.env('STRAPI_TOKEN'), #Token generated in the admin
+        ])->baseUrl(env('STRAPI_URL')); # Base url of your strapi app
+    });
+}
+````
+
+Once your macro has been configured, you may invoke it from anywhere in your application to create a pending request with the specified configuration:
+
+````php
+# Access to GraphQL
+$response = Http::strapi()->post('graphql', ['query' => $gqlQuery, 'variables' => $variables]); 
+#Tip you might include a .gql file here using $gqlQuery = include('gqlQuery.gql')
+
+# Access to Api Rest
+$response = Http::strapi()->get('api/pages');
+```
 
 ## Install the Laravel-Strapi Laravel Package
+
+!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 ```bash
 composer require dbfx/laravel-strapi
