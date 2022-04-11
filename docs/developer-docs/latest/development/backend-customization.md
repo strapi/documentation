@@ -2555,10 +2555,10 @@ _Parameters:_
 
 _Parameters:_
 
-| Name   | Type                    | Description                                                    |
-| ------ | ----------------------- | -------------------------------------------------------------- |
-| result | Object / Array{Objects} | Deleted entry or an array of entries _(in case of bulkDelete)_ |
-| params | Object                  | Find params _(e.g: filters)_                                   |
+| Name   | Type   | Description                  |
+| ------ | ------ | ---------------------------- |
+| result | Object | Array                        | Deleted entry or an array of entries _(in case of bulkDelete)_ |
+| params | Object | Find params _(e.g: filters)_ |
 
 :::
 
