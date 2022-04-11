@@ -129,10 +129,10 @@ The default structure of a Strapi project created without the starter CLI looks 
 ├──── public # files accessible to the outside world
 │     └──── uploads
 ├──── src
-│     ├──── admin # admin customization files
+│     ├──── admin  <span class="token comment"># admin customization files</span>
 │           ├──── extensions # files to extend the admin panel
 │     │     ├ app.example.tsx
-│     │     └ webpack.config.js
+│     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api # business logic of the project split into subfolders per API
 │     │     └──── (api-name)
 │     │           ├──── content-types
@@ -154,7 +154,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           ├──── content-types
 │     │           │     └──── (content-type-name)
 │     │           │           └ schema.json
-│     │           └ strapi-server.js
+│     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├──── middlewares
 │     │     └──── (middleware-name)
 │     │           ├ defaults.json
@@ -170,8 +170,8 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           │     ├──── controllers
 │     │           │     └──── policies
 │     │           ├ package.json
-│     │           ├ strapi-admin.js
-│     │           └ strapi-server.js
+│     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
+│     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├─── policies
 │     └ index.ts # include register(), bootstrap() and destroy() functions
 ├ .env
