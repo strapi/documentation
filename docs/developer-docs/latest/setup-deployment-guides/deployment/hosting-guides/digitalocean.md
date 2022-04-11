@@ -177,9 +177,12 @@ You will need the **database name**, **username** and **password** for later use
 
 In your code editor, you will need to edit a file called `database.js`. Replace the contents of the file with the following.
 
-`Path: ./config/database.js`
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./config/database.js`
+
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
   connections: {
@@ -200,6 +203,37 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'postgres',
+        host: env('DATABASE_HOST', '127.0.0.1'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'strapi'),
+        username: env('DATABASE_USERNAME', ''),
+        password: env('DATABASE_PASSWORD', ''),
+      },
+      options: {
+        ssl: false,
+      },
+    },
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 You are now ready to push these changes to Github:
 
