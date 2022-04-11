@@ -307,9 +307,13 @@ npm install pg
 
 Copy/paste the following:
 
-`Path: ./my-project/config/database.js`:
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./my-project/config/database.js`:
+
 module.exports = ({ env }) => ({
   connection: {
     client: "postgres",
@@ -325,6 +329,33 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./my-project/config/database.ts`:
+
+export default ({ env }) => ({
+  connection: {
+    client: "postgres",
+    connection: {
+      host: env("DATABASE_HOST", "127.0.0.1"),
+      port: env.int("DATABASE_PORT", 5432),
+      database: env("DATABASE_NAME", "strapi"),
+      user: env("DATABASE_USERNAME", ""),
+      password: env("DATABASE_PASSWORD", ""),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
 #### 3. Install the **Strapi AWS S3 Upload Provider**:
 
 Path: `./my-project/`.
@@ -334,6 +365,9 @@ npm install @strapi/provider-upload-aws-s3
 ```
 
 To enable and configure the provider, create or edit the file at `./config/plugins.js`.
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = ({ env }) => ({
@@ -352,6 +386,33 @@ module.exports = ({ env }) => ({
   }
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default ({ env }) => ({
+  upload: {
+      config: {
+          provider: 'aws-s3',
+          providerOptions: {
+              accessKeyId: env('AWS_ACCESS_KEY_ID'),
+              secretAccessKey: env('AWS_ACCESS_SECRET'),
+              region: env('AWS_REGION'),
+              params: {
+                  Bucket: env('AWS_BUCKET_NAME'),
+              },
+          },
+      },
+  }
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
 
@@ -408,6 +469,9 @@ sudo nano ecosystem.config.js
 
 - Next, replace the boilerplate content in the file, with the following:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = {
   apps: [
@@ -432,6 +496,40 @@ module.exports = {
   ],
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  apps: [
+    {
+      name: 'your-app-name',
+      cwd: '/home/ubuntu/my-project',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
+        DATABASE_PORT: '5432',
+        DATABASE_NAME: 'strapi', // DB name under 'Configuration' tab
+        DATABASE_USERNAME: 'postgres', // default username
+        DATABASE_PASSWORD: 'Password',
+        AWS_ACCESS_KEY_ID: 'aws-access-key-id',
+        AWS_ACCESS_SECRET: 'aws-access-secret', // Find it in Amazon S3 Dashboard
+        AWS_REGION: 'aws-region',
+        AWS_BUCKET_NAME: 'my-project-bucket-name',
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+</code-group>
+
+
 
 You can also set your environment variables in a `.env` file in your project like so:
 
