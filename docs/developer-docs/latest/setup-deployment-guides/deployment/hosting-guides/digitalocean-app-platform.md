@@ -28,6 +28,9 @@ To deploy your Strapi app, you will need to update the exisiting database config
 
 You will configure a database for production. First, install the [pg](https://www.npmjs.com/package/pg) package (with `npm install pg --save` or `yarn add pg`) then add the following to `config/database.js`:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```javascript
 module.exports = ({ env }) => {
   if (env('NODE_ENV') === 'production') {
@@ -60,6 +63,48 @@ module.exports = ({ env }) => {
   }  
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```javascript
+export default ({ env }) => {
+  if (env('NODE_ENV') === 'production') {
+    return {
+      connection: {
+        client: 'postgres',
+        connection: {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: env('DATABASE_PASSWORD', 'strapi'),
+          ssl: {
+            rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false),
+          },
+        },
+        debug: false,
+      },
+    };
+  }
+
+  return {
+    connection: {
+      client: 'sqlite',
+      connection: {
+        filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+      },
+      useNullAsDefault: true,
+    }
+  }  
+};
+```
+
+</code-block>
+</code-group>
+
+
 
 Your application is now ready to deploy to DigitalOcean App Platform.
 
