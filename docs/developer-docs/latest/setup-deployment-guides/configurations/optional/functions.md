@@ -29,7 +29,12 @@ It can be used to:
 
 The bootstrap function can be synchronous, asynchronous, or return a promise:
 
+
+
 **Synchronous function**
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = () => {
@@ -37,21 +42,68 @@ module.exports = () => {
 };
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default () => {
+  // some sync code
+};
+```
+
+</code-block>
+</code-group>
+
+
 **Asynchronous function**
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = async () => {
   await someSetup();
 };
 ```
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default async () => {
+  await someSetup();
+};
+```
+
+</code-block>
+</code-group>
+
 
 **Function returning a promise**
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = () => {
   return new Promise(/* some code */);
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default () => {
+  return new Promise(/* some code */);
+};
+```
+
+</code-block>
+</code-group>
+
 
 
 ## Destroy

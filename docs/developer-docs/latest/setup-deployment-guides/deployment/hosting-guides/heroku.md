@@ -198,9 +198,13 @@ yarn add pg-connection-string
 
 Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
 
-`Path: ./config/env/production/database.js`
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./config/env/production/database.js
+
 const parse = require('pg-connection-string').parse;
 const config = parse(process.env.DATABASE_URL);
 
@@ -222,6 +226,39 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/env/production/database.ts
+
+import parse = require('pg-connection-string').parse;
+const config = parse(process.env.DATABASE_URL);
+
+export default ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: config.host,
+      port: config.port,
+      database: config.database,
+      user: config.user,
+      password: config.password,
+      ssl: {
+        rejectUnauthorized: false
+      },
+    },
+    debug: false,
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
 You also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
 
 ```bash
@@ -232,19 +269,36 @@ heroku config:set NODE_ENV=production
 
 Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
 
-`Path: ./config/env/production/server.js`
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+// Path: ./config/env/production/server.js`
+
 module.exports = ({ env }) => ({
-    proxy: true,
-    url: env('MY_HEROKU_URL'),
-    app: { 
-      keys: env.array('APP_KEYS')
-    },
-  })
+  url: env('MY_HEROKU_URL'),
+});
+
 ```
 
-You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL` and `APP_KEYS`. This will populate the variables with something like `https://your-app.herokuapp.com/` and `dsfhasbvvfwfcerterzer+n1w==,afjdsagfsauzuwzref6==,kjdbgjerhgh6wireg==,jkssdhgjaksdgkjbsdg==` respectively.
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+export default ({ env }) => ({
+  url: env('MY_HEROKU_URL'),
+});
+```
+
+</code-block>
+</code-group>
+
+
+
+You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
 
 ```bash
 heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
