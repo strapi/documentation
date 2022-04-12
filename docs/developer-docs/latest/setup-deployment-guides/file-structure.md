@@ -34,7 +34,9 @@ my-project
 The default structure of a Strapi project created without the starter CLI looks like the following:
 
 :::: tabs card
-::: tab JavaScript
+
+::: tab JAVASCRIPT
+
 <pre>
   <code>
 . <span class="token comment"># root of the application</span>
@@ -106,7 +108,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 
 :::
 
-::: tab TypeScript
+::: tab TYPESCRIPT
 <pre>
   <code>
 # TS project
@@ -114,23 +116,23 @@ The default structure of a Strapi project created without the starter CLI looks 
 ├──── .cache # files used to build the admin panel
 ├──── .tmp
 ├──── config # API configurations
-│     ├ api.ts
-│     ├ admin.ts
-│     ├ cron-tasks.ts
-│     ├ database.ts
-│     ├ middlewares.ts
-│     ├ plugins.ts
-│     └ server.ts
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.ts</a>
+│     ├  <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html">admin.ts</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.js</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.ts</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html">middlewares.ts</a>
+│     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.ts</a>
+│     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.ts</a>
 ├──── database
 │     └──── migrations
 ├──── dist # build of the backend
 │     └──── build # build of the admin panel
 ├──── node_modules # npm packages used by the project
-├──── public # files accessible to the outside world
+├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
 │     └──── uploads
 ├──── src
-│     ├──── admin  <span class="token comment"># admin customization files</span>
-│           ├──── extensions # files to extend the admin panel
+│     ├──── admin <span class="token comment"># admin customization files</span>
+│           ├──── <a href="/developer-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span>
 │     │     ├ app.example.tsx
 │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api # business logic of the project split into subfolders per API
@@ -181,6 +183,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 
   </code>
 </pre>
+
 :::
 
 ::::
