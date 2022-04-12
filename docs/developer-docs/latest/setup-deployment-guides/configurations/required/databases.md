@@ -77,6 +77,8 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 :::: tab PostgreSQL
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
@@ -137,6 +139,8 @@ module.exports = ({ env }) => ({
 :::: tab MySQL/MariaDB
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'mysql',
@@ -158,8 +162,13 @@ module.exports = ({ env }) => ({
 ::::
 
 :::: tab SQLite
+<code-group>
+
+<code-block title="JavaScript">
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'sqlite',
@@ -172,10 +181,11 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::::
-::: tab SQLite-TypeScript
-```jsx
-// TS configuration
+</code-block>
+
+<code-block title="TypeScript">
+
+```js
 // path: ./config/database.ts
 
 import path from 'path';
@@ -195,7 +205,13 @@ export default ({ env }) => ({
   },
 });
 ```
-:::
+
+</code-block>
+
+</code-group>
+
+::::
+
 :::::
 
 ## Configuration in database

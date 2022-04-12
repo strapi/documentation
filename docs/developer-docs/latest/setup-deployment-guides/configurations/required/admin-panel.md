@@ -47,10 +47,9 @@ The `./config/admin.js` file should at least include a minimal configuration wit
 
 The default configuration created with any new project should at least include the following:
 
-
 <code-group>
 
-<code-block title="JavaScript">
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/admin.js
@@ -68,7 +67,7 @@ module.exports = ({ env }) => ({
 
 </code-block>
 
-<code-block title="TypeScript">
+<code-block title="TYPESCRIPT">
 
 ```js
 // path: ./config/admin.ts
@@ -93,7 +92,7 @@ module.exports = ({ env }) => ({
 
 <code-group>
 
-<code-block title="JavaScript">
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/admin.js
@@ -135,7 +134,7 @@ module.exports = ({ env }) => ({
 
 </code-block>
 
-<code-block title="TypeScript">
+<code-block title="TYPESCRIPT">
 
 ```js
 // path: ./config/admin.js

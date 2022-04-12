@@ -45,6 +45,10 @@ Variables defined in the `.env` file are accessible using `process.env.{variable
 
 In configuration files, a `env()` utility allows defining defaults and [casting values](#casting-environment-variables):
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/database.js
 
@@ -58,6 +62,28 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/database.ts
+
+export default ({ env }) => ({
+  connections: {
+    default: {
+      settings: {
+        password: env('DATABASE_PASSWORD'),
+      },
+    },
+  },
+});
+```
+
+</code-block>
+
+</code-group>
 
 ### Casting environment variables
 
