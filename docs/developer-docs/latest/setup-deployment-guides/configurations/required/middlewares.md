@@ -37,8 +37,8 @@ module.exports = [
   // ...
   'my-custom-node-module', // custom middleware that does not require any configuration
   {
-    // custom resolve to find a package or a path
-    resolve: 'my-custom-node-module',
+    // custom name to find a package or a path
+    name: 'my-custom-node-module',
     config: {
       foo: 'bar',
     },
@@ -216,9 +216,12 @@ The `public` middleware is a static file serving middleware, based on [koa-stati
 
 | Option         | Description                                         | Type      | Default value |
 | -------------- | --------------------------------------------------- | --------- | ------------- |
-| `path`         | Path to the public folder                           | `String`  | `'./public'`  |
 | `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
 | `defaultIndex` | Display default index page at `/` and `/index.html` | `Boolean` | `true`        |
+
+:::tip
+You can customize the path of the public folder by editing the [server configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#available-options).
+:::
 
 ### `security`
 
@@ -239,15 +242,15 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 
 The `session` middleware allows the use of cookie-based sessions, based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
-| Option       | Description                                                                                                                                                                       | Type                     | Default value                           |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | --------------------------------------- |
-| `key`        | Cookie key                                                                                                                                                                        | `String`                 | `'koa.sess'`                            |
-| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. `'session'` will result in a cookie that expires when the session or browser is closed.                                                  | `Integer` or `'session'` | `86400000`                              |
-| `autoCommit` | Automatically commit headers                                                                                                                                                      | `Boolean`                | `true`                                  |
-| `overwrite`  | Can overwrite or not                                                                                                                                                              | `Boolean`                | `true`                                  |
+| Option       | Description                                                                                                                                                                                                                                                 | Type                     | Default value                           |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | --------------------------------------- |
+| `key`        | Cookie key                                                                                                                                                                                                                                                  | `String`                 | `'koa.sess'`                            |
+| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. `'session'` will result in a cookie that expires when the session or browser is closed.                                                                                                                   | `Integer` or `'session'` | `86400000`                              |
+| `autoCommit` | Automatically commit headers                                                                                                                                                                                                                                | `Boolean`                | `true`                                  |
+| `overwrite`  | Can overwrite or not                                                                                                                                                                                                                                        | `Boolean`                | `true`                                  |
 | `httpOnly`   | Is httpOnly or not. A cookie with the `HttpOnly` attribute is inaccessible to the JavaScript [`Document.cookie API`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie). Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks. | `Boolean`                | `true`                                  |
-| `signed`     | Sign the cookies                                                                                                                                                                  | `Boolean`                | `true`                                  |
-| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original `maxAge` value, resetting the expiration countdown.                                | `Boolean`                | `false`                                 |
-| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                                                                                                  | `Boolean`                | `false`                                 |
-| `secure`     | Force the use of HTTPS                                                                                                                                                            | `Boolean`                | `true` in production, `false` otherwise |
-| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                                                                                        | `String`                 | `null`                                  |
+| `signed`     | Sign the cookies                                                                                                                                                                                                                                            | `Boolean`                | `true`                                  |
+| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original `maxAge` value, resetting the expiration countdown.                                                                                                  | `Boolean`                | `false`                                 |
+| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                                                                                                                                                                    | `Boolean`                | `false`                                 |
+| `secure`     | Force the use of HTTPS                                                                                                                                                                                                                                      | `Boolean`                | `true` in production, `false` otherwise |
+| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                                                                                                                                                                  | `String`                 | `null`                                  |

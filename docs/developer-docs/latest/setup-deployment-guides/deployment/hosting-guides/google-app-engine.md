@@ -154,6 +154,7 @@ Create `.gcloudignore` in the project root.
 node_modules/
 #!include:.gitignore
 !.env
+yarn.lock  # If you're using Yarn
 ```
 
 In the case of Strapi, the admin UI will have to be re-built after every deploy,
