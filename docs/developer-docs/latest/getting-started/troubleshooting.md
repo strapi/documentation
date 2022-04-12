@@ -97,8 +97,12 @@ Likewise since Strapi is Node.js based, in order for changes with the SSL certif
 
 Due to these two issues, it is recommended you use a proxy application such as [Nginx](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md), [Caddy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md), [HAProxy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
+## Can I use TypeScript in a Strapi project?
+
+TypeScript is supported in Strapi projects from v4.1.x. TypeScript code examples are available available throughout the core Developer Documentation, including a [dedicated introductory page](/developer-docs/latest/setup-deployment-guides/configurations/databases/typescript.md).
+
 ## Is X feature available yet?
 
-You can see the [ProductBoard roadmap](https://portal.productboard.com/strapi) to see which feature requests are currently being worked on and which have not been started yet.
+You can see the [ProductBoard roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet.
 
 <!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->
