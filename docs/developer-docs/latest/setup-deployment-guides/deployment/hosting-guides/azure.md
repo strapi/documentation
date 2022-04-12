@@ -27,7 +27,7 @@ When Strapi is running in a PaaS hosting model, a custom storage provider will b
 
 ### Required Resources
 
-There are three resources in Azure that are required to run Strapi in a PaaS model, [AppService](https://azure.microsoft.com/services/app-service/?WT.mc_id=javascript-37811-aapowell) to host the Strapi web application, [Storage](https://azure.microsoft.com/product-categories/storage/?WT.mc_id=javascript-37811-aapowell) to store images/uploaded assets, and a database, Azure has managed MySQL and Postgres to choose from (for this tutorial, we'll use MySQL, but the steps are the same for MySQL).
+There are three resources in Azure that are required to run Strapi in a PaaS model, [AppService](https://azure.microsoft.com/services/app-service/?WT.mc_id=javascript-37811-aapowell) to host the Strapi web application, [Storage](https://azure.microsoft.com/product-categories/storage/?WT.mc_id=javascript-37811-aapowell) to store images/uploaded assets, and a database, Azure has managed MySQL and Postgres to choose from (for this tutorial, we'll use MySQL, but the steps are the same for Postgres).
 
 ### Creating Resources via the Azure Portal
 

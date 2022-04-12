@@ -33,6 +33,10 @@ To create a plugin, use Strapi CLI tools:
       // ...
     }
     ```
+    ::: caution 
+    The plugin name must be kebab-case.
+    Example: an-example-of-kebab-case
+    :::
 5. Run `strapi build` to build the plugin.
 
 Plugins created this way are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
