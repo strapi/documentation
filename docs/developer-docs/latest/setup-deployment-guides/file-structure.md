@@ -40,6 +40,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 <pre>
   <code>
 . <span class="token comment"># root of the application</span>
+
 ├──── .cache <span class="token comment"># files used to build the admin panel</span>
 ├──── .tmp
 ├──── <a href="/developer-docs/latest/development/admin-customization.html#build">build</a> <span class="token comment"># build of the admin panel</span>
@@ -111,8 +112,8 @@ The default structure of a Strapi project created without the starter CLI looks 
 ::: tab TYPESCRIPT
 <pre>
   <code>
-# TS project
-. # root of the application
+. <span class="token comment"># root of the application</span>
+
 ├──── .cache # files used to build the admin panel
 ├──── .tmp
 ├──── config # API configurations
@@ -133,44 +134,45 @@ The default structure of a Strapi project created without the starter CLI looks 
 ├──── src
 │     ├──── admin <span class="token comment"># admin customization files</span>
 │           ├──── <a href="/developer-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span>
-│     │     ├ app.example.tsx
+│     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.example.tsx</a>
 │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api # business logic of the project split into subfolders per API
 │     │     └──── (api-name)
-│     │           ├──── content-types
+│     │          <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
-│     │           │           └ lifecycles.ts
-│     │           │           └ schema.json
-│     │           ├──── controllers
-│     │           ├──── middlewares
-│     │           ├──── policies
-│     │           ├──── routes
-│     │           ├──── services
+│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#lifecycle-hooks">lifecycles.s</a>
+│     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
+│     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routes.html">routes</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
 │     │           └ index.ts
-│     ├──── components
+│     │
+│     ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">components</a>
 │     │     └──── (category-name)
 │     │           ├ (componentA).json
 │     │           └ (componentB).json
-│     ├──── extensions # files to extend installed plugins
+│     ├──── <a href="/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
 │     │     └──── (plugin-to-be-extended)
 │     │           ├──── content-types
 │     │           │     └──── (content-type-name)
 │     │           │           └ schema.json
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-│     ├──── middlewares
+│     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │     └──── (middleware-name)
 │     │           ├ defaults.json
 │     │           └ index.ts
-│     ├──── plugins # local plugins files
+│     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
 │     │     └──── (plugin-name)
 │     │           ├──── admin
 │     │           │     └──── src
-│     │           │           └ index.tsx
+│     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.tsx</a>
 │     │           │           └ pluginId.ts
-│     │           ├──── server
-│     │           │     ├──── content-types
-│     │           │     ├──── controllers
-│     │           │     └──── policies
+│     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
+│     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#content-types">content-types</a>
+│     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers">controllers</a>
+│     │           │     └──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies">policies</a>
 │     │           ├ package.json
 │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
