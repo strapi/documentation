@@ -242,7 +242,7 @@ The default [Strapi theme](https://github.com/strapi/design-system/tree/main/pac
 :::
 
 ::: note
-Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), however custom theme extension is only applied for Light mode. When choosing Dark mode for a Strapi application, theme customizations are ignored.
+Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), however custom theme extension is only applied for Light mode. When choosing Dark mode for a Strapi application, theme customisations are ignored.
 :::
 
 ### WYSIWYG editor
