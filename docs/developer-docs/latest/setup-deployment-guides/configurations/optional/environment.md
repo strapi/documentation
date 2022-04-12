@@ -123,6 +123,9 @@ When starting Strapi with `NODE_ENV=production` it will load the configuration f
 
 For instance, using the following configuration files will give you various options to start the server:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/server.js
 
@@ -138,6 +141,28 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: '127.0.0.1',
+});
+
+
+// path: ./config/env/production/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+});
+```
+
+</code-block>
+</code-group>
+
 With these configuration files the server will start on various ports depending on the environment variables passed:
 
 ```bash
@@ -145,4 +170,3 @@ yarn start                                   # uses host 127.0.0.1
 NODE_ENV=production yarn start               # uses host 0.0.0.0
 HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
 ```
-
