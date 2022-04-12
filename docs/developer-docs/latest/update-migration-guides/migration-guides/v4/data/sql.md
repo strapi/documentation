@@ -5,8 +5,6 @@ sidebarDepth: 3
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.html
 ---
 
-<!-- TODO: update SEO -->
-
 # v4 data migration: Migrate SQL from Strapi v3 to v4
 
 The database layer of Strapi has been fully rewritten in Strapi v4. This documentation is designed to highlight the breaking changes introduced in Strapi v4 that impact SQL databases, by comparing v3 and v4 table and column names, data structures and relations. Changes can be [global](#global-changes) (impacting any table) or more limited in scope, impacting only [specific tables](#changes-impacting-strapi-built-in-tables) or some [Strapi plugins](#changes-impacting-strapi-plugins).
@@ -89,7 +87,22 @@ The `strapi_permission` table used in Strapi v3 is named `admin_permissions` in 
 
 The `core_store` table used in Strapi v3 is named `strapi_core_store_settings` in Strapi v4.
 
-The structure of the core store table remains untouched.
+The structure of the core store table remains untouched, but model definitions and content manager configurations have changed.
+
+#### Model definitions
+
+All the rows that begin with `model_def_` have been dropped and are no longer required.
+
+#### Content manager configurations
+
+All the rows that begin with `plugin_content_manager_configuration_content_types` have been changed to match new unique identifiers (UIDs) and reflect [table names changes](#changes-impacting-strapi-built-in-tables). These changes include both the suffix of the `key` column and the `uid` field in the `value` column.
+
+In addition to all the content-types that have been renamed (see [table names changes](#changes-impacting-strapi-built-in-tables)), the following UIDs have changed:
+
+| UID in Strapi v3 | UID in Strapi v4 |
+|------------------|------------------|
+| `application`    | `api`            |
+| `plugins`        | `plugin`         |
 
 ## Changes impacting Strapi plugins
 
