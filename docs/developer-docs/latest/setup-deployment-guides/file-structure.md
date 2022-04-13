@@ -35,7 +35,7 @@ The default structure of a Strapi project created without the starter CLI depend
 
 :::: tabs card
 
-::: tab JAVASCRIPT
+::: tab Vanilla JavaScript-based projects
 
 <pre>
   <code>
@@ -109,7 +109,7 @@ The default structure of a Strapi project created without the starter CLI depend
 
 :::
 
-::: tab TYPESCRIPT
+::: tab TypeScript-based projects
 <pre>
   <code>
 . <span class="token comment"># root of the application</span>
