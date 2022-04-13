@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # TypeScript 
 
-::: callout 🚧  Typescript documentation
+::: callout 🚧  TypeScript documentation
 This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
@@ -38,7 +38,7 @@ npx create-strapi-app@beta my-app --typescript
 
 </code-group>
 
-## Understanding TypeScript Support
+## Understanding TypeScript support
 
 When a Strapi project is created with the TypeScript enabled, two `tsconfig.json` files are created
 
