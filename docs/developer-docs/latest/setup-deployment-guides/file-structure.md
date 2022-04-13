@@ -31,7 +31,7 @@ my-project
 :::
 ::::
 
-The default structure of a Strapi project created without the starter CLI looks like the following:
+The default structure of a Strapi project created without the starter CLI depends on whether the project was created with vanilla JavaScript or with [TypeScript](/developer-docs/latest/setup-deployment-guides/typescript.md), and looks like the following:
 
 :::: tabs card
 
