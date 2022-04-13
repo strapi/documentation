@@ -4,7 +4,7 @@ description: Learn how you can use Typescript for your Strapi application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/databases/typescript.html
 ---
 
-# TypeScript 
+# TypeScript support
 
 ::: callout 🚧  TypeScript documentation
 This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
