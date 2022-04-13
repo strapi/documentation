@@ -236,15 +236,21 @@ Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-
 
 ```js
 module.exports = ({ env }) => ({
-  url: env('MY_HEROKU_URL'),
-});
+    proxy: true,
+    url: env('MY_HEROKU_URL'),
+    app: { 
+      keys: env.array('APP_KEYS')
+    },
+  })
 ```
 
-You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This will populate the variable with something like `https://your-app.herokuapp.com`.
+You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL` and `APP_KEYS`. This will populate the variables with something like `https://your-app.herokuapp.com/` and `dsfhasbvvfwfcerterzer+n1w==,afjdsagfsauzuwzref6==,kjdbgjerhgh6wireg==,jkssdhgjaksdgkjbsdg==` respectively.
 
 ```bash
 heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
+heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
 ```
+
 
 ### 6. Install the `pg` node module
 
