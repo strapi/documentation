@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file, or the `./config/database.ts` file for TypeScript, is used to define database connections that will be used to store the application content.
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
@@ -164,7 +164,7 @@ module.exports = ({ env }) => ({
 :::: tab SQLite
 <code-group>
 
-<code-block title="JavaScript">
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/database.js
@@ -183,7 +183,7 @@ module.exports = ({ env }) => ({
 
 </code-block>
 
-<code-block title="TypeScript">
+<code-block title="TYPESCRIPT">
 
 ```js
 // path: ./config/database.ts
