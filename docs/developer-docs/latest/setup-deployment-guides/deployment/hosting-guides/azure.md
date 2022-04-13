@@ -491,6 +491,8 @@ Using the following example we will remove any private information:
 <code-block title="JAVASCRIPT">
 
 ```js
+// path: /srv/strapi/mystrapiapp/config/database.js
+
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
   connections: {
@@ -516,6 +518,8 @@ module.exports = ({ env }) => ({
 <code-block title="TYPESCRIPT">
 
 ```js
+// path: /srv/strapi/mystrapiapp/config/database.ts
+
 export default ({ env }) => ({
   defaultConnection: 'default',
   connections: {
@@ -537,7 +541,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
 
 #### 3. Installing PM2 and running Strapi as a service
 
