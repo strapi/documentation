@@ -314,7 +314,7 @@ module.exports = ({ env }) => ({
 <code-block title="TYPESCRIPT">
 
 ```jsx
-// path: ./config/admin.js
+// path: ./config/admin.ts
 
 import GithubStrategy from "passport-github2";
 
@@ -727,7 +727,41 @@ yarn add passport-okta-oauth20
 <code-group>
 <code-block title="JAVASCRIPT">
 
+```jsx
+// path: ./config/admin.js
 
+const OktaOAuth2Strategy = require("passport-okta-oauth20").Strategy;
+
+module.exports = ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "okta",
+        displayName: "Okta",
+        icon: "https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png",
+        createStrategy: (strapi) =>
+          new OktaOAuth2Strategy(
+            {
+              clientID: env("OKTA_CLIENT_ID"),
+              clientSecret: env("OKTA_CLIENT_SECRET"),
+              audience: env("OKTA_DOMAIN"),
+              scope: ["openid", "email", "profile"],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("okta"),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+ ```
 
 </code-block>
 
