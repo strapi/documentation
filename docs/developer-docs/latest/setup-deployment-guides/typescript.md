@@ -47,6 +47,8 @@ When a Strapi project is created with TypeScript enabled, 2 `tsconfig.json` file
 
 TypeScript-enabled projects also contain a `dist` directory, which is used to compile the project JavaScript source code.
 
+<!-- 
+TODO: complete these sections
 ## Adding TypeScript to an existing project
 
-## Backend customization (routes, controllers, services)
+## Backend customization (routes, controllers, services) -->
