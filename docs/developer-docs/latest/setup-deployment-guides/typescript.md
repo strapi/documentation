@@ -40,7 +40,7 @@ npx create-strapi-app@beta my-app --typescript
 
 ## Understanding TypeScript support
 
-When a Strapi project is created with the TypeScript enabled, two `tsconfig.json` files are created
+When a Strapi project is created with TypeScript enabled, 2 `tsconfig.json` files are created (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
 
 - `tsconfig.json` file at the root of the project, to manage TypeScript compilation for the server
 - `/src/admin/tsconfig.json` to manage TypeScript compilation for the admin
