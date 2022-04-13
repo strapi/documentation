@@ -17,7 +17,7 @@ TypeScript adds an additional type system layer above JavaScript, which means th
 Create a Strapi project with Typescript support by using the `--ts` or `--typescript` flags with either the npm or yarn package manager.
 
 ::: tip
-Adding the quickstart flag `--quickstart` will create the project with an SQlite database.
+Adding the `--quickstart` flag will create the project with an SQlite database.
 :::
 
 <code-group>
