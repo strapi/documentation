@@ -307,12 +307,11 @@ npm install pg
 
 Copy/paste the following:
 
-
 <code-group>
 <code-block title="JAVASCRIPT">
 
 ```js
-// path: ./my-project/config/database.js`:
+// path: ./my-project/config/database.js
 
 module.exports = ({ env }) => ({
   connection: {
@@ -334,7 +333,7 @@ module.exports = ({ env }) => ({
 <code-block title="TYPESCRIPT">
 
 ```js
-// path: ./my-project/config/database.ts`:
+// path: ./my-project/config/database.ts
 
 export default ({ env }) => ({
   connection: {
