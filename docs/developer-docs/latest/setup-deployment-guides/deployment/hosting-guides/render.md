@@ -62,6 +62,8 @@ services:
         generateValue: true
       - key: APP_KEYS
         generateValue: true
+      - key: API_TOKEN_SALT
+        generateValue: true
 ```
 
 :::
@@ -97,6 +99,8 @@ services:
       - key: ADMIN_JWT_SECRET
         generateValue: true
       - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
         generateValue: true
 
 databases:
@@ -135,6 +139,8 @@ services:
       - key: ADMIN_JWT_SECRET
         generateValue: true
       - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
         generateValue: true
 
 databases:
