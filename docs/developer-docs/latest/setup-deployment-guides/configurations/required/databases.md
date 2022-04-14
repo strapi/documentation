@@ -13,7 +13,7 @@ The CLI installation guide details [supported database and versions](/developer-
 :::
 
 ## Configuration structure
-<!-- Decide between commas and parentheses for the TS file names-->
+
 The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 main configuration objects:
 
 - [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
