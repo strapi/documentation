@@ -22,6 +22,7 @@ const developer = [
         sidebarDepth: 1,
         children: [
           ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
+          ['/developer-docs/latest/setup-deployment-guides/typescript.md', 'TypeScript'],
           ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
           [
             '/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md',

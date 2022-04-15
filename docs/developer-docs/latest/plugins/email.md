@@ -106,9 +106,14 @@ When using community providers, pass the full package name to the `provider` key
 
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
-**Path —** `./config/plugins.js`.
+**Path —** ``.
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+//path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -128,6 +133,37 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+//path: ./config/plugins.ts
+
+export default = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid',
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
+    },
+  },
+  // ...
+});
+```
+</code-block>
+
+</code-group>
+
+
+
 ::: tip
 If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
 :::
@@ -145,7 +181,12 @@ More info here: [Configure templates Locally](/user-docs/latest/settings/configu
 
 Default template
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
+//path: ./config/plugins.js
 module.exports = {
   init: (providerOptions = {}, settings = {}) => {
     return {
@@ -154,6 +195,27 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+//path: ./config/plugins.ts
+export default {
+  init: (providerOptions = {}, settings = {}) => {
+    return {
+      send: async options => {},
+    };
+  },
+};
+```
+
+</code-block>
+
+</code-group>
+
+
 
 In the `send` function you will have access to:
 
