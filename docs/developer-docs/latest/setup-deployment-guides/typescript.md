@@ -30,11 +30,11 @@ npx create-strapi-app@beta my-app --typescript
 ```
 </code-block>
 
-<code-block title="YARN">
+<!-- <code-block title="YARN">
 ```sh
 [code goes here]
 ```
-</code-block>
+</code-block> -->
 
 </code-group>
 
