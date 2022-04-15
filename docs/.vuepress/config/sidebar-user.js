@@ -54,6 +54,20 @@ const user = [
   },
   {
     collapsable: false,
+    title: 'Media Library',
+    children: [
+      [
+        '/user-docs/latest/media-library/introduction-to-media-library.md',
+        'Introduction to the Media Library'
+      ],
+      // [
+      //   '/',
+      //   'Managing assets'
+      // ]
+    ]
+  },
+  {
+    collapsable: false,
     title: 'Users, Roles & Permissions',
     children: [
       [
