@@ -244,13 +244,15 @@ module.exports = ({ env }) => ({
   })
 ```
 
-You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL` and `APP_KEYS`. This will populate the variables with something like `https://your-app.herokuapp.com/` and `dsfhasbvvfwfcerterzer+n1w==,afjdsagfsauzuwzref6==,kjdbgjerhgh6wireg==,jkssdhgjaksdgkjbsdg==` respectively.
+You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, and `JWT_SECRET`. This will populate the variables with something like `https://your-app.herokuapp.com/` and various random keys from the `.env` file locally. In some cases it is recommended to create new random secrets instead and there are various methods to do so.
 
 ```bash
 heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
 heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
+heroku config:set API_TOKEN_SALT=$(cat .env | grep API_TOKEN_SALT | cut -d= -f2-)
+heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= -f2-)
+heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2-)
 ```
-
 
 ### 6. Install the `pg` node module
 
