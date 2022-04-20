@@ -58,12 +58,17 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 
 ### <img width="28" src="../assets/plugins/EmailPlugin.png"> Email plugin
 
-The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is configured through the `./config/plugins.js` file, however users can test email delivery by clicking on Settings in the main navigation and then Configuration under the email plugin heading.
-More information about the email plugin is available in the [Developer Documentation](/developer-docs/latest/plugins/email.md)
+The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/developer-docs/latest/plugins/email.md).
 
-### <img width="28" src="../assets/plugins/MediaLibPlugin.png"> Media library plugin
+| Section impacted | Options and settings |
+|------------------|----------------------|
+| Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Users and Permissions > Roles* </li></ul>|
 
-The Media Library plugin is installed by default in each Strapi application and is accessible in the main navigation panel. The media Library allows users to:
+### <img width="28" src="../assets/plugins/MediaLibPlugin.png"> Media Library plugin
+
+<!-- this section might be deleted and moved to the "content-type builder/content manager" status check with Pierre-->
+
+The Media Library plugin is installed by default in each Strapi application and is accessible in the main navigation. The media Library allows users to:
 
 - upload media
 - download media
