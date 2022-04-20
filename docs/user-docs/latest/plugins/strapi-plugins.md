@@ -29,14 +29,14 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 | Section impacted | Options and settings                                                                                    |
 |------------------|---------------------------------------------------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li> <br> <li> Addition of role-based permissions setttings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/></li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li> <br> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/></li></ul> |
 | Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localisation/translation of the Content-type (see [Creating a new content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localisation/translation of the Content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/latest/content-manager/translating-content.md)).</li></ul> |
 
 ### <img width="28" src="../assets/plugins/icon_up-plugin.png"> Users & Permissions plugin
 
 :::note
-[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation in the future.
+[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022. <!--this date to be confirmed with DX squad-->
 :::
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
@@ -75,10 +75,10 @@ Media assets can be manipulated through the main navigation or inside media fiel
 | Section impacted | Options and settings                                                |
 |------------------|---------------------------------------------------------------------|
 | Main Navigation    | <ul> Addition of the Media Library to the main navigation. From the Media Library assets can be uploaded, downloaded, meta data edited, and images can be cropped. </ul>|
-|Settings      | <ul> <li> Addition of booleans for: <ul> <li>responsive friendly upload</li> <li>size optimization</li><li>auto orientation</li></ul> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Media Library* </li><li>Addition of role-based permissions setttings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul><li>Addition of role-based permissions setttings where the access to the Media Library and Media Library functions can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Plugins* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li> |
+|Settings      | <ul> <li> Addition of booleans for: <ul> <li>responsive friendly upload</li> <li>size optimization</li><li>auto orientation</li></ul> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Media Library* </li><li>Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul><li>Addition of role-based permissions settings where the access to the Media Library and Media Library functions can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Plugins* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li> |
 
 :::note
-Drag and drop media uploads on the entry page are not currently functional. A user must click on the media field to open a dialog box, where you can select existing assets or upload new assets.
+Drag and drop media uploads on the entry page are not currently functional. Users must click on the media field to open a dialog box, where you can select existing assets or upload new assets.
 :::
 
 ## Additional plugins
@@ -106,6 +106,7 @@ The Gatsby preview plugin allows applications with Gatsby Cloud accounts to prev
 |------------|-----------------|
 | Settings     |  Addition of the Gatsby preview plugin section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync url</li> </ul> |
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation                  |
+  
 
 
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
@@ -115,12 +116,12 @@ There is no access to the GraphQL plugin in the admin panel. Users can confirm t
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation menu. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows for:
+The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows:
 
-- importation of default Strapi seo and meta-social components
-- manage the meta title, meta description, and preview the content
-- manage social tags for Facebook and Twitter
-- SEO analysis of the application content
+- importing of default Strapi seo and meta-social components
+- managing the meta title, meta description, and preview the content
+- managing social tags for Facebook and Twitter
+- analyzing the SEO of the application content
 
 Please see the plugin documentation in the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo) for more details.
 
