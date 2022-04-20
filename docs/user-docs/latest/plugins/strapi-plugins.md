@@ -6,12 +6,11 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/strapi-plugins.htm
 
 # List of Strapi plugins
 
-This section provides a reference guide to the pre-installed plugins and additional plugins developed by Strapi which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Regardless of the type, plugins are the fastest way to expand the functionality of your Strapi application. Additional documentation on plugins is provided in the relevent sections of the User Guide and the Developer Documention, however, A brief plugin description, how the installed plugin works, and changes to the admin panel is provided below.
+This section provides a reference guide to the pre-installed plugins and additional plugins developed by Strapi which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Regardless of the type, plugins are a way to expand the functionality of your Strapi application. Additional documentation on plugins is provided in the relevent sections of the User Guide and the Developer Documention, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided below.
 
-Some plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), and are marked with  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
-
-::: tip
-Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
+::: note
+- Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
+- Some plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), and are marked with  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
 :::
 
 ## Pre-installed plugins
