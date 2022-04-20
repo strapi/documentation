@@ -90,7 +90,7 @@ Drag and drop media uploads on the entry page are not currently functional. User
 
 ### <img width="28" src="../assets/plugins/Documentation-swagger.png"> Documentation
 
-The Documentation plugin is available from the [Strapi Market](https://market.strapi.io)  or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin allows you to:
+ The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation).  The Documentation plugin allows you to:
 
 - open the API documentation
 - regenerate the documentation
@@ -105,7 +105,7 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 ### <img width="28" src="../assets/plugins/Gatsby_Monogram.png"> Gatsby preview
 
-The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end and is available from the [Strapi Market](https://market.strapi.io) or the [in-app marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins). More information about the plugin is available on the [Gatsby preview plugin page](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview).
+The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end. The Strapi Gatsby preview plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview). The Strapi Market page also contains more information about the Gatsby preview plugin.
 
 | Section impacted    | Options and settings         |
 |------------|-----------------|
@@ -115,19 +115,17 @@ The Gatsby preview plugin allows applications with Gatsby Cloud accounts to prev
 
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
 
-There is no access to the GraphQL plugin in the admin panel. Users can confirm the plugin installation by referencing the list of installed plugins by clicking on
+GraphQL is both a data query language for APIs and a runtime for queries. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).The GraphQL plugin enables GraphQL endpoints in a Strapi application. The GraphQL Playground is accesible at <http://localhost:1337/graphql> in a default Strapi application with the GraphQL plugin installed. The GraphQL playground is a browser-based interface that assists in writing GraphQL queries and data exploration. There is no access to the GraphQL plugin in the admin panel. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql). Users can confirm the plugin installation by referencing the list of installed plugins by clicking on
  ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows:
+The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows:
 
 - importing of default Strapi seo and meta-social components
 - managing the meta title, meta description, and preview the content
 - managing social tags for Facebook and Twitter
 - analyzing the SEO of the application content
-
-Please see the plugin documentation in the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo) for more details.
 
 | Section impacted    | Options and settings                     |
 |-------------------|--------------------------------------------|
@@ -137,7 +135,7 @@ Please see the plugin documentation in the [Strapi Market](https://market.strapi
 
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
-The Sentry plugin is used to track Strapi errors with Sentry. With the plugin installed a user can:
+The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi Sentry plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-sentry). With the plugin installed a user can:
 
 - Initialize a Sentry instance when a Strapi application starts,
 - Send errors encountered in an application end API to Sentry,
