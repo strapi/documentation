@@ -18,8 +18,8 @@ The Media Library displays all assets uploaded in the application, either via th
 
 From the Media Library, it is possible to:
 
-- create a new media folder (1),
-- upload a new asset (2),
+- upload a new asset (1),
+- create a new media folder (2),
 - sort the assets and folders (3) or set filters (4) to find assets more easily,
 - make a textual search (5) to find a specific asset or folder.
 
