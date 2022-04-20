@@ -36,7 +36,7 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 ### <img width="28" src="../assets/plugins/icon_up-plugin.png"> Users & Permissions plugin
 
 :::note
-[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022. <!--this date to be confirmed with DX squad-->
+[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022. <!--confirmed with Marco. Probably earlier, update will be needed-->
 :::
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
