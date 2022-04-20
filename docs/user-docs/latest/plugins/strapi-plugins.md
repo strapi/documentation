@@ -113,7 +113,6 @@ The Gatsby preview plugin allows applications with Gatsby Cloud accounts to prev
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation                  |
   
 
-
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
 
 There is no access to the GraphQL plugin in the admin panel. Users can confirm the plugin installation by referencing the list of installed plugins by clicking on
