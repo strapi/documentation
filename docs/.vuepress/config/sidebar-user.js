@@ -60,10 +60,18 @@ const user = [
         '/user-docs/latest/media-library/introduction-to-media-library.md',
         'Introduction to the Media Library'
       ],
+      [
+        '/user-docs/latest/media-library/adding-assets.md',
+        'Adding assets'
+      ],
       // [
-      //   '/',
+      //   '/user-docs/latest/media-library/managing-assets.md',
       //   'Managing assets'
-      // ]
+      // ],
+      [
+        '/user-docs/latest/media-library/organizing-assets-with-folders.md',
+        'Organizing assets with folders'
+      ],
     ]
   },
   {
