@@ -138,4 +138,11 @@ Please see the plugin documentation in the [Strapi Market](https://market.strapi
 
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
-There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
+The Sentry plugin is used to track Strapi errors with Sentry. With the plugin installed a user can:
+
+- Initialize a Sentry instance when a Strapi application starts,
+- Send errors encountered in an application end API to Sentry,
+- Attach useful metadata to Sentry events, to help with debugging,
+- Expose a global Sentry service.
+
+ There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
