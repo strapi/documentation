@@ -6,6 +6,14 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.1.8 migration guide
 
+<!-- 
+We need to let everyone know they need to set all 4 of these for non-development environment usage (eg Heroku, aws, ect)
+- APP_KEYS
+- JWT_SECRET
+- API_TOKEN_SALT
+- ADMIN_JWT_SECRET
+ -->
+
 The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Additionally, Strapi no long populates default values for the admin JSON web token in `config/admin`. Initial values are generated and stored in the .env file during project creation. The migration to v4.1.8 consists of 2 steps:
 
 - adding the API token to `config/admin`,
@@ -38,6 +46,21 @@ module.exports = ({ env }) => ({
 ```
 
 </code-block>
+
+<!-- 
+If we want to put the U&P JWT_SECRET example in here, this is what it will look like:
+```jsx
+// path: config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+    jwtSecret: env('JWT_SECRET')
+  },
+  // ...
+});
+``` -->
 
 <code-block title="TYPESCRIPT">
 
