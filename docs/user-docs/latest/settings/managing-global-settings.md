@@ -8,6 +8,24 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/managing-global-s
 
 Global settings for plugins and features are managed from ![Settings icon](../assets/icons/settings.svg) *Settings* in the main navigation of the admin panel.
 
+## Customizing the admin panel
+
+The default Strapi logo, displayed in both the login page and main navigation of a Strapi application, can be modified through the *Settings > Overview* sub-section of the admin panel.
+
+[screenshot]
+
+To customize the logo of the admin panel:
+
+1. Go to the *Global settings > Overview* sub-section of the settings interface.
+2. Click on the upload area.
+3. Upload your chosen logo, either by browsing files, drag & dropping the file in the right area, or by using a URL.
+4. Click on the **Upload logo** button in the upload window.
+5. Click on the **Save** button in the top right corner.
+
+::: tip
+Once uploaded, the new logo can be replaced with another one ![Add icon](../assets/icons/add_icon.svg), or resetted  with the default Strapi logo.
+:::
+
 ## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
