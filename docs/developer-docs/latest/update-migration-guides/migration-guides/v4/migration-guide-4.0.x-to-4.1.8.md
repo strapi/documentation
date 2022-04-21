@@ -6,18 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.1.8 migration guide
 
-<!-- 
-We need to let everyone know they need to set all 4 of these for non-development environment usage (eg Heroku, aws, ect)
-- APP_KEYS
-- JWT_SECRET
-- API_TOKEN_SALT
-- ADMIN_JWT_SECRET
- -->
-
-The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Additionally, Strapi no long populates default values for the admin JSON web token in `config/admin`. Initial values are generated and stored in the .env file during project creation. The migration to v4.1.8 consists of 2 steps:
+The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Additionally, Strapi no long populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-developmen environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 3 steps:
 
 - adding the API token to `config/admin`,
-- removing the default `ADMIN_JWT_SECRET`.
+- removing the default `ADMIN_JWT_SECRET` (recommended for improved security),
+- setting secrets for non-development environments.
 
 ## Modifying the `config/admin` file
 
@@ -83,10 +76,19 @@ export default ({ env }) => ({
 
 </code-group>
 
+## Setting secrets for non-development environments
+
+Users are required to set secrets for each unique environment, such as a prodcution environment deployment on a platform. Strapi no longer passes the following secrets to non-development environments:
+
+- APP_KEYS
+- JWT_SECRET
+- API_TOKEN_SALT
+- ADMIN_JWT_SECRET
+
+There are many methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (mac and linux OS). Generating unique secrets for each environment is recommended for increased security.
+
 ::: caution
 
-`JWT_SECRET` is not auto-generated in production mode. Secrets must be set for production mode independent of the development .env file. The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes.
+The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are particularly encouraged for Amazon AWS, Azure, and Google App Engine.
 
 :::
-
-<!--update this guide once all of the provider guides are updated.-->
