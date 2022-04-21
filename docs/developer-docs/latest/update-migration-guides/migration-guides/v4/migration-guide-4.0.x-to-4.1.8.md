@@ -6,10 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.1.8 migration guide
 
-The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 3 steps:
+The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 4 steps:
 
 - adding the API token to `config/admin`,
 - removing the default `ADMIN_JWT_SECRET` (recommended for improved security),
+- configuring `JWT_SECRET` in `config/plugins` (recommended),
 - setting secrets for non-development environments.
 
 ## Modifying the `config/admin` file
@@ -40,21 +41,6 @@ module.exports = ({ env }) => ({
 
 </code-block>
 
-<!-- 
-If we want to put the U&P JWT_SECRET example in here, this is what it will look like:
-```jsx
-// path: config/plugins.js
-
-module.exports = ({ env }) => ({
-  // ...
-  'users-permissions': {
-    config: {
-    jwtSecret: env('JWT_SECRET')
-  },
-  // ...
-});
-``` -->
-
 <code-block title="TYPESCRIPT">
 
 ```jsx
@@ -76,6 +62,50 @@ export default ({ env }) => ({
 
 </code-group>
 
+## Configuring `JWT_SECRET`
+
+`JWT_SECRET` is used by the Users and Permissions plugin, and populated in `/.env`. The property should be stored in `config/plugins.js` (or `config/plugins.ts` for a TypeScript project). The `plugins` file is not created by default in a Strapi application. If the file does not exist, users should create the file and add the follow code snippet.
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
+```jsx
+//  path: config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+    jwtSecret: env('JWT_SECRET')
+  },
+  // ...
+});
+
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+//  path: config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+    jwtSecret: env('JWT_SECRET')
+  },
+  // ...
+});
+
+```
+
+</code-block>
+
+</code-group>
+
 ## Setting secrets for non-development environments
 
 Users are required to set secrets for each unique environment, such as a prodcution environment deployment on a platform. Strapi no longer passes the following secrets to non-development environments:
@@ -85,10 +115,10 @@ Users are required to set secrets for each unique environment, such as a prodcut
 - API_TOKEN_SALT
 - ADMIN_JWT_SECRET
 
-There are multiple methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (mac and linux OS). Generating unique secrets for each environment is recommended for increased security.
+There are multiple methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (Mac and Linux OS). Generating unique secrets for each environment is recommended for increased security.
 
 ::: caution
 
-The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged for Amazon AWS, Azure, and Google App Engine.
+The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged.
 
 :::
