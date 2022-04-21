@@ -117,7 +117,7 @@ Users are required to set secrets for each unique environment, such as a product
 - API_TOKEN_SALT
 - ADMIN_JWT_SECRET
 
-There are multiple methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (Mac and Linux OS). Generating unique secrets for each environment is recommended for increased security.
+There are multiple methods to generate secrets, for example running `openssl rand -base64 32` in the terminal (Mac and Linux OS). Generating unique secrets for each environment is recommended for increased security.
 
 ::: caution
 
