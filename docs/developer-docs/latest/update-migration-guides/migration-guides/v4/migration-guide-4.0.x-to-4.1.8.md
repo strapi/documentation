@@ -110,7 +110,7 @@ export default ({ env }) => ({
 
 ## Setting secrets for non-development environments
 
-Users are required to set secrets for each unique environment, such as a prodcution environment deployment on a platform. Strapi no longer passes the following secrets to non-development environments:
+Users are required to set secrets for each unique environment, such as a production environment deployment on a platform. Strapi no longer passes the following secrets to non-development environments:
 
 - APP_KEYS
 - JWT_SECRET
