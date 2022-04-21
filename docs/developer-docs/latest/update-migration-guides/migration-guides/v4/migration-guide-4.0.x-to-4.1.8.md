@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.0.x to v4.1.8 migration guide
 
-The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Additionally, Strapi no long populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-developmen environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 3 steps:
+The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 3 steps:
 
 - adding the API token to `config/admin`,
 - removing the default `ADMIN_JWT_SECRET` (recommended for improved security),
@@ -85,10 +85,10 @@ Users are required to set secrets for each unique environment, such as a prodcut
 - API_TOKEN_SALT
 - ADMIN_JWT_SECRET
 
-There are many methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (mac and linux OS). Generating unique secrets for each environment is recommended for increased security.
+There are multiple methods to generate secrets, such as running `openssl rand -base64 32` in the terminal (mac and linux OS). Generating unique secrets for each environment is recommended for increased security.
 
 ::: caution
 
-The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are particularly encouraged for Amazon AWS, Azure, and Google App Engine.
+The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged for Amazon AWS, Azure, and Google App Engine.
 
 :::
