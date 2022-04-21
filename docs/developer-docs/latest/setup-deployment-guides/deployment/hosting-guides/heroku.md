@@ -244,7 +244,7 @@ module.exports = ({ env }) => ({
   })
 ```
 
-You will also need to set the environment variable in Heroku for the `MY_HEROKU_URL`, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, and `JWT_SECRET`. This will populate the variables with something like `https://your-app.herokuapp.com/` and various random keys from the `.env` file locally. In some cases it is recommended to create new random secrets instead and there are various methods to do so.
+You will also need to set the environment variables in Heroku for the `MY_HEROKU_URL`, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, and `JWT_SECRET`. This will populate the variables with something like `https://your-app.herokuapp.com/` and various random keys from the `.env` file locally. In some cases it is recommended to create new random secrets instead and there are various methods to do so.
 
 To copy existing secrets from your environment config locally use the following:
 
@@ -256,7 +256,7 @@ heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= 
 heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
 ```
 
-To create new secrets you can use the `openssl` command to randomly generate new secrets:
+The following `openssl` commands will generate random new secrets (Mac and Linux only):
 
 ```bash
 heroku config:set APP_KEYS=$(openssl rand -base64 32)
