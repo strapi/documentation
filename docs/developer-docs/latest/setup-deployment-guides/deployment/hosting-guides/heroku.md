@@ -265,6 +265,7 @@ heroku config:set ADMIN_JWT_SECRET=$(openssl rand -base64 32)
 heroku config:set JWT_SECRET=$(openssl rand -base64 32)
 ```
 
+
 ### 6. Install the `pg` node module
 
 Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
