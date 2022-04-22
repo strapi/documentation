@@ -222,7 +222,7 @@ To update the logos, put image files in the `./src/admin/extensions` folder and 
 The size of the custom image should be the same as the default one (434px x 120px).
 
 ::: note
-The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)). However, the logo displayed in the login page can only be customized via the configuration files for now. Note also that the main navigation logo uploaded via the admin panel has priority over any other logo customised via the configuration files.
+The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)). However, the logo displayed in the login page can only be customized via the configuration files for now. Note also that the main navigation logo uploaded via the admin panel has priority over any other logo customized via the configuration files.
 :::
 
 #### Favicon
