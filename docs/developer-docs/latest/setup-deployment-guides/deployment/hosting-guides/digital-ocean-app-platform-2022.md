@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 The purpose of this guide is to allow users to deploy Strapi applications on the Digital Ocean App Platform. While both Strapi and Digital Ocean App Platform can work with multiple types of databases the focus is on connecting to a postgres development database so users can test their application in a deployed environment. Future additions to the guide will address different database options. This guide does not cover migrating local database content to a production database or connecting front-end applications to the Digital Ocean App Platform.
 
 ::: caution
-Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to the Strapi app and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please open an issue on GitHub.
+Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please open an issue on GitHub.
 :::
 
 ## Prerequsites
