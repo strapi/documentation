@@ -136,21 +136,51 @@ export default ({ env }) => ({
 
 
 ### Adding postgres dependencies
-<!-- yarn and npm commands-->
+Connecting a postgres database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
+<code-group>
+
+<code-block title="NPM">
+```bash
+npm install pg
+```
+</code-block>
+
+<code-block title="YARN">
+```bash
+yarn pg
+```
+</code-block>
+
+</code-group>
 
 ### Committing the project to a remote repository
 
+Save the Strapi application locally then, in a terminal, run :
+
+1. `git add .`
+2. `git commit -m "commit message"`
+3. `git push`
 
 ## Creating a Digital Ocean App
 
 <!-- intro to the nomenclature for DO AP-->
 
+
+
+
+
 ### Connecting to GitHub repository
+connect to GH repo, autoDeploy on/off,
+
 
 ### Connecting web app to a database
-
+<!-- create apps,  add resource: db, dev db, name db **important** -->
 ### Environmental variables
+
+Env var: db at global and rest at app level
+
+Region: keep same as app level for lower latency
 
 ::: caution
 The environmental variables for the development and managed database are handled differently by DO. When connected to a managed database DO handles the environmental variables automatically. Check the .yaml file to confirm the db settings are not duplicated if using a managed database.
@@ -161,3 +191,4 @@ The environmental variables for the development and managed database are handled
 
 ## Accessing the application in the production environment
 
+Access to the Strapi admin panel is {your app domain}/admin.
