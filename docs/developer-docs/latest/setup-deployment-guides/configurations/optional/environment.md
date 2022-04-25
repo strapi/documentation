@@ -7,6 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 # Environment configuration and variables
 
 Strapi provides environment variables that can be used in configuration files.  An `env()` utility can be used to [retrieve the value of environment variables](#configuration-using-environment-variables) and [cast variables to different types](#casting-environment-variables), and  specific [configurations for different environments](#environment-configurations) can be created.
+
 ## Strapi's environment variables
 
 Strapi provides the following environment variables:
@@ -115,7 +116,7 @@ With these configuration files the server will start on various ports depending 
 
 ```bash
 yarn start                                   # uses host 127.0.0.1
-NODE_ENV=production yarn start               # uses host 0.0.0.0
+NODE_ENV=production yarn start               # uses host defined in .env. If not defined, uses 0.0.0.0
 HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
 ```
 
