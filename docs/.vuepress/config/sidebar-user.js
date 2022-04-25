@@ -64,10 +64,10 @@ const user = [
         '/user-docs/latest/media-library/adding-assets.md',
         'Adding assets'
       ],
-      // [
-      //   '/user-docs/latest/media-library/managing-assets.md',
-      //   'Managing assets'
-      // ],
+      [
+        '/user-docs/latest/media-library/managing-assets.md',
+        'Managing assets'
+      ],
       [
         '/user-docs/latest/media-library/organizing-assets-with-folders.md',
         'Organizing assets with folders'
