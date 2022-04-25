@@ -7,11 +7,13 @@ sidebarDepth: 2
 
 # List of Strapi plugins
 
-This section provides a reference guide to the pre-installed plugins and additional plugins developed by Strapi which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Regardless of the type, plugins are a way to expand the functionality of your Strapi application. Additional documentation on plugins is provided in the relevent sections of the User Guide and the Developer Documention, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided below.
+ Strapi builds and maintains plugins that extends the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Additional documentation on plugins is provided in the relevent sections of the User Guide and the Developer Documention, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
 
 ::: note
+
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
 - Some plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), and are marked with  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
+
 :::
 
 ## Pre-installed plugins
