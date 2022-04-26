@@ -189,9 +189,7 @@ export default createCoreService('api::restaurant.restaurant', ({ strapi }) => (
 </code-block>
 </code-group>
 
-
 The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
-
 
 <code-group>
 <code-block title=JAVASCRIPT>
@@ -217,7 +215,6 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
   },
 }));
 ```
-
 
 </code-block>
 
@@ -399,6 +396,5 @@ strapi.service('plugin::pluginName.serviceName');
 ::: tip
 To list all the available services, run `yarn strapi services:list`.
 :::
-
 
 :::
