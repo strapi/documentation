@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 :::caution
 This Docker image is only for Strapi v3. For now, Strapi will not update the image for v4.
-However, to build an image compatible with Strapi v4, we recommend following this guide by Simen Daehlin, Community Star at Strapi, <https://blog.dehlin.dev/docker-with-strapi-v4>.
+However, to build an image compatible with Strapi v4, we recommend following [this guide](https://blog.dehlin.dev/docker-with-strapi-v4) by Simen Daehlin, Community Star at Strapi.
 
 If you would like an official v4 image, please share it on the [roadmap](https://feedback.strapi.io/developer-experience).
 
