@@ -8,18 +8,15 @@ canonicalUrl:
 
 # Adding assets
 
+<!-- TODO: review intro -->
+
+<!-- assets only added via Media Library -->
 The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) or the [Content Manager](/user-docs/latest/content-manager/writing-content.md#filling-up-fields) when managing a media field.
 
-Assets can be added to the Media Library by clicking the **Add new assets** button.
+<!-- TODO: remove -->
+<!-- Assets can be added to the Media Library by clicking the **Add new assets** button. -->
 
-A variety of media types and extensions are supported by the Media Library:
 
-| Media type | Supported extensions                                          |
-|------------|---------------------------------------------------------------|
-| Image      | - JPEG<br>- PNG<br>- GIF<br>- SVG<br>- TIFF<br>- ICO<br>- DVU |
-| Video      | - MPEG<br>- MP4<br>- Quicktime<br>- WMV<br>- AVI<br>- FLV     |
-| Audio      | - MP3<br>- WAV<br>- OGG                                       |
-| File       | - CSV<br>- ZIP<br>- PDF<br>- Excel<br>- JSON                  |
 
 ![🏞 screenshot - "Add new assets" popup]()
 
@@ -36,18 +33,3 @@ To add new assets to the media library:
 ::: caution Drag'n'drop bug
 There currently is a bug preventing the use of the drag & drop feature on Firefox and Chrome. Our team is currently working on solving this issue.
 :::
-
-## Editing assets
-
-![🏞 screenshot - "Details" popup]()
-
-- overlay control buttons
-  - delete asset
-  - download asset
-  - copy link to asset
-  - (optional, image files) crop image
-- view & edit metadata
-  - view file metadata
-  - edit alternative text and caption
-- replace media
-

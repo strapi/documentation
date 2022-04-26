@@ -6,7 +6,7 @@ canonicalUrl:
 
 <!-- TODO: update SEO -->
 
-# Managing assets
+# Editing and deleting assets
 
 ![🏞 screenshot - Asset details popup]()
 
@@ -22,4 +22,20 @@ canonicalUrl:
       - file name (can’t be edited on first upload in “add new assets” popup)
       - alternative text
       - caption
+- delete an asset
 - move an asset to a folder
+
+
+## Editing assets
+
+![🏞 screenshot - "Details" popup]()
+
+- overlay control buttons
+  - delete asset
+  - download asset
+  - copy link to asset
+  - (optional, image files) crop image
+- view & edit metadata
+  - view file metadata
+  - edit alternative text and caption
+- replace media
