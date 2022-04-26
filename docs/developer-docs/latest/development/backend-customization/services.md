@@ -24,8 +24,6 @@ A new service can be implemented:
 
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
-
-
 <code-group>
 <code-block title="JAVASCRIPT">
 
@@ -109,8 +107,6 @@ export default createCoreService('api::restaurant.restaurant', ({ strapi }) =>  
 
 </code-block>
 </code-group>
-
-
 
 ::: strapi Entity Service API
 To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
