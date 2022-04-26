@@ -13,7 +13,9 @@ Global settings for plugins and features are managed from ![Settings icon](../as
 The default Strapi logo, displayed in the main navigation of a Strapi application, can be modified through the *Settings > Overview* sub-section of the admin panel.
 
 ::: note
-The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos)). However, the logo uploaded via the admin panel has priority over any logo added through the configuration files. Note also that the logo customization via the configuration files allows to also modify the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
+The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos). However, the logo uploaded via the admin panel supersedes any logo added through the configuration files.
+<br>
+Note also that modifying the configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#configuration-options) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
 :::
 
 [screenshot]
