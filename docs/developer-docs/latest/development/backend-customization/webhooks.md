@@ -17,14 +17,19 @@ If you need to notify other applications about changes in the Users collection, 
 
 ## Available configurations
 
-You can set webhook configurations inside the file `./config/server.js`.
+You can set webhook configurations inside the file `./config/server`.
 
 - `webhooks`
   - `defaultHeaders`: You can set default headers to use for your webhook requests. This option is overwritten by the headers set in the webhook itself.
 
 **Example configuration**
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
+//path: ./config/server.js
+
 module.exports = {
   webhooks: {
     defaultHeaders: {
@@ -34,6 +39,25 @@ module.exports = {
 };
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/server.ts
+
+export default {
+  webhooks: {
+    defaultHeaders: {
+      'Custom-Header': 'my-custom-header',
+    },
+  },
+};
+```
+
+</code-block>
+</code-group>
+
 ## Securing your webhooks
 
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
@@ -41,13 +65,18 @@ Most of the time, webhooks make requests to public URLs, therefore it is possibl
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
 Another way is to define `defaultHeaders` to add to every webhook requests.
 
-You can configure these global headers by updating the file at `./config/server.js`:
+You can configure these global headers by updating the file at `./config/server`:
 
 :::: tabs card
 
 ::: tab Simple token
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
+//path: ./config.server.js
+
 module.exports = {
   webhooks: {
     defaultHeaders: {
@@ -57,11 +86,35 @@ module.exports = {
 };
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./config.server.ts
+
+ export default {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: 'Bearer my-very-secured-token',
+    },
+  },
+};
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ::: tab Environment variable
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
+//path: ./config.server.js
+
 module.exports = {
   webhooks: {
     defaultHeaders: {
@@ -70,6 +123,25 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config.server.ts
+
+export default {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: `Bearer ${process.env.WEBHOOK_TOKEN}`,
+    },
+  },
+};
+```
+
+</code-block>
+</code-group>
 
 ::::
 
