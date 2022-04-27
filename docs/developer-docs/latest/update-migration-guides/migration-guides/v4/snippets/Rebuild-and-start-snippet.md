@@ -1,4 +1,4 @@
-### Reinitializing the application 
+## Reinitializing the application 
 
 Rebuild the administration panel and start the application:
 

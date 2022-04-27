@@ -21,7 +21,6 @@ Strapi provides the following environment variables:
 | `BROWSER`                                                  | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                          | `Boolean` | `true`          |
 | `ENV_PATH`                                                 | Path to the file that contains your environment variables                                                                                                                                                                                                                                                  | `String`  | `'./.env'`      |
 | `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_ | Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-of-the-default-locale)) | `String`  | `'en'`          |
-| `API_TOKEN_SALT`<br/><br/>_Optional_                       | Salt to use to generate [API tokens](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)                                                                                                                                                                                 | `String`  | -               |
 
 ## Configuration using environment variables
 
@@ -82,7 +81,7 @@ env.json('VAR', { key: 'value' });
 // Cast to array (syntax: ENV_VAR=[value1, value2, value3] | ENV_VAR=["value1", "value2", "value3"])
 env.array('VAR', [1, 2, 3]);
 
-// Case to date (using new Date(value))
+// Cast to date (using new Date(value))
 env.date('VAR', new Date());
 ```
 

@@ -487,9 +487,10 @@ const developer = [
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html',
                 collapsable: true,
                 children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4 migration'],
                   ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md', 'SQL relations cheatsheet'],
-                  // ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v4'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v3 migration'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md', 'MongoDB vs. SQL cheatsheet'],
                 ],
               },
               {

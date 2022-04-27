@@ -8,14 +8,43 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 4 steps:
 
-- adding the API token to `config/admin`,
-- removing the default `ADMIN_JWT_SECRET` (recommended for improved security),
-- configuring `JWT_SECRET` in `config/plugins` (recommended),
-- setting secrets for non-development environments.
+- upgrading the application dependencies
 
-## Modifying the `config/admin` file
+## Upgrading the application dependencies to 4.1.8
 
-Strapi, by default, creates the environmental variable `API_TOKEN_SALT` and populates a unique value, stored in `/.env` at project creation. In order to update `config/admin`:
+:::prerequisites
+Stop the server before starting the upgrade.
+:::
+
+1. Upgrade all of the Strapi packages in the `package.json` to `4.1.8`:
+
+```jsx
+// path: package.json
+
+{
+  // ...
+  "dependencies": {
+    "@strapi/strapi": "4.1.8",
+    "@strapi/plugin-users-permissions": "4.1.8",
+    "@strapi/plugin-i18n": "4.1.8",
+    "better-sqlite3": "7.4.6"
+    // ...
+  }
+}
+
+```
+
+2. Save the edited `package.json` file.
+
+3. Run either `yarn` or `npm install` to install the new version.
+
+::: tip
+If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
+:::
+
+## Fixing the breaking changes
+
+1. Modify the `config/admin` file. Strapi, by default, creates the environmental variable `API_TOKEN_SALT` and populates a unique value, stored in `/.env` at project creation. In order to update `config/admin`:
 
 - add the apiToken object,
 - remove the comma and default value from the `ADMIN_JWT_SECRET` parenthetical.
@@ -62,9 +91,7 @@ export default ({ env }) => ({
 
 </code-group>
 
-## Configuring `JWT_SECRET`
-
-`JWT_SECRET` is used by the Users and Permissions plugin, and populated in `/.env`. The property should be stored in `config/plugins.js` (or `config/plugins.ts` for a TypeScript project). The `plugins` file is not created by default in a Strapi application. If the file does not exist, users should create the file and add the follow code snippet.
+2. Configure`JWT_SECRET`. `JWT_SECRET` is used by the Users and Permissions plugin, and populated in `/.env`. The property should be stored in `config/plugins.js` (or `config/plugins.ts` for a TypeScript project). The `plugins` file is not created by default in a Strapi application. If the file does not exist, users should create the file and add the following code snippet.
 
 <code-group>
 
@@ -124,3 +151,5 @@ There are multiple methods to generate secrets, for example running `openssl ran
 The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged.
 
 :::
+
+!!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Rebuild-and-start-snippet.md)!!!

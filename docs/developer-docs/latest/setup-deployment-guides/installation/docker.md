@@ -6,6 +6,14 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Installing using Docker
 
+:::caution
+This Docker image is only for Strapi v3. For now, Strapi will not update the image for v4.
+However, to build an image compatible with Strapi v4, we recommend following [this guide](https://blog.dehlin.dev/docker-with-strapi-v4) by Simen Daehlin, Community Star at Strapi.
+
+If you would like an official v4 image, please share it on the [roadmap](https://feedback.strapi.io/developer-experience).
+
+:::
+
 The following documentation will guide you through the installation of a new Strapi project using [Docker](https://www.docker.com/).
 
 Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies).
