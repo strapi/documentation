@@ -19,11 +19,12 @@ The Media Library displays all assets uploaded in the application, either via th
 From the Media Library, it is possible to:
 
 - upload a new asset (1) (see [adding assets](/user-docs/latest/media-library/adding-assets.md)),
-- create a new media folder (2) (see [organizing assets with media folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)),
+- create a new folder (2) (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)),
 - [sort the assets](#sorting-assets) and folders (3) or [set filters](#filtering-assets) (4) to find assets more easily,
 - make a textual search (5) to find a specific asset or folder.
 - if folders were created, view, navigate through, and manage [folders](/user-docs/latest/media-library/organizing-assets-with-folders.md) (6)
 - view the list of available assets (7)
+- select how many assets to display per page (8) and browse other pages of assets (9)
 
 <!-- TODO: use in details block or re-move to intro -->
 ::: details Supported file types for Media Library assets
