@@ -95,7 +95,7 @@ export default ({ env }) => ({
 
 </code-group>
 
-2. Configure`JWT_SECRET`. `JWT_SECRET` is used by the Users and Permissions plugin, and populated in `/.env`. The property should be stored in `config/plugins.js` (or `config/plugins.ts` for a TypeScript project). The `plugins` file is not created by default in a Strapi application. If the file does not exist, users should create the file and add the follow code snippet.
+2. Configure`JWT_SECRET`. `JWT_SECRET` is used by the Users and Permissions plugin, and populated in `/.env`. The property should be stored in `config/plugins.js` (or `config/plugins.ts` for a TypeScript project). The `plugins` file is not created by default in a Strapi application. If the file does not exist, users should create the file and add the following code snippet.
 
 <code-group>
 
