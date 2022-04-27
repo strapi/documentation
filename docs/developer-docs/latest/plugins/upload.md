@@ -14,7 +14,7 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middleware.js`:
+You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
 
 ```js
 // path: ./config/middlewares.js
