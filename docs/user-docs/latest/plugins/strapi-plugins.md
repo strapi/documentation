@@ -67,27 +67,6 @@ The Email plugin allows users to send email from the server or from external pro
 |------------------|----------------------|
 | Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Users and Permissions > Roles* </li></ul>|
 
-### <img width="28" src="../assets/plugins/MediaLibPlugin.png"> Media Library plugin
-
-<!-- this section might be deleted and moved to the "content-type builder/content manager" status check with Pierre-->
-
-The Media Library plugin is installed by default in each Strapi application and is accessible in the main navigation. The media Library allows users to:
-
-- upload media
-- download media
-- crop images
-- change file names, alternative text, and captions
-
-Media assets can be manipulated through the main navigation or inside media fields in the Content Manager. In addition to the Media Library in the main navigation, the Media Library Plugin affects other parts of the administration panel:
-
-| Section impacted | Options and settings                                                |
-|------------------|---------------------------------------------------------------------|
-| Main Navigation    | <ul> Addition of the Media Library to the main navigation. From the Media Library assets can be uploaded, downloaded, meta data edited, and images can be cropped. </ul>|
-|Settings      | <ul> <li> Addition of booleans for: <ul> <li>responsive friendly upload</li> <li>size optimization</li><li>auto orientation</li></ul> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Media Library* </li><li>Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul><li>Addition of role-based permissions settings where the access to the Media Library and Media Library functions can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Plugins* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li> |
-
-:::note
-Drag and drop media uploads on the entry page are not currently functional. Users must click on the media field to open a dialog box, where you can select existing assets or upload new assets.
-:::
 
 ## Additional plugins
 
@@ -95,9 +74,9 @@ Drag and drop media uploads on the entry page are not currently functional. User
 
  The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation).  The Documentation plugin allows you to:
 
-- open the API documentation
-- regenerate the documentation
-- restrict access to the documentation endpoint
+- open the API documentation,
+- regenerate the documentation,
+- restrict access to the documentation endpoint.
 
 The Documentation plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
@@ -108,41 +87,46 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 ### <img width="28" src="../assets/plugins/Gatsby_Monogram.png"> Gatsby preview
 
-The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end. The Strapi Gatsby preview plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview). The Strapi Market page also contains more information about the Gatsby preview plugin.
+The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end. The Strapi Gatsby preview plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview).
 
 | Section impacted    | Options and settings         |
 |------------|-----------------|
-| Settings     |  Addition of the Gatsby preview plugin section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync url</li> </ul> |
+| Settings     |  Addition of the Gatsby preview plugin section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync URL</li> </ul> |
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation                  |
   
 
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
 
-GraphQL is both a data query language for APIs and a runtime for queries. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).The GraphQL plugin enables GraphQL endpoints in a Strapi application. The GraphQL Playground is accesible at <http://localhost:1337/graphql> in a default Strapi application with the GraphQL plugin installed. The GraphQL playground is a browser-based interface that assists in writing GraphQL queries and data exploration. There is no access to the GraphQL plugin in the admin panel. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql). Users can confirm the plugin installation by referencing the list of installed plugins by clicking on
- ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
+The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives access to the GraphQL Playground: a browser-based interface that assists in writing GraphQL queries and data exploration. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).
+
+There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <http://localhost:1337/graphql> in a default Strapi application. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql).
+
+Users can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the **SEO** link in the main navigation, a list of Collection Types and Single Types is available. The plugin allows:
+The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the *SEO* link in the main navigation, a list of Collection Types and Single Types is available. <!-- these two sentences are not clear-->
 
-- importing of default Strapi seo and meta-social components
-- managing the meta title, meta description, and preview the content
-- managing social tags for Facebook and Twitter
-- analyzing the SEO of the application content
+With the plugin installed, it is possible to:
+
+- import default Strapi SEO and meta-social components,
+- manage the meta title, meta description, and preview the content;
+- manage social tags for Facebook and Twitter,
+- analyze the SEO of the application content.
 
 | Section impacted    | Options and settings                     |
 |-------------------|--------------------------------------------|
-| Content Manager    | <ul> <li>Addition of SEO field to Collection Types with the SEO component</li> <li> Addition of SEO menu in the right-side navigation </li> <li>Addition of **Browser Preview** and **Social Preview** buttons in the right-side navigation, </li> <li> Addition of SEO Summary and link for details in the right-side navigation.</li> </ul>                          |
-| Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the **+ Add another field** button and adding an existing component. See [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.html#components) </ul> |
+| Content Manager    | <ul> <li>Addition of SEO field to Collection Types with the SEO component.</li> <li> Addition of SEO menu in the right-side navigation </li> <li>Addition of **Browser Preview** and **Social Preview** buttons in the right-side navigation, </li> <li> Addition of SEO Summary and link for details in the right-side navigation.</li> </ul>                          |
+| Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the **+ Add another field** button and adding an existing component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.html#components)). </ul> |
 |Main navigation    | <ul> Addition of ![search icon](../assets/icons/search.svg) _SEO_ to the main navigation. By clicking on ![search icon](../assets/icons/search.svg) _SEO_ a list of Collection Types and Single Types, with the SEO status, is available.</ul>
 
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
 The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi Sentry plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-sentry). With the plugin installed a user can:
 
-- Initialize a Sentry instance when a Strapi application starts,
-- Send errors encountered in an application end API to Sentry,
-- Attach useful metadata to Sentry events, to help with debugging,
-- Expose a global Sentry service.
+- initialize a Sentry instance when a Strapi application starts,
+- send errors encountered in an application end API to Sentry,
+- attach useful metadata to Sentry events, to help with debugging,
+- expose a global Sentry service.
 
  There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
