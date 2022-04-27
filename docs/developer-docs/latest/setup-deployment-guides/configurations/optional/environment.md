@@ -95,6 +95,12 @@ The environment is based on the `NODE_ENV` environment variable, which defaults 
 
 When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production configuration will override the default configuration. In combination with environment variables this pattern becomes really powerful.
 
+::: note
+
+The `NODE_ENV` environmental variable can be set to any arbitrary value, however, there are some behaviors that only apply when `NODE_ENV=production`. For example, the session middleware is in a secure mode. The exact behavior will depend on which libraries are installed for each Strapi application.
+
+:::
+
 For instance, using the following configuration files will give you various options to start the server:
 
 ```js
