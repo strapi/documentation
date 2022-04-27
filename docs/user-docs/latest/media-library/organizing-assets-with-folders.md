@@ -34,3 +34,7 @@ To create a new folder in the Media Library:
 2. In the "Add new folder" popup, type a name for the new folder in the _Folder name_ field.
 3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the root of the Media library.
 4. Click **Save**.
+
+::: note
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested folder as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](../assets/icons/search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+:::
