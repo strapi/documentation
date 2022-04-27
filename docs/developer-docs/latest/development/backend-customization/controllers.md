@@ -76,7 +76,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 ```js
 // path: ./src/api/restaurant/controllers/restaurant.ts
 
-import { factories } from '@strapi/strapi'; //verify with soup
+import { factories } from '@strapi/strapi'; 
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom action

@@ -76,7 +76,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')
 
-import { factories } from '@strapi/strapi'; //confirm with soup
+import { factories } from '@strapi/strapi'; 
 
 export default factories.createCoreRouter('api::restaurant.restaurant', {
   prefix: '',
@@ -134,7 +134,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-import { factories } from '@strapi/strapi'; //confirm with soup
+import { factories } from '@strapi/strapi'; 
 
 export default factories.createCoreRouter('api::restaurant.restaurant', {
   only: ['find'],
@@ -272,7 +272,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-import { factories } from '@strapi/strapi';//check with soup
+import { factories } from '@strapi/strapi';
 
 export default factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
