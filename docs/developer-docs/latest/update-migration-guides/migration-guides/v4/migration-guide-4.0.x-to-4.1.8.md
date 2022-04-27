@@ -9,10 +9,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 4 steps:
 
 - upgrading the application dependencies
-- adding the API token to `config/admin`,
-- removing the default `ADMIN_JWT_SECRET` (recommended for improved security),
-- configuring `JWT_SECRET` in `config/plugins` (recommended),
-- setting secrets for non-development environments.
 
 ## Upgrading the application dependencies to 4.1.8
 
