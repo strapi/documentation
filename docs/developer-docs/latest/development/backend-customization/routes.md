@@ -74,11 +74,11 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 <code-block title=TYPESCRIPT>
 
 ```js
-// path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.ts')
+// path: ./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; //confirm with soup
 
-export default createCoreRouter('api::restaurant.restaurant', {
+export default factories.createCoreRouter('api::restaurant.restaurant', {
   prefix: '',
   only: ['find', 'findOne'],
   except: [],
@@ -134,9 +134,9 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; //confirm with soup
 
-export default createCoreRouter('api::restaurant.restaurant', {
+export default factories.createCoreRouter('api::restaurant.restaurant', {
   only: ['find'],
   config: {
     find: {
@@ -272,9 +272,9 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi';//check with soup
 
-export default createCoreRouter('api::restaurant.restaurant', {
+export default factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
       policies: [
