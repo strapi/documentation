@@ -104,7 +104,7 @@ Users can confirm the plugin installation by referencing the list of installed p
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation and adds two pre-built components *MetaSocial* and *Seo* to the Content-type Builder.
+The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation and adds 2 pre-built components *MetaSocial* and *Seo* to the Content-type Builder.
 
 To apply the SEO plugin to a Collection Type:
 
