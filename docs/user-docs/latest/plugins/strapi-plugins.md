@@ -118,7 +118,7 @@ To apply the SEO plugin to a Collection Type:
 With the plugin installed, it is possible to:
 
 - import default Strapi SEO and meta-social components,
-- manage the meta title, meta description, and preview the content;
+- manage the meta title, meta description, and preview the content,
 - manage social tags for Facebook and Twitter,
 - analyze the SEO of the application content.
 
