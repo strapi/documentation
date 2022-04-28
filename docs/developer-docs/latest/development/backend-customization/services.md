@@ -71,9 +71,9 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 ```js
 // path: ./src/api/restaurant/services/restaurant.ts
 
-const { createCoreService } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; 
 
-export default createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom service
   async exampleService(...args) {
     let response = { okay: true }
@@ -158,7 +158,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 // path: ./src/api/email/services/email.ts
 
 
-const { createCoreService } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; //check with soup
 const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
 
 // Create reusable transporter object using SMTP transport.
@@ -170,9 +170,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
   send(from, to, subject, text) {
-    // Setup e-mail data.
+    // Setup e-mail data. 
     const options = {
       from,
       to,
@@ -223,7 +223,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 ```js
 // path: ./src/api/user/controllers/user.ts
 
-export default createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
   async signup(ctx) {
     const { userData } = ctx.body;
