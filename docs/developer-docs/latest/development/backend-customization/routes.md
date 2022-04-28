@@ -422,9 +422,9 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi';
 
-export default createCoreRouter('api::restaurant.restaurant', {
+export default factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
       middlwares: [
@@ -555,9 +555,9 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 ```js
 // path: ./src/api/restaurant/routes/restaurant.ts
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi';
 
-export default = createCoreRouter('api::restaurant.restaurant', {
+export default = factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
       auth: false
