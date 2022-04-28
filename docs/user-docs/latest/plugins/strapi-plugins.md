@@ -44,7 +44,7 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
-This plugin is used to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device etc.). With the Users & Permissions plugin, it is possible to:
+This plugin is used to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device, etc.). With the Users & Permissions plugin, it is possible to:
 
 - manage end users accounts, based on the "User" collection type available through the plugin,
 - define the available end-user roles and their related permissions,
