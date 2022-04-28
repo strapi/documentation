@@ -7,7 +7,7 @@ sidebarDepth: 2
 
 # List of Strapi plugins
 
- Strapi builds and maintains plugins that extends the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Additional documentation on plugins is provided in the relevent sections of the User Guide and the Developer Documention, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
+Strapi builds and maintains plugins that extend the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md). Additional documentation on plugins is provided in the relevant sections of the User Guide and the Developer Documentation, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
 
 ::: note
 
