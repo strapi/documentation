@@ -489,7 +489,7 @@ module.exports = {
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.ts
 
-export default = {
+export default  {
   routes: [
     {
       method: 'GET',
@@ -557,7 +557,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 import { factories } from '@strapi/strapi';
 
-export default = factories.createCoreRouter('api::restaurant.restaurant', {
+export default  factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
       auth: false
@@ -600,7 +600,7 @@ module.exports = {
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.ts
 
-export default = {
+export default  {
   routes: [
     {
       method: 'GET',
