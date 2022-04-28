@@ -39,7 +39,7 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 ### <img width="28" src="../assets/plugins/icon_up-plugin.png"> Users & Permissions plugin
 
 :::note
-[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022. <!--confirmed with Marco. Probably earlier, update will be needed-->
+[API tokens](/user-docs/latest/settings/managing-global-settings.html#managing-api-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022.
 :::
 
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
@@ -82,7 +82,7 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 | Section impacted    | Options and settings         |
 |------------------|---------------------------------------------------------------------------------------------------------|
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation under the plugins heading, which contains links to open and refresh the documentation.   </ul>        |
-| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > documentation plugin* </li><br>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the _Plugins_ tab and the _Settings_ tab. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration Panel > Roles*  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul>|
+| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > documentation plugin* </li><br>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration Panel > Roles*  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> </li></ul>|
 
 ### <img width="28" src="../assets/plugins/Gatsby_Monogram.png"> Gatsby preview
 
@@ -100,20 +100,20 @@ The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives 
 
 There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <http://localhost:1337/graphql> in a default Strapi application. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql).
 
-Users can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
+Users can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) *Plugins* in the main navigation.
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
 The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation and adds 2 pre-built components *MetaSocial* and *Seo* to the Content-type Builder.
 
-To apply the SEO plugin to a Collection Type:
+To apply the SEO plugin to a collection type:
 
-1. in the Content Builder select a Collection Type and click *Add another field*,
-2. select *Component* from the dialog box,
-3. select *Use an existing component* and click *Select a component*,
-4. select either *shared - MetaSocial* or *shared - Seo* from the dropdown menu,
-5. name the new component *MetaSocial* or *seo*, respectively,
-6. click finish.
+1. In the Content Builder select a collection type and click *Add another field*.
+2. Select *Component* from the dialog box.
+3. Select *Use an existing component* and click *Select a component*.
+4. Select either *shared - MetaSocial* or *shared - Seo* from the dropdown menu.
+5. Name the new component *MetaSocial* or *seo*, respectively.
+6. Click finish.
 
 With the plugin installed, it is possible to:
 
@@ -126,7 +126,7 @@ With the plugin installed, it is possible to:
 |-------------------|--------------------------------------------|
 | Content Manager    | <ul> <li>Addition of SEO field to Collection Types with the SEO component.</li> <li> Addition of SEO menu in the right-side navigation </li> <li>Addition of **Browser Preview** and **Social Preview** buttons in the right-side navigation, </li> <li> Addition of SEO Summary and link for details in the right-side navigation.</li> </ul>                          |
 | Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the **+ Add another field** button and adding an existing component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.html#components)). </ul> |
-|Main navigation    | <ul> Addition of ![search icon](../assets/icons/search.svg) _SEO_ to the main navigation. By clicking on ![search icon](../assets/icons/search.svg) _SEO_ a list of Collection Types and Single Types, with the SEO status, is available.</ul>
+|Main navigation    | <ul> Addition of ![search icon](../assets/icons/search.svg) *SEO* to the main navigation. By clicking on ![search icon](../assets/icons/search.svg) *SEO* a list of Collection Types and Single Types, with the SEO status, is available.</ul>
 
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
@@ -137,4 +137,4 @@ The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi 
 - attach useful metadata to Sentry events, to help with debugging,
 - expose a global Sentry service.
 
- There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) _Plugins_ in the main navigation.
+ There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) *Plugins* in the main navigation.
