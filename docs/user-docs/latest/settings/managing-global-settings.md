@@ -13,18 +13,18 @@ Global settings for plugins and features are managed from ![Settings icon](../as
 The default Strapi logo, displayed in the main navigation of a Strapi application, can be modified through the *Settings > Overview* sub-section of the admin panel.
 
 ::: note
-The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos). However, the logo uploaded via the admin panel supersedes any logo added through the configuration files.
+The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos)). However, the logo uploaded via the admin panel supersedes any logo set through the configuration files.
 <br>
-Note also that modifying the configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#configuration-options) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
+Note also that modifying the configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#configuration-options)) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
 :::
 
-[screenshot]
+![Custom logo settings](../assets/settings/settings_custom-logo.png)
 
 To customize the logo of the admin panel:
 
 1. Go to the *Global settings > Overview* sub-section of the settings interface.
 2. Click on the upload area.
-3. Upload your chosen logo, either by browsing files, drag & dropping the file in the right area, or by using a URL.
+3. Upload your chosen logo, either by browsing files, drag & dropping the file in the right area, or by using a URL. The logo shouldn't be more than 750x750px. 
 4. Click on the **Upload logo** button in the upload window.
 5. Click on the **Save** button in the top right corner.
 
