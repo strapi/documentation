@@ -29,7 +29,7 @@ To customize the logo of the admin panel:
 5. Click on the **Save** button in the top right corner.
 
 ::: tip
-Once uploaded, the new logo can be replaced with another one ![Add icon](../assets/icons/add.svg), or resetted ![Reset icon](../assets/icons/reset_icon.svg) with the default Strapi logo.
+Once uploaded, the new logo can be replaced with another one ![Add icon](../assets/icons/add.svg), or resetted ![Reset icon](../assets/icons/reset_icon.svg) with the default Strapi logo or the logo set in the configuration files.
 :::
 
 ## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
