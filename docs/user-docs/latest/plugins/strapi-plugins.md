@@ -67,7 +67,6 @@ The Email plugin allows users to send email from the server or from external pro
 |------------------|----------------------|
 | Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Users and Permissions > Roles* </li></ul>|
 
-
 ## Additional plugins
 
 ### <img width="28" src="../assets/plugins/Documentation-swagger.png"> Documentation
@@ -105,7 +104,16 @@ Users can confirm the plugin installation by referencing the list of installed p
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
-The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation. The SEO plugin requires adding a shared component to Collection Types and Single Types. From the *SEO* link in the main navigation, a list of Collection Types and Single Types is available. <!-- these two sentences are not clear-->
+The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation and adds two pre-built components *MetaSocial* and *Seo* to the Content-type Builder.
+
+To apply the SEO plugin to a Collection Type:
+
+1. in the Content Builder select a Collection Type and click *Add another field*,
+2. select *Component* from the dialog box,
+3. select *Use an existing component* and click *Select a component*,
+4. select either *shared - MetaSocial* or *shared - Seo* from the dropdown menu,
+5. name the new component *MetaSocial* or *seo*, respectively,
+6. click finish.
 
 With the plugin installed, it is possible to:
 
