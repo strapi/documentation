@@ -899,10 +899,9 @@ Please be aware of the different type of routes:
 
 - content-api: It is external: The routes will be available from this endpoint: `/api/plugin-name/...`. It needs to be activated in the Users & Permissions plugin setting in the admin.
 - admin: It is internal: The routes will be available from this endpoint: `/plugin-name/...` and will **only be accessible from the fron-ent part of Strapi**: the admin. No need to to define permissions.
-:::
+  :::
 
 Lear more about [routes in the documentation](/developer-docs/latest/development/backend-customization/routes.html#implementation)
-
 
 #### Strapi object
 
@@ -1035,7 +1034,6 @@ In fact, every content-types created in the admin will have a uid beginning with
 
 [Learn more about relations in the documentation](/developer-docs/latest/development/backend-customization/models.html#model-attributes)
 
-
 #### Managing settings with the store
 
 A plugin might need to have some some settings depending on the use case. This section will cover the server part of handling settings for a plugin. For this guide, we'll define a setting to hide or either cross tasks when they are marked as done.
@@ -1043,37 +1041,37 @@ A plugin might need to have some some settings depending on the use case. This s
 - Update the a `routes/task.js` file with the following:
 
 ```js
-"use strict";
+'use strict';
 
 /**
  *  router.
  */
 
 module.exports = {
-  type: "admin",
+  type: 'admin',
   routes: [
     {
-      method: "GET",
-      path: "/count",
-      handler: "task.count",
+      method: 'GET',
+      path: '/count',
+      handler: 'task.count',
       config: {
         policies: [],
         auth: false,
       },
     },
     {
-      method: "GET",
-      path: "/settings",
-      handler: "task.getSettings",
+      method: 'GET',
+      path: '/settings',
+      handler: 'task.getSettings',
       config: {
         policies: [],
         auth: false,
       },
     },
     {
-      method: "POST",
-      path: "/settings",
-      handler: "task.setSettings",
+      method: 'POST',
+      path: '/settings',
+      handler: 'task.setSettings',
       config: {
         policies: [],
         auth: false,
@@ -1085,26 +1083,30 @@ module.exports = {
 
 This custom router create 2 new admin routes that will be using two new `task` controller actions.
 
-
 - Update the `controllers/task.js` file with the following:
 
-
 ```js
-"use strict";
+'use strict';
 
 /**
  *  controller
  */
 
-const { createCoreController } = require("@strapi/strapi").factories;
+const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController("plugin::todo.task", {
+module.exports = createCoreController('plugin::todo.task', {
   async count(ctx) {
-    ctx.body = await strapi.plugin("todo").service("todoService").count();
+    ctx.body = await strapi
+      .plugin('todo')
+      .service('task')
+      .count();
   },
   async getSettings(ctx) {
     try {
-      ctx.body = await strapi.plugin("todo").service("task").getSettings();
+      ctx.body = await strapi
+        .plugin('todo')
+        .service('task')
+        .getSettings();
     } catch (err) {
       ctx.throw(500, err);
     }
@@ -1112,8 +1114,14 @@ module.exports = createCoreController("plugin::todo.task", {
   async setSettings(ctx) {
     const { body } = ctx.request;
     try {
-      await strapi.plugin("todo").service("task").setSettings(body);
-      ctx.body = await strapi.plugin("todo").service("task").getSettings();
+      await strapi
+        .plugin('todo')
+        .service('task')
+        .setSettings(body);
+      ctx.body = await strapi
+        .plugin('todo')
+        .service('task')
+        .getSettings();
     } catch (err) {
       ctx.throw(500, err);
     }
@@ -1126,19 +1134,18 @@ This controller has two actions:
 - `getSettings`: Uses getSettings service
 - `setSettings`: Uses setSettings service
 
-
-- Update the `services/task.js` file with the following:
+* Update the `services/task.js` file with the following:
 
 ```js
-"use strict";
+'use strict';
 
-const { createCoreService } = require("@strapi/strapi").factories;
+const { createCoreService } = require('@strapi/strapi').factories;
 
 function getPluginStore() {
   return strapi.store({
-    environment: "",
-    type: "plugin",
-    name: "todo",
+    environment: '',
+    type: 'plugin',
+    name: 'todo',
   });
 }
 async function createDefaultConfig() {
@@ -1146,17 +1153,17 @@ async function createDefaultConfig() {
   const value = {
     hidden: false,
   };
-  await pluginStore.set({ key: "settings", value });
-  return pluginStore.get({ key: "settings" });
+  await pluginStore.set({ key: 'settings', value });
+  return pluginStore.get({ key: 'settings' });
 }
 
-module.exports = createCoreService("plugin::todo.task", {
+module.exports = createCoreService('plugin::todo.task', {
   async count() {
-    return await strapi.query("plugin::todo.task").count();
+    return await strapi.query('plugin::todo.task').count();
   },
   async getSettings() {
     const pluginStore = getPluginStore();
-    let config = await pluginStore.get({ key: "settings" });
+    let config = await pluginStore.get({ key: 'settings' });
     if (!config) {
       config = await createDefaultConfig();
     }
@@ -1165,8 +1172,8 @@ module.exports = createCoreService("plugin::todo.task", {
   async setSettings(settings) {
     const value = settings;
     const pluginStore = getPluginStore();
-    await pluginStore.set({ key: "settings", value });
-    return pluginStore.get({ key: "settings" });
+    await pluginStore.set({ key: 'settings', value });
+    return pluginStore.get({ key: 'settings' });
   },
 });
 ```
@@ -1190,18 +1197,658 @@ A plugin allows you to customize the front-end part of your Strapi application. 
 - Create a plugin homepage
 - Create a plugin settings page
 - Insert React components in [injection zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#injection-zones-api)
-- Way more
+- Way more things...
 
+We are going explore the entrypoint of the admin of your plugin: `./src/plugins/todo/admin/src/index.js`.
 
-#### Design System introduction
+#### Admin entrypoint
 
-#### Settings page
+By default, your `admin/src/index.js` file should look like this:
 
-notify on slack when a task is complete
+```js
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import pluginPkg from '../../package.json';
+import pluginId from './pluginId';
+import Initializer from './components/Initializer';
+import PluginIcon from './components/PluginIcon';
+
+const name = pluginPkg.strapi.name;
+
+export default {
+  register(app) {
+    app.addMenuLink({
+      to: `/plugins/${pluginId}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: name,
+      },
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+
+        return component;
+      },
+      permissions: [
+        // Uncomment to set the permissions of the plugin here
+        // {
+        //   action: '', // the action name should be plugin::plugin-name.actionType
+        //   subject: null,
+        // },
+      ],
+    });
+    app.registerPlugin({
+      id: pluginId,
+      initializer: Initializer,
+      isReady: false,
+      name,
+    });
+  },
+
+  bootstrap(app) {},
+  async registerTrads({ locales }) {
+    const importedTrads = await Promise.all(
+      locales.map(locale => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      })
+    );
+
+    return Promise.resolve(importedTrads);
+  },
+};
+```
+
+This file will, first, add your plugin to the menu link and register your plugin during the register phase:
+
+```js
+register(app) {
+    app.addMenuLink({
+      to: `/plugins/${pluginId}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: name,
+      },
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+
+        return component;
+      },
+      permissions: [
+        // Uncomment to set the permissions of the plugin here
+        // {
+        //   action: '', // the action name should be plugin::plugin-name.actionType
+        //   subject: null,
+        // },
+      ],
+    });
+    app.registerPlugin({
+      id: pluginId,
+      initializer: Initializer,
+      isReady: false,
+      name,
+    });
+  },
+```
+
+Then, it will do nothing during the bootstrap phase:
+
+```js
+bootstrap(app) {},
+```
+
+This is the phase where we are going to inject our components later.
+Finally, it handle the translation files in your plugin allowing you to make it i18n friendly.
+
+```js
+async registerTrads({ locales }) {
+    const importedTrads = await Promise.all(
+      locales.map(locale => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      })
+    );
+
+    return Promise.resolve(importedTrads);
+  },
+```
+
+There is a lot of things you can already do here. You may want to customize the icon of your plugin in the menu link for example by updating the `admin/src/components/PluginIcon/index.js` file. Find another icon in the [Strapi Design System website](https://design-system-git-main-strapijs.vercel.app/?path=/story/design-system-components-theme--icons) and update it:
+
+```js
+// Replace the default Puzzle icon by a Brush one
+import React from 'react';
+import Brush from '@strapi/icons/Brush';
+
+const PluginIcon = () => <Brush />;
+
+export default PluginIcon;
+```
+
+::: tip
+Don't forget to build your admin or to run it with the `--watch-admin` option.
+:::
+
+Needless to say that if you don't want your plugin to be listed in the menu link for some reasons, you can remove this function.
+Now is the time to get into the front-end part of this plugin but first, an introduction to our Design System is necessary.
+
+#### Strapi Design System
+
+Strapi Design System provides guidelines and tools to help anyone make Strapi's contributions more cohesive and to build plugins more efficiently. You can find the [guidelines for publishing a plugin to the marketplace](https://strapi.io/marketplace/guidelines). As you can see: `Plugins compatible with Strapi v4 MUST use the Strapi Design System for the UI.`.
+
+Feel free to browse the [Design System website](https://design-system.strapi.io/) but what is more important to you is the [components](https://design-system-git-main-strapijs.vercel.app/). This is every React components you can use within your project to give a beautiful UI to your plugin.
+
+You can also find [every icons](https://design-system-git-main-strapijs.vercel.app/?path=/story/design-system-components-theme--icons) you can use. Click on them to have the import js line copied in your clipboard.
+
+You don't need to install anything, from a Strapi project, specially in the `./admin/src` folder of your plugin, you can directly create components, import some items from the Design System like this: `import { Button } from '@strapi/design-system/Button';` and that's it.
 
 #### Homepage
 
-show the count of tasks and the last x ones linking to the corresponding entry
+A Strapi plugin can have an homepage or not, you decide if it is necessary. For our todo use case it doesn't make sense to have a specific homepage since the most important part would be to inject a todo on every entry we have (article, product, etc...)
+
+But this section will cover this anyway, we are goin to use the route we created to get the total number of task in order to display it on this homepage.
+
+The route we created is the following:
+
+```js
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'GET',
+      path: '/count',
+      handler: 'task.count',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    // ...
+  ],
+};
+```
+
+::: tip
+Remember, this is an admin route, which means that it will be directly accessible from the admin
+:::
+
+We are going to create a file that will execute every HTTP request to our server in a specific folder but feel free to name it differently.
+
+- Create an `./admin/src/api/task.js` file containing the following:
+
+```js
+import { request } from '@strapi/helper-plugin';
+
+const taskRequests = {
+  getTaskCount: async () => {
+    const data = await request(`/todo/count`, {
+      method: 'GET',
+    });
+    return data;
+  },
+};
+export default taskRequests;
+```
+
+We are using the [helper-plugin](https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin). This is a core package containing hooks, components, functions and more. We are using the [request function](https://github.com/strapi/strapi/blob/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin/lib/src/utils/request/index.js) for making HTTP request.
+
+- Update the content of the `admin/src/pages/Homepage/index.js` file with the following:
+
+```js
+/*
+ *
+ * HomePage
+ *
+ */
+
+import React, { memo, useState, useEffect } from 'react';
+
+import taskRequests from '../../api/task';
+
+import { Box } from '@strapi/design-system/Box';
+import { Flex } from '@strapi/design-system/Flex';
+import { Typography } from '@strapi/design-system/Typography';
+import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
+import { BaseHeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
+
+import { Illo } from '../../components/Illo';
+
+const HomePage = () => {
+  const [taskCount, setTaskCount] = useState(0);
+
+  useEffect(() => {
+    taskRequests.getTaskCount().then(data => {
+      setTaskCount(data);
+    });
+  }, []);
+
+  return (
+    <>
+      <BaseHeaderLayout
+        title="Task Plugin"
+        subtitle="Discover the number of tasks you have in your project"
+        as="h2"
+      />
+      <ContentLayout>
+        {taskCount === 0 && (
+          <EmptyStateLayout icon={<Illo />} content="You don't have any tasks yet..." />
+        )}
+        {taskCount > 0 && (
+          <Box background="neutral0" hasRadius={true} shadow="filterShadow">
+            <Flex justifyContent="center" padding={8}>
+              <Typography variant="alpha">You have a total of {taskCount} tasks 🚀</Typography>
+            </Flex>
+          </Box>
+        )}
+      </ContentLayout>
+    </>
+  );
+};
+
+export default memo(HomePage);
+```
+
+For this hommepage to work, you'll just need to create the `Illo` icon that the `EmptyStateLayout` is using.
+
+- Create a `admin/src/components/Illo/index.js` file containing the following:
+
+```js
+import React from 'react';
+
+export const Illo = () => (
+  <svg width="159" height="88" viewBox="0 0 159 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M134.933 17.417C137.768 17.417 140.067 19.7153 140.067 22.5503C140.067 25.3854 137.768 27.6837 134.933 27.6837H105.6C108.435 27.6837 110.733 29.9819 110.733 32.817C110.733 35.6521 108.435 37.9503 105.6 37.9503H121.733C124.568 37.9503 126.867 40.2486 126.867 43.0837C126.867 45.9187 124.568 48.217 121.733 48.217H114.272C110.698 48.217 107.8 50.5153 107.8 53.3503C107.8 55.2404 109.267 56.9515 112.2 58.4837C115.035 58.4837 117.333 60.7819 117.333 63.617C117.333 66.4521 115.035 68.7503 112.2 68.7503H51.3333C48.4982 68.7503 46.2 66.4521 46.2 63.617C46.2 60.7819 48.4982 58.4837 51.3333 58.4837H22.7333C19.8982 58.4837 17.6 56.1854 17.6 53.3503C17.6 50.5153 19.8982 48.217 22.7333 48.217H52.0666C54.9017 48.217 57.2 45.9187 57.2 43.0837C57.2 40.2486 54.9017 37.9503 52.0666 37.9503H33.7333C30.8982 37.9503 28.6 35.6521 28.6 32.817C28.6 29.9819 30.8982 27.6837 33.7333 27.6837H63.0666C60.2316 27.6837 57.9333 25.3854 57.9333 22.5503C57.9333 19.7153 60.2316 17.417 63.0666 17.417H134.933ZM134.933 37.9503C137.768 37.9503 140.067 40.2486 140.067 43.0837C140.067 45.9187 137.768 48.217 134.933 48.217C132.098 48.217 129.8 45.9187 129.8 43.0837C129.8 40.2486 132.098 37.9503 134.933 37.9503Z"
+      fill="#DBDBFA"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M95.826 16.6834L102.647 66.4348L103.26 71.4261C103.458 73.034 102.314 74.4976 100.706 74.695L57.7621 79.9679C56.1542 80.1653 54.6906 79.0219 54.4932 77.4139L47.8816 23.5671C47.7829 22.7631 48.3546 22.0313 49.1586 21.9326C49.1637 21.932 49.1688 21.9313 49.1739 21.9307L52.7367 21.5311L95.826 16.6834ZM55.6176 21.208L58.9814 20.8306Z"
+      fill="white"
+    />
+    <path
+      d="M55.6176 21.208L58.9814 20.8306M95.826 16.6834L102.647 66.4348L103.26 71.4261C103.458 73.034 102.314 74.4976 100.706 74.695L57.7621 79.9679C56.1542 80.1653 54.6906 79.0219 54.4932 77.4139L47.8816 23.5671C47.7829 22.7631 48.3546 22.0313 49.1586 21.9326C49.1637 21.932 49.1688 21.9313 49.1739 21.9307L52.7367 21.5311L95.826 16.6834Z"
+      stroke="#7E7BF6"
+      strokeWidth="2.5"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M93.9695 19.8144L100.144 64.9025L100.699 69.4258C100.878 70.8831 99.8559 72.2077 98.416 72.3845L59.9585 77.1065C58.5185 77.2833 57.2062 76.2453 57.0272 74.7881L51.0506 26.112C50.9519 25.308 51.5236 24.5762 52.3276 24.4775L57.0851 23.8934"
+      fill="#F0F0FF"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M97.701 7.33301H64.2927C63.7358 7.33301 63.2316 7.55873 62.8667 7.92368C62.5017 8.28862 62.276 8.79279 62.276 9.34967V65.083C62.276 65.6399 62.5017 66.1441 62.8667 66.509C63.2316 66.874 63.7358 67.0997 64.2927 67.0997H107.559C108.116 67.0997 108.62 66.874 108.985 66.509C109.35 66.1441 109.576 65.6399 109.576 65.083V19.202C109.576 18.6669 109.363 18.1537 108.985 17.7755L99.1265 7.92324C98.7484 7.54531 98.2356 7.33301 97.701 7.33301Z"
+      fill="white"
+      stroke="#7F7CFA"
+      strokeWidth="2.5"
+    />
+    <path
+      d="M98.026 8.17871V16.6833C98.026 17.8983 99.011 18.8833 100.226 18.8833H106.044"
+      stroke="#807EFA"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M70.1594 56.2838H89.2261M70.1594 18.8838H89.2261H70.1594ZM70.1594 27.6838H101.693H70.1594ZM70.1594 37.2171H101.693H70.1594ZM70.1594 46.7505H101.693H70.1594Z"
+      stroke="#817FFA"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+```
+
+You should be able to see the total number of tasks in your plugin homepage now. Let's explore in details what's happening.
+
+```js
+import React, { memo, useState, useEffect } from 'react';
+
+import taskRequests from '../../api/task';
+
+import { Box } from '@strapi/design-system/Box';
+import { Flex } from '@strapi/design-system/Flex';
+import { Typography } from '@strapi/design-system/Typography';
+import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
+import { BaseHeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
+```
+
+First, we import every hooks from React that we'll need for this to work. We import the function to get the task count we created just before and then we import every Design system component we'll need.
+
+```js
+const [taskCount, setTaskCount] = useState(0);
+
+useEffect(() => {
+  taskRequests.getTaskCount().then(data => {
+    setTaskCount(data);
+  });
+}, []);
+```
+
+Then we create a `taskCount` state with 0 as a default value. We use the useEffect React hook to fetch our task count using the function we created earlier and replace our state variable with the result.
+
+```js
+return (
+  <>
+    <BaseHeaderLayout
+      title="Task Plugin"
+      subtitle="Discover the number of tasks you have in your project"
+      as="h2"
+    />
+    <ContentLayout>
+      {taskCount === 0 && (
+        <EmptyStateLayout icon={<Illo />} content="You don't have any tasks yet..." />
+      )}
+      {taskCount > 0 && (
+        <Box background="neutral0" hasRadius={true} shadow="filterShadow">
+          <Flex justifyContent="center" padding={8}>
+            <Typography variant="alpha">You have a total of {taskCount} tasks 🚀</Typography>
+          </Flex>
+        </Box>
+      )}
+    </ContentLayout>
+  </>
+);
+```
+
+Then, depending on the number of tasks you have, it will display something on the homepage of your plugin.
+As I told you before, for this use case, making this homepage is not really necessary but you are know familiar with it and with the Design System already.
+
+Let's add something that may be useful in the futur. We want to display a loading indicator while the request is pending and for this, we'll use the [helper-plugin](<(https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin)>) again.
+
+- Import the `LoadingIndicatorPage` component from the `helper-plugin`
+
+```js
+import { LoadingIndicatorPage } from '@strapi/helper-plugin';
+```
+
+- Create a new state variable that will indicate the page that it is loading by default:
+
+```js
+const [isLoading, setIsLoading] = useState(true);
+```
+
+- Add this conditional return just after the `useEffect` hook:
+
+```js
+if (isLoading) return <LoadingIndicatorPage />;
+```
+
+Final code:
+
+```js
+/*
+ *
+ * HomePage
+ *
+ */
+
+import React, { memo, useState, useEffect } from 'react';
+
+import taskRequests from '../../api/task';
+
+import { LoadingIndicatorPage } from '@strapi/helper-plugin';
+
+import { Box } from '@strapi/design-system/Box';
+import { Flex } from '@strapi/design-system/Flex';
+import { Typography } from '@strapi/design-system/Typography';
+import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
+import { BaseHeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
+
+import { Illo } from '../../components/Illo';
+
+const HomePage = () => {
+  const [taskCount, setTaskCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    taskRequests.getTaskCount().then(data => {
+      setTaskCount(data);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) return <LoadingIndicatorPage />;
+
+  return (
+    <>
+      <BaseHeaderLayout
+        title="Task Plugin"
+        subtitle="Discover the number of tasks you have in your project"
+        as="h2"
+      />
+
+      <ContentLayout>
+        {taskCount === 0 && (
+          <EmptyStateLayout icon={<Illo />} content="You don't have any tasks yet..." />
+        )}
+        {taskCount > 0 && (
+          <Box background="neutral0" hasRadius={true} shadow="filterShadow">
+            <Flex justifyContent="center" padding={8}>
+              <Typography variant="alpha">You have a total of {taskCount} tasks 🚀</Typography>
+            </Flex>
+          </Box>
+        )}
+      </ContentLayout>
+    </>
+  );
+};
+
+export default memo(HomePage);
+```
+
+The content of you page will only be displayed if the request has return something.
+We strongly advise you to take a look at the helper-plugin which deserve to have this name. You can find the source code of the `LoadingIndicatorPage` component [here](https://github.com/strapi/strapi/blob/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin/lib/src/components/LoadingIndicatorPage/index.js).
+
+#### Settings page
+
+We created a settings api in a previous section. Now is the time to create the settings view in the admin to be able to intereact with it. By default Strapi creates an Homepage folder, the one you just played with, but it doesn't create the Settings which is needed to implement a settings section for your plugin in the main settings view.
+
+First, we need to create the necessary HTTP requests from the admin.
+
+- Update the `admin/src/api/task.js` file with the following content:
+
+```js
+import { request } from '@strapi/helper-plugin';
+
+const taskRequests = {
+  getTaskCount: async () => {
+    const data = await request(`/todo/count`, {
+      method: 'GET',
+    });
+    return data;
+  },
+  getSettings: async () => {
+    const data = await request(`/todo/settings`, {
+      method: 'GET',
+    });
+    return data;
+  },
+  setSettings: async data => {
+    return await request(`/todo/settings`, {
+      method: 'POST',
+      body: data,
+    });
+  },
+};
+export default taskRequests;
+```
+
+- Create a `admin/src/pages/Settings` folder with an `index.js` file in it with the following:
+
+```js
+import React, { useEffect, useState } from "react";
+
+import taskRequests from "../../api/task";
+
+import { LoadingIndicatorPage, useNotification } from "@strapi/helper-plugin";
+
+import { Box } from "@strapi/design-system/Box";
+import { Stack } from "@strapi/design-system/Stack";
+import { Button } from "@strapi/design-system/Button";
+import { Grid, GridItem } from "@strapi/design-system/Grid";
+import { HeaderLayout } from "@strapi/design-system/Layout";
+import { ContentLayout } from "@strapi/design-system/Layout";
+import { Typography } from "@strapi/design-system/Typography";
+import { ToggleInput } from "@strapi/design-system/ToggleInput";
+
+import Check from "@strapi/icons/Check";
+
+const Settings = () => {
+  const [settings, setSettings] = useState();
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const toggleNotification = useNotification();
+
+  useEffect(() => {
+    taskRequests.getSettings().then((data) => {
+      setSettings(data);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const handleSubmit = async () => {
+    setIsSaving(true);
+    const data = await taskRequests.setSettings(settings);
+    setSettings(data);
+    setIsSaving(false);
+    toggleNotification({
+      type: "success",
+      message: "Settings successfully updated",
+    });
+  };
+
+  return (
+    <>
+      <HeaderLayout
+        id="title"
+        title="Todo General settings"
+        subtitle="Manage the settings and behaviour of your todo plugin"
+        primaryAction={
+          isLoading ? (
+            <></>
+          ) : (
+            <Button
+              onClick={handleSubmit}
+              startIcon={<Check />}
+              size="L"
+              disabled={isSaving}
+              loading={isSaving}
+            >
+              Save
+            </Button>
+          )
+        }
+      ></HeaderLayout>
+      {isLoading ? (
+        <LoadingIndicatorPage />
+      ) : (
+        <ContentLayout>
+            <Box
+              background="neutral0"
+              hasRadius
+              shadow="filterShadow"
+              paddingTop={6}
+              paddingBottom={6}
+              paddingLeft={7}
+              paddingRight={7}
+            >
+              <Stack size={3}>
+                <Typography>General settings</Typography>
+                <Grid gap={6}>
+                  <GridItem col={12} s={12}>
+                    <ToggleInput
+                      checked={settings?.enabled ?? false}
+                      hint="Cross or hide tasks marked as done"
+                      offLabel="Cross"
+                      onLabel="Hide"
+                      onChange={(e) => {
+                        setSettings({
+                          enabled: e.target.checked,
+                        });
+                      }}
+                    />
+                  </GridItem>
+                </Grid>
+              </Stack>
+            </Box>
+        </ContentLayout>
+      )}
+    </>
+  );
+};
+
+export default Settings;
+```
+
+This settings page is displaying a toggle that will allow you to manage if you want to cross or hide your tasks marked as done.
+next thing that is necessary, tell your plugin to create a settings section. You can achieve this using the `createSettingSection`. Learn more about it just right [here](https://github.com/strapi/strapi/blob/5cbb60ce4b652e84dd8d65ffa2713437ecb4e619/packages/core/admin/admin/src/StrapiApp.js).
+
+- Update the `admin/src/index.js` file by adding the following code just before the `app.registerPlugin` call:
+
+```js
+//...
+app.createSettingSection(
+  {
+    id: pluginId,
+    intlLabel: {
+      id: `${pluginId}.plugin.name`,
+      defaultMessage: 'Todo',
+    },
+  },
+  [
+    {
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: 'General settings',
+      },
+      id: 'settings',
+      to: `/settings/${pluginId}`,
+      Component: async () => {
+        return import('./pages/Settings');
+      },
+    },
+  ]
+);
+//..
+```
+
+If you you go to the main settings of your application, you should be able to see a `TODO - General settings` section. From there, you can save your settings in the store.
+
+We'll be able to get this settings directly from the component that we'll inject later.
+
+#### Translations
+
+Your plugin can handle multiple translation if you need it to. 
 
 #### Component injection
 
