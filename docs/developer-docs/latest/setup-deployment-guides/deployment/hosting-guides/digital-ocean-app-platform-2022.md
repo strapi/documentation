@@ -45,7 +45,7 @@ In order to connect the Strapi application in production to a hosted database th
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-//path:config/env/production.database.js
+//path:config/env/production/database.js
 
 module.exports = ({ env }) => ({
   connection: {
@@ -71,7 +71,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path:config/env/production.database.ts
+//path:config/env/production/database.ts
 
 export default ({ env }) => ({
   connection: {
@@ -102,7 +102,7 @@ export default ({ env }) => ({
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-//path:config/env/production.server.js
+//path:config/env/production/server.js
 
 module.exports = ({ env }) => ({
     proxy: true,
@@ -119,7 +119,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path:config/env/production.server.ts
+//path:config/env/production/server.ts
 
 export default ({ env }) => ({
     proxy: true,
@@ -134,7 +134,6 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-
 ### Adding postgres dependencies
 Connecting a postgres database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
@@ -148,7 +147,7 @@ npm install pg
 
 <code-block title="YARN">
 ```bash
-yarn pg
+yarn add pg
 ```
 </code-block>
 
@@ -164,25 +163,26 @@ Save the Strapi application locally then, in a terminal, run :
 
 ## Creating a Digital Ocean App
 
-On the Digital Ocean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to your repository. 
+On the Digital Ocean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to your repository. Next:
 
-- select the branch,
-- select the source directory (optional),
-- chose whether or not to autodeploy with GitHub updates
-- click the **Next** button
-<!--clean up lists commas etc -->
+1. select the branch,
+2. select the source directory (optional),
+3. chose whether or not to autodeploy with GitHub updates,
+4. click the **Next** button.
+
 ### Connecting a web app to a database
+
 On the next screen:
 
 1. click **add resource**,
 2. select database, and click **Add**,
 3. On the next screen select *dev database* and name the database. The default database name is "db" and that will be used in the subsequent sections.
-4. Click the **Create and attach** button. 
+4. Click the **Create and attach** button.
 5. On the next screen click the **Next** button to set the enviroment variables.
 
 ### Environmental variables
 
-In the Digital Ocean App Platform there are global and component level enviroment variables. Strapi applications in production need global variables to set the database connection, and can use component level variables for secrets storage. Add the following variables to the global environment table: 
+In the Digital Ocean App Platform there are global and component level enviroment variables. Strapi applications in production need global variables to set the database connection, and can use component level variables for secrets storage. Add the following variables to the global environment table:
 
 | Variable name     | Value          |
 |-------------------|----------------|
@@ -194,8 +194,8 @@ In the Digital Ocean App Platform there are global and component level enviromen
 | DATABASE_PASSWORD | ${db.PASSWORD} |
 | NODE_ENV          | production     |
 
-Click **Save**. 
-At the top of the *Settings* menu select your Strapi application component. Scroll down to the Environment variables and click **edit** on the far right of the menu. The secrets for a Strapi application are set in the component settings environment variables. In your local application these secrets are stored in the `.env` file by default. Security is enhanced if different keys are generated for different environments. Add the following secrets and keys to the component environment variables table: 
+Click **Save**.
+At the top of the *Settings* menu select your Strapi application component. Scroll down to the Environment variables and click **edit** on the far right of the menu. The secrets for a Strapi application are set in the component settings environment variables. In your local application these secrets are stored in the `.env` file by default. Security is enhanced if different keys are generated for different environments. Add the following secrets and keys to the component environment variables table:
 
 | Variable name    | value                               |
 |------------------|-------------------------------------|
@@ -212,5 +212,11 @@ The environmental variables for the development and managed database are handled
 
 ### Deploying and accessing a Strapi application
 
-Once the above steps are completed Digital Ocean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your app domain}/admin once the application is successfully deployed.
+When the above steps are completed Digital Ocean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your app domain}/admin once the application is successfully deployed.
 
+## Optional Steps
+
+### Connect to a storage service
+ 
+
+### Switch to a managed database
