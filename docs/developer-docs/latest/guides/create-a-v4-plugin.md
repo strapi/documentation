@@ -1,24 +1,30 @@
 ---
-title: Plugin API 101 - Strapi Developer Docs
+title: Create a v4 plugin - Strapi Developer Docs
 description: Learn in this guide how to restrict content editing to content authors only.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/plugin-api-101.html
 ---
 
-# Plugin API 101
+# Create a v4 plugin
 
-This guide shows you how to create a plugin on Strapi.
+This guide is a solid introduction to Strapi v4 plugin development.
 
 ## Introduction
 
-The documentation already covers a [plugin development](/developer-docs/latest/development/plugins-development.html) section. However, this might be a little bit complicated to follow especially if you discovered Strapi recently. This guide aims to make it easier for you to learn this process with a concrete example of a to-do list plugin.
+The documentation already covers a [plugin development](/developer-docs/latest/development/plugins-development.html) section. However, this might be a little bit hard to follow especially if you discovered Strapi recently. This guide aims to make it easier for you to learn this process with a real example of a To Do list plugin.
 
 The plugin API you are going to use was born from a [request for change](https://plugin-api-rfc.vercel.app/) (RFC) that we invite you to read if you are curious to know more about it.
 
-You will learn to create a simple todo plugin in which you'll create a plugin content-type for persiting data, customize the back-end, inject a React component in the admin, use the [Strapi Design System](https://design-system.strapi.io/) and more.
+You will learn to create a simple To Do plugin in which you'll create a plugin content-type for persiting data, customize the back-end, create settings, create a plugin homepage, inject a React component in the admin, use the [Strapi Design System](https://design-system.strapi.io/) and more.
+
+:::caution
+This guide is working for the Strapi v4 version only.
+:::
 
 ## Generate a plugin
 
-We assume that you have a Strapi project and that you are located inside it from your terminal. From there, you can simply generate a plugin using the [generate](/developer-docs/latest/developer-resources/cli/CLI.html#strapi-generate) CLI command. This command, allows you to generate APIs, controllers, content-types, **plugins**, policies, middlewares and services.
+We assume you have a Strapi project and you are located inside of it from your terminal. From there, you can simply generate a plugin using the [generate](/developer-docs/latest/developer-resources/cli/CLI.html#strapi-generate) CLI command.
+
+This command, allows you to generate APIs, controllers, content-types, **plugins**, policies, middlewares and services for your Strapi project.
 
 :::: tabs card
 
@@ -52,7 +58,7 @@ $ strapi generate
   service - Generate a service for an API
 ```
 
-We are going to call this plugin: `todo`
+- We are going to call this plugin: `todo`
 
 ```
 $ strapi generate
@@ -73,11 +79,12 @@ module.exports = {
 ─────────────────────────────────
 ```
 
-Strapi created a new `./src/plugins/todo` folder containing the default files of your plugin.
+Strapi created a new `./src/plugins/todo` folder containing the default files of your v4 plugin.
 
 The result of the generate command invite you to update your `./config/plugins.js` file if it already exists or to create it with the following:
 
 ```js
+// ./config/plugins.js
 module.exports = {
   todo: {
     enabled: true,
@@ -86,14 +93,15 @@ module.exports = {
 };
 ```
 
-Now the last step of this section is to [build the admin](/developer-docs/latest/developer-resources/cli/CLI.html#strapi-build) of your Strapi project.
+The last step of this section is to [build the admin](/developer-docs/latest/developer-resources/cli/CLI.html#strapi-build) of your Strapi project.
 
 ::: tip
 **Updating the admin requires to build your Strapi project**. By default, Strapi will inject some plugin components (menu link, homepage) in the admin which is why, a build is required.
 
 **However**, you can directly start you server with `'yarn'|'npm run' develop --watch-admin` options. It will starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. But once you are done with your customizations, **you'll need to build your application**.
 
-So instead of building your application again and again during your plugin development, I advise you to customize your plugin while having your Strapi project running with the autoReload enabled with: `--watch-admin`
+Instead of building your application again and again during your plugin development, I advise you to work on your plugin while having your Strapi project running with the autoReload enabled by using: `--watch-admin`
+
 :::
 
 :::: tabs card
@@ -102,6 +110,8 @@ So instead of building your application again and again during your plugin devel
 
 ```bash
 yarn build
+# or
+yarn develop --watch-admin
 ```
 
 :::
@@ -110,17 +120,19 @@ yarn build
 
 ```bash
 npm run build
+# or
+npm run develop --watch-admin
 ```
 
 :::
 
 ::::
 
-If you start your server with the `develop` command, you should see your todo plugin in the main navigation linking to an empty homepage.
+If you start your server after building or after running `develop --watch-admin`, you should see your todo plugin in the main navigation linking to an empty homepage.
 
 ## Architecture file
 
-Here is what the `generate` command has created for you.
+When creating a plugin, this is what Strapi will generate for you in the `./src/plugins/your-plugin-folder`:
 
 ```
 ├── README.md                 // You know...
@@ -168,17 +180,18 @@ A plugin is divided in two parts: **admin** and **server**. It is interesting to
 
 #### Server plugin
 
-You can create a plugin that will just use the server part to have a unique API. We can think of a plugin that will have its own visible or invisible content-types, controller actions and routes that are usefull for a specific use case. In this scenario, you don't need your plugin to have a specific interface in the admin.
+You can create a plugin that will just use the server part to have a unique API. We can think of a plugin that will have its own visible or invisible content-types, controller actions and routes that are usefull for a specific use case. In such scenario, you don't need your plugin to have a specific interface in the admin.
 
 #### Admin plugin
 
-You can create a plugin just to inject some components in the admin. However, just know that you can basically do this by creating an `./src/admin/app.js` file, invoking the bootstrap lifecycle to inject your components:
+You can create a plugin just to inject some components in the admin. However, just know that you can basically do this by creating an `./src/admin/app.js` file, invoking the bootstrap lifecycle function to inject your components:
 
 :::: tabs card
 
 ::: tab app.js
 
 ```js
+// ./src/admin/app.js
 import TweetButton from './extensions/components/TweetButton'; // Component displaying a tweet button in the Content Manager
 
 export default {
@@ -198,6 +211,7 @@ export default {
 ::: tab TweetButton/index.js
 
 ```js
+// ./src/admin/extensions/TweetButton/index.js
 import React from 'react';
 import { Button } from '@strapi/design-system/Button';
 import Twitter from '@strapi/icons/Twitter';
@@ -246,13 +260,13 @@ export default TweetButton;
 
 #### Complete plugin
 
-This is what we are going to do. A plugin that involves some server customization but also a nice interface in the admin. You can find a lot of plugins already on the [Marketplace.](https://market.strapi.io/) The [SEO plugin made by us](https://github.com/strapi/strapi-plugin-seo) is a good example of such plugin.
+This is what we are going to do. A plugin that involves some server customization but also a nice interface in the admin. You can find a lot of plugins already on the [Marketplace.](https://market.strapi.io/).
 
-## Create a collection-type for persisting data
+## Create a plugin content-type
 
-The idea of the todo plugin is to have a todo list for every entry that you'll create in your project. This can be very useful for content-manager that wants to keep a clear vision of what needs to be done for a unique entry.
+The idea of the todo plugin is to have a todo list for every entry that you'll create in your project. This can be very useful for content-manager who wants to keep a clear vision of what needs to be done for a unique entry.
 
-A todo is a simple list of tasks that need to be saved in your application. Also, each task will be related to an existing entry but will see this later.
+A todo is a simple list of tasks that needs to be saved in your application. Also, each task will be **related** to an existing entry but will see this later in this guide.
 
 You can create a new collection-type using the `generate` CLI command or by directly creating/updating the necessary files in your code editor. Here, we'll do both:
 
@@ -310,13 +324,14 @@ $ strapi generate
 
 #### Content-type schema
 
-The most important thing here is the `./src/plugins/todo/server/content-types/task/schema.json`. This is the schema of your plugin collection-type. We are going to add some customization by opening it in a code editor:
+The most important thing here is the `./src/plugins/todo/server/content-types/task/schema.json`. This is the schema of your plugin collection-type. We are going to customize it by opening it in a code editor:
 
 :::: tabs card
 
 ::: tab Before
 
 ```json
+// ./src/plugins/todo/server/content-types/task/schema.json
 {
   "kind": "collectionType",
   "collectionName": "tasks",
@@ -345,6 +360,7 @@ The most important thing here is the `./src/plugins/todo/server/content-types/ta
 ::: tab After
 
 ```json
+// ./src/plugins/todo/server/content-types/task/schema.json
 {
   "kind": "collectionType",
   "collectionName": "tasks",
@@ -380,12 +396,13 @@ As you can see, we are making the `name` field required and it can only contains
 However, something is missing for Strapi to use this new collection-type. You need to make some manual updates.
 
 :::caution
-These manual updates are necessary because of a bug in the generate CLI command. This will not be necessary inn the futur. The bug is that the schema created by Strapi are not automatically exported as it should be.
+These manual updates are necessary because of a bug in the generate CLI command. This will not be necessary in the future. The bug is that the schema created by Strapi are not automatically exported as it should be.
 :::
 
 - Create a `./src/plugins/todo/server/content-types/task/index.js` file that will export the schema generated by Strapi:
 
 ```js
+// ./src/plugins/todo/server/content-types/task/index.js
 'use strict';
 
 const schema = require('./schema');
@@ -398,6 +415,7 @@ module.exports = {
 - Update the `./src/plugins/todo/server/content-types/index.js` file by exporting the content-type you just created:
 
 ```js
+// ./src/plugins/todo/server/content-types/index.js
 'use strict';
 
 const task = require('./task');
@@ -435,7 +453,7 @@ npm run strapi console
 
 ::::
 
-- Then type the following:
+- Then type the following command:
 
 ```
 strapi.contentType('plugin::todo.task')
@@ -495,7 +513,7 @@ You should see this:
 
 #### Content-type Visibility
 
-However, you might not want your collection-type to be visible in the Content-Type Builder and/or Content Manager. In fact, for this use case, having all the tasks displayed in the Content manager doesn't make sense since what it interesting here, is to see every tasks just for another entry (article for example) inside the view of this particular entry.
+However, you might not want your collection-type to be visible in the Content-Type Builder and/or Content Manager. In fact, for this use case, having all the tasks displayed in the Content manager doesn't make sense since what it interesting here, is to see every tasks just for another content-type entry (article or product for example) inside the view of this particular entry.
 
 - You can give a `pluginOptions` object to your schema.json with the following config in order to make your task collection-type invisible in your admin:
 
@@ -504,6 +522,7 @@ However, you might not want your collection-type to be visible in the Content-Ty
 ::: tab Before
 
 ```json
+// ./src/plugins/todo/server/content-types/task/schema.json
 {
   "kind": "collectionType",
   "collectionName": "tasks",
@@ -535,6 +554,7 @@ However, you might not want your collection-type to be visible in the Content-Ty
 ::: tab After
 
 ```json
+// ./src/plugins/todo/server/content-types/task/schema.json
 {
   "kind": "collectionType",
   "collectionName": "tasks",
@@ -573,19 +593,22 @@ However, you might not want your collection-type to be visible in the Content-Ty
 
 ::::
 
-**Note**: For the purpose of this guide, leave the content-type visible by setting both fields to `true`, we'll set them back to false at the end.
+**Note**: For the purpose of this guide, we'll leave the content-type visible by setting both fields to `true`, we'll set them back to false at the very end of this guide.
 
 ## Server customization
 
-The server part of a plugin is nothing more than an API you can consume from the outside or in the admin of your plugin. It is made of routes, controllers and services but also middlewares and policies. Knowing how to master this little API you are ready to create, is definitely important in the development of a plugin.
+The server part of a plugin is nothing more than an API you can consume from the outside (http://localhost:1337/api/plugin-name/...) or in the admin of your plugin (http://localhost:1337/plugin-name/...). It is made of routes, controllers and services but also middlewares and policies.
+
+Knowing how to master this little API you are ready to create, is definitely important in the development of a plugin.
 
 #### Internal and External API
 
-When creating an API, we first start by creating the route. We would like to be able to fetch the number of tasks.
+When creating an API, we first start by creating the route. We would like to be able to fetch the total number of tasks.
 
-By default, Strapi generate the following route:
+By default, Strapi generates the following route:
 
 ```js
+// server/routes/index.js
 module.exports = [
   {
     method: 'GET',
@@ -598,9 +621,10 @@ module.exports = [
 ];
 ```
 
-This means that if you execute a GET request to the url `http://localhost:1337/<name-of-your-plugin>`, the index action of the myController controller will be executed. In this case the route is using [authentication](/developer-docs/latest/guides/auth-request.html#introduction). We can make it public and see the result:
+This means that if you execute a GET request to the url `http://localhost:1337/<name-of-your-plugin>`, the `index` action of the `myController` controller will be executed. In this case the route is using [authentication](/developer-docs/latest/guides/auth-request.html#introduction). We can make it public and see the result:
 
 ```js
+// server/routes/index.js
 module.exports = [
   {
     method: 'GET',
@@ -614,13 +638,14 @@ module.exports = [
 ];
 ```
 
-- Open the `http://localhost:1337/todo` url in your browser. You should see a `Welcome to Strapi 🚀` message.
+- Open the [http://localhost:1337/todo](http://localhost:1337/todo) url in your browser. You should see a `Welcome to Strapi 🚀` message.
 
-Defaults routes, controllers and services can be modified and this is what we are going to do. The goal is to create a route for getting the total number of tasks.
+Default routes, controllers and services can be modified and this is what we are going to do. Again, the goal is to create a route for getting the total number of tasks.
 
 - Update the `./src/plugins/todo/server/routes/index.js` file with the following:
 
 ```js
+// server/routes/index.js
 module.exports = [
   {
     method: 'GET',
@@ -634,12 +659,13 @@ module.exports = [
 ];
 ```
 
-This routes indicates that when requesting the url: `http://localhost:1337/todo/count`, the task will execute the count action to return something.
+This routes indicates that when requesting the url: `http://localhost:1337/todo/count`, the task will execute the count action of the task controller to return something.
 
 - Rename the `./src/plugins/todo/server/controller/my-controller.js` file by `task.js`.
 - Modify the import in the `./src/plugins/todo/server/controller/index.js` with the following:
 
 ```js
+// server/controller/index.js
 'use strict';
 
 const task = require('./task');
@@ -652,6 +678,7 @@ module.exports = {
 - Finally, replace the content of the `task.js` file with the following:
 
 ```js
+// server/controller/task.js
 'use strict';
 
 module.exports = {
@@ -661,18 +688,19 @@ module.exports = {
 };
 ```
 
-- Wait for your server to restart and open the `http://localhost:1337/todo/count` url in your browser. You should see a `todo` message.
+- Wait for your server to restart and open the [http://localhost:1337/todo/count](http://localhost:1337/todo/count) url in your browser. You should see a `todo` message.
 
-What is left to do is to actually get the number of tasks instead of just a message.
+What is left to do is to get the number of tasks instead of just a message.
 
-- Create via the Content Manager some tasks, at least one so your function returns something.
+- Create, via the Content Manager some tasks, at least one so your function returns something else than 0.
 
-We are going to use a service for getting the number of tasks.
+We are going to use a service to get the number of tasks.
 
 - Rename the `./src/plugins/todo/server/services/my-service.js` by `task.js`
-- Modify the import in the `./src/plugins/todo/server/services/task.js` with the following:
+- Modify the import in the `./src/plugins/todo/server/services/index.js` with the following:
 
 ```js
+// server/services/index.js
 'use strict';
 
 const task = require('./task');
@@ -685,6 +713,7 @@ module.exports = {
 - Update the content of the `task.js` file with the following:
 
 ```js
+// server/services/task.js
 'use strict';
 
 module.exports = ({ strapi }) => ({
@@ -694,9 +723,10 @@ module.exports = ({ strapi }) => ({
 });
 ```
 
-- Update the `task.js` file with the following:
+- Update the `server/controllers/task.js` file with the following:
 
 ```js
+// server/controller/task.js
 'use strict';
 
 module.exports = {
@@ -709,18 +739,19 @@ module.exports = {
 };
 ```
 
-If we summarize, the route tells your application that when receiving the `http://localhost:1337/todo/count` GET request, the task will execute the count action that will use the task count function to return the actual count of tasks.
+If we summarize, the route tells your application that when receiving the `http://localhost:1337/todo/count` GET request, the task will execute the `count` action from the task controller that will use the [Query engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html) count function to return the actual count of tasks.
 
-- Give it a try by browsing the `http://localhost:1337/todo/count` url in your browser.
+- Give it a try by browsing the [http://localhost:1337/todo/count](http://localhost:1337/todo/count) url in your browser.
 
 ::: tip
 Do you remember when you created your tasks content-type using the CLI? We answered no at the last question which was `Bootstrap API related files?`. If you said yes, Strapi would have generated the right controller, service and route with correct and simple names so you don't have to modify it by yourself.
 
-We think it is nice for you to see that you have the freedom to modify your files first but for your next content-type, you might want to answer yes to this question.
+It is nice for you to see that you have the freedom to modify your files first but for your next content-type, you might want to answer yes to this question.
 
-Just know that the default files will be different. Let's see the controller file for example:
+Just know that the default files would have been different. Let's see the controller file for example:
 
 ```js
+// server/controllers/task.js
 'use strict';
 
 /**
@@ -735,6 +766,7 @@ module.exports = createCoreController('plugin::todo.task');
 If you want to add an action to this controller like we did previously, you must do the following:
 
 ```js
+// server/controllers/task.js
 'use strict';
 
 /**
@@ -753,9 +785,10 @@ module.exports = createCoreController('plugin::todo.task', {
 });
 ```
 
-It will then be the same for services:
+It will be the same for services:
 
 ```js
+// server/services/task.js
 'use strict';
 
 /**
@@ -771,9 +804,10 @@ module.exports = createCoreService('plugin::todo.task', {
 });
 ```
 
-Concerning the default router file, it is about the core router configuration. You can leave it like this and keep creating your routes in the `routes/index.js` file:
+Concerning the default router file, it is about the core router configuration. You can leave it like this and keep creating your routes in the `server/routes/index.js` file:
 
 ```js
+// server/routes/index.js
 module.exports = [
   {
     method: 'GET',
@@ -800,19 +834,20 @@ module.exports = [
 
 #### Routes structuration
 
-These endpoints will be accessible directly with this url `http://localhost:1337/plugin-name/...` without having permissions to set like you must do with content-api routes type. These ones, are admin routes type.
+These endpoints will be accessible directly with this url `http://localhost:1337/plugin-name/<path>` without having permissions to set like you must do with content-api routes type. These ones, are admin routes type.
 
-We can better structurate our routes by doing the following and we advise you to do the same:
+We can better structurate our routes:
 
-- First thing to do, is to replace the content of your `routes/index.js` file with this:
+- The first thing to do, is to replace the content of your `server/routes/index.js` file with this:
 
 ```js
 module.exports = {};
 ```
 
-Then, we advise to create a route file for every content-type you have. When saying Yes to the `Bootstrap API related files?` question in the CLI, this is what Strapi does. It create a `routes/task.js` file with the following:
+Then, you can create a route file for every content-types you have. When saying Yes to the `Bootstrap API related files?` question in the CLI, this is what Strapi does. It creates a `server/routes/task.js` file with the following:
 
 ```js
+// server/routes/task.js
 'use strict';
 
 /**
@@ -827,6 +862,7 @@ module.exports = createCoreRouter('plugin::todo.task');
 - You can replace all of this content with custom routes like this:
 
 ```js
+// server/routes/task.js
 'use strict';
 
 /**
@@ -849,9 +885,10 @@ module.exports = {
 };
 ```
 
-- Then you just need to export this router in the `routes/index.js`:
+- Then, you just need to export this router in the `server/routes/index.js`:
 
 ```js
+// server/routes/index.js
 const task = require('./task');
 
 module.exports = {
@@ -859,9 +896,10 @@ module.exports = {
 };
 ```
 
-If you have another content-type, then you just need to create another custom router: `routes/report.js` and to export it:
+If you have another content-type, then you just need to create another custom router: `server/routes/report.js` and to export it:
 
 ```js
+// server/routes/report.js
 'use strict';
 
 /**
@@ -885,6 +923,7 @@ module.exports = {
 ```
 
 ```js
+// server/routes/index.js
 const task = require('./task');
 const report = require('./report');
 
@@ -898,16 +937,17 @@ module.exports = {
 Please be aware of the different type of routes:
 
 - content-api: It is external: The routes will be available from this endpoint: `/api/plugin-name/...`. It needs to be activated in the Users & Permissions plugin setting in the admin.
-- admin: It is internal: The routes will be available from this endpoint: `/plugin-name/...` and will **only be accessible from the fron-ent part of Strapi**: the admin. No need to to define permissions.
+- admin: It is internal: The routes will be available from this endpoint: `/plugin-name/...` and will **only be accessible from the fron-ent part of Strapi**: the admin. No need to to define permissions but you can enable or disable authentication.
   :::
 
 Lear more about [routes in the documentation](/developer-docs/latest/development/backend-customization/routes.html#implementation)
 
 #### Strapi object
 
-In the previous section, we used the [query engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html) to interact with the database layer.
+In the previous section, we used the [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html) to interact with the database layer.
 
 ```js
+// server/services/task.js
 'use strict';
 
 /**
@@ -930,6 +970,7 @@ module.exports = createCoreService('plugin::todo.task', {
 ::: tab yarn
 
 ```bash
+# stop your server and run
 yarn strapi console
 ```
 
@@ -938,6 +979,7 @@ yarn strapi console
 ::: tab npx
 
 ```bash
+# stop your server and run
 npm run strapi console
 ```
 
@@ -977,17 +1019,72 @@ Most of the time, when developing a plugin, you'll need to create a content-type
 
 For this guide, we want to have a todo list for every api content-types our application contains. This means that we'll create a relation between the task content-type to every other api content-types.
 
-- First, we need to update the schema file of the task content-type to include a `...` relation.
+However, we are not going to use the [regular relations](/developer-docs/latest/development/backend-customization/models.html#model-attributes)). In fact, for this use case, we'll use the specific relation that the Media Library is using for managing file relations: Polymorphic relations. It is a good occasion to learn how to use them since they are not documented.
+
+:::tip
+This relationship involves a column in a table (task table with an id) that can link to different columns in other tables (article table, product table, etc...). In a polymorphic relationship, a model/table can be associated with different models/tables.
+
+This plugin will require a polymorphic relation to work properly. In fact, if you create an `article` content-type and create a regular one-to-many relationship, it will work, your articles will have many related tasks, fine, but if you create 99 other content-types, you'll need to create the 99 relationship manually in the admin...
+
+Also, by creating a non-polymorphic oneToMany, manyToOne or manyToMany relation, Strapi will create a lookup database table to match your entries, this is how 'regular' relationships works. By creating a Polymorphic relation, only 1 table will be created wether you have 1 or 99 content-types related to your task content-type but this is true if you use a morphToMany relation for your task. If you use a `morphToOne`, and this is the one we are going to use, no lookup table will be necessary!
+
+In non-polymorphic relationships, the foreign keys references a primary ID in a specific table. On the other hand, a foreign key in a polymorphic lookup table can reference many tables.
+:::
+
+One other advantage of the polymorphic relation is that you'll don't have a right-links block in the content-manager displaying your tasks. We don't want that for our plugin since it will not be useful at all. We want to manage ourselves how we'll display our tasks in order to correctly interact with them
+
+You can learn more by browsing the source code of Strapi. [Here](https://github.com/strapi/strapi/blob/master/packages/core/upload/server/content-types/file/schema.js), you can find the schema file of the upload plugin (Media Library) that is using a polymorphic `morphToMany` relation.
+
+- First, we need to update the schema file of the task (`./server/content-types/task/schema.json`) content-type to include a `morphToOne` relation.
 
 ```json
-
+// ./server/content-types/task/schema.json
+{
+  "kind": "collectionType",
+  "collectionName": "tasks",
+  "info": {
+    "singularName": "task",
+    "pluralName": "tasks",
+    "displayName": "Task"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40
+    },
+    "isDone": {
+      "type": "boolean",
+      "default": false
+    },
+    "related": {
+      "type": "relation",
+      "relation": "morphToOne"
+    }
+  }
+}
 ```
 
-In fact, for a relation to work, it must be indicated in both side (1.task <> 2.article,product,page etc...). We did half of the job here. Now, we are going to use the [register phase](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#register) of the plugin to automatically create the relation on every other content-types.
+By selecting a `morphToOne` related field, Strapi will create in the task table, a `target_id` and a `target_type` column. If you create a task for an article entry, you will fill the `target_id` with the id of the article and the `target_type` with the internal slug of the entry which will probalby be: `api::article.article`. But we'll see that later in the front-end section.
+
+For a relation to work, it must be indicated in both side (1.task <> 2.article,product,page etc...). We did half of the job. We are going to use the [register phase](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#register) of the plugin to automatically create the relation on every other content-types.
 
 - Update the `server/register.js` file with the following:
 
 ```js
+// server/register.js
 'use strict';
 
 module.exports = ({ strapi }) => {
@@ -996,9 +1093,9 @@ module.exports = ({ strapi }) => {
     // Add tasks property to the content-type
     contentType.attributes.tasks = {
       type: 'relation',
-      relation: 'morphToMany',
-      target: 'plugin::todo.task',
-      morphBy: 'related',
+      relation: 'morphMany',
+      target: 'plugin::todo.task', // internal slug of the target
+      morphBy: 'related', // field in the task schema that is used for the relation
       private: false, // false: This will not be exposed in API call
       configurable: false,
     };
@@ -1006,9 +1103,12 @@ module.exports = ({ strapi }) => {
 };
 ```
 
-This code will associates tasks to every content-types, even the other plugin ones (i18n, Users and Permission etc...). We can add a very simple condition to only associate the task content-type to api content-types:
+This code will associates tasks to every content-types by creating a `tasks` object containing the `relation` type which will be a `morphMany` here since you want this content-type to have multiple tasks using polymorphic relation.
+
+However, even the other plugins will have this relation (i18n, Users and Permission etc...). We can add a very simple condition to only associate the task content-type to api content-types:
 
 ```js
+// server/register.js
 'use strict';
 
 module.exports = ({ strapi }) => {
@@ -1019,9 +1119,9 @@ module.exports = ({ strapi }) => {
       // Add tasks property to the content-type
       contentType.attributes.tasks = {
         type: 'relation',
-        relation: 'morphToMany',
-        target: 'plugin::todo.task',
-        morphBy: 'related',
+        relation: 'morphMany',
+        target: 'plugin::todo.task', // internal slug of the target
+        morphBy: 'related', // field in the task schema that is used for the relation
         private: false, // false: This will not be exposed in API call
         configurable: false,
       };
@@ -1032,15 +1132,16 @@ module.exports = ({ strapi }) => {
 
 In fact, every content-types created in the admin will have a uid beginning with `api::`. For plugins, it will begins with `plugin::` etc...
 
-[Learn more about relations in the documentation](/developer-docs/latest/development/backend-customization/models.html#model-attributes)
+We created a polymorphic relation between a plugin content-type and every other api content-types.
 
 #### Managing settings with the store
 
-A plugin might need to have some some settings depending on the use case. This section will cover the server part of handling settings for a plugin. For this guide, we'll define a setting to hide or either cross tasks when they are marked as done.
+A plugin might need to have some settings. This section will cover the server part of handling settings for a plugin. For this guide, we'll define a setting to disable or either cross tasks when they are marked as done.
 
-- Update the a `routes/task.js` file with the following:
+- Update the `server/routes/task.js` file with the following:
 
 ```js
+// server/routes/task.js
 'use strict';
 
 /**
@@ -1083,9 +1184,10 @@ module.exports = {
 
 This custom router create 2 new admin routes that will be using two new `task` controller actions.
 
-- Update the `controllers/task.js` file with the following:
+- Update the `server/controllers/task.js` file with the following:
 
 ```js
+// server/controllers/task.js
 'use strict';
 
 /**
@@ -1131,12 +1233,13 @@ module.exports = createCoreController('plugin::todo.task', {
 
 This controller has two actions:
 
-- `getSettings`: Uses getSettings service
-- `setSettings`: Uses setSettings service
+- `getSettings`: Uses `getSettings` service
+- `setSettings`: Uses `setSettings` service
 
-* Update the `services/task.js` file with the following:
+- Update the `server/services/task.js` file with the following:
 
 ```js
+// server/services/task.js
 'use strict';
 
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -1151,7 +1254,7 @@ function getPluginStore() {
 async function createDefaultConfig() {
   const pluginStore = getPluginStore();
   const value = {
-    hidden: false,
+    disabled: false,
   };
   await pluginStore.set({ key: 'settings', value });
   return pluginStore.get({ key: 'settings' });
@@ -1178,17 +1281,17 @@ module.exports = createCoreService('plugin::todo.task', {
 });
 ```
 
-This service allows you to manage your plugin store. It will create a default config with a object containing an `hidden` key to false.
+This service allows you to manage your plugin store. It will create a default config with a object containing a `disabled` key to false. It means that, by default, we want to our tasks to be crossed when mark as donemm not disabled. We'll see this in the next section.
 
-- Browse the `http://localhost:1337/todo/settings`, you should have the following result:
+- Browse the [http://localhost:1337/todo/settings](http://localhost:1337/todo/settings) url, you should have the following result:
 
 ```json
 {
-  "hidden": false
+  "disabled": false
 }
 ```
 
-It is time for some admin customization now.
+It is time for some admin customization.
 
 ## Admin customization
 
@@ -1197,7 +1300,7 @@ A plugin allows you to customize the front-end part of your Strapi application. 
 - Create a plugin homepage
 - Create a plugin settings page
 - Insert React components in [injection zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#injection-zones-api)
-- Way more things...
+- Way more...
 
 We are going explore the entrypoint of the admin of your plugin: `./src/plugins/todo/admin/src/index.js`.
 
@@ -1206,6 +1309,7 @@ We are going explore the entrypoint of the admin of your plugin: `./src/plugins/
 By default, your `admin/src/index.js` file should look like this:
 
 ```js
+// admin/src/index.js
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
@@ -1302,7 +1406,7 @@ register(app) {
   },
 ```
 
-Then, it will do nothing during the bootstrap phase:
+Then, nothing is happening during the bootstrap phase:
 
 ```js
 bootstrap(app) {},
@@ -1338,6 +1442,7 @@ async registerTrads({ locales }) {
 There is a lot of things you can already do here. You may want to customize the icon of your plugin in the menu link for example by updating the `admin/src/components/PluginIcon/index.js` file. Find another icon in the [Strapi Design System website](https://design-system-git-main-strapijs.vercel.app/?path=/story/design-system-components-theme--icons) and update it:
 
 ```js
+// admin/src/components/PluginIcon/index.js
 // Replace the default Puzzle icon by a Brush one
 import React from 'react';
 import Brush from '@strapi/icons/Brush';
@@ -1351,28 +1456,30 @@ export default PluginIcon;
 Don't forget to build your admin or to run it with the `--watch-admin` option.
 :::
 
-Needless to say that if you don't want your plugin to be listed in the menu link for some reasons, you can remove this function.
+If you don't want your plugin to be listed in the menu link for some reasons, you can remove this function.
+
 Now is the time to get into the front-end part of this plugin but first, an introduction to our Design System is necessary.
 
 #### Strapi Design System
 
 Strapi Design System provides guidelines and tools to help anyone make Strapi's contributions more cohesive and to build plugins more efficiently. You can find the [guidelines for publishing a plugin to the marketplace](https://strapi.io/marketplace/guidelines). As you can see: `Plugins compatible with Strapi v4 MUST use the Strapi Design System for the UI.`.
 
-Feel free to browse the [Design System website](https://design-system.strapi.io/) but what is more important to you is the [components](https://design-system-git-main-strapijs.vercel.app/). This is every React components you can use within your project to give a beautiful UI to your plugin.
+Feel free to browse the [Design System website](https://design-system.strapi.io/) but what is more important for you is the [components](https://design-system-git-main-strapijs.vercel.app/). This is every React components you can use within your project to give a beautiful UI to your plugin.
 
 You can also find [every icons](https://design-system-git-main-strapijs.vercel.app/?path=/story/design-system-components-theme--icons) you can use. Click on them to have the import js line copied in your clipboard.
 
-You don't need to install anything, from a Strapi project, specially in the `./admin/src` folder of your plugin, you can directly create components, import some items from the Design System like this: `import { Button } from '@strapi/design-system/Button';` and that's it.
+You don't need to install anything, you can directly create components, import some items from the Design System like this: `import { Button } from '@strapi/design-system/Button';` and that's it.
 
 #### Homepage
 
 A Strapi plugin can have an homepage or not, you decide if it is necessary. For our todo use case it doesn't make sense to have a specific homepage since the most important part would be to inject a todo on every entry we have (article, product, etc...)
 
-But this section will cover this anyway, we are goin to use the route we created to get the total number of task in order to display it on this homepage.
+But this section will cover this anyway. We are going to use the route we created to get the total number of task in order to display it on this homepage.
 
 The route we created is the following:
 
 ```js
+// server/routes/task.js
 module.exports = {
   type: 'admin',
   routes: [
@@ -1391,14 +1498,15 @@ module.exports = {
 ```
 
 ::: tip
-Remember, this is an admin route, which means that it will be directly accessible from the admin
+This is an admin route, which means that it will be directly accessible from the admin. Not from the outside (/api/...)
 :::
 
-We are going to create a file that will execute every HTTP request to our server in a specific folder but feel free to name it differently.
+We are going to create a file that will execute every HTTP request to our server in a specific folder but feel free to name it differently or manage this file in another way.
 
 - Create an `./admin/src/api/task.js` file containing the following:
 
 ```js
+// ./admin/src/api/task.js
 import { request } from '@strapi/helper-plugin';
 
 const taskRequests = {
@@ -1414,9 +1522,12 @@ export default taskRequests;
 
 We are using the [helper-plugin](https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin). This is a core package containing hooks, components, functions and more. We are using the [request function](https://github.com/strapi/strapi/blob/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin/lib/src/utils/request/index.js) for making HTTP request.
 
+Feel free to take some time exploring the [strapi](https://github.com/strapi/strapi) repository, a lot of useful things, sometimes not yet documented, can be found.
+
 - Update the content of the `admin/src/pages/Homepage/index.js` file with the following:
 
 ```js
+// admin/src/pages/Homepage/index.js
 /*
  *
  * HomePage
@@ -1447,7 +1558,7 @@ const HomePage = () => {
   return (
     <>
       <BaseHeaderLayout
-        title="Task Plugin"
+        title="Todo Plugin"
         subtitle="Discover the number of tasks you have in your project"
         as="h2"
       />
@@ -1475,6 +1586,7 @@ For this hommepage to work, you'll just need to create the `Illo` icon that the 
 - Create a `admin/src/components/Illo/index.js` file containing the following:
 
 ```js
+// admin/src/components/Illo/index.js
 import React from 'react';
 
 export const Illo = () => (
@@ -1528,9 +1640,10 @@ export const Illo = () => (
 );
 ```
 
-You should be able to see the total number of tasks in your plugin homepage now. Let's explore in details what's happening.
+You should be able to see the total number of tasks in your plugin homepage. Let's explore in details what's happening.
 
 ```js
+// admin/src/pages/Homepage/index.js
 import React, { memo, useState, useEffect } from 'react';
 
 import taskRequests from '../../api/task';
@@ -1542,7 +1655,7 @@ import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
 import { BaseHeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
 ```
 
-First, we import every hooks from React that we'll need for this to work. We import the function to get the task count we created just before and then we import every Design system component we'll need.
+First, we import every hooks from React that we'll need for this to work. We import the function to get the task count we created just before and then we import every Design system components we'll need.
 
 ```js
 const [taskCount, setTaskCount] = useState(0);
@@ -1554,13 +1667,13 @@ useEffect(() => {
 }, []);
 ```
 
-Then we create a `taskCount` state with 0 as a default value. We use the useEffect React hook to fetch our task count using the function we created earlier and replace our state variable with the result.
+We create a `taskCount` state with 0 as a default value. We use the [useEffect React hook](https://reactjs.org/docs/hooks-effect.html) to fetch our task count using the function we created earlier and replace our state variable with the result.
 
 ```js
 return (
   <>
     <BaseHeaderLayout
-      title="Task Plugin"
+      title="Todo Plugin"
       subtitle="Discover the number of tasks you have in your project"
       as="h2"
     />
@@ -1581,17 +1694,18 @@ return (
 ```
 
 Then, depending on the number of tasks you have, it will display something on the homepage of your plugin.
-As I told you before, for this use case, making this homepage is not really necessary but you are know familiar with it and with the Design System already.
+As mentionned before, for this use case, making this homepage is not really necessary but you are now familiar with it and with the Design System.
 
-Let's add something that may be useful in the futur. We want to display a loading indicator while the request is pending and for this, we'll use the [helper-plugin](<(https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin)>) again.
+Let's add something that may be useful in the future. We want to display a loading indicator while the request is pending and for this, we'll use the [helper-plugin]((https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin)>) again.
 
 - Import the `LoadingIndicatorPage` component from the `helper-plugin`
 
 ```js
+// admin/src/pages/Homepage/index.js
 import { LoadingIndicatorPage } from '@strapi/helper-plugin';
 ```
 
-- Create a new state variable that will indicate the page that it is loading by default:
+- Create a new state variable that will indicate the page it is loading by default:
 
 ```js
 const [isLoading, setIsLoading] = useState(true);
@@ -1606,6 +1720,7 @@ if (isLoading) return <LoadingIndicatorPage />;
 Final code:
 
 ```js
+// admin/src/pages/Homepage/index.js
 /*
  *
  * HomePage
@@ -1642,7 +1757,7 @@ const HomePage = () => {
   return (
     <>
       <BaseHeaderLayout
-        title="Task Plugin"
+        title="Todo Plugin"
         subtitle="Discover the number of tasks you have in your project"
         as="h2"
       />
@@ -1667,17 +1782,20 @@ export default memo(HomePage);
 ```
 
 The content of you page will only be displayed if the request has return something.
-We strongly advise you to take a look at the helper-plugin which deserve to have this name. You can find the source code of the `LoadingIndicatorPage` component [here](https://github.com/strapi/strapi/blob/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin/lib/src/components/LoadingIndicatorPage/index.js).
+We strongly advise you to take a look at the helper-plugin which deserve to have this name. 
+You can find the source code of the `LoadingIndicatorPage` component [here](https://github.com/strapi/strapi/blob/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin/lib/src/components/LoadingIndicatorPage/index.js).
 
 #### Settings page
 
-We created a settings api in a previous section. Now is the time to create the settings view in the admin to be able to intereact with it. By default Strapi creates an Homepage folder, the one you just played with, but it doesn't create the Settings which is needed to implement a settings section for your plugin in the main settings view.
+We created a settings API in a previous section. Now is the time to create the settings view in the admin to be able to intereact with it. 
+By default Strapi creates an Homepage folder, the one you just played with, but it doesn't create the Settings which is needed to implement a settings section for your plugin in the main settings view.
 
-First, we need to create the necessary HTTP requests from the admin.
+We need to create the necessary HTTP requests from the admin.
 
 - Update the `admin/src/api/task.js` file with the following content:
 
 ```js
+// admin/src/api/task.js
 import { request } from '@strapi/helper-plugin';
 
 const taskRequests = {
@@ -1703,25 +1821,28 @@ const taskRequests = {
 export default taskRequests;
 ```
 
-- Create a `admin/src/pages/Settings` folder with an `index.js` file in it with the following:
+These two new function will request the API you created earlier for the settings.
+
+- Create a `admin/src/pages/Settings` folder with an `index.js` file inside of it with the following:
 
 ```js
-import React, { useEffect, useState } from "react";
+// admin/src/pages/Settings/index.js
+import React, { useEffect, useState } from 'react';
 
-import taskRequests from "../../api/task";
+import taskRequests from '../../api/task';
 
-import { LoadingIndicatorPage, useNotification } from "@strapi/helper-plugin";
+import { LoadingIndicatorPage, useNotification } from '@strapi/helper-plugin';
 
-import { Box } from "@strapi/design-system/Box";
-import { Stack } from "@strapi/design-system/Stack";
-import { Button } from "@strapi/design-system/Button";
-import { Grid, GridItem } from "@strapi/design-system/Grid";
-import { HeaderLayout } from "@strapi/design-system/Layout";
-import { ContentLayout } from "@strapi/design-system/Layout";
-import { Typography } from "@strapi/design-system/Typography";
-import { ToggleInput } from "@strapi/design-system/ToggleInput";
+import { Box } from '@strapi/design-system/Box';
+import { Stack } from '@strapi/design-system/Stack';
+import { Button } from '@strapi/design-system/Button';
+import { Grid, GridItem } from '@strapi/design-system/Grid';
+import { HeaderLayout } from '@strapi/design-system/Layout';
+import { ContentLayout } from '@strapi/design-system/Layout';
+import { Typography } from '@strapi/design-system/Typography';
+import { ToggleInput } from '@strapi/design-system/ToggleInput';
 
-import Check from "@strapi/icons/Check";
+import Check from '@strapi/icons/Check';
 
 const Settings = () => {
   const [settings, setSettings] = useState();
@@ -1730,7 +1851,7 @@ const Settings = () => {
   const toggleNotification = useNotification();
 
   useEffect(() => {
-    taskRequests.getSettings().then((data) => {
+    taskRequests.getSettings().then(data => {
       setSettings(data);
       setIsLoading(false);
     });
@@ -1742,8 +1863,8 @@ const Settings = () => {
     setSettings(data);
     setIsSaving(false);
     toggleNotification({
-      type: "success",
-      message: "Settings successfully updated",
+      type: 'success',
+      message: 'Settings successfully updated',
     });
   };
 
@@ -1773,34 +1894,34 @@ const Settings = () => {
         <LoadingIndicatorPage />
       ) : (
         <ContentLayout>
-            <Box
-              background="neutral0"
-              hasRadius
-              shadow="filterShadow"
-              paddingTop={6}
-              paddingBottom={6}
-              paddingLeft={7}
-              paddingRight={7}
-            >
-              <Stack size={3}>
-                <Typography>General settings</Typography>
-                <Grid gap={6}>
-                  <GridItem col={12} s={12}>
-                    <ToggleInput
-                      checked={settings?.enabled ?? false}
-                      hint="Cross or hide tasks marked as done"
-                      offLabel="Cross"
-                      onLabel="Hide"
-                      onChange={(e) => {
-                        setSettings({
-                          enabled: e.target.checked,
-                        });
-                      }}
-                    />
-                  </GridItem>
-                </Grid>
-              </Stack>
-            </Box>
+          <Box
+            background="neutral0"
+            hasRadius
+            shadow="filterShadow"
+            paddingTop={6}
+            paddingBottom={6}
+            paddingLeft={7}
+            paddingRight={7}
+          >
+            <Stack size={3}>
+              <Typography>General settings</Typography>
+              <Grid gap={6}>
+                <GridItem col={12} s={12}>
+                  <ToggleInput
+                    checked={settings?.disabled ?? false}
+                    hint="Cross or disable checkbox tasks marked as done"
+                    offLabel="Cross"
+                    onLabel="Disable"
+                    onChange={e => {
+                      setSettings({
+                        disabled: e.target.checked,
+                      });
+                    }}
+                  />
+                </GridItem>
+              </Grid>
+            </Stack>
+          </Box>
         </ContentLayout>
       )}
     </>
@@ -1810,12 +1931,14 @@ const Settings = () => {
 export default Settings;
 ```
 
-This settings page is displaying a toggle that will allow you to manage if you want to cross or hide your tasks marked as done.
-next thing that is necessary, tell your plugin to create a settings section. You can achieve this using the `createSettingSection`. Learn more about it just right [here](https://github.com/strapi/strapi/blob/5cbb60ce4b652e84dd8d65ffa2713437ecb4e619/packages/core/admin/admin/src/StrapiApp.js).
+This settings page is displaying a toggle that will allows you to manage if you want to cross or disable your tasks marked as done.
+
+Next thing that is necessary, tell your plugin to create a settings section. You can achieve this by using the `createSettingSection` function. Learn more about it just right [here](https://github.com/strapi/strapi/blob/5cbb60ce4b652e84dd8d65ffa2713437ecb4e619/packages/core/admin/admin/src/StrapiApp.js).
 
 - Update the `admin/src/index.js` file by adding the following code just before the `app.registerPlugin` call:
 
 ```js
+// admin/src/index.js
 //...
 app.createSettingSection(
   {
@@ -1842,20 +1965,678 @@ app.createSettingSection(
 //..
 ```
 
-If you you go to the main settings of your application, you should be able to see a `TODO - General settings` section. From there, you can save your settings in the store.
+If you you go to the main settings of your application, you should be able to see a `TODO - General settings` section. From there, you can save the way you'll want to display your tasks marked as done in the store.
 
 We'll be able to get this settings directly from the component that we'll inject later.
 
 #### Translations
 
-Your plugin can handle multiple translation if you need it to. 
+You can translate your plugin into several languages if you wish. It's quite simple, you just have to do 2 things:
+
+1. Create a locale file containing all the translations for the language you want to have for your plugin. By default, we'll ask for your plugin to have an english file containing all the wording of your application in english and then, you can create as many files as you would like to have.
+
+By default, a plugin contains an english JSON file and also a french one inside the `admin/src/translations` folder:
+
+```
+├── translations
+    ├── en.json
+    └── fr.json
+```
+
+The format of this file is straight to the point. You need to create a key which is an id corresponding to a translation string:
+
+For the `en.json` file, we can have:
+
+```JSON
+// admin/src/translations/en.json
+{
+  "Homepage.BaseHeaderLayout.title": "Todo Plugin",
+  // etc...
+}
+```
+
+You are free to name the ids as you would like to, but we advise you to name them correctly so it's easy to understand in your front-end code. 
+`Homepage.BaseHeaderLayout.title` correspond to the title prop of the `BaseHeaderLayout` component that we use in the homepage. Instead of having a fixed value, we can now use this translation with this id.
+
+- Update the `admin/src/translations/en.json` file with the following code:
+
+```JSON
+// admin/src/translations/en.json
+{
+  "Homepage.BaseHeaderLayout.title": "Todo Plugin"
+}
+```
+
+- Update the `admin/src/translations/fr.json` file with the following code:
+
+```JSON
+// admin/src/translations/fr.json
+{
+  "Homepage.BaseHeaderLayout.title": "Plugin des tâches" // French translation for Todo Plugin :)
+}
+```
+
+The only thing that is needed is to replace hard text by dynamically load the translations in your pages/components.
+
+2. Use the `useIntl` hook from `react-intl` and the `admin/src/utils/getTrad.js` function to internationalize your plugin.
+
+- Update the `admin/src/pages/Homepage/index.js` by importing these two elements:
+
+```js
+// admin/src/pages/Homepage/index.js
+//...
+import { useIntl } from 'react-intl';
+import getTrad from '../../utils/getTrad';
+//...
+```
+
+- Implement the `formatMessage` function just before the `useEffect`:
+
+```js
+//...
+const { formatMessage } = useIntl();
+//...
+```
+
+- Finally, replace the content of your `BaseHeaderLayout` component with the following:
+
+```js
+<BaseHeaderLayout
+  title={formatMessage({
+    id: getTrad('Homepage.BaseHeaderLayout.title'),
+    defaultMessage: 'Todo Plugin',
+  })}
+  subtitle="Discover the number of tasks you have in your project"
+  as="h2"
+/>
+```
+
+You can have a `defaultMessage` in case it doesn't succeed to load the requested translation.
+
+This is what your file should look like:
+
+```js
+// admin/src/pages/Homepage/index.js
+/*
+ *
+ * HomePage
+ *
+ */
+
+import React, { memo, useState, useEffect } from 'react';
+
+import { useIntl } from 'react-intl';
+import getTrad from '../../utils/getTrad';
+
+import taskRequests from '../../api/task';
+
+import { LoadingIndicatorPage } from '@strapi/helper-plugin';
+
+import { Box } from '@strapi/design-system/Box';
+import { Flex } from '@strapi/design-system/Flex';
+import { Typography } from '@strapi/design-system/Typography';
+import { EmptyStateLayout } from '@strapi/design-system/EmptyStateLayout';
+import { BaseHeaderLayout, ContentLayout } from '@strapi/design-system/Layout';
+
+import { Illo } from '../../components/Illo';
+
+const HomePage = () => {
+  const [taskCount, setTaskCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { formatMessage } = useIntl();
+
+  useEffect(() => {
+    taskRequests.getTaskCount().then(data => {
+      setTaskCount(data);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) return <LoadingIndicatorPage />;
+
+  return (
+    <>
+      <BaseHeaderLayout
+        title={formatMessage({
+          id: getTrad('Homepage.BaseHeaderLayout.title'),
+          defaultMessage: 'Todo Plugin',
+        })}
+        subtitle="Discover the number of tasks you have in your project"
+        as="h2"
+      />
+
+      <ContentLayout>
+        {taskCount === 0 && (
+          <EmptyStateLayout icon={<Illo />} content="You don't have any tasks yet..." />
+        )}
+        {taskCount > 0 && (
+          <Box background="neutral0" hasRadius={true} shadow="filterShadow">
+            <Flex justifyContent="center" padding={8}>
+              <Typography variant="alpha">You have a total of {taskCount} tasks 🚀</Typography>
+            </Flex>
+          </Box>
+        )}
+      </ContentLayout>
+    </>
+  );
+};
+
+export default memo(HomePage);
+```
+
+Feel free to change the language of your admin in the general settings to see your different translations.
 
 #### Component injection
 
-CMdata
+A plugin allows you inject React comonents where the admin allows you to. In fact some areas were designed to receive any kind of components. This is possible thanks to the [injection Zones](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html#injection-zones-api).
+
+You need to use the `bootstrap` lifecycle function to inject your components in the `admin/src/index.js`. For this use case, we'll simply tell our plugin to inject a `TodoCard` React component in the `editView` > `right-links` injection zone.
+
+- Update the `admin/src/index.js` file by importing the component:
+
+```js
+// admin/src/index.js
+//...
+import TodoCard from './components/TodoCard';
+//...
+```
+
+- Update the `admin/src/index.js` file by injecting this component in the bootstrap lifecycle function:
+
+```js
+ bootstrap(app) {
+    app.injectContentManagerComponent("editView", "right-links", {
+      name: "todo-component",
+      Component: TodoCard,
+    });
+  },
+```
+
+Your file should look like this:
+
+```js
+// admin/src/index.js
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import pluginPkg from '../../package.json';
+import pluginId from './pluginId';
+import Initializer from './components/Initializer';
+import PluginIcon from './components/PluginIcon';
+import TodoCard from './components/TodoCard';
+
+const name = pluginPkg.strapi.name;
+
+export default {
+  register(app) {
+    app.addMenuLink({
+      to: `/plugins/${pluginId}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: name,
+      },
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+
+        return component;
+      },
+      permissions: [
+        // Uncomment to set the permissions of the plugin here
+        // {
+        //   action: '', // the action name should be plugin::plugin-name.actionType
+        //   subject: null,
+        // },
+      ],
+    });
+    app.createSettingSection(
+      {
+        id: pluginId,
+        intlLabel: {
+          id: `${pluginId}.plugin.name`,
+          defaultMessage: 'Todo',
+        },
+      },
+      [
+        {
+          intlLabel: {
+            id: `${pluginId}.plugin.name`,
+            defaultMessage: 'General settings',
+          },
+          id: 'settings',
+          to: `/settings/${pluginId}`,
+          Component: async () => {
+            return import('./pages/Settings');
+          },
+        },
+      ]
+    );
+    app.registerPlugin({
+      id: pluginId,
+      initializer: Initializer,
+      isReady: false,
+      name,
+    });
+  },
+  bootstrap(app) {
+    app.injectContentManagerComponent('editView', 'right-links', {
+      name: 'todo-component',
+      Component: TodoCard,
+    });
+  },
+  async registerTrads({ locales }) {
+    const importedTrads = await Promise.all(
+      locales.map(locale => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      })
+    );
+
+    return Promise.resolve(importedTrads);
+  },
+};
+```
+
+Your application will not work since this `TodoCard` doesn't exists yet.
+
+- Create a `admin/src/components/TodoCard/index.js` with the following code:
+
+```js
+// admin/src/components/TodoCard/index.js
+import React, { useState, useEffect } from 'react';
+
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+
+import axiosInstance from '../../utils/axiosInstance';
+
+import { Box, Typography, Divider, Checkbox, Stack, Flex, Icon } from '@strapi/design-system';
+
+import Plus from '@strapi/icons/Plus';
+
+import TaskModal from '../TaskModal';
+
+function useRelatedTasks() {
+  const { initialData, isSingleType, slug } = useCMEditViewDataManager();
+
+  const [tasks, setTasks] = useState([]);
+  const [status, setStatus] = useState('loading');
+  const [settings, setSettings] = useState(false);
+
+  const fetchSettings = async () => {
+    try {
+      const { data } = await axiosInstance.get(`todo/settings`);
+      setSettings(data.disabled);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const refetchTasks = async () => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/content-manager/${isSingleType ? 'single-types' : 'collection-types'}/${slug}/${
+          isSingleType ? '' : initialData.id
+        }?populate=tasks`
+      );
+
+      setTasks(data.tasks);
+      setStatus('success');
+    } catch (e) {
+      setStatus('error');
+    }
+  };
+
+  useEffect(() => {
+    fetchSettings();
+    refetchTasks();
+  }, [initialData, isSingleType, axiosInstance, setTasks, setStatus, setSettings]);
+
+  return { status, tasks, refetchTasks, fetchSettings, settings };
+}
+
+const TodoCard = () => {
+  const { status, tasks, refetchTasks, settings } = useRelatedTasks();
+  const [createModalIsShown, setCreateModalIsShown] = useState(false);
+
+  const toggleTask = async (taskId, isChecked) => {
+    // Update task in database
+    await axiosInstance.put(`/content-manager/collection-types/plugin::todo.task/${taskId}`, {
+      isDone: isChecked,
+    });
+    // Call API to update local cache
+    await refetchTasks();
+  };
+
+  const showTasks = () => {
+    // Loading state
+    if (status === 'loading') {
+      return <p>Fetching todos...</p>;
+    }
+
+    // Error state
+    if (status === 'error') {
+      return <p>Could not fetch tasks.</p>;
+    }
+
+    // Empty state
+    if (tasks == null || tasks.length === 0) {
+      return <p>No todo yet.</p>;
+    }
+
+    // Success state, show all tasks
+    return tasks.map(task => (
+      <>
+        <Checkbox
+          value={task.isDone}
+          onValueChange={isChecked => toggleTask(task.id, isChecked)}
+          key={task.id}
+          disabled={task.isDone && settings ? true : false}
+        >
+          <span
+            style={{
+              textDecoration: task.isDone && settings == false ? 'line-through' : 'none',
+            }}
+          >
+            {task.name}
+          </span>
+        </Checkbox>
+      </>
+    ));
+  };
+
+  return (
+    <>
+      {createModalIsShown && (
+        <TaskModal handleClose={() => setCreateModalIsShown(false)} refetchTasks={refetchTasks} />
+      )}
+      <Box
+        as="aside"
+        aria-labelledby="additional-informations"
+        background="neutral0"
+        borderColor="neutral150"
+        hasRadius
+        paddingBottom={4}
+        paddingLeft={4}
+        paddingRight={4}
+        paddingTop={3}
+        shadow="tableShadow"
+      >
+        <Typography variant="sigma" textColor="neutral600" id="additional-informations">
+          Todos
+        </Typography>
+        <Box paddingTop={2} paddingBottom={6}>
+          <Box paddingBottom={2}>
+            <Divider />
+          </Box>
+          <Typography
+            fontSize={2}
+            textColor="primary600"
+            as="button"
+            type="button"
+            onClick={() => setCreateModalIsShown(true)}
+          >
+            <Flex>
+              <Icon as={Plus} color="primary600" marginRight={2} width={3} height={3} />
+              Add todo
+            </Flex>
+          </Typography>
+
+          <Stack paddingTop={3} size={2}>
+            {showTasks()}
+          </Stack>
+        </Box>
+      </Box>
+    </>
+  );
+};
+
+export default TodoCard;
+```
+
+There is 3 important things to see in this code:
+
+1. `useCMEditViewDataManager`. This hook is coming from the [helper-plugin](https://github.com/strapi/strapi/tree/0f9b69298b2d94b31b434bd7217060570ae89374/packages/core/helper-plugin). It allows you to have access, from the content-manager, to the data of the actual entry. In this case, we are fetching the `initialData`, if the entry is from a single-type (`isSingleType`), and the `slug` of the entry in the admin.
+
+You can have access to more data with it. [Learn more about this hook](https://github.com/strapi/strapi/blob/master/packages/core/helper-plugin/lib/src/content-manager/hooks/useCMEditViewDataManager/useCMEditViewDataManager.stories.mdx).
+
+2. Usage of the Strapi Content Manager API. In one of the previous section, we saw how we can fetch data from the server of our plugin by creating an API (controller, routes, etc...). Well, there is another way to fetch your data without having to create all this, you can use the undocumented Strapi Content Manager API. It will allows you to fetch, from the admin only, your data using the `/content-manager/` endpoint.
+
+- To learn more about this API you need to clone the [strapi](https://github.com/strapi/strapi) repository and start the open-api server for the core/content-manager:
+
+```
+git clone https://github.com/strapi/strapi.git
+cd strapi
+yarn doc:api core/content-manager
+```
+
+:::caution
+It is an internal documentation. There might be breaking changes.
+:::
+
+3. The component is using the settings we created in one of the previous section. In fact, the function `fetchSettings` will execute an API call to the route we created in one of the previous section.
+
+```js
+const fetchSettings = async () => {
+  try {
+    const { data } = await axiosInstance.get(`todo/settings`);
+    setSettings(data.disabled);
+  } catch (e) {
+    console.log(e);
+  }
+};
+```
+
+Then, depending on the value of this settings, it will render the checkbox:
+
+```js
+return tasks.map(task => (
+  <>
+    <Checkbox
+      value={task.isDone}
+      onValueChange={isChecked => toggleTask(task.id, isChecked)}
+      key={task.id}
+      disabled={task.isDone && settings ? true : false}
+    >
+      <span
+        style={{
+          textDecoration: task.isDone && settings == false ? 'line-through' : 'none',
+        }}
+      >
+        {task.name}
+      </span>
+    </Checkbox>
+  </>
+));
+```
+
+However, this component requires another one (`TaskModal`).
+
+- Create a `admin/src/components/TaskModal/index.js` with the following code:
+
+```js
+// admin/src/components/TaskModal/index.js
+import React, { useState } from 'react';
+import {
+  ModalLayout,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Typography,
+  Button,
+  TextInput,
+} from '@strapi/design-system';
+
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+
+import axiosInstance from '../../utils/axiosInstance';
+
+const TaskModal = ({ handleClose, refetchTasks }) => {
+  const [name, setName] = useState('');
+  const [status, setStatus] = useState();
+
+  const { slug, initialData } = useCMEditViewDataManager();
+
+  const handleSubmit = async e => {
+    // Prevent submitting parent form
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      // Show loading state
+      setStatus('loading');
+
+      // Create task and link it to the related entry
+      await axiosInstance.post('/content-manager/collection-types/plugin::todo.task', {
+        name,
+        isDone: false,
+        related: {
+          __type: slug,
+          id: initialData.id,
+        },
+      });
+
+      // Refetch tasks list so it includes the created one
+      await refetchTasks();
+
+      // Remove loading and close popup
+      setStatus('success');
+      handleClose();
+    } catch (e) {
+      setStatus('error');
+    }
+  };
+
+  const getError = () => {
+    // Form validation error
+    if (name.length > 40) {
+      return 'Content is too long';
+    }
+    // API error
+    if (status === 'error') {
+      return 'Could not create todo';
+    }
+    return null;
+  };
+
+  return (
+    <ModalLayout onClose={handleClose} labelledBy="title" as="form" onSubmit={handleSubmit}>
+      <ModalHeader>
+        <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
+          Add todo
+        </Typography>
+      </ModalHeader>
+      <ModalBody>
+        <TextInput
+          placeholder="What do you need to do?"
+          label="Name"
+          name="text"
+          hint="Max 40 characters"
+          error={getError()}
+          onChange={e => setName(e.target.value)}
+          value={name}
+        />
+      </ModalBody>
+      <ModalFooter
+        startActions={
+          <Button onClick={handleClose} variant="tertiary">
+            Cancel
+          </Button>
+        }
+        endActions={
+          <Button type="submit" loading={status === 'loading'}>
+            {status === 'loading' ? 'Saving...' : 'Save'}
+          </Button>
+        }
+      />
+    </ModalLayout>
+  );
+};
+
+export default TaskModal;
+```
+
+The most important thing here, is that we create tasks using the Content Manager API:
+
+```js
+await axiosInstance.post('/content-manager/collection-types/plugin::todo.task', {
+  name,
+  isDone: false,
+  related: {
+    __type: slug,
+    id: initialData.id,
+  },
+});
+```
+
+We create the association by adding a `related` object containing the `id` of the current entry and the internal `slug` for the `__type` field. A task creation for an article will have this data:
+
+```js
+{
+  name, // name of the task
+  isDone: false,
+  related: {
+    __type: "api::article.article",
+    id: initialData.id, // id of the article
+  },
+}
+```
+
+As mentionned at the beginning of this guide, you can make your task content-type invisible in the admin:
+
+```json
+// ./src/plugins/todo/server/content-types/task/schema.json
+{
+  "kind": "collectionType",
+  "collectionName": "tasks",
+  "info": {
+    "singularName": "task",
+    "pluralName": "tasks",
+    "displayName": "Task"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": { // option to make your content-type invisible
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40
+    },
+    "isDone": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
+```
+
+Your todo plugin should be 100% working now. Give it a try.
+
+This guide doesn't cover yet [middlewares](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#loading-order) and [policies](/developer-docs/latest/development/backend-customization/policies.html), this will come later.
 
 ## Publish on npm
 
 ## Publish on the marketplace
 
 ## Install a plugin in Strapi
+
+Any kind of [contributions to this guide](https://github.com/strapi/documentation) is much appreciated.

@@ -588,7 +588,7 @@ const developer = [
       ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
       ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
-      ['/developer-docs/latest/guides/plugin-api-101', 'Plugin API 101'],
+      ['/developer-docs/latest/guides/create-a-v4-plugin', 'Create a v4 plugin'],
     ],
   },
 ];
