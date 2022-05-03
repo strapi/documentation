@@ -196,7 +196,7 @@ To start the Node.js application, AppService will run the `npm start` command. A
 
 ```json
 "scripts": {
-    "start": "node node_modules/strapi/bin/strapi.js start"
+    "start": "node node_modules/@strapi/strapi/bin/strapi.js start"
 }
 ```
 
