@@ -1,5 +1,5 @@
 ---
-title: Webhooks - Strapi Developer Docs 
+title: Webhooks - Strapi Developer Docs
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/webhooks.html
 ---
@@ -159,7 +159,7 @@ This event is triggered when a new entry is created.
 ```json
 {
   "event": "entry.create",
-  "created_at": "2020-01-10T08:47:36.649Z",
+  "createdAt": "2020-01-10T08:47:36.649Z",
   "model": "address",
   "entry": {
     "id": 1,
@@ -168,8 +168,8 @@ This event is triggered when a new entry is created.
     "postal_code": null,
     "category": null,
     "full_name": "Paris",
-    "created_at": "2020-01-10T08:47:36.264Z",
-    "updated_at": "2020-01-10T08:47:36.264Z",
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T08:47:36.264Z",
     "cover": null,
     "images": []
   }
@@ -185,7 +185,7 @@ This event is triggered when an entry is updated.
 ```json
 {
   "event": "entry.update",
-  "created_at": "2020-01-10T08:58:26.563Z",
+  "createdAt": "2020-01-10T08:58:26.563Z",
   "model": "address",
   "entry": {
     "id": 1,
@@ -194,8 +194,8 @@ This event is triggered when an entry is updated.
     "postal_code": null,
     "category": null,
     "full_name": "Paris",
-    "created_at": "2020-01-10T08:47:36.264Z",
-    "updated_at": "2020-01-10T08:58:26.210Z",
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T08:58:26.210Z",
     "cover": null,
     "images": []
   }
@@ -211,7 +211,7 @@ This event is triggered when an entry is deleted.
 ```json
 {
   "event": "entry.delete",
-  "created_at": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2020-01-10T08:59:35.796Z",
   "model": "address",
   "entry": {
     "id": 1,
@@ -220,8 +220,8 @@ This event is triggered when an entry is deleted.
     "postal_code": null,
     "category": null,
     "full_name": "Paris",
-    "created_at": "2020-01-10T08:47:36.264Z",
-    "updated_at": "2020-01-10T08:58:26.210Z",
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T08:58:26.210Z",
     "cover": null,
     "images": []
   }
@@ -237,7 +237,7 @@ This event is triggered when an entry is published.
 ```json
 {
   "event": "entry.publish",
-  "created_at": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2020-01-10T08:59:35.796Z",
   "model": "address",
   "entry": {
     "id": 1,
@@ -246,9 +246,9 @@ This event is triggered when an entry is published.
     "postal_code": null,
     "category": null,
     "full_name": "Paris",
-    "created_at": "2020-01-10T08:47:36.264Z",
-    "updated_at": "2020-01-10T08:58:26.210Z",
-    "published_at": "2020-08-29T14:20:12.134Z",
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T08:58:26.210Z",
+    "publishedAt": "2020-08-29T14:20:12.134Z",
     "cover": null,
     "images": []
   }
@@ -264,7 +264,7 @@ This event is triggered when an entry is unpublished.
 ```json
 {
   "event": "entry.unpublish",
-  "created_at": "2020-01-10T08:59:35.796Z",
+  "createdAt": "2020-01-10T08:59:35.796Z",
   "model": "address",
   "entry": {
     "id": 1,
@@ -273,9 +273,9 @@ This event is triggered when an entry is unpublished.
     "postal_code": null,
     "category": null,
     "full_name": "Paris",
-    "created_at": "2020-01-10T08:47:36.264Z",
-    "updated_at": "2020-01-10T08:58:26.210Z",
-    "published_at": null,
+    "createdAt": "2020-01-10T08:47:36.264Z",
+    "updatedAt": "2020-01-10T08:58:26.210Z",
+    "publishedAt": null,
     "cover": null,
     "images": []
   }
@@ -291,7 +291,7 @@ This event is triggered when you upload a file on entry creation or through the 
 ```json
 {
   "event": "media.create",
-  "created_at": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2020-01-10T10:58:41.115Z",
   "media": {
     "id": 1,
     "name": "image.png",
@@ -303,8 +303,8 @@ This event is triggered when you upload a file on entry creation or through the 
     "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
     "provider": "local",
     "provider_metadata": null,
-    "created_at": "2020-01-10T10:58:41.095Z",
-    "updated_at": "2020-01-10T10:58:41.095Z",
+    "createdAt": "2020-01-10T10:58:41.095Z",
+    "updatedAt": "2020-01-10T10:58:41.095Z",
     "related": []
   }
 }
@@ -319,7 +319,7 @@ This event is triggered when you replace a media or update the metadata of a med
 ```json
 {
   "event": "media.update",
-  "created_at": "2020-01-10T10:58:41.115Z",
+  "createdAt": "2020-01-10T10:58:41.115Z",
   "media": {
     "id": 1,
     "name": "image.png",
@@ -331,8 +331,8 @@ This event is triggered when you replace a media or update the metadata of a med
     "url": "/uploads/353fc98a19e44da9acf61d71b11895f9.png",
     "provider": "local",
     "provider_metadata": null,
-    "created_at": "2020-01-10T10:58:41.095Z",
-    "updated_at": "2020-01-10T10:58:41.095Z",
+    "createdAt": "2020-01-10T10:58:41.095Z",
+    "updatedAt": "2020-01-10T10:58:41.095Z",
     "related": []
   }
 }
@@ -347,7 +347,7 @@ This event is triggered only when you delete a media through the media interface
 ```json
 {
   "event": "media.delete",
-  "created_at": "2020-01-10T11:02:46.232Z",
+  "createdAt": "2020-01-10T11:02:46.232Z",
   "media": {
     "id": 11,
     "name": "photo.png",
@@ -359,8 +359,8 @@ This event is triggered only when you delete a media through the media interface
     "url": "/uploads/43761478513a4c47a5fd4a03178cfccb.png",
     "provider": "local",
     "provider_metadata": null,
-    "created_at": "2020-01-07T19:34:32.168Z",
-    "updated_at": "2020-01-07T19:34:32.168Z",
+    "createdAt": "2020-01-07T19:34:32.168Z",
+    "updatedAt": "2020-01-07T19:34:32.168Z",
     "related": []
   }
 }
