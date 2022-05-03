@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-Thanks to the plugin `Email`, you can send email from your server or externals providers such as **Sendgrid**.
+The Email plugin enables applications to send email from a server or external providers such as **Sendgrid**. <!--need more here-->
 
 ## Programmatic usage
 
@@ -33,7 +33,7 @@ await strapi.plugins['email'].services.email.send({
 ### Send an email using a template - `.sendTemplatedEmail()`
 
 When you send an email, you will most likely want to build it from a template you wrote.
-The email plugin provides the service `sendTemplatedEmail` that compile the email and then sends it. The function have the following params:
+The email plugin provides the service `sendTemplatedEmail` that compiles the email and then sends it. The function has the following parameters:
 
 | param           | description                                                                                                              | type   | default |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ | ------- |
@@ -106,9 +106,12 @@ When using community providers, pass the full package name to the `provider` key
 
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
-**Path —** `./config/plugins.js`.
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
+//path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -127,6 +130,35 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</code-block>
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid',
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
+    },
+  },
+  // ...
+});
+
+```
+
+</code-block>
+</code-group>
 
 ::: tip
 If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
