@@ -45,7 +45,7 @@ In order to connect the Strapi application in production to a hosted database th
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-//path:config/env/production/database.js
+// path: ./config/env/production/database.js
 
 module.exports = ({ env }) => ({
   connection: {
