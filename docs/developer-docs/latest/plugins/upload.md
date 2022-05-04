@@ -142,7 +142,6 @@ To upload files to your application.
 
 ::: tab Node.js
 
-### From Node.js
 
 ```js
 import { FormData, Blob } from "formdata-node"
