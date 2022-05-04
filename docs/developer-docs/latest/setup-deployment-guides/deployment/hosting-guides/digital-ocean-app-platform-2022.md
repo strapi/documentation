@@ -24,7 +24,7 @@ The Digital Ocean App Platform uses version control repositories such as GitHub 
 
 <!--- add details here-->
 ::: details - Setting up Git version control and connecting to a remote repository
-
+[GitHub quickstart instructions](https://docs.github.com/en/get-started/quickstart/set-up-git)
 :::
 
 ## Setting up a Strapi project for deployment
@@ -96,6 +96,8 @@ export default ({ env }) => ({
 </code-group>
 
 ### Configuring server
+
+The `env/production.server` file is distinct from the local development `server` file, and requires the `url` property instead of the `host` and `port` properties. Copy the code snippet below for the minimal `env/production.server` configuration.
 
 <code-group>
 
@@ -214,9 +216,9 @@ The environmental variables for the development and managed database are handled
 
 When the above steps are completed Digital Ocean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your app domain}/admin once the application is successfully deployed.
 
-## Optional Steps
+<!--## Optional Steps
 
 ### Connect to a storage service
  
 
-### Switch to a managed database
+### Switch to a managed database -->
