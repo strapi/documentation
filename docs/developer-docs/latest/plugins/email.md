@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-The Email plugin enables applications to send email from a server or external providers such as **Sendgrid**. <!--need more here-->
+The Email plugin enables applications to send email from a server or external providers such as **Sendgrid**. Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation below provides examples for how to configure the email plugin and examples of controllers, routes, and lifecycle hooks to affectuate programicatic email.
 
 ## Programmatic usage
 
