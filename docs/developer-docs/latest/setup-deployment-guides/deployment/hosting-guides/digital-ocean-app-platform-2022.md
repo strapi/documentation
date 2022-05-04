@@ -36,7 +36,7 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 2. In the project `config` directory create the sub-directory `config/env/production`
 3. Create `database.js` and `server.js` files (`.ts` for TypeScript projects)
 
-### Configuring `env/production/database`
+### Configuring database
 
 In order to connect the Strapi application in production to a hosted database the database credentials must be specified. Copy the following code snippet into `env/production/database`.
 
