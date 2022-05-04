@@ -113,9 +113,9 @@ To upload files to your application.
 
 - `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
 
-:::: tabs card
+<code-group>
 
-::: tab Browser
+<code-block title="BROWSER">
 
 ```html
 <form>
@@ -138,10 +138,9 @@ To upload files to your application.
 </script>
 ```
 
-:::
+</code-block>
 
-::: tab Node.js
-
+<code-block title="NODE.JS">
 
 ```js
 import { FormData, Blob } from "formdata-node"
@@ -164,7 +163,9 @@ await fetch('http://localhost:1337/api/upload', {
 });
 ```
 
-:::
+</code-block>
+
+</code-group>
 
 :::caution
 You have to send FormData in your request body.
