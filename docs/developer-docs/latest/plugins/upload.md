@@ -302,8 +302,7 @@ Code
 </script>
 ```
 
-Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files, need to
-be prefixed with `files` (example with a cover attribute: `files.cover`).
+Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files, need to be prefixed with `files` (example with a cover attribute: `files.cover`).
 
 ::: tip
 If you want to upload files for a component, you will have to specify the index of the item you want to add the file to.
