@@ -95,7 +95,7 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-### Configuring `env/production/server`
+### Configuring server
 
 <code-group>
 
