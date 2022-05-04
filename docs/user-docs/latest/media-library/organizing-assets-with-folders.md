@@ -10,26 +10,18 @@ canonicalUrl:
 
 Folders in the [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the Content Manager.
 
-![🏞 screenshot - Media library with folders highlighted]()
-
-From the Media Library, it is possible to:
-
-- view the list of folders and [browse](#browsing-folders) a folder's content
-- [create new folders](#adding-folders)
-- [edit an existing folder](#editing-folders)
-- [move assets to a folder](#moving-assets-to-a-folder)
-- [delete a folder](#deleting-folders)
+From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
 ## Browsing folders
 
-By default, the Media Library displays folders and assets created at the root level. Double-clicking a folder navigates to this folder. The interface is refreshed with the folder's content and displays:
+By default, the Media Library displays folders and assets created at the root level. Double-clicking a folder navigates to this folder, and displays the following elements:
 
 - the folder title (1)
 - the number of subfolders and assets contained (2)
 - the subfolders (3) the current folder contains
 - all assets (4) from this folder
 
-![🏞 screenshot - Media library one folder deep, with back button and updated folder title]()
+![🏞 screenshot - Media library one folder deep, with back button and updated folder title](../assets/media-library/media-library_folder-content.png)
 
 From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/user-docs/latest/media-library/introduction-to-media-library.md)).
 
@@ -38,14 +30,11 @@ To navigate back to the parent folder, one level up, use the **Back** button at 
 
 ## Adding folders
 
-![🏞 screenshot - Add new folder popup]()
-
 To create a new folder in the Media Library:
 
 1. Click on **Add new folder** in the upper right of the Media Library interface.
-<!-- ? how should I write the name of the popup? should I use the word 'popup'? -->
-2. In the "Add new folder" popup, type a name for the new folder in the _Folder name_ field.
-3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the root of the Media library.
+2. In the window that pops up, type a name for the new folder in the _Folder name_ field.
+3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the root of the Media Library.
 4. Click **Save**.
 
 ::: note
@@ -56,27 +45,23 @@ There is no limit to how deep your folders hierarchy can go, but bear in mind it
 
 Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
 
-![🏞 screenshot - "Move elements to" popup]()
+![🏞 screenshot - "Move elements to" popup](../assets/media-library/media-library_move-assets.png)
 
 To move assets and folders to another folder:
 
 1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the blue **Move** button at the top of the interface.
-<!-- ? how should I write the name of the popup? should I use the word 'popup'? -->
-3. In the "Move elements to" popup, select the _Folder location_ where to move items to.
+<!-- TODO: add move icon -->
+2. Click the blue ![Move icon]() **Move** button at the top of the interface.
+3. In the window that pops up, select the _Folder location_ where to move items to.
 4. Click **Confirm**.
 
 ## Editing folders
 
-Once created, a folder can be renamed, moved or [deleted](#deleting-folders). To manage a single folder:
+Once created, a folder can be renamed, moved or deleted. To manage a single folder:
 
 1. Click the folder name in the Folders view of the Media library.
-2. In the "Edit folder" popup, update the name and location with the _Folder name_ field and _Folder location_ drop-down list, respectively.
-3. Click **Save** to save the changes and see them reflected in the Media Library interface.
-
-::: tip
-From the "Edit folder" popup, you can also delete a single folder by clicking the **Delete folder** button.
-:::
+2. In the window that pops up, update the name and location with the _Folder name_ field and _Folder location_ drop-down list, respectively.
+3. Click **Save**.
 
 ## Deleting folders
 
@@ -85,8 +70,7 @@ Deleting a folder can be done either from the list of folders of the Media Libra
 To delete a folder, from the Media Library:
 
 1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
-2. Click the **Delete** button above the Folders list.
-<!-- ? when should I use the 'dialog' or 'popup' wording? -->
+2. Click the ![Delete icon](../assets/icons/delete.svg) **Delete** button above the Folders list.
 3. In the _Confirmation_ dialog, click **Confirm**.
 
-A single folder can also be deleted from the "Edit folder" popup: click on a folder name to open the "Edit folder" popup, then click the **Delete folder** button, and confirm the deletion.
+A single folder can also be deleted when editing it: click on a folder name to open the "Edit folder" popup, then click the **Delete folder** button, and confirm the deletion.
