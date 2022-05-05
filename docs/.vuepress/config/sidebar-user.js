@@ -66,7 +66,7 @@ const user = [
       ],
       [
         '/user-docs/latest/media-library/editing-and-deleting-assets.md',
-        'Editing and deleting assets'
+        'Managing individual assets'
       ],
       [
         '/user-docs/latest/media-library/organizing-assets-with-folders.md',
