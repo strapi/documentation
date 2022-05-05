@@ -50,7 +50,7 @@ Assets and folders can be moved to another folder from the root view of the Medi
 To bulk move assets and folders to another folder:
 
 1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the blue ![Move icon](../assets/icons/move.svg) **Move** button at the top of the interface.
+2. Click the ![Move icon](../assets/icons/move.svg) **Move** button at the top of the interface.
 3. In the window that pops up, select the _Folder location_ where to move items to.
 4. Click **Confirm**.
 
