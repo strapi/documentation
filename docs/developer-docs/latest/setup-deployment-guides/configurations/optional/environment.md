@@ -18,7 +18,7 @@ Strapi provides the following environment variables:
 | `STRAPI_HIDE_STARTUP_MESSAGE`                              | Don't show the startup message in the terminal                                                                                                                                                                                                                                                             | `Boolean` | `false`         |
 | `STRAPI_TELEMETRY_DISABLED`                                | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                  | `Boolean` | `false`         |
 | `STRAPI_LICENSE`                                           | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                         | `String`  | `undefined`     |
-| `NODE_ENV`                                                 | Type of environment where the app is running                                                                                                                                                                                                                                                               | `String`  | `'development'` |
+| `NODE_ENV`                                                 | Type of environment where the app is running. Note: `production` enables specific behaviors. See  [Node.js](https://nodejs.dev/learn/nodejs-the-difference-between-development-and-production) for details.                                                                                                                                                                                                                                                            | `String`  | `'development'` |
 | `BROWSER`                                                  | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                          | `Boolean` | `true`          |
 | `ENV_PATH`                                                 | Path to the file that contains your environment variables                                                                                                                                                                                                                                                  | `String`  | `'./.env'`      |
 | `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_ | Initialization locale for the app, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-of-the-default-locale)) | `String`  | `'en'`          |
@@ -94,12 +94,6 @@ These configurations will be merged into the base configurations defined in the 
 The environment is based on the `NODE_ENV` environment variable, which defaults to `development`.
 
 When starting Strapi with `NODE_ENV=production` it will load the configuration from `./config/*` and `./config/env/production/*`. Everything defined in the production configuration will override the default configuration. In combination with environment variables this pattern becomes really powerful.
-
-::: note
-
-The `NODE_ENV` environmental variable can be set to any arbitrary value, however, there are some behaviors that only apply when `NODE_ENV=production`. For example, the session middleware is in a secure mode. The exact behavior will depend on which libraries are installed for each Strapi application.
-
-:::
 
 For instance, using the following configuration files will give you various options to start the server:
 
