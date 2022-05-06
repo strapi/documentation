@@ -130,7 +130,7 @@ With the plugin installed, it is possible to:
 
 ### <img width="28" src="../assets/plugins/sentry.png"> Sentry
 
-The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi Sentry plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-sentry). With the plugin installed a user can:
+The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi Sentry plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-sentry). With the plugin installed it is possible to:
 
 - initialize a Sentry instance when a Strapi application starts,
 - send errors encountered in an application end API to Sentry,
