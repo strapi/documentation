@@ -196,7 +196,7 @@ chmod 400 ~/.ssh/ec2-strapi-key-pair.pem
 #### 2. Log in to your server as the default `ubuntu` user:
 
 ::: tip
-In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134`.
+In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance at the end, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134`.
 :::
 
 ```bash
