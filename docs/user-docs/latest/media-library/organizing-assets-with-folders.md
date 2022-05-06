@@ -57,7 +57,7 @@ To bulk move assets and folders to another folder:
 4. Click **Confirm**.
 
 ::: note
-An individual asset can also be moved to a folder when [editing the asset](/user-docs/latest/media-library/editing-and-deleting-assets.md).
+An individual asset can also be moved to a folder when [editing the asset](/user-docs/latest/media-library/managing-assets.md).
 :::
 
 ## Editing folders
