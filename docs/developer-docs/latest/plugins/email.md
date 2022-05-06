@@ -68,7 +68,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 By default Strapi provides a local email system ([sendmail](https://www.npmjs.com/package/sendmail)). If you want to use a third party to send emails, you need to install the correct provider module. Otherwise you can skip this part and continue to configure your provider.
 
-Below are the providers maintained by the Strapi team:
+The Strapi team maintains the following providers:
 
 - [Amazon SES](https://www.npmjs.com/package/@strapi/provider-email-amazon-ses)
 - [Mailgun](https://www.npmjs.com/package/@strapi/provider-email-mailgun)
