@@ -12,7 +12,8 @@ The Media Library is a Strapi plugin that is always activated by default and can
 
 Administrators can access the Media Library from ![ML icon](../assets/icons/media_library.svg) _Media Library_ in the main navigation of the admin panel.
 
-![🏞 screenshot - Media Library overview, annotated]()
+<!-- TODO: replace screenshot -->
+![Media Library overview, annotated](../assets/media-library/media-library_overview.png)
 
 The Media Library displays all assets uploaded in the application, either via the Media Library itself or via the Content Manager when managing a media field. Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/user-docs/latest/content-manager/writing-content.md#filling-up-fields).
 
