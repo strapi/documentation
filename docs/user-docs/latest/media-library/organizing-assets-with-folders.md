@@ -17,7 +17,7 @@ From the Media Library, it is possible to view the list of folders and browse a 
 By default, the Media Library displays folders and assets created at the root level. Double-clicking a folder navigates to this folder, and displays the following elements:
 
 - the folder title (1)
-- the number of subfolders and assets contained (2)
+- the number of subfolders and assets (2) the current folder contains
 - the subfolders (3) the current folder contains
 - all assets (4) from this folder
 
@@ -64,7 +64,7 @@ An individual asset can also be moved to a folder when [editing the asset](/user
 
 Once created, a folder can be renamed, moved or deleted. To manage a single folder:
 
-1. Click the folder name in the Folders view of the Media library.
+1. Click the folder name in the Folders part of the Media library.
 2. In the window that pops up, update the name and location with the _Folder name_ field and _Folder location_ drop-down list, respectively.
 3. Click **Save**.
 
