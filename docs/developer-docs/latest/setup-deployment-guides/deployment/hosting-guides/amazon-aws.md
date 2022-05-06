@@ -77,7 +77,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 
 #### 3. Click on the orange `Launch Instance` button
 
-- `Select` **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+- `Select` **Ubuntu Server 22.04 LTS (HVM), SSD Volume Type**
 - Ensure `General purpose` + `t2.small` is `checked`.
   ::: tip
   `t2.small` is the smallest instance type in which Strapi runs. `t2.nano` and `t2.micro` **DO NOT** work. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, **t2.small** or larger instance is needed.
@@ -196,37 +196,37 @@ chmod 400 ~/.ssh/ec2-strapi-key-pair.pem
 #### 2. Log in to your server as the default `ubuntu` user:
 
 ::: tip
-In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@12.123.123.11`.
+In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134`.
 :::
 
 ```bash
-ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@12.123.123.11
+ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134
 
-Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
 
 ...
 
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-ubuntu@ip-12.123.123.11:~$
+ubuntu@ip-34.182.83.134:~$
 
 ```
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js v12.x.x`. The following steps will install Node.js onto your EC2 server.
+Strapi currently supports `Node.js v16.x.x`. The following steps will install Node.js onto your EC2 server.
 
 ```bash
 cd ~
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 ...
 sudo apt-get install nodejs
 ...
 node -v && npm -v
 ```
 
-The last command `node -v && npm -v` should output two versions numbers, eg. `v12.x.x, 6.x.x`.
+The last command `node -v && npm -v` should output two versions numbers, eg. `v16.x.x, 8.x.x`.
 
 #### 4. Create and change npm's default directory.
 
@@ -412,10 +412,10 @@ sudo nano ecosystem.config.js
 module.exports = {
   apps: [
     {
-      name: 'your-app-name',
-      cwd: '/home/ubuntu/my-project',
-      script: 'npm',
-      args: 'start',
+      name: 'your-app-name', // Your project name
+      cwd: '/home/ubuntu/my-project', // Path to your project
+      script: 'npm', // For this example we're using npm, could also be yarn
+      args: 'start', // Script to start the Strapi server. `start` by default
       env: {
         NODE_ENV: 'production',
         DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
@@ -456,7 +456,7 @@ cd ~
 pm2 start ecosystem.config.js
 ```
 
-Your Strapi project should now be available on `http://your-ip-address:1337/`.
+Your Strapi project should now be available on `http://your-local-ip-address:1337/`. Your local IP address will be that of your computer, rather than the one from the Ubuntu server.
 
 ::: tip
 Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
