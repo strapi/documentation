@@ -78,4 +78,6 @@ To delete a folder, from the Media Library:
 2. Click the ![Delete icon](../assets/icons/delete.svg) **Delete** button above the Folders list.
 3. In the _Confirmation_ dialog, click **Confirm**.
 
-A single folder can also be deleted when editing it: click on a folder name to open the "Edit folder" popup, then click the **Delete folder** button, and confirm the deletion.
+::: note
+A single folder can also be deleted when editing it: click on a folder name, and in the window that pops up, click the **Delete folder** button, and confirm the deletion.
+:::
