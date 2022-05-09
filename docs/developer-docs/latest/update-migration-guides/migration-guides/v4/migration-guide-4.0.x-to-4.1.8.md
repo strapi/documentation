@@ -1,14 +1,17 @@
 ---
-title: Migrate from 4.1.7 to 4.1.8 - Strapi Developer Docs
-description: Learn how you can migrate your Strapi application from 4.1.7 to 4.1.8.
+title: Migrate from 4.0.6+ to 4.1.8 - Strapi Developer Docs
+description: Learn how you can migrate your Strapi application from 4.0.6+ to 4.1.8.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to-4.1.8.html
 ---
 
-# v4.0.x to v4.1.8 migration guide
+# v4.0.6+ to v4.1.8 migration guide
 
-The Strapi v4.0.x to v4.1.8 migration guide upgrades versions of v4.0.6 through v4.1.7 to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 4 steps:
+The Strapi v4.0.6+ to v4.1.8 migration guide upgrades versions of v4.0.6 and above to v4.1.8. The minimum configuration for `config/admin` now includes the API token `API_TOKEN_SALT`. Strapi no longer populates default values for the admin JWT in `config/admin`. Initial values are generated and stored in the .env file during project creation. Strapi no longer passes secrets to non-development environments, requiring users to set the secrets purposefully. The migration to v4.1.8 consists of 4 steps:
 
-- upgrading the application dependencies
+- Upgrading the application dependencies
+- Fixing the breaking changes
+- Setting secrets for non-development environments
+- Reinitializing the application
 
 ## Upgrading the application dependencies to 4.1.8
 
