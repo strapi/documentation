@@ -456,7 +456,7 @@ cd ~
 pm2 start ecosystem.config.js
 ```
 
-Your Strapi project should now be available on `http://your-local-ip-address:1337/`. Your local IP address will be the one from the Ubuntu server.
+Your Strapi project should now be available on `http://your-ip-address:1337/`. Your IP address will be the one corresponding to your Ubuntu server.
 
 ::: tip
 Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
