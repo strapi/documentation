@@ -45,7 +45,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 ## Installing database migration script (optional)
 
-This step is only needed if you have files in your database that have the mime-type set to `null` (see GitHub issue [#12761](https://github.com/strapi/strapi/issues/12761)).
+This step is only required if some files in your database have their MIME type set to `null` (see GitHub issue [#12761](https://github.com/strapi/strapi/issues/12761)).
 
 Based on the file names, the migration script will set the correct mime-type of each file in the database that currently don't have a mime-type. The script will automatically be executed by Strapi, only once, at the next launch of Strapi.
 
