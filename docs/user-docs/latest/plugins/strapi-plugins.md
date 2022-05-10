@@ -13,6 +13,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
 - Some plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), and are marked with  <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
+- All plugin installations can be confirmed in the admin panel by clicking on ![plugins icon](../assets/icons/plugins.svg) *Plugins* in the main navigation.
 
 :::
 
@@ -32,7 +33,7 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 | Section impacted | Options and settings                                                                                    |
 |------------------|---------------------------------------------------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li> <br> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/></li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#configuring-role-s-permissions)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel*</li> <br> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html#editing-a-role)). <br> 👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/></li></ul> |
 | Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/latest/content-manager/translating-content.md)).</li></ul> |
 
@@ -88,19 +89,19 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 
 The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end. The Strapi Gatsby preview plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview).
 
+The Gatsby preview plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
+
 | Section impacted    | Options and settings         |
 |------------|-----------------|
-| Settings     |  Addition of the Gatsby preview plugin section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync URL</li> </ul> |
-| Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation                  |
+| Settings     |  Addition of a "Gatsby preview plugin" section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync URL</li> </ul> |
+| Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation.                  |
   
 
 ### <img width="28" src="../assets/plugins/graphql.png"> GraphQL
 
 The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives access to the GraphQL Playground: a browser-based interface that assists in writing GraphQL queries and data exploration. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).
 
-There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <http://localhost:1337/graphql> in a default Strapi application. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql).
-
-Users can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) *Plugins* in the main navigation.
+There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <http://localhost:1337/graphql> in a Strapi application. More information on using the GraphQL API is located in the [API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#graphql-api) and the [Developer Documentation plugins section](/developer-docs/latest/plugins/graphql.md#graphql).
 
 ### <img width="28" src="../assets/plugins/seo-logo.png"> SEO
 
@@ -112,6 +113,8 @@ With the plugin installed, it is possible to:
 - manage the meta title, meta description, and preview the content,
 - manage social tags for Facebook and Twitter,
 - analyze the SEO of the application content.
+
+The Strapi SEO plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
 | Section impacted    | Options and settings                     |
 |-------------------|--------------------------------------------|
@@ -127,5 +130,3 @@ The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi 
 - send errors encountered in an application end API to Sentry,
 - attach useful metadata to Sentry events, to help with debugging,
 - expose a global Sentry service.
-
- There is no access to the Sentry plugin in the admin panel. The user can confirm the plugin installation by referencing the list of installed plugins by clicking on ![plugins icon](../assets/icons/plugins.svg) *Plugins* in the main navigation.
