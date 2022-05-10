@@ -24,7 +24,7 @@ Strapi will automatically detect migration files and run them once at the next s
 
 Migrations are run before the database tables are synced with the content-types schemas.
 
-There is no CLI to run the migration by hand for the moment.
+There is no CLI to run the migration manually for the moment.
 
 There are no ways to use the downgrade feature for the moment, hence, the `down()`is not usable for the moment.
 
