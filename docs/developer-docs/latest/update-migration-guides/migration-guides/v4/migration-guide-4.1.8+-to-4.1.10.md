@@ -52,7 +52,7 @@ To make sure Strapi can load the Media Library, the following migration script f
 To add the script:
 
 1. In the `./database/migrations` folder, create a file named `2022.05.10T00.00.00.fill-files-mime-type.js`.
-2. Copy paste the following code in the created file:
+2. Copy and paste the following code into the previously created file:
 
 ```jsx
 'use strict'
