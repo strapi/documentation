@@ -36,7 +36,7 @@ To create a migration file:
 
 1. In the `./database/migrations` folder, create a new file named after the date and the name of the migration (e.g. `2022.05.10T00.00.00.name-of-my-migration.js`). Make sure that the file name follows this naming pattern, because the alphabetical order of the files defines the order in which the migrations have to run.
 
-2. Fill the migration file with the following template:
+2. Copy and paste the following template in the previously created file:
 
 ```jsx
 'use strict'
