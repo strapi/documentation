@@ -49,7 +49,7 @@ This step is only needed if you have files in your database that have the mime-t
 
 Based on the file names, the migration script will set the correct mime-type of each file in the database that currently don't have a mime-type. The script will automatically be executed by Strapi, only once, at the next launch of Strapi.
 
-1. Create a file named `202205110000.fill-files-mime-type.js` in `database/migrations`
+1. Create a file named `2022.05.10T00.00.00.fill-files-mime-type.js` in `database/migrations`
 2. Copy paste the following code in the created file:
 
 ```jsx
