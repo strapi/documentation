@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-c
 
 # Database migrations (experimental feature)
 
-Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi app.
+Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application.
 
 ::: callout 🚧  Experimental
 The feature is to be considered as unfinished and experimental.
