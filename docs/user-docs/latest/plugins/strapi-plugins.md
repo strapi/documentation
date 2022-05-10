@@ -93,7 +93,7 @@ The Gatsby preview plugin affects multiple parts of the admin panel. The table b
 
 | Section impacted    | Options and settings         |
 |------------|-----------------|
-| Settings     |  Addition of a "Gatsby preview plugin" section in the Settings sub navigation. In the plugin settings the user can: <ul><li> enable or disable Collection Types and Single Types, </li> <li>add the Gatsby Content Sync URL</li> </ul> |
+| Settings     |  Addition of a "Gatsby preview plugin" setting section, enables/disables collection types and single types, and allows the Gatsby Content Sync URL to be added. <br>👉 Path reminder: ![Settings icon](../assets/icons/settings.svg) *Settings > Gatsby preview plugin* | |
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation.                  |
   
 
