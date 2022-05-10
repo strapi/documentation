@@ -179,7 +179,7 @@ You will set-up your EC2 server as a Node.js server. Including basic configurati
 You will need your **EC2** ip address:
 
 - In the `AWS Console`, navigate to the `AWS EC2`. In the top menu, click on `Services` and do a search for `ec2`, click on `Virtual Servers in the cloud`.
-- Click on `1 Running Instance` and note the `IPv4 Public OP` address. E.g. `34.182.83.134`.
+- Click on `1 Running Instance` and note the `IPv4 Public OP` address. E.g. `1.2.3.4`.
 
 #### 1. Setup the `.pem` file
 
@@ -196,11 +196,11 @@ chmod 400 ~/.ssh/ec2-strapi-key-pair.pem
 #### 2. Log in to your server as the default `ubuntu` user:
 
 ::: tip
-In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance at the end, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134`.
+In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance at the end, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@1.2.3.4`.
 :::
 
 ```bash
-ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@34.182.83.134
+ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@1.2.3.4
 
 Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
 
@@ -209,24 +209,24 @@ Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-ubuntu@ip-34.182.83.134:~$
+ubuntu@ip-1.2.3.4:~$
 
 ```
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js v16.x.x`. The following steps will install Node.js onto your EC2 server.
+Strapi currently supports `Node.js v14.x.x`. The following steps will install Node.js onto your EC2 server.
 
 ```bash
 cd ~
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 ...
 sudo apt-get install nodejs
 ...
 node -v && npm -v
 ```
 
-The last command `node -v && npm -v` should output two versions numbers, eg. `v16.x.x, 8.x.x`.
+The last command `node -v && npm -v` should output two versions numbers, eg. `v14.x.x, 6.x.x`.
 
 #### 4. Create and change npm's default directory.
 
