@@ -32,7 +32,9 @@ There are no ways to use the downgrade feature for the moment, hence, the `down
 
 ## Creating a migration file
 
-1. Create a new file in `database/migrations` with a name containing the date and the name of the migration (ex: `2022.05.10T00.00.00.name-of-my-migration.js`). The file name is important because the alphabetical order of the files defines the order in which the migrations have to run.
+To create a migration file: 
+
+1. In the `./database/migrations` folder, create a new file named after the date and the name of the migration (e.g. `2022.05.10T00.00.00.name-of-my-migration.js`). Make sure that the file name follows this naming pattern, because the alphabetical order of the files defines the order in which the migrations have to run.
 
 2. Fill the migration file with the following template:
 
