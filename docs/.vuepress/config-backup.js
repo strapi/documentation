@@ -351,6 +351,7 @@ const sidebar = {
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+        ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
