@@ -14,7 +14,7 @@ The feature is to be considered as unfinished and experimental.
 
 ## General logic
 
-Migration are run using javascript migration files stored in `database/migrations`.
+Migrations are run using JavaScript migration files stored in `./database/migrations`.
 
 Migration files should export 2 functions `up()` and `down()`.
 - The `up()`function is used when upgrading (ex: adding a new table `my_new_table`)
