@@ -49,7 +49,9 @@ This step is only required if some files in your database have their MIME type s
 
 To make sure Strapi can load the Media Library, the following migration script file must be added to `./database/migrations`. The script automatically sets MIME types for files that miss one, based on their filename. The script will be automatically executed only once at the next launch of Strapi.
 
-1. Create a file named `2022.05.10T00.00.00.fill-files-mime-type.js` in `database/migrations`
+To add the script:
+
+1. In the `./database/migrations` folder, create a file named `2022.05.10T00.00.00.fill-files-mime-type.js`.
 2. Copy paste the following code in the created file:
 
 ```jsx
