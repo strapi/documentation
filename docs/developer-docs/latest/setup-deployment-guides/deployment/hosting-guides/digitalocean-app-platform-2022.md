@@ -12,7 +12,7 @@ The purpose of this guide is to allow users to deploy Strapi applications on the
 Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please open an issue on GitHub.
 :::
 
-## Prerequsites
+## Prerequisites
 
 Prior to starting the deployment process each user will need:
 
@@ -22,14 +22,14 @@ Prior to starting the deployment process each user will need:
 
 The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported. The Strapi referral link for DigitalOcean provides \$100 in credits. Git version control must be used locally, in order to store an application in a remote repository such as GitHub. Follow the details below to setup Git for the project.
 
-<!--- add details here-->
 ::: details - Setting up Git version control and connecting to a remote repository
+
+[Git quick-start guide from GitHub](https://docs.github.com/en/get-started/quickstart/set-up-git)
 
 :::
 
 ## Setting up a Strapi project for deployment
 
-<!-- proposal is to move this content to the main deployment page once all of the guides are modified for consistency-->
 Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
 1. [Create a new Strapi application using the quickstart flag](/developer-docs/latest/getting-started/quick-start.md) or navigate to the root directory of an existing Strapi application.
@@ -135,6 +135,7 @@ export default ({ env }) => ({
 </code-group>
 
 ### Adding postgres dependencies
+
 Connecting a postgres database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
 <code-group>
@@ -163,11 +164,11 @@ Save the Strapi application locally then, in a terminal, run :
 
 ## Creating a DigitalOcean App
 
-On the DigitalOcean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to your repository. Next:
+On the DigitalOcean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to the correct repository. Next:
 
 1. select the branch,
 2. select the source directory (optional),
-3. chose whether or not to autodeploy with GitHub updates,
+3. chose whether or not to "Autodeploy" when an update is pushed to the GitHub repository,
 4. click the **Next** button.
 
 ### Connecting a web app to a database
@@ -178,11 +179,11 @@ On the next screen:
 2. select database, and click **Add**,
 3. On the next screen select *dev database* and name the database. The default database name is "db" and that will be used in the subsequent sections.
 4. Click the **Create and attach** button.
-5. On the next screen click the **Next** button to set the enviroment variables.
+5. On the next screen click the **Next** button to set the environment variables.
 
 ### Environmental variables
 
-In the DigitalOcean App Platform there are global and component level enviroment variables. Strapi applications in production need global variables to set the database connection, and can use component level variables for secrets storage. Add the following variables to the global environment table:
+In the DigitalOcean App Platform there are global and component level environment variables. Strapi applications in production need global variables to set the database connection, and can use component level variables for secrets storage. Add the following variables to the global environment table:
 
 | Variable name     | Value          |
 |-------------------|----------------|
@@ -214,9 +215,11 @@ The environmental variables for the development and managed database are handled
 
 When the above steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your app domain}/admin once the application is successfully deployed.
 
+<!--
 ## Optional Steps
 
 ### Connect to a storage service
  
 
 ### Switch to a managed database
+-->
