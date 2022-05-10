@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.1.8+ to v4.1.10 migration guide
 
-The Strapi v4.1.8+ to v4.1.10 migration guide upgrades versions of v4.1.8 and above to v4.1.10. This migration guide is needed only for users who experienced missing mime-types on their media when uploading media through the content-api. Related GitHub issue [#12761](https://github.com/strapi/strapi/issues/12761). The migration to 4.1.10 consits of 3 steps:
+The Strapi v4.1.8+ to v4.1.10 migration guide upgrades versions of v4.1.8 and above to v4.1.10. This migration guide is needed only for users who experienced missing MIME types on their media when uploading media through the Content API (see [GitHub issue #12761](https://github.com/strapi/strapi/issues/12761)). The migration to 4.1.10 consists of 3 steps:
 
 - Upgrading the application dependencies
 - Installing database migration script (optional)
