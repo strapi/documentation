@@ -20,7 +20,7 @@ Migration files should export 2 functions `up()` and `down()`.
 - The `up()` function is used when upgrading (e.g. adding a new table `my_new_table`).
 - The `down()`function is used to reverse the `up()` function when downgrading (ex: deleting `my_new_table`)
 
-Strapi will automatically detect migration files and run then, once, at the next startup, in alphabetical order. Every new file will be executed once.
+Strapi will automatically detect migration files and run them once at the next startup in alphabetical order. Every new file is executed once.
 
 Migrations are run before the database tables are synced with the content-types schemas.
 
