@@ -71,11 +71,11 @@ The Email plugin allows users to send email from the server or from external pro
 
 ### <img width="28" src="../assets/plugins/Documentation-swagger.png"> Documentation
 
- The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading plugins. The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation).  The Documentation plugin allows you to:
+ The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading "Plugins". The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation). The Documentation plugin enables:
 
-- open the API documentation,
-- regenerate the documentation,
-- restrict access to the documentation endpoint.
+- opening the API documentation,
+- regenerating the documentation,
+- restricting access to the documentation endpoint.
 
 The Documentation plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
 
