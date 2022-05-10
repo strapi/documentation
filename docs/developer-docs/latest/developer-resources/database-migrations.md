@@ -48,5 +48,5 @@ async function down(trx) {}
 module.exports = { up, down };
 ```
 
-3. Write the migration code inside the `up()` and `down()` functions.
+3. Fill in the template by adding actual migration code inside the `up()` and `down()` functions.
 `up()` and `down()` receive a [Knex instance](https://knexjs.org/) that can be used to run the database queries.
