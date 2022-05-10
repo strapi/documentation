@@ -47,7 +47,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 This step is only required if some files in your database have their MIME type set to `null` (see GitHub issue [#12761](https://github.com/strapi/strapi/issues/12761)).
 
-Based on the file names, the migration script will set the correct mime-type of each file in the database that currently don't have a mime-type. The script will automatically be executed by Strapi, only once, at the next launch of Strapi.
+To make sure Strapi can load the Media Library, the following migration script file must be added to `./database/migrations`. The script automatically sets MIME types for files that miss one, based on their filename. The script will be automatically executed only once at the next launch of Strapi.
 
 1. Create a file named `2022.05.10T00.00.00.fill-files-mime-type.js` in `database/migrations`
 2. Copy paste the following code in the created file:
