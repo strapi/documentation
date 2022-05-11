@@ -44,6 +44,12 @@ const plugins = [
   ],
   ['@vuepress/back-to-top', {}],
   [
+    '@vuepress/html-redirect',
+    {
+      duration: 0,
+    },
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'callout',
@@ -149,25 +155,29 @@ const plugins = [
       type: 'grid',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-top-left',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-top-right',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-bottom-left',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-bottom-right',
