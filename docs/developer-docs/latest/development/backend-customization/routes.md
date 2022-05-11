@@ -43,6 +43,9 @@ A core router file is a JavaScript file exporting the result of a call to `creat
 
 <br/>
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // path: ./src/api/[apiName]/routes/[routerName].js (e.g './src/api/restaurant/routes/restaurant.js')
 
@@ -66,9 +69,45 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')
+
+import { factories } from '@strapi/strapi'; 
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  prefix: '',
+  only: ['find', 'findOne'],
+  except: [],
+  config: {
+    find: {
+      auth: false,
+      policies: [],
+      middlewares: [],
+    },
+    findOne: {},
+    create: {},
+    update: {},
+    delete: {},
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
+
 <br />
 
 Generic implementation example:
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/restaurant.js
@@ -86,6 +125,33 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
   }
 });
 ```
+
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/restaurant.ts
+
+import { factories } from '@strapi/strapi'; 
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  only: ['find'],
+  config: {
+    find: {
+      auth: false
+      policies: [],
+      middlewares: [],
+    }
+  }
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/developer-docs/latest/development/backend-customization/controllers.md) without authentication.
 
@@ -105,6 +171,10 @@ Creating custom routers consists in creating a file that exports an array of obj
 Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
 
 ::: details Example of a custom router using URL parameters and regular expressions for routes
+
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.js
 
@@ -124,6 +194,32 @@ module.exports = {
 }
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
+
+export default {
+  routes: [
+    { // Path defined with a URL parameter
+      method: 'GET',
+      path: '/restaurants/:category/:id',
+      handler: 'Restaurant.findOneByCategory',
+    },
+    { // Path defined with a regular expression
+      method: 'GET',
+      path: '/restaurants/:region(\\d{2}|\\d{3})/:id', // Only match when the first parameter contains 2 or 3 digits.
+      handler: 'Restaurant.findOneByRegion',
+    }
+  ]
+}
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ## Configuration
@@ -140,6 +236,9 @@ Both [core routers](#configuring-core-routers) and [custom routers](#creating-cu
 :::: tabs card
 
 ::: tab Core router policy
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/restaurant.js
@@ -166,12 +265,49 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/restaurant.ts
+
+import { factories } from '@strapi/strapi';
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: {
+    find: {
+      policies: [
+        // point to a registered policy
+        'policy-name',
+
+        // point to a registered policy with some custom configuration
+        { name: 'policy-name', config: {} }, 
+        
+        // pass a policy implementation directly
+        (policyContext, config, { strapi }) => {
+          return true;
+        },
+      ]
+    }
+  }
+});
+```
+
+</code-block>
+</code-group>
+
+
 :::
 
 ::: tab Custom router policy
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.js
+
 
 module.exports = {
   routes: [
@@ -198,6 +334,44 @@ module.exports = {
 };
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
+
+
+export default {
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles/customRoute',
+      handler: 'controllerName.actionName',
+      config: {
+        policies: [
+          // point to a registered policy
+          'policy-name',
+
+          // point to a registered policy with some custom configuration
+          { name: 'policy-name', config: {} }, 
+
+          // pass a policy implementation directly
+          (policyContext, config, { strapi }) => {
+            return true;
+          },
+        ]
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+</code-group>
+
+
+
 :::
 
 ::::
@@ -212,6 +386,9 @@ module.exports = {
 :::: tabs card
 
 ::: tab Core router middleware
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/restaurant.js
@@ -238,9 +415,44 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/restaurant.ts
+
+import { factories } from '@strapi/strapi';
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: {
+    find: {
+      middlwares: [
+        // point to a registered middleware
+        'middleware-name', 
+
+        // point to a registered middleware with some custom configuration
+        { name: 'middleware-name', config: {} }, 
+
+        // pass a middleware implementation directly
+        (ctx, next) => {
+          return next();
+        },
+      ]
+    }
+  }
+});
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ::: tab Custom router middleware
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.js
@@ -270,6 +482,41 @@ module.exports = {
 };
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
+
+export default  {
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles/customRoute',
+      handler: 'controllerName.actionName',
+      config: {
+        middlewares: [
+          // point to a registered middleware
+          'middleware-name', 
+
+          // point to a registered middleware with some custom configuration
+          { name: 'middleware-name', config: {} }, 
+
+          // pass a middleware implementation directly
+          (ctx, next) => {
+            return next();
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ::::
@@ -283,6 +530,9 @@ In some scenarios, it can be useful to have a route publicly available and contr
 :::: tabs card
 
 ::: tab Core router with a public route
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/restaurant.js
@@ -298,9 +548,33 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 });
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/restaurant.ts
+
+import { factories } from '@strapi/strapi';
+
+export default  factories.createCoreRouter('api::restaurant.restaurant', {
+  config: {
+    find: {
+      auth: false
+    }
+  }
+});
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ::: tab Custom router with a public route
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/restaurant/routes/custom-restaurant.js
@@ -318,6 +592,30 @@ module.exports = {
   ],
 };
 ```
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
+
+export default  {
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles/customRoute',
+      handler: 'controllerName.actionName',
+      config: {
+        auth: false,
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+</code-group>
 
 :::
 

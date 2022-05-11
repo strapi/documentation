@@ -24,8 +24,6 @@ A new service can be implemented:
 
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
-
-
 <code-group>
 <code-block title="JAVASCRIPT">
 
@@ -73,9 +71,9 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 ```js
 // path: ./src/api/restaurant/services/restaurant.ts
 
-const { createCoreService } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; 
 
-export default createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom service
   async exampleService(...args) {
     let response = { okay: true }
@@ -109,8 +107,6 @@ export default createCoreService('api::restaurant.restaurant', ({ strapi }) =>  
 
 </code-block>
 </code-group>
-
-
 
 ::: strapi Entity Service API
 To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
@@ -162,7 +158,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 // path: ./src/api/email/services/email.ts
 
 
-const { createCoreService } = require('@strapi/strapi').factories;
+import { factories } from '@strapi/strapi'; //check with soup
 const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
 
 // Create reusable transporter object using SMTP transport.
@@ -174,9 +170,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
   send(from, to, subject, text) {
-    // Setup e-mail data.
+    // Setup e-mail data. 
     const options = {
       from,
       to,
@@ -193,9 +189,7 @@ export default createCoreService('api::restaurant.restaurant', ({ strapi }) => (
 </code-block>
 </code-group>
 
-
 The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
-
 
 <code-group>
 <code-block title=JAVASCRIPT>
@@ -222,7 +216,6 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 }));
 ```
 
-
 </code-block>
 
 <code-block title=TYPESCRIPT>
@@ -230,7 +223,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 ```js
 // path: ./src/api/user/controllers/user.ts
 
-export default createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
   async signup(ctx) {
     const { userData } = ctx.body;
@@ -403,6 +396,5 @@ strapi.service('plugin::pluginName.serviceName');
 ::: tip
 To list all the available services, run `yarn strapi services:list`.
 :::
-
 
 :::
