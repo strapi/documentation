@@ -415,7 +415,7 @@ module.exports = {
       name: 'your-app-name', // Your project name
       cwd: '/home/ubuntu/my-project', // Path to your project
       script: 'npm', // For this example we're using npm, could also be yarn
-      args: 'start', // Script to start the Strapi server. `start` by default
+      args: 'start', // Script to start the Strapi server, `start` by default
       env: {
         NODE_ENV: 'production',
         DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
