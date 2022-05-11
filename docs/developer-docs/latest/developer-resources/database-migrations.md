@@ -16,9 +16,9 @@ The feature is to be considered as unfinished and experimental.
 
 Migrations are run using JavaScript migration files stored in `./database/migrations`.
 
-Migration files should export 2 functions `up()` and `down()`.
+Migration files should export 2 functions `up()` and `down()`:
 - The `up()` function is used when upgrading (e.g. adding a new table `my_new_table`).
-- The `down()` function is used to reverse the `up()` function when downgrading (ex: deleting `my_new_table`)
+- The `down()` function is used to reverse the `up()` function when downgrading (e.g. deleting `my_new_table`).
 
 Strapi will automatically detect migration files and run them once at the next startup in alphabetical order. Every new file is executed once.
 
