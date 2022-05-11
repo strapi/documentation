@@ -89,7 +89,7 @@ module.exports = (plugin) => {
 
   plugin.policies[newPolicy] = (ctx) => {};
 
-  plugin.routes.push({
+  plugin.routes['content-api'].routes.push({
     method: 'GET',
     path: '/route-path',
     handler: 'controller.action',

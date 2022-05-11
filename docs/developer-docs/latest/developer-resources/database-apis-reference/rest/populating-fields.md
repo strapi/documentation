@@ -91,10 +91,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 If the users-permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. **If a role doesn't have access to a content-type it will not be populated.**
 :::
 
-:::note
-https://github.com/ljharb/qs
-:::
-
 #### Populate 1 level for all relations
 
 To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
