@@ -629,7 +629,7 @@ import cellFormatter from './components/cellFormatter';
 export default {
   bootstrap(app) {
 	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
-      const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
+			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
 
 			if (!isFieldLocalized) {
 			  return { displayedHeaders, layout };
