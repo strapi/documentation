@@ -20,9 +20,15 @@ To create a plugin, use Strapi CLI tools:
 2. Start the project with `cd myDevelopmentProject && strapi develop`.
 3. In a new terminal window, run `cd /path/to/myDevelopmentProject && strapi generate` to launch the interactive `strapi generate` CLI.
 4. Choose "plugin" from the list, press Enter, and give the plugin a name.
-5. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
-    ```js
-    // path: /path/to/myDevelopmentProject/config/plugins.js
+5. Choose either `JavaScript` or `TypeScript` for the plugin language.
+6. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./config/plugins.js
 
     module.exports = {
       // ...
@@ -32,12 +38,36 @@ To create a plugin, use Strapi CLI tools:
       },
       // ...
     }
-    ```
-    ::: caution 
-    The plugin name must be kebab-case.
-    Example: an-example-of-kebab-case
-    :::
-5. Run `strapi build` to build the plugin.
+```
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+ //path: ./config/plugins.ts
+
+    export default {
+      // ...
+      'my-plugin': {
+        enabled: true,
+        resolve: './src/plugins/my-plugin' // path to plugin folder
+      },
+      // ...
+    }
+
+
+```
+</code-block>
+
+</code-group>
+ 
+::: caution
+The plugin name must be kebab-case.
+    Example: an-example-of-kebab-case.
+:::
+
+7. For TypeScript applications, run `npm run install` or `yarn install` in the plugin directory.
+8. Run `yarn build` or `npm run build` to build the plugin.
 
 Plugins created this way are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
