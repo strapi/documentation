@@ -51,8 +51,8 @@ When a Strapi project is created with TypeScript enabled, a `dist` directory is 
 | TypeScript-specific directories and files | Purpose                                              |
 |-------------------------------------------|------------------------------------------------------|
 | `dist` directory                          | Used to compile the project JavaScript source code.  |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the server        |
-| `src/admin/tsconfig.json` file            | Manages TypeScript compilation for the admin panel   |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the server.       |
+| `src/admin/tsconfig.json` file            | Manages TypeScript compilation for the admin panel.  |
 
 Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `dist` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands:
 
