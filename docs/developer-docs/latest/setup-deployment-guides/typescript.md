@@ -12,7 +12,7 @@ This section is still a work in progress and will continue to be updated and imp
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new and existing projects running v4.2.0 and above. The core Developer Documentation contains code snippets in both JavaScript and TypeScript.
 
-## Creating a new TypeScript project
+## Create a new TypeScript project
 
 Create a Strapi project with Typescript support by using the `--ts` or `--typescript` flags with either the npm or yarn package manager.
 
@@ -23,29 +23,78 @@ Adding the `--quickstart` flag will create the project with an SQlite database.
 <code-group>
 
 <code-block title="NPM">
+
 ```sh
 npx create-strapi-app@beta my-app --ts
 #or
 npx create-strapi-app@beta my-app --typescript
 ```
+
 </code-block>
 
 <!-- <code-block title="YARN">
 ```sh
-[code goes here]
+yarn create-strapi-app@latest my-project --quickstart --ts
+
+# or
+
+yarn create-strapi-app@latest my-project --quickstart --typescript
 ```
 </code-block> -->
 
 </code-group>
 
-## Understanding TypeScript support
+## Understand TypeScript support
 
-When a Strapi project is created with TypeScript enabled, 2 `tsconfig.json` files are created (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)):
+When a Strapi project is created with TypeScript enabled, a `dist` directory is added at the project root and 2 `tsconfig.json` files are created (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-- `tsconfig.json` file at the root of the project, to manage TypeScript compilation for the server
-- `/src/admin/tsconfig.json` to manage TypeScript compilation for the admin
+| TypeScript-specific directories and files | Purpose                                              |
+|-------------------------------------------|------------------------------------------------------|
+| `dist` directory                          | Used to compile the project JavaScript source code.  |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the server        |
+| `src/admin/tsconfig.json` file            | Manages TypeScript compilation for the admin panel   |
 
-TypeScript-enabled projects also contain a `dist` directory, which is used to compile the project JavaScript source code.
+Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `dist` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands:
+
+<code-group>
+
+<code-block title="NPM">
+
+```sh
+npm run build
+npm run develop
+```
+
+</code-block>
+
+ <code-block title="YARN">
+
+```sh
+yarn build
+yarn develop
+```
+
+</code-block>
+
+</code-group>
+
+## TypeScript typings
+
+Something here and revise the title.
+
+## Develop a plugin using TypeScript
+
+<!-- 
+- link to normal plugin dev information
+- New: there is a typescript option in the "strapi generate plugin" that launches the interactive CLI
+- use the yarn build && yarn develop to build the admin and compile the JS version to the dist folder. 
+- >
+
+<!--- a `tsconfig.json` file at the root of the project, to manage TypeScript compilation for the server,
+
+- a `/src/admin/tsconfig.json` to manage TypeScript compilation for the admin panel. 
+
+TypeScript-enabled projects also contain a `dist` directory, which is used to compile the project JavaScript source code. -->
 
 <!-- 
 TODO: complete these sections
