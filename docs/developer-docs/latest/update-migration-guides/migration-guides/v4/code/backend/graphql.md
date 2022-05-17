@@ -208,7 +208,7 @@ module.exports = {
             type: nexus.nonNull('Boolean'),
 
             // Args definition
-            args: { ItemID: nexus.nonNull('ID'), email: nexus.nonNull('String)' },
+            args: { ItemID: nexus.nonNull('ID'), email: nexus.nonNull('String') },
 
             // Resolver definition
             resolve(parent, args, context) {
