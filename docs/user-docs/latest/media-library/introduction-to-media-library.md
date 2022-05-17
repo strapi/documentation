@@ -47,7 +47,7 @@ Click the search icon ![Search icon](../assets/icons/search.svg) on the right si
 
 ## Sorting assets
 
-Right above the list of folders and assets, on the left side of the interface, a **Sort by** drop-down list is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the drop-down list and select an option in the list to automatically display the sorted assets.
+Just above the list of folders and assets, on the left side of the interface, a **Sort by** drop-down list is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the drop-down list and select an option in the list to automatically display the sorted assets.
 
 ## Filtering assets
 
