@@ -84,7 +84,21 @@ Something here and revise the title.
 
 ## Develop a plugin using TypeScript
 
+New plugins can be generated following the [plugins development documentation](/developer-docs/latest/development/plugins-development.md). There are 2 important distinctions for TypeScript applications:
+
+1. After creating the plugin, run `yarn install` or `npm run install` in the plugin directory `src/admin/plugins/[my-plugin-name]` to install dependencies for the plugin.
+2. Run `yarn build` or `npm run build` in the plugin directory `src/admin/plugins/[my-plugin-name]` to build the admin panel including the plugin.
+
+It is not necessary to repeat the `yarn install` or `npm run install` command after the initial installation. The `yarn build` or `npm run build` commands are necessary to implement any plugin development that affects the admin panel.
+
 <!-- 
+
+::: caution 
+    The plugin name must be kebab-case.
+    Example: an-example-of-kebab-case
+    :::
+
+
 - link to normal plugin dev information
 - New: there is a typescript option in the "strapi generate plugin" that launches the interactive CLI
 - use the yarn build && yarn develop to build the admin and compile the JS version to the dist folder. 
@@ -95,9 +109,3 @@ Something here and revise the title.
 - a `/src/admin/tsconfig.json` to manage TypeScript compilation for the admin panel. 
 
 TypeScript-enabled projects also contain a `dist` directory, which is used to compile the project JavaScript source code. -->
-
-<!-- 
-TODO: complete these sections
-## Adding TypeScript to an existing project
-
-## Backend customization (routes, controllers, services) -->
