@@ -69,7 +69,7 @@ The plugin name must be kebab-case.
 7. For TypeScript applications, run `npm run install` or `yarn install` in the plugin directory.
 8. Run `yarn build` or `npm run build` to build the plugin.
 
-Plugins created this way are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Plugins created using the preceding directions are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 ## Adding features to a plugin
 
