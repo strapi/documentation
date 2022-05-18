@@ -61,7 +61,6 @@ Images can be cropped when editing the asset's details.
 
 To crop an image:
 
-<!-- TODO: fix icons -->
 1. Click on the edit ![Edit icon](../assets/icons/edit.svg) button for the asset to be cropped.
 2. In the window that pops up, click the crop button ![Crop icon](../assets/icons/crop.svg) to enter cropping mode.
 3. Crop the image using handles in the corners to resize the frame. The frame can also be moved by drag & drop.
