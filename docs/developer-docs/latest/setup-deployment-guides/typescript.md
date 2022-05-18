@@ -20,6 +20,8 @@ Create a Strapi project with Typescript support by using the `--ts` or `--typesc
 Adding the `--quickstart` flag will create the project with an SQlite database.
 :::
 
+<!-- UPDATE these code blocks for the stable release-->
+
 <code-group>
 
 <code-block title="NPM">
@@ -34,11 +36,11 @@ npx create-strapi-app@beta my-app --typescript
 
 <!-- <code-block title="YARN">
 ```sh
-yarn create-strapi-app@latest my-project --quickstart --ts
+yarn create-strapi-app@latest my-project --ts
 
 # or
 
-yarn create-strapi-app@latest my-project --quickstart --typescript
+yarn create-strapi-app@latest my-project --typescript
 ```
 </code-block> -->
 
@@ -46,15 +48,15 @@ yarn create-strapi-app@latest my-project --quickstart --typescript
 
 ## Understand TypeScript support
 
-When a Strapi project is created with TypeScript enabled, a `dist` directory is added at the project root and 2 `tsconfig.json` files are created (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+TypeScript-enabled Strapi applications have a directory `dist` at the project root and 2 `tsconfig.json` files (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-| TypeScript-specific directories and files | Purpose                                              |
-|-------------------------------------------|------------------------------------------------------|
-| `dist` directory                          | Used to compile the project JavaScript source code.  |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the server.       |
-| `src/admin/tsconfig.json` file            | Manages TypeScript compilation for the admin panel.  |
+| TypeScript-Specific directories and files | Purpose                                                     | Location         |
+|-------------------------------------------|-------------------------------------------------------------|------------------|
+| `dist` directory                          |  Location for compiling the project JavaScript source code. | application root |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the server.              | application root |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the admin panel.         | `./src/admin/`   |
 
-Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `dist` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands:
+Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands:
 
 <code-group>
 
@@ -78,7 +80,7 @@ yarn develop
 
 </code-group>
 
-## TypeScript typings
+## Use TypeScript typings
 
 Something here and revise the title.
 
@@ -86,10 +88,10 @@ Something here and revise the title.
 
 New plugins can be generated following the [plugins development documentation](/developer-docs/latest/development/plugins-development.md). There are 2 important distinctions for TypeScript applications:
 
-1. After creating the plugin, run `yarn install` or `npm run install` in the plugin directory `src/admin/plugins/[my-plugin-name]` to install dependencies for the plugin.
+1. After creating the plugin, run `yarn install` or `npm run install` in the plugin directory `src/admin/plugins/[my-plugin-name]` to install the dependencies for the plugin.
 2. Run `yarn build` or `npm run build` in the plugin directory `src/admin/plugins/[my-plugin-name]` to build the admin panel including the plugin.
 
-It is not necessary to repeat the `yarn install` or `npm run install` command after the initial installation. The `yarn build` or `npm run build` commands are necessary to implement any plugin development that affects the admin panel.
+It is not necessary to repeat the `yarn install` or `npm run install` command after the initial installation. The `yarn build` or `npm run build` commands is necessary to implement any plugin development that affects the admin panel.
 
 <!-- 
 
