@@ -8,9 +8,6 @@ canonicalUrl:
 
 # Adding assets
 
-<!-- TODO: review intro -->
-
-<!-- assets only added via Media Library -->
 The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) or the [Content Manager](/user-docs/latest/content-manager/writing-content.md#filling-up-fields) when managing a media field.
 
 <!-- TODO: improve/replace screenshot -->
