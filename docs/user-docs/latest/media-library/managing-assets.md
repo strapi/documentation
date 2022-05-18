@@ -41,20 +41,6 @@ To move an asset:
 Assets can also be moved to other folders from the main view of the Media Library (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md#moving-assets-to-a-folder)).
 :::
 
-## Deleting assets
-
-An individual asset can be deleted when editing its details.
-
-To delete an asset:
-
-1. Click on the edit ![Edit icon](../assets/icons/edit.svg) button for the asset to be deleted.
-2. In the window that pops up, click the delete button ![Delete icon](../assets/icons/delete.svg) in the control buttons bar above the asset's preview.
-3. Click **Confirm**.
-
-::: tip
-Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon ![Delete icon](../assets/icons/delete.svg) at the top of the window, below the filters and sorting options.
-:::
-
 ## Cropping images
 
 Images can be cropped when editing the asset's details.
@@ -68,3 +54,16 @@ To crop an image:
 <!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
 5. Click **Finish** to save changes to the file.
 
+## Deleting assets
+
+An individual asset can be deleted when editing its details.
+
+To delete an asset:
+
+1. Click on the edit ![Edit icon](../assets/icons/edit.svg) button for the asset to be deleted.
+2. In the window that pops up, click the delete button ![Delete icon](../assets/icons/delete.svg) in the control buttons bar above the asset's preview.
+3. Click **Confirm**.
+
+::: tip
+Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon ![Delete icon](../assets/icons/delete.svg) at the top of the window, below the filters and sorting options.
+:::

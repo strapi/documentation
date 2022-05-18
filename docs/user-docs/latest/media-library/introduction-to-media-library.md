@@ -43,9 +43,6 @@ A variety of media types and extensions are supported by the Media Library:
 Click the search icon ![Search icon](../assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets more quickly!
 :::
 
-## Sorting assets
-
-Just above the list of folders and assets, on the left side of the interface, a **Sort by** drop-down list is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the drop-down list and select an option in the list to automatically display the sorted assets.
 
 ## Filtering assets
 
@@ -65,3 +62,7 @@ To set a new filter:
 ::: note
 When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](../assets/icons/clear.svg).
 :::
+
+## Sorting assets
+
+Just above the list of folders and assets, on the left side of the interface, a **Sort by** drop-down list is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the drop-down list and select an option in the list to automatically display the sorted assets.
