@@ -49,7 +49,7 @@ Just above the list of folders and assets, on the left side of the interface, a 
 
 ## Filtering assets
 
-Right above the list of folders and assets, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
+Right above the list of folders and assets, on the left side of the interface, a **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
 
 <!-- TODO: improve/replace screenshot -->
 ![Filters in the Media Library](../assets/media-library/media-library_filters.png)

@@ -8,7 +8,7 @@ canonicalUrl:
 
 # Managing individual assets
 
-The Media Library allows to manage individual assets, which includes modifying the asset's file details and location, downloading and copying the link to the asset file, and deleting the asset. Image files can also be cropped. To manage an asset, click on its Rdit ![Edit icon](../assets/icons/edit.svg) button.
+The Media Library allows managing assets, which includes modifying the asset's file details and location, downloading and copying the link to the asset file, and deleting the asset. Image files can also be cropped. To manage an asset, click on its Rdit ![Edit icon](../assets/icons/edit.svg) button.
 
 ## Editing assets
 
@@ -17,7 +17,7 @@ Clicking on the edit ![Edit icon](../assets/icons/edit.svg) button of an asset o
 <!-- TODO: improve/replace screenshot -->
 ![Annotated asset details window screenshot](../assets/media-library/media-library_asset-details.png)
 
-- On the left, above the preview of the asset, control buttons (1) allow to perform various actions:
+- On the left, above the preview of the asset, control buttons (1) allow performing various actions:
   - click on the delete button ![Delete icon](../assets/icons/delete.svg) to delete the asset,
   - click on the download button ![Download icon](../assets/icons/download.svg) to download the asset,
   - click on the copy link button ![Copy link icon](../assets/icons/link.svg) to copy the asset's link to the clipboard,
