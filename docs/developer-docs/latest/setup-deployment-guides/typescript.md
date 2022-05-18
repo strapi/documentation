@@ -17,7 +17,7 @@ TypeScript adds an additional type system layer above JavaScript, which means th
 Create a Strapi project with Typescript support by using the `--ts` or `--typescript` flags with either the npm or yarn package manager.
 
 ::: tip
-Adding the `--quickstart` flag will create the project with an SQlite database.
+Adding the `--quickstart` flag in addition to the `--ts` flag will create a TypeScript project with an SQLite database.
 :::
 
 <!-- UPDATE these code blocks for the stable release-->
@@ -56,7 +56,7 @@ TypeScript-enabled Strapi applications have a directory `dist` at the project ro
 | `tsconfig.json` file                      | Manages TypeScript compilation for the server.              | application root |
 | `tsconfig.json` file                      | Manages TypeScript compilation for the admin panel.         | `./src/admin/`   |
 
-Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands:
+Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands in the application root directory:
 
 <code-group>
 
