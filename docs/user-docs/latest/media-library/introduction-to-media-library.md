@@ -25,24 +25,9 @@ From the Media Library, it is possible to:
 - make a textual search (5) to find a specific asset or folder,
 - view, navigate through, and manage folders (6),
 
-<!-- TODO: use in details block or re-move to intro -->
-::: details Supported file types for Media Library assets
-A variety of media types and extensions are supported by the Media Library:
-
-<!-- ? is this list complete & up-to-date ? -->
-
-| Media type | Supported extensions                                          |
-|------------|---------------------------------------------------------------|
-| Image      | - JPEG<br>- PNG<br>- GIF<br>- SVG<br>- TIFF<br>- ICO<br>- DVU |
-| Video      | - MPEG<br>- MP4<br>- MOV (Quicktime)<br>- WMV<br>- AVI<br>- FLV     |
-| Audio      | - MP3<br>- WAV<br>- OGG                                       |
-| File       | - CSV<br>- ZIP<br>- PDF<br>- XLS, XLSX<br>- JSON                  |
-:::
-
 ::: tip
 Click the search icon ![Search icon](../assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets more quickly!
 :::
-
 
 ## Filtering assets
 
