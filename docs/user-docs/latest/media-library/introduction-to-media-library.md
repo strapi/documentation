@@ -23,7 +23,7 @@ From the Media Library, it is possible to:
 - create a new folder (2) (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)),
 - sort the assets and folders (3) or set filters (4) to find assets more easily,
 - make a textual search (5) to find a specific asset or folder,
-- view, navigate through, and manage folders (6),
+- and view, navigate through, and manage folders (6).
 
 ::: tip
 Click the search icon ![Search icon](../assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets more quickly!
