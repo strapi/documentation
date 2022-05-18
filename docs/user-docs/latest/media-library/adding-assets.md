@@ -23,6 +23,17 @@ To add new assets to the media library:
 4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
 5. Click on **Upload assets to the library**.
 
+A variety of media types and extensions are supported by the Media Library:
+
+<!-- ? is this list complete & up-to-date ? -->
+
+| Media type | Supported extensions                                            |
+| ---------- | --------------------------------------------------------------- |
+| Image      | - JPEG<br>- PNG<br>- GIF<br>- SVG<br>- TIFF<br>- ICO<br>- DVU   |
+| Video      | - MPEG<br>- MP4<br>- MOV (Quicktime)<br>- WMV<br>- AVI<br>- FLV |
+| Audio      | - MP3<br>- WAV<br>- OGG                                         |
+| File       | - CSV<br>- ZIP<br>- PDF<br>- XLS, XLSX<br>- JSON                |
+
 <!-- This should not be documented, but fixed 😅  -->
 <!-- ::: caution Drag'n'drop bug
 There currently is a bug preventing the use of the drag & drop feature on Firefox and Chrome. Our team is currently working on solving this issue.
