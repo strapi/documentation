@@ -24,8 +24,6 @@ From the Media Library, it is possible to:
 - sort the assets and folders (3) or set filters (4) to find assets more easily,
 - make a textual search (5) to find a specific asset or folder,
 - view, navigate through, and manage folders (6),
-- view the list of available assets (7),
-- select how many assets to display per page (8), and browse other pages of assets (9).
 
 <!-- TODO: use in details block or re-move to intro -->
 ::: details Supported file types for Media Library assets
