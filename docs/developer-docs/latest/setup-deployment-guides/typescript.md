@@ -82,7 +82,7 @@ yarn develop
 
 ## Use TypeScript typings
 
-Something here and revise the title.
+<!--Something here -->
 
 ## Develop a plugin using TypeScript
 
