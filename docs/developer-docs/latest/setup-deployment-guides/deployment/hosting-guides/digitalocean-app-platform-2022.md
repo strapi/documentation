@@ -217,7 +217,7 @@ It is possible to copy the secrets from the local `.env` file or to generate new
 
 ## Deploy and access a Strapi application
 
-When the preceeding steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your App domain}/admin once the application is successfully deployed.
+When the preceeding steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
 
 ## Add a managed database
 
