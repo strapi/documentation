@@ -213,7 +213,7 @@ In the DigitalOcean App Platform there are App and Component-level environment v
 It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [Openssl](https://www.openssl.org/).
 :::
 
-### Deploy and access a Strapi application
+## Deploy and access a Strapi application
 
 When the preceeding steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your App domain}/admin once the application is successfully deployed.
 
@@ -248,7 +248,7 @@ yarn add pg-connection-string
 
 </code-group>
 
-To switch to a managed database change the `config/env/production/database` file to be able to parse the `DATABASE_URL` like the example below.
+To switch to a managed database change the `config/env/production/database` file to be able to parse the `DATABASE_URL` like the following example.
 
 <code-group>
 
@@ -287,7 +287,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path:config/env/production/database.ts
+//path: ./config/env/production/database.ts
 
 const parse = require("pg-connection-string").parse;
 
@@ -322,9 +322,10 @@ export default ({ env }) => ({
 1. Create a managed database.
 2. Attach the managed database to the App.
 3. Delete all database environment variables from the App.
-4. Check the `.yaml` file for any remaining database environment variables. If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
+4. Check the `.yaml` file for any remaining database environment variables. 
+5. (optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 
-### Deploy the application to on DigitalOcean
+### Deploy the application to DigitalOcean
 
 
 ::: caution
