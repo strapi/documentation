@@ -128,7 +128,7 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-### Add Postgres dependencies
+### Add PostgreSQL dependencies
 
 Connecting a PostgreSQL database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
@@ -169,7 +169,7 @@ On the DigitalOcean website click on the **Create** button and select *Apps*.  N
 3. chose whether or not to "Autodeploy" when an update is pushed to the GitHub repository,
 4. click the **Next** button.
 
-### Connect a web app to a database
+### Connect an App to a database
 
 On the next screen:
 
@@ -215,7 +215,7 @@ It is possible to copy the secrets from the local `.env` file or to generate new
 
 ### Deploy and access a Strapi application
 
-When the above steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your app domain}/admin once the application is successfully deployed.
+When the preceeding steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at {your App domain}/admin once the application is successfully deployed.
 
 ## Add a managed database
 
@@ -320,8 +320,8 @@ export default ({ env }) => ({
 ### Modify settings on DigitalOcean
 
 1. Create a managed database.
-2. Attached the managed database to the app.
-3. Delete all database environment variables from the app.
+2. Attach the managed database to the App.
+3. Delete all database environment variables from the App.
 4. Check the `.yaml` file for any remaining database environment variables. If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 
 ### Deploy the application to on DigitalOcean
