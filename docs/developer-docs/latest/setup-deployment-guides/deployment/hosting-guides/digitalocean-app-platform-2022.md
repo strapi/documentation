@@ -223,7 +223,7 @@ When the preceeding steps are completed DigitalOcean should automatically try to
 
 DigitalOcean managed databases are a production-scale database solution for a deployed Strapi application. Switching from a development database to a managed database requires modifying the Strapi application and modifying the settings on DigitalOcean.
 
-- removing the database environment variables,
+- removing the development database and database environment variables,
 - installing the `pg-connection-string` dependency,
 - changing the production `database` file,
 - creating and attaching the database in the DigitalOcean platform.
@@ -232,7 +232,7 @@ DigitalOcean managed databases are a production-scale database solution for a de
 
 When a managed database is attached to a Strapi application, the connection parameters are passed directly from the database to the application `.yaml` file. This requires a modification to the `config/env/production/database` file and the addition of the `pg-connection-string` dependency.
 
-To add the `pg-connection-string` dependency navigate to the project directory and run the code snippet below in a terminal.
+To add the `pg-connection-string` dependency navigate to the project directory and run the following code snippet in a terminal:
 
 <code-group>
 
@@ -280,7 +280,7 @@ module.exports = ({ env }) => ({
       },
       debug: false,
     },
-  });
+});
 
 ```
 
@@ -324,7 +324,7 @@ export default ({ env }) => ({
 1. Create a managed database.
 2. Attach the managed database to the App.
 3. Delete all database environment variables from the App.
-4. Check the `.yaml` file for any remaining database environment variables. 
+4. Check the `.yaml` file for any remaining database environment variables.
 5. (optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 
 ### Deploy the application to DigitalOcean
