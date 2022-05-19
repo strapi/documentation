@@ -32,14 +32,14 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 
 ### Configure the database
 
-In order to connect the Strapi application in production to a hosted development database, the database credentials must be specified. Copy the following code snippet into `env/production/database`.
+In order to connect the Strapi application in production to a hosted development database, the database credentials must be specified. Copy the following code snippet into `./config/env/production/database`.
 
 <code-group>
 
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-// path:config/env/production/database.js
+// path: ./config/env/production/database.js
 
 module.exports = ({ env }) => ({
   connection: {
@@ -65,7 +65,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path:config/env/production/database.ts
+//path: ./config/env/production/database.ts
 
 export default ({ env }) => ({
   connection: {
@@ -91,12 +91,14 @@ export default ({ env }) => ({
 
 ### Configure the server
 
+The `server.js` config file (or `server.ts` for a TypeScript project) for a deployed project requires the `url` property instead of the `host` and `port` properties that are used in the local development environment. The `APP_URL` variable is then specified as an [environment variable](#add-environment-variables) in the DigitalOcean App Platform. Add the following code snippet to `./config/env/production/server`
+
 <code-group>
 
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-//path:config/env/production/server.js
+//path: ./config/env/production/server.js
 
 module.exports = ({ env }) => ({
     proxy: true,
@@ -113,7 +115,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path:config/env/production/server.ts
+//path: ./config/env/production/server.ts
 
 export default ({ env }) => ({
     proxy: true,
