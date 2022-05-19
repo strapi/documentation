@@ -137,13 +137,13 @@ Connecting a PostgreSQL database to Strapi requires a set of Node modules contai
 <code-group>
 
 <code-block title="NPM">
-```bash
+```sh
 npm install pg
 ```
 </code-block>
 
 <code-block title="YARN">
-```bash
+```sh
 yarn add pg
 ```
 </code-block>
@@ -155,7 +155,7 @@ yarn add pg
 Save the Strapi application locally then, in a terminal, run :
 
 ```
-jsx
+sh
 
 git add .
 git commit -m "commit message"
@@ -237,13 +237,13 @@ To add the `pg-connection-string` dependency navigate to the project directory a
 <code-group>
 
 <code-block title="NPM">
-```bash
+```sh
 npm install pg-connection-string --save <!-- needed?-->
 ```
 </code-block>
 
 <code-block title="YARN">
-```bash
+```sh
 yarn add pg-connection-string
 ```
 </code-block>
@@ -328,7 +328,6 @@ export default ({ env }) => ({
 5. (optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 
 ### Deploy the application to DigitalOcean
-
 
 ::: caution
 The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. Check the .yaml file to confirm the database settings are set at the top of the file and duplicated if using a managed database.
