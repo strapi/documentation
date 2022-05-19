@@ -132,7 +132,7 @@ export default ({ env }) => ({
 
 ### Add PostgreSQL dependencies
 
-Connecting a PostgreSQL database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
+Connecting a PostgreSQL database to Strapi requires a set of Node modules contained in the [`pg` package](https://www.npmjs.com/package/pg). Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
 <code-group>
 
