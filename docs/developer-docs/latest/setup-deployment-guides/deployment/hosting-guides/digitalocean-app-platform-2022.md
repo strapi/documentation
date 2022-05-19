@@ -6,29 +6,29 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Deploy to the DigitalOcean App Platform
 
-The purpose of this guide is to allow users to deploy Strapi applications on the DigitalOcean App Platform. While both Strapi and DigitalOcean App Platform can work with multiple types of databases the focus is on connecting to a PostgreSQL development database so users can test their application in a deployed environment. Future additions to the guide will address different database options. This guide does not cover migrating local database content to a production database or connecting front-end applications to the DigitalOcean App Platform.
+The purpose of this guide is to allow users to deploy Strapi applications on the DigitalOcean App Platform. While both Strapi and DigitalOcean App Platform can work with multiple types of databases the focus is on connecting to a PostgreSQL development database so users can test their application in a deployed environment. Information on [migrating local database content to a production database](https://docs.digitalocean.com/products/databases/postgresql/how-to/import-databases/) and other deployment topics are provided in the [DigitalOcean documentation](https://docs.digitalocean.com/).
 
 ::: caution
-Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please open an issue on GitHub.
+Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues).
 :::
 
-## Prerequisites
+## Prepare
 
 Prior to starting the deployment process each user will need:
 
-- a DigitalOcean account ([referral link](https://try.digitalocean.com/strapi/)),
+- a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join),
 - [Git version control.](https://docs.github.com/en/get-started/quickstart/set-up-git)
 
-The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported. The Strapi referral link for DigitalOcean provides \$100 in credits. Git version control must be used locally, in order to store an application in a remote repository such as GitHub. Follow the details below to setup Git for the project.
+Git version control is necessary to efficiently add and edit a Strapi application in a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
 
 ## Setup a Strapi project for deployment
 
 Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
 1. [Create a new Strapi application using the quick start flag](/developer-docs/latest/getting-started/quick-start.md) or navigate to the root directory of an existing Strapi application.
-2. In the project `config` directory create the sub-directory `config/env/production`
-3. Create `database.js` and `server.js` files (`.ts` for TypeScript projects)
+2. In the project `config` directory create the sub-directory `config/env/production`.
+3. Create `database.js` and `server.js` files (`.ts` for TypeScript projects).
 
 ### Configure the database
 
@@ -130,7 +130,7 @@ export default ({ env }) => ({
 
 ### Add Postgres dependencies
 
-Connecting a Postgres database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
+Connecting a PostgreSQL database to Strapi requires a set of Node modules contained in the `pg` package. Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
 
 <code-group>
 
