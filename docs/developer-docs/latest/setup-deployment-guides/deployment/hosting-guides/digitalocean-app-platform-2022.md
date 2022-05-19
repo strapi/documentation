@@ -179,9 +179,11 @@ On the next screen:
 4. Click the **Create and attach** button.
 5. On the next screen click the **Next** button to set the environment variables.
 
-### Environmental variables
+### Add environment variables
 
-In the DigitalOcean App Platform there are global and component level environment variables. Strapi applications in production need global variables to set the database connection, and can use component level variables for secrets storage. Add the following variables to the global environment table:
+In the DigitalOcean App Platform there are App and Component-level environment variables. Strapi applications in production need App-level variables to set the database connection, and can use either Component or App-level variables for secrets storage. The following procedure is to add the database variables at the App level and store the Strapi secrets at the Component level.
+
+1. Add the following variables to the global environment table:
 
 | Variable name     | Value          |
 |-------------------|----------------|
@@ -193,8 +195,10 @@ In the DigitalOcean App Platform there are global and component level environmen
 | DATABASE_PASSWORD | ${db.PASSWORD} |
 | NODE_ENV          | production     |
 
-Click **Save**.
-At the top of the *Settings* menu select your Strapi application component. Scroll down to the Environment variables and click **edit** on the far right of the menu. The secrets for a Strapi application are set in the component settings environment variables. In your local application these secrets are stored in the `.env` file by default. Security is enhanced if different keys are generated for different environments. Add the following secrets and keys to the component environment variables table:
+2. Click **Save**.
+3. At the top of the *Settings* menu select your Strapi application component.
+4. Scroll down to the *Environment Variables* and click **edit**.
+5. Add the following key-value pairs to the component environment variables table:
 
 | Variable name    | value                               |
 |------------------|-------------------------------------|
@@ -203,7 +207,11 @@ At the top of the *Settings* menu select your Strapi application component. Scro
 | ADMIN_JWT_SECRET | "unique user-generated secret here" |
 | JWT_SECRET       | "unique user-generated secret here" |
 
-Click **Save**.
+6. Click **Save**.
+
+::: note
+It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [Openssl](https://www.openssl.org/).
+:::
 
 ### Deploy and access a Strapi application
 
