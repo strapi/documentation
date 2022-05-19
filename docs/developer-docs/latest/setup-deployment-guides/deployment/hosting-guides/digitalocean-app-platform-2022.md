@@ -19,6 +19,7 @@ Prior to starting the deployment process each user will need:
 - a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join),
 - [Git version control.](https://docs.github.com/en/get-started/quickstart/set-up-git)
+- an existing Strapi application
 
 Git version control is necessary to efficiently add and edit a Strapi application in a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
 
@@ -26,9 +27,10 @@ Git version control is necessary to efficiently add and edit a Strapi applicatio
 
 Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
-1. [Create a new Strapi application using the quick start flag](/developer-docs/latest/getting-started/quick-start.md) or navigate to the root directory of an existing Strapi application.
-2. In the project `config` directory create the sub-directory `config/env/production`.
-3. Create `database.js` and `server.js` files (`.ts` for TypeScript projects).
+### Add a production configuration environment
+
+In the project `config` directory create the sub-directory `config/env/production`.
+Create `database.js` and `server.js` files (`.ts` for TypeScript projects).
 
 ### Configure the database
 
@@ -166,10 +168,10 @@ git push
 
 On the DigitalOcean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to the correct repository. Next:
 
-1. select the branch,
-2. select the source directory (optional),
-3. chose whether or not to "Autodeploy" when an update is pushed to the GitHub repository,
-4. click the **Next** button.
+1. Select the branch.
+2. (Optional) select the source directory.
+3. Choose whether or not to "Autodeploy" when an update is pushed to the GitHub repository.
+4. Click the **Next** button.
 
 ### Connect an App to a database
 
