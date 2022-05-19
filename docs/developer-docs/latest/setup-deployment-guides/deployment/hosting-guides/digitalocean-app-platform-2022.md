@@ -175,7 +175,7 @@ On the DigitalOcean website click on the **Create** button and select *Apps*.  N
 
 ### Connect an App to a database
 
-On the next screen:
+On the DigitalOcean App Platform there is an option between a development or a managed (production) database. On the following screen :
 
 1. click **add resource**,
 2. select database, and click **Add**,
@@ -219,7 +219,11 @@ It is possible to copy the secrets from the local `.env` file or to generate new
 
 ## Deploy and access a Strapi application
 
-When the preceding steps are completed DigitalOcean should automatically try to build and deploy the application. If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
+When the preceding steps are completed DigitalOcean should automatically try to build and deploy the application. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
+
+::: tip
+If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*.
+:::
 
 ## Add a managed database
 
