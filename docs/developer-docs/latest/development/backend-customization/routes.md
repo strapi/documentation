@@ -105,19 +105,15 @@ Creating custom routers consists in creating a file that exports an array of obj
 Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
 
 ::: caution
-
-Routes files are loaded in alphabetical order, keep that in mind if you plan to add custom routes that could conflict with core routes.
-
-In the example below, the custom routes would never be hit if the name of their file comes after the one exporting core routes.
-
-An easy solution for this problem would be to prefix the name of your routes files to enforce the expected order (e.g.: `01-custom-routes.js` and `02-core-routes.js`).
-
+Routes files are loaded in alphabetical order. To load custom routes before core routes, make sure to name custom routes appropriately (e.g. `01-custom-routes.js` and `02-core-routes.js`).
 :::
 
 ::: details Example of a custom router using URL parameters and regular expressions for routes
 
+In the following example, the custom routes file name is prefixed with `01-` to make sure the route is reached before the core routes.
+
 ```js
-// path: ./src/api/restaurant/routes/custom-restaurant.js
+// path: ./src/api/restaurant/routes/01-custom-restaurant.js
 
 module.exports = {
   routes: [
