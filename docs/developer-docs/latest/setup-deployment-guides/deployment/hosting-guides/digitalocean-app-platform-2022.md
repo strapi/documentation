@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 The purpose of this guide is to allow users to deploy Strapi applications on the DigitalOcean App Platform. While both Strapi and DigitalOcean App Platform can work with multiple types of databases the focus is on connecting to a PostgreSQL development database so users can test their application in a deployed environment. Information on [migrating local database content to a production database](https://docs.digitalocean.com/products/databases/postgresql/how-to/import-databases/) and other deployment topics are provided in the [DigitalOcean documentation](https://docs.digitalocean.com/).
 
 ::: caution
-Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues).
+Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues) or [submit a pull request](https://github.com/strapi/documentation/pulls) to improve the documentation.
 :::
 
 ## Prepare
@@ -21,7 +21,7 @@ Prior to starting the deployment process each user needs:
 - [Git version control.](https://docs.github.com/en/get-started/quickstart/set-up-git)
 - an existing Strapi application
 
-Git version control is necessary to efficiently add and edit a Strapi application in a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
+Git version control is necessary to efficiently add a Strapi application to a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
 
 ## Setup a Strapi project for deployment
 
