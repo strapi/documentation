@@ -14,7 +14,7 @@ Strapi maintains deployment guides to assist users in deploying projects. Since 
 
 ## Prepare
 
-Prior to starting the deployment process each user will need:
+Prior to starting the deployment process each user needs:
 
 - a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join),
@@ -85,7 +85,6 @@ export default ({ env }) => ({
     debug: false,
   },
 });
-
 ```
 
 </code-block>
@@ -108,8 +107,7 @@ module.exports = ({ env }) => ({
     app: { 
       keys: env.array('APP_KEYS')
     },
-  })
-
+});
 ```
 
 </code-block>
@@ -125,8 +123,7 @@ export default ({ env }) => ({
     app: { 
       keys: env.array('APP_KEYS')
     },
-  })
-
+});
 ```
 
 </code-block>
@@ -152,18 +149,16 @@ yarn add pg
 
 </code-group>
 
-### Committing the project to a remote repository
+### Commit the project to a remote repository
 
-Save the Strapi application locally then, in a terminal, run :
+Save the Strapi application locally then, in a terminal, run:
 
-```
-sh
-
+```sh
 git add .
 git commit -m "commit message"
 git push
-
 ```
+
 ## Create a DigitalOcean App
 
 On the DigitalOcean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to the correct repository. Next:
@@ -175,7 +170,7 @@ On the DigitalOcean website click on the **Create** button and select *Apps*.  N
 
 ### Connect an App to a database
 
-On the DigitalOcean App Platform there is an option between a development or a managed (production) database. On the following screen :
+On the DigitalOcean App Platform there is an option between a development or a managed (production) database. On the following screen:
 
 1. click **add resource**,
 2. select database, and click **Add**,
@@ -217,7 +212,7 @@ In the DigitalOcean App Platform there are App and Component-level environment v
 It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [Openssl](https://www.openssl.org/).
 :::
 
-## Deploy and access a Strapi application
+## Deploy and access a Strapi application <!--revise this section-->
 
 When the preceding steps are completed DigitalOcean should automatically try to build and deploy the application. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
 
@@ -318,7 +313,7 @@ export default ({ env }) => ({
       },
       debug: false,
     },
-  });
+});
 
 ```
 
