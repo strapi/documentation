@@ -267,20 +267,20 @@ const { host, port, database, user, password } = parse(
 );
 
 module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
     connection: {
-      client: 'postgres',
-      cconnection: {
-        host,
-        port,
-        database,
-        user,
-        password,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+      host,
+      port,
+      database,
+      user,
+      password,
+      ssl: {
+        rejectUnauthorized: false,
       },
-      debug: false,
     },
+      debug: false,
+  },
 });
 
 ```
@@ -299,20 +299,20 @@ const { host, port, database, user, password } = parse(
 );
 
 export default ({ env }) => ({
+  connection: {
+    client: 'postgres',
     connection: {
-      client: 'postgres',
-      connection: {
-        host,
-        port,
-        database,
-        user,
-        password,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+      host,
+      port,
+      database,
+      user,
+      password,
+      ssl: {
+        rejectUnauthorized: false,
       },
-      debug: false,
     },
+      debug: false,
+  },
 });
 
 ```
