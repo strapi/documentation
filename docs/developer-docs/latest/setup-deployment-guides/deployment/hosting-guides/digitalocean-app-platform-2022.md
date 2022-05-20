@@ -301,7 +301,7 @@ const { host, port, database, user, password } = parse(
 export default ({ env }) => ({
     connection: {
       client: 'postgres',
-      cconnection: {
+      connection: {
         host,
         port,
         database,
