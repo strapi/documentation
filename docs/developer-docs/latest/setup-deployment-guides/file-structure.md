@@ -110,13 +110,14 @@ The default structure of a Strapi project created without the starter CLI depend
 :::
 
 ::: tab TypeScript-based projects
+
 <pre>
   <code>
 . <span class="token comment"># root of the application</span>
 
-├──── .cache # files used to build the admin panel
+├──── .cache <span class="token comment"># files used to build the admin panel</span>
 ├──── .tmp
-├──── config # API configurations
+├──── config <span class="token comment"># API configurations</span>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.ts</a>
 │     ├  <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html">admin.ts</a>
 │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.js</a>
@@ -126,9 +127,9 @@ The default structure of a Strapi project created without the starter CLI depend
 │     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.ts</a>
 ├──── database
 │     └──── migrations
-├──── dist # build of the backend
-│     └──── build # build of the admin panel
-├──── node_modules # npm packages used by the project
+├──── dist <span class="token comment"># build of the backend</span>
+│     └──── build <span class="token comment"># build of the admin panel</span>
+├──── node_modules # <span class="token comment">npm packages used by the project</span>
 ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
 │     └──── uploads
 ├──── src
@@ -136,7 +137,7 @@ The default structure of a Strapi project created without the starter CLI depend
 │           ├──── <a href="/developer-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span>
 │     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.example.tsx</a>
 │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
-│     ├──── api # business logic of the project split into subfolders per API
+│     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span>
 │     │     └──── (api-name)
 │     │          <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
 │     │           │     └──── (content-type-name)
@@ -177,10 +178,10 @@ The default structure of a Strapi project created without the starter CLI depend
 │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├─── policies
-│     └ index.ts # include register(), bootstrap() and destroy() functions
+│     └ index.ts <span class="token comment"># include register(), bootstrap() and destroy() functions</span>
 ├ .env
-├ tsconfig-admin.json # NOTE: Location and name might change
-├ tsconfig-server.json # NOTE: Location and name might change
+├ tsconfig-admin.json <span class="token comment"># NOTE: Location and name might change</span>
+├ tsconfig-server.json <span class="token comment"># NOTE: Location and name might change</span>
 └ package.json
 
   </code>
