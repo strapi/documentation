@@ -62,7 +62,7 @@ To create a plugin, use Strapi CLI tools:
 </code-group>
  
 ::: caution
-The plugin name must be kebab-case.
+The plugin name must be kebab-case (e.g. my-plugin-name).
     Example: an-example-of-kebab-case.
 :::
 
