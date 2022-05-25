@@ -63,7 +63,6 @@ To create a plugin, use Strapi CLI tools:
  
 ::: caution
 The plugin name must be kebab-case (e.g. my-plugin-name).
-    Example: an-example-of-kebab-case.
 :::
 
 7. For TypeScript applications, run `npm run install` or `yarn install` in the plugin directory.
