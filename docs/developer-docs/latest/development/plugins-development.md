@@ -6,20 +6,19 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/plugins-d
 
 # Plugins development
 
-Strapi allows you to create local plugins that work exactly like the external ones installed with npm or through the Marketplace.
+Strapi allows the development of local plugins that work exactly like the external plugins available from the [Marketplace](). 
 
 :::strapi Extending plugins
 If you would rather extend an existing plugin than create a new one, see the [Plugins extension](/developer-docs/latest/development/plugins-extension.md) documentation.
 :::
 
-## Creating a plugin
+## Create a plugin
 
-To create a plugin, use Strapi CLI tools:
+Strapi provides a [command line interface (CLI)](/developer-docs/latest/developer-resources/cli/CLI.md) for creating plugins. To create a plugin:
 
-1. (_Optional_) If you don't already have an existing project, create a new development project with `strapi new myDevelopmentProject`.
-2. Start the project with `cd myDevelopmentProject && strapi develop`.
-3. In a new terminal window, run `cd /path/to/myDevelopmentProject && strapi generate` to launch the interactive `strapi generate` CLI.
-4. Choose "plugin" from the list, press Enter, and give the plugin a name.
+1. Navigate to the root of a Strapi project.
+2. Run `yarn strapi generate` or `npm run strapi generate` in a terminal window to start the interactive `Strapi generate` CLI.
+4. Choose "plugin" from the list, press Enter, and give the plugin a name in kebab-case (e.g. my-plugin-name)
 5. Choose either `JavaScript` or `TypeScript` for the plugin language.
 6. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
 
@@ -60,19 +59,15 @@ To create a plugin, use Strapi CLI tools:
 </code-block>
 
 </code-group>
- 
-::: caution
-The plugin name must be kebab-case (e.g. my-plugin-name).
-:::
 
-7. For TypeScript applications, run `npm run install` or `yarn install` in the plugin directory.
+7. (*TypeScript-specific*) Run `npm run install` or `yarn install` in the newly-created plugin directory.
 8. Run `yarn build` or `npm run build` to build the plugin.
 
-Plugins created using the preceding directions are located in the `plugins` folder of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Plugins created using the preceding directions are located in the `plugins` directory of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-## Adding features to a plugin
+## Add features to a plugin
 
-Strapi provides programmatic APIs for your plugin to hook into some of Strapi's features.
+Strapi provides programmatic APIs for plugins to hook into some of Strapi's features.
 
 Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
   - `strapi-server.js` for the Server (see [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)),
