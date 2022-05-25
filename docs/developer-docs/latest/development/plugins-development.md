@@ -44,7 +44,7 @@ To create a plugin, use Strapi CLI tools:
 <code-block title="TYPESCRIPT">
 
 ```js
- //path: ./config/plugins.ts
+ // path: ./config/plugins.ts
 
     export default {
       // ...
