@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 # TypeScript support
 
 ::: callout 🚧  TypeScript documentation
-This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
+This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new and existing projects running v4.2.0 and above. The core Developer Documentation contains code snippets in both JavaScript and TypeScript.
@@ -50,11 +50,12 @@ yarn create-strapi-app@latest my-project --typescript
 
 TypeScript-enabled Strapi applications have a `dist` directory at the project root and 2 `tsconfig.json` files (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-| TypeScript-specific directories and files | Purpose                                                             | Location      |
-|-------------------------------------------|---------------------------------------------------------------------|---------------|
-| `dist` directory                          | Adds the location for compiling the project JavaScript source code. | application root                                                                                                              |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the server.                      | application root                                                                                                              |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the admin panel.                 | `./src/admin/`   |
+| TypeScript-Specific directories and files | Purpose                                                                                                                                           | Location         |
+|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| `./dist` directory                        | Adds the location for compiling the project JavaScript source code.                                                                               | application root |
+| `build` directory                         | Contains the compiled administration panel JavaScript source code.  The directory is created on the first `yarn build` or `npm run build` command | `./dist/`         |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the server.                                                                                                    | application root |
+| `tsconfig.json` file                      | Manages TypeScript compilation for the admin panel.                                                                                               | `./src/admin/`   |
 
 Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application run the following commands in the application root directory:
 
@@ -94,21 +95,3 @@ New plugins can be generated following the [plugins development documentation](/
 ::: note
 It is not necessary to repeat the `yarn install` or `npm run install` command after the initial installation. The `yarn build` or `npm run build` command is necessary to implement any plugin development that affects the admin panel.
 :::
-<!-- 
-
-::: caution 
-    The plugin name must be kebab-case.
-    Example: an-example-of-kebab-case
-    :::
-
-
-- link to normal plugin dev information
-- New: there is a typescript option in the "strapi generate plugin" that launches the interactive CLI
-- use the yarn build && yarn develop to build the admin and compile the JS version to the dist folder. 
-- >
-
-<!--- a `tsconfig.json` file at the root of the project, to manage TypeScript compilation for the server,
-
-- a `/src/admin/tsconfig.json` to manage TypeScript compilation for the admin panel. 
-
-TypeScript-enabled projects also contain a `dist` directory, which is used to compile the project JavaScript source code. -->
