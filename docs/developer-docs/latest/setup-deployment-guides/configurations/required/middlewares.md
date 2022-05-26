@@ -269,7 +269,8 @@ The `ip` middleware is an IP filter middleware based on [koa-ip](https://github.
 | `blacklist` | Blacklisted IPs | `Array` | `[]`          |
 
 :::tip
-Both whitelist and blacklist support wildcards so you can use something like `whitelist: ['192.168.0.*', '127.0.0.*']`
+Both whitelist and blacklist support wildcards so it's possible to do something like
+`whitelist: ['192.168.0.*', '127.0.0.*']` or using spreads such as `whitelist: ['192.168.*.[3-10]']`
 :::
 
 ::: details Example: Custom configuration for the ip middleware
@@ -370,9 +371,10 @@ The `query` middleware is a query parser based on [qs](https://github.com/ljharb
 module.exports = {
   // ...
   {
-    name: 'strapi::body',
+    name: 'strapi::query',
     config: {
-      
+      arrayLimit: 50,
+      depth: 10,
     },
   },
   // ...
@@ -391,10 +393,13 @@ The middleware doesn't have any configuration options.
 
 The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
 
-| Option         | Description                                         | Type      | Default value |
-|----------------|-----------------------------------------------------|-----------|---------------|
-| `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
-| `defaultIndex` | Display default index page at `/` and `/index.html` | `Boolean` | `true`        |
+| Option         | Description                                                                              | Type      | Default value |
+|----------------|------------------------------------------------------------------------------------------|-----------|---------------|
+| `maxAge`       | Cache-control max-age directive, in milliseconds                                         | `Integer` | `60000`       |
+| `hidden`       | Allow transfer of hidden files                                                           | `Boolean` | `false`       |
+| `defer`        | If true, serves after return next(), allowing any downstream middleware to respond first | `Boolean` | `false`       |
+| `index`        | Default file name                                                                        | `String`  | `index.html`  |
+| `defaultIndex` | Display default index page at `/` and `/index.html`                                      | `Boolean` | `true`        |
 
 :::tip
 You can customize the path of the public folder by editing the [server configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#available-options).
@@ -408,9 +413,10 @@ You can customize the path of the public folder by editing the [server configura
 module.exports = {
   // ...
   {
-    name: 'strapi::body',
+    name: 'strapi::public',
     config: {
-      
+      defer: true,
+      index: env('INDEX_PATH', 'index-dev.html')
     },
   },
   // ...
@@ -423,18 +429,29 @@ module.exports = {
 
 The security middleware is based on [koa-helmet](https://helmetjs.github.io/). It accepts the following options:
 
-| Option                      | Description                                                                                                                                                                                                                                         | Type                                                                         | Default value                                                              |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `crossOriginEmbedderPolicy` | Set the `Cross-Origin-Embedder-Policy` header to `require-corp`                                                                                                                                                                                     | `Boolean`                                                                    | `false`                                                                    |
-| `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                                                                                                                                                                         | `Boolean`                                                                    | `false`                                                                    |
-| `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                                                                                                                                                                       | `Boolean`                                                                    | `false`                                                                    |
-| `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                                                                                                                                                                               | `Boolean`                                                                    | `false`                                                                    |
-| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                                                                                                                                                                            | `Boolean`                                                                    | `false`                                                                    |
-| `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0`                                                                                                                                                       | `Boolean`                                                                    | `false`                                                                    |
-| `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.<br/><br/>Accepts the following parameters:<ul><li>`maxAge`: Number of seconds HSTS is in effect</li><li>`includeSubDomains`: Applies HSTS to all subdomains of the host</li></ul> | <ul><li>`maxAge`: `Integer`</li><li>`includeSubDomains`: `Boolean`</li></ul> | <ul><li>`maxAge`: `31536000`</li><li>`includeSubDomains`: `true`</li></ul> |
-| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks<br/><br />Accepts the `action` parameter that specifies which directive to use.                                                                                                  | `String`                                                                     | `'sameorigin'`                                                             |
+| Option                      | Description                                                                                   | Type                  | Default value |
+|-----------------------------|-----------------------------------------------------------------------------------------------|-----------------------|---------------|
+| `crossOriginEmbedderPolicy` | Set the `Cross-Origin-Embedder-Policy` header to `require-corp`                               | `Boolean`             | `false`       |
+| `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                   | `Boolean`             | `false`       |
+| `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
+| `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                         | `Boolean`             | `false`       |
+| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Boolean`             | `false`       |
+| `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0` | `Boolean`             | `false`       |
+| `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | See below     |
+| `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |
+| `hsts.includeSubDomains`    | Applies HSTS to all subdomains of the host                                                    | `Boolean`             | `true`        |
+| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks, set to false to disable   | `Boolean` or `Object` | See below     |
+| `frameguard.action`         | Value must be either `deny` or `sameorigin`                                                   | `String`              | `sameorigin`  |
 
-::: details Example: Custom configuration for the security middleware
+::: tip
+When using any 3rd party upload provider, generally it's required to set a custom configuration here. Please see the provider documentation for which configuration options are required.
+:::
+
+::: strapi
+Within the default directives there is a `dl.airtable.com`, this value is set for the [in-app market](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) and is absolutely safe to keep.
+:::
+
+::: details Example: Custom configuration for the security middleware for using the AWS-S3 provider
 
 ```js
 // path: ./config/middlewares.js
@@ -442,9 +459,29 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 module.exports = {
   // ...
   {
-    name: 'strapi::body',
+    name: 'strapi::security',
     config: {
-      
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
     },
   },
   // ...
@@ -457,18 +494,18 @@ module.exports = {
 
 The `session` middleware allows the use of cookie-based sessions, based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
-| Option       | Description                                                                                                                                                                                                                                                 | Type                     | Default value                           |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
-| `key`        | Cookie key                                                                                                                                                                                                                                                  | `String`                 | `'koa.sess'`                            |
-| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. `'session'` will result in a cookie that expires when the session or browser is closed.                                                                                                                   | `Integer` or `'session'` | `86400000`                              |
-| `autoCommit` | Automatically commit headers                                                                                                                                                                                                                                | `Boolean`                | `true`                                  |
-| `overwrite`  | Can overwrite or not                                                                                                                                                                                                                                        | `Boolean`                | `true`                                  |
-| `httpOnly`   | Is httpOnly or not. A cookie with the `HttpOnly` attribute is inaccessible to the JavaScript [`Document.cookie API`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie). Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks. | `Boolean`                | `true`                                  |
-| `signed`     | Sign the cookies                                                                                                                                                                                                                                            | `Boolean`                | `true`                                  |
-| `rolling`    | Force a session identifier cookie to be set on every response. The expiration is reset to the original `maxAge` value, resetting the expiration countdown.                                                                                                  | `Boolean`                | `false`                                 |
-| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                                                                                                                                                                    | `Boolean`                | `false`                                 |
-| `secure`     | Force the use of HTTPS                                                                                                                                                                                                                                      | `Boolean`                | `true` in production, `false` otherwise |
-| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                                                                                                                                                                  | `String`                 | `null`                                  |
+| Option       | Description                                                                                                  | Type                     | Default value                           |
+|--------------|--------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
+| `key`        | Cookie key                                                                                                   | `String`                 | `'koa.sess'`                            |
+| `maxAge`     | Maximum lifetime of the cookies, in ms. Using `'session'` will expire the cookie when the session is closed. | `Integer` or `'session'` | `86400000`                              |
+| `autoCommit` | Automatically commit headers                                                                                 | `Boolean`                | `true`                                  |
+| `overwrite`  | Can overwrite or not                                                                                         | `Boolean`                | `true`                                  |
+| `httpOnly`   | Is httpOnly or not. Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks.                      | `Boolean`                | `true`                                  |
+| `signed`     | Sign the cookies                                                                                             | `Boolean`                | `true`                                  |
+| `rolling`    | Force a session identifier cookie to be set on every response.                                               | `Boolean`                | `false`                                 |
+| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                     | `Boolean`                | `false`                                 |
+| `secure`     | Force the use of HTTPS                                                                                       | `Boolean`                | `true` in production, `false` otherwise |
+| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                   | `String`                 | `null`                                  |
 
 ::: details Example: Custom configuration for the session middleware
 
@@ -478,9 +515,10 @@ The `session` middleware allows the use of cookie-based sessions, based on [koa-
 module.exports = {
   // ...
   {
-    name: 'strapi::body',
+    name: 'strapi::session',
     config: {
-      
+      rolling: true
+      renew: true
     },
   },
   // ...
