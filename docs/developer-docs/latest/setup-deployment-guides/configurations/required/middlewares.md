@@ -54,7 +54,7 @@ module.exports = [
     },
   },
 
-  // custom config for internal & build-in middleware
+  // custom config for internal & built-in middleware
   {
     name: 'strapi::poweredBy',
     config: {
