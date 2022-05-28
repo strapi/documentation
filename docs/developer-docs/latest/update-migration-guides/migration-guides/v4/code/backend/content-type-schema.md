@@ -44,13 +44,7 @@ To convert Strapi v3 models to v4 content-types:
     mv src/api/<apiName>/models/ src/api/<apiName>/content-types/
     ```
     
-    Note: if you have a lot of content types, you can run this shell script at root of your folder
-    
-    ```sh
-    for d in src/api/* ; do
-      mv $d/models/ $d/content-types/
-    done
-    ```
+::: tip If you have a lot of content types, you should maybe consider using [Strapi codemods](https://github.com/strapi/codemods/). This might save you a lot of time and allow you to migrate the file structure with that command line. 
 
 3. Move/rename each model's `<modelName>.settings.json` file to `./src/api/<apiName>/content-types/<contentTypeName>/schema.json` files.
 4. In each `<contentTypeName>/schema.json` file, update [the `info` object](/developer-docs/latest/development/backend-customization/models.md#model-information), which now requires declaring the 3 new `singularName`, `pluralName` and `displayName` keys and respecting some case-formatting conventions:
