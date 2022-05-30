@@ -45,7 +45,7 @@ To convert Strapi v3 models to v4 content-types:
     ```
 
 ::: tip
-[Strapi codemods](https://github.com/strapi/codemods/) can be used to convert models to content-types.
+[Strapi codemods](https://github.com/strapi/codemods/) can be used to convert v3 models to v4 content-types.
 :::
 
 3. Move/rename each model's `<modelName>.settings.json` file to `./src/api/<apiName>/content-types/<contentTypeName>/schema.json` files.
