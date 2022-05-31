@@ -34,7 +34,7 @@ Create `database.js` and `server.js` files (or `database.ts` and `server.ts` for
 
 ### Configure the database
 
-In order to connect the Strapi application in production to a hosted development database, the database credentials must be specified. Copy the following code snippet into `./config/env/production/database`.
+In order to connect the Strapi application in production to a hosted development database, the database credentials must be specified. Copy the following code snippet into `./config/env/production/database`:
 
 <code-group>
 
