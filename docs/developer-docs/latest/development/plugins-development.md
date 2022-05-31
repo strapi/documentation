@@ -17,7 +17,7 @@ If you would rather extend an existing plugin than create a new one, see the [Pl
 Strapi provides a [command line interface (CLI)](/developer-docs/latest/developer-resources/cli/CLI.md) for creating plugins. To create a plugin:
 
 1. Navigate to the root of a Strapi project.
-2. Run `yarn strapi generate` or `npm run strapi generate` in a terminal window to start the interactive `Strapi generate` CLI.
+2. Run `yarn strapi generate` or `npm run strapi generate` in a terminal window to start the interactive CLI.
 4. Choose "plugin" from the list, press Enter, and give the plugin a name in kebab-case (e.g. my-plugin-name)
 5. Choose either `JavaScript` or `TypeScript` for the plugin language.
 6. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
