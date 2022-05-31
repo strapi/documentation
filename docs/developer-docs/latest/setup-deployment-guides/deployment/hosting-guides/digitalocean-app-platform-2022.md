@@ -164,7 +164,7 @@ git push
 On the DigitalOcean website click on the **Create** button and select *Apps*.  Next select GitHub and authorize access to the correct repository. Next:
 
 1. Select the branch.
-2. (Optional) select the source directory.
+2. (Optional) Select the source directory.
 3. Choose whether or not to "Autodeploy" when an update is pushed to the GitHub repository.
 4. Click the **Next** button.
 
