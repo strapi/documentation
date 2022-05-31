@@ -99,7 +99,7 @@ The `server.js` configuration file (or `server.ts` for a TypeScript project) for
 <code-block title='JAVASCRIPT'>
 
 ```jsx
-//path: ./config/env/production/server.js
+// path: ./config/env/production/server.js
 
 module.exports = ({ env }) => ({
     proxy: true,
@@ -115,7 +115,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path: ./config/env/production/server.ts
+// path: ./config/env/production/server.ts
 
 export default ({ env }) => ({
     proxy: true,
@@ -251,7 +251,7 @@ yarn add pg-connection-string
 
 </code-group>
 
-To switch to a managed database change the `config/env/production/database` file to be able to parse the `DATABASE_URL` like the following example.
+To switch to a managed database modify the `config/env/production/database` file to be able to parse the `DATABASE_URL` like the following example.
 
 <code-group>
 
@@ -288,7 +288,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path: ./config/env/production/database.ts
+// path: ./config/env/production/database.ts
 
 const parse = require("pg-connection-string").parse;
 
@@ -322,15 +322,9 @@ export default ({ env }) => ({
 2. Attach the managed database to the App.
 3. Delete all database environment variables from the App.
 4. Check the `.yaml` file for any remaining database environment variables.
-5. (optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
-
-### Deploy the application to DigitalOcean
+5. (Optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
+6. 
 
 ::: caution
-The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. Check the .yaml file to confirm the database settings are set at the top of the file and duplicated if using a managed database.
+The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. Check the `.yaml` file to confirm the database settings are set at the top of the file and duplicated if using a managed database.
 :::
-<!--
-## Optional Steps
-
-### Connect to a storage service
- -->
