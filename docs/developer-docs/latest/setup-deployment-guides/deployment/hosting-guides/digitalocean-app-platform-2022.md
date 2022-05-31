@@ -67,7 +67,7 @@ module.exports = ({ env }) => ({
 <code-block title='TYPESCRIPT'>
 
 ```jsx
-//path: ./config/env/production/database.ts
+// path: ./config/env/production/database.ts
 
 export default ({ env }) => ({
   connection: {
