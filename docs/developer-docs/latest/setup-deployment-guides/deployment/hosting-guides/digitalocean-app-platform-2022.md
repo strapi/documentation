@@ -30,7 +30,7 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 ### Add a production configuration environment
 
 In the project `config` directory create the sub-directory `config/env/production`.
-Create `database.js` and `server.js` files (`.ts` for TypeScript projects).
+Create `database.js` and `server.js` files (or `database.ts` and `server.ts` for TypeScript projects).
 
 ### Configure the database
 
