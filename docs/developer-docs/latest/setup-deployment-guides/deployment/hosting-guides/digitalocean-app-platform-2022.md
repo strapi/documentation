@@ -92,7 +92,7 @@ export default ({ env }) => ({
 
 ### Configure the server
 
-The `server.js` config file (or `server.ts` for a TypeScript project) for a deployed project requires the `url` property instead of the `host` and `port` properties that are used in the local development environment. The `APP_URL` variable is then specified as an [environment variable](#add-environment-variables) in the DigitalOcean App Platform. Add the following code snippet to `./config/env/production/server`
+The `server.js` configuration file (or `server.ts` for a TypeScript project) for a deployed project requires the `url` property instead of the `host` and `port` properties that are used in the local development environment. The `APP_URL` variable is then specified as an [environment variable](#add-environment-variables) in the DigitalOcean App Platform. Add the following code snippet to `./config/env/production/server`:
 
 <code-group>
 
