@@ -18,7 +18,7 @@ Prior to starting the deployment process each user needs:
 
 - a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join),
-- [Git version control.](https://docs.github.com/en/get-started/quickstart/set-up-git)
+- [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application
 
 Git version control is necessary to efficiently add a Strapi application to a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
