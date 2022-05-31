@@ -239,7 +239,7 @@ To add the `pg-connection-string` dependency navigate to the project directory a
 
 <code-block title="NPM">
 ```sh
-npm install pg-connection-string --save <!-- needed?-->
+npm install pg-connection-string
 ```
 </code-block>
 
