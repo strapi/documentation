@@ -209,7 +209,7 @@ In the DigitalOcean App Platform there are App and Component-level environment v
 It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [Openssl](https://www.openssl.org/).
 :::
 
-## Deploy and access a Strapi application <!--revise this section-->
+## Deploy and access a Strapi application
 
 When the preceding steps are completed DigitalOcean should automatically try to build and deploy the application. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
 
@@ -318,10 +318,8 @@ export default ({ env }) => ({
 1. Create a managed database.
 2. Attach the managed database to the App.
 3. Delete all database environment variables from the App.
-4. Check the `.yaml` file for any remaining database environment variables.
-5. (Optional) If there are environment variables in the `.yaml` file, download the file, delete the environment variables and upload the edited file to DigitalOcean.
-6. 
+4. Build and deploy the App.
 
 ::: caution
-The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. Check the `.yaml` file to confirm the database settings are set at the top of the file and duplicated if using a managed database.
+The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. If the App build fails due to database connection errors check the `.yaml` file to confirm the database settings are set at the top of the file and that there are no database environment variables in the file. If there are database environment variables, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 :::
