@@ -18,17 +18,9 @@ Requests for new documentation are highly encouraged, this is not limited to new
 
 This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please read the [full text](CODE_OF_CONDUCT.md) so that you can read which actions may or may not be tolerated.
 
-## Target Branch
-
-Pull requests relating to fixing documentation for the latest release should be directed towards the `main` branch.
-
 ## Bugs
 
-We are using [GitHub Issues](https://github.com/strapi/documentation/issues) to manage our public bugs. We keep a close eye on this so before filing a new issue, try to make sure the problem does not already exist.
-
-### Reporting an issue
-
-Before submitting an issue you need to make sure:
+We are using [GitHub Issues](https://github.com/strapi/documentation/issues) to manage our public bugs. Before submitting an issue you need to make sure:
 
 - Checked for any existing pull requests that may address the same issue
 - Checked for any open issues related to your issue, if so, please provide context on that issue
