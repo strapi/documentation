@@ -387,6 +387,15 @@ const plugins = [
     siteTitle: (_, $site) => $site.title,
     title: $page => $page.title,
   }],
+  ['@vuepress/last-updated',
+    {
+      transformer: (timestamp, lang) => {
+        const date = new Date(timestamp);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options)
+      }
+    }
+  ],
   ['vuepress-plugin-code-copy', {
     color: '#ffffff',
     successText: 'Copied to clipboard!',
