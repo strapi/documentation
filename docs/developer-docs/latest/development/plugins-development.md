@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/plugins-d
 
 # Plugins development
 
-Strapi allows the development of local plugins that work exactly like the external plugins available from the [Marketplace](). 
+Strapi allows the development of local plugins that work exactly like the external plugins available from the [Marketplace](https://market.strapi.io).
 
 :::strapi Extending plugins
 If you would rather extend an existing plugin than create a new one, see the [Plugins extension](/developer-docs/latest/development/plugins-extension.md) documentation.
