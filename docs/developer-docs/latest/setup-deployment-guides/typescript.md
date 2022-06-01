@@ -81,9 +81,11 @@ yarn develop
 
 </code-group>
 
-<!--## Use TypeScript typings
+## Use TypeScript typings
 
-Something here -->
+To leverage your experience while using TypeScript Strapi comes with typings on the Strapi class.
+
+![test](./TypeScript-typing.gif)
 
 ## Develop a plugin using TypeScript
 
@@ -95,3 +97,11 @@ New plugins can be generated following the [plugins development documentation](/
 ::: note
 It is not necessary to repeat the `yarn install` or `npm run install` command after the initial installation. The `yarn build` or `npm run build` command is necessary to implement any plugin development that affects the admin panel.
 :::
+
+## Start Strapi programmatically
+
+
+
+
+
+### Handle both Javascript and typescript codebases when starting Strapi programmatically
