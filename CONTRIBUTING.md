@@ -100,15 +100,11 @@ Follow the procedure below to contribute to the Strapi documentation.
 
 You are now ready to contribute to the Strapi documentation! 🚀
 
-<aside>
 🤗 Make sure to follow the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and the [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) when writing your documentation contribution. These documents are meant to help you write a contribution that fits the whole Strapi documentation and make the reviewing process easier and quicker.
-</aside>
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information).
 
-<aside>
 ✋ To be able to submit your contribution, you must sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
-</aside>
 
 ### Pull request review and management
 
