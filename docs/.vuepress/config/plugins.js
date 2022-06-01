@@ -21,6 +21,15 @@ const checklinksIgnoredFiles = [
 
 const plugins = [
   ['vuepress-plugin-element-tabs', {}],
+  ['@vuepress/last-updated',
+    {
+      transformer: (timestamp, lang) => {
+        const date = new Date(timestamp);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options)
+      }
+    }
+  ],
   [
     'check-md',
     {

@@ -121,9 +121,7 @@ module.exports = () => {
     // ...
     bootstrap(app) {
       // execute some bootstrap code
-      app
-        .getPlugin('content-manager')
-        .injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
     },
   };
 };
