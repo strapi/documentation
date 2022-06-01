@@ -19,7 +19,7 @@ Prior to starting the deployment process each user needs:
 - a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
-- an existing Strapi application
+- an existing Strapi application.
 
 Git version control is necessary to efficiently add a Strapi application to a remote repository such as GitHub. The DigitalOcean App Platform uses version control repositories such as GitHub to deploy applications. In addition to GitHub, GitLab and Docker are also supported.
 
@@ -27,141 +27,132 @@ Git version control is necessary to efficiently add a Strapi application to a re
 
 Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
-### Add a production configuration environment
+1. Add a production configuration environment by creating a sub-directory `./config/env/production`.
+2. Create `database.js` (or `database.ts` for TypeScript projects) inside the `./config/env/production` directory.
+3. Add the code snippet to the `database` configuration file:
 
-In the project `config` directory create the sub-directory `config/env/production`.
-Create `database.js` and `server.js` files (or `database.ts` and `server.ts` for TypeScript projects).
+      <code-group>
 
-### Configure the database
+    <code-block title='JAVASCRIPT'>
 
-In order to connect the Strapi application in production to a hosted development database, the database credentials must be specified. Copy the following code snippet into `./config/env/production/database`:
+    ```jsx
+    // path: ./config/env/production/database.js
 
-<code-group>
-
-<code-block title='JAVASCRIPT'>
-
-```jsx
-// path: ./config/env/production/database.js
-
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'postgres',
-    connection: {
-      host: env('DATABASE_HOST'), 
-      port: env.int('DATABASE_PORT'), 
-      database: env('DATABASE_NAME'), 
-      user: env('DATABASE_USERNAME'), 
-      password: env('DATABASE_PASSWORD'),
-      ssl: {
-        rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+    module.exports = ({ env }) => ({
+      connection: {
+        client: 'postgres',
+        connection: {
+          host: env('DATABASE_HOST'), 
+          port: env.int('DATABASE_PORT'), 
+          database: env('DATABASE_NAME'), 
+          user: env('DATABASE_USERNAME'), 
+          password: env('DATABASE_PASSWORD'),
+          ssl: {
+            rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+          },
+        },
+        debug: false,
       },
-    },
-    debug: false,
-  },
-});
+    });
 
-```
+    ```
 
-</code-block>
+    </code-block>
 
-<code-block title='TYPESCRIPT'>
+    <code-block title='TYPESCRIPT'>
 
-```jsx
-// path: ./config/env/production/database.ts
+    ```jsx
+    // path: ./config/env/production/database.ts
 
-export default ({ env }) => ({
-  connection: {
-    client: 'postgres',
-    connection: {
-      host: env('DATABASE_HOST'), 
-      port: env.int('DATABASE_PORT'), 
-      database: env('DATABASE_NAME'), 
-      user: env('DATABASE_USERNAME'), 
-      password: env('DATABASE_PASSWORD'),
-      ssl: {
-        rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+    export default ({ env }) => ({
+      connection: {
+        client: 'postgres',
+        connection: {
+          host: env('DATABASE_HOST'), 
+          port: env.int('DATABASE_PORT'), 
+          database: env('DATABASE_NAME'), 
+          user: env('DATABASE_USERNAME'), 
+          password: env('DATABASE_PASSWORD'),
+          ssl: {
+            rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+          },
+        },
+        debug: false,
       },
-    },
-    debug: false,
-  },
-});
-```
+    });
+    ```
 
-</code-block>
-</code-group>
+    </code-block>
+    </code-group>
 
-### Configure the server
+4. Create `server.js` (or `server.ts` for TypeScript projects) inside the `./config/env/production` directory.
+5. Add the code snippet to the `server` configuration file:
 
-The `server.js` configuration file (or `server.ts` for a TypeScript project) for a deployed project requires the `url` property instead of the `host` and `port` properties that are used in the local development environment. The `APP_URL` variable is then specified as an [environment variable](#add-environment-variables) in the DigitalOcean App Platform. Add the following code snippet to `./config/env/production/server`:
+    <code-group>
 
-<code-group>
+    <code-block title='JAVASCRIPT'>
 
-<code-block title='JAVASCRIPT'>
+    ```jsx
+    // path: ./config/env/production/server.js
 
-```jsx
-// path: ./config/env/production/server.js
+    module.exports = ({ env }) => ({
+        proxy: true,
+        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        app: { 
+          keys: env.array('APP_KEYS')
+        },
+    });
+    ```
 
-module.exports = ({ env }) => ({
-    proxy: true,
-    url: env('APP_URL'),
-    app: { 
-      keys: env.array('APP_KEYS')
-    },
-});
-```
+    </code-block>
 
-</code-block>
+    <code-block title='TYPESCRIPT'>
 
-<code-block title='TYPESCRIPT'>
+    ```jsx
+    // path: ./config/env/production/server.ts
 
-```jsx
-// path: ./config/env/production/server.ts
+    export default ({ env }) => ({
+        proxy: true,
+        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        app: { 
+          keys: env.array('APP_KEYS')
+        },
+    });
+    ```
 
-export default ({ env }) => ({
-    proxy: true,
-    url: env('APP_URL'),
-    app: { 
-      keys: env.array('APP_KEYS')
-    },
-});
-```
+    </code-block>
+    </code-group>
 
-</code-block>
-</code-group>
+6. Add PostgreSQL dependencies by installing [`pg` package](https://www.npmjs.com/package/pg):
 
-### Add PostgreSQL dependencies
+    <code-group>
 
-Connecting a PostgreSQL database to Strapi requires a set of Node modules contained in the [`pg` package](https://www.npmjs.com/package/pg). Use the same package manager used to create the Strapi application to install `pg`. Run the following command in a terminal:
+    <code-block title="NPM">
+    ```sh
+    npm install pg
+    ```
+    </code-block>
 
-<code-group>
+    <code-block title="YARN">
+    ```sh
+    yarn add pg
+    ```
+    </code-block>
 
-<code-block title="NPM">
-```sh
-npm install pg
-```
-</code-block>
+    </code-group>
 
-<code-block title="YARN">
-```sh
-yarn add pg
-```
-</code-block>
+7. Save the Strapi application locally.
+8. Commit the project to a remote repository:
 
-</code-group>
+    ```sh
+    git add .
+    git commit -m "commit message"
+    git push
+    ```
 
-### Commit the project to a remote repository
+## Create and configure a DigitalOcean App 
 
-Save the Strapi application locally then, in a terminal, run:
-
-```sh
-git add .
-git commit -m "commit message"
-git push
-```
-
-## Create and configure a DigitalOcean App <!--work on the wording here. Think about a better introduction and moving the DO -->
-
-Deploying on the DigitalOcean App Platform requires creating an App, connecting the App to a development database, and setting environment variables. At the end of these steps a Strapi application should be successfully deployed.
+Deploying on the DigitalOcean App Platform requires creating an App, connecting the App to a development database, and setting environment variables. At the end of the following steps a Strapi application should be successfully deployed.
 
 ### Create a DigitalOcean App
 
@@ -188,7 +179,7 @@ After creating an App attach a development database. To add a development databa
 
 In the DigitalOcean App Platform there are App and Component-level environment variables. Strapi applications in production need App-level variables to set the database connection, and can use either Component or App-level variables for secrets storage. The following procedure is to add the database variables at the App level and store the Strapi secrets at the Component level.
 
-1. Add the following variables to the global environment table:
+1. Add the database, URL, and NODE_ENV variables to the global environment table:
 
     | Variable name     | Value          |
     |-------------------|----------------|
@@ -203,7 +194,7 @@ In the DigitalOcean App Platform there are App and Component-level environment v
 2. Click **Save**.
 3. Navigate to the *Settings* menu and select the Strapi application component.
 4. Scroll to the *Environment Variables* and click **edit**.
-5. Add the following key-value pairs to the component environment variables table:
+5. Add the key-value pairs to the component environment variables table:
 
     | Variable name    | value                               |
     |------------------|-------------------------------------|
@@ -239,7 +230,7 @@ DigitalOcean managed databases are a production-scale database solution for a de
 
 When a managed database is attached to a Strapi application, the connection parameters are passed directly from the database to the application `.yaml` file. This requires a modification to the `config/env/production/database` file and the addition of the `pg-connection-string` dependency.
 
-To add the `pg-connection-string` dependency navigate to the project directory and run the following code snippet in a terminal:
+To add the `pg-connection-string` dependency navigate to the project directory and install `pg-connection=string`:
 
 <code-group>
 
@@ -257,7 +248,7 @@ yarn add pg-connection-string
 
 </code-group>
 
-To switch to a managed database modify the `config/env/production/database` file to be able to parse the `DATABASE_URL` like the following example.
+To switch to a managed database modify the `config/env/production/database` file to be able to parse the `DATABASE_URL`:
 
 <code-group>
 
