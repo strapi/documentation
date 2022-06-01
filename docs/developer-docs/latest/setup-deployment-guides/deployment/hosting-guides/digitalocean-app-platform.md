@@ -230,7 +230,7 @@ DigitalOcean managed databases are a production-scale database solution for a de
 
 When a managed database is attached to a Strapi application, the connection parameters are passed directly from the database to the application `.yaml` file. This requires a modification to the `config/env/production/database` file and the addition of the `pg-connection-string` dependency.
 
-To add the `pg-connection-string` dependency navigate to the project directory and install `pg-connection=string`:
+To add the `pg-connection-string` dependency navigate to the project directory and install `pg-connection-string`:
 
 <code-group>
 
