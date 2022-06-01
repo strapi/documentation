@@ -159,24 +159,30 @@ git commit -m "commit message"
 git push
 ```
 
-## Create a DigitalOcean App
+## Create and configure a DigitalOcean App <!--work on the wording here. Think about a better introduction and moving the DO -->
 
-On the DigitalOcean website click on the **Create** button and select *Apps*. Next select GitHub and authorize access to the correct repository. Next:
+Deploying on the DigitalOcean App Platform requires creating an App, connecting the App to a development database, and setting environment variables. At the end of these steps a Strapi application should be successfully deployed.
 
-1. Select the branch.
-2. (Optional) select the source directory.
-3. Choose whether or not to "Autodeploy" when an update is pushed to the GitHub repository.
-4. Click the **Next** button.
+### Create a DigitalOcean App
+
+From the DigitalOcean website create and App and connect it to a GitHub repository:
+
+1. Click on the **Create** button and select *Apps*.
+2. Select GitHub and authorize access to the correct repository.
+3. Select the branch.
+4. (Optional) select the source directory.
+5. Choose whether or not to "Autodeploy" when an update is pushed to the GitHub repository.
+6. Click the **Next** button.
 
 ### Connect an App to a database
 
-On the DigitalOcean App Platform there is an option between a development or a managed (production) database. To add a development database On the following screen:
+After creating an App attach a development database. To add a development database On the following screen:
 
 1. Click **add resource**.
-2. Select database, and click **Add**.
-3. On the next screen select *dev database* and name the database. The default database name is "db" and that will be used in the subsequent sections.
+2. Select database and click **Add**.
+3. Select *dev database* and name the database. The default database name is "db" and that will be used in the following example.
 4. Click the **Create and attach** button.
-5. On the next screen click the **Next** button to set the environment variables.
+5. Click the **Next** button to set the environment variables.
 
 ### Add environment variables
 
@@ -195,13 +201,13 @@ In the DigitalOcean App Platform there are App and Component-level environment v
     | NODE_ENV          | production     |
 
 2. Click **Save**.
-3. At the top of the *Settings* menu select your Strapi application component.
-4. Scroll down to the *Environment Variables* and click **edit**.
+3. Navigate to the *Settings* menu and select the Strapi application component.
+4. Scroll to the *Environment Variables* and click **edit**.
 5. Add the following key-value pairs to the component environment variables table:
 
     | Variable name    | value                               |
     |------------------|-------------------------------------|
-    | APP_KEYS         | "unique user-generated secret here" |
+    | APP_KEYS         | "unique user-generated secrets here"|
     | API_TOKEN_SALT   | "unique user-generated secret here" |
     | ADMIN_JWT_SECRET | "unique user-generated secret here" |
     | JWT_SECRET       | "unique user-generated secret here" |
