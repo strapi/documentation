@@ -85,7 +85,7 @@ yarn develop
 
 To leverage your experience while using TypeScript Strapi comes with typings on the Strapi class.
 
-![test](./TypeScript-typing.gif)
+![Animated gif demonstrating TypeScript typings](./TypeScript-typing.gif)
 
 ## Develop a plugin using TypeScript
 
