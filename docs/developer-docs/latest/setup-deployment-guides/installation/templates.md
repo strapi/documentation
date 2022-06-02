@@ -86,7 +86,7 @@ You can create this file structure by hand or generate it via the [CLI](/develop
 ::: tab yarn
 
 ```bash
-yarn strapi generate:template <path>
+yarn strapi templates:generate <path>
 ```
 
 :::
@@ -94,7 +94,7 @@ yarn strapi generate:template <path>
 ::: tab npx
 
 ```bash
-npx strapi generate:template <path>
+npx strapi templates:generate <path>
 ```
 
 :::
@@ -103,7 +103,30 @@ npx strapi generate:template <path>
 
 ### File structure
 
-You can add as many files as you want to the root of your template repository. But it must at least have `template` directory, and either a `template.json` or a `template.js` file.
+You can add as many files as you want to the root of your template repository. But it must at least have `template/src` directory, either a `template.json` or a `template.js`, and a `package.json` file.
+
+Your template will need to be published to npm with a `package.json` file that might look like this:
+
+```json
+{
+  "name": "strapi-template-blog",
+  "version": "1.0.0",
+  "description": "My Strapi Blog Template",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<your-github-username>/strapi-template-blog.git"
+  },
+  "keywords": ["strapi", "template", "blog"],
+  "author": "<Author Name>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/<your-github-username>/strapi-template-blog/issues"
+  },
+  "homepage": "https://github.com/<your-github-username>/strapi-template-blog#readme"
+}
+```
+
+If you've never published an npm package before, [here's a great article to help you out](https://zellwk.com/blog/publish-to-npm/).
 
 The `template.json` is used to extend the Strapi app's default `package.json`. You can put all the properties that should overwrite the default `package.json` in a root `package` property. For example, a `template.json` might look like this:
 
@@ -134,19 +157,22 @@ module.exports = function(scope) {
 };
 ```
 
-The `template` directory is where you can extend the file contents of a Strapi project. All the children are optional, you should only include the files that will overwrite the default Strapi app.
+The `template/src` directory is where you can extend the file contents of a Strapi project. All the children are optional, you should only include the files that will overwrite the default Strapi app.
 
 Only the following contents are allowed inside the `template` directory:
 
+- `src/`
+  - `api/`: for collections and single types
+  - `components/` for components
+  - `config/` can only include the `functions` directory (things like `bootstrap.js` or `404.js`), because other config files are environment-specific.
+  - `plugins/` for custom Strapi plugins
+- `data/` to store the data imported by a seed script
+  - `data.json` to seed your project with data
+  - `uploads/` to serve files
 - `README.md`: the readme of an app made with this template
 - `.env.example`: to specify required environment variables
-- `api/`: for collections and single types
-- `components/` for components
-- `config/` can only include the `functions` directory (things like `bootstrap.js` or `404.js`), because other config files are environment-specific.
-- `data/` to store the data imported by a seed script
-- `plugins/` for custom Strapi plugins
-- `public/` to serve files
 - `scripts/` for custom scripts
+- `package.json` for the npm registry
 
 If any unexpected file or directory is found, the installation will crash.
 
@@ -158,5 +184,7 @@ After reading the above rules, follow these steps to create your template:
 2. Customize your app to match the needs of your use case.
 3. Generate your template using the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate) by running `strapi templates:generate <path>`
 4. Navigate to this path to see your generated template
-5. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. Otherwise, leave it as an empty object.
-6. Publish the root template project on GitHub. Make sure that the repository is public, and that the code is on the `master` branch.
+5. Run `npm init` to generate a `package.json` file
+6. Publish your template to the npm registry with `npm publish`
+7. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. Otherwise, leave it as an empty object.
+8. Publish the root template project on GitHub. Make sure that the repository is public, and that the code is on the `master` branch.
