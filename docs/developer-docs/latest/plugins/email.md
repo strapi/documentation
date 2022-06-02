@@ -107,6 +107,7 @@ When using community providers, pass the full package name to the `provider` key
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
 :::: tabs card
+
 ::: tab SENDGRID
 <code-group>
 <code-block title=JAVASCRIPT>
@@ -163,6 +164,246 @@ export default ({ env }) => ({
 </code-group>
 
 :::
+
+::: tab AMAZON-SES
+<code-group>
+<code-block title=JAVASCRIPT>
+
+```js
+//path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'amazon-ses',
+      providerOptions: {
+        key: env('AWS_SES_KEY'),
+        secret: env('AWS_SES_SECRET'),
+        amazon: 'https://email.us-east-1.amazonaws.com',
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</code-block>
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'amazon-ses',
+      providerOptions: {
+        key: env('AWS_SES_KEY'),
+        secret: env('AWS_SES_SECRET'),
+        amazon: 'https://email.us-east-1.amazonaws.com',
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+
+```
+
+</code-block>
+</code-group>
+
+:::
+
+::: tab MAILGUN
+<code-group>
+<code-block title=JAVASCRIPT>
+
+```js
+//path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'mailgun',
+      providerOptions: {
+        apiKey: env('MAILGUN_API_KEY'),
+        domain: env('MAILGUN_DOMAIN'), //Required if you have an account with multiple domains
+        host: env('MAILGUN_HOST', 'api.mailgun.net'), //Optional. If domain region is Europe use 'api.eu.mailgun.net'
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</code-block>
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'mailgun',
+      providerOptions: {
+        apiKey: env('MAILGUN_API_KEY'),
+        domain: env('MAILGUN_DOMAIN'), //Required if you have an account with multiple domains
+        host: env('MAILGUN_HOST', 'api.mailgun.net'), //Optional. If domain region is Europe use 'api.eu.mailgun.net'
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+
+```
+
+</code-block>
+</code-group>
+
+:::
+
+::: tab NODEMAILER
+<code-group>
+<code-block title=JAVASCRIPT>
+
+```js
+//path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST', 'smtp.example.com'),
+        port: env('SMTP_PORT', 587),
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        // ... any custom nodemailer options
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+  // ...
+});
+
+```
+
+</code-block>
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST', 'smtp.example.com'),
+        port: env('SMTP_PORT', 587),
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        // ... any custom nodemailer options
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+  // ...
+});
+
+
+```
+
+</code-block>
+</code-group>
+
+:::
+
+::: tab SENDMAIL
+<code-group>
+<code-block title=JAVASCRIPT>
+
+```js
+//path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendmail',
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+
+
+```
+
+</code-block>
+<code-block title=TYPESCRIPT>
+
+```js
+//path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendmail',
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+
+
+```
+
+</code-block>
+</code-group>
+
+:::
+
 ::::
 
 ::: tip
