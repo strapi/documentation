@@ -129,25 +129,23 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Instantiating Strapi programmatically in a Typescript project requires additional configurations to load everything correctly.
+Instantiating Strapi programmatically in a Typescript project requires additional configurations to load everything correctly. The primary difference for TypeScript programatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
 
 ### Understand programatic use
 
-When instantiating Strapi programmatically using the default export of @strapi/strapi, you can pass different parameters, among them there is the `app` directory and the `dist` directory. The `app` directory is the project root directory and `dist` is a subdirectory of `app` which contains all of the compiled code.
+When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the `app` directory and the `dist` directory can be passed. The `app` directory is the project root directory and `dist` is a subdirectory of `app` which contains all of the compiled code.
 
-The `dist` directory represents the compiled project with the same folder structure as the `app` directory and the app directory represents your codebase (TS or JS). The main differences are:
+The `dist` directory represents the compiled project with the same directory structure as the `app` directory and the app directory represents the codebase (TS or JS). The main differences are:
 
 - When using the Content-type Builder to create/update/delete content types (or any other service that creates files), Strapi uses the `app` folder to write the files.
 - When reading what content types exist on the system, Strapi reads the `dist` folder. Basically, **we're reading from the dist directory & writing to the app directory**.
 - Only the app folder is watched when using the develop command. In TS, a compilation will be triggered when a change is detected in the app folder & the output will be written to the dist folder
 
 ::: Note
-
-- The public folder is considered static and thus ignores app/dist directories.
-- When developing in vanilla JS, the `dist` folder will be the same as the app folder since we writing & reading in the same place. If we were to use some kind of compilation tool for JS (babel, etc...) we would set the `dist` directory to wherever babel output the code.
-
+The public folder is considered static and thus ignores app/dist directories.
 :::
-The default values for the `app` & `dist` directories are transformed and assigned using the following behavior:
+
+The default values for the `app` & `dist` directories are transformed and assigned:
 
 ```js
 
