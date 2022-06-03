@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 
 # Upload
 
-Thanks to the plugin `Upload`, you can upload any kind of file on your server or external providers such as **AWS S3**.
+The `Upload` plugin is used to implement the Media Library available in the admin panel. With it you can upload any kind of file on your server or external providers such as **AWS S3**.
 
 ## Configuration
 
