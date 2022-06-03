@@ -83,9 +83,38 @@ yarn develop
 
 ## Use TypeScript typings
 
-To leverage your experience while using TypeScript Strapi comes with typings on the Strapi class.
+Strapi provides typings on the Strapi class to improve the TypeScript experience. In the following example a `register` method is added to `./src/index.ts`. For example, when a developer adds the `strapi.runLifecyclesFunctions` method a list of available lifecycle types (`register`, `bootstrap` and `destroy`) are returned by the code editor. The following example is illustrated statically and the second tab shows an animated example.
+
+:::: tabs card
+
+::: tab STATIC EXAMPLE
+
+```ts
+// path: ./src/index.ts
+
+import '@strapi/strapi';
+
+export default {
+
+  register( {strapi }: { strapi: Strapi }) {
+    strapi.runLifecyclesFunctions('register') .then(()  => console.log('hello world')
+    )
+    
+  },
+};
+```
+
+:::
+
+::: tab ANIMATED GIF
 
 ![Animated gif demonstrating TypeScript typings](./TypeScript-typing.gif)
+
+:::
+
+::::
+
+<!--add text description here-->
 
 ## Develop a plugin using TypeScript
 
@@ -100,13 +129,13 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Initiating Strapi programmatically in a Typescript project requires additional configurations to load everything correctly.
+Instantiating Strapi programmatically in a Typescript project requires additional configurations to load everything correctly.
 
 ### Understand programatic use
 
-When initiating Strapi programmatically using the default export of @strapi/strapi, you can pass different parameters, among them there is the `app` directory and the `dist` directory. The `app` directory is the project root directory and `dist` is a subdirectory of `app` which contains all of the compiled code.
+When instantiating Strapi programmatically using the default export of @strapi/strapi, you can pass different parameters, among them there is the `app` directory and the `dist` directory. The `app` directory is the project root directory and `dist` is a subdirectory of `app` which contains all of the compiled code.
 
-Basically, the dist directory represents the compiled project (with the same folder structure as the app directory) and the app directory represents your codebase (TS or JS). The main differences are:
+The `dist` directory represents the compiled project with the same folder structure as the `app` directory and the app directory represents your codebase (TS or JS). The main differences are:
 
 - When using the Content-type Builder to create/update/delete content types (or any other service that creates files), Strapi uses the `app` folder to write the files.
 - When reading what content types exist on the system, Strapi reads the `dist` folder. Basically, **we're reading from the dist directory & writing to the app directory**.
@@ -133,9 +162,9 @@ const resolveWorkingDirectories = opts => {
 
 ```
 
-### Handle both JavaScript and TypeScript codebases when starting Strapi programmatically
+### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-This can be particularly useful when creating CLI tools or developing a plugin. To do so, you can use the `@strapi/typescript-utils` package:
+Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programatically. A common use is for creating command line interface tools or developing a plugin. Examples of how to incorporate both code bases:
 
 ```js
 const tsUtils = require('@strapi/typescript-utils');
@@ -143,24 +172,24 @@ const strapi = require('@strapi/strapi');
 
 const appDir = process.cwd();
 
-// Automatically detect if this is a project using Typescript
+// Automatically detect if this is a Typescript project:
 const isTSProject = await tsUtils.isUsingTypeScript(appDir);
-// Resolve the directory containing the compilation output
+
+// Resolve the directory containing the compilation output:
 const outDir = await tsUtils.resolveOutDir(appDir);
 
 if (isTSProject) {
-// If we're in a Typescript project, compile the TS code in appDir
+// If inside a Typescript project, compile the TypeScript code in the appDir:
   await tsUtils.compile(appDir, {
     watch: false,
     configOptions: { options: { incremental: true } },
   });
 }
 
-// If we're in a Typescript project, use a custom dist
-// directory, otherwise set it to appDir value 
+// If inside a Typescript project, use a custom dist directory, otherwise set it to appDir value: 
 const distDir = isTSProject ? outDir : appDir;
 
-// Start the app by providing the app and dist directories
+// Start the app by providing the app and dist directories:
 const app = await strapi({ appDir, distDir }).load();
 
 ```
