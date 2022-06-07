@@ -179,27 +179,27 @@ In the DigitalOcean App Platform there are App and Component-level environment v
 
 1. Add the database, URL, and NODE_ENV variables to the global environment table:
 
-    | Variable name     | Value          |
-    |-------------------|----------------|
-    | URL               | ${APP_URL}     |
-    | DATABASE_HOST     | ${db.HOSTNAME} |
-    | DATABASE_PORT     | ${db.PORT}     |
-    | DATABASE_NAME     | ${db.DATABASE} |
-    | DATABASE_USERNAME | ${db.USERNAME} |
-    | DATABASE_PASSWORD | ${db.PASSWORD} |
-    | NODE_ENV          | production     |
+    | Variable name       | Value            |
+    |---------------------|------------------|
+    |`URL`                | `${APP_URL}`     |
+    | `DATABASE_HOST`     | `${db.HOSTNAME}` |
+    | `DATABASE_PORT`     | `${db.PORT}`     |
+    | `DATABASE_NAME`     | `${db.DATABASE}` |
+    | `DATABASE_USERNAME` | `${db.USERNAME}` |
+    | `DATABASE_PASSWORD` | `${db.PASSWORD}` |
+    | `NODE_ENV`          | `production`     |
 
 2. Click **Save**.
 3. Navigate to the *Settings* menu and select the Strapi application component.
 4. Scroll to the *Environment Variables* and click **edit**.
 5. Add the key-value pairs to the component environment variables table:
 
-    | Variable name    | value                               |
-    |------------------|-------------------------------------|
-    | APP_KEYS         | "unique user-generated secrets here"|
-    | API_TOKEN_SALT   | "unique user-generated secret here" |
-    | ADMIN_JWT_SECRET | "unique user-generated secret here" |
-    | JWT_SECRET       | "unique user-generated secret here" |
+    | Variable name      | value                                 |
+    |--------------------|---------------------------------------|
+    | `APP_KEYS`         | `"unique user-generated secrets here"`|
+    | `API_TOKEN_SALT`   | `"unique user-generated secret here"` |
+    | `ADMIN_JWT_SECRET` | `"unique user-generated secret here"` |
+    | `JWT_SECRET`       | `"unique user-generated secret here"` |
 
 6. Click **Save**.
 
