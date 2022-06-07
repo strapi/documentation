@@ -64,7 +64,7 @@ An individual asset can also be moved to a folder when [editing the asset](/user
 
 Once created, a folder can be renamed, moved or deleted. To manage a single folder:
 
-1. Click the folder name in the Folders part of the Media library.
+1. In the Folders part of the Media library, hover the folder to be edited and click its edit button ![Edit icon](../assets/icons/edit.svg).
 2. In the window that pops up, update the name and location with the _Folder name_ field and _Folder location_ drop-down list, respectively.
 3. Click **Save**.
 
