@@ -33,9 +33,7 @@ To move an asset:
 
 1. Click on the edit ![Edit icon](../assets/icons/edit.svg) button for the asset to be moved.
 2. In the window that pops up, click the _Asset location_ field and choose a different folder from the drop-down list.
-3. Click **Finish** to confirm.
-
-<!-- ? is the button named Finish or Save ? -->
+3. Click **Save** to confirm.
 
 ::: note
 Assets can also be moved to other folders from the main view of the Media Library (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md#moving-assets-to-a-folder)).
