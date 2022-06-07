@@ -26,7 +26,7 @@ From the Media Library, it is possible to:
 - and view, navigate through, and manage folders (6).
 
 ::: tip
-Click the search icon ![Search icon](../assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets more quickly!
+Click the search icon ![Search icon](../assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
 :::
 
 ## Filtering assets
