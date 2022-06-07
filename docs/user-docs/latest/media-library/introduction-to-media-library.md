@@ -51,4 +51,4 @@ When active, filters are displayed next to the **Filters** button. They can be r
 ## Sorting assets
 
 <!-- TODO: add screenshot -->
-Just above the list of folders and assets, on the left side of the interface, a **Sort by** drop-down list is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the drop-down list and select an option in the list to automatically display the sorted assets.
+Just above the list of folders and assets, on the left side of the interface, a **Sort by** button is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the button and select an option in the list to automatically display the sorted assets.
