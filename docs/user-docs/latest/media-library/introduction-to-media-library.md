@@ -21,7 +21,7 @@ From the Media Library, it is possible to:
 
 - upload a new asset (1) (see [adding assets](/user-docs/latest/media-library/adding-assets.md)),
 - create a new folder (2) (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)),
-- sort the assets and folders (3) or set filters (4) to find assets more easily,
+- sort the assets and folders (3) or set filters (4) to find assets and folders more easily,
 - make a textual search (5) to find a specific asset or folder,
 - and view, navigate through, and manage folders (6).
 
