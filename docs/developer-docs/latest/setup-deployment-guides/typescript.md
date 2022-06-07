@@ -48,7 +48,7 @@ yarn create-strapi-app@latest my-project --typescript
 
 ## Understand TypeScript support
 
-TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)) with the following dedicated folders and configuration files:
+TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) with the following dedicated folders and configuration files:
 
 | TypeScript-Specific directories and files | Purpose                                                                                                                                           | Location         |
 |-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
