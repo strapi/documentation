@@ -35,7 +35,7 @@ To create a new folder in the Media Library:
 
 1. Click on **Add new folder** in the upper right of the Media Library interface.
 2. In the window that pops up, type a name for the new folder in the _Folder name_ field.
-3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the root of the Media Library.
+3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the active folder.
 4. Click **Save**.
 
 ::: note
