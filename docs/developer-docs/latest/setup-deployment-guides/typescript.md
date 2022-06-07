@@ -128,7 +128,7 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Instantiating Strapi programmatically in a Typescript project requires additional configurations to load everything correctly. The primary difference for TypeScript programatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
+Instantiating Strapi programmatically in a TypeScript project requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
 
 ### Understand programatic use
 
