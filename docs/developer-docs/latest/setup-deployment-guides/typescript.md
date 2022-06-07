@@ -48,7 +48,7 @@ yarn create-strapi-app@latest my-project --typescript
 
 ## Understand TypeScript support
 
-TypeScript-enabled Strapi applications have a `dist` directory at the project root, a `./dist/build/` subdirectory that contains the compiled admin panel, and 2 `tsconfig.json` files (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)) with the following dedicated folders and configuration files:
 
 | TypeScript-Specific directories and files | Purpose                                                                                                                                           | Location         |
 |-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
