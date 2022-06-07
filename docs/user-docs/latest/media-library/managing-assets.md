@@ -36,7 +36,7 @@ To move an asset:
 3. Click **Save** to confirm.
 
 ::: note
-Assets can also be moved to other folders from the main view of the Media Library (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md#moving-assets-to-a-folder)).
+Assets can also be moved to other folders from the main view of the Media Library (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md#moving-assets-to-a-folder)). This includes the ability to move several assets simultaneously.
 :::
 
 ## Cropping images
