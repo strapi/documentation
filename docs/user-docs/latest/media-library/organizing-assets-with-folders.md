@@ -14,7 +14,7 @@ From the Media Library, it is possible to view the list of folders and browse a 
 
 ## Browsing folders
 
-By default, the Media Library displays folders and assets created at the root level. Double-clicking a folder navigates to this folder, and displays the following elements:
+By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
 - the folder title (1)
 - the number of subfolders and assets (2) the current folder contains
