@@ -136,7 +136,7 @@ When instantiating Strapi programmatically using the default export of `@strapi/
 
 - When using the Content-type Builder to create, update, delete content types (or any other service that creates files), Strapi uses the `app` folder to write the files.
 - When reading what content types exist on the system Strapi reads the `dist` folder.
-- When the `develop` command is used only the `app` directory is watched. In TypeScript, a compilation will be triggered when a change is detected in the `app` directory & the output will be written to the `dist` directory.
+- When the `develop` command is used only the `app` directory is watched. In TypeScript, a compilation will be triggered when a change is detected in the `app` directory and the output will be written to the `dist` directory.
 
 ::: note
 The public folder is considered static and thus ignores the  `app` and `dist` directories.
