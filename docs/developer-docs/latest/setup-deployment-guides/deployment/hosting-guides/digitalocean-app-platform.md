@@ -17,8 +17,7 @@ Strapi maintains deployment guides to assist users in deploying projects. Since 
 Prior to starting the deployment process each user needs:
 
 - a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
-- a [GitHub account](https://github.com/join),
-- [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
+- a [GitHub account](https://github.com/join) and [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
 
 ## Setup a Strapi project for deployment
@@ -148,7 +147,7 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
     git push
     ```
 
-## Create and configure a DigitalOcean App 
+## Create and configure a DigitalOcean App
 
 Deploying on the DigitalOcean App Platform requires creating an App, connecting the App to a development database, and setting environment variables. At the end of the following steps a Strapi application should be successfully deployed.
 
@@ -319,5 +318,5 @@ export default ({ env }) => ({
 4. Build and deploy the App.
 
 ::: caution
-The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. If the App build fails due to database connection errors check the `.yaml` file to confirm the database settings are set at the top of the file and that there are no database environment variables in the file. If there are database environment variables, download the file, delete the environment variables and upload the edited file to DigitalOcean.
+The environmental variables for the development and managed database are handled differently by DigitalOcean. When connected to a managed database DigitalOcean passes the environmental variables automatically. If the App build fails due to database connection errors check the `.yaml` file (_App Spec_) to confirm the database settings are set at the top of the file and that there are no database environment variables in the file. If there are database environment variables, download the file, delete the environment variables and upload the edited file to DigitalOcean.
 :::
