@@ -164,13 +164,13 @@ From the DigitalOcean website create and App and connect it to a GitHub reposito
 
 ### Connect an App to a database
 
-After creating an App attach a development database. To add a development database On the following screen:
+After creating an App attach a development database. To add a development database on the following screen:
 
 1. Click **add resource**.
-2. Select database and click **Add**.
-3. Select *dev database* and name the database. The default database name is "db" and that will be used in the following example.
-4. Click the **Create and attach** button.
-5. Click the **Next** button to set the environment variables.
+2. Select *Database* and click **Add**.
+3. Select *Dev Database* and name the database. The default database name is "db" and that will be used in the following example.
+4. Click the **Create and Attach** button.
+5. Click the **Next** button to set the Environment Variables (Env Vars).
 
 ### Add environment variables
 
@@ -211,7 +211,7 @@ It is possible to copy the secrets from the local `.env` file or to generate new
 When the preceding steps are completed DigitalOcean should automatically try to build and deploy the application. The Strapi admin panel is accessed at `{your App domain}/admin` once the application is successfully deployed.
 
 ::: tip
-If the build does not start, click the **Actions** button in the upper right and select *force rebuild and deploy*.
+If the build does not start, click the **Actions** button and select *force rebuild and deploy*.
 :::
 
 ## Add a managed database
@@ -220,12 +220,12 @@ DigitalOcean managed databases are a production-scale database solution for a de
 
 - removing the development database and database environment variables,
 - installing the `pg-connection-string` dependency,
-- changing the production `database` file,
+- changing the production `database` configuration file,
 - creating and attaching the database in the DigitalOcean platform.
 
 ### Modify the Strapi application
 
-When a managed database is attached to a Strapi application, the connection parameters are passed directly from the database to the application `.yaml` file. This requires a modification to the `config/env/production/database` file and the addition of the `pg-connection-string` dependency.
+When a managed database is attached to a Strapi application, the connection parameters are passed directly from the database to the application `.yaml` file (*App Spec* in the DigitalOcean settings). This requires a modification to the `config/env/production/database` file and the addition of the `pg-connection-string` dependency.
 
 To add the `pg-connection-string` dependency navigate to the project directory and install `pg-connection-string`:
 
@@ -311,6 +311,8 @@ export default ({ env }) => ({
 </code-group>
 
 ### Modify settings on DigitalOcean
+
+SOmething here.
 
 1. Create a managed database.
 2. Attach the managed database to the App.
