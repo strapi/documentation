@@ -83,31 +83,29 @@ yarn develop
 
 ## Use TypeScript typings
 
-Strapi provides typings on the Strapi class to improve the TypeScript experience. In the following example a `register` method is added to `./src/index.ts`. For example, when the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (`register`, `bootstrap` and `destroy`) are returned by the code editor. The following example is illustrated statically and the second tab shows an animated example.
+Strapi provides typings on the `Strapi` class to improve the TypeScript developing experience. These typings come with an autocomplete feature that automatically offer suggestions while developing.
 
-:::: tabs card
+To experience TypeScript-based autocomplete while developing Strapi applications, you could try the following:
 
-::: tab STATIC EXAMPLE
+1. From your code editor, open the `./src/index.ts` file.
+2. In the `register` method, declare the `strapi` argument as of type `Strapi`:
 
-```ts
-// path: ./src/index.ts
+    ```js
+    // path: ./src/index.ts
 
-import '@strapi/strapi';
+    import '@strapi/strapi';
 
-export default {
+    export default {
 
-  register( {strapi }: { strapi: Strapi }) {
-    strapi.runLifecyclesFunctions('register') .then(()  => console.log('hello world')
-    )
+      register( {strapi }: { strapi: Strapi }) {
+      },
+    };
     
-  },
-};
-```
+    ```
 
-:::
-
-::::
-
+2. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available interfaces.
+3. Choose `runLifecyclesfunction` from the list.
+4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of them and the code will autocomplete.
 
 ## Develop a plugin using TypeScript
 
