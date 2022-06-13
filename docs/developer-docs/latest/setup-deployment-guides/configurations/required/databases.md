@@ -28,7 +28,7 @@ The `./config/database.js` accepts 2 main configuration objects:
 | `debug`                                                  | Show database exchanges and errors.                                                         | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                               | `Boolean` | `true`  |
 | `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                       | `Object`  | -       |
-| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in ms) | `Integer` | `60000` |
+| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 #### Connection parameters
 
@@ -53,12 +53,12 @@ The `connection.pool` object optionally found in `./config/database.js` is used 
 |-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
 | `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `0`     |
 | `max`                       | Maximum number of database connections to keepalive                                                                                                                                        | `Integer`  | `10`    |
-| `acquireTimeoutMillis`      | Time in ms before timing out a database connection attempt                                                                                                                                 | `Integer`  | -       |
-| `createTimeoutMillis`       | Time in ms before timing out a create query attempt                                                                                                                                        | `Integer`  | -       |
-| `destroyTimeoutMillis`      | Time in ms before timing out a destroy query attempt                                                                                                                                       | `Integer`  | -       |
-| `idleTimeoutMillis`         | Time in ms before free database connections are destroyed                                                                                                                                  | `Integer`  | -       |
-| `reapIntervalMillis`        | Time in ms to check for idle database connections to destroy                                                                                                                               | `Integer`  | -       |
-| `createRetryIntervalMillis` | Time in ms to idle before retrying failed create actions                                                                                                                                   | `Integer`  | -       |
+| `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                                 | `Integer`  | -       |
+| `createTimeoutMillis`       | Time in milliseconds before timing out a create query attempt                                                                                                                                        | `Integer`  | -       |
+| `destroyTimeoutMillis`      | Time in milliseconds before timing out a destroy query attempt                                                                                                                                       | `Integer`  | -       |
+| `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                                  | `Integer`  | -       |
+| `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                               | `Integer`  | -       |
+| `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                                   | `Integer`  | -       |
 | `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
 
 ### `settings` configuration object
