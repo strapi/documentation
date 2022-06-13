@@ -80,9 +80,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           │           └ schema.json
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-│     │     └──── (middleware-name)
-│     │           ├ defaults.json
-│     │           └ index.js
+│     │     └──── (middleware-name).js
 │     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
 │     │     └──── (plugin-name)
 │     │           ├──── admin
