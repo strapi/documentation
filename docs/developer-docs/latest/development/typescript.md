@@ -106,12 +106,6 @@ export default {
 
 :::
 
-::: tab ANIMATED GIF
-
-![Animated gif demonstrating TypeScript typings](./TypeScript-typing.gif)
-
-:::
-
 ::::
 
 
