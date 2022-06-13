@@ -143,23 +143,20 @@ To upload files to your application.
 <code-block title="NODE.JS">
 
 ```js
-import { FormData, Blob } from "formdata-node"
-import { FormDataEncoder } from  "form-data-encoder"
-import { Readable } from "stream"
-import fetch from 'node-fetch';
-import fs from 'fs';
+import { FormData } from 'formdata-node';
+import fetch, { blobFrom } from 'node-fetch';
 
-const file = fs.createReadStream('path-to-your-file');
+const file = await blobFrom('./1.png', 'image/png');
 const form = new FormData();
 
-form.append('files', file);
+form.append('files', file, "iamge.png");
 
-const encoder = new FormDataEncoder(form);
+const response = await fetch('http://localhost:1337/api/upload', {
+  method: 'post',
+  body: form,
+});
 
-await fetch('http://localhost:1337/api/upload', {
-    method: "post",
-    headers: encoder.headers,
-    body: Readable.from(encoder)
+console.log(await response.json());
 });
 ```
 
