@@ -105,7 +105,11 @@ const developer = [
                 '/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md',
                 'Role-Based Access Control (RBAC)',
               ],
+              [
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md',
+                'TypeScript',
             ],
+          ],
           },
         ],
       },
