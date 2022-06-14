@@ -84,20 +84,20 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 
 | Middleware                                                                                  | Added by Default | Required |
 |---------------------------------------------------------------------------------------------|------------------|----------|
-| [body](#body)                                                                               | `true`           | `true`   |
-| [compression](#compression)                                                                 | `false`          | `false`  |
-| [cors](#cors)                                                                               | `true`           | `true`   |
-| [errors](#errors)                                                                           | `true`           | `true`   |
-| [favicon](#favicon)                                                                         | `true`           | `true`   |
-| [ip](#ip)                                                                                   | `false`          | `false`  |
-| [logger](#logger)                                                                           | `true`           | `false`  |
-| [poweredBy](#poweredby)                                                                     | `true`           | `false`  |
-| [query](#query)                                                                             | `true`           | `true`   |
-| [response-time](#response-time)                                                             | `false`          | `false`  |
-| [responses](/developer-docs/latest/development/backend-customization/requests-responses.md) | -                | `true`   |
-| [public](#public)                                                                           | `true`           | `true`   |
-| [security](#security)                                                                       | `true`           | `true`   |
-| [session](#session)                                                                         | `true`           | `false`  |
+| [body](#body)                                                                               | Yes              | Yes      |
+| [compression](#compression)                                                                 | No               | No       |
+| [cors](#cors)                                                                               | Yes              | Yes      |
+| [errors](#errors)                                                                           | Yes              | Yes      |
+| [favicon](#favicon)                                                                         | Yes              | Yes      |
+| [ip](#ip)                                                                                   | No               | No       |
+| [logger](#logger)                                                                           | Yes              | No       |
+| [poweredBy](#poweredby)                                                                     | Yes              | No       |
+| [query](#query)                                                                             | Yes              | Yes      |
+| [response-time](#response-time)                                                             | No               | No       |
+| [responses](/developer-docs/latest/development/backend-customization/requests-responses.md) | Yes              | Yes      |
+| [public](#public)                                                                           | Yes              | Yes      |
+| [security](#security)                                                                       | Yes              | Yes      |
+| [session](#session)                                                                         | Yes              | No       |
 
 ### `body`
 
