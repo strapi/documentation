@@ -62,7 +62,7 @@ If you aren't sure where to place a middleware in the stack, add it to the end o
 Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
 
 | Middleware type   | Origin                                                                                                                                                                                                                                  | Naming convention                                                                                                    |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | Internal          | Built-in middlewares (i.e. included with Strapi), automatically loaded                                                                                                                                                                  | `strapi::middleware-name`                                                                                            |
 | Application-level | Loaded from the `./src/middlewares` folder                                                                                                                                                                                              | `global::middleware-name`                                                                                            |
 | API-level         | Loaded from the `./src/api/[api-name]/middlewares` folder                                                                                                                                                                               | `api::api-name.middleware-name`                                                                                      |
@@ -74,7 +74,7 @@ Strapi middlewares can be classified into different types depending on their ori
 Middlewares can have an optional configuration with the following parameters:
 
 | Parameter | Description                                                       | Type     |
-| --------- | ----------------------------------------------------------------- | -------- |
+|-----------|-------------------------------------------------------------------|----------|
 | `config`  | Used to define or override the middleware configuration           | `Object` |
 | `resolve` | Path to the middleware's folder (useful for external middlewares) | `String` |
 
@@ -82,31 +82,29 @@ Middlewares can have an optional configuration with the following parameters:
 
 Strapi's core includes the following internal middlewares, mostly used for performances, security and error handling:
 
-- [body](#body),
-- [compression](#compression),
-- [cors](#cors),
-- [errors](#errors),
-- [favicon](#favicon),
-- [ip](#ip),
-- [logger](#logger),
-- [poweredBy](#poweredby),
-- [query](#query),
-- [response-time](#response-time),
-- responses, which handle the [responses](/developer-docs/latest/development/backend-customization/requests-responses.md),
-- [public](#public),
-- [security](#security),
-- and [session](#session).
-
-::: caution
-The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `favicon`. They should not be removed as it will throw an error.
-:::
+| Middleware                                                                                  | Added by Default | Required |
+|---------------------------------------------------------------------------------------------|------------------|----------|
+| [body](#body)                                                                               | `true`           | `true`   |
+| [compression](#compression)                                                                 | `false`          | `false`  |
+| [cors](#cors)                                                                               | `true`           | `true`   |
+| [errors](#errors)                                                                           | `true`           | `true`   |
+| [favicon](#favicon)                                                                         | `true`           | `true`   |
+| [ip](#ip)                                                                                   | `false`          | `false`  |
+| [logger](#logger)                                                                           | `true`           | `false`  |
+| [poweredBy](#poweredby)                                                                     | `true`           | `false`  |
+| [query](#query)                                                                             | `true`           | `true`   |
+| [response-time](#response-time)                                                             | `false`          | `false`  |
+| [responses](/developer-docs/latest/development/backend-customization/requests-responses.md) | -                | `true`   |
+| [public](#public)                                                                           | `true`           | `true`   |
+| [security](#security)                                                                       | `true`           | `true`   |
+| [session](#session)                                                                         | `true`           | `false`  |
 
 ### `body`
 
 The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body). It accepts the following options:
 
 | Option      | Description                               | Type      | Default |
-| ----------- | ----------------------------------------- | --------- | ------- |
+|-------------|-------------------------------------------|-----------|---------|
 | `multipart` | Parse multipart bodies                    | `Boolean` | `true`  |
 | `patchKoa`  | Patch request body to Koa's `ctx.request` | `Boolean` | `true`  |
 
@@ -122,9 +120,9 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 
 <!-- we definitely need to add multimarkdown support 😅  -->
 
-| Option              | Type                                                                                                                                                                                                                                            | Description          | Default value                                                  |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | -------------------------------------------------------------- |
-| `origin`            | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `String` or `Array`  | `'*'`                                                          |
+| Option   | Type                                                                                                                                                                                                                                            | Description         | Default value |
+|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|---------------|
+| `origin` | Allowed URLs.<br/><br/>The value(s) can be:<ul><li>strings (e.g. `http://example1.com, http://example2.com`)</li><li>an array of strings (e.g. `['http://www.example1.com', 'http://example1.com']`)</li><li>or `*` to allow all URLs</li></ul> | `String` or `Array` | `'*'`         |
 | `maxAge`            | Configure the `Access-Control-Max-Age` CORS header parameter, in seconds                                                                                                                                                                        | `String` or `Number` | `31536000`                                                     |  |
 | `credentials`       | Configure the `Access-Control-Allow-Credentials` CORS header                                                                                                                                                                                    | `Boolean`            | `true`                                                         |
 | `methods`           | Configure the `Access-Control-Allow-Methods` CORS header                                                                                                                                                                                        | `Array` or `String`  | `['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']` |
@@ -142,7 +140,7 @@ The middleware doesn't have any configuration option.
 The `favicon` middleware serves the favicon and is based on [koa-favicon](https://github.com/koajs/favicon). It accepts the following options:
 
 | Option   | Description                                      | Type      | Default value   |
-| -------- | ------------------------------------------------ | --------- | --------------- |
+|----------|--------------------------------------------------|-----------|-----------------|
 | `path`   | Path to the favicon file                         | `String`  | `'favicon.ico'` |
 | `maxAge` | Cache-control max-age directive, in milliseconds | `Integer` | `86400000`      |
 
@@ -151,7 +149,7 @@ The `favicon` middleware serves the favicon and is based on [koa-favicon](https:
 The `ip` middleware is an IP filter middleware based on [koa-ip](https://github.com/nswbmw/koa-ip). It accepts the following options:
 
 | Option      | Description     | Type    | Default value |
-| ----------- | --------------- | ------- | ------------- |
+|-------------|-----------------|---------|---------------|
 | `whitelist` | Whitelisted IPs | `Array` | `[]`          |
 | `blacklist` | Blacklisted IPs | `Array` | `[]`          |
 
@@ -191,7 +189,7 @@ module.exports = {
 The `poweredBy` middleware adds a `X-Powered-By` parameter to the response header. It accepts the following options:
 
 | Option      | Description                        | Type     | Default value          |
-| ----------- | ---------------------------------- | -------- | ---------------------- |
+|-------------|------------------------------------|----------|------------------------|
 | `poweredBy` | Value of the `X-Powered-By` header | `String` | `'Strapi <strapi.io>'` |
 
 ### `query`
@@ -199,7 +197,7 @@ The `poweredBy` middleware adds a `X-Powered-By` parameter to the response heade
 The `query` middleware is a query parser based on [qs](https://github.com/ljharb/qs). It accepts the following options:
 
 | Option               | Description                                                                                                                      | Type      | Default value |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------- |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------------|-----------|---------------|
 | `strictNullHandling` | Distinguish between null values and empty strings (see [qs documentation](https://github.com/ljharb/qs#handling-of-null-values)) | `Boolean` | `true`        |
 | `arrayLimit`         | Maximum index limit when parsing arrays (see [qs documentation](https://github.com/ljharb/qs#parsing-arrays))                    | `Number`  | `100`         |
 | `depth`              | Maximum depth of nested objects when parsing objects (see [qs documentation](https://github.com/ljharb/qs#parsing-objects))      | `Number`  | `20`          |
@@ -215,7 +213,7 @@ The middleware doesn't have any configuration options.
 The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
 
 | Option         | Description                                         | Type      | Default value |
-| -------------- | --------------------------------------------------- | --------- | ------------- |
+|----------------|-----------------------------------------------------|-----------|---------------|
 | `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
 | `defaultIndex` | Display default index page at `/` and `/index.html` | `Boolean` | `true`        |
 
@@ -228,7 +226,7 @@ You can customize the path of the public folder by editing the [server configura
 The security middleware is based on [koa-helmet](https://helmetjs.github.io/). It accepts the following options:
 
 | Option                      | Description                                                                                                                                                                                                                                         | Type                                                                         | Default value                                                              |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | `crossOriginEmbedderPolicy` | Set the `Cross-Origin-Embedder-Policy` header to `require-corp`                                                                                                                                                                                     | `Boolean`                                                                    | `false`                                                                    |
 | `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                                                                                                                                                                         | `Boolean`                                                                    | `false`                                                                    |
 | `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                                                                                                                                                                       | `Boolean`                                                                    | `false`                                                                    |
@@ -243,7 +241,7 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 The `session` middleware allows the use of cookie-based sessions, based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
 | Option       | Description                                                                                                                                                                                                                                                 | Type                     | Default value                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | --------------------------------------- |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
 | `key`        | Cookie key                                                                                                                                                                                                                                                  | `String`                 | `'koa.sess'`                            |
 | `maxAge`     | Maximum lifetime of the cookies, in milliseconds. `'session'` will result in a cookie that expires when the session or browser is closed.                                                                                                                   | `Integer` or `'session'` | `86400000`                              |
 | `autoCommit` | Automatically commit headers                                                                                                                                                                                                                                | `Boolean`                | `true`                                  |
