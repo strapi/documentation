@@ -16,10 +16,9 @@ From the Media Library, it is possible to view the list of folders and browse a 
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
-- the folder title (1)
-- the number of subfolders and assets (2) the current folder contains
-- the subfolders (3) the current folder contains
-- all assets (4) from this folder
+- the folder title and the number of subfolders and assets the current folder contains (1)
+- the subfolders (2) the current folder contains
+- all assets (3) from this folder
 
 <!-- TODO: replace screenshot -->
 ![🏞 screenshot - Media library one folder deep, with back button and updated folder title](../assets/media-library/media-library_folder-content.png)
@@ -34,9 +33,9 @@ To navigate back to the parent folder, one level up, use the **Back** button at 
 To create a new folder in the Media Library:
 
 1. Click on **Add new folder** in the upper right of the Media Library interface.
-2. In the window that pops up, type a name for the new folder in the _Folder name_ field.
-3. (optional) In the _Folder location_ drop-down list, choose a location for the new folder. The default location is the active folder.
-4. Click **Save**.
+2. In the window that pops up, type a name for the new folder in the _Name_ field.
+3. (optional) In the _Location_ drop-down list, choose a location for the new folder. The default location is the active folder.
+4. Click **Create**.
 
 ::: note
 There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested folder, as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](../assets/icons/search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
@@ -53,8 +52,8 @@ To bulk move assets and folders to another folder:
 
 1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
 2. Click the ![Move icon](../assets/icons/move.svg) **Move** button at the top of the interface.
-3. In the _Move elements to_ pop-up window, select the new folder from the _Folder location_ drop-down list.
-4. Click **Confirm**.
+3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
+4. Click **Move**.
 
 ::: note
 An individual asset can also be moved to a folder when [editing the asset](/user-docs/latest/media-library/managing-assets.md).
@@ -65,7 +64,7 @@ An individual asset can also be moved to a folder when [editing the asset](/user
 Once created, a folder can be renamed, moved or deleted. To manage a single folder:
 
 1. In the Folders part of the Media library, hover the folder to be edited and click its edit button ![Edit icon](../assets/icons/edit.svg).
-2. In the window that pops up, update the name and location with the _Folder name_ field and _Folder location_ drop-down list, respectively.
+2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
 3. Click **Save**.
 
 ## Deleting folders
