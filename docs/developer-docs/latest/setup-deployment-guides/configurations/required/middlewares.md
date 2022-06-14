@@ -164,7 +164,7 @@ The `compression` middleware is based on [koa-compress](https://github.com/koajs
 
 | Option            | Description                                                                | Type                | Default    |
 |-------------------|----------------------------------------------------------------------------|---------------------|------------|
-| `threshold`       | Minimum response size in bytes to compress                                 | `String or Integer` | `1kb`      |
+| `threshold`       | Minimum response size in bytes to compress                                 | `String` or `Integer` | `1kb`      |
 | `br`              | Toggle Brotli compression                                                  | `Boolean`           | `true`     |
 | `gzip`            | Toggle gzip compression                                                    | `Boolean`           | `false`    |
 | `deflate`         | Toggle deflate compression                                                 | `Boolean`           | `false`    |
