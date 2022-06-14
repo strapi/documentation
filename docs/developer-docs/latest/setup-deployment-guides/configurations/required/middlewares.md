@@ -117,7 +117,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 - and [session](#session).
 
 ::: caution
-The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `session`, `favicon`. They should not be removed as it will throw an error.
+The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `session`, `favicon`. All of them except `session` should not be removed as it will throw an error.
 :::
 
 ### `body`
