@@ -496,7 +496,7 @@ The `session` middleware allows the use of cookie-based sessions, based on [koa-
 | Option       | Description                                                                                                  | Type                     | Default value                           |
 |--------------|--------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
 | `key`        | Cookie key                                                                                                   | `String`                 | `'koa.sess'`                            |
-| `maxAge`     | Maximum lifetime of the cookies, in ms. Using `'session'` will expire the cookie when the session is closed. | `Integer` or `'session'` | `86400000`                              |
+| `maxAge`     | Maximum lifetime of the cookies, in milliseconds. Using `'session'` will expire the cookie when the session is closed. | `Integer` or `'session'` | `86400000`                              |
 | `autoCommit` | Automatically commit headers                                                                                 | `Boolean`                | `true`                                  |
 | `overwrite`  | Can overwrite or not                                                                                         | `Boolean`                | `true`                                  |
 | `httpOnly`   | Is httpOnly or not. Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks.                      | `Boolean`                | `true`                                  |
