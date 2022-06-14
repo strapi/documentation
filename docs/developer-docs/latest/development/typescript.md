@@ -1,7 +1,7 @@
 ---
 title: Typescript - Strapi Developer Docs
 description: Learn how you can use Typescript for your Strapi application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/databases/typescript.html
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescript.html
 ---
 
 # TypeScript development
