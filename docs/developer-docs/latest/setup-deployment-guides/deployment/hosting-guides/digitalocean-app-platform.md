@@ -174,7 +174,7 @@ After creating an App attach a development database. To add a development databa
 
 ### Add environment variables
 
-In the DigitalOcean App Platform there are App and Component-level environment variables. Strapi applications in production need App-level variables to set the database connection, and can use either Component or App-level variables for secrets storage. The following procedure is to add the database variables at the App level and store the Strapi secrets at the Component level.
+In the DigitalOcean App Platform there are Global and Component-level environment variables. Strapi applications in production need Global-level variables to set the database connection, and can use either Component or Global-level variables for secrets storage. The following procedure is to add the database variables at the Global level and store the Strapi secrets at the Component level.
 
 1. Add the database, URL, and NODE_ENV variables to the global environment table:
 
