@@ -12,7 +12,7 @@ The purpose of this guide is to allow users to deploy Strapi applications on the
 Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues) or [submit a pull request](https://github.com/strapi/documentation/pulls) to improve the documentation.
 :::
 
-## Prepare
+## Prepare the deployment
 
 Prior to starting the deployment process each user needs:
 
@@ -158,7 +158,7 @@ From the DigitalOcean website create and App and connect it to a GitHub reposito
 1. Click on the **Create** button and select *Apps*.
 2. Select GitHub and authorize access to the correct repository.
 3. Select the branch.
-4. (Optional) select the source directory.
+4. (optional) Select the source directory.
 5. Choose whether or not to "Autodeploy" when an update is pushed to the GitHub repository.
 6. Click the **Next** button.
 
