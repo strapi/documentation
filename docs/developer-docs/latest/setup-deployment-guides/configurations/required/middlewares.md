@@ -268,7 +268,7 @@ The `ip` middleware is an IP filter middleware based on [koa-ip](https://github.
 | `blacklist` | Blacklisted IPs | `Array` | `[]`          |
 
 :::tip
-Both whitelist and blacklist support wildcards so it's possible to do something like
+The `whitelist` and `blacklist` options support wildcards (e.g. `whitelist: ['192.168.0.*', '127.0.0.*']`) and spreads (e.g. `whitelist: ['192.168.*.[3-10]']`).
 `whitelist: ['192.168.0.*', '127.0.0.*']` or using spreads such as `whitelist: ['192.168.*.[3-10]']`
 :::
 
