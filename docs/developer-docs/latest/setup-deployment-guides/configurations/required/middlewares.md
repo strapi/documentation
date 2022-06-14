@@ -135,7 +135,6 @@ The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body).
 | `formidable` | Options to pass to the `formidable` multipart parser (see [node-formidable documentation](https://github.com/felixge/node-formidable)). | `Object`              | `undefined` |
 
 For a full list of available options for `koa-body`, check the [koa-body documentation](https://github.com/koajs/koa-body#options).
-For a full list of available options for `formidable`, check the [node-formidable documentation](https://github.com/felixge/node-formidable).
 
 ::: details Example: Custom configuration for the body middleware
 
