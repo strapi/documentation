@@ -7,10 +7,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # TypeScript project configuration
 
-<!-- some text here-->
-
-## Understand TypeScript support
-
 TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) with the following dedicated folders and configuration files:
 
 | TypeScript-Specific directories and files | Purpose                                                                                                                                           | Location         |
