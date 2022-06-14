@@ -132,7 +132,7 @@ The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body).
 | `formLimit`  | The byte (if integer) limit of the form body       | `String` or `Integer` | `56kb`      |
 | `textLimit`  | The byte (if integer) limit of the text body       | `String` or `Integer` | `56kb`      |
 | `encoding`   | Sets encoding for incoming form fields             | `String`              | `utf-8`     |
-| `formidable` | Options to pass to the formidable multipart parser | `Object`              | `undefined` |
+| `formidable` | Options to pass to the `formidable` multipart parser (see [node-formidable documentation](https://github.com/felixge/node-formidable)). | `Object`              | `undefined` |
 
 For a full list of available options for `koa-body`, check the [koa-body documentation](https://github.com/koajs/koa-body#options).
 For a full list of available options for `formidable`, check the [node-formidable documentation](https://github.com/felixge/node-formidable).
