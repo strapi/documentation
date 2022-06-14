@@ -12,40 +12,7 @@ This section is still a work in progress and will continue to be updated and imp
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new and existing projects running v4.2.0 and above. The core Developer Documentation contains code snippets in both JavaScript and TypeScript.
 
-## Understand TypeScript support
 
-TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) with the following dedicated folders and configuration files:
-
-| TypeScript-Specific directories and files | Purpose                                                                                                                                           | Location         |
-|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
-| `./dist` directory                        | Adds the location for compiling the project JavaScript source code.                                                                               | application root |
-| `build` directory                         | Contains the compiled administration panel JavaScript source code.  The directory is created on the first `yarn build` or `npm run build` command | `./dist/`         |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the server.                                                                                                    | application root |
-| `tsconfig.json` file                      | Manages TypeScript compilation for the admin panel.                                                                                               | `./src/admin/`   |
-
-Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application, run the following commands in the root directory:
-
-<code-group>
-
-<code-block title="NPM">
-
-```sh
-npm run build
-npm run develop
-```
-
-</code-block>
-
- <code-block title="YARN">
-
-```sh
-yarn build
-yarn develop
-```
-
-</code-block>
-
-</code-group>
 
 ## Use TypeScript typings
 
