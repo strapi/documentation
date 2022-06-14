@@ -119,4 +119,3 @@ yarn start                                   # uses host 127.0.0.1
 NODE_ENV=production yarn start               # uses host defined in .env. If not defined, uses 0.0.0.0
 HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
 ```
-
