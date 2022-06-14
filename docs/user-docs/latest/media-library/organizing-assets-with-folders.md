@@ -38,7 +38,7 @@ To create a new folder in the Media Library:
 4. Click **Create**.
 
 ::: note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested folder, as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](../assets/icons/search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](../assets/icons/search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
 :::
 
 ## Moving assets to a folder
