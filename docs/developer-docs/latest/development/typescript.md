@@ -12,40 +12,6 @@ This section is still a work in progress and will continue to be updated and imp
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new and existing projects running v4.2.0 and above. The core Developer Documentation contains code snippets in both JavaScript and TypeScript.
 
-## Create a new TypeScript project
-
-Create a Strapi project with Typescript support by using the `--ts` or `--typescript` flags with either the npm or yarn package manager.
-
-::: tip
-Adding the `--quickstart` flag in addition to the `--ts` flag will create a TypeScript project with an [SQLite database](/developer-docs/latest/setup-deployment-guides/installation/cli.md#creating-a-strapi-project).
-:::
-
-<!-- UPDATE these code blocks for the stable release-->
-
-<code-group>
-
-<code-block title="NPM">
-
-```sh
-npx create-strapi-app@beta my-app --ts
-#or
-npx create-strapi-app@beta my-app --typescript
-```
-
-</code-block>
-
-<!-- <code-block title="YARN">
-```sh
-yarn create-strapi-app@latest my-project --ts
-
-# or
-
-yarn create-strapi-app@latest my-project --typescript
-```
-</code-block> -->
-
-</code-group>
-
 ## Understand TypeScript support
 
 TypeScript-enabled Strapi applications have a specific [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) with the following dedicated folders and configuration files:
