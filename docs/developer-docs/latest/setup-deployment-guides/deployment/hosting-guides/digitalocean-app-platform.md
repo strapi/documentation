@@ -138,7 +138,7 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 
     </code-group>
 
-7. Save the Strapi application locally.
+7. Verify that all of the new and modified files are saved locally.
 8. Commit the project to a remote repository:
 
     ```sh
