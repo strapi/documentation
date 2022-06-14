@@ -96,11 +96,10 @@ To experience TypeScript-based autocomplete while developing Strapi applications
     import '@strapi/strapi';
 
     export default {
-
       register( {strapi }: { strapi: Strapi }) {
+        // ...
       },
     };
-    
     ```
 
 2. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
