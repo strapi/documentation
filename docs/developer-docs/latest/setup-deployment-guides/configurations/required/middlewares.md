@@ -124,14 +124,14 @@ The following built-in middlewares are automatically added by Strapi: `errors`, 
 
 The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body). It accepts the following options:
 
-| Option       | Description                                        | Type                  | Default     |
-|--------------|----------------------------------------------------|-----------------------|-------------|
-| `multipart`  | Parse multipart bodies                             | `Boolean`             | `true`      |
-| `patchKoa`   | Patch request body to Koa's `ctx.request`          | `Boolean`             | `true`      |
-| `jsonLimit`  | The byte (if integer) limit of the JSON body       | `String` or `Integer` | `1mb`       |
-| `formLimit`  | The byte (if integer) limit of the form body       | `String` or `Integer` | `56kb`      |
-| `textLimit`  | The byte (if integer) limit of the text body       | `String` or `Integer` | `56kb`      |
-| `encoding`   | Sets encoding for incoming form fields             | `String`              | `utf-8`     |
+| Option       | Description                                                                                                                             | Type                  | Default     |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------------------|-------------|
+| `multipart`  | Parse multipart bodies                                                                                                                  | `Boolean`             | `true`      |
+| `patchKoa`   | Patch request body to Koa's `ctx.request`                                                                                               | `Boolean`             | `true`      |
+| `jsonLimit`  | The byte (if integer) limit of the JSON body                                                                                            | `String` or `Integer` | `1mb`       |
+| `formLimit`  | The byte (if integer) limit of the form body                                                                                            | `String` or `Integer` | `56kb`      |
+| `textLimit`  | The byte (if integer) limit of the text body                                                                                            | `String` or `Integer` | `56kb`      |
+| `encoding`   | Sets encoding for incoming form fields                                                                                                  | `String`              | `utf-8`     |
 | `formidable` | Options to pass to the `formidable` multipart parser (see [node-formidable documentation](https://github.com/felixge/node-formidable)). | `Object`              | `undefined` |
 
 For a full list of available options for `koa-body`, check the [koa-body documentation](https://github.com/koajs/koa-body#options).
@@ -162,13 +162,13 @@ module.exports = {
 
 The `compression` middleware is based on [koa-compress](https://github.com/koajs/compress). It accepts the following options:
 
-| Option            | Description                                                                | Type                | Default    |
-|-------------------|----------------------------------------------------------------------------|---------------------|------------|
+| Option            | Description                                                                | Type                  | Default    |
+|-------------------|----------------------------------------------------------------------------|-----------------------|------------|
 | `threshold`       | Minimum response size in bytes to compress                                 | `String` or `Integer` | `1kb`      |
-| `br`              | Toggle Brotli compression                                                  | `Boolean`           | `true`     |
-| `gzip`            | Toggle gzip compression                                                    | `Boolean`           | `false`    |
-| `deflate`         | Toggle deflate compression                                                 | `Boolean`           | `false`    |
-| `defaultEncoding` | Specifies what encoders to use for requests without Accept-Encoding header | `String`            | `identity` |
+| `br`              | Toggle Brotli compression                                                  | `Boolean`             | `true`     |
+| `gzip`            | Toggle gzip compression                                                    | `Boolean`             | `false`    |
+| `deflate`         | Toggle deflate compression                                                 | `Boolean`             | `false`    |
+| `defaultEncoding` | Specifies what encoders to use for requests without Accept-Encoding header | `String`              | `identity` |
 
 ::: details Example: Custom configuration for the compression middleware
 
@@ -391,13 +391,13 @@ The middleware doesn't have any configuration options.
 
 The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
 
-| Option         | Description                                                                              | Type      | Default value |
-|----------------|------------------------------------------------------------------------------------------|-----------|---------------|
-| `maxAge`       | Cache-control max-age directive, in milliseconds                                         | `Integer` | `60000`       |
-| `hidden`       | Allow transfer of hidden files                                                           | `Boolean` | `false`       |
+| Option         | Description                                                                                  | Type      | Default value |
+|----------------|----------------------------------------------------------------------------------------------|-----------|---------------|
+| `maxAge`       | Cache-control max-age directive, in milliseconds                                             | `Integer` | `60000`       |
+| `hidden`       | Allow transfer of hidden files                                                               | `Boolean` | `false`       |
 | `defer`        | If `true`, serves after `return next()`, allowing any downstream middleware to respond first | `Boolean` | `false`       |
-| `index`        | Default file name                                                                        | `String`  | `index.html`  |
-| `defaultIndex` | Display default index page at `/` and `/index.html`                                      | `Boolean` | `true`        |
+| `index`        | Default file name                                                                            | `String`  | `index.html`  |
+| `defaultIndex` | Display default index page at `/` and `/index.html`                                          | `Boolean` | `true`        |
 
 :::tip
 You can customize the path of the public folder by editing the [server configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#available-options).
@@ -435,10 +435,10 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 | `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                         | `Boolean`             | `false`       |
 | `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Boolean`             | `false`       |
 | `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0` | `Boolean`             | `false`       |
-| `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | See below     |
+| `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | -             |
 | `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |
 | `hsts.includeSubDomains`    | Applies HSTS to all subdomains of the host                                                    | `Boolean`             | `true`        |
-| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks, set to `false` to disable   | `Boolean` or `Object` | See below     |
+| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks, set to `false` to disable | `Boolean` or `Object` | -             |
 | `frameguard.action`         | Value must be either `deny` or `sameorigin`                                                   | `String`              | `sameorigin`  |
 
 ::: tip
@@ -492,18 +492,18 @@ module.exports = {
 
 The `session` middleware allows the use of cookie-based sessions, based on [koa-session](https://github.com/koajs/session). It accepts the following options:
 
-| Option       | Description                                                                                                  | Type                     | Default value                           |
-|--------------|--------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
-| `key`        | Cookie key                                                                                                   | `String`                 | `'koa.sess'`                            |
+| Option       | Description                                                                                                            | Type                     | Default value                           |
+|--------------|------------------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
+| `key`        | Cookie key                                                                                                             | `String`                 | `'koa.sess'`                            |
 | `maxAge`     | Maximum lifetime of the cookies, in milliseconds. Using `'session'` will expire the cookie when the session is closed. | `Integer` or `'session'` | `86400000`                              |
-| `autoCommit` | Automatically commit headers                                                                                 | `Boolean`                | `true`                                  |
-| `overwrite`  | Can overwrite or not                                                                                         | `Boolean`                | `true`                                  |
-| `httpOnly`   | Is httpOnly or not. Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks.                      | `Boolean`                | `true`                                  |
-| `signed`     | Sign the cookies                                                                                             | `Boolean`                | `true`                                  |
-| `rolling`    | Force a session identifier cookie to be set on every response.                                               | `Boolean`                | `false`                                 |
-| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                     | `Boolean`                | `false`                                 |
-| `secure`     | Force the use of HTTPS                                                                                       | `Boolean`                | `true` in production, `false` otherwise |
-| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                   | `String`                 | `null`                                  |
+| `autoCommit` | Automatically commit headers                                                                                           | `Boolean`                | `true`                                  |
+| `overwrite`  | Can overwrite or not                                                                                                   | `Boolean`                | `true`                                  |
+| `httpOnly`   | Is httpOnly or not. Using `httpOnly` helps mitigate cross-site scripting (XSS) attacks.                                | `Boolean`                | `true`                                  |
+| `signed`     | Sign the cookies                                                                                                       | `Boolean`                | `true`                                  |
+| `rolling`    | Force a session identifier cookie to be set on every response.                                                         | `Boolean`                | `false`                                 |
+| `renew`      | Renew the session when the session is nearly expired, so the user keeps being logged in.                               | `Boolean`                | `false`                                 |
+| `secure`     | Force the use of HTTPS                                                                                                 | `Boolean`                | `true` in production, `false` otherwise |
+| `sameSite`   | Restrict the cookies to a first-party or same-site context                                                             | `String`                 | `null`                                  |
 
 ::: details Example: Custom configuration for the session middleware
 
