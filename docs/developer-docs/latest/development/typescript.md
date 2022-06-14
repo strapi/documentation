@@ -83,7 +83,7 @@ yarn develop
 
 ## Use TypeScript typings
 
-Strapi provides typings on the `Strapi` class to improve the TypeScript developing experience. These typings come with an autocomplete feature that automatically offer suggestions while developing.
+Strapi provides typings on the `Strapi` class to improve the TypeScript developing experience. These typings come with an autocomplete feature that automatically offers suggestions while developing.
 
 To experience TypeScript-based autocomplete while developing Strapi applications, you could try the following:
 
