@@ -166,7 +166,7 @@ From the DigitalOcean website create and App and connect it to a GitHub reposito
 
 After creating an App attach a development database. To add a development database on the following screen:
 
-1. Click **add resource**.
+1. Click **Add Resource**.
 2. Select *Database* and click **Add**.
 3. Select *Dev Database* and name the database. The default database name is "db" and is used to prefix the database values in the [global environment table](#add-environment-variables). If another database name is used, it should be substituted for "db".
 4. Click the **Create and Attach** button.
