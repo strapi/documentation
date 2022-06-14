@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescrip
 # TypeScript development
 
 ::: callout 🚧  TypeScript documentation
-This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io). Check the [beta documentation](docs-next.strapi.io) for faster access to TypeScript documentation.
+This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io). Check the [beta documentation](https://docs-next.strapi.io/developer-docs/latest/development/typescript.html) to access the latest TypeScript documentation.
 :::
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.2.0 and above. TypeScript-enabled projects allow developing plugins with TypeScript as well as using TypeScript typings.
@@ -57,7 +57,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
     import '@strapi/strapi';
 
     export default {
-      register( {strapi }: { strapi: Strapi }) {
+      register( { strapi }: { strapi: Strapi }) {
         // ...
       },
     };
@@ -65,7 +65,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 
 2. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
 3. Choose `runLifecyclesfunction` from the list.
-4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of them and the code will autocomplete.
+4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
 ## Develop a plugin using TypeScript
 
