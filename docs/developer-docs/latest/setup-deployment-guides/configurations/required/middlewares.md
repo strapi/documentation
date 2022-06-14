@@ -101,24 +101,22 @@ Middlewares can have an optional configuration with the following parameters:
 
 Strapi's core includes the following internal middlewares, mostly used for performances, security and error handling:
 
-- [body](#body),
-- [compression](#compression),
-- [cors](#cors),
-- [errors](#errors),
-- [favicon](#favicon),
-- [ip](#ip),
-- [logger](#logger),
-- [poweredBy](#poweredby),
-- [query](#query),
-- [response-time](#response-time),
-- responses, which handle the [responses](/developer-docs/latest/development/backend-customization/requests-responses.md),
-- [public](#public),
-- [security](#security),
-- and [session](#session).
-
-::: caution
-The following built-in middlewares are automatically added by Strapi: `errors`, `security`, `cors`, `query`, `body`, `public`, `session`, `favicon`. All of them except `session` should not be removed as it will throw an error.
-:::
+| Middleware                                                                                  | Added by Default | Required |
+| ------------------------------------------------------------------------------------------- | ---------------- | -------- |
+| [body](#body)                                                                               | Yes              | Yes      |
+| [compression](#compression)                                                                 | No               | No       |
+| [cors](#cors)                                                                               | Yes              | Yes      |
+| [errors](#errors)                                                                           | Yes              | Yes      |
+| [favicon](#favicon)                                                                         | Yes              | Yes      |
+| [ip](#ip)                                                                                   | No               | No       |
+| [logger](#logger)                                                                           | Yes              | No       |
+| [poweredBy](#poweredby)                                                                     | Yes              | No       |
+| [query](#query)                                                                             | Yes              | Yes      |
+| [response-time](#response-time)                                                             | No               | No       |
+| [responses](/developer-docs/latest/development/backend-customization/requests-responses.md) | Yes              | Yes      |
+| [public](#public)                                                                           | Yes              | Yes      |
+| [security](#security)                                                                       | Yes              | Yes      |
+| [session](#session)                                                                         | Yes              | No       |
 
 ### `body`
 
