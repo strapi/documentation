@@ -203,7 +203,7 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
 6. Click **Save**.
 
 ::: note
-It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [Openssl](https://www.openssl.org/).
+It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [OpenSSL](https://www.openssl.org/).
 :::
 
 ## Deploy and access a Strapi application
