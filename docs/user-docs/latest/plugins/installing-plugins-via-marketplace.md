@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins
 
 # Using the Marketplace
 
-The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](./introduction-to-plugins.html#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
+The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](./introduction-to-plugins.md#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
  ::: strapi In-app Marketplace vs. Market website
 The Marketplace in the admin panel only displays v4 plugins, but all plugins for all Strapi versions are discoverable in the [Strapi Market](https://market.strapi.io). 

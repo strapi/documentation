@@ -11,7 +11,7 @@ Strapi is built around different types of plugins. Every default Strapi applicat
 * Content Manager (see [Introduction to the Content Manager](../content-manager/introduction-to-content-manager.md))
 * Content Type Builder (see [Introduction to the Content-type Builder](../content-types-builder/introduction-to-content-types-builder.md))
 * Email
-* Media Library (implemented via the [Upload plugin](../../../developer-docs/latest/plugins/upload.html))
+* Media Library (implemented via the [Upload plugin](../../../developer-docs/latest/plugins/upload.md))
 * Internationalization
 * Roles and Permissions
 
@@ -32,5 +32,5 @@ Some plugins can be further extended through the configuration of _providers_, p
 
 Currently, the only plugins designed to work with providers are the:
 
-* [Email plugin](../../../developer-docs/latest/plugins/email.html#configure-the-plugin), and
-* [Media Library plugin](../../../developer-docs/latest/plugins/upload.html#using-a-provider) (implemented via the [Upload plugin](../../../developer-docs/latest/plugins/upload.html)).
+* [Email plugin](../../../developer-docs/latest/plugins/email.md#configure-the-plugin), and
+* [Media Library plugin](../../../developer-docs/latest/plugins/upload.md#using-a-provider) (implemented via the [Upload plugin](../../../developer-docs/latest/plugins/upload.md)).

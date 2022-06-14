@@ -400,7 +400,7 @@ The `public` middleware is a static file serving middleware, based on [koa-stati
 | `defaultIndex` | Display default index page at `/` and `/index.html`                                          | `Boolean` | `true`        |
 
 :::tip
-You can customize the path of the public folder by editing the [server configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#available-options).
+You can customize the path of the public folder by editing the [server configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md#available-options).
 :::
 
 ::: details Example: Custom configuration for the public middleware
