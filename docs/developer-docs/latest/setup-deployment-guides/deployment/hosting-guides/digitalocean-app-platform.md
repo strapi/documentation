@@ -188,10 +188,7 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
     | `DATABASE_PASSWORD` | `${db.PASSWORD}` |
     | `NODE_ENV`          | `production`     |
 
-2. Click **Save**.
-3. Navigate to the *Settings* menu and select the Strapi application component.
-4. Scroll to the *Environment Variables* and click **edit**.
-5. Add the key-value pairs to the component environment variables table:
+2. Add the key-value pairs for the Strapi secrets to the component environment variables table:
 
     | Variable name      | value                                 |
     |--------------------|---------------------------------------|
@@ -200,11 +197,15 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
     | `ADMIN_JWT_SECRET` | `"unique user-generated secret here"` |
     | `JWT_SECRET`       | `"unique user-generated secret here"` |
 
-6. Click **Save**.
+3. Click **Next**.
 
 ::: note
 It is possible to copy the secrets from the local `.env` file or to generate new secrets using a random secret generator. Examples can be found at [OpenSSL](https://www.openssl.org/).
 :::
+
+4. (optional) Edit the App name and Region and click **Save**
+5. Click **Next**.
+6. Click **Create Resources** to create the App and database.
 
 ## Deploy and access a Strapi application
 
