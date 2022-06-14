@@ -439,7 +439,7 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 | `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | See below     |
 | `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |
 | `hsts.includeSubDomains`    | Applies HSTS to all subdomains of the host                                                    | `Boolean`             | `true`        |
-| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks, set to false to disable   | `Boolean` or `Object` | See below     |
+| `frameguard`                | Set `X-Frame-Options` header to help mitigate clickjacking attacks, set to `false` to disable   | `Boolean` or `Object` | See below     |
 | `frameguard.action`         | Value must be either `deny` or `sameorigin`                                                   | `String`              | `sameorigin`  |
 
 ::: tip
