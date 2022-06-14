@@ -4,15 +4,13 @@ description: Learn how you can use Typescript for your Strapi application.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/databases/typescript.html
 ---
 
-# TypeScript support
+# TypeScript development
 
 ::: callout 🚧  TypeScript documentation
-This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
+This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io). Check the [beta documentation](docs-next.strapi.io) for faster access to TypeScript documentation.
 :::
 
-TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new and existing projects running v4.2.0 and above. The core Developer Documentation contains code snippets in both JavaScript and TypeScript.
-
-
+TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.2.0 and above. The [CLI documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) describes how to develop a new TypeScript project. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [optional configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources. The core Developer Documentation contains code examples in both JavaScript and TypeScript.
 
 ## Use TypeScript typings
 
@@ -40,7 +38,6 @@ export default {
 :::
 
 ::::
-
 
 ## Develop a plugin using TypeScript
 
