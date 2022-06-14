@@ -315,18 +315,14 @@ export default ({ env }) => ({
 Changing the settings on the DigitalOcean App Platform to incorporate a managed database requires creating and attaching the database to an existing Strapi application. Additionally, the database environment variables must be removed, as managed databases propagate the connection properties automatically.  
 
 1. Click on the **Create** button from any DigitalOcean page and select *Databases*.
-2. Select a location (it is recommended to be the same as the application location) 
+2. Select a location (use the same location as the application location).
 3. Select the PostgreSQL database engine.
 4. Select a database configuration.
 5. Click the **Create a Database Cluster** button.
 
-2. Attach the managed database to the App.
-3. Delete all database environment variables from the App.
-4. Build and deploy the App.
-
 ### Attach the managed database to an App
 
-After creating the managed database navigate to the application page and :
+After creating the managed database, navigate to the application page:
 
 1. Click on the **Create** button and select *Create/Attach Database*.
 2. Select *Previously Created DigitalOcean Database*.
