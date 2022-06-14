@@ -446,7 +446,7 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 When using any 3rd party upload provider, generally it's required to set a custom configuration here. Please see the provider documentation for which configuration options are required.
 :::
 
-::: strapi
+::: note
 Within the default directives there is a `dl.airtable.com`, this value is set for the [in-app market](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) and is absolutely safe to keep.
 :::
 
