@@ -168,7 +168,7 @@ After creating an App attach a development database. To add a development databa
 
 1. Click **add resource**.
 2. Select *Database* and click **Add**.
-3. Select *Dev Database* and name the database. The default database name is "db" and that will be used in the following example.
+3. Select *Dev Database* and name the database. The default database name is "db" and is used to prefix the database values in the [global environment table](#add-environment-variables). If another database name is used, it should be substituted for "db".
 4. Click the **Create and Attach** button.
 5. Click the **Next** button to set the Environment Variables (Env Vars).
 
