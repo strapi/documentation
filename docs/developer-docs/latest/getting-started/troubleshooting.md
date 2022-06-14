@@ -99,7 +99,7 @@ Due to these two issues, it is recommended you use a proxy application such as [
 
 ## Can I use TypeScript in a Strapi project?
 
-TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/developer-docs/latest/setup-deployment-guides/configurations/databases/typescript.md).
+TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/developer-docs/latest/development/typescript.md).
 
 ## Is X feature available yet?
 
