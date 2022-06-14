@@ -1,10 +1,8 @@
 ---
 title: Introduction to the Media Library - Strapi User Guide
-description:
-canonicalUrl:
+description: Introduction to the Media Library which allows to display and manage all assets uploaded in the application.
+canonicalUrl: https://docs.strapi.io/user-docs/latest/media-library/introduction-to-media-library.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Introduction to the Media Library
 
@@ -12,7 +10,6 @@ The Media Library is a Strapi plugin that is always activated by default and can
 
 Administrators can access the Media Library from ![ML icon](../assets/icons/media_library.svg) _Media Library_ in the main navigation of the admin panel.
 
-<!-- TODO: replace screenshot -->
 ![Media Library overview, annotated](../assets/media-library/media-library_overview.png)
 
 The Media Library displays all assets uploaded in the application, either via the Media Library itself or via the Content Manager when managing a media field. Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/user-docs/latest/content-manager/writing-content.md#filling-up-fields).
@@ -32,7 +29,6 @@ Click the search icon ![Search icon](../assets/icons/search.svg) on the right si
 
 Right above the list of folders and assets, on the left side of the interface, a **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
 
-<!-- TODO: improve/replace screenshot -->
 ![Filters in the Media Library](../assets/media-library/media-library_filters.png)
 
 To set a new filter:

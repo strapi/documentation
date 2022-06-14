@@ -1,10 +1,8 @@
 ---
 title: Managing assets with the Media Library - Strapi User Guide
-description:
-canonicalUrl:
+description: Instructions on how to manage assets uploaded to the Media Library, including editing, moving, and deleting assets, and cropping images.
+canonicalUrl: http://docs.strapi.io/user-docs/latest/media-library/managing-assets.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Managing individual assets
 
@@ -14,7 +12,6 @@ The Media Library allows managing assets, which includes modifying assets' file 
 
 Clicking on the edit ![Edit icon](../assets/icons/edit.svg) button of an asset opens up a "Details" window, with all the available options.
 
-<!-- TODO: improve/replace screenshot -->
 ![Annotated asset details window screenshot](../assets/media-library/media-library_asset-details.png)
 
 - On the left, above the preview of the asset, control buttons (1) allow performing various actions:

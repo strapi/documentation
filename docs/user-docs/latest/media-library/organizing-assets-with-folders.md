@@ -1,10 +1,8 @@
 ---
 title: Adding assets to the Media Library - Strapi User Guide
-description:
-canonicalUrl:
+description: Instructions on how to use folders in the Media Library, including adding, editing, and deleting folders, and browsing their content.
+canonicalUrl: http://docs.strapi.io/user-docs/latest/media-library/organizing-assets-with-folders.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Organizing assets with folders
 
@@ -20,13 +18,11 @@ By default, the Media Library displays folders and assets created at the root le
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
-<!-- TODO: replace screenshot -->
 ![🏞 screenshot - Media library one folder deep, with back button and updated folder title](../assets/media-library/media-library_folder-content.png)
 
 From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/user-docs/latest/media-library/introduction-to-media-library.md)).
 
 To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
-<!-- ? how does it work when you go deeper into the folder hierarchy? do you go back up one-level or back to the ML root? -->
 
 ## Adding folders
 
@@ -45,7 +41,6 @@ There is no limit to how deep your folders hierarchy can go, but bear in mind it
 
 Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
 
-<!-- TODO: replace screenshot -->
 ![🏞 screenshot - "Move elements to" popup](../assets/media-library/media-library_move-assets.png)
 
 To bulk move assets and folders to another folder:

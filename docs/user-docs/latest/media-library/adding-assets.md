@@ -1,16 +1,13 @@
 ---
 title: Adding assets to the Media Library - Strapi User Guide
-description:
-canonicalUrl:
+description: Instructions to add assets to the Media Library
+canonicalUrl: https://docs.strapi.io/user-docs/latest/media-library/adding-assets.html
 ---
-
-<!-- TODO: update SEO -->
 
 # Adding assets
 
 The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) or the [Content Manager](/user-docs/latest/content-manager/writing-content.md#filling-up-fields) when managing a media field.
 
-<!-- TODO: improve/replace screenshot -->
 ![🏞 screenshot - "Add new assets" window](../assets/media-library/media-library_add-new-assets.png)
 
 To add new assets to the media library:
@@ -24,8 +21,6 @@ To add new assets to the media library:
 5. Click on **Upload assets to the library**.
 
 A variety of media types and extensions are supported by the Media Library:
-
-<!-- ? is this list complete & up-to-date ? -->
 
 | Media type | Supported extensions                                            |
 | ---------- | --------------------------------------------------------------- |
