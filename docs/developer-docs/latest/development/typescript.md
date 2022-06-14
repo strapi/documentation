@@ -10,7 +10,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io). Check the [beta documentation](docs-next.strapi.io) for faster access to TypeScript documentation.
 :::
 
-TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.2.0 and above. The [CLI documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) describes how to create a new TypeScript project. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [optional configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources. The Developer Documentation contains code examples in both JavaScript and TypeScript.
+::: prerequisites
+To start developing in TypeScript create a new project using the [CLI](/developer-docs/latest/setup-deployment-guides/installation/cli.md)
+
+:::
+
+TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.2.0 and above. To start developing in TypeScript use the [CLI documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) to create a new TypeScript project. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [TypeScript configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources for understanding and configuring an application. The Developer Documentation contains code examples in both JavaScript and TypeScript.
 
 ## Develop a plugin using TypeScript
 
