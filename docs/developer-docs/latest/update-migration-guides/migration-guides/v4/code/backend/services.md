@@ -62,7 +62,7 @@ To create a Strapi v4 service:
 
   const { createCoreService } = require('@strapi/strapi').factories;
 
-  module.exports = createCoreService('api::api-name.content-type-name', ({ strapi }) => {
+  module.exports = createCoreService('api::api-name.content-type-name', ({ strapi }) => ({
     async find(...args) {
       const { results, pagination } = await super.find(...args);
 

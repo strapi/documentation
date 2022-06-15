@@ -121,9 +121,7 @@ module.exports = () => {
     // ...
     bootstrap(app) {
       // execute some bootstrap code
-      app
-        .getPlugin('content-manager')
-        .injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
     },
   };
 };
@@ -617,37 +615,42 @@ export default {
 
 #### Predefined hook
 
-Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
 
-::: details Example: 'cm/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
+::: details Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
 
 ```jsx
 // ./plugins/my-plugin/admin/src/index.js
+import get from 'lodash/get';
+import cellFormatter from './components/cellFormatter';
 
 export default {
   bootstrap(app) {
-	  app.registerHook('cm/inject-column-in-table', ({ displayedHeaders, layout }) => {
+	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
 			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
 
 			if (!isFieldLocalized) {
-			  return displayedHeaders;
+			  return { displayedHeaders, layout };
 			}
 
-			return [
-			  ...displayedHeaders,
-			  {
-			    key: '__locale_key__', // Needed for the table
-			    fieldSchema: { type: 'string' }, // Schema of the attribute
-			    metadatas: {
-						label: 'Content available in', // Label of the header,
-						sortable: false|true // Define in the column is sortable
-					}, // Metadatas for the label
-					// Name of the key in the data we will display
-			    name: 'locales',
-					// Custom renderer
-			    cellFormatter: props => <div>Object.keys(props).map(key => <p key={key}>key</p>)</div>,
-			  },
-			];
+			return {
+        layout,
+        displayedHeaders: [
+          ...displayedHeaders,
+          {
+            key: '__locale_key__', // Needed for the table
+            fieldSchema: { type: 'string' }, // Schema of the attribute
+            metadatas: {
+              label: 'Content available in', // Label of the header,
+              sortable: true|false // Define if the column is sortable
+            }, // Metadatas for the label
+            // Name of the key in the data we will display
+            name: 'locales',
+            // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+            cellFormatter,
+          },
+			  ]
+      };
     });
   },
 }
