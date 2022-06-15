@@ -11,7 +11,7 @@ Folders in the Media Library help you organize uploaded assets. Folders sit at t
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
 ::: caution
-Downgrading from Strapi v4.3.0-beta to v4.2.0 will delete folders of the Media Library. Even though assets should be preserved, we recommend you test beta versions of Strapi on a new project rather than on existing one, as unexpected consequences could impact your database.
+Downgrading from Strapi v4.3.0-beta to v4.2.0 will delete folders of the Media Library. Even though assets should be preserved, we recommend you test beta versions of Strapi on a new project rather than on an existing one, as unexpected consequences could impact your database.
 :::
 
 ## Browsing folders
