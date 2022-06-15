@@ -156,8 +156,6 @@ const response = await fetch('http://localhost:1337/api/upload', {
   body: form,
 });
 
-console.log(await response.json());
-});
 ```
 
 </code-block>
