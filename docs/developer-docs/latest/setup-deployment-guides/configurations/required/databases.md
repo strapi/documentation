@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file is used to define database connections that will be used to store the application content.
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
@@ -14,7 +14,7 @@ The CLI installation guide details [supported database and versions](/developer-
 
 ## Configuration structure
 
-The `./config/database.js` accepts 2 main configuration objects:
+The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 main configuration objects:
 
 - [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
 - [`settings`](#settings-configuration-object) for Strapi-specific database settings
@@ -32,7 +32,7 @@ The `./config/database.js` accepts 2 main configuration objects:
 
 #### Connection parameters
 
-The `connection.connection` object found in `./config/database.js` is used to pass database connection information and accepts the following parameters:
+The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
@@ -47,7 +47,7 @@ The `connection.connection` object found in `./config/database.js` is used to pa
   
 #### Database pooling options
 
-The `connection.pool` object optionally found in `./config/database.js` is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
+The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
 |-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
@@ -63,7 +63,7 @@ The `connection.pool` object optionally found in `./config/database.js` is used 
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
 
 | Parameter        | Description                                      | Type      | Default |
 |------------------|--------------------------------------------------|-----------|---------|
@@ -78,6 +78,8 @@ The `settings` object found in `./config/database.js` is used to configure Strap
 :::: tab PostgreSQL
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
@@ -138,6 +140,8 @@ module.exports = ({ env }) => ({
 :::: tab MySQL/MariaDB
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'mysql',
@@ -159,8 +163,13 @@ module.exports = ({ env }) => ({
 ::::
 
 :::: tab SQLite
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'sqlite',
@@ -172,6 +181,35 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/database.ts
+
+import path from 'path';
+
+export default ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(
+        __dirname,
+        '..',
+        '..',
+        env('DATABASE_FILENAME', path.join('.tmp', 'data.db'))
+      ),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</code-block>
+
+</code-group>
 
 ::::
 

@@ -487,7 +487,12 @@ nano /srv/strapi/mystrapiapp/config/database.js
 
 Using the following example we will remove any private information:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
+// path: /srv/strapi/mystrapiapp/config/database.js
+
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
   connections: {
@@ -506,6 +511,36 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: /srv/strapi/mystrapiapp/config/database.ts
+
+export default ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'mysql',
+        database: env('DB_NAME'),
+        host: env('DB_HOST'),
+        port: env('DB_PORT'),
+        username: env('DB_USER'),
+        password: env('DB_PASS'),
+      },
+      options: {},
+    },
+  },
+});
+```
+
+</code-block>
+</code-group>
 
 #### 3. Installing PM2 and running Strapi as a service
 

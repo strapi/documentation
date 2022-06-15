@@ -19,6 +19,10 @@ General settings for API calls can be set in the `./config/api.js` file:
 
 **Example:**
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
+
 ```js
 // path: ./config/api.js
 
@@ -33,3 +37,28 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+// path: ./config/api.ts
+
+export default ({ env }) => ({
+  responses: {
+    privateAttributes: ['_v', 'id', 'created_at'],
+  },
+  rest: {
+    prefix: '/v1',
+    defaultLimit: 100,
+    maxLimit: 250,
+  },
+});
+```
+
+
+</code-block>
+</code-group>

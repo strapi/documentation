@@ -1,5 +1,5 @@
 const themeConfig = {
-  logo: '/assets/logo.svg',
+  logo: '/assets/logo-beta.png',
   nav: [
     {
       text: 'Resource Center',

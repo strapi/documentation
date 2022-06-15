@@ -16,6 +16,10 @@ The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it use
 
 You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/middlewares.js
 
@@ -36,6 +40,35 @@ module.exports = {
 };
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/middlewares.js
+
+export default {
+  // ...
+  {
+    name: "strapi::body",
+    config: {
+      formLimit: "256mb", // modify form body
+      jsonLimit: "256mb", // modify JSON body
+      textLimit: "256mb", // modify text body
+      formidable: {
+        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
+  },
+  // ...
+};
+```
+
+</code-block>
+
+</code-group>
+
+
 ### Responsive Images
 
 When the `Enable responsive friendly upload` setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
@@ -46,6 +79,10 @@ When the `Enable responsive friendly upload` setting is enabled in the settings 
 | small   | 500px      |
 
 These sizes can be overridden in `./config/plugins.js`:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/plugins.js
@@ -64,6 +101,33 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  upload: {
+    config: {
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+});
+```
+
+</code-block>
+
+</code-group>
+
 
 :::caution
   Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
@@ -404,6 +468,10 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 
 You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -420,6 +488,31 @@ module.exports = ({ env })=>({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env })=>({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+    },
+  },
+});
+```
+
+</code-block>
+
+</code-group>
+
+
 ### Enabling the provider
 
 To enable the provider, create or edit the file at `./config/plugins.js`
@@ -427,6 +520,10 @@ To enable the provider, create or edit the file at `./config/plugins.js`
 ::: note
 When using community providers, pass the full package name to the `provider` key (e.g. `provider: 'strapi-provider-upload-google-cloud-storage'`). Only Strapi-maintained providers can use the shortcode format (e.g. `provider: 'aws-s3'`).
 :::
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/plugins.js
@@ -450,6 +547,37 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        accessKeyId: env('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env('AWS_ACCESS_SECRET'),
+        region: env('AWS_REGION'),
+        params: {
+          Bucket: env('AWS_BUCKET'),
+        },
+      },
+    },
+  },
+  // ...
+});
+```
+
+</code-block>
+
+</code-group>
+
+
 Make sure to read the provider's `README` to know what are the possible parameters.
 
 :::caution
@@ -467,6 +595,10 @@ You can set a specific configuration in the `./config/env/{env}/plugins.js` conf
 You can create a Node.js module to implement a custom provider. Read the official documentation [here](https://docs.npmjs.com/creating-node-js-modules).
 
 Your provider needs to export the following interface:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = {
@@ -489,6 +621,36 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  init(providerOptions) {
+    // init your provider if necessary
+
+    return {
+      upload(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.buffer`
+      },
+      uploadStream(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.stream`
+      },
+      delete(file) {
+        // delete the file in the provider
+      },
+    };
+  },
+};
+```
+</code-block>
+
+</code-group>
+
 
 :::tip
 For performance reasons, the upload plugin will only use the `uploadStream` function if it exists, otherwise it will fallback on the `upload` function.
@@ -519,6 +681,10 @@ If you want to create your own provider without publishing it on **npm** you can
 
 4. Update the Upload plugin configuration:
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -533,5 +699,28 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: '{provider-name}',
+      providerOptions: {},
+    },
+  },
+  // ...
+});
+```
+</code-block>
+
+</code-group>
+
 
 5. Run `yarn install` or `npm install` to install your new custom provider.

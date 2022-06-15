@@ -606,6 +606,9 @@ To configure a content-type lifecycle hook, create a `lifecycles.js` file in the
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // ./src/api/[api-name]/content-types/restaurant/lifecycles.js
 
@@ -624,6 +627,34 @@ module.exports = {
   },
 };
 ```
+
+
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// ./src/api/[api-name]/content-types/restaurant/lifecycles.ts
+
+export default {
+  beforeCreate(event) {
+    const { data, where, select, populate } = event.params;
+
+    // let's do a 20% discount everytime
+    event.params.data.price = event.params.data.price * 0.8;
+  },
+
+  afterCreate(event) {
+    const { result, params } = event;
+
+    // do something to the result;
+  },
+};
+```
+
+</code-block>
+</code-group>
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
