@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Functions
 
-The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/developer-docs/latest/setup-deployment-guides/typescript.md) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
+The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/developer-docs/latest/development/typescript.md) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
 ## Register
 

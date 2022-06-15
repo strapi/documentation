@@ -79,6 +79,25 @@ To add a new locale:
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
 5. Click on the **Save** button to confirm the addition of your new locale.
 
+## Configuring the Media Library
+
+The [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+
+![Media Library settings](../assets/settings/settings_media-library.png)
+
+To configure the Media Library settings:
+
+1. Go to the *Global settings > Media Library* sub-section of the settings interface.
+2. Define your chosen new settings:
+
+    | Setting name               | Instructions                                                                                         | Default value |
+    | -------------------------- | ---------------------------------------------------------------------------------------------------- |---------------|
+    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset. | True          |
+    | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
+    | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+
+3. Click on the **Save** button.
+
 ## Managing API tokens
 
 API tokens allow users to authenticate their Content API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
