@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Templates
 
-::: callout 🚧  TypeScript documentation
+::: callout 🚧 
 This documentation is currently being reworked and updated to Strapi v4. You can follow the work-in-progress pull request on [GitHub](https://github.com/strapi/documentation/pull/665).
 :::
 
