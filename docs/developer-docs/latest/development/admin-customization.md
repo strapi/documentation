@@ -217,9 +217,13 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | On the login page      | `config.auth.logo`          |
 | In the main navigation | `config.menu.logo`          |
 
-To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys.
+To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 
-The size of the custom image should be the same as the default one (434px x 120px).
+::: note
+The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)). However, the logo displayed in the login page can only be customized via the configuration files for now.
+<br>
+Note also that the main navigation logo uploaded via the admin panel supersedes any logo set through the configuration files.
+:::
 
 #### Favicon
 
