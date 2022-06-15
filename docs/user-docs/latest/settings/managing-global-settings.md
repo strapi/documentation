@@ -8,6 +8,30 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/managing-global-s
 
 Global settings for plugins and features are managed from ![Settings icon](../assets/icons/settings.svg) *Settings* in the main navigation of the admin panel.
 
+## Customizing the admin panel
+
+The default Strapi logo, displayed in the main navigation of a Strapi application, can be modified through the *Settings > Overview* sub-section of the admin panel.
+
+::: note
+The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos)). However, the logo uploaded via the admin panel supersedes any logo set through the configuration files.
+<br>
+Note also that modifying the configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#configuration-options)) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
+:::
+
+![Custom logo settings](../assets/settings/settings_custom-logo.png)
+
+To customize the logo of the admin panel:
+
+1. Go to the *Global settings > Overview* sub-section of the settings interface.
+2. Click on the upload area.
+3. Upload your chosen logo, either by browsing files, drag & dropping the file in the right area, or by using a URL. The logo shouldn't be more than 750x750px. 
+4. Click on the **Upload logo** button in the upload window.
+5. Click on the **Save** button in the top right corner.
+
+::: tip
+Once uploaded, the new logo can be replaced with another one ![Add icon](../assets/icons/add.svg), or resetted ![Reset icon](../assets/icons/reset_icon.svg) with the default Strapi logo or the logo set in the configuration files.
+:::
+
 ## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
