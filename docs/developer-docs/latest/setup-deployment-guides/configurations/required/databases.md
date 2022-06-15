@@ -21,24 +21,25 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 ### `connection` configuration object
 
-| Parameter                                                          | Description                                                                  | Type      |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | --------- |
-| `client`                                                           | Database client to create the connection. `sqlite` or `postgres` or `mysql`. | `String`  |
-| `connection`                                                       | Database [connection information](#connection-parameters)                    | `Object`  |
-| `debug`                                                            | Show database exchanges and errors.                                          | `Boolean` |
-| `useNullAsDefault`<br/><br />_Optional, only for SQLite_           | Use `NULL` as a default value                                                | `Boolean` |
-| `pool`<br /><br />_Optional_                                       | [Database pooling options](#database-pooling-options)                        | `Object`  |
+| Parameter                                                | Description                                                                                 | Type      | Default |
+|----------------------------------------------------------|---------------------------------------------------------------------------------------------|-----------|---------|
+| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                | `String`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                   | `Object`  | -       |
+| `debug`                                                  | Show database exchanges and errors.                                                         | `Boolean` | `false` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                               | `Boolean` | `true`  |
+| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                       | `Object`  | -       |
+| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 #### Connection parameters
 
 The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
 | Parameter  | Description                                                                                                                   | Type                  |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+|------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
-| `user` | Username used to establish the connection                                                                                     | `String`              |
+| `user`     | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
@@ -48,16 +49,16 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
-| Parameter                   | Description                                                                                                                                                                       | Type       | Default |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- |
-| `min`                       | Minimum number of database connections to keepalive                                                                                                                               | `Integer`  | `0`     |
-| `max`                       | Maximum number of database connections to keepalive                                                                                                                               | `Integer`  | `10`    |
-| `acquireTimeoutMillis`      | Time in ms before timing out a database connection attempt                                                                                                                        | `Integer`  | -       |
-| `createTimeoutMillis`       | Time in ms before timing out a create query attempt                                                                                                                               | `Integer`  | -       |
-| `destroyTimeoutMillis`      | Time in ms before timing out a destroy query attempt                                                                                                                              | `Integer`  | -       |
-| `idleTimeoutMillis`         | Time in ms before free database connections are destroyed                                                                                                                         | `Integer`  | -       |
-| `reapIntervalMillis`        | Time in ms to check for idle database connections to destroy                                                                                                                      | `Integer`  | -       |
-| `createRetryIntervalMillis` | Time in ms to idle before retrying failed create actions                                                                                                                          | `Integer`  | -       |
+| Parameter                   | Description                                                                                                                                                                                | Type       | Default |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
+| `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `0`     |
+| `max`                       | Maximum number of database connections to keepalive                                                                                                                                        | `Integer`  | `10`    |
+| `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                                 | `Integer`  | -       |
+| `createTimeoutMillis`       | Time in milliseconds before timing out a create query attempt                                                                                                                                        | `Integer`  | -       |
+| `destroyTimeoutMillis`      | Time in milliseconds before timing out a destroy query attempt                                                                                                                                       | `Integer`  | -       |
+| `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                                  | `Integer`  | -       |
+| `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                               | `Integer`  | -       |
+| `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                                   | `Integer`  | -       |
 | `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
 
 ### `settings` configuration object
@@ -65,7 +66,7 @@ The `connection.pool` object optionally found in `./config/database.js` (or `./c
 The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
 
 | Parameter        | Description                                      | Type      | Default |
-| ---------------- | ------------------------------------------------ | --------- | ------- |
+|------------------|--------------------------------------------------|-----------|---------|
 | `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->

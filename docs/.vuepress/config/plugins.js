@@ -21,6 +21,15 @@ const checklinksIgnoredFiles = [
 
 const plugins = [
   ['vuepress-plugin-element-tabs', {}],
+  ['@vuepress/last-updated',
+    {
+      transformer: (timestamp, lang) => {
+        const date = new Date(timestamp);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options)
+      }
+    }
+  ],
   [
     'check-md',
     {
@@ -43,6 +52,12 @@ const plugins = [
     },
   ],
   ['@vuepress/back-to-top', {}],
+  [
+    '@vuepress/html-redirect',
+    {
+      duration: 0,
+    },
+  ],
   [
     'vuepress-plugin-container',
     {
@@ -149,25 +164,29 @@ const plugins = [
       type: 'grid',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-top-left',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-top-right',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-bottom-left',
       defaultTitle: '',
     },
-  ],  [
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'grid-bottom-right',

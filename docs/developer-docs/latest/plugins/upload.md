@@ -14,7 +14,7 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middleware.js`:
+You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
 
 <code-group>
 
@@ -171,13 +171,15 @@ export default ({ env }) => ({
 
 ## Upload files
 
-To upload files into your application.
+To upload files to your application.
 
 ### Parameters
 
 - `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
 
-### Code example
+<code-group>
+
+<code-block title="BROWSER">
 
 ```html
 <form>
@@ -187,19 +189,44 @@ To upload files into your application.
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
-    request.open('POST', '/upload');
-
-    request.send(new FormData(formElement));
+    await fetch('/api/upload', {
+      method: 'post',
+      body: new FormData(e.target)
+    });
   });
 </script>
 ```
+
+</code-block>
+
+<code-block title="NODE.JS">
+
+```js
+import { FormData } from 'formdata-node';
+import fetch, { blobFrom } from 'node-fetch';
+
+const file = await blobFrom('./1.png', 'image/png');
+const form = new FormData();
+
+form.append('files', file, "iamge.png");
+
+const response = await fetch('http://localhost:1337/api/upload', {
+  method: 'post',
+  body: form,
+});
+
+console.log(await response.json());
+});
+```
+
+</code-block>
+
+</code-group>
 
 :::caution
 You have to send FormData in your request body.
@@ -253,16 +280,15 @@ Code
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
-    request.open('POST', '/upload');
-
-    request.send(new FormData(formElement));
+    await fetch('/api/upload', {
+      method: 'post',
+      body: new FormData(e.target)
+    });
   });
 </script>
 ```
@@ -309,44 +335,36 @@ Code
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
+    const data = {};
     const formData = new FormData();
 
-    const formElements = formElement.elements;
-
-    const data = {};
-
-    for (let i = 0; i < formElements.length; i++) {
-      const currentElement = formElements[i];
-      if (!['submit', 'file'].includes(currentElement.type)) {
-        data[currentElement.name] = currentElement.value;
-      } else if (currentElement.type === 'file') {
-        for (let i = 0; i < currentElement.files.length; i++) {
-          const file = currentElement.files[i];
-          formData.append(`files.${currentElement.name}`, file, file.name);
+    form.elements
+      .forEach(({ name, type, value, files, ...element }) => {
+        if (!['submit', 'file'].includes(type)) {
+          data[name] = value;
+        } else if (type === 'file') {
+          files.forEach((file) => {
+            formData.append(`files.${name}`, file, file.name);
+          });
         }
-      }
-    }
+      });
 
     formData.append('data', JSON.stringify(data));
 
-    request.open('POST', `${HOST}/restaurants`);
-
-    request.send(formData);
+    await fetch('/api/restaurants', {
+      method: 'post',
+      body: formData
+    });
   });
 </script>
 ```
 
-Your entry data has to be contained in a `data` key. You have to `JSON.stringify` your data object.
-
-And for your files, they have to be prefixed by `files`.
-Example here with cover attribute `files.cover`.
+Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files, need to be prefixed with `files` (example with a cover attribute: `files.cover`).
 
 ::: tip
 If you want to upload files for a component, you will have to specify the index of the item you want to add the file to.

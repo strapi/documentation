@@ -144,7 +144,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
 
    # Add a container to the storage account
    container=strapi-uploads
-   az storage container create --name $container --public-access blob --access-key $saKey --account-name $saName
+   az storage container create --name $container --public-access blob --account-key $saKey --account-name $saName
    ```
 
 5. Create a MySQL database.
@@ -196,7 +196,7 @@ To start the Node.js application, AppService will run the `npm start` command. A
 
 ```json
 "scripts": {
-    "start": "node node_modules/strapi/bin/strapi.js start"
+    "start": "node node_modules/@strapi/strapi/bin/strapi.js start"
 }
 ```
 

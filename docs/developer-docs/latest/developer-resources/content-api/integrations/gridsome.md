@@ -28,7 +28,7 @@ Gridsome is a [Static Site Generator](https://www.staticgen.com/) and will fetch
 yarn add @gridsome/source-strapi
 ```
 
-- Add the `@gridsome/source-strapi` to the plugins section in the `gridsome-config.js` file:
+- Add the `@gridsome/source-strapi` to the plugins section in the `gridsome.config.js` file:
 
 ```js
 module.exports = {
