@@ -53,7 +53,6 @@ module.exports = () => {
 };
 ```
 
-
 ## Destroy
 
 The `destroy` function found in `./src/index.js` is an asynchronous function that runs before the application gets shut down.
