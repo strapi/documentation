@@ -25,7 +25,7 @@ Prior to starting the deployment process each user needs:
 Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
 1. Add a production configuration environment by creating a sub-directory `./config/env/production`.
-2. Create `database.js` (or `database.ts` for TypeScript projects) inside the `./config/env/production` directory.
+2. Create `database.js` inside the `./config/env/production` directory.
 3. Add the code snippet to the `database` configuration file:
 
     ```jsx
@@ -50,9 +50,8 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 
     ```
 
-4. Create `server.js` (or `server.ts` for TypeScript projects) inside the `./config/env/production` directory.
+4. Create `server.js` inside the `./config/env/production` directory.
 5. Add the code snippet to the `server` configuration file:
-
 
     ```jsx
     // path: ./config/env/production/server.js
