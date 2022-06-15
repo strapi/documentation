@@ -28,10 +28,6 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 2. Create `database.js` (or `database.ts` for TypeScript projects) inside the `./config/env/production` directory.
 3. Add the code snippet to the `database` configuration file:
 
-      <code-group>
-
-    <code-block title='JAVASCRIPT'>
-
     ```jsx
     // path: ./config/env/production/database.js
 
@@ -54,40 +50,9 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
 
     ```
 
-    </code-block>
-
-    <code-block title='TYPESCRIPT'>
-
-    ```jsx
-    // path: ./config/env/production/database.ts
-
-    export default ({ env }) => ({
-      connection: {
-        client: 'postgres',
-        connection: {
-          host: env('DATABASE_HOST'), 
-          port: env.int('DATABASE_PORT'), 
-          database: env('DATABASE_NAME'), 
-          user: env('DATABASE_USERNAME'), 
-          password: env('DATABASE_PASSWORD'),
-          ssl: {
-            rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
-          },
-        },
-        debug: false,
-      },
-    });
-    ```
-
-    </code-block>
-    </code-group>
-
 4. Create `server.js` (or `server.ts` for TypeScript projects) inside the `./config/env/production` directory.
 5. Add the code snippet to the `server` configuration file:
 
-    <code-group>
-
-    <code-block title='JAVASCRIPT'>
 
     ```jsx
     // path: ./config/env/production/server.js
@@ -100,25 +65,6 @@ Strapi uses [environment configurations](/developer-docs/latest/setup-deployment
         },
     });
     ```
-
-    </code-block>
-
-    <code-block title='TYPESCRIPT'>
-
-    ```jsx
-    // path: ./config/env/production/server.ts
-
-    export default ({ env }) => ({
-        proxy: true,
-        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
-        app: { 
-          keys: env.array('APP_KEYS')
-        },
-    });
-    ```
-
-    </code-block>
-    </code-group>
 
 6. Add PostgreSQL dependencies by installing [`pg` package](https://www.npmjs.com/package/pg):
 
@@ -248,10 +194,6 @@ yarn add pg-connection-string
 
 To switch to a managed database modify the `config/env/production/database` file to be able to parse the `DATABASE_URL`:
 
-<code-group>
-
-<code-block title='JAVASCRIPT'>
-
 ```jsx
 // path: ./config/env/production/database.js
 
@@ -277,39 +219,6 @@ module.exports = ({ env }) => ({
 });
 
 ```
-
-</code-block>
-
-<code-block title='TYPESCRIPT'>
-
-```jsx
-// path: ./config/env/production/database.ts
-
-const parse = require("pg-connection-string").parse;
-
-const { host, port, database, user, password } = parse(
-  process.env.DATABASE_URL
-);
-
-export default ({ env }) => ({
-    client: 'postgres',
-    connection: {
-      host,
-      port,
-      database,
-      user,
-      password,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-      debug: false,
-  },
-});
-
-```
-
-</code-block>
-</code-group>
 
 ### Create a managed database on DigitalOcean
 
