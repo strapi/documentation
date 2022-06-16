@@ -451,3 +451,7 @@ Dynamic zones are a combination of components that can be added to content-types
 ::::
 
 After configuring the settings of the dynamic zone, its components must be configured as well. It is possible to either choose an existing component or create a new one.
+
+::: caution
+When using dynamic zones, different components cannot have the same field name with different types (or with enumeration fields, different values).
+:::
