@@ -13,7 +13,6 @@ To extend this package you will have to create an `admin` folder at the root of 
 
 In this folder you will be able to override admin files and functions.
 
-
 ## Customization options
 
 The administration panel can be customized according to your needs, so you can make it reflect your identity.
@@ -44,10 +43,27 @@ The panel will be available through [http://localhost:1337/dashboard](http://loc
 
 To enable the front-end development mode you need to start your application using the `--watch-admin` flag.
 
+<code-group>
+
+<code-block title="YARN">
+
 ```bash
 cd my-app
-strapi develop --watch-admin
+yarn develop -- --watch-admin
 ```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+cd my-app
+npm run develop -- --watch-admin
+```
+
+</code-block>
+
+</code-group>
 
 With this option you can do the following:
 
@@ -181,8 +197,8 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   admin: {
-    host: 'my-host', // only used along with `strapi develop --watch-admin` command
-    port: 3000, // only used along with `strapi develop --watch-admin` command
+    host: 'my-host', // only used along with the `npm run/yarn develop -- --watch-admin` commands
+    port: 3000, // only used along with `npm run/yarn develop -- --watch-admin` commands
   },
 });
 ```
@@ -190,7 +206,6 @@ module.exports = ({ env }) => ({
 ### Build
 
 To build the administration, run the following command from the root directory of your project.
-
 
 <code-group>
 
