@@ -171,7 +171,7 @@ yarn add pg
 
 [Google App Engine requires](https://cloud.google.com/sql/docs/postgres/connect-app-engine) to connect to the database using the unix socket path, not an IP and port.
 
-Edit `database.js`, and use the socket path as `socketPath`.
+Edit `database.js`, and use the socket path as `socketPath` for a MySQL database or as `host` for a PostgreSQL database.
 
 `Path: ./config/env/production/database.js`.
 
@@ -183,7 +183,8 @@ module.exports = ({ env }) => ({
       connector: 'bookshelf',
       settings: {
         client: 'postgres',
-        socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a MySQL database
+        // ⚠️ For a PostgreSQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
         database: env('DATABASE_NAME'),
         username: env('DATABASE_USERNAME'),
         password: env('DATABASE_PASSWORD'),
