@@ -102,7 +102,7 @@ To be able to see the update, you will need to have a Content Type that has a `d
 
 Then you will have to investigate into the [`strapi-plugin-content-manager`](https://github.com/strapi/strapi/tree/master/packages/strapi-plugin-content-manager) package to find the file that is used to format the date for the list view.
 
-Here is the [Row component](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-content-manager/admin/src/components/CustomTable/Row.js) which requires a [dedicated file](https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-content-manager/admin/src/utils/dateFormats.js) to modify the date display.
+Here is the [Row component](https://github.com/strapi/strapi/blob/v3.6.10/packages/strapi-plugin-content-manager/admin/src/components/CustomTable/Row/index.js) which requires a [dedicated file](https://github.com/strapi/strapi/blob/v3.6.10/packages/strapi-plugin-content-manager/admin/src/utils/dateFormats.js) to modify the date display.
 
 ### Eject the file
 
