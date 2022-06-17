@@ -477,3 +477,7 @@ strapi.middleware('plugin::plugin-name.middleware-name');
 ```
 
 :::
+
+::: strapi Entity Service API
+To interact with the content-types, use the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md).
+:::
