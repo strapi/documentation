@@ -110,6 +110,11 @@ module.exports = () => ({
 });
 ```
 
+Once defined, the configuration can be accessed:
+
+* with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
+* or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+
 ## Backend customization
 
 ### Content-types
