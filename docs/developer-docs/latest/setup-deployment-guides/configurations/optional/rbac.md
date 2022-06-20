@@ -37,6 +37,7 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$or`
 - `$and`
 - `$eq`
+- `$eqsi`
 - `$ne`
 - `$in`
 - `$nin`

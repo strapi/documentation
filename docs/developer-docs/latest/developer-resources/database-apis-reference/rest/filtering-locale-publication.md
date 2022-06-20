@@ -24,6 +24,7 @@ The following operators are available:
 | Operator        | Description                              |
 | --------------- | ---------------------------------------- |
 | `$eq`           | Equal                                    |
+| `$eqsi`         | Equal(case-sensitive)                    |
 | `$ne`           | Not equal                                |
 | `$lt`           | Less than                                |
 | `$lte`          | Less than or equal to                    |
