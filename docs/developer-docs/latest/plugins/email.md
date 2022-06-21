@@ -6,16 +6,19 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-The Email plugin enables applications to send email from a server or external providers such as **Sendgrid**. Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation below provides examples for how to configure the email plugin and examples of controllers, routes, and lifecycle hooks to implement programmatic email. [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider, the [provider documentation](link) has instructions for changing providers or creating a new email provider.
+The Email plugin enables applications to send email from a server or [external providers](link). Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation below provides examples for how to configure the email plugin and examples of controllers, routes, and lifecycle hooks to implement programmatic email. 
+
+<!--Rewrite and incorporate above-->[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider, the [provider documentation](link) has instructions for changing providers or creating a new email provider.
+
+## Configure the plugin
+
+something here or is it covered in providers?
 
 ## Programmatic usage
 
 ### Send an email - `.send()`
 
-In your custom controllers or services you may want to send email.
-By using the following function, Strapi will use the configured provider to send an email.
-
-**Example**
+To trigger an email in response to a user input add the following function to a custom controller or service. The function will utilize the email provider enabled in the `plugins.js` configuration file.
 
 ```js
 await strapi.plugins['email'].services.email.send({
