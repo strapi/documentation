@@ -145,7 +145,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
 ### `$eqsi`
 
-Attribute equals input value(case-insensitive).
+Attribute equals input value (case-insensitive).
 
 **Example**
 
