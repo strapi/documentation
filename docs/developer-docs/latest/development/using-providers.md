@@ -54,6 +54,8 @@ Each provider will have different configuration settings available, review the r
 
 Below are example configurations for the Upload and Email plugins.
 
+:::: tabs card
+
 ::: tab Upload
 
 ```js
@@ -112,6 +114,8 @@ Keep in mind that:
 
 :::
 
+::::
+
 ### Configuration per environment
 
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
@@ -123,6 +127,8 @@ You can set a specific configuration in the `./config/env/{env}/plugins.js` conf
 To implement your own custom provider you must [create a Node.js module](https://docs.npmjs.com/creating-node-js-modules).
 
 The interface that must be exported depends on the plugin you are developing the provider for. Below are templates for the Upload and Email plugins:
+
+:::: tabs card
 
 ::: tab Upload
 
@@ -168,6 +174,8 @@ In the send function you will have access to:
 * `options` that contains options you send when you call the send function from the email plugin service
 
 :::
+
+::::
 
 See the [Strapi maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for reference.
 
