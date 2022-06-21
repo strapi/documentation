@@ -6,17 +6,17 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-The Email plugin enables applications to send email from a server or [external providers](link). Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation below provides examples for how to configure the email plugin and examples of controllers, routes, and lifecycle hooks to implement programmatic email. 
+The Email plugin enables applications to send email from a server or [external providers](link). Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation below provides examples for how to configure the email plugin and examples of controllers, routes, and lifecycle hooks to implement programmatic email.
 
-<!--Rewrite and incorporate above-->[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider, the [provider documentation](link) has instructions for changing providers or creating a new email provider.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi email plugin. It provides functionality for the local development environment, but has limited functionality in the production environment and another provider is likely preferable. The [provider documentation](link) has instructions for changing providers or creating a new email provider. <!--rename-->
 
 ## Configure the plugin
 
 something here or is it covered in providers?
 
-## Programmatic usage <!--rename-->
+## Programmatic usage
 
-### Send an email - `.send()`
+### Send an email with backend customization
 
 To trigger an email in response to a user input add the following function to a custom controller or service. The function will utilize the email provider enabled in the `plugins.js` configuration file.
 
@@ -33,7 +33,7 @@ await strapi.plugins['email'].services.email.send({
 });
 ```
 
-### Send an email using a template - `.sendTemplatedEmail()`
+### Send an email using a template
 
 The email plugin provides the function `sendTemplatedEmail` to compose email from a template. The service compiles the email from the available properties and then sends the email. The function has the following parameters:
 
@@ -43,7 +43,7 @@ The email plugin provides the function `sendTemplatedEmail` to compose email fro
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html`.                | `object` | {}      |
 | `data`          | Contains the data used to compile the templates.                                 | `object` | {}      |
 
-**Example**
+<!--some text here-->
 
 ```js
 const emailTemplate = {
@@ -66,19 +66,23 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
+### Send email using lifecycle hooks
 
-::: tip
-If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
-:::
+[Lifecycle hooks] can be used to trigger an email based on administrator actions in the admin panel. For example, an editor could receive an email each time an author submits new content.
 
-::: tip
-Only one email provider will be active at all time. If the email provider setting isn't picked up by strapi, verify you have put the file `plugins.js` in the correct folder, and with correct filename. The selection of email provider is done via configuration file only.  
-:::
+
 
 ::: tip
 When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test.
 More info here: [Configure templates Locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates)
 :::
+
+
+
+
+
+
+<!-- propose removing this section-->
 
 ## Fix common problems
 
