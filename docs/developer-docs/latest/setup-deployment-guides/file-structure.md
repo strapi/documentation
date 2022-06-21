@@ -54,6 +54,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     └──── uploads
 ├──── src
 │     ├──── admin <span class="token comment"># admin customization files</span>
+│           ├──── <a href="/developer-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span>
 │     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.js</a>
 │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.js</a>
 │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span>
@@ -65,7 +66,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
 │     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routing.html">routes</a>
+│     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routes.html">routes</a>
 │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
 │     │           └ index.js
 │     ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">components</a>
@@ -79,9 +80,7 @@ The default structure of a Strapi project created without the starter CLI looks 
 │     │           │           └ schema.json
 │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
 │     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-│     │     └──── (middleware-name)
-│     │           ├ defaults.json
-│     │           └ index.js
+│     │     └──── (middleware-name).js
 │     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
 │     │     └──── (plugin-name)
 │     │           ├──── admin

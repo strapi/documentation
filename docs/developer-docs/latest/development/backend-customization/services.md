@@ -11,7 +11,7 @@ Services are a set of reusable functions. They are particularly useful to respec
 
 ## Implementation
 
-Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated services](#extending-core-services).
+Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core services and allows building custom ones or [extend or replace the generated services](#extending-core-services).
 
 ### Adding a new service
 
@@ -30,7 +30,7 @@ To manually create a service, export a factory function that returns the service
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
-  // Method 1: Creating an entirely custom service
+  // Method 1: Creating an entirely new custom service
   async exampleService(...args) {
     let response = { okay: true }
 
@@ -84,7 +84,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+module.exports = createCoreService('api::email.email', ({ strapi }) => ({
   send(from, to, subject, text) {
     // Setup e-mail data.
     const options = {

@@ -79,9 +79,15 @@ module.exports = ({ env }) => ({
 
 ### Configuration options
 
+::: prerequisites
+Before configuring any admin panel customization option, make sure to:
+- rename the default `app.example.js` file into `app.js`,
+- and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/developer-docs/latest/development/plugins-extension.md)).
+:::
+
 The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
 
-Any file used by the `config` object (e.g. a custom logo) should be placed in the `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
+Any file used by the `config` object (e.g. a custom logo) should be placed in a `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
 
 The `config` object accepts the following parameters:
 
@@ -124,11 +130,11 @@ export default {
     // Override or extend the theme
     theme: {
       colors: {
-        alternative100: '#f6ecfc',
-        alternative200: '#e0c1f4',
-        alternative500: '#ac73e6',
-        alternative600: '#9736e8',
-        alternative700: '#8312d1',
+        primary100: '#f6ecfc',
+        primary200: '#e0c1f4',
+        primary500: '#ac73e6',
+        primary600: '#9736e8',
+        primary700: '#8312d1',
         danger700: '#b72b1a'
       },
     },
@@ -211,9 +217,13 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | On the login page      | `config.auth.logo`          |
 | In the main navigation | `config.menu.logo`          |
 
-To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys.
+To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 
-The size of the custom image should be the same as the default one (434px x 120px).
+::: note
+The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)). However, the logo displayed in the login page can only be customized via the configuration files for now.
+<br>
+Note also that the main navigation logo uploaded via the admin panel supersedes any logo set through the configuration files.
+:::
 
 #### Favicon
 
@@ -229,19 +239,31 @@ To disable notifications about new Strapi releases, set the `config.notification
 
 #### Theme extension
 
-<!-- TODO: complete this section once design system is ready -->
-
 To extend the theme, use the `config.theme` key.
 
-::: Strapi Design System
-The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`.
+::: strapi Strapi Design System
+The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`. The [Strapi Design System](https://design-system.strapi.io/) is fully customizable.
 :::
 
-<!-- TODO: maybe provide a theme extension example once design system is ready? -->
+::: note
+Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), however custom theme extension is only applied for Light mode. When choosing Dark mode for a Strapi application, theme customizations are ignored.
+:::
 
 ### WYSIWYG editor
 
-To change the current WYSIWYG, you can either install a third-party plugin, or take advantage of the bootstrap lifecycle (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap)).
+To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md)) or take advantage of the [bootstrap lifecycle](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#bootstrap) and the [extensions](#extension) system:
+
+```js
+// path: ./src/admin/app.js
+
+import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
+
+export default {
+  bootstrap(app) {
+    app.addFields({ type: 'wysiwyg', Component: MyNewWYSIGWYG });
+  },
+};
+```
 
 ### 'Forgotten password' email
 
@@ -262,7 +284,6 @@ module.exports = ({ env }) => ({
     from: 'support@mywebsite.fr',
     replyTo: 'support@mywebsite.fr',
     emailTemplate: forgotPasswordTemplate,
-  },
   },
   // ...
 });
@@ -288,10 +309,15 @@ module.exports = {
 
 ### Webpack configuration
 
+::: prerequisites
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.js` before customizing webpack.
+:::
+
 In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
 
 ```js
 module.exports = {
+  // WARNING: the admin panel now uses webpack 5 to bundle the application.
   webpack: (config, webpack) => {
     // Note: we provide webpack above so you should not `require` it
 

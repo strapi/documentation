@@ -19,7 +19,7 @@ However, these above actions alone are often insufficient to maintain an overall
 - How long does setting up a project take? If the global install time increases, does it mean that users are encountering issues or the process is simply too complicated?
 - What type of errors our users are facing?
 - What are the most used plugins?
-- Should we focus our efforts to being compatible with Node 12? Maybe our community uses version 12, in greater percentages than the global Node.js community?
+- Should we focus our efforts on being compatible with Node 16? Maybe our community uses version 16 in greater percentages than the global Node.js community?
 - And more...
 
 Without these metrics, we wouldn't be able to make the right choices as we continue to move forward with the roadmap and provide what you, the community and users, are asking for.
@@ -40,21 +40,36 @@ The collected data are of a non-sensitive nature and no personal data is collect
 
 ### Opt-out
 
-You can easily disable the default data collection feature.
+::: caution
+Strapi previously recommended disabling data collection by removing the `uuid` property in the `package.json` file located in the project root. While this method will still work it is discouraged since the `uuid` might be required for certain project functionality and adding a `uuid` at a later date would re-enable data collection without informing the user.
+ :::
 
-Should you decide to opt-out, you may do so by removing the `uuid` property in the `package.json` file located within the root of your project. This will automatically disable this feature.
+The default data collection feature can be disabled using the following CLI command:
 
-```json
-{
-  "name": "my-project",
-  "version": "0.1.0",
-  "strapi": {
-    "uuid": "7b581c0d-89b7-479e-b379-a76ab90b8754"
-  },
-  "license": "SEE LICENSE IN LICENSE"
-}
+<code-group>
+
+<code-block title="NPM">
+```jsx
+//disable telemetry in a Strapi application
+
+npm run strapi telemetry:disable
+
+```
+</code-block>
+
+<code-block title="YARN">
+```jsx
+//disable telemetry in a Strapi application
+
+yarn strapi telemetry:disable
 ```
 
+</code-block>
+
+</code-group>
+
+Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection. Deleting the flag or setting it to false will re-enable data collection.
+
 ::: note
-Should you have any questions regarding this feature, feel free to email [privacy@strapi.io](mailto:privacy@strapi.io).
+If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::

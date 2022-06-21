@@ -85,13 +85,15 @@ Please note the setting for GraphQL `tracing` as changed and has been moved to `
 module.exports = {
   //
   graphql: {
-    endpoint: '/graphql',
-    shadowCRUD: true,
-    playgroundAlways: false,
-    depthLimit: 7,
-    amountLimit: 100,
-    apolloServer: {
-      tracing: false,
+    config: {
+      endpoint: '/graphql',
+      shadowCRUD: true,
+      playgroundAlways: false,
+      depthLimit: 7,
+      amountLimit: 100,
+      apolloServer: {
+        tracing: false,
+      },
     },
   },
 };

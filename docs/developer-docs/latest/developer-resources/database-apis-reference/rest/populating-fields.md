@@ -91,10 +91,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 If the users-permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. **If a role doesn't have access to a content-type it will not be populated.**
 :::
 
-:::note
-https://github.com/ljharb/qs
-:::
-
 #### Populate 1 level for all relations
 
 To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
@@ -280,7 +276,7 @@ await request(`/api/articles?${query}`);
 
 ### Component & Dynamic Zones
 
-The `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
+The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 #### Deeply populate a 2 level component & media
 
@@ -412,7 +408,13 @@ await request(`/api/articles?${query}`);
 
 ### Combining Population with other operators
 
-By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection), [filters](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md), and [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. 
+
+:::caution
+The population and pagination operators cannot be combined.
+:::
+
+See the following complex population examples:
 
 #### Populate with field selection
 

@@ -110,8 +110,8 @@ The Number field displays a field for any kind of number: integer, decimal and f
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
+| Maximum value  | Tick to define a maximum value allowed.                      |
+| Minimum value  | Tick to define a minimum value allowed.                      |
 
 :::
 
@@ -450,3 +450,7 @@ Dynamic zones are a combination of components that can be added to content-types
 ::::
 
 After configuring the settings of the dynamic zone, its components must be configured as well. It is possible to either choose an existing component or create a new one.
+
+::: caution
+When using dynamic zones, different components cannot have the same field name with different types (or with enumeration fields, different values).
+:::

@@ -110,6 +110,11 @@ module.exports = () => ({
 });
 ```
 
+Once defined, the configuration can be accessed:
+
+* with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
+* or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+
 ## Backend customization
 
 ### Content-types
@@ -471,4 +476,8 @@ strapi.policy('plugin::plugin-name.policy-name');
 strapi.middleware('plugin::plugin-name.middleware-name');
 ```
 
+:::
+
+::: strapi Entity Service API
+To interact with the content-types, use the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md).
 :::

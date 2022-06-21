@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. 
 
 ::: note
-It is recommend to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
+It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 :::
 
 ## strapi new
@@ -173,6 +173,31 @@ When running the restore command, you can choose from three different strategies
 - **replace**: Will create missing keys and replace existing ones.
 - **merge**: Will create missing keys and merge existing keys with their new value.
 - **keep**: Will create missing keys and keep existing keys as is.
+
+## strapi admin:create-user
+
+**Alias** `admin:create`
+
+Creates an administrator.
+Administrator's first name, last name, email, and password can be:
+- passed as options
+- or set interactively if you call the command without passing any option.
+
+**Example**
+
+```bash
+strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
+```
+
+**Options**
+
+| Option          | Type   | Description                        | Required |
+| --------------- | ------ | ---------------------------------- | -------- |
+| -f, --firstname | string | The administrator's first name     | Yes      |
+| -l, --lastname  | string | The administrator's last name      | No       |
+| -e, --email     | string | The administrator's email          | Yes      |
+| -p, --password  | string | New password for the administrator | No       |
+| -h, --help      |        | display help for command           |          |
 
 ## strapi admin:reset-user-password
 

@@ -121,9 +121,7 @@ module.exports = () => {
     // ...
     bootstrap(app) {
       // execute some bootstrap code
-      app
-        .getPlugin('content-manager')
-        .injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
     },
   };
 };
@@ -188,7 +186,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
 ::: strapi Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of the [register lifecycle](#register) (see [register a new field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md)).
+The WYSIWYG editor can be replaced by taking advantage of the [register lifecycle](#register) (see [new WYSIWYG field in the admin panel](/developer-docs/latest/guides/registering-a-field-in-admin.md) guide).
 :::
 
 ::: tip
@@ -291,17 +289,20 @@ const myComponent = async () => {
 export default {
   register(app) {
     app.createSettingSection(
-	   { id: String, intlLabel: { id: String, defaultMessage: String }, // Section to create
-		 [ // links
-			 {
-			   intlLabel: { id: String, defaultMessage: String },
-			   id: String,
-			   to: String,
-			   Component: myComponent,
-			   permissions: Object[]
-		 ] 
-  }
-}
+      { id: String, intlLabel: { id: String, defaultMessage: String } }, // Section to create
+      [
+        // links
+        {
+          intlLabel: { id: String, defaultMessage: String },
+          id: String,
+          to: String,
+          Component: myComponent,
+          permissions: Object[],
+        },
+      ]
+    );
+  },
+};
 ```
 
 #### addSettingsLink()
@@ -411,6 +412,14 @@ A plugin has 2 different ways of injecting a component:
 * to inject a component from a plugin into another plugin's injection zones, use the `injectComponent()` function
 * to specifically inject a component into one of the Content Manager's [predefined injection zones](#using-predefined-injection-zones), use the `injectContentManagerComponent()` function instead
 
+Both the `injectComponent()` and `injectContentManagerComponent()` methods accept the following arguments:
+
+| Argument        | Type   | Description                                                                                                                                                                   |
+| --------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| first argument  | String | The view where the component is injected
+| second argument | String | The zone where the component is injected
+| third argument  | Object | An object with the following keys:<ul><li>`name` (string): the name of the component</li><li>`Component` (function or class): the React component to be injected</li></ul> |
+
 ::: details Example: Inject a component in the informations box of the Edit View of the Content Manager:
 
 ```jsx
@@ -421,9 +430,11 @@ export default {
     app.injectContentManagerComponent('editView', 'informations', {
       name: 'my-plugin-my-compo',
       Component: () => 'my-compo',
-  });
+    });
+  }
 }
 ```
+
 :::
 
 ::: details Example: Creating a new injection zone and injecting it from a plugin to another one:
@@ -604,37 +615,42 @@ export default {
 
 #### Predefined hook
 
-Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
 
-::: details Example: 'cm/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
+::: details Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
 
 ```jsx
 // ./plugins/my-plugin/admin/src/index.js
+import get from 'lodash/get';
+import cellFormatter from './components/cellFormatter';
 
 export default {
   bootstrap(app) {
-	  app.registerHook('cm/inject-column-in-table', ({ displayedHeaders, layout }) => {
+	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
 			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
 
 			if (!isFieldLocalized) {
-			  return displayedHeaders;
+			  return { displayedHeaders, layout };
 			}
 
-			return [
-			  ...displayedHeaders,
-			  {
-			    key: '__locale_key__', // Needed for the table
-			    fieldSchema: { type: 'string' }, // Schema of the attribute
-			    metadatas: {
-						label: 'Content available in', // Label of the header,
-						sortable: false|true // Define in the column is sortable
-					}, // Metadatas for the label
-					// Name of the key in the data we will display
-			    name: 'locales',
-					// Custom renderer
-			    cellFormatter: props => <div>Object.keys(props).map(key => <p key={key}>key</p>)</div>,
-			  },
-			];
+			return {
+        layout,
+        displayedHeaders: [
+          ...displayedHeaders,
+          {
+            key: '__locale_key__', // Needed for the table
+            fieldSchema: { type: 'string' }, // Schema of the attribute
+            metadatas: {
+              label: 'Content available in', // Label of the header,
+              sortable: true|false // Define if the column is sortable
+            }, // Metadatas for the label
+            // Name of the key in the data we will display
+            name: 'locales',
+            // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+            cellFormatter,
+          },
+			  ]
+      };
     });
   },
 }
