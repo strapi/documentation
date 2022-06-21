@@ -14,7 +14,7 @@ The Email plugin enables applications to send email from a server or [external p
 
 something here or is it covered in providers?
 
-## Programmatic usage
+## Programmatic usage <!--rename-->
 
 ### Send an email - `.send()`
 
@@ -27,7 +27,7 @@ await strapi.plugins['email'].services.email.send({
   cc: 'helenedarroze@strapi.io',
   bcc: 'ghislainearabian@strapi.io',
   replyTo: 'annesophiepic@strapi.io',
-  subject: 'Use strapi email provider successfully',
+  subject: 'The Strapi email provider worked successfully',
   text: 'Hello world!',
   html: 'Hello world!',
 });
@@ -35,23 +35,22 @@ await strapi.plugins['email'].services.email.send({
 
 ### Send an email using a template - `.sendTemplatedEmail()`
 
-When you send an email, you will most likely want to build it from a template you wrote.
-The email plugin provides the service `sendTemplatedEmail` that compiles the email and then sends it. The function has the following parameters:
+The email plugin provides the function `sendTemplatedEmail` to compose email from a template. The service compiles the email from the available properties and then sends the email. The function has the following parameters:
 
-| param           | description                                                                                                              | type   | default |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ | ------- |
-| `emailOptions`  | Object that contains email options (`to`, `from`, `replyTo`, `cc`, `bcc`) except `subject`, `text` and `html`            | object | `{}`    |
-| `emailTemplate` | Object that contains `subject`, `text` and `html` as [lodash string templates](https://lodash.com/docs/4.17.15#template) | object | `{}`    |
-| `data`          | Object that contains the data used to compile the templates                                                              | object | `{}`    |
+| Parameter       | Description                                                                     | Type     | Default |
+|-----------------|---------------------------------------------------------------------------------|----------|---------|
+| `emailOptions`  | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`.  | `object` | {}      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html`.                | `object` | {}      |
+| `data`          | Contains the data used to compile the templates.                                 | `object` | {}      |
 
 **Example**
 
 ```js
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
-  text: `Welcome on mywebsite.fr!
+  text: `Welcome to mywebsite.fr!
     Your account is now linked with: <%= user.email %>.`,
-  html: `<h1>Welcome on mywebsite.fr!</h1>
+  html: `<h1>Welcome to mywebsite.fr!</h1>
     <p>Your account is now linked with: <%= user.email %>.<p>`,
 };
 
