@@ -68,9 +68,29 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ### Send email using lifecycle hooks
 
-[Lifecycle hooks] can be used to trigger an email based on administrator actions in the admin panel. For example, an editor could receive an email each time an author submits new content.
+[Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) can be used to trigger an email based on administrator actions in the admin panel. For example, an editor can receive an email each time an author submits new content.
 
+```jsx
 
+//path: ./src/api/[api-name]]/content-types/[content-type-name]/lifecycles.js
+
+module.exports = {
+    async afterCreate(event) {
+        const { result } = event;
+
+        try{
+            await strapi.plugins['email'].services.email.send({
+                to: 'kai@strapi.io',
+                from: 'kai@strapi.io',
+                subject: 'test',
+                text: '${alertMessage}'
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    }
+}
+```
 
 ::: tip
 When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test.
