@@ -42,8 +42,8 @@ The email plugin provides the function `sendTemplatedEmail` to compose email fro
 
 | Parameter       | Description                                                                     | Type     | Default |
 |-----------------|---------------------------------------------------------------------------------|----------|---------|
-| `emailOptions`  | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`.  | `object` | {}      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html`.                | `object` | {}      |
+| `emailOptions`  | Contains email addressing properties: <ul> <li>`to`</li><li> `from`</li><li> `replyTo`</li><li> `cc`</li><li> `bcc`</li></ul>  | `object` | {}      |
+| `emailTemplate` | Contains email content properties: <ul><li>`subject`</li><li>`text`</li><li> `html`</li></ul>                | `object` | {}      |
 | `data`          | Contains data used to compile the templates.                                 | `object` | {}      |
 
 To use the `sendTemplatedEmail` function add a constant `emailTemplate` above the function.
@@ -66,7 +66,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
     to: user.email,
     // from: is not specified, so it's the defaultFrom that will be used instead
   },
-  emailTemplate,
+    emailTemplate,
   {
     user: _.pick(user, ['username', 'email', 'firstname', 'lastname']),
   }
