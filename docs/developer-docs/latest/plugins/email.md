@@ -12,11 +12,12 @@ The Email plugin enables applications to send email from a server or [external p
 
 ## Send an email using custom a controller or service
 
-To trigger an email in response to a user input add the following function to a custom controller or service. The function will utilize the email provider enabled in the `plugins.js` configuration file.
+To trigger an email in response to a user input add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file.
 
 <!--TO DO: test the code here -->
 
 ```js
+
 //path: ./src/api/{api name}/controllers/{api name}.js
 
 const { createCoreController } = require('@strapi/strapi').factories;
@@ -43,12 +44,15 @@ The email plugin provides the function `sendTemplatedEmail` to compose email fro
 |-----------------|---------------------------------------------------------------------------------|----------|---------|
 | `emailOptions`  | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`.  | `object` | {}      |
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html`.                | `object` | {}      |
-| `data`          | Contains the data used to compile the templates.                                 | `object` | {}      |
+| `data`          | Contains data used to compile the templates.                                 | `object` | {}      |
 
 To use the `sendTemplatedEmail` function add a constant `emailTemplate` above the function.
  <!--TO DO: this would be better with the options and data objects incorporated-->
 
 ```js
+
+//path: ./src/api/{api name}/controllers/{api name}.js
+
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
   text: `Welcome to mywebsite.fr!
