@@ -10,9 +10,6 @@ The Email plugin enables applications to send email from a server or [external p
 
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi email plugin. It provides functionality for the local development environment, but has limited functionality in the production environment and another provider is likely preferable. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers or creating a new email provider. <!--rename-->
 
-## Configure the plugin
-
-something here or is it covered in providers?
 
 ## Programmatic usage
 
