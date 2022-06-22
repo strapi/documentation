@@ -89,7 +89,7 @@ module.exports = {
             await strapi.plugins['email'].services.email.send({
                 to: 'kai@strapi.io',
                 from: 'kai@strapi.io',
-                subject: 'test',
+                subject: 'New content posted',
                 text: '${alertMessage}'
             })
         } 
