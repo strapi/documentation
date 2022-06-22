@@ -10,10 +10,6 @@ The Email plugin enables applications to send email from a server or [external p
 
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers or creating a new email provider.
 
-The email templates located in the Users and Permissions plugin are documented with
-
-Programatic emails are triggered by user actions such as clicking on a forgot password link.
-
 ## Send an email with backend customization
 
 To trigger an email in response to a user input add the following function to a custom controller or service. The function will utilize the email provider enabled in the `plugins.js` configuration file.
