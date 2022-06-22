@@ -93,4 +93,12 @@ module.exports = {
 }
 ```
 
+<!-- decide whether to include this: 
+
 ## Find other email documentation
+
+- Customize the admin password reset message.
+- Use the Users and Permissions email templates.
+- other? 
+
+-->
