@@ -52,21 +52,6 @@ The following operators are available:
 
 `GET /api/users?filters[username][$eq]=John`
 
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    username: {
-      $eq: 'John',
-    },
-  },
-}, {
-  encodeValuesOnly: true,
-});
-
-await request(`/api/users?${query}`);
-```
-
 :::
 
 :::response Example response
@@ -88,6 +73,25 @@ await request(`/api/users?${query}`);
 
 :::
 ::::
+
+::: details JavaScript query (built with the qs library):
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  filters: {
+    username: {
+      $eq: 'John',
+    },
+  },
+}, {
+  encodeValuesOnly: true,
+});
+
+await request(`/api/users?${query}`);
+```
+
+:::
 
 ### Find multiple restaurants with ids 3, 6, 8
 

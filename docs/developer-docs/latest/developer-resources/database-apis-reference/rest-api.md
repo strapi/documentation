@@ -9,68 +9,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
 
-[API parameters](#api-parameters) can be used to [filter](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering), [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting), and [paginate](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) results and to [select fields](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) and relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population)). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state) and [locale](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale).
-
-## API Parameters
-
-Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
-
-The following parameters are available:
-
-| Operator           | Type          | Description                                           |
-| ------------------ | ------------- | ----------------------------------------------------- |
-| `sort`             | String/Array  | [Sorting the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting) |
-| `filters`          | Object        | [Filter the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering) |
-| `populate`         | String/Object | [Populate relations, components, or dynamic zones](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population) |
-| `fields`           | Array         | [Select only specific fields to display](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) |
-| `pagination`       | Object        | [Page through entries](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) |
-| `publicationState` | String        | [Select the draft & publish state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
-| `locale`           | String/Array  | [Select one ore multiple locales](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale) |
-
-::::tip
-Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
-Use `qs` directly to generate complex queries instead of creating them manually.
-
-:::details Example using qs
-
-```js
-// GET /api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
-
-const qs = require('qs');
-const query = qs.stringify({
-  sort: ['title:asc'],
-  filters: {
-    title: {
-      $eq: 'hello',
-    },
-  },
-  populate: '*',
-  fields: ['title'],
-  pagination: {
-    pageSize: 10,
-    page: 1,
-  },
-  publicationState: 'live',
-  locale: ['en'],
-}, {
-  encodeValuesOnly: true, // prettify url
-});
-
-await request(`/api/books?${query}`);
-```
-
-:::
-::::
-
-## API Endpoints
-
 Creating a content-type automatically creates some REST API endpoints available to interact with it.
 
 :::note
 [Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
 :::
 
-### Endpoints
+## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:
 
@@ -172,9 +117,9 @@ For each Content-Type, the following endpoints are automatically generated:
 ::::
 :::::
 
-### Unified response format
+## Requests
 
-Whatever the query, the response is always an object with the following keys:
+No matter the request, the response is always an object with the following keys:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
@@ -187,7 +132,6 @@ Whatever the query, the response is always an object with the following keys:
 - `meta`(object): information about pagination, publication state, available locales, etc.
 
 - `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
-
 ### Get entries
 
 Returns entries matching the query filters (see [parameters](#api-parameters) documentation).
