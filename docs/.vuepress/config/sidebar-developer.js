@@ -425,6 +425,7 @@ const developer = [
       ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
       ['/developer-docs/latest/plugins/email', 'Email'],
       ['/developer-docs/latest/plugins/upload', 'Upload'],
+      ['/developer-docs/latest/plugins/sentry', 'Sentry'],
       ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
     ],
     sidebarDepth: 1,
