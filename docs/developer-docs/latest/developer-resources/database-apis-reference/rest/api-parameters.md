@@ -8,11 +8,9 @@ canonicalUrl:
 
 # API parameters
 
-[API parameters](#api-parameters) can be used to [filter](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering), [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting), and [paginate](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) results and to [select fields](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) and relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population)). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state) and [locale](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale).
+API parameters can be used with the [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
 
-Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
-
-The following parameters are available:
+The following API parameters are available:
 
 | Operator           | Type          | Description                                           |
 | ------------------ | ------------- | ----------------------------------------------------- |
@@ -23,6 +21,8 @@ The following parameters are available:
 | `pagination`       | Object        | [Page through entries](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) |
 | `publicationState` | String        | [Select the draft & publish state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
 | `locale`           | String/Array  | [Select one ore multiple locales](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale) |
+
+Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)
 
 ::::tip
 Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.

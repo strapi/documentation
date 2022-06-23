@@ -7,9 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API
 
-The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
-
-Creating a content-type automatically creates some REST API endpoints available to interact with it.
+The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) can be used when querying API endpoints to refine the results.
 
 :::note
 [Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
