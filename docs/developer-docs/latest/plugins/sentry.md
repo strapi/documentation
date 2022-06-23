@@ -42,7 +42,7 @@ Then you must [configure](#configuration) the plugin to enable your Strapi appli
 Create or edit your `./config/plugins.js` file to configure the Sentry plugin. The following properties are available:
 
 | Property | Type | Default Value | Description |
-| -------------- | -------------- |------------ |
+| -------- | ---- | ------------- |------------ |
 | `dsn` | string | `null` | Your Sentry [data source name](https://docs.sentry.io/product/sentry-basics/dsn-explainer/). |
 | `sendMetadata` | boolean | `true` | Whether the plugin should attach additional information (e.g. OS, browser, etc.) to the events sent to Sentry. |
 | `init` | object | `{}` | A config object that is passed directly to Sentry during initialization. See the official [Sentry documentation](https://docs.sentry.io/platforms/node/configuration/options/) for all available options. |
@@ -93,7 +93,7 @@ This service exposes the following methods:
 
 | Method | Description | Parameters |
 | ------ | ----------- | ---------- |
-| `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li><br><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
+| `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
 | `getInstance` | Used for direct access to the Sentry instance. | |
 
 ### Examples
