@@ -12,28 +12,22 @@ The Email plugin enables applications to send email from a server or [external p
 
 ## Send an email using custom a controller or service
 
-To trigger an email in response to a user input add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file.
-
-<!--TO DO: test the code here -->
+To trigger an email in response to a user input add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
 
 ```js
 
 //path: ./src/api/{api name}/controllers/{api name}.js
 
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   await strapi.plugins['email'].services.email.send({
-    to: 'paulbocuse@strapi.io',
-    from: 'joelrobuchon@strapi.io',
-    cc: 'helenedarroze@strapi.io',
-    bcc: 'ghislainearabian@strapi.io',
-    replyTo: 'annesophiepic@strapi.io',
-    subject: 'The Strapi email provider worked successfully',
+    to: 'valid email address',
+    from: 'your verified email address', //e.g. single sender verification in SendGrid
+    cc: 'valid email address',
+    bcc: 'valid email address',
+    replyTo: 'valid email address',
+    subject: 'The Strapi email plugin worked successfully',
     text: 'Hello world!',
     html: 'Hello world!',
   }),
-});
 ```
 
 ## Send an email using a template
@@ -46,8 +40,7 @@ The email plugin provides the function `sendTemplatedEmail` to compose email fro
 | `emailTemplate` | Contains email content properties: <ul><li>`subject`</li><li>`text`</li><li> `html`</li></ul>                | `object` | {}      |
 | `data`          | Contains data used to compile the templates.                                 | `object` | {}      |
 
-To use the `sendTemplatedEmail` function add a constant `emailTemplate` above the function.
- <!--TO DO: this would be better with the options and data objects incorporated-->
+To use the `sendTemplatedEmail` function define the `emailTemplate` object .
 
 ```js
 
