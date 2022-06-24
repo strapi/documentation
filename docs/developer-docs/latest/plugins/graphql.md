@@ -33,36 +33,31 @@ yarn strapi install graphql
 
 </code-group>
 
-Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
+Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
-## Configurations
+## Configuration
 
-By default, the [Shadow CRUD](#shadow-crud) feature is enabled and the GraphQL path is set to `/graphql`. The Playground is enabled by default for both the development and staging environments, however it is disabled in production. By changing the config option `playgroundAlways` to true, you can enable it.
+| param              | description                                                                                                                                                   | type    | default |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| `shadowCRUD`       | Boolean indicating whether type definitions for queries, mutations and resolvers based on your models should be created automatically.                        | boolean | `true`  |
+| `playgroundAlways` | Boolean indicating whether the playground should be created and exposed (enabled by default in development environments).                                     | boolean | `{}`    |
+| `depthLimit`       | Number to limit the complexity of GraphQL queries, that can be run.                                                                                           | number  | `10`    |
+| `maxLimit`         | Number indicating how many entities are returned by default.                                                                                                  | number  | `-1`    |
+| `apolloServer`     | Object containing additional configuration for the [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver). | object  | `{}`    |
+| `generateArtifacts`| Boolean indicating whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions.                    | boolean | `false` |
 
-<!-- TODO: update these paragraphs 👇 (format as a table — check with JS) -->
 
-Security limits on maximum number of items in your response by default is limited to 100, however you can change this on the following config option `amountLimit`. This should only be changed after careful consideration of the drawbacks of a large query which can cause what would basically be a DDoS (Distributed Denial of Service). And may cause abnormal load on your Strapi server, as well as your database server.
-
-You can also setup any [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) with the `apolloServer` option. For example, you can enable the tracing feature, which is supported by the playground to track the response time of each part of your query. To enable this feature just change/add the `"tracing": true` option in the GraphQL settings file. You can read more about the tracing feature from Apollo [here](https://www.apollographql.com/docs/apollo-server/federation/metrics/).
-
-You can edit these [configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
-
-:::caution
-Please note the setting for GraphQL `tracing` as changed and has been moved to `apolloServer.tracing`
-:::
+You can edit the [configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
 
 ```js
 // path: ./config/plugins.js
 
 module.exports = {
-  //
   graphql: {
     config: {
-      endpoint: '/graphql',
       shadowCRUD: true,
       playgroundAlways: false,
       depthLimit: 7,
-      amountLimit: 100,
       apolloServer: {
         tracing: false,
       },
