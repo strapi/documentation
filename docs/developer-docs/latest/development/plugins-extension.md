@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/plugins-e
 
 # Plugins extension
 
-Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the Marketplace or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
+Strapi comes with [plugins](/developer-docs/latest/plugins/plugins-intro.md) that can be installed from the [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/developer-docs/latest/development/plugins-development.md)) or extend the existing ones.
 
 Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Some plugins automatically create files there, ready to be modified.
 
