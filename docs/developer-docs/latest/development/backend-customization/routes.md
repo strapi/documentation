@@ -16,7 +16,7 @@ Once a route exists, reaching it executes some code handled by a controller (see
 
 ## Implementation
 
-Implementing a new route consists in defining it in a router file within the `.src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+Implementing a new route consists in defining it in a router file within the `./src/api/[apiName]/routes` folder (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
 There are 2 different router file structures, depending on the use case:
 
@@ -32,7 +32,7 @@ Strapi provides a `createCoreRouter` factory function that automatically generat
 - passing in configuration options to each router
 - and disabling some core routers to [create custom ones](#creating-custom-routers).
 
-The core router file structure has the following parameters:
+A core router file is a JavaScript file exporting the result of a call to `createCoreRouter` with the following parameters:
 
 | Parameter | Description                                                                                  | Type     |
 | ----------| -------------------------------------------------------------------------------------------- | -------- |
@@ -79,7 +79,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
   only: ['find'],
   config: {
     find: {
-      auth: false
+      auth: false,
       policies: [],
       middlewares: [],
     }
@@ -104,21 +104,28 @@ Creating custom routers consists in creating a file that exports an array of obj
 
 Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
 
+::: caution
+Routes files are loaded in alphabetical order. To load custom routes before core routes, make sure to name custom routes appropriately (e.g. `01-custom-routes.js` and `02-core-routes.js`).
+:::
+
 ::: details Example of a custom router using URL parameters and regular expressions for routes
+
+In the following example, the custom routes file name is prefixed with `01-` to make sure the route is reached before the core routes.
+
 ```js
-// path: ./src/api/restaurant/routes/custom-restaurant.js
+// path: ./src/api/restaurant/routes/01-custom-restaurant.js
 
 module.exports = {
   routes: [
-    { // Path defined with a URL parameter
-      method: 'GET',
-      path: '/restaurants/:category/:id',
-      handler: 'Restaurant.findOneByCategory',
+    { // Path defined with an URL parameter
+      method: 'POST',
+      path: '/restaurants/:id/review', 
+      handler: 'restaurant.review',
     },
     { // Path defined with a regular expression
       method: 'GET',
-      path: '/restaurants/:region(\\d{2}|\\d{3})/:id', // Only match when the first parameter contains 2 or 3 digits.
-      handler: 'Restaurant.findOneByRegion',
+      path: '/restaurants/:category([a-z]+)', // Only match when the URL parameter is composed of lowercase letters
+      handler: 'restaurant.findByCategory',
     }
   ]
 }
@@ -221,7 +228,7 @@ const { createCoreRouter } = require('@strapi/strapi').factories;
 module.exports = createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
-      middlwares: [
+      middlewares: [
         // point to a registered middleware
         'middleware-name', 
 

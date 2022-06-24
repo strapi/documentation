@@ -4,37 +4,44 @@ description: Instructions to install new plugins in a Strapi application via the
 canonicalUrl: https://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html
 ---
 
-# Installing plugins via the Marketplace
+# Using the Marketplace
 
-::: callout 🚧 The Marketplace is currently not available for v4. It will be back soon, stay tuned!
-In the meantime, plugins can be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
+The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](./introduction-to-plugins.md#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
+
+ ::: strapi In-app Marketplace vs. Market website
+The Marketplace in the admin panel only displays v4 plugins, but all plugins for all Strapi versions are discoverable in the [Strapi Market](https://market.strapi.io). 
+
+Keep in mind that v3 and v4 plugins are not cross-compatible, but that providers are compatible both with v3 and v4 plugins.
 :::
 
-The Marketplace is a section of the admin panel that lists all plugins that can be installed in a Strapi application. The Marketplace is accessible from ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ in the main navigation of the admin panel.
+![The Marketplace interface](../assets/plugins/marketplace-v4.png)
 
-<!--
+The Plugins and Providers tabs display each plugin/provider on individual cards containing:
 
-::: note
-Plugins can also be installed via the Command Line Interface (see [Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
-:::
+- their name, sometimes followed by either of the following badges:
+  - ![maintained by Strapi icon](../assets/icons/official-market.svg) to indicate it is made by Strapi,
+  - ![verified by Strapi icon](../assets/icons/verified-marketplace.svg) to indicate it was verified by Strapi.
+- the description
+- a **Learn more** button for additional information, including detailed implementation instructions
+- a **Copy install command** button to copy the installation command to the local clipboard
 
-![Interface of the Marketplace](../assets/plugins/marketplace.png)
-
-The Marketplace displays each available plugin in a box, which contains:
-- the name of the plugin,
-- the description of the plugin,
-- indications on the current status of the plugin:
-   - "Compatible with your app": indicates that the plugin is not installed yet but can be installed on your Strapi application
-   - "Already installed": indicates that the plugin is already installed and available in your Strapi application
+In the top right corner of the Marketplace, the **Submit your plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
 
 ::: tip
-Click on the link icon ![External link icon](../assets/icons/external_link.svg) next to the name of a plugin to be redirected to the plugin package in the Strapi GitHub repository.
+The search bar displays incremental search results based on the plugin/provider name and description.
 :::
 
-To install a new plugin via the Marketplace:
+## Installing Marketplace plugins and providers
+
+::: note
+Marketplace plugins and providers are installed and deleted from the user's terminal ([see Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md)).
+:::
+
+To install a new plugin or provider via the Marketplace:
 
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
-2. Among the available plugin, choose the one you wish to install.
-3. Click on the **Install** button in the chosen plugin's box.
-
--->
+2. Choose the **Plugins** tab to browse available plugins or the **Providers** tab to browse available providers.
+3. Choose an available plugin/provider and click on the **Copy install command** button.
+3. Switch to your terminal and navigate to the Strapi application directory.
+4. Paste and run the copied install command.
+5. Follow any plugin/provider-specific implementation instructions.

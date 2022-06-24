@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 
 # Upload
 
-Thanks to the plugin `Upload`, you can upload any kind of file on your server or external providers such as **AWS S3**.
+The `Upload` plugin is used to implement the Media Library available in the admin panel. With it you can upload any kind of file on your server or external providers such as **AWS S3**.
 
 ## Configuration
 
@@ -14,7 +14,7 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middleware.js`:
+You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
 
 ```js
 // path: ./config/middlewares.js
@@ -107,13 +107,15 @@ module.exports = ({ env }) => ({
 
 ## Upload files
 
-To upload files into your application.
+To upload files to your application.
 
 ### Parameters
 
 - `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
 
-### Code example
+<code-group>
+
+<code-block title="BROWSER">
 
 ```html
 <form>
@@ -123,19 +125,42 @@ To upload files into your application.
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
-    request.open('POST', '/upload');
-
-    request.send(new FormData(formElement));
+    await fetch('/api/upload', {
+      method: 'post',
+      body: new FormData(e.target)
+    });
   });
 </script>
 ```
+
+</code-block>
+
+<code-block title="NODE.JS">
+
+```js
+import { FormData } from 'formdata-node';
+import fetch, { blobFrom } from 'node-fetch';
+
+const file = await blobFrom('./1.png', 'image/png');
+const form = new FormData();
+
+form.append('files', file, "1.png");
+
+const response = await fetch('http://localhost:1337/api/upload', {
+  method: 'post',
+  body: form,
+});
+
+```
+
+</code-block>
+
+</code-group>
 
 :::caution
 You have to send FormData in your request body.
@@ -189,16 +214,15 @@ Code
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
-    request.open('POST', '/upload');
-
-    request.send(new FormData(formElement));
+    await fetch('/api/upload', {
+      method: 'post',
+      body: new FormData(e.target)
+    });
   });
 </script>
 ```
@@ -245,44 +269,36 @@ Code
 </form>
 
 <script type="text/javascript">
-  const formElement = document.querySelector('form');
+  const form = document.querySelector('form');
 
-  formElement.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const request = new XMLHttpRequest();
-
+    const data = {};
     const formData = new FormData();
 
-    const formElements = formElement.elements;
-
-    const data = {};
-
-    for (let i = 0; i < formElements.length; i++) {
-      const currentElement = formElements[i];
-      if (!['submit', 'file'].includes(currentElement.type)) {
-        data[currentElement.name] = currentElement.value;
-      } else if (currentElement.type === 'file') {
-        for (let i = 0; i < currentElement.files.length; i++) {
-          const file = currentElement.files[i];
-          formData.append(`files.${currentElement.name}`, file, file.name);
+    form.elements
+      .forEach(({ name, type, value, files, ...element }) => {
+        if (!['submit', 'file'].includes(type)) {
+          data[name] = value;
+        } else if (type === 'file') {
+          files.forEach((file) => {
+            formData.append(`files.${name}`, file, file.name);
+          });
         }
-      }
-    }
+      });
 
     formData.append('data', JSON.stringify(data));
 
-    request.open('POST', `${HOST}/restaurants`);
-
-    request.send(formData);
+    await fetch('/api/restaurants', {
+      method: 'post',
+      body: formData
+    });
   });
 </script>
 ```
 
-Your entry data has to be contained in a `data` key. You have to `JSON.stringify` your data object.
-
-And for your files, they have to be prefixed by `files`.
-Example here with cover attribute `files.cover`.
+Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files, need to be prefixed with `files` (example with a cover attribute: `files.cover`).
 
 ::: tip
 If you want to upload files for a component, you will have to specify the index of the item you want to add the file to.
@@ -387,7 +403,7 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 You can provide them by create or edit the file at `./config/plugins.js`. The example below set `max-age` header.
 
 ```js
-//path: ./config/plugins.js
+// path: ./config/plugins.js
 
 module.exports = ({ env })=>({
   upload: {
@@ -411,7 +427,7 @@ When using community providers, pass the full package name to the `provider` key
 :::
 
 ```js
-//path: ./config/plugins.js
+// path: ./config/plugins.js
 
 module.exports = ({ env }) => ({
   // ...
@@ -448,7 +464,7 @@ You can set a specific configuration in the `./config/env/{env}/plugins.js` conf
 
 You can create a Node.js module to implement a custom provider. Read the official documentation [here](https://docs.npmjs.com/creating-node-js-modules).
 
-Your provider need to export the following interface:
+Your provider needs to export the following interface:
 
 ```js
 module.exports = {
@@ -458,6 +474,11 @@ module.exports = {
     return {
       upload(file) {
         // upload the file in the provider
+        // file content is accessible by `file.buffer`
+      },
+      uploadStream(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.stream`
       },
       delete(file) {
         // delete the file in the provider
@@ -467,27 +488,48 @@ module.exports = {
 };
 ```
 
+:::tip
+For performance reasons, the upload plugin will only use the `uploadStream` function if it exists, otherwise it will fallback on the `upload` function.
+:::
+
 You can then publish it to make it available to the community.
 
 ### Create a local provider
 
 If you want to create your own provider without publishing it on **npm** you can follow these steps:
 
-1. Create a `./providers/strapi-provider-upload-{provider-name}` folder in your root application folder.
+1. Create a `./providers/upload-{provider-name}` folder in your root application folder.
 2. Create your provider as explained in the [documentation](#create-providers) above.
-3. Then update your `package.json` to link your `strapi-provider-upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider.
+3. Update your `package.json` to link your `upload-{provider-name}` dependency to point to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your provider:
 
 ```json
-//path: ./package.json
+// path: ./package.json
 
 {
   ...
   "dependencies": {
     ...
-    "strapi-provider-upload-{provider-name}": "file:providers/strapi-provider-upload-{provider-name}"
+    "@strapi/provider-upload-{provider-name}": "file:providers/upload-{provider-name}"
     ...
   }
 }
 ```
 
-4. Finally, run `yarn install` or `npm install` to install your new custom provider.
+4. Update the Upload plugin configuration:
+
+```js
+// path: ./config/plugins.js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: '{provider-name}',
+      providerOptions: {},
+    },
+  },
+  // ...
+});
+```
+
+5. Run `yarn install` or `npm install` to install your new custom provider.

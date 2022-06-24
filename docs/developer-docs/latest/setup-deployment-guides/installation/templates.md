@@ -6,6 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Templates
 
+::: callout 🚧 
+This documentation is currently being reworked and updated to Strapi v4. You can follow the work-in-progress pull request on [GitHub](https://github.com/strapi/documentation/pull/665).
+:::
+
 A template is a pre-made Strapi configuration designed for a specific use case. It allows you to quickly bootstrap a custom Strapi app.
 
 Here are some things a template may configure for you:
@@ -86,7 +90,7 @@ You can create this file structure by hand or generate it via the [CLI](/develop
 ::: tab yarn
 
 ```bash
-yarn strapi templates:generate <path>
+yarn strapi generate:template <path>
 ```
 
 :::
@@ -94,7 +98,7 @@ yarn strapi templates:generate <path>
 ::: tab npx
 
 ```bash
-npx strapi templates:generate <path>
+npx strapi generate:template <path>
 ```
 
 :::

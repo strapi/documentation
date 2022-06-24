@@ -15,7 +15,7 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination-by-offset))                                                                      | Integer      | `25`    |
-| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination-by-offset)).<br/><br/>Defaults to `null`, which fetches all results. | Integer      | `100`   |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination-by-offset)). | Integer      | `100`   |
 
 **Example:**
 
