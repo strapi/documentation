@@ -16,7 +16,6 @@ Plugin extensions code is located in the `./src/extensions` folder (see [project
 ```bash
 /extensions
   /some-plugin-to-extend
-    strapi-admin.js
     strapi-server.js
     /content-types
       /some-content-type-to-extend
@@ -24,7 +23,7 @@ Plugin extensions code is located in the `./src/extensions` folder (see [project
       /another-content-type-to-extend
         model.json
   /another-plugin-to-extend
-    strapi-admin.js
+    strapi-server.js
 ```
 
 :::
@@ -34,6 +33,9 @@ Plugins can be extended in 2 ways:
 - [extending the plugin's Content-Types](#extending-a-plugin-s-content-types)
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
+::: note
+Currently it's not possible to extend the admin panel part of a plugin. Consider forking a plugin if admin panel customizations are required.
+:::
 A plugin's Content-Types can be extended in 2 ways: using the programmatic interface within `strapi-server.js` and by overriding the content-types schemas.
 
 The final schema of the content-types depends on the following loading order:
@@ -70,13 +72,11 @@ A plugin's interface can be extended at step 2 (i.e. within `./src/extensions`) 
 
 ### Within the extensions folder
 
-To extend a plugin's interface using the `./src/extensions` folder:
+To extend a plugin's server interface using the `./src/extensions` folder:
 
 1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
-3. Depending on what needs to be extended:
-    * create a `strapi-server.js` file to extend a plugin's back end using the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)
-    * or create a  `strapi-admin.js` file to extend the admin panel with the [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md).
+3. Create a `strapi-server.js` file to extend a plugin's back end using the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md).
 4. Within this file, define and export a function.  The function receives the `plugin` interface as an argument so it can be extended.
 
 ::: details Example of backend extension
