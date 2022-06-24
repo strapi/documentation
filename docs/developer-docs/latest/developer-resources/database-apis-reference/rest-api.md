@@ -75,7 +75,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 ::::
 
-::::: details Examples
+::::: details Examples:
 
 :::: tabs card
 
@@ -127,12 +127,13 @@ No matter the request, the response is always an object with the following keys:
   - a list of entries, as an array of objects
   - a custom response
 
-- `meta`(object): information about pagination, publication state, available locales, etc.
+- `meta` (object): information about pagination, publication state, available locales, etc.
 
 - `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
+
 ### Get entries
 
-Returns entries matching the query filters (see [parameters](#api-parameters) documentation).
+Returns entries matching the query filters (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) documentation).
 
 :::: api-call
 
@@ -179,7 +180,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
 
 ### Get an entry
 
-Returns an entry by id.
+Returns an entry by `id`.
 
 :::: api-call
 
@@ -216,7 +217,7 @@ Returns an entry by id.
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: api-call
 
@@ -260,7 +261,8 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
-Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
+
+Fields that aren't sent in the query are not changed in the database. Send a `null` value to clear fields.
 
 :::: api-call
 
@@ -293,17 +295,15 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 }
 ```
 
-:::
-
 ::::
 
 :::note
-If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
+Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
 :::
 
 ### Delete an entry
 
-Deletes an entry by id and returns its value.
+Deletes an entry by `id` and returns its value.
 
 :::: api-call
 
