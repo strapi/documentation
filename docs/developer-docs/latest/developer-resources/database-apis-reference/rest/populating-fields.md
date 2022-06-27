@@ -9,6 +9,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
 
+:::: tip
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-intro-full.md)!!!
+
+::::
+
 ## Field selection
 
 Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/developer-docs/latest/development/backend-customization/models.md#model-attributes) are returned:

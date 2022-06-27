@@ -9,6 +9,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 Entries that are returned by queries to the [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) can be sorted and paginated.
 
+:::: tip
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-intro-full.md)!!!
+
+::::
+
 ## Sorting
 
 Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntaxes:

@@ -13,6 +13,12 @@ Using optional Strapi features can provide some more filters:
 - If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
 - If the [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) is enabled, it's possible to filter based on a `live` or `draft` state.
 
+:::: tip
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-intro-full.md)!!!
+
+::::
+
 ## Filtering
 
 Queries can accept a `filters` parameter with the following syntax:
