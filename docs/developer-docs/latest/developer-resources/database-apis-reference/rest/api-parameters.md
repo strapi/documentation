@@ -1,10 +1,10 @@
 ---
-title:
-description:
-canonicalUrl:
+title: REST API - Strapi Developer Docs
+description: Use API parameters to refine your Strapi REST API queries.
+canonicalUrl: http://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html
+next: ./filtering-locale-publication.md
 ---
 
-<!-- TODO: add SEO tags -->
 
 # API parameters
 
@@ -25,8 +25,7 @@ The following API parameters are available:
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)
 
 ::::tip
-Strapi takes advantage of the ability of the [`qs`](https://github.com/ljharb/qs) library to parse nested objects to create more complex queries.
-Use `qs` directly to generate complex queries instead of creating them manually.
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-intro-short.md)!!!
 
 :::details Example using qs:
 

@@ -1,5 +1,5 @@
 ---
-title: Filtering for REST API - Strapi Developer Docs
+title: Filtering, Locale, and Publication State for REST API - Strapi Developer Docs
 description: Use Strapi's REST API to filter the results of your requests.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api/filtering-locale-publication.html
