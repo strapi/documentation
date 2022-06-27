@@ -37,10 +37,10 @@ The email plugin provides the function `sendTemplatedEmail` to compose emails fr
 | Parameter       | Description                                                                     | Type     | Default |
 |-----------------|---------------------------------------------------------------------------------|----------|---------|
 | `emailOptions`  | Contains email addressing properties: <ul> <li>`to`</li><li> `from`</li><li> `replyTo`</li><li> `cc`</li><li> `bcc`</li></ul>  | `object` | {}      |
-| `emailTemplate` | Contains email content properties: <ul><li>`subject`</li><li>`text`</li><li> `html`</li></ul>                | `object` | {}      |
+| `emailTemplate` | Contains email content properties using [Lodash string templates](https://lodash.com/docs/4.17.15#template): <ul><li>`subject`</li><li>`text`</li><li> `html`</li></ul>                | `object` | {}      |
 | `data`          | Contains data used to compile the templates.                                 | `object` | {}      |
 
-To use the `sendTemplatedEmail` function define the `emailTemplate` object.
+To use the `sendTemplatedEmail` function define the `emailTemplate` object and insert the function into a controller or service.
 
 ```js
 
@@ -57,7 +57,7 @@ const emailTemplate = {
 await strapi.plugins['email'].services.email.sendTemplatedEmail(
   {
     to: user.email,
-    // from: is not specified, so it's the defaultFrom that will be used instead
+    // from: is not specified, the defaultFrom is used.
   },
     emailTemplate,
   {
@@ -89,13 +89,3 @@ module.exports = {
     }
 }
 ```
-
-<!-- decide whether to include this: 
-
-## Find other email documentation
-
-- Customize the admin password reset message.
-- Use the Users and Permissions email templates.
-- other? 
-
--->
