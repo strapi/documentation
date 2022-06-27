@@ -46,7 +46,7 @@ All of the following parameters are optional.
 | `depthLimit`       | Limit the [complexity of GraphQL queries](https://www.npmjs.com/package/graphql-depth-limit).                                                                 | number  | `10`    |
 | `generateArtifacts`| Whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions. The file-sytem location can be configured through `artifacts`.  | boolean | `false` |
 | `maxLimit`         | Maximum number entities are returned by default.                                                                                                              | number  | `-1`    |
-| `playgroundAlways` | Whether the playground should be publicly exposed (Note: enabled by default in if `NODE_ENV` is set to `development`).                                        | boolean | `{}`    |
+| `playgroundAlways` | Whether the playground should be publicly exposed (Note: enabled by default in if `NODE_ENV` is set to `development`).                                        | boolean | `false`  |
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on your models should be created automatically.                                           | boolean | `true`  |
 | `subscriptions`    | Enable GraphQL subscriptions.                                                                                                                                 | boolean | `false` |
 
@@ -59,20 +59,14 @@ You can edit the [configuration](/developer-docs/latest/setup-deployment-guides/
 module.exports = {
   graphql: {
     config: {
-      shadowCRUD: true,
       playgroundAlways: false,
-      depthLimit: 7,
       apolloServer: {
-        tracing: false,
+        tracing: true,
       },
     },
   },
 };
 ```
-
-## Shadow CRUD
-
-To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definitions, queries, mutations and resolvers based on your models.
 
 **Example:**
 
