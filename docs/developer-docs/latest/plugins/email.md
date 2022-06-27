@@ -68,11 +68,11 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Send an email using a lifecycle hook
 
-[Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) can be used to trigger an email based on administrator actions in the admin panel. For example, an editor can receive an email each time an author creates a new content entry in the Content Manager. The following code example illustrates a lifecycle hook on the **Save** event when adding a new entry to the specified collection type.
+[Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) can be used to trigger an email based on administrator actions in the admin panel. For example, an editor can receive an email each time an author creates a new content entry in the Content Manager. The following code example illustrates a lifecycle hook that runs when a new entry is created in the specified collection type.
 
 ```js
 
-//path: ./src/api/[api-name]]/content-types/[content-type-name]/lifecycles.js
+//path: ./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js
 
 module.exports = {
     async afterCreate(event) {
