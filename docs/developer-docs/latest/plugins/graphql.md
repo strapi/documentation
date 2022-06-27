@@ -37,14 +37,16 @@ Then, start your app and open your browser at [http://localhost:1337/graphql](ht
 
 ## Configuration
 
-| param              | description                                                                                                                                                   | type    | default |
+| Parameter          | Description                                                                                                                                                   | Type    | Default |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| `shadowCRUD`       | Boolean indicating whether type definitions for queries, mutations and resolvers based on your models should be created automatically.                        | boolean | `true`  |
-| `playgroundAlways` | Boolean indicating whether the playground should be created and exposed (enabled by default in development environments).                                     | boolean | `{}`    |
-| `depthLimit`       | Number to limit the complexity of GraphQL queries, that can be run.                                                                                           | number  | `10`    |
-| `maxLimit`         | Number indicating how many entities are returned by default.                                                                                                  | number  | `-1`    |
-| `apolloServer`     | Object containing additional configuration for the [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver). | object  | `{}`    |
-| `generateArtifacts`| Boolean indicating whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions.                    | boolean | `false` |
+| `apolloServer`     | Additional configuration for [`ApolloServer`](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver).                   | object  | `{}`    |
+| `artifacts`        | Object containing file-system paths, about where to store the generated articats. Example usage:<br/><br/>  ```{ schema: join(__dirname, '..', 'schema.graphql'), typegen: join(__dirname, '..', 'types.d.ts') }```<br/><br/> This option is linked to the option `generateArtifacts`.  | object  | `{ schema: false, typegen: false }`    |
+| `depthLimit`       | Limit the [complexity of GraphQL queries](https://www.npmjs.com/package/graphql-depth-limit).                                                                 | number  | `10`    |
+| `generateArtifacts`| Whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions. The file-sytem location can be configured through `artifacts`.  | boolean | `false` |
+| `maxLimit`         | Maximum number entities are returned by default.                                                                                                              | number  | `-1`    |
+| `playgroundAlways` | Whether the playground should be publicly exposed (Note: enabled by default in if `NODE_ENV` is set to `development`).                                        | boolean | `{}`    |
+| `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on your models should be created automatically.                                           | boolean | `true`  |
+| `subscriptions`    | Toggle GraphQL subscriptions.                                                                                                                                 | boolean | `false` |
 
 
 You can edit the [configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
