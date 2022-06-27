@@ -12,7 +12,7 @@ The Email plugin enables applications to send email from a server or [external p
 
 ## Send an email using custom a controller or service
 
-To trigger an email in response to a user input add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
+To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
 
 ```js
 
@@ -68,7 +68,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Send email using lifecycle hooks
 
-[Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) can be used to trigger an email based on administrator actions in the admin panel. For example, an editor can receive an email each time an author submits new content.
+[Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) can be used to trigger an email based on administrator actions in the admin panel. For example, an editor can receive an email each time an author creates a new content entry in the Content Manager.
 
 ```jsx
 
