@@ -336,7 +336,7 @@ Some plugins have admin panel integrations, your admin panel might have to be re
 
 ## strapi telemetry:disable
 
-Disable data collection for the project.
+Disable data collection for the project (see [Usage Information](/developer-docs/latest/getting-started/usage-information.md)).
 
 ```bash
 strapi telemetry:disable
@@ -344,7 +344,7 @@ strapi telemetry:disable
 
 ## strapi telemetry:enable
 
-Re-enable data collection for the project after it was disabled.
+Re-enable data collection for the project after it was disabled (see [Usage Information](/developer-docs/latest/getting-started/usage-information.md)).
 
 ```bash
 strapi telemetry:enable
