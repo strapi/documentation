@@ -6,13 +6,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-The Email plugin enables applications to send emails from a server or [external providers](/developer-docs/latest/development/using-providers.md). Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programatic emails. The documentation provides examples for how to configure the email plugin and examples of controllers and lifecycle hooks to implement programmatic email.
+The Email plugin enables applications to send emails from a server or [external providers](/developer-docs/latest/development/using-providers.md). Successful use of the plugin requires the plugin configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using `sendTemplatedEmail` to streamline programmatic emails. This documentation provides examples of how to use the email plugin to send emails using controllers and lifecycle hooks.
 
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers or creating a new email provider.
 
 ## Send an email using custom a controller or service
 
-To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function will utilize the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
+To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function utilizes the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
 
 ```js
 
@@ -40,7 +40,7 @@ The email plugin provides the function `sendTemplatedEmail` to compose emails fr
 | `emailTemplate` | Contains email content properties: <ul><li>`subject`</li><li>`text`</li><li> `html`</li></ul>                | `object` | {}      |
 | `data`          | Contains data used to compile the templates.                                 | `object` | {}      |
 
-To use the `sendTemplatedEmail` function define the `emailTemplate` object .
+To use the `sendTemplatedEmail` function define the `emailTemplate` object.
 
 ```js
 
