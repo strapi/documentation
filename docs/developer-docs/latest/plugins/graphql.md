@@ -37,16 +37,18 @@ Then, start your app and open your browser at [http://localhost:1337/graphql](ht
 
 ## Configuration
 
+All of the following parameters are optional.
+
 | Parameter          | Description                                                                                                                                                   | Type    | Default |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `apolloServer`     | Additional configuration for [`ApolloServer`](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver).                   | object  | `{}`    |
-| `artifacts`        | Object containing file-system paths, about where to store the generated articats. Example usage:<br/><br/>  ```{ schema: join(__dirname, '..', 'schema.graphql'), typegen: join(__dirname, '..', 'types.d.ts') }```<br/><br/> This option is linked to the option `generateArtifacts`.  | object  | `{ schema: false, typegen: false }`    |
+| `artifacts`        | Object containing file-paths, defining where to store generated articats. It can include the following properties: <ul><li>`schema`: Path to the generated GraphQL schema file</li><li>`typegen`: Path to generated TypeScript types</li></ul> **Note:** This option does only work if `generateArtifacts` is set to true.  | object  | <ul><li>`schema: false`</li><li>`typegen: false`</li></ul> |
 | `depthLimit`       | Limit the [complexity of GraphQL queries](https://www.npmjs.com/package/graphql-depth-limit).                                                                 | number  | `10`    |
 | `generateArtifacts`| Whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions. The file-sytem location can be configured through `artifacts`.  | boolean | `false` |
 | `maxLimit`         | Maximum number entities are returned by default.                                                                                                              | number  | `-1`    |
 | `playgroundAlways` | Whether the playground should be publicly exposed (Note: enabled by default in if `NODE_ENV` is set to `development`).                                        | boolean | `{}`    |
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on your models should be created automatically.                                           | boolean | `true`  |
-| `subscriptions`    | Toggle GraphQL subscriptions.                                                                                                                                 | boolean | `false` |
+| `subscriptions`    | Enable GraphQL subscriptions.                                                                                                                                 | boolean | `false` |
 
 
 You can edit the [configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
