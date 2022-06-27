@@ -334,6 +334,22 @@ options [--delete-files]
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::
 
+## strapi telemetry:disable
+
+Disable data collection for the project.
+
+```bash
+strapi telemetry:disable
+```
+
+## strapi telemetry:enable
+
+Re-enable data collection for the project after it was disabled.
+
+```bash
+strapi telemetry:enable
+```
+
 ## strapi console
 
 Start the server and eval commands in your application in real time.
