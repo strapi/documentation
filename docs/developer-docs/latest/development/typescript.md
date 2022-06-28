@@ -94,31 +94,40 @@ When instantiating Strapi programmatically using the default export of `@strapi/
 The public folder is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
+When starting Strapi programmatically by running `strapi()`, you can pass 2 optional parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. This can lead to the following combinations:
+
+| `appDir` parameter value | `distDir` parameter value | Actual `app` directory    | Actual `dist` directory   |
+| ------------------------ | ------------------------- | ----------------------    | -----------------------   |
+| -                        | -                         | current working directory | current working directory | 
+| `./app`                  | -                         | `./app`                    | `./app`                    | 
+| -                        | `./dist`                  | current working directory | `./dist`                  | 
+| `./app`                  | `./dist`                  | `./app`                   | `./dist` | 
+
+
+
+For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
+
+::: caution
+Do not set `appDir` to `build` or `dist` directory as it could cause issues when the app tries to write some files.
+:::
+
+::: details Examples of how Strapi resolves directories based on passed parameters:
+
 <!--Note: I don't really understand this section.-->
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
 ```js
-
 const resolveWorkingDirectories = opts => {
   const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
 
   const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
-  
+
   const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
 
   return { appDir, distDir };
 }
 
 ```
-
-For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
-
-::: caution
-Do not set the `appDir` to the `build` or `dist` directory as it could cause issues when the app tries to write some files.
-:::
-
-::: details Examples
-
 Start Strapi for JavaScript applications:
 
 ```js

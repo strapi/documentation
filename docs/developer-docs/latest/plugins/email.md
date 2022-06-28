@@ -107,6 +107,7 @@ When using community providers, pass the full package name to the `provider` key
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
 **Path —** ``.
+
 <code-group>
 
 <code-block title="JAVASCRIPT">
