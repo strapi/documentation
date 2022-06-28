@@ -34,7 +34,7 @@ Plugins can be extended in 2 ways:
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
 ::: note
-Currently it's not possible to extend the admin panel part of a plugin. Consider forking a plugin if admin panel customizations are required.
+Currently it's not possible to extend the admin panel part of a plugin. Consider using [patch-package](https://www.npmjs.com/package/patch-package) if admin panel customizations are required.
 :::
 
 :::warning
