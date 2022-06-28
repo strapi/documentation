@@ -15,7 +15,7 @@ The [GraphQL API reference](/developer-docs/latest/developer-resources/database-
 
 ## Usage
 
-To get started with GraphQL in your app, please install the plugin first. To do that, open your terminal and run the following command:
+To get started with GraphQL in your application, please install the plugin first. To do that, open your terminal and run the following command:
 
 <code-group>
 
@@ -33,44 +33,21 @@ yarn strapi install graphql
 
 </code-group>
 
-Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
+Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
-## Configurations
-
-By default, the [Shadow CRUD](#shadow-crud) feature is enabled and the GraphQL path is set to `/graphql`. The Playground is enabled by default for both the development and staging environments, however it is disabled in production. By changing the config option `playgroundAlways` to true, you can enable it.
-
-<!-- TODO: update these paragraphs 👇 (format as a table — check with JS) -->
-
-Security limits on maximum number of items in your response by default is limited to 100, however you can change this on the following config option `amountLimit`. This should only be changed after careful consideration of the drawbacks of a large query which can cause what would basically be a DDoS (Distributed Denial of Service). And may cause abnormal load on your Strapi server, as well as your database server.
-
-You can also setup any [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) with the `apolloServer` option. For example, you can enable the tracing feature, which is supported by the playground to track the response time of each part of your query. To enable this feature just change/add the `"tracing": true` option in the GraphQL settings file. You can read more about the tracing feature from Apollo [here](https://www.apollographql.com/docs/apollo-server/federation/metrics/).
-
-You can edit these [configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
-
-:::caution
-Please note the setting for GraphQL `tracing` as changed and has been moved to `apolloServer.tracing`
+:::note
+The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
 :::
 
-```js
-// path: ./config/plugins.js
+## Configuration
 
-module.exports = {
-  //
-  graphql: {
-    config: {
-      endpoint: '/graphql',
-      shadowCRUD: true,
-      playgroundAlways: false,
-      depthLimit: 7,
-      amountLimit: 100,
-      apolloServer: {
-        tracing: false,
-      },
-    },
-  },
-};
-```
+Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
 
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. 
+
+::: caution
+The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
+:::
 ## Shadow CRUD
 
 To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definitions, queries, mutations and resolvers based on your models.
