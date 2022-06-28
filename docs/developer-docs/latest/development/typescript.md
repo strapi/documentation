@@ -82,18 +82,19 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 Starting Strapi programmatically in a TypeScript project requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
 
-### Understand programatic use
+### Understand programmatic use
 
-When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the `app` directory and the `dist` directory can be passed. The `app` directory is the project root directory and `dist` is a subdirectory of `app` ([see project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). The `dist` directory represents the compiled project, with the same directory structure as the `app` directory, and the `app` directory represents the codebase (TypeScript or JavaScript). The main differences are:
+When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The codebase is located at the root of the project in the directory name chosen during installation, while the compiled codebase is in the subdirectory `dist` ([see project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Compared to a native JavaScript application, the primary differences are:
 
-- When using the Content-type Builder to create, update, delete content types (or any other service that creates files), Strapi uses the `app` folder to write the files.
-- When reading what content types exist on the system Strapi reads the `dist` folder.
-- When the `develop` command is used only the `app` directory is watched. In TypeScript, a compilation will be triggered when a change is detected in the `app` directory and the output will be written to the `dist` directory.
+- When using the Content-type Builder to create, update, delete content types (or any other service that creates files), files are written to the root directory.
+- Content types are read from the `dist` folder.
+- In development mode the root directory is watched and when a change is detected in the output is be written to the `dist` directory.
 
 ::: note
 The public folder is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
+<!--Note: I don't really understand this section.-->
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
 ```js
@@ -116,7 +117,7 @@ For example, if the compiled code is stored in a separate directory (eg: when us
 Do not set the `appDir` to the `build` or `dist` directory as it could cause issues when the app tries to write some files.
 :::
 
-### Start Strapi programmatically examples
+::: details Examples
 
 Start Strapi for JavaScript applications:
 
@@ -159,9 +160,11 @@ strapi({ appDir: './app' });
 
 ```
 
+:::
+
 ### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programatically. A common use is for creating command line interface tools or developing a plugin. Examples of how to incorporate both code bases:
+Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programatically. A common use is for creating command line interface tools or developing a plugin. The following are examples of how to incorporate both code bases:
 
 ```js
 const tsUtils = require('@strapi/typescript-utils');
