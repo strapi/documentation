@@ -80,11 +80,11 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Instantiating Strapi programmatically in a TypeScript project requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
+Starting Strapi programmatically in a TypeScript project requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
 
 ### Understand programatic use
 
-When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the `app` directory and the `dist` directory can be passed. The `app` directory is the project root directory and `dist` is a subdirectory of `app`. The `dist` directory represents the compiled project, with the same directory structure as the `app` directory, and the `app` directory represents the codebase (TypeScript or JavaScript). The main differences are:
+When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the `app` directory and the `dist` directory can be passed. The `app` directory is the project root directory and `dist` is a subdirectory of `app` ([see project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). The `dist` directory represents the compiled project, with the same directory structure as the `app` directory, and the `app` directory represents the codebase (TypeScript or JavaScript). The main differences are:
 
 - When using the Content-type Builder to create, update, delete content types (or any other service that creates files), Strapi uses the `app` folder to write the files.
 - When reading what content types exist on the system Strapi reads the `dist` folder.
