@@ -117,7 +117,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 ## Requests
 
-No matter the request, the response is always an object with the following keys:
+Requests return a response as an object which usually includes the following keys:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
@@ -131,6 +131,9 @@ No matter the request, the response is always an object with the following keys:
 
 - `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
 
+::: note
+Some plugins (including Users & Permissions and Upload) may not follow this response format.
+:::
 ### Get entries
 
 Returns entries matching the query filters (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) documentation).
