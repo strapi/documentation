@@ -176,29 +176,13 @@ strapi({ appDir: './app' });
 Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programatically. A common use is for creating command line interface tools or developing a plugin. The following are examples of how to incorporate both code bases:
 
 ```js
-const tsUtils = require('@strapi/typescript-utils');
+
 const strapi = require('@strapi/strapi');
 
-const appDir = process.cwd();
-
-// Automatically detect if this is a Typescript project:
-const isTSProject = await tsUtils.isUsingTypeScript(appDir);
-
-// Resolve the directory containing the compilation output:
-const outDir = await tsUtils.resolveOutDir(appDir);
-
-if (isTSProject) {
-// If inside a Typescript project, compile the TypeScript code in the appDir:
-  await tsUtils.compile(appDir, {
-    watch: false,
-    configOptions: { options: { incremental: true } },
-  });
-}
-
-// If inside a Typescript project, use a custom dist directory, otherwise set it to appDir value: 
-const distDir = isTSProject ? outDir : appDir;
-
+const appContext = await strapi.compile();
 // Start the app by providing the app and dist directories:
-const app = await strapi({ appDir, distDir }).load();
+const app = await strapi(appContext).load();
+
+// NOTE TO SELF: all of the deleted code when to the compiled method ->checking for JS and/or TS if TS, resolve from config the distDir value `outDir` fetched from tsconfig and set distDir to outDir value. 
 
 ```
