@@ -217,4 +217,4 @@ var response = await http.put(
 
 ## Conclusion
 
-Here is how to request your collection types in Strapi using Dart/Flutter. When you create a collections type or a single type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) available to interact with.
+Here is how to request your collection types in Strapi using Dart/Flutter. When you create a collections type or a single type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) available to interact with.
