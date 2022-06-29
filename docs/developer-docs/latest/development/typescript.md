@@ -84,6 +84,8 @@ Starting Strapi programmatically in a TypeScript project requires additional con
 
 ### Understand programmatic use
 
+<!-- NOTE TO SELF: add callout here about the typical programmatic use config for TS with what not to do. Also move most of this content elsewhere-->
+
 When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The codebase is located at the root of the project in the directory name chosen during installation, while the compiled codebase is in the subdirectory `dist` ([see project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Compared to a native JavaScript application, the primary differences are:
 
 - When using the Content-type Builder to create, update, delete content types (or any other service that creates files), files are written to the root directory.
@@ -102,7 +104,6 @@ When starting Strapi programmatically by running `strapi()`, you can pass 2 opti
 | `./app`                  | -                         | `./app`                    | `./app`                    | 
 | -                        | `./dist`                  | current working directory | `./dist`                  | 
 | `./app`                  | `./dist`                  | `./app`                   | `./dist` | 
-
 
 
 For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
