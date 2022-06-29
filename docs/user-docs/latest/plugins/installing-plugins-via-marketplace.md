@@ -25,7 +25,7 @@ The Plugins and Providers tabs display each plugin/provider on individual cards 
 - a **Learn more** button for additional information, including detailed implementation instructions
 - a **Copy install command** button to copy the installation command to the local clipboard
 
-For installed providers, the **Copy install command** button is replaced by an indicator that the given provider is already installed:
+For any installed plugins and providers, the **Copy install command** button is replaced by an indicator that it is already installed:
 
 ![Installed providers indicated](../assets/plugins/installed-providers.png)
 
