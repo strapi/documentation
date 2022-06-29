@@ -153,8 +153,8 @@ Start Strapi using custom `app` and `dist` directories:
 
 const strapi = require('@strapi/strapi');
 
-strapi({ distDir: './dist' });
-// appDir => process.cwd() | distDir => './dist'
+strapi({ appDir: './app', distDir: './dist' });
+// appDir => './app' | distDir => './dist'
 
 ```
 
