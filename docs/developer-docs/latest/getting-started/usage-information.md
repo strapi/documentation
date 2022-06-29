@@ -68,7 +68,9 @@ yarn strapi telemetry:disable
 
 </code-group>
 
-Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection. Deleting the flag or setting it to false will re-enable data collection.
+Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection.
+
+Data collection can later be re-enabled by deleting the flag or setting it to false, or by using the `telemetry:enable` command.
 
 ::: note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).

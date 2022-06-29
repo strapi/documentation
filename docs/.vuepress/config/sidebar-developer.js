@@ -240,10 +240,12 @@ const developer = [
             path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
             collapsable: true,
             initialOpenGroupIndex: -1,
-            // sidebarDepth: 3,
+            sidebarDepth: 3,
             children: [
+              ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html', 'API endpoints'],
               {
-                title: 'API Parameters',
+                title: 'API parameters',
+                path: '/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html',
                 collapsable: true,
                 initialOpenGroupIndex: -1,
                 children: [
@@ -261,10 +263,6 @@ const developer = [
                   ],
                 ]
               },
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
-                'API Endpoints'
-              ]
             ],
           },
           [

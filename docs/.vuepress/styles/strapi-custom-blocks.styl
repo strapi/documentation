@@ -96,6 +96,10 @@
       color: rgba(241,251,255,.8)
     p
       padding-left: 1rem
+      code
+      /* Chrome version 29 and above */
+        @media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm)
+          word-break: break-word
     ul, ol
       padding-left: 3rem
     [class^="language-"]

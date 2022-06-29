@@ -96,7 +96,28 @@ Follow the procedure below to contribute to the Strapi documentation.
     git checkout -b <user/branch-name>
     
     ```
-    
+
+7. Run the docs on your computer
+
+  ```bash
+    cd docs
+
+    # Install dependencies
+    yarn
+
+    # Run user and developer-docs
+    yarn dev
+
+    # Run developer-docs only
+    yarn dev:dev
+
+    # Run user-docs only
+    yarn dev:user
+
+  ```
+
+  The project is now up and running at http://localhost:8080 and you should be able to access it in your browser.
+
 
 You are now ready to contribute to the Strapi documentation! 🚀
 
