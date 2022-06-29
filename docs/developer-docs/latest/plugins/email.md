@@ -80,12 +80,14 @@ module.exports = {
 
         try{
             await strapi.plugins['email'].services.email.send({
-                to: 'kai@strapi.io',
-                from: 'kai@strapi.io',
-                subject: 'New content posted',
-                text: '${alertMessage}'
+                to: 'shaun.brown@strapi.io',
+                from: 'shaun.brown@strapi.io',
+                subject: 'test',
+                text: '${welcomeMessage}'
             })
-        } 
+        } catch(err) {
+            console.log(err);
+        }
     }
 }
 ```
