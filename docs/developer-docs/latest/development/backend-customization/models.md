@@ -540,7 +540,7 @@ The `options` key is used to define specific behaviors and accepts the following
 | Parameter                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `privateAttributes`     | Array of strings            | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
-| `draftAndPublish`       | Boolean                     | Enables the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
+| `draftAndPublish`       | Boolean                     | Enables the draft and publish feature.<br><br>Default value: `true`                                                                                                                                                                                                                                                                          |
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
@@ -548,7 +548,7 @@ The `options` key is used to define specific behaviors and accepts the following
 {
   "options": {
     "privateAttributes": ["id", "created_at"],
-    "draftAndPublish": false
+    "draftAndPublish": true
   }
 }
 ```
