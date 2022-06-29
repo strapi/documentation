@@ -42,6 +42,6 @@ To install a new plugin or provider via the Marketplace:
 1. Go to the ![Marketplace icon](../assets/icons/marketplace.svg) Marketplace.
 2. Choose the **Plugins** tab to browse available plugins or the **Providers** tab to browse available providers.
 3. Choose an available plugin/provider and click on the **Copy install command** button.
-3. Switch to your terminal and navigate to the Strapi application directory.
-4. Paste and run the copied install command.
-5. Follow any plugin/provider-specific implementation instructions.
+4. Switch to your terminal and navigate to the Strapi application directory.
+5. Paste and run the copied install command.
+6. Follow any plugin/provider-specific implementation instructions.
