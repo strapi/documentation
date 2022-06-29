@@ -93,7 +93,7 @@ This service exposes the following methods:
 
 | Method | Description | Parameters |
 | ------ | ----------- | ---------- |
-| `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
+| `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
 | `getInstance` | Used for direct access to the Sentry instance. | |
 
 ### Examples
