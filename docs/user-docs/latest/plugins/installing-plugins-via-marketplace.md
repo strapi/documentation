@@ -34,7 +34,7 @@ The search bar displays incremental search results based on the plugin/provider 
 ## Installing Marketplace plugins and providers
 
 ::: note
-Marketplace plugins and providers are installed and deleted from the user's terminal ([see Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md)).
+Marketplace plugins and providers are installed and deleted from the user's terminal ([see Developer Documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-install)).
 :::
 
 To install a new plugin or provider via the Marketplace:
