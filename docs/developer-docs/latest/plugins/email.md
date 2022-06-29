@@ -6,11 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-The Email plugin enables applications to send emails from a server or [external providers](/developer-docs/latest/development/using-providers.md). Successful use of the plugin requires a provider configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using the function `sendTemplatedEmail` to streamline programmatic emails. This documentation provides examples of how to use the email plugin to send emails using controllers and lifecycle hooks.
+The Email plugin enables applications to send emails from a server or [external providers](/developer-docs/latest/development/using-providers.md). Successful use of the plugin requires a provider configuration in a `plugins.js` file and an event that triggers an email, such as a custom controller for external requests or a lifecycle hook for requests inside the admin panel. Data from the Content Manager can also be populated into email templates using the function `sendTemplatedEmail` to streamline programmatic emails. This documentation provides examples of how to use the Email plugin to send emails using controllers and lifecycle hooks.
 
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, creating a new email provider, and configuring the `plugins.js` file.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, creating a new email provider, and configuring the `plugins.js` file.
 
-## Send an email using custom a controller or service
+## Send an email using a controller or service
 
 To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function utilizes the email provider enabled in the `plugins.js` configuration file. The function can be used by extending a core controller/service or developing a custom controller/service.
 
@@ -24,7 +24,7 @@ To trigger an email in response to a user action add the following function to a
     cc: 'valid email address',
     bcc: 'valid email address',
     replyTo: 'valid email address',
-    subject: 'The Strapi email plugin worked successfully',
+    subject: 'The Strapi Email plugin worked successfully',
     text: 'Hello world!',
     html: 'Hello world!',
   }),
@@ -32,7 +32,7 @@ To trigger an email in response to a user action add the following function to a
 
 ## Send an email using a template
 
-The email plugin provides the function `sendTemplatedEmail` to compose emails from a template. The function compiles the email from the available properties and then sends the email. The function has the following parameters:
+The Email plugin provides the function `sendTemplatedEmail` to compose emails from a template. The function compiles the email from the available properties and then sends the email. The function has the following parameters:
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
