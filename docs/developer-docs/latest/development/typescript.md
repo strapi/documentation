@@ -86,15 +86,12 @@ Starting Strapi programmatically in a TypeScript project requires additional con
 
 <!-- NOTE TO SELF: add callout here about the typical programmatic use config for TS with what not to do. Also move most of this content elsewhere-->
 
-When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The codebase is located at the root of the project in the directory name chosen during installation, while the compiled codebase is in the subdirectory `dist` ([see project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)). Compared to a native JavaScript application, the primary differences are:
+When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The important information for TypeScript applications is that there should be a separate directory for compiling the codebase.
 
-- When using the Content-type Builder to create, update, delete content types (or any other service that creates files), files are written to the root directory.
-- Content types are read from the `dist` folder.
-- In development mode the root directory is watched and when a change is detected in the output is be written to the `dist` directory.
-
-::: note
-The public folder is considered static and thus ignores the  `app` and `dist` directories.
+::: caution
+Do not set `appDir` to `build` or `dist` directory as it could cause issues when the app tries to write some files.
 :::
+
 
 When starting Strapi programmatically by running `strapi()`, you can pass 2 optional parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. This can lead to the following combinations:
 
@@ -108,9 +105,10 @@ When starting Strapi programmatically by running `strapi()`, you can pass 2 opti
 
 For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
 
-::: caution
-Do not set `appDir` to `build` or `dist` directory as it could cause issues when the app tries to write some files.
+::: note
+The public folder is considered static and thus ignores the  `app` and `dist` directories.
 :::
+
 
 ::: details Examples of how Strapi resolves directories based on passed parameters:
 
