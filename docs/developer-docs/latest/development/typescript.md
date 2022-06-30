@@ -110,19 +110,19 @@ The default values for the `app` and `dist` directories are transformed and assi
 
 ```js
 const resolveWorkingDirectories = opts => {
-  const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
-
-  const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
 
   const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
 
+//NOTE TO SELF: example to set both here
+
   return { appDir, distDir };
 }
-
+```
 
 Start Strapi using a custom `dist` directory:
 
 ```js
+
 const strapi = require('@strapi/strapi');
 
 strapi({ distDir: './dist' });
@@ -139,9 +139,6 @@ strapi({ appDir: './app', distDir: './dist' });
 // appDir => './app' | distDir => './dist'
 
 ```
-
-
-
 
 :::
 
