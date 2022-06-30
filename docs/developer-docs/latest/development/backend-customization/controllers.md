@@ -29,7 +29,7 @@ A new controller can be implemented:
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
   // Method 1: Creating an entirely custom action
   async exampleAction(ctx) {
     try {
@@ -42,13 +42,13 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
   // Method 2: Wrapping a core action (leaves core logic in place)
   async find(ctx) {
     // some custom logic here
-    ctx.query = { ...ctx.query, local: 'en' }
-    
+    ctx.query = { ...ctx.query, local: 'en' };
+
     // Calling the default core action
     const { data, meta } = await super.find(ctx);
 
     // some more custom logic
-    meta.date = Date.now()
+    meta.date = Date.now();
 
     return { data, meta };
   },
@@ -62,7 +62,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
 
     return this.transformResponse(sanitizedEntity);
-  }
+  },
 }));
 ```
 
@@ -82,16 +82,17 @@ module.exports = {
       method: 'GET',
       path: '/hello',
       handler: 'hello.index',
-    }
-  ]
-}
+    },
+  ],
+};
 ```
 
 ```js
 // path: ./src/api/hello/controllers/hello.js
 
 module.exports = {
-  async index(ctx, next) { // called by GET /hello 
+  async index(ctx, next) {
+    // called by GET /hello
     ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
@@ -234,9 +235,17 @@ async delete(ctx) {
 ::::
 :::::
 
-## Usage
+### Attaching a controller to a route
 
-Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/developer-docs/latest/development/backend-customization/services.md) can call controllers, and in this case the following syntax should be used:
+Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly (see [routes documentation](/developer-docs/latest/development/backend-customization/routes.md)).
+
+::: tip
+You may also create routes, controllers, services, and bind them together, by using [strapi generate](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate)
+:::
+
+## Usage with services
+
+[services](/developer-docs/latest/development/backend-customization/services.md) can call controllers, and in this case the following syntax should be used:
 
 ```js
 // access an API controller
