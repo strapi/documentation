@@ -11,7 +11,7 @@ The Email plugin enables applications to send emails from a server or [external 
 - a provider configuration in a `plugins.js` file,
 - an event that triggers an email, such as a controller for external requests or a lifecycle hook for requests inside the admin panel.
 
- Data from the Content Manager can also be populated into email templates using the function `sendTemplatedEmail` to streamline programmatic emails. This documentation provides examples of how to use the Email plugin to send emails using controllers and lifecycle hooks.
+ The functions `send` and `sendTemplatedEmail` are available to send emails. The `send` function directly contains the email contents, while the `sendTemplatedEmail` function consumes data from the Content Manager to populate emails, streamlining programmatic emails.
 
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable for production stage applications. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, creating a new email provider, and configuring the `plugins.js` file.
 
@@ -35,7 +35,7 @@ To trigger an email in response to a user action add the following function to a
   }),
 ```
 
-## Send an email using a template
+## Send a templated email using a controller or service
 
 The Email plugin provides the function `sendTemplatedEmail` to compose emails from a template. The function compiles the email from the available properties and then sends the email. The function has the following parameters:
 
