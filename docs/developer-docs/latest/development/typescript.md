@@ -89,9 +89,8 @@ Starting Strapi programmatically in a TypeScript project requires additional con
 When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The important information for TypeScript applications is that there should be a separate directory for compiling the codebase.
 
 ::: caution
-Do not set `appDir` to `build` or `dist` directory as it could cause issues when the app tries to write some files.
+Do not set `appDir` to `build` or `dist` as it could cause issues when the app tries to write certain files.
 :::
-
 
 When starting Strapi programmatically by running `strapi()`, you can pass 2 optional parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. This can lead to the following combinations:
 
@@ -172,7 +171,7 @@ strapi({ appDir: './app' });
 
 ### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programatically. A common use is for creating command line interface tools or developing a plugin. The following are examples of how to incorporate both code bases:
+Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programmatically. A common use is for creating command line interface tools or developing a plugin. The `@strapi/typescript-utils` package checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
 
 ```js
 
@@ -180,8 +179,6 @@ const strapi = require('@strapi/strapi');
 
 const appContext = await strapi.compile();
 // Start the app by providing the app and dist directories:
-const app = await strapi(appContext).load();
-
-// NOTE TO SELF: all of the deleted code when to the compiled method ->checking for JS and/or TS if TS, resolve from config the distDir value `outDir` fetched from tsconfig and set distDir to outDir value. 
+const app = await strapi(appContext).load(); 
 
 ```
