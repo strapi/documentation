@@ -105,13 +105,12 @@ When starting Strapi programmatically by running `strapi()`, you can pass 2 opti
 For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
 
 ::: note
-The public folder is considered static and thus ignores the  `app` and `dist` directories.
+The [public directory](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md) is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
 
 ::: details Examples of how Strapi resolves directories based on passed parameters:
 
-<!--Note: I don't really understand this section.-->
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
 ```js
@@ -171,7 +170,7 @@ strapi({ appDir: './app' });
 
 ### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-Adding the package `@strapi/typescript-utils` allows for both JavaScript and TypeScript codebases to be used programmatically. A common use is for creating command line interface tools or developing a plugin. The `@strapi/typescript-utils` package checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
+Adding the package `@strapi/typescript-utils` allows JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The `@strapi/typescript-utils` package checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
 
 ```js
 
