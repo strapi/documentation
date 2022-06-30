@@ -89,27 +89,22 @@ Starting Strapi programmatically in a TypeScript project requires additional con
 When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The important information for TypeScript applications is that there should be a separate directory for compiling the codebase.
 
 ::: caution
-Do not set `appDir` to `build` or `dist` as it could cause issues when the app tries to write certain files.
+Do not set `appDir` to `build` or `dist` directories as it could cause issues when the app tries to write certain files.
 :::
 
-When starting Strapi programmatically by running `strapi()`, you can pass 2 optional parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. This can lead to the following combinations:
+For programmatic use of Strapi with TypeScript use the function `strapi()`. The function accepts 2 parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. For TypeScript projects Strapi should be instantiated with a specified `distDir` directory, and specifying `appDir` is optional. The two possible configurations for TypeScript projects are as follows:
 
 | `appDir` parameter value | `distDir` parameter value | Actual `app` directory    | Actual `dist` directory   |
-| ------------------------ | ------------------------- | ----------------------    | -----------------------   |
-| -                        | -                         | current working directory | current working directory | 
-| `./app`                  | -                         | `./app`                    | `./app`                    | 
+| ------------------------ | ------------------------- | ----------------------    | -----------------------   | 
 | -                        | `./dist`                  | current working directory | `./dist`                  | 
-| `./app`                  | `./dist`                  | `./app`                   | `./dist` | 
+| `./app`                  | `./dist`                  | `./app`                   | `./dist`                  | 
 
-
-For example, if the compiled code is stored in a separate directory (eg: when using TypeScript)  Strapi should be instantiated with a specific `distDir` value which matches the path of your build directory.
 
 ::: note
 The [public directory](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md) is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
-
-::: details Examples of how Strapi resolves directories based on passed parameters:
+::: details Examples of how Strapi resolves directories based on passed parameters for TypeScript projects:
 
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
@@ -124,16 +119,6 @@ const resolveWorkingDirectories = opts => {
   return { appDir, distDir };
 }
 
-```
-Start Strapi for JavaScript applications:
-
-```js
-const strapi = require('@strapi/strapi');
-
-strapi();
-// appDir => process.cwd() | distDir => process.cwd()
-
-```
 
 Start Strapi using a custom `dist` directory:
 
@@ -155,16 +140,8 @@ strapi({ appDir: './app', distDir: './dist' });
 
 ```
 
-Start Strapi using a custom `app` directory:
 
-```js
 
-const strapi = require('@strapi/strapi');
-
-strapi({ appDir: './app' });
-// appDir => './app' | distDir => './app'
-
-```
 
 :::
 
