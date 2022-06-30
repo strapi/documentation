@@ -11,20 +11,20 @@ Certain [plugins](../../../user-docs/latest/plugins/introduction-to-plugins.md) 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to Rackspace instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
 ::: note
-Only the [Upload](./upload.md) and [Email](./email.md) plugins are currently designed to work with providers. 
+Only the [Upload](../plugins/upload.md) and [Email](../plugins/email.md) plugins are currently designed to work with providers. 
 :::
 
-For the relevant plugins, there are both official providers maintained by Strapi - discoverable via the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) - and many community maintained providers available via [NPM](https://www.npmjs.com/).
+For the relevant plugins, there are both official providers maintained by Strapi - discoverable via the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) - and many community maintained providers available via [npm](https://www.npmjs.com/).
 
 ## Installing providers
 
-Install new providers using `npm` or `yarn` using the format `@strapi/provider-<plugin>-<provider> --save`.
+New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
 
 For example:
 
 <code-group>
 
-<code-block title="NPM">
+<code-block title="npm">
 ```sh
 # Install the AWS S3 provider for the Upload plugin
 npm install @strapi/provider-upload-aws-s3 --save
@@ -50,7 +50,7 @@ yarn add @strapi/provider-email-sendgrid --save
 
 Newly installed providers are enabled and configured in the `./config/plugins.js` file. If this file does not exist you must create it.
 
-Each provider will have different configuration settings available, review the respective entry for that provider in the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) or [NPM](https://www.npmjs.com/) to learn more.
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) or [npm](https://www.npmjs.com/) to learn more.
 
 Below are example configurations for the Upload and Email plugins.
 
@@ -80,7 +80,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Strapi has a default Security Middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) for more information.
+Strapi has a default `security` middleware that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#security) for more information.
 
 :::
 
@@ -108,9 +108,9 @@ module.exports = ({ env }) => ({
 
 Keep in mind that:
 
-* When using a different provider per environment, specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. See [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
+* When using a different provider per environment, specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js` (See [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test. See: [Configure templates locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates).
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates)).
 
 :::
 
@@ -177,13 +177,13 @@ In the send function you will have access to:
 
 ::::
 
-See the [Strapi maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for reference.
+You can review the [Strapi maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for example implementations.
 
-After creating your new provider you can [publish it to NPM](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages) to share with the community or [use it locally](#local-providers) for your project only.
+After creating your new provider you can [publish it to npm](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages) to share with the community or [use it locally](#local-providers) for your project only.
 
 ### Local providers
 
-If you want to create your own provider without publishing it on **npm** you can follow these steps:
+If you want to create your own provider without publishing it on npm you can follow these steps:
 
 1. Create a `providers` folder in your application.
 2. Create your provider (e.g. `./providers/strapi-provider-<plugin>-<provider>`)
