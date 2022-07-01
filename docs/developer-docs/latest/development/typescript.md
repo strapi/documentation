@@ -144,7 +144,7 @@ strapi({ appDir: './app', distDir: './dist' });
 
 ### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-To allow JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The XXXX checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
+The `strapi.compile` method allows JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The method checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files, the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the  `strapi.compile` method use the following code snippet:
 
 ```js
 
