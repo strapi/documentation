@@ -108,15 +108,19 @@ The [public directory](/developer-docs/latest/setup-deployment-guides/configurat
 
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
+<!--NOTE to self: revert this section and change the exp-->
+
 ```js
 const resolveWorkingDirectories = opts => {
+  const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
+
+  const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
 
   const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
 
-//NOTE TO SELF: example to set both here
-
   return { appDir, distDir };
 }
+
 ```
 
 Start Strapi using a custom `dist` directory:
