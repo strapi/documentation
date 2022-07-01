@@ -92,7 +92,7 @@ When instantiating Strapi programmatically using the default export of `@strapi/
 Do not set `appDir` to `build` or `dist` directories as it could cause issues when the app tries to write certain files.
 :::
 
-For programmatic use of Strapi with TypeScript use the function `strapi()`. The function accepts 2 parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. For TypeScript projects Strapi should be instantiated with a specified `distDir` directory, and specifying `appDir` is optional. The two possible configurations for TypeScript projects are as follows:
+For programmatic use of Strapi with TypeScript use the  `strapi()` function. The function accepts 2 parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. For TypeScript projects Strapi should be instantiated with a specified `distDir` directory, and specifying `appDir` is optional. The two possible configurations for TypeScript projects are as follows:
 
 | `appDir` parameter value | `distDir` parameter value | Actual `app` directory    | Actual `dist` directory   |
 | ------------------------ | ------------------------- | ----------------------    | -----------------------   | 
@@ -144,7 +144,7 @@ strapi({ appDir: './app', distDir: './dist' });
 
 ### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
 
-Adding the package `@strapi/typescript-utils` allows JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The `@strapi/typescript-utils` package checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
+To allow JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The XXXX checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the `@strapi/typescript-utils` package use the following code snippet:
 
 ```js
 
