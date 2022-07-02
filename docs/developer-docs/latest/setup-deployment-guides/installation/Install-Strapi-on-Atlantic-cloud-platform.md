@@ -60,6 +60,10 @@ You can also verify the NPM version using the following command:
     npm --version
     6.14.16
 
+Next, install Yarn package with the following command:
+    npm install --global yarn
+    yarn add node-sass
+
 ## Install PostgreSQL Database
 
 Strapi supports several databases including SQLite, MySQL, MariaDB, and PostgreSQL. In this post, we will use PostgreSQL as a database backend.
