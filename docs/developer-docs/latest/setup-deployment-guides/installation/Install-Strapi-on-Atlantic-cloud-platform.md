@@ -47,13 +47,13 @@ Once you are connected to the server, update all the system packages using the f
 
 Next, run the following command to install Node.js:
 
-    curl -sL https://deb.nodesource.com/setup\_14.x | bash -
+    curl -sL https://deb.nodesource.com/setup\_16.x | bash -
     apt-get install -y nodejs
 
 Once Node.js is installed, verify the Node.js version using the following command:
 
     node --version
-    v14.19.1
+    v16.19.1
 
 You can also verify the NPM version using the following command:
 
