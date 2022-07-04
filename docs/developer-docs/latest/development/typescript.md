@@ -80,48 +80,25 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Starting Strapi programmatically in a TypeScript project requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
+Starting Strapi programmatically in a TypeScript project requires identifying <!--not the right word--> requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
 
-### Understand programmatic use
+### Use the `strapi()` function
 
 <!-- NOTE TO SELF: add callout here about the typical programmatic use config for TS with what not to do. Also move most of this content elsewhere-->
 
-When instantiating Strapi programmatically using the default export of `@strapi/strapi`, different parameters such as the directories containing the codebase and the compiled codebase can be passed. The important information for TypeScript applications is that there should be a separate directory for compiling the codebase.
+For programmatic use of Strapi with TypeScript use the  `strapi()` function. Since TypeScript is compiled in a different directory, pass the parameter `distDir` to set the compiled codebase directory.
 
 ::: caution
 Do not set `appDir` to `build` or `dist` directories as it could cause issues when the app tries to write certain files.
 :::
 
-For programmatic use of Strapi with TypeScript use the  `strapi()` function. The function accepts 2 parameters, `appDir` and `distDir`, to set the path of the root directory and the compiled codebase directory respectively. For TypeScript projects Strapi should be instantiated with a specified `distDir` directory, and specifying `appDir` is optional. The two possible configurations for TypeScript projects are as follows:
-
-| `appDir` parameter value | `distDir` parameter value | Actual `app` directory    | Actual `dist` directory   |
-| ------------------------ | ------------------------- | ----------------------    | -----------------------   | 
-| -                        | `./dist`                  | current working directory | `./dist`                  | 
-| `./app`                  | `./dist`                  | `./app`                   | `./dist`                  | 
-
-
 ::: note
 The [public directory](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md) is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
-::: details Examples of how Strapi resolves directories based on passed parameters for TypeScript projects:
 
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
 
-<!--NOTE to self: revert this section and change the exp-->
-
-```js
-const resolveWorkingDirectories = opts => {
-  const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
-
-  const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
-
-  const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
-
-  return { appDir, distDir };
-}
-
-```
 
 Start Strapi using a custom `dist` directory:
 
@@ -133,20 +110,9 @@ strapi({ distDir: './dist' });
 // appDir => process.cwd() | distDir => './dist'
 ```
 
-Start Strapi using custom `app` and `dist` directories:
+### Use the strapi.compile() function
 
-```js
-
-const strapi = require('@strapi/strapi');
-
-strapi({ appDir: './app', distDir: './dist' });
-// appDir => './app' | distDir => './dist'
-
-```
-
-:::
-
-### Use both JavaScript and TypeScript codebases when starting Strapi programmatically
+In some cases, such as CLI commands and plugin development, that can run for a JavaScript or TypeScript application you need to add the `strapi.compile` method
 
 The `strapi.compile` method allows JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The method checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files, the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the  `strapi.compile` method use the following code snippet:
 
