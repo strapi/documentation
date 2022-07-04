@@ -18,7 +18,7 @@ The Email plugin requires a provider and a provider configuration in the `plugin
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Using providers documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
-## Sending emails
+## Sending emails with a controller or service
 
 The functions `send` and `sendTemplatedEmail` are available to send emails. The `send` function directly contains the email contents, while the `sendTemplatedEmail` function consumes data from the Content Manager to populate emails, streamlining programmatic emails. Both functions utilize the email provider enabled in the `plugins.js` configuration file.
 
@@ -28,7 +28,8 @@ To trigger an email in response to a user action add the following function to a
 
 ```js
 
-// e.g. path: ./src/api/{api name}/controllers/{api name}.js
+// This code example can be used in a controller or a service
+// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
 
   await strapi.plugins['email'].services.email.send({
     to: 'valid email address',
@@ -54,7 +55,8 @@ The Email plugin provides the function `sendTemplatedEmail` to compose emails fr
 
 ```js
 
-// e.g. path: ./src/api/{api name}/controllers/{api name}.js
+// This code example can be used in a controller or a service
+// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
 
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
@@ -76,7 +78,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-### Using `send ` with a lifecycle hook <!--Should this be H2 or H3?-->
+## Sending emails with a lifecycle hook
 
  Another use case for the Email plugin is to trigger an email based on administrator actions in the admin panel using [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks). For example, an editor can receive an email each time an author creates a new content entry in the Content Manager.
 
