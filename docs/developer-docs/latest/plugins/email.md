@@ -14,8 +14,9 @@ The Email plugin requires a provider and a provider configuration in the `plugin
 
 :::
 
-<!--note to self: discuss moving this to providers with Gabriel-->
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. Another provider is likely preferable for production stage applications. The [provider documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, creating a new email provider, and configuring the `plugins.js` file.
+::: note
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the provided configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Using providers documentation](/developer-docs/latest/development/using-providers.md) has instructions for changing providers, configuring providers, and creating a new email provider.
+:::
 
 ## Sending emails
 
@@ -41,7 +42,7 @@ To trigger an email in response to a user action add the following function to a
   }),
 ```
 
-### Using the Send templated email function in the back end
+### Using the `sendTemplatedEmail` function in the back end
 
 The Email plugin provides the function `sendTemplatedEmail` to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail` function define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects.
 
@@ -75,13 +76,13 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-## Using a lifecycle hook to send email from the admin panel
+### Using a lifecycle hook
 
  Another use case for the Email plugin is to trigger an email based on administrator actions in the admin panel using [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks). For example, an editor can receive an email each time an author creates a new content entry in the Content Manager.
 
- The following code example illustrates a lifecycle hook that runs when a new entry is created in the specified collection type.
+ The following code example illustrates a lifecycle hook that runs when a new entry is created in the specified collection type. <!--a sentence here-->
 
- - The `afterCreate` lifecycle event is initiated when an administrator clicks the **Save** button in the Content Manager. 
+ - The `afterCreate` lifecycle event is initiated when an administrator clicks the **Save** button in the Content Manager.
  - The `send` function is identical to the [back end example](#using-the-send-function-in-the-back-end), with the same available properties.
  - Fields from the new content entry can be included in the email using the `text` property and the value `${fieldName}` to indicate which field should be included.
 
