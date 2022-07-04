@@ -24,7 +24,7 @@ The functions `send` and `sendTemplatedEmail` are available to send emails. The 
 
 ### Using the `send` function in the back end
 
-To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The function can be used by extending a core controller/service or developing a custom controller/service.
+To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md).
 
 ```js
 
