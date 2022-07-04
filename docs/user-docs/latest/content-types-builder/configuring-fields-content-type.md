@@ -302,6 +302,10 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 ::::
 
+::: danger
+Enumeration values on Strapi v4.1.3 and above should not start with a special character or a number. This would cause a GraphQL issue leading to a server crash and some possible data loss, and will be fixed as soon as possible.
+:::
+
 ### <img width="28" src="../assets/icons/ctb_media.svg"> Media
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
