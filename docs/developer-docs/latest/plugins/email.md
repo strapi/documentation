@@ -20,11 +20,11 @@ The Email plugin requires a provider and a provider configuration in the `plugin
 
 ## Sending emails with a controller or service
 
-The functions `send` and `sendTemplatedEmail` are available to send emails. The `send` function directly contains the email contents, while the `sendTemplatedEmail` function consumes data from the Content Manager to populate emails, streamlining programmatic emails.
+The functions `send()` and `sendTemplatedEmail()` are available to send emails. The `send()` function directly contains the email contents, while the `sendTemplatedEmail()` function consumes data from the Content Manager to populate emails, streamlining programmatic emails.
 
-### Using the `send` function
+### Using the `send()` function
 
-To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). <!--NOTE for review: I thought this needed a little more explanation so I added the following text. WDYT?--> There are several ways the `send` function can be used, but an example is wrapping a core action such as `update`. In this case, when a `PUT` request reaches the controller the record is updated and the `send` function sends the email.
+To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). <!--NOTE for review: I thought this needed a little more explanation so I added the following text. WDYT?--> There are several ways the `send()` function can be used, but an example is wrapping a core action such as `update`. In this case, when a `PUT` request reaches the controller the record is updated and the `send()` function sends the email.
 
 ```js
 
@@ -43,9 +43,9 @@ To trigger an email in response to a user action add the following function to a
   }),
 ```
 
-### Using the `sendTemplatedEmail` function
+### Using the `sendTemplatedEmail()` function
 
-The Email plugin includes the function `sendTemplatedEmail` to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects.
+The `sendTemplatedEmail()` is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects.
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
@@ -80,28 +80,27 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Sending emails with a lifecycle hook
 
- Another use case for the Email plugin is to trigger an email based on administrator actions in the admin panel using [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks). For example, an editor can receive an email each time an author creates a new content entry in the Content Manager.
-
- The following code example illustrates a lifecycle hook that runs when a new entry is created in the specified collection type. The following points are important for understanding the code example.
-
-- The `afterCreate` lifecycle event is initiated when an administrator clicks the **Save** button in the Content Manager.
-- The `send` function is identical to the [back end example](#using-the-send-function-in-the-back-end), with the same available properties.
-- Fields from the new content entry can be included in the email using the `text` property and replacing the value `${fieldName}` with a valid field name.
+ To trigger an email based on administrator actions in the admin panel use [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the `send()` function. For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 ```js
 
-// e.g. path: ./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js
+// path: ./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js
 
 module.exports = {
-    async afterCreate(event) {
+    async afterCreate(event) {    // Connected to "Save" button in admin panel
         const { result } = event;
 
         try{
             await strapi.plugins['email'].services.email.send({
-                to: 'a valid email address',
-                from: 'a valid email address',
-                subject: 'A new content entry',
-                text: '${fieldName}'
+              to: 'valid email address',
+              from: 'your verified email address', // e.g. single sender verification in SendGrid
+              cc: 'valid email address',
+              bcc: 'valid email address',
+              replyTo: 'valid email address',
+              subject: 'The Strapi Email plugin worked successfully',
+              text: '${fieldName}', // Replace with a valid field ID
+              html: 'Hello world!', 
+                
             })
         } catch(err) {
             console.log(err);
