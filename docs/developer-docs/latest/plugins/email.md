@@ -49,9 +49,9 @@ The Email plugin includes the function `sendTemplatedEmail` to compose emails fr
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `emailOptions`  | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | {}      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | {}      |
-| `data`          | Contains the data used to compile the templates                                                                                            | `object` | {}      |
+| `emailOptions`  | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `data`          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 ```js
 
