@@ -24,7 +24,7 @@ The functions `send()` and `sendTemplatedEmail()` are available to send emails. 
 
 ### Using the `send()` function
 
-To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). <!--NOTE for review: I thought this needed a little more explanation so I added the following text. WDYT?--> There are several ways the `send()` function can be used, but an example is wrapping a core action such as `update`. In this case, when a `PUT` request reaches the controller the record is updated and the `send()` function sends the email.
+To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md).
 
 ```js
 
