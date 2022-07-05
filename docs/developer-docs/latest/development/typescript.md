@@ -84,83 +84,25 @@ Starting Strapi programmatically in a TypeScript project requires passing the ou
 
 ### Use the `strapi()` function
 
-For programmatic use of Strapi with TypeScript use the `strapi()` function. Since TypeScript is compiled in a different directory, pass the parameter `distDir` to set the compiled codebase directory.
-
-::: caution
-Do not set `appDir` to `build` or `dist` directories as it could cause issues when the app tries to write certain files.
-:::
-
-::: note
-The [public directory](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md) is considered static and thus ignores the  `app` and `dist` directories.
-:::
-
-The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
-
-Start Strapi using a custom `dist` directory:
+Strapi can be run programmatically by calling the `strapi()` function. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the `strapi()` function to indicate where the compiled code should be read:
 
 ```js
-const resolveWorkingDirectories = opts => {
-  const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
-
-  const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
-
-  const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
-
-  return { appDir, distDir };
-}
-
-```
-Start Strapi for JavaScript applications:
-
-```js
-const strapi = require('@strapi/strapi');
-
-strapi();
-// appDir => process.cwd() | distDir => process.cwd()
-
-```
-
-Start Strapi using a custom `dist` directory:
-
-```js
-const strapi = require('@strapi/strapi');
-
-strapi({ distDir: './dist' });
-// appDir => process.cwd() | distDir => './dist'
-```
-
-Start Strapi using custom `app` and `dist` directories:
-
-```js
+// path: ./src/plugins/<plugin-name>/server/index.js 
 
 const strapi = require('@strapi/strapi');
 
-strapi({ appDir: './app', distDir: './dist' });
-// appDir => './app' | distDir => './dist'
-
+const app = await strapi({ distDir: './dist' });
 ```
 
-Start Strapi using a custom `app` directory:
+### Use the `strapi.compile()` function
 
-```js
-
-const strapi = require('@strapi/strapi');
-
-strapi({ appDir: './app' });
-// appDir => './app' | distDir => './app'
-
-```
-
-### Use the strapi.compile() function
-
-In some cases, such as CLI commands and plugin development, that can run for both a JavaScript or TypeScript application the `strapi.compile` method is necessary. The `strapi.compile` method automatically detects the project language and compiles the code (if necessary) and returns a context with specific values for the directories Strapi requires. To use the `strapi.compile` method:
+The `strapi.compile()` method should be mostly used for developing a tool that needs to start a Strapi instance without knowing if the project includes TypeScript code. `strapi.compile()` automatically detects the project language. If the project code contains any TypeScript code, `strapi.compile()` compiles the code and returns a context with specific values for the directories that Strapi requires:
 
 ```js
 
 const strapi = require('@strapi/strapi');
 
 const appContext = await strapi.compile();
-// Start the app by providing the app and dist directories:
-const app = await strapi(appContext).load(); 
+const app = await strapi(appContext);
 
 ```
