@@ -80,13 +80,11 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Starting Strapi programmatically in a TypeScript project requires identifying <!--not the right word--> requires additional configurations to load everything correctly. The primary difference for TypeScript programmatic use is that the codebase and compiled code are stored in separate directories, whereas the same directory is used to read and write in native JavaScript.
+Starting Strapi programmatically in a TypeScript project requires passing the output directory where the code is compiled.
 
 ### Use the `strapi()` function
 
-<!-- NOTE TO SELF: add callout here about the typical programmatic use config for TS with what not to do. Also move most of this content elsewhere-->
-
-For programmatic use of Strapi with TypeScript use the  `strapi()` function. Since TypeScript is compiled in a different directory, pass the parameter `distDir` to set the compiled codebase directory.
+For programmatic use of Strapi with TypeScript use the `strapi()` function. Since TypeScript is compiled in a different directory, pass the parameter `distDir` to set the compiled codebase directory.
 
 ::: caution
 Do not set `appDir` to `build` or `dist` directories as it could cause issues when the app tries to write certain files.
@@ -96,25 +94,66 @@ Do not set `appDir` to `build` or `dist` directories as it could cause issues wh
 The [public directory](/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md) is considered static and thus ignores the  `app` and `dist` directories.
 :::
 
-
 The default values for the `app` and `dist` directories are transformed and assigned using one of the following options:
-
 
 Start Strapi using a custom `dist` directory:
 
 ```js
+const resolveWorkingDirectories = opts => {
+  const cwd = process.cwd(); // Neither the appDir or distDir are passed. Both the appDir and distDir are set to process.cwd().
 
+  const appDir = opts.appDir ? path.resolve(cwd, opts.appDir) : cwd; // Only appDir is defined distDir matches appDir.
+
+  const distDir = opts.distDir ? path.resolve(cwd, opts.distDir) : appDir; // Only distDir is defined, appDir is set to process.cwd().
+
+  return { appDir, distDir };
+}
+
+```
+Start Strapi for JavaScript applications:
+
+```js
+const strapi = require('@strapi/strapi');
+
+strapi();
+// appDir => process.cwd() | distDir => process.cwd()
+
+```
+
+Start Strapi using a custom `dist` directory:
+
+```js
 const strapi = require('@strapi/strapi');
 
 strapi({ distDir: './dist' });
 // appDir => process.cwd() | distDir => './dist'
 ```
 
+Start Strapi using custom `app` and `dist` directories:
+
+```js
+
+const strapi = require('@strapi/strapi');
+
+strapi({ appDir: './app', distDir: './dist' });
+// appDir => './app' | distDir => './dist'
+
+```
+
+Start Strapi using a custom `app` directory:
+
+```js
+
+const strapi = require('@strapi/strapi');
+
+strapi({ appDir: './app' });
+// appDir => './app' | distDir => './app'
+
+```
+
 ### Use the strapi.compile() function
 
-In some cases, such as CLI commands and plugin development, that can run for a JavaScript or TypeScript application you need to add the `strapi.compile` method
-
-The `strapi.compile` method allows JavaScript and TypeScript codebases to be used programmatically together. A common use is for creating command-line interface tools or developing a plugin. The method checks the codebase for JavaScript and TypeScript files. If the project contains TypeScript files, the `dist` directory is fetched from the property `outDir` in the `tsconfig.json` file and assigned to the property `distDir`. To add and implement the  `strapi.compile` method use the following code snippet:
+In some cases, such as CLI commands and plugin development, that can run for both a JavaScript or TypeScript application the `strapi.compile` method is necessary. The `strapi.compile` method automatically detects the project language and compiles the code (if necessary) and returns a context with specific values for the directories Strapi requires. To use the `strapi.compile` method:
 
 ```js
 
