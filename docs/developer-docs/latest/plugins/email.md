@@ -24,19 +24,18 @@ The functions `send()` and `sendTemplatedEmail()` are available to send emails. 
 
 ### Using the `send()` function
 
-To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md).
+To trigger an email in response to a user action add the `send()` function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The send function has the following properties:
 
-
-| Property  | Type     | Format        |
-|-----------|----------|---------------|
-| `from`    | `string` | email address |
-| `to`      | `string` | email address |
-| `cc`      | `string` | email address |
-| `bcc`     | `string` | email address |
-| `replyTo` | `string` | email address |
-| `subject` | `string` |               |
-| `text`    | `string` |               |
-| `html`    | `string` | HTML          |
+| Property                                                             | Type     | Format        |
+|----------------------------------------------------------------------|----------|---------------|
+| `from` <br><br>If not specified, uses `defaultFrom` in `plugins.js`. | `string` | email address |
+| `to` <br><br>(Required)                                              | `string` | email address |
+| `cc`                                                                 | `string` | email address |
+| `bcc`                                                                | `string` | email address |
+| `replyTo`                                                            | `string` | email address |
+| `subject` <br><br>(Required)                                         | `string` |               |
+| `text` <br><br>Either `text` or `html` is required.                  | `string` |               |
+| `html` <br><br>Either `text` or `html` is required.                  | `string` | HTML          |
 
 ```js
 
