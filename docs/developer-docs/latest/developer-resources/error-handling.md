@@ -27,7 +27,7 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
   "error": {
     "status": "", // HTTP status
     "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
-    "message": "", // A human reable error message
+    "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
     }
