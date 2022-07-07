@@ -26,6 +26,18 @@ The functions `send()` and `sendTemplatedEmail()` are available to send emails. 
 
 To trigger an email in response to a user action add the following function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md).
 
+
+| Property  | Type     | Format        |
+|-----------|----------|---------------|
+| `from`    | `string` | email address |
+| `to`      | `string` | email address |
+| `cc`      | `string` | email address |
+| `bcc`     | `string` | email address |
+| `replyTo` | `string` | email address |
+| `subject` | `string` |               |
+| `text`    | `string` |               |
+| `html`    | `string` | HTML          |
+
 ```js
 
 // This code example can be used in a controller or a service
