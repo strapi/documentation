@@ -6,9 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 
 # Upload
 
-The `Upload` plugin is the backend powering the [Media Library](../../../user-docs/latest/media-library/introduction-to-media-library.md) plugin available by default in the Strapi admin panel.
-
-Using either the Media Library UI or the upload API directly, you can upload any kind of file for use in your Strapi application.
+The Upload plugin is the backend powering the [Media Library](../../../user-docs/latest/media-library/introduction-to-media-library.md) plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
 
 By default Strapi provides a [provider](../development/using-providers.md) that uploads files to a local directory. Additional providers are available should you want to upload your files to another location.
 
@@ -47,7 +45,7 @@ module.exports = ({ env })=>({
 
 ### Max file size
 
-Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of **200MB**.
+Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB.
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
