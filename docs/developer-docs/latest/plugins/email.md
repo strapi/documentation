@@ -10,7 +10,7 @@ The Email plugin enables applications to send emails from a server or an externa
 
 ::: prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the[Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions. <!--NOTE: update name/link to match final Providers page name/link-->
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions. <!--NOTE: update name/link to match final Providers page name/link-->
 
 :::
 
@@ -96,7 +96,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Sending emails with a lifecycle hook
 
- To trigger an email based on administrator actions in the admin panel use [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the `send()` function. For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+ To trigger an email based on administrator actions in the admin panel use [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 ```js
 
