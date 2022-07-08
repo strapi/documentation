@@ -27,7 +27,7 @@ Content-types in Strapi can be created:
 - with the [Content-type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
 - or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
-The content-types has the following models files:
+The content-types have the following models files:
 
 - `schema.json` for the model's [schema](#model-schema) definition. (generated automatically, when creating content-type with either method)
 - `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks). This file must be created manually.
@@ -540,7 +540,7 @@ The `options` key is used to define specific behaviors and accepts the following
 | Parameter           | Type             | Description                                                                                                                                                                                                                                                                                                        |
 |---------------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `privateAttributes` | Array of strings | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps. <br><br> The `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
-| `draftAndPublish`   | Boolean          | Enables the draft and publish feature. <br><br> Default value: `true` (`false` if the content type is created from the interactive CLI).                                                                                                                                                                                    |
+| `draftAndPublish`   | Boolean          | Enables the draft and publish feature. <br><br> Default value: `true` (`false` if the content-type is created from the interactive CLI).                                                                                                                                                                                    |
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
