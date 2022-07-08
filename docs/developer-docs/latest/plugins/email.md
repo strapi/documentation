@@ -10,18 +10,19 @@ The Email plugin enables applications to send emails from a server or an externa
 
 ::: prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the[ Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions. <!--NOTE: update name/link to match final Providers page name/link-->
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the[Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions. <!--NOTE: update name/link to match final Providers page name/link-->
 
 :::
 
 ::: note
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Using providers ](/developer-docs/latest/development/using-providers.md)documentation has instructions for changing providers, configuring providers, and creating a new email provider.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Using providers](/developer-docs/latest/development/using-providers.md)documentation has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
 ## Sending emails with a controller or service
 
-The Email plugin comes with an `email` [service](/developer-docs/latest/development/backend-customization/services.md#services) that includes/offers/provides 2 functions to send emails:
-* `send()` directly contains the email contents, 
+The Email plugin has an `email` [service](/developer-docs/latest/development/backend-customization/services.md#services) that contains 2 functions to send emails:
+
+* `send()` directly contains the email contents,
 * `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
 
 ### Using the `send()` function
@@ -38,12 +39,6 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `subject` <br><br>(Required)                                         | `string` |               |
 | `text` <br><br>Either `text` or `html` is required.                  | `string` |               |
 | `html` <br><br>Either `text` or `html` is required.                  | `string` | HTML          |
-
-
-
-
-
-
 
 ```js
 
