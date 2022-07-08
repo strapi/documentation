@@ -20,7 +20,9 @@ The Email plugin requires a provider and a provider configuration in the `plugin
 
 ## Sending emails with a controller or service
 
-The functions `send()` and `sendTemplatedEmail()` are available to send emails. The `send()` function directly contains the email contents, while the `sendTemplatedEmail()` function consumes data from the Content Manager to populate emails, streamlining programmatic emails.
+The Email plugin comes with an `email` [service](/developer-docs/latest/development/backend-customization/services.md#services) that includes/offers/provides 2 functions to send emails:
+* `send()` directly contains the email contents, 
+* `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
 
 ### Using the `send()` function
 
