@@ -27,7 +27,7 @@ Content-types in Strapi can be created:
 - with the [Content-type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
 - or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
-The content-types have the following models files:
+The content-types use the following files:
 
 - `schema.json` for the model's [schema](#model-schema) definition. (generated automatically, when creating content-type with either method)
 - `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks). This file must be created manually.
