@@ -37,6 +37,12 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `text` <br><br>Either `text` or `html` is required.                  | `string` |               |
 | `html` <br><br>Either `text` or `html` is required.                  | `string` | HTML          |
 
+
+
+
+
+
+
 ```js
 
 // This code example can be used in a controller or a service
@@ -56,15 +62,15 @@ To trigger an email in response to a user action add the `send()` function to a 
 
 ### Using the `sendTemplatedEmail()` function
 
-The `sendTemplatedEmail()` is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects.
+The `sendTemplatedEmail()` is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
 
 <!--NOTE TO SELF: reformat the table for the 'optional' addition-->
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `emailOptions` (optional) | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailOptions` <br><br>(optional) | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
-| `data` (optional)          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
+| `data`  <br><br>(optional)          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 ```js
 
