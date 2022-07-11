@@ -29,16 +29,16 @@ The Email plugin has an `email` [service](/developer-docs/latest/development/bac
 
 To trigger an email in response to a user action add the `send()` function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The send function has the following properties:
 
-| Property                                                             | Type     | Format        |
-|----------------------------------------------------------------------|----------|---------------|
-| `from` <br><br>If not specified, uses `defaultFrom` in `plugins.js`. | `string` | email address |
-| `to` <br><br>(Required)                                              | `string` | email address |
-| `cc`                                                                 | `string` | email address |
-| `bcc`                                                                | `string` | email address |
-| `replyTo`                                                            | `string` | email address |
-| `subject` <br><br>(Required)                                         | `string` |               |
-| `text` <br><br>Either `text` or `html` is required.                  | `string` |               |
-| `html` <br><br>Either `text` or `html` is required.                  | `string` | HTML          |
+| Property  | Type     | Format        | Description                                           |
+|-----------|----------|---------------|-------------------------------------------------------|
+| `from`    | `string` | email address | If not specified, uses `defaultFrom` in `plugins.js`. |
+| `to`      | `string` | email address | Required                                              |
+| `cc`      | `string` | email address | Optional                                              |
+| `bcc`     | `string` | email address | Optional                                              |
+| `replyTo` | `string` | email address | Optional                                              |
+| `subject` | `string` | -             | Required                                              |
+| `text`    | `string` | -             | Either `text` or `html` is required.                  |
+| `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
 
 ```js
 
@@ -65,9 +65,9 @@ The `sendTemplatedEmail()` is used to compose emails from a template. The functi
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `emailOptions` <br><br>(optional) | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailOptions` <br><br> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
-| `data`  <br><br>(optional)          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
+| `data`  <br><br> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 ```js
 
