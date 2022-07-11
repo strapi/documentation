@@ -10,7 +10,7 @@ The Email plugin enables applications to send emails from a server or an externa
 
 ::: prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions. <!--NOTE: update name/link to match final Providers page name/link-->
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions.
 
 :::
 
@@ -60,8 +60,6 @@ To trigger an email in response to a user action add the `send()` function to a 
 ### Using the `sendTemplatedEmail()` function
 
 The `sendTemplatedEmail()` is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
-
-<!--NOTE TO SELF: reformat the table for the 'optional' addition-->
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
