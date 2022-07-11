@@ -67,7 +67,7 @@ module.exports = ({ env }) => ({
 
 ### Environment configuration
 
-Using the `env` utility, you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
+Using the [`env` utility](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#configuration-using-environment-variables), you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
 
 ```js
 // path: ./config/plugins.js
@@ -81,7 +81,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-## Global Sentry service
+## Global Sentry service access
 
 After installing and configuring the plugin, you can access a Sentry service in your Strapi application as follows:
 
@@ -93,8 +93,8 @@ This service exposes the following methods:
 
 | Method | Description | Parameters |
 | ------ | ----------- | ---------- |
-| `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
-| `getInstance` | Used for direct access to the Sentry instance. | |
+| `sendError()` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
+| `getInstance()` | Used for direct access to the Sentry instance. | |
 
 Below are examples for each method.
 
