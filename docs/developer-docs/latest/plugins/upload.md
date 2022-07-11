@@ -25,7 +25,7 @@ This section details configuration options for the default upload provider. If u
 
 By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for [koa-static](https://github.com/koajs/static).
 
-You can provide them by creating or editing the `./config/plugins.js` file. The example below sets the `max-age` header.
+You can provide them by creating or editing the `./config/plugins.js` file. The following example sets the `max-age` header.
 
 ```js
 // path: ./config/plugins.js
@@ -49,7 +49,7 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
+You can pass configuration to the middleware directly by setting it in the [`body` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#internal-middlewares-configuration-reference) configuration in `./config/middlewares.js`:
 
 ```js
 // path: ./config/middlewares.js
