@@ -29,6 +29,10 @@ From this dedicated folder view, folders and assets can be managed, filtered, so
 
 To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
 
+::: tip
+Breadcrumbs can also be used to navigate to a different folder: click on a folder name to directly jump to it or click on the 3 dots `...` and select a parent folder from the drop-down list.
+:::
+
 ## Adding folders
 
 To create a new folder in the Media Library:
