@@ -18,7 +18,7 @@ Downgrading from Strapi v4.3.0-beta to v4.2.0 will delete folders of the Media L
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
-- the folder title and a breadcrumb line to navigate through folders (1)
+- the folder title and breadcrumbs to navigate through folders (1)
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
