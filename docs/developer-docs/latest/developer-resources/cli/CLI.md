@@ -230,7 +230,7 @@ strapi generate
 
 ## strapi templates:generate
 
-Create a template from the current strapi project
+Create a template from the current Strapi project.
 
 ```bash
 strapi templates:generate <path>
@@ -240,6 +240,18 @@ strapi templates:generate <path>
   Generates a Strapi template at `<path>`
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+
+## strapi content-types:generate-types
+
+Generate TypeScript typings for the project schemas.
+
+```sh
+strapi content-types:generate-types
+```
+
+:::note
+The `strapi content-types:generate-types` command only works for TypeScript-enabled projects. See the [TypeScript](/developer-docs/latest/development/typescript.md) documentation for more information.
+:::
 
 ## strapi routes:list
 
