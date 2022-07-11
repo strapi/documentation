@@ -67,6 +67,27 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 3. Choose `runLifecyclesfunction` from the list.
 4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
+## Generate typings for project schemas
+
+<code-group>
+<code-block title="NPM">
+
+```sh
+npm run strapi content-types:generate-types
+
+```
+</code-block>
+
+<code-block title="YARN">
+
+```sh
+yarn strapi content-types:generate-types
+
+```
+
+</code-block>
+</code-group>
+
 ## Develop a plugin using TypeScript
 
 New plugins can be generated following the [plugins development documentation](/developer-docs/latest/development/plugins-development.md). There are 2 important distinctions for TypeScript applications:
