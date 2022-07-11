@@ -84,7 +84,7 @@ Starting Strapi programmatically in a TypeScript project requires passing the ou
 
 ### Use the `strapi()` factory
 
-Strapi can be run programmatically by calling the `strapi()` function. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the `strapi()` function to indicate where the compiled code should be read:
+Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js
 // path: ./src/plugins/<plugin-name>/server/index.js 
