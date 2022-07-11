@@ -22,6 +22,7 @@ By default, the Media Library displays folders and assets created at the root le
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
+<!-- TODO: update the screenshot once the feature can be tested -->
 ![🏞 screenshot - Media library one folder deep, with back button and updated folder title](../assets/media-library/media-library_folder-content.png)
 
 From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/user-docs/latest/media-library/introduction-to-media-library.md)).
