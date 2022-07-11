@@ -80,7 +80,7 @@ It is not necessary to repeat the `yarn install` or `npm run install` command af
 
 ## Start Strapi programmatically
 
-Starting Strapi programmatically in a TypeScript project requires passing the output directory where the code is compiled.
+Starting Strapi programmatically in a TypeScript project requires indicating to Strapi where the code is compiled.
 
 ### Use the `strapi()` factory
 
