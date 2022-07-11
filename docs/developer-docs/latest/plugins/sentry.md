@@ -15,6 +15,8 @@ By using the Sentry plugin you can:
 * Include additional metadata in Sentry events to assist in debugging
 * Expose a [global Sentry service](#global-sentry-service)
 
+Begin by first [installing](#installation) the Sentry plugin, and then [configuring](#configuration) the plugin to enable your Strapi application to send events to the Sentry instance.
+
 ## Installation
 
 Install the Sentry plugin by adding the dependency to your Strapi application as follows:
@@ -34,8 +36,6 @@ yarn add @strapi/plugin-sentry
 </code-block>
 
 </code-group>
-
-Then you must [configure](#configuration) the plugin to enable your Strapi application to send events to the Sentry instance.
 
 ## Configuration
 
@@ -96,7 +96,7 @@ This service exposes the following methods:
 | `sendError` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
 | `getInstance` | Used for direct access to the Sentry instance. | |
 
-### Examples
+Below are examples for each method.
 
 :::: tabs card
 
