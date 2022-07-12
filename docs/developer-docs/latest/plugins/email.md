@@ -10,12 +10,12 @@ The Email plugin enables applications to send emails from a server or an externa
 
 ::: prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Using providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions.
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Providers](/developer-docs/latest/development/using-providers.md) documentation for detailed installation and configuration instructions.
 
 :::
 
 ::: note
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Using providers](/developer-docs/latest/development/using-providers.md) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/developer-docs/latest/development/using-providers.md) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
 ## Sending emails with a controller or service
