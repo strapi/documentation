@@ -250,6 +250,7 @@ export default {
 Your Strapi app should now have your updated favicon.
 
 *Note: Be certain the *cached favicon* is **cleared**. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN*
+
 #### Tutorial videos
 
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
