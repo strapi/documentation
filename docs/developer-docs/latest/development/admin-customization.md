@@ -229,7 +229,9 @@ Note also that the main navigation logo uploaded via the admin panel supersedes 
 
 ##### Create an extensions folder in: `src/admin/extensions/`
 
-##### Import your favicon into: `src/admin/extensions/`
+##### Upload your favicon into: `src/admin/extensions/`
+
+##### Replace the **favicon.ico** at `Strapi app root` with your favicon.ico
 
 ##### Update your `src/admin/app.js` with the following:
 ```
@@ -237,12 +239,10 @@ import favicon from './extensions/favicon.png';
 
 export default {
   config: {
-  	    ...
          // replace favicon with custom icon
          head: {
                 favicon: favicon,
         },
-        ...
   }
 }
 ```
