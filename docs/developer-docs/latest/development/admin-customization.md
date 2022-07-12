@@ -227,8 +227,29 @@ Note also that the main navigation logo uploaded via the admin panel supersedes 
 
 #### Favicon
 
-To update the favicon, put a favicon file in the `./src/admin/extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
+##### Create an extensions folder in: `src/admin/extensions/`
 
+##### Import your favicon into: `src/admin/extensions/`
+
+##### Update your `src/admin/app.js` with the following:
+```
+import favicon from './extensions/favicon.png';
+
+export default {
+  config: {
+  	    ...
+         // replace favicon with custom icon
+         head: {
+                favicon: favicon,
+        },
+        ...
+  }
+}
+```
+##### Rebuild, run & revisit your Strapi app `yarn build && yarn develop`
+Your Strapi app should now have your updated favicon.
+
+*Note: Be certain the *cached favicon* is **cleared**. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN*
 #### Tutorial videos
 
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
