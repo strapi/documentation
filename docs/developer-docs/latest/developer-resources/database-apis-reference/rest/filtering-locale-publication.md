@@ -83,15 +83,13 @@ The following operators are available:
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     filters: {
       username: {
         $eq: 'John',
       },
     },
-  },
-  {
+  }, {
     encodeValuesOnly: true, // prettify URL
   }
 );
@@ -116,21 +114,21 @@ await request(`/api/users?${query}`);
     {
       "id": 3,
       "attributes": {
-        "name": "test3"
+        "name": "test3",
         // ...
       }
     },
     {
       "id": 6,
       "attributes": {
-        "name": "test6"
+        "name": "test6",
         // ...
       }
     },
     {
       "id": 8,
       "attributes": {
-        "name": "test8"
+        "name": "test8",
         // ...
       }
     }
@@ -150,22 +148,19 @@ await request(`/api/users?${query}`);
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     filters: {
       id: {
         $in: [3, 6, 8],
       },
     },
-  },
-  {
+  }, {
     encodeValuesOnly: true, // prettify URL
   }
 );
 
 await request(`/api/restaurants?${query}`);
 ```
-
 :::
 
 :::caution
@@ -192,7 +187,7 @@ Complex filtering is combining multiple filters using advanced methods such as c
       "id": 1,
       "attributes": {
         "name": "test1",
-        "date": "2020-01-01"
+        "date": "2020-01-01",
         // ...
       }
     },
@@ -200,7 +195,7 @@ Complex filtering is combining multiple filters using advanced methods such as c
       "id": 2,
       "attributes": {
         "name": "test2",
-        "date": "2020-01-02"
+        "date": "2020-01-02",
         // ...
       }
     }
@@ -220,8 +215,7 @@ Complex filtering is combining multiple filters using advanced methods such as c
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     filters: {
       $or: [
         {
@@ -241,8 +235,7 @@ const query = qs.stringify(
         },
       },
     },
-  },
-  {
+  }, {
     encodeValuesOnly: true, // prettify URL
   }
 );
@@ -300,8 +293,7 @@ Deep filtering is filtering on a relation's fields.
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     filters: {
       chef: {
         restaurants: {
@@ -311,8 +303,7 @@ const query = qs.stringify(
         },
       },
     },
-  },
-  {
+  }, {
     encodeValuesOnly: true, // prettify URL
   }
 );
@@ -342,7 +333,7 @@ await request(`/api/restaurants?${query}`);
 
 - The [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) should be installed.
 - [Localization should be enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
-  :::
+:::
 
 The `locale` API parameter can be used to [get entries from a specific locale](/developer-docs/latest/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
 
@@ -400,8 +391,7 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     publicationState: 'preview',
   },
   {
@@ -423,8 +413,7 @@ To retrieve only draft entries, combine the `preview` publication state and the 
 
 ```js
 const qs = require('qs');
-const query = qs.stringify(
-  {
+const query = qs.stringify({
     publicationState: 'preview',
     filters: {
       publishedAt: {

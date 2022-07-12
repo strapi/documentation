@@ -88,7 +88,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 - as a logical operator (e.g. in `where: { $not: { // conditions… }}`)
 - or [as an attribute operator](#not-2) (e.g. in `where: { attribute-name: $not: { … } }`).
-  :::
+:::
 
 :::tip
 `$and`, `$or` and `$not` operators are nestable inside of another `$and`, `$or` or `$not` operator.
@@ -282,6 +282,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
+
 ### `$between`
 
 Attribute is between the 2 input values.
@@ -297,6 +298,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
   },
 });
 ```
+
 
 ### `$contains`
 
