@@ -44,12 +44,19 @@ If no specific configuration is required, a plugin can also be declared with the
 
 ## GraphQL configuration
 
-The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the following specific configuration options:
+The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the following specific configuration options that should be declared in a `graphql.config` object. All parameters are optional:
 
-| Parameter      | Description                                                                                                                                                                     | Type      |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| `defaultLimit` | Default value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
-| `maxLimit`     | Maximum value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | `Integer` |
+| Parameter          | Description                                                                                                                                                   | Type    | Default |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| `apolloServer`     | Additional configuration for [`ApolloServer`](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver).                   | Object  | `{}`    |
+| `artifacts`        | Object containing filepaths, defining where to store generated articats. Can include the following properties: <ul><li>`schema`: path to the generated GraphQL schema file</li><li>`typegen`: path to generated TypeScript types</li></ul>Only works if `generateArtifacts` is set to `true`.  | Object  | <ul><li>`schema: false`</li><li>`typegen: false`</li></ul> |
+| `defaultLimit` | Default value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls | Integer | 100 |
+| `depthLimit`       | Limits the [complexity of GraphQL queries](https://www.npmjs.com/package/graphql-depth-limit).                                                                 | Integer  | `10`    |
+| `generateArtifacts`| Whether Strapi should automatically generate and output a GraphQL schema file and corresponding TypeScript definitions.<br/><br/>The file system location can be configured through `artifacts`.  | Boolean | `false` |
+| `maxLimit`         | Maximum value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls                                                                                                              | Integer  | `-1`    |
+| `playgroundAlways` | Whether the playground should be publicly exposed.<br/><br/>Enabled by default in if `NODE_ENV` is set to `development`.                                        | Boolean | `false`  |
+| `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on models should be created automatically (see [Shadow CRUD documentation](/developer-docs/latest/plugins/graphql.md#shadow-crud)). | Boolean | `true` |
+| `subscriptions`    | Enable GraphQL subscriptions (experimental feature).                                                                                                                                 | Boolean | `false` |
 
 ```js
 // path: ./config/plugins.js
@@ -58,8 +65,12 @@ module.exports = () => ({
   graphql: {
     enabled: true,
     config: {
+      playgroundAlways: false,
       defaultLimit: 10,
       maxLimit: 20
+      apolloServer: {
+        tracing: true,
+      },
     }
   }
 })

@@ -148,7 +148,7 @@ There are multiple methods to generate secrets, for example running `openssl ran
 
 ::: caution
 
-The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides.md) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged.
+The [Hosting Provider Guides](/developer-docs/latest/setup-deployment-guides/deployment.md#hosting-provider-guides) are being updated to reflect these changes. Community contributions updating the hosting guides are encouraged.
 
 :::
 

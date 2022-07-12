@@ -19,7 +19,7 @@ Errors are included in the response object with the `error` key and include info
 
 ### REST errors
 
-Errors thrown by the REST API are included in the [response](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#unified-response-format) that has the following format:
+Errors thrown by the REST API are included in the [response](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#requests) that has the following format:
 
 ```json
 {
@@ -27,7 +27,7 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
   "error": {
     "status": "", // HTTP status
     "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
-    "message": "", // A human reable error message
+    "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
     }

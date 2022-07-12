@@ -7,28 +7,85 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API: Sort & Pagination
 
-The [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) by default does not populate any relations, media fields, components, or dynamic zones. It will return all fields for the model and while populating.
+Entries that are returned by queries to the [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) can be sorted and paginated.
+
+:::: tip
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-intro-full.md)!!!
+
+::::
 
 ## Sorting
 
-Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntax:
+Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntaxes:
 
-### Sort using 2 fields
+- `GET /api/:pluralApiId?sort=value` to sort on 1 field
+- `GET /api/:pluralApiId?sort[0]=value1&sort[1]=value2` to sort on multiple fields (e.g. on 2 fields)
+
+The sorting order can be defined with:
+
+- `:asc` for ascending order (default order, can be omitted)
+- or `:desc` for descending order.
 
 ::::api-call
-:::request Example request
+:::request Example request: Sort using 2 fields
+
+`GET /api/articles?sort[0]=title&sort[1]=slug`
+
+:::
+
+:::response Example response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
+        // ...
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article-1",
+        // ...
+      }
+    }
+  ],
+  "meta": {
+    // ...
+  }
+}
+```
+
+:::
+::::
+
+::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
   sort: ['title', 'slug'],
 }, {
-  encodeValuesOnly: true,
+  encodeValuesOnly: true, // prettify URL
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?sort[0]=title&sort[1]=slug
 ```
+
+:::
+
+::::api-call
+:::request Example request: Sort using 2 fields and set the order
+
+`GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc`
 
 :::
 
@@ -38,18 +95,18 @@ await request(`/api/articles?${query}`);
 {
   "data": [
     {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        // ...
-      }
-    },
-    {
       "id": 2,
       "attributes": {
         "title": "Test Article",
         "slug": "test-article-1",
+        // ...
+      }
+    },
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Test Article",
+        "slug": "test-article",
         // ...
       }
     }
@@ -61,59 +118,25 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
+
 ::::
 
-### Sort using 2 fields and set the order
+::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
 
-The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
-
-::::api-call
-:::request Example request
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
   sort: ['title:asc', 'slug:desc'],
 }, {
-  encodeValuesOnly: true,
+  encodeValuesOnly: true, // prettify URL
 });
 
 await request(`/api/articles?${query}`);
-// GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc
 ```
 
 :::
-
-:::response Example response
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article-1",
-        // ...
-      }
-    },
-    {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        // ...
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-:::
-::::
 
 ## Pagination
 
@@ -137,22 +160,9 @@ To paginate results by page, use the following parameters:
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 :::: api-call
-::: request Example request: Select only 10 entries on page 1
+::: request Example request: Return only 10 entries on page 1
 
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  pagination: {
-    page: 1,
-    pageSize: 10,
-  },
-}, {
-  encodeValuesOnly: true,
-});
-
-await request(`/api/articles?${query}`);
-// GET /api/articles?pagination[page]=1&pagination[pageSize]=10
-```
+`GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
 
 :::
 ::: response Example response
@@ -176,6 +186,26 @@ await request(`/api/articles?${query}`);
 :::
 ::::
 
+::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  pagination: {
+    page: 1,
+    pageSize: 10,
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+:::
+
 ### Pagination by offset
 
 To paginate results by offset, use the following parameters:
@@ -191,22 +221,10 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 :::
 
 :::: api-call
-::: request Example request
+::: request Example request: Return only the first 10 entries using offset
 
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  pagination: {
-    start: 0,
-    limit: 10,
-  },
-}, {
-  encodeValuesOnly: true,
-});
+`GET /api/articles?pagination[start]=0&pagination[limit]=10`
 
-await request(`/api/articles?${query}`);
-// GET /api/articles?pagination[start]=0&pagination[limit]=10
-```
 
 :::
 ::: response Example response
@@ -228,3 +246,22 @@ await request(`/api/articles?${query}`);
 
 :::
 ::::
+
+::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  pagination: {
+    start: 0,
+    limit: 10,
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+:::
