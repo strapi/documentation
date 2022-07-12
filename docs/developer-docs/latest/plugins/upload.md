@@ -49,7 +49,7 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the [`body` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#internal-middlewares-configuration-reference) configuration in `./config/middlewares.js`:
+You can pass configuration to the middleware directly by setting it in the [`body` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#body) configuration in `./config/middlewares.js`:
 
 ```js
 // path: ./config/middlewares.js
@@ -209,12 +209,14 @@ Upload one or more files that will be linked to a specific entry.
 
 The following parameters are accepted:
 
-- `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
-- `path` (optional): The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3).
-- `refId`: The ID of the entry which the file(s) will be linked to.
-- `ref`: The unique ID (uid) of the model which the file(s) will be linked to (see more below).
-- `source` (optional): The name of the plugin where the model is located.
-- `field`: The field of the entry which the file(s) will be precisely linked to.
+| Parameter | Description |
+| --------- | ----------- |
+|`files`    | The file(s) to upload. The value(s) can be a Buffer or Stream. |
+|`path` (optional) | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
+| `refId` | The ID of the entry which the file(s) will be linked to. |
+| `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
+| `source` (optional) | The name of the plugin where the model is located. |
+| `field` | The field of the entry which the file(s) will be precisely linked to. |
 
 For example, given the `Restaurant` model attributes:
 
