@@ -6,9 +6,9 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 
 # Upload
 
-The Upload plugin is the backend powering the [Media Library](../../../user-docs/latest/media-library/introduction-to-media-library.md) plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
+The Upload plugin is the backend powering the Media Library plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
 
-By default Strapi provides a [provider](../development/using-providers.md) that uploads files to a local directory. Additional providers are available should you want to upload your files to another location.
+By default Strapi provides a [provider](../development/providers.md) that uploads files to a local directory. Additional providers are available should you want to upload your files to another location.
 
 The providers maintained by Strapi include:
 

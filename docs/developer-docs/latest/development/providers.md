@@ -1,10 +1,10 @@
 ---
-title: Using Providers - Strapi Developer Docs
+title: Providers - Strapi Developer Docs
 description: Install and use providers to extend the functionality of available plugins.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/using-providers.html
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/providers.html
 ---
 
-# Using Providers
+# Providers
 
 Certain [plugins](../../../user-docs/latest/plugins/introduction-to-plugins.md) can be extended via the installation and configuration of additional [providers](../../../user-docs/latest/plugins/introduction-to-plugins.md#providers).
 
@@ -81,7 +81,7 @@ module.exports = ({ env }) => ({
 ```
 
 ::: note
-Strapi has a default [`security` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#security) for more information.
+Strapi has a default [`security` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security) for more information.
 :::
 
 ::: tab Email
