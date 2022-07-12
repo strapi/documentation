@@ -303,7 +303,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 ::::
 
 ::: danger
-Enumeration values on Strapi v4.1.3 and above should not start with a special character or a number. This would cause a GraphQL issue leading to a server crash and some possible data loss, and will be fixed as soon as possible.
+Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
 :::
 
 ### <img width="28" src="../assets/icons/ctb_media.svg"> Media
