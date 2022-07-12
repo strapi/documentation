@@ -84,8 +84,6 @@ module.exports = ({ env }) => ({
 Strapi has a default [`security` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#security) for more information.
 :::
 
-:::
-
 ::: tab Email
 
 ```js
@@ -155,7 +153,6 @@ module.exports = {
   },
 };
 ```
-:::
 
 ::: tab Email
 

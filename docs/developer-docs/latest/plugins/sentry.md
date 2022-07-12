@@ -13,7 +13,7 @@ By using the Sentry plugin you can:
 * Initialize a Sentry instance upon startup of a Strapi application
 * Send Strapi application errors as events to Sentry
 * Include additional metadata in Sentry events to assist in debugging
-* Expose a [global Sentry service](#global-sentry-service)
+* Expose a [global Sentry service](#global-sentry-service-access)
 
 Begin by first [installing](#installation) the Sentry plugin, and then [configuring](#configuration) the plugin to enable your Strapi application to send events to the Sentry instance.
 
