@@ -84,15 +84,14 @@ The following operators are available:
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    filters: {
-      username: {
-        $eq: 'John',
-      },
+  filters: {
+    username: {
+      $eq: 'John',
     },
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
 await request(`/api/users?${query}`);
 ```
@@ -149,15 +148,14 @@ await request(`/api/users?${query}`);
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    filters: {
-      id: {
-        $in: [3, 6, 8],
-      },
+  filters: {
+    id: {
+      $in: [3, 6, 8],
     },
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
 await request(`/api/restaurants?${query}`);
 ```
@@ -216,29 +214,28 @@ Complex filtering is combining multiple filters using advanced methods such as c
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    filters: {
-      $or: [
-        {
-          date: {
-            $eq: '2020-01-01',
-          },
-        },
-        {
-          date: {
-            $eq: '2020-01-02',
-          },
-        },
-      ],
-      author: {
-        name: {
-          $eq: 'Kai doe',
+  filters: {
+    $or: [
+      {
+        date: {
+          $eq: '2020-01-01',
         },
       },
+      {
+        date: {
+          $eq: '2020-01-02',
+        },
+      },
+    ],
+    author: {
+      name: {
+        $eq: 'Kai doe',
+      },
     },
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
 await request(`/api/books?${query}`);
 ```
@@ -294,19 +291,18 @@ Deep filtering is filtering on a relation's fields.
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    filters: {
-      chef: {
-        restaurants: {
-          stars: {
-            $eq: 5,
-          },
+  filters: {
+    chef: {
+      restaurants: {
+        stars: {
+          $eq: 5,
         },
       },
     },
-  }, {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
 await request(`/api/restaurants?${query}`);
 ```
@@ -315,7 +311,7 @@ await request(`/api/restaurants?${query}`);
 
 ::: caution
 
-- Querying your API with deep filters may cause performance issues. If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
+- Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
 - Deep filtering isn't available for polymorphic relations (eg: Dynamic Zones & Media Fields).
 
 :::
@@ -392,12 +388,10 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    publicationState: 'preview',
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
+  publicationState: 'preview',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
 await request(`/api/articles?${query}`);
 ```
@@ -414,11 +408,10 @@ To retrieve only draft entries, combine the `preview` publication state and the 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-    publicationState: 'preview',
-    filters: {
-      publishedAt: {
-        $null: true,
-      },
+  publicationState: 'preview',
+  filters: {
+    publishedAt: {
+      $null: true,
     },
   },
 }, {
