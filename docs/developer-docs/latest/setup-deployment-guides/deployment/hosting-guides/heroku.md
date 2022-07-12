@@ -256,7 +256,7 @@ heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= 
 heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
 ```
 
-If you are using Windows, it is recommended to use WSL for this step.
+If you are using Windows, it is recommended to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/about) for this step.
 
 The following `openssl` commands will generate random new secrets (Mac and Linux only):
 
