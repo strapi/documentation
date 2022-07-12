@@ -222,6 +222,7 @@ const developer = [
       ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ['/developer-docs/latest/development/using-providers.md', 'Using providers'],
     ],
   },
   {
