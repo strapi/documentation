@@ -59,7 +59,7 @@ To trigger an email in response to a user action add the `send()` function to a 
 
 ### Using the `sendTemplatedEmail()` function
 
-The `sendTemplatedEmail()` is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
+The `sendTemplatedEmail()` function is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
@@ -94,7 +94,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Sending emails with a lifecycle hook
 
- To trigger an email based on administrator actions in the admin panel use [Lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+ To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 ```js
 
