@@ -153,7 +153,7 @@ module.exports = {
   },
 };
 ```
-
+:::
 ::: tab Email
 
 ```js
