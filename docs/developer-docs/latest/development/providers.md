@@ -87,6 +87,8 @@ Strapi has a default [`security` middleware](/developer-docs/latest/setup-deploy
 ::: tab Email
 
 ```js
+// path: ./config/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   email: {
