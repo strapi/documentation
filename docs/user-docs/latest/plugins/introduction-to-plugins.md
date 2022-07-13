@@ -32,5 +32,5 @@ Some plugins can be further extended through the configuration of _providers_, p
 
 Currently, the only plugins designed to work with providers are the:
 
-* [Email plugin](../../../developer-docs/latest/plugins/email.md#configure-the-plugin), and
-* [Media Library plugin](../../../developer-docs/latest/plugins/upload.md#using-a-provider) (implemented via the [Upload plugin](../../../developer-docs/latest/plugins/upload.md)).
+* [Email plugin](/developer-docs/latest/plugins/email.md), and
+* Media Library plugin (implemented via the [Upload plugin](/developer-docs/latest/plugins/upload.md)).
