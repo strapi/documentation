@@ -222,6 +222,7 @@ const developer = [
       ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ['/developer-docs/latest/development/providers.md', 'Providers'],
     ],
   },
   {
@@ -423,6 +424,7 @@ const developer = [
       ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
       ['/developer-docs/latest/plugins/email', 'Email'],
       ['/developer-docs/latest/plugins/upload', 'Upload'],
+      ['/developer-docs/latest/plugins/sentry', 'Sentry'],
       ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
     ],
     sidebarDepth: 1,

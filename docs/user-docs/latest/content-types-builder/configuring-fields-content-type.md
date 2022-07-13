@@ -302,6 +302,10 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 ::::
 
+::: caution
+Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
+:::
+
 ### <img width="28" src="../assets/icons/ctb_media.svg"> Media
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
