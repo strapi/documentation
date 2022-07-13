@@ -27,7 +27,7 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
   "error": {
     "status": "", // HTTP status
     "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
-    "message": "", // A human reable error message
+    "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
     }
@@ -63,7 +63,7 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) respond with the correct status and body.
 
-This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be camel-cased to be used by Strapi (e.g. `badRequest`).
+This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
 Error functions accept 2 parameters that correspond to the `error.message` and `error.details` attributes [received](#receiving-errors) by a developer querying the API:
 

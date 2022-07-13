@@ -6,219 +6,119 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 
 # Email
 
-Thanks to the plugin `Email`, you can send email from your server or externals providers such as **Sendgrid**.
+The Email plugin enables applications to send emails from a server or an external provider. The Email plugin uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application. Two of the most common use cases are in the Strapi back end and in the admin panel. The following documentation describes how to use the Email plugin in a controller or service for back-end use cases and using a lifecycle hook for admin panel use cases.
 
-## Programmatic usage
+::: prerequisites
 
-### Send an email - `.send()`
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Providers](/developer-docs/latest/development/providers.md) documentation for detailed installation and configuration instructions.
 
-In your custom controllers or services you may want to send email.
-By using the following function, Strapi will use the configured provider to send an email.
+:::
 
-**Example**
+::: note
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/developer-docs/latest/development/providers.md) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
+:::
+
+## Sending emails with a controller or service
+
+The Email plugin has an `email` [service](/developer-docs/latest/development/backend-customization/services.md#services) that contains 2 functions to send emails:
+
+* `send()` directly contains the email contents,
+* `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
+
+### Using the `send()` function
+
+To trigger an email in response to a user action add the `send()` function to a [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [service](/developer-docs/latest/development/backend-customization/services.md). The send function has the following properties:
+
+| Property  | Type     | Format        | Description                                           |
+|-----------|----------|---------------|-------------------------------------------------------|
+| `from`    | `string` | email address | If not specified, uses `defaultFrom` in `plugins.js`. |
+| `to`      | `string` | email address | Required                                              |
+| `cc`      | `string` | email address | Optional                                              |
+| `bcc`     | `string` | email address | Optional                                              |
+| `replyTo` | `string` | email address | Optional                                              |
+| `subject` | `string` | -             | Required                                              |
+| `text`    | `string` | -             | Either `text` or `html` is required.                  |
+| `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
 
 ```js
-await strapi.plugins['email'].services.email.send({
-  to: 'paulbocuse@strapi.io',
-  from: 'joelrobuchon@strapi.io',
-  cc: 'helenedarroze@strapi.io',
-  bcc: 'ghislainearabian@strapi.io',
-  replyTo: 'annesophiepic@strapi.io',
-  subject: 'Use strapi email provider successfully',
-  text: 'Hello world!',
-  html: 'Hello world!',
-});
+
+// This code example can be used in a controller or a service
+// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
+
+  await strapi.plugins['email'].services.email.send({
+    to: 'valid email address',
+    from: 'your verified email address', //e.g. single sender verification in SendGrid
+    cc: 'valid email address',
+    bcc: 'valid email address',
+    replyTo: 'valid email address',
+    subject: 'The Strapi Email plugin worked successfully',
+    text: 'Hello world!',
+    html: 'Hello world!',
+  }),
 ```
 
-### Send an email using a template - `.sendTemplatedEmail()`
+### Using the `sendTemplatedEmail()` function
 
-When you send an email, you will most likely want to build it from a template you wrote.
-The email plugin provides the service `sendTemplatedEmail` that compile the email and then sends it. The function have the following params:
+The `sendTemplatedEmail()` function is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
 
-| param           | description                                                                                                              | type   | default |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ | ------- |
-| `emailOptions`  | Object that contains email options (`to`, `from`, `replyTo`, `cc`, `bcc`) except `subject`, `text` and `html`            | object | `{}`    |
-| `emailTemplate` | Object that contains `subject`, `text` and `html` as [lodash string templates](https://lodash.com/docs/4.17.15#template) | object | `{}`    |
-| `data`          | Object that contains the data used to compile the templates                                                              | object | `{}`    |
-
-**Example**
+| Parameter       | Description                                                                                                                                | Type     | Default |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
+| `emailOptions` <br><br> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `data`  <br><br> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 ```js
+
+// This code example can be used in a controller or a service
+// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
+
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
-  text: `Welcome on mywebsite.fr!
+  text: `Welcome to mywebsite.fr!
     Your account is now linked with: <%= user.email %>.`,
-  html: `<h1>Welcome on mywebsite.fr!</h1>
+  html: `<h1>Welcome to mywebsite.fr!</h1>
     <p>Your account is now linked with: <%= user.email %>.<p>`,
 };
 
 await strapi.plugins['email'].services.email.sendTemplatedEmail(
   {
     to: user.email,
-    // from: is not specified, so it's the defaultFrom that will be used instead
+    // from: is not specified, the defaultFrom is used.
   },
-  emailTemplate,
+    emailTemplate,
   {
     user: _.pick(user, ['username', 'email', 'firstname', 'lastname']),
   }
 );
 ```
 
-## Configure the plugin
+## Sending emails with a lifecycle hook
 
-By default Strapi provides a local email system ([sendmail](https://www.npmjs.com/package/sendmail)). If you want to use a third party to send emails, you need to install the correct provider module. Otherwise you can skip this part and continue to configure your provider.
-
-Below are the providers maintained by the Strapi team:
-
-- [Amazon SES](https://www.npmjs.com/package/@strapi/provider-email-amazon-ses)
-- [Mailgun](https://www.npmjs.com/package/@strapi/provider-email-mailgun)
-- [Nodemailer](https://www.npmjs.com/package/@strapi/provider-email-nodemailer)
-- [SendGrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid)
-- [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail)
-
-You can also find additional community maintained providers on [NPM](https://www.npmjs.com/).
-
-To install a new provider run:
-
-<code-group>
-
-<code-block title="NPM">
-```sh
-npm install @strapi/provider-email-sendgrid --save
-```
-</code-block>
-
-<code-block title="YARN">
-```sh
-yarn add @strapi/provider-email-sendgrid --save
-```
-</code-block>
-
-</code-group>
-
-### Configure your provider
-
-After installing your provider you will need to add some settings in `./config/plugins.js`. If this file doesn't exists, you'll need to create it. Check the README of each provider to know what configuration settings the provider needs.
-
-::: note
-When using community providers, pass the full package name to the `provider` key (e.g. `provider: 'strapi-provider-email-mandrill'`). Only Strapi-maintained providers can use the shortcode format (e.g. `provider: 'sendmail'`).
-:::
-
-Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
-
-**Path —** `./config/plugins.js`.
+ To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 ```js
-module.exports = ({ env }) => ({
-  // ...
-  email: {
-    config: {
-      provider: 'sendgrid',
-      providerOptions: {
-        apiKey: env('SENDGRID_API_KEY'),
-      },
-      settings: {
-        defaultFrom: 'juliasedefdjian@strapi.io',
-        defaultReplyTo: 'juliasedefdjian@strapi.io',
-        testAddress: 'juliasedefdjian@strapi.io',
-      },
-    },
-  },
-  // ...
-});
-```
 
-::: tip
-If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
-:::
+// path: ./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js
 
-::: tip
-Only one email provider will be active at all time. If the email provider setting isn't picked up by strapi, verify you have put the file `plugins.js` in the correct folder, and with correct filename. The selection of email provider is done via configuration file only.  
-:::
-
-::: tip
-When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test.
-More info here: [Configure templates Locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates)
-:::
-
-## Create new provider
-
-Default template
-
-```js
 module.exports = {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
+    async afterCreate(event) {    // Connected to "Save" button in admin panel
+        const { result } = event;
 
-In the `send` function you will have access to:
-
-- `providerOptions` that contains configurations written in `plugins.js`
-- `settings` that contains configurations written in `plugins.js`
-- `options` that contains options you send when you call the `send` function from the email plugin service
-
-To use it you will have to publish it on **npm**.
-
-### Create a local provider
-
-If you want to create your own provider without publishing it on **npm** you can follow these steps:
-
-- Create a `providers` folder in your application.
-- Create your provider (e.g. `./providers/strapi-provider-email-[...]/...`)
-- Then update your `package.json` to link your `strapi-provider-email-[...]` dependency to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your new provider.
-
-```json
-{
-  ...
-  "dependencies": {
-    ...
-    "strapi-provider-email-[...]": "file:providers/strapi-provider-email-[...]",
-    ...
-  }
-}
-```
-
-- Finally, run `yarn install` or `npm install` to install your new custom provider.
-
-## Troubleshooting
-
-You received an `Auth.form.error.email.invalid` error even though the email is valid and exists in the database.
-
-Here is the error response you get from the API.
-
-```json
-{
-  "statusCode": 400,
-  "error": "Bad Request",
-  "message": [
-    {
-      "messages": [
-        {
-          "id": "Auth.form.error.email.invalid"
+        try{
+            await strapi.plugins['email'].services.email.send({
+              to: 'valid email address',
+              from: 'your verified email address', // e.g. single sender verification in SendGrid
+              cc: 'valid email address',
+              bcc: 'valid email address',
+              replyTo: 'valid email address',
+              subject: 'The Strapi Email plugin worked successfully',
+              text: '${fieldName}', // Replace with a valid field ID
+              html: 'Hello world!', 
+                
+            })
+        } catch(err) {
+            console.log(err);
         }
-      ]
     }
-  ]
 }
 ```
-
-This error is due to your IP connection. By default, Strapi uses the [`sendmail`](https://github.com/guileen/node-sendmail) package.
-
-This package sends an email from the server it runs on. Depending on the network you are on, the connection to the SMTP server could fail.
-
-Here is the `sendmail` error.
-
-```
-Error: SMTP code:550 msg:550-5.7.1 [87.88.179.13] The IP you're using to send mail is not authorized to
-550-5.7.1 send email directly to our servers. Please use the SMTP relay at your
-550-5.7.1 service provider instead. Learn more at
-550 5.7.1  https://support.google.com/mail/?p=NotAuthorizedError 30si2132728pjz.75 - gsmtp
-```
-
-To fix it, we suggest you to use another email provider that uses third party to send emails.
-
-When using a third party provider, you avoid having to setup a mail server on your server and get extra features such as email analytics.

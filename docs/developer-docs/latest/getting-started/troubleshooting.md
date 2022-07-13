@@ -103,6 +103,6 @@ Due to these two issues, it is recommended you use a proxy application such as [
 
 ## Is X feature available yet?
 
-You can see the [ProductBoard roadmap](https://portal.productboard.com/strapi) to see which feature requests are currently being worked on and which have not been started yet.
+You can see the [Public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet.
 
 <!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->

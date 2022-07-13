@@ -56,7 +56,7 @@ The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the followin
 | `maxLimit`         | Maximum value for [the `pagination[limit]` parameter](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination-by-offset) used in API calls                                                                                                              | Integer  | `-1`    |
 | `playgroundAlways` | Whether the playground should be publicly exposed.<br/><br/>Enabled by default in if `NODE_ENV` is set to `development`.                                        | Boolean | `false`  |
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on models should be created automatically (see [Shadow CRUD documentation](/developer-docs/latest/plugins/graphql.md#shadow-crud)). | Boolean | `true` |
-| `subscriptions`    | Enable GraphQL subscriptions.                                                                                                                                 | Boolean | `false` |
+| `subscriptions`    | Enable GraphQL subscriptions (experimental feature).                                                                                                                                 | Boolean | `false` |
 
 ```js
 // path: ./config/plugins.js
