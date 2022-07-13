@@ -106,9 +106,7 @@ It is not necessary to repeat the `yarn` or `npm install` command after the init
 
 ## Start Strapi programmatically
 
-Starting Strapi programmatically in a TypeScript project requires indicating to Strapi where the code is compiled.
-<!--possible alternate text: 
-To start Strapi programmatically in a TypeScript project the Strapi instance requires the compiled code location. This section describes how to set and indicate the compiled code directory.-->
+To start Strapi programmatically in a TypeScript project the Strapi instance requires the compiled code location. This section describes how to set and indicate the compiled code directory.
 
 ### Use the `strapi()` factory
 
