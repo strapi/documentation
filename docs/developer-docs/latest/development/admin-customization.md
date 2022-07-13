@@ -226,15 +226,25 @@ Note also that the main navigation logo uploaded via the admin panel supersedes 
 :::
 
 #### Favicon
+We will be replacing the Strapi favicon with our own favicon. 
+:::tip
+This same process can be used to  replace the login logo `AuthLogo` and menu logo with `MenuLogo`. For more details, please visit Strapi [admin-customization.html#logos](https://docs.strapi.io/developer-docs/latest/development/admin-customization.html#logos)
+:::
 
-##### Create an extensions folder in: `src/admin/extensions/`
+1. Create an extensions folder in: 
+`src/admin/extensions/`
 
-##### Upload your favicon into: `src/admin/extensions/`
+2. Upload your favicon into: 
+`src/admin/extensions/`
 
-##### Replace the **favicon.ico** at `Strapi app root` with your favicon.ico
+3. Replace the **favicon.ico** at: 
+`Strapi app root` with your favicon.ico
 
-##### Update your `src/admin/app.js` with the following:
-```
+4.  Update your `src/admin/app.js` with the following:
+
+```js
+// path: src/admin/app.js
+
 import favicon from './extensions/favicon.png';
 
 export default {
@@ -246,10 +256,15 @@ export default {
   }
 }
 ```
-##### Rebuild, run & revisit your Strapi app `yarn build && yarn develop`
+
+5. Rebuild, run & revisit your Strapi app
+ `yarn build && yarn develop`
+
 Your Strapi app should now have your updated favicon.
 
-*Note: Be certain the *cached favicon* is **cleared**. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN*
+:::note
+Be certain that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN
+:::
 
 #### Tutorial videos
 
