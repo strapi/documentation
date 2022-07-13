@@ -14,7 +14,7 @@ Providers add an extension to the core capabilities of the plugin, for example t
 Only the [Upload](../plugins/upload.md) and [Email](../plugins/email.md) plugins are currently designed to work with providers. 
 :::
 
-For the relevant plugins, there are both official providers maintained by Strapi - discoverable via the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) - and many community maintained providers available via [npm](https://www.npmjs.com/).
+For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/latest/plugins/installing-plugins-via-marketplace.md) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
 ## Installing providers
 
