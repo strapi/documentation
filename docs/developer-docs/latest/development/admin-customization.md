@@ -227,7 +227,43 @@ Note also that the main navigation logo uploaded via the admin panel supersedes 
 
 #### Favicon
 
-To update the favicon, put a favicon file in the `./src/admin/extensions` folder and update the `config.head.favicon` key in the [admin panel configuration](#configuration-options).
+Replacing the Strapi favicon with a custom favicon.
+:::tip
+This same process may be used to replace the login logo `AuthLogo` and menu logo with `MenuLogo`. For more details, please visit Strapi [#logos](#)
+:::
+
+1. Create an extensions folder at:
+`src/admin/extensions/`
+
+2. Upload your favicon into:
+`src/admin/extensions/`
+
+3. Replace the **favicon.ico** at:
+`Strapi app root` with custom favicon.ico
+
+4. Update your `src/admin/app.js` with the following:
+
+```js
+// path: src/admin/app.js
+
+import favicon from './extensions/favicon.png';
+
+export default {
+  config: {
+         // replace favicon with custom icon
+         head: {
+                favicon: favicon,
+        },
+  }
+}
+```
+
+5. Rebuild, run & revisit your Strapi app
+ `yarn build && yarn develop`
+
+:::note
+Be certain that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN
+:::
 
 #### Tutorial videos
 
