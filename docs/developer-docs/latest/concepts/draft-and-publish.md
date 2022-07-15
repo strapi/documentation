@@ -51,7 +51,7 @@ To publish a draft, click on the **Publish** button in the top right corner of t
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
-When a content is not a draft anymore, but has been published, it is indicated on the right of the interface, below the Information box.
+When a content is not a draft any more, but has been published, it is indicated on the right of the interface, below the Information box.
 
 ![Editing published version](../assets/concepts/draft-publish/editing_published_version.png)
 

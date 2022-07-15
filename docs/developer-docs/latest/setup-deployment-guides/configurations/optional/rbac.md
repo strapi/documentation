@@ -120,7 +120,7 @@ const conditions = [
 ];
 
 module.exports = async () => {
-  // do your boostrap
+  // do your bootstrap
 
   await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
 };

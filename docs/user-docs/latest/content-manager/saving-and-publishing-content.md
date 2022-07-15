@@ -1,5 +1,5 @@
 ---
-title: Saving & Publishishing content - Strapi User Guide
+title: Saving & Publishing content - Strapi User Guide
 description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html
 ---
@@ -28,7 +28,7 @@ To publish a draft, click on the **Publish** button in the top right corner of t
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
-When a content is not a draft anymore, but has been published, it is indicated on the right of the interface, above the Information box.
+When a content is not a draft any more, but has been published, it is indicated on the right of the interface, above the Information box.
 
 ![Editing published version](../assets/content-manager/editing_published_version.png)
 
@@ -51,4 +51,3 @@ You can delete entries from the list view of a collection type, by clicking on t
 
 ::: caution
 If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, entries can only be deleted one locale at the time.
-:::

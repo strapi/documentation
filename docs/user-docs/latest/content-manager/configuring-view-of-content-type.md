@@ -113,7 +113,7 @@ On the right side of the View area is displayed a Relational fields part. As in 
 
 To define what relational fields of an entry should be available in the edit view, the following options are available:
 
-- the **Insert another relational field** button, to add another relational field to your entry. If the button remains unclickable, it means that no other relational field can be added.
+- the **Insert another relational field** button, to add another relational field to your entry. If the button remains un-clickable, it means that no other relational field can be added.
 - the delete button ![Clear icon](../assets/icons/clear.svg), to remove a relational field.
 - the reorder button ![Drag icon](../assets/icons/drag.svg), to drag and drop to the place you want your relational field to be displayed among the others.
 

@@ -10,11 +10,11 @@ This DigitalOcean configuration documentation is related to the [DigitalOcean On
 You can click below for more information about the installed software and the Nginx server configuration.
 
 ::: details Installed software
-The Strapi application running on the droplet has the following softwares installed and configured:
+The Strapi application running on the droplet has the following software installed and configured:
 
 | Software                     | Version               | Comments                                                                                                                                 |
 | ---------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Node.js                      | 12                    | Installed via the offical [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
+| Node.js                      | 12                    | Installed via the official [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
 | Yarn                         | latest stable version | Installed via the official [apt repository](https://classic.yarnpkg.com/en/docs/install/#debian-stable))                                 |
 | Nginx                        | latest version        | Installed via Ubuntu default repository                                                                                                  |
 | UFW (Uncomplicated Firewall) | latest stable version | Configured to only allow incoming ports 80 (HTTP), 443 (HTTPS), and 22 (SSH)                                                             |
@@ -111,7 +111,7 @@ While identified as the service user on the DigitalOcean virtual machine, [PM2](
 - `pm2 logs strapi-development`: Show the logs in real time; to exit, use Ctrl+C.
 
 :::tip TIP
-You can also manually view the log files under `/srv/strapi/.pm2/logs` if you encounter any errors during the bootup.
+You can also manually view the log files under `/srv/strapi/.pm2/logs` if you encounter any errors during the boot up.
 :::
 
 ## Strapi application access with ssh

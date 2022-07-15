@@ -131,4 +131,4 @@ module.exports = {
 };
 ```
 
-And tada, it works.
+And ta da, it works.

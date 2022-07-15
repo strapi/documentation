@@ -248,7 +248,7 @@ In Strapi v4, security middlewares from Strapi v3 have been removed and replaced
 
 In Strapi v3, CRON tasks could be defined in a `./config/functions/cron.js` file. 
 
-In Strapi v4, the `config/functions` folder [does not exist anymore](#custom-functions-folder), and [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) can be defined:
+In Strapi v4, the `config/functions` folder [does not exist any more](#custom-functions-folder), and [CRON tasks](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) can be defined:
 
 - in a separate file (e.g. `./config/cron-tasks.js`)
 - or in the `server.js` file:

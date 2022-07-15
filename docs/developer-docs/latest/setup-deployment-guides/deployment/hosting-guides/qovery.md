@@ -35,7 +35,7 @@ One project can have multiple apps running. This is convenient to group your bac
 ### 4. Add a PostgreSQL database
 * Click on add a **PostgreSQL** database.
 * Select the version
-* Give a name to your PostgreSQL databse.
+* Give a name to your PostgreSQL database.
 * Click on **next**.
 
 ### 5. Add a storage
@@ -90,7 +90,6 @@ Alternatively, you can deploy your Strapi application with a PostgreSQL database
 
 ### 3. Add a Dockerfile (optional)
 
-By default, Qovery uses Buildpacks to build and run your Strapi application. But it is also possible to build and run your application by providing a `Dockerfile` (see [Quovery documentation](https://docs.qovery.com/docs/using-qovery/configuration/applications/#application-build) for more information).
 
 ### 4. Deploy
 

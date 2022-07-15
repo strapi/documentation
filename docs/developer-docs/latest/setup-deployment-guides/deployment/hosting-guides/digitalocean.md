@@ -38,7 +38,7 @@ Choose these options:
   ::: tip
   The \$5/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$10/mo** or larger instance is needed.
   :::
-- Choose a `datacenter` region nearest your audience, for example, `New York`.
+- Choose a `data center` region nearest your audience, for example, `New York`.
 - **OPTIONAL:** Select additional options, for example, `[x] IPv6`.
 - Add your SSH key
   ::: tip

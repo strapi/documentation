@@ -29,7 +29,7 @@ Managing a content-type or component can include editing the general settings an
   - Click on the delete button ![Delete icon](../assets/icons/delete.svg) to delete a field
 
 ::: caution
-Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
+Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application any more.
 :::
 
 
