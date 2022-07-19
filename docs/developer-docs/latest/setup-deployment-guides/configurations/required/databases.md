@@ -50,7 +50,7 @@ The `connection.connection` object found in `./config/database.js` is used to pa
 The `connection.pool` object optionally found in `./config/database.js` is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
 ::: caution
-If you are using Docker, you will need to change the pool `min` value to `0` as Docker will kill any idle connections making it impossible to keep any open connections to the database. See [Tarn.js's pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information.
+When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see [Tarn.js's pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
 :::
 
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
