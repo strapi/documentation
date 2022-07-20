@@ -124,7 +124,7 @@ In the top menu, click on `Services` and do a search for `rds`, click on `RDS, M
 
 #### 2. Select your region
 
-In the top menu bar, select the region that is the same as the EC2 instance, e.g. `EU (Paris)` or `US East (N. Virginia)`.
+In the top menu bar, select the region that is the same as the EC2 instance, e.g. `EU (Paris)` or `US East (N. Virgina)`.
 
 #### 3. Create the database
 
@@ -159,7 +159,7 @@ In the top menu, click on `Services` and do a search for `s3`, click on `Scalabl
 Click on the blue `Create bucket` button:
 
 - Give your bucket a unique name, under **Bucket name**, e.g. `my-project-name-images`.
-- Select the most appropriate region, under **Region**, e.g. `EU (Paris)` or `US East (N. Virginia)`.
+- Select the most appropriate region, under **Region**, e.g. `EU (Paris)` or `US East (N. Virgina)`.
 - Click `Next`.
 - Configure any appropriate options for your project in the **Configure Options** page, and click `next`.
 - Under **Block public access**:

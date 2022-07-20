@@ -38,7 +38,7 @@ npm install sqreen
 
 ::::
 
-## Start your application programmatically
+## Start your application programmaticaly
 
 We will have to require the Sqreen node_module in the file we use to start Strapi.
 

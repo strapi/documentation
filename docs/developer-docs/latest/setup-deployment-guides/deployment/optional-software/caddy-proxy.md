@@ -18,7 +18,7 @@ The below configuration is based on "Caddy File" type, this is a single file con
 
 ### Caddy file
 
-The Caddyfile is a convenient Caddy configuration format for humans. It is most people's favourite way to use Caddy because it is easy to write, easy to understand, and expressive enough for most use cases.
+The Caddyfile is a convenient Caddy configuration format for humans. It is most people's favorite way to use Caddy because it is easy to write, easy to understand, and expressive enough for most use cases.
 
 In the below examples you will need to replace your domain, and should you wish to use SSL you will need to tweak these Caddy file configs to suit your needs, SSL is not covered in this guide and you should review the Caddy documentation.
 

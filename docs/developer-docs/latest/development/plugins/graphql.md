@@ -607,7 +607,7 @@ module.exports = {
       restaurants: {
         description: 'Return a list of restaurants', // Add a description to the query.
         deprecated:
-          'This query should not be used any more. Please consider using restaurantsByChef instead.',
+          'This query should not be used anymore. Please consider using restaurantsByChef instead.',
       },
       restaurantsByChef: {
         description: 'Return the restaurants open by the chef',
@@ -680,6 +680,7 @@ module.exports = {
       lastname: 'The lastname of the person',
       age: {
         description: 'The age of the person',
+        deprecated: 'We are not using the age anymore, we can find it thanks to our powerful AI'
       },
       children: 'The children of the person'
     }
@@ -732,6 +733,7 @@ One of the most powerful features of GraphQL is the auto-documentation of the sc
     "name": {
       "type": "string",
       "description": "The name of the restaurant",
+      "deprecated": "We are not using the name anymore, it is auto-generated thanks to our powerful AI"
     },
     "description": {
       "type": "text",
@@ -760,7 +762,7 @@ module.exports = {
       restaurants: {
         description: 'Return a list of restaurants', // Add a description to the query.
         deprecated:
-          'This query should not be used any more. Please consider using restaurantsByChef instead.', // Deprecate the query and explain the reason why.
+          'This query should not be used anymore. Please consider using restaurantsByChef instead.', // Deprecate the query and explain the reason why.
       },
     },
     Mutation: {
@@ -950,6 +952,7 @@ module.exports = {
   type: {
     Restaurant: {
       name: false, // The Restaurant's name won't be "queryable" or "mutable".
+    }
   },
   resolver: {
     Query: {

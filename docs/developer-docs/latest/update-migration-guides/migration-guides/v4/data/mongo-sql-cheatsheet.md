@@ -1,5 +1,5 @@
 ---
-title: MongoDB vs. SQL cheat sheet for Strapi v3 - Strapi Developer Docs
+title: MongoDB vs. SQL cheatsheet for Strapi v3 - Strapi Developer Docs
 description: Learn how MongoDB and SQL implementations differ in Strapi v3
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html
 ---

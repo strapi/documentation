@@ -1,7 +1,7 @@
 ---
 title: Code migration - GraphQL resolvers - Strapi Developer Docs
 description: Migrate GraphQL resolvers from Strapi v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl: http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html
+canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html
 sidebarDepth: 3
 ---
 
@@ -149,7 +149,7 @@ module.exports = {
 
 ::: note NOTES
 
-- In Strapi v4, REST controllers and GraphQL resolvers are not coupled any more. The business logic is implemented in services and called either from the controller or the resolver. This approach keeps the business logic in one place so both REST and GraphQL can be customized the way you want.
+* In Strapi v4, REST controllers and GraphQL resolvers are not coupled anymore. The business logic is implemented in services and called either from the controller or the resolver. This approach keeps the business logic in one place so both REST and GraphQL can be customized the way you want.
 
 * In Strapi v4, it’s not recommended to reference a REST controller directly from the GraphQL resolver. However, you can still call it programmatically from the resolver definition.
 :::
@@ -234,7 +234,7 @@ The service that Strapi provides to perform queries is called the [Entity Servic
 
 **Strapi v3**:
 
-Strapi v3 offers 2 ways of replacing the behaviour of a query or mutation resolver: have the resolver point to a REST controller, or create a new custom GraphQL resolver then associate the resolver to an existing query or mutation.
+Strapi v3 offers 2 ways of replacing the behavior of a query or mutation resolver: have the resolver point to a REST controller, or create a new custom GraphQL resolver then associate the resolver to an existing query or mutation.
 
   ::: details Example of a Strapi v3 resolver pointing to a REST controller
 
@@ -400,7 +400,7 @@ module.exports = {
 ```
 
 ::: note
-Strapi v4 policies are not inherited from controllers any more since the resolvers are standalone.
+Strapi v4 policies are not inherited from controllers anymore since the resolvers are stand-alones.
 :::
 
 ## Adding middlewares

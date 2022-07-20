@@ -258,7 +258,7 @@ For the networking configuration you will want to leave the following as default
 - Accelerated networking
 - Load Balancing (off/no)
 
-However for the NIC network security group we will want to select `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
+However for the NIC network security group we will want to slect `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
 
 - SSH (TCP/22) - Already on be default
 - HTTPS (Any/443)

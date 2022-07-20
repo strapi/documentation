@@ -10,7 +10,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 The database layer of Strapi has been fully rewritten in Strapi v4. This documentation is designed to highlight the breaking changes introduced in Strapi v4 that impact SQL databases, by comparing v3 and v4 table and column names, data structures and relations. Changes can be [global](#global-changes) (impacting any table) or more limited in scope, impacting only [specific tables](#changes-impacting-strapi-built-in-tables) or some [Strapi plugins](#changes-impacting-strapi-plugins).
 
 ::: strapi Relations in Strapi v3 vs. v4
-The [v3 vs. v4 SQL relations cheat sheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md) is designed to help you understand the differences in model schemas and entity relationship diagrams between Strapi v3 and Strapi v4.
+The [v3 vs. v4 SQL relations cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md) is designed to help you understand the differences in model schemas and entity relationship diagrams between Strapi v3 and Strapi v4.
 :::
 
 ::: callout 🚧  Migration scripts

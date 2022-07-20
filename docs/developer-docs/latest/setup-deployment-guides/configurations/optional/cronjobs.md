@@ -1,6 +1,6 @@
 ---
 title: Cron jobs - Strapi Developer Docs
-description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
+description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reccurence rules.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html
 ---
 
@@ -58,15 +58,15 @@ module.exports = {
 };
 ```
 
-If the cron job requires running on a specific time zone:
+If the cron job requires running on a specific timezone:
 
 ```js
 // path: ./config/cron-tasks.js
 module.exports = {
    /**
-   * Cron job with time zone example.
-   * Every Monday at 1am for Asia/Dhaka time zone.
-   * List of valid time zones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+   * Cron job with timezone example.
+   * Every Monday at 1am for Asia/Dhaka timezone.
+   * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
   

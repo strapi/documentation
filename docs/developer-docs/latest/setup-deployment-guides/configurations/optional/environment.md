@@ -63,7 +63,7 @@ module.exports = ({ env }) => ({
 
 ### Casting environment variables
 
-The `env()` utility can be used to cast environment variables to different types:
+The `env()` utility can be used to cast environment varibles to different types:
 
 ```js
 // Returns the env if defined without casting it

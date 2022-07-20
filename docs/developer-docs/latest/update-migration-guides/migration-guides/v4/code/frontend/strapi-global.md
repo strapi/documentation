@@ -11,7 +11,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 ::: strapi v3/v4 comparison
 In Strapi v3,  a `window.strapi` global variable is used to display notifications, freeze user interactions when requests are pending, and get the backend URL.
 
-In Strapi v4, `strapi.notification`, `strapi.lockApp` and `strapi.unlockApp` are not supported any more and replaced by specific React hooks. Calls to `strapi.backendUrl` are still supported.
+In Strapi v4, `strapi.notification`, `strapi.lockApp` and `strapi.unlockApp` are not supported anymore and replaced by specific React hooks. Calls to `strapi.backendUrl` are still supported.
 :::
 
 To migrate to Strapi v4:

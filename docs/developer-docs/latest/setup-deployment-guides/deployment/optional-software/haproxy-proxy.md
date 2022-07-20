@@ -162,7 +162,7 @@ frontend example.com
 
 backend default-backend
         # HAProxy -cannot- serve static content on it's own
-        # This example is relaying traffic to some other backend web server
+        # This example is relaying traffic to some other backend webserver
         server somewebserver 127.0.0.1:8080
 
 backend strapi-backend
