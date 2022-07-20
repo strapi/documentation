@@ -30,6 +30,7 @@ The following operators are available:
 | Operator        | Description                              |
 | --------------- | ---------------------------------------- |
 | `$eq`           | Equal                                    |
+| `$eqi`          | Equal(case-sensitive)                    |
 | `$ne`           | Not equal                                |
 | `$lt`           | Less than                                |
 | `$lte`          | Less than or equal to                    |
