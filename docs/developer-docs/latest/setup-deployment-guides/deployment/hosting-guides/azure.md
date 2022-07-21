@@ -178,7 +178,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
 
 ### Deploy with an Azure Resource Manager template
 
-To deploy using an Azure Resource Manager template, use the botton below, or upload [this template](https://gist.githubusercontent.com/aaronpowell/f216f119ffe5ed52945b46d0bb55569b/raw/2490a9295ea25c905096dbaae57da6ef8edb0e43/azuredeploy.json) as a custom deployment in Azure.
+To deploy using an Azure Resource Manager template, use the bottom below, or upload [this template](https://gist.githubusercontent.com/aaronpowell/f216f119ffe5ed52945b46d0bb55569b/raw/2490a9295ea25c905096dbaae57da6ef8edb0e43/azuredeploy.json) as a custom deployment in Azure.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgist.githubusercontent.com%2Faaronpowell%2Ff216f119ffe5ed52945b46d0bb55569b%2Fraw%2F2490a9295ea25c905096dbaae57da6ef8edb0e43%2Fazuredeploy.json)
 
@@ -258,7 +258,7 @@ For the networking configuration you will want to leave the following as default
 - Accelerated networking
 - Load Balancing (off/no)
 
-However for the NIC network security group we will want to slect `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
+However for the NIC network security group we will want to select `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
 
 - SSH (TCP/22) - Already on be default
 - HTTPS (Any/443)

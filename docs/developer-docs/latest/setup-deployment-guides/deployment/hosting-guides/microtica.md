@@ -23,7 +23,7 @@ Microtica's pre-made Strapi template will create a new environment and automatic
 
 * **VPC** – VPC, subnets and networking.
 * **AppRunner** – Container infrastructure based on Fargate and application load balancer. This component will run the Strapi project.
-* **StrapiInfra** – Persistent storage, relational databased and S3 storage.
+* **StrapiInfra** – Persistent storage, relational database and S3 storage.
 * (_optional_) **StrapiApp** – Component for your existing Strapi project. If not provided, a standalone Strapi development environment is created.
 
 ### Persistent Storage

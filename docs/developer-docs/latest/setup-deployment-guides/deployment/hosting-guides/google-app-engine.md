@@ -11,7 +11,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 In this guide we are going to:
 
 - Create a new Strapi project
-- Configure PostgreSQL for the production enviroment
+- Configure PostgreSQL for the production environment
 - Deploy the app to Google App Engine
 - Add the [Google Cloud Storage file uploading plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage) by [@Lith](https://github.com/Lith)
 
