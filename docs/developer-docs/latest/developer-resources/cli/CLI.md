@@ -250,7 +250,7 @@ strapi content-types:generate-types
 ```
 
 :::note
-The `strapi content-types:generate-types` command only works in TypeScript-enabled projects. See the [TypeScript](/developer-docs/latest/development/typescript.md) documentation for more information.
+The `strapi content-types:generate-types` command only works in [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects.
 :::
 
 ## strapi routes:list
