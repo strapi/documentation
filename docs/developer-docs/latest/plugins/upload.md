@@ -45,7 +45,12 @@ module.exports = ({ env })=>({
 
 ### Max file size
 
-Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB.
+Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB in addition to provider options passed to the upload plugin for sizeLimit.
+
+:::caution
+You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes.<br>
+(e.g. [Nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) has a config setting called `client_max_body_size` that will need to be adjusted since it's default is only 1mb.)
+:::
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
@@ -63,12 +68,29 @@ module.exports = {
       jsonLimit: "256mb", // modify JSON body
       textLimit: "256mb", // modify text body
       formidable: {
-        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
       },
     },
   },
   // ...
 };
+```
+
+In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the `providerOptions` of the [plugin configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) in `./config/plugins.js`:
+
+```js
+// path: ./config/plugins.js
+
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      providerOptions: {
+        sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+      }
+    }
+  }
+}
 ```
 
 ### Responsive images
