@@ -243,15 +243,20 @@ strapi templates:generate <path>
 
 ## strapi ts:generate-types
 
-Generate TypeScript typings for the project schemas.
+Generate [TypeScript](/developer-docs/latest/development/typescript.md) typings for the project schemas.
 
 ```sh
 strapi ts:generate-types
 ```
 
-:::note
-The `strapi ts:generate-types` command only works in [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects.
-:::
+* **strapi ts:generate-types --verbose**
+  Generate typings with the verbose mode enabled, displaing a detailed table of the generated schemas (but not the exact definitions).
+* **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**
+  Generate typings with the silent mode enabled, completely removing all the logs in the terminal.
+* **strapi ts:generate-types --out-dir <path>** or **strapi ts:generate-types -o <path>**
+  Generate typings specifying the out directory in which the file will be created.
+* **strapi ts:generate-types --file <filename>** or **strapi ts:generate-types -f <filename>**
+  Generate typings specifiying the name of the file to contain the types declarations.
 
 ## strapi routes:list
 
