@@ -241,16 +241,16 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## strapi content-types:generate-types
+## strapi ts:generate-types
 
 Generate TypeScript typings for the project schemas.
 
 ```sh
-strapi content-types:generate-types
+strapi ts:generate-types
 ```
 
 :::note
-The `strapi content-types:generate-types` command only works in [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects.
+The `strapi ts:generate-types` command only works in [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects.
 :::
 
 ## strapi routes:list
