@@ -235,7 +235,7 @@ This same process may be used to replace the login logo `AuthLogo` and menu logo
 1. Create an extensions folder at:
 `src/admin/extensions/`
 
-2. Upload your favicon into:
+2. Upload your favicon into `src/admin/extensions/`.
 `src/admin/extensions/`
 
 3. Replace the **favicon.ico** at:
