@@ -69,7 +69,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 
 ## Generate typings for project schemas
 
-To generate typings for your project schemas use the Strapi CLI and the command `ts:generate-types`. The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns the project type definitions in the terminal.
+To generate typings for your project schemas use the [`ts:generate-types` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns the project type definitions in the terminal.
 
 To use `ts:generate-types`run the following code in a terminal at the project root:
 
