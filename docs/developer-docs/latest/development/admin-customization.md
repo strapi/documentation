@@ -232,7 +232,7 @@ Replacing the Strapi favicon with a custom favicon.
 This same process may be used to replace the login logo `AuthLogo` and menu logo with `MenuLogo`. For more details, please visit Strapi [#logos](#)
 :::
 
-1. Create an extensions folder at:
+1. (_optional_) Create a `./src/admin/extensions/` folder if the folder does not already exist.
 
 2. Upload your favicon into `src/admin/extensions/`.
 `src/admin/extensions/`
