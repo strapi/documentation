@@ -229,7 +229,7 @@ Note also that the main navigation logo uploaded via the admin panel supersedes 
 
 Replacing the Strapi favicon with a custom favicon.
 :::tip
-This same process may be used to replace the login logo `AuthLogo` and menu logo with `MenuLogo`. For more details, please visit Strapi [logos subsection](#configuration-options)
+This same process may be used to replace the login logo `AuthLogo` and menu logo with `MenuLogo`. For more details, please visit Strapi [logos subsection](#logos)
 :::
 
 1. (_optional_) Create a `./src/admin/extensions/` folder if the folder does not already exist.
@@ -243,15 +243,14 @@ import favicon from './extensions/favicon.png';
 
 export default {
   config: {
-         // replace favicon with custom icon
+         // replace favicon with a custom icon
          head: {
                 favicon: favicon,
         },
   }
 }
 ```
-5. Rebuild, run & revisit your Strapi app
- `yarn build && yarn develop`
+5. Rebuild, launch and revisit your Strapi app `yarn build && yarn develop`
 
 :::note
 Be certain that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN
