@@ -20,7 +20,7 @@ The Query Engine is available through `strapi.db.query`:
 strapi.db.query('api::blog.article').findMany({ // uid syntax: 'api::api-name.content-type-name'
   where: {
     title: {
-      $startWith: '2021',
+      $startsWith: '2021',
       $endsWith: 'v4',
     },
   },
