@@ -250,7 +250,7 @@ strapi ts:generate-types
 ```
 
 * **strapi ts:generate-types --verbose**<br/>
-  Generate typings with the verbose mode enabled, displaing a detailed table of the generated schemas (but not the exact definitions).
+  Generate typings with the verbose mode enabled, displaying a detailed table of the generated schemas.
 * **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
   Generate typings with the silent mode enabled, completely removing all the logs in the terminal.
 * **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
