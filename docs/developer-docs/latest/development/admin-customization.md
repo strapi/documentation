@@ -250,7 +250,7 @@ export default {
   }
 }
 ```
-5. Rebuild, launch and revisit your Strapi app `yarn build && yarn develop`
+5. Rebuild, launch and revisit your Strapi app `yarn build && yarn develop`.
 
 :::note
 Be certain that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN
