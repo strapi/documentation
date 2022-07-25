@@ -11,7 +11,8 @@ Folders in the Media Library help you organize uploaded assets. Folders sit at t
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
 ::: note
-Folders are not displayed in the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+* Folders are not displayed in the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+* Folders follow the permission system of assets (see [Users, Roles & Permissions](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md)). You can't define specific permissions for a folder.
 :::
 
 ## Browsing folders
