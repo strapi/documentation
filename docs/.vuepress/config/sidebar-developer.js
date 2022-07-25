@@ -227,6 +227,7 @@ const developer = [
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       ['/developer-docs/latest/development/typescript.md', 'TypeScript'],
+      ['/developer-docs/latest/development/providers.md', 'Providers'],
     ],
   },
   {
@@ -245,10 +246,12 @@ const developer = [
             path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
             collapsable: true,
             initialOpenGroupIndex: -1,
-            // sidebarDepth: 3,
+            sidebarDepth: 3,
             children: [
+              ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html', 'API endpoints'],
               {
-                title: 'API Parameters',
+                title: 'API parameters',
+                path: '/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html',
                 collapsable: true,
                 initialOpenGroupIndex: -1,
                 children: [
@@ -266,10 +269,6 @@ const developer = [
                   ],
                 ]
               },
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
-                'API Endpoints'
-              ]
             ],
           },
           [
@@ -430,6 +429,7 @@ const developer = [
       ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
       ['/developer-docs/latest/plugins/email', 'Email'],
       ['/developer-docs/latest/plugins/upload', 'Upload'],
+      ['/developer-docs/latest/plugins/sentry', 'Sentry'],
       ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
     ],
     sidebarDepth: 1,

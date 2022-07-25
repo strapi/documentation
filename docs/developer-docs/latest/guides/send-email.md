@@ -18,7 +18,7 @@ What we want here is to add some custom logic and call the email service when a 
 
 To be able to do that, you have first to understand some concepts.
 
-When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
 
 Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content-type is created.
 

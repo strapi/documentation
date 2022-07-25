@@ -6,15 +6,55 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
 
 # Upload
 
-The `Upload` plugin is used to implement the Media Library available in the admin panel. With it you can upload any kind of file on your server or external providers such as **AWS S3**.
+The Upload plugin is the backend powering the Media Library plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
+
+By default Strapi provides a [provider](../development/providers.md) that uploads files to a local directory. Additional providers are available should you want to upload your files to another location.
+
+The providers maintained by Strapi include:
+
+- [Amazon S3](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3)
+- [Cloudinary](https://www.npmjs.com/package/@strapi/provider-upload-cloudinary)
+- [Local](https://www.npmjs.com/package/@strapi/provider-upload-local)
+- [Rackspace](https://www.npmjs.com/package/@strapi/provider-upload-rackspace)
 
 ## Configuration
 
-Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of **200MB**.
+This section details configuration options for the default upload provider. If using another provider (e.g. AWS S3 or Rackspace), see the available configuration parameters in that provider's documentation.
+
+### Local server
+
+By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for [koa-static](https://github.com/koajs/static).
+
+You can provide them by creating or editing the `./config/plugins.js` file. The following example sets the `max-age` header.
+
+```js
+// path: ./config/plugins.js
+
+module.exports = ({ env })=>({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+    },
+  },
+});
+```
+
+### Max file size
+
+Currently the Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB in addition to provider options passed to the upload plugin for sizeLimit.
+
+:::caution
+You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes.<br>
+(e.g. [Nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) has a config setting called `client_max_body_size` that will need to be adjusted since it's default is only 1mb.)
+:::
 
 The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
 
-You can pass configuration to the middleware directly by setting it in the `body` middleware configuration in `./config/middlewares.js`:
+You can pass configuration to the middleware directly by setting it in the [`body` middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#body) configuration in `./config/middlewares.js`:
 
 <code-group>
 
@@ -32,7 +72,7 @@ module.exports = {
       jsonLimit: "256mb", // modify JSON body
       textLimit: "256mb", // modify text body
       formidable: {
-        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
       },
     },
   },
@@ -169,11 +209,13 @@ export default ({ env }) => ({
 
 </div>
 
-## Upload files
+## Examples
 
-To upload files to your application.
+### Upload files
 
-### Parameters
+Upload one or more files to your application.
+
+The following parameters are accepted:
 
 - `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
 
@@ -213,15 +255,13 @@ import fetch, { blobFrom } from 'node-fetch';
 const file = await blobFrom('./1.png', 'image/png');
 const form = new FormData();
 
-form.append('files', file, "iamge.png");
+form.append('files', file, "1.png");
 
 const response = await fetch('http://localhost:1337/api/upload', {
   method: 'post',
   body: form,
 });
 
-console.log(await response.json());
-});
 ```
 
 </code-block>
@@ -232,22 +272,22 @@ console.log(await response.json());
 You have to send FormData in your request body.
 :::
 
-## Upload files related to an entry
+### Upload entry files
 
-To upload files that will be linked to a specific entry.
+Upload one or more files that will be linked to a specific entry.
 
-### Request parameters
+The following parameters are accepted:
 
-- `files`: The file(s) to upload. The value(s) can be a Buffer or Stream.
-- `path` (optional): The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3).
-- `refId`: The ID of the entry which the file(s) will be linked to.
-- `ref`: The unique ID (uid) of the model which the file(s) will be linked to (see more below).
-- `source` (optional): The name of the plugin where the model is located.
-- `field`: The field of the entry which the file(s) will be precisely linked to.
+| Parameter | Description |
+| --------- | ----------- |
+|`files`    | The file(s) to upload. The value(s) can be a Buffer or Stream. |
+|`path` (optional) | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
+| `refId` | The ID of the entry which the file(s) will be linked to. |
+| `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
+| `source` (optional) | The name of the plugin where the model is located. |
+| `field` | The field of the entry which the file(s) will be precisely linked to. |
 
-### Examples
-
-The `Restaurant` model attributes:
+For example, given the `Restaurant` model attributes:
 
 ```json
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
@@ -267,7 +307,7 @@ The `Restaurant` model attributes:
 }
 ```
 
-Code
+The corresponding code would be:
 
 ```html
 <form>
@@ -297,13 +337,11 @@ Code
 You have to send FormData in your request body.
 :::
 
-## Upload file during entry creation
+### Upload files at entry creation
 
 You can also add files during your entry creation.
 
-### Examples
-
-The `Restaurant` model attributes:
+For example, given the `Restaurant` model attributes:
 
 ```json
 // path: ./src/api/restaurant/content-types/restaurant/schema.json
@@ -321,10 +359,9 @@ The `Restaurant` model attributes:
   }
   // ...
 }
-
 ```
 
-Code
+The corresponding code would be:
 
 ```html
 <form>
@@ -364,18 +401,17 @@ Code
 </script>
 ```
 
-Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files, need to be prefixed with `files` (example with a cover attribute: `files.cover`).
+Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files need to be prefixed with `files` (e.g. for a cover attribute: `files.cover`).
 
 ::: tip
-If you want to upload files for a component, you will have to specify the index of the item you want to add the file to.
-Example `files.my_component_name[the_index].attribute_name`
+If you want to upload files for a component, you will have to specify the index of the item you want to add the file to: `files.my_component_name[the_index].attribute_name`
 :::
 
 :::caution
 You have to send FormData in your request body.
 :::
 
-## Models definition
+### Models definition
 
 Adding a file attribute to a model (or the model of another plugin) is like adding a new association.
 

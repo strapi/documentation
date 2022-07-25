@@ -13,8 +13,8 @@ The database layer of Strapi has been fully rewritten in Strapi v4. This documen
 The [v3 vs. v4 SQL relations cheatsheet](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md) is designed to help you understand the differences in model schemas and entity relationship diagrams between Strapi v3 and Strapi v4.
 :::
 
-::: callout 🚧 Upcoming migration scripts
-Scripts will be available soon to automate the migration of a SQL database from Strapi v3 to Strapi v4.
+::: callout 🚧  Migration scripts
+[Data migration scripts](https://github.com/strapi/migration-scripts) are currently in alpha/beta testing. Please feel free to share feedback in [the dedicated forum thread](https://forum.strapi.io/t/strapi-v4-migration-scripts-are-live-for-testing/18266).
 :::
 
 ## Global changes

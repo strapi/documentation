@@ -33,7 +33,7 @@ To manually create a service, export a factory function that returns the service
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
-  // Method 1: Creating an entirely custom service
+  // Method 1: Creating an entirely new custom service
   async exampleService(...args) {
     let response = { okay: true }
 

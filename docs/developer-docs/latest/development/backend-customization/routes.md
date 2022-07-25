@@ -25,7 +25,7 @@ There are 2 different router file structures, depending on the use case:
 
 ### Configuring core routers
 
-Core routers (i.e. `find`, `findOne`, `create`, `update`, and `delete`) correspond to [default routes](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) automatically created by Strapi when a new [content-type](/developer-docs/latest/development/backend-customization/models.md#model-creation) is created.
+Core routers (i.e. `find`, `findOne`, `create`, `update`, and `delete`) correspond to [default routes](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) automatically created by Strapi when a new [content-type](/developer-docs/latest/development/backend-customization/models.md#model-creation) is created.
 
 Strapi provides a `createCoreRouter` factory function that automatically generates the core routers and allows:
 

@@ -697,4 +697,4 @@ There are many different types of proxy services you could use, anything from lo
 
 #### 3. File upload providers
 
-There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/plugins/upload.md#create-providers) on searching for options as well as installing them.
+There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/development/providers.md) on searching for options as well as installing them.

@@ -21,13 +21,13 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 ### `connection` configuration object
 
-| Parameter                                                | Description                                                                                 | Type      | Default |
-|----------------------------------------------------------|---------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                | `String`  | -       |
-| `connection`                                             | Database [connection information](#connection-parameters)                                   | `Object`  | -       |
-| `debug`                                                  | Show database exchanges and errors.                                                         | `Boolean` | `false` |
-| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                               | `Boolean` | `true`  |
-| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                       | `Object`  | -       |
+| Parameter                                                | Description                                                                                           | Type      | Default |
+|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
+| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
+| `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
+| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
 | `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 #### Connection parameters
@@ -49,16 +49,20 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
+::: caution
+When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see [Tarn.js's pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
+:::
+
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
 |-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
-| `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `0`     |
+| `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `2`     |
 | `max`                       | Maximum number of database connections to keepalive                                                                                                                                        | `Integer`  | `10`    |
-| `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                                 | `Integer`  | -       |
-| `createTimeoutMillis`       | Time in milliseconds before timing out a create query attempt                                                                                                                                        | `Integer`  | -       |
-| `destroyTimeoutMillis`      | Time in milliseconds before timing out a destroy query attempt                                                                                                                                       | `Integer`  | -       |
-| `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                                  | `Integer`  | -       |
-| `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                               | `Integer`  | -       |
-| `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                                   | `Integer`  | -       |
+| `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                       | `Integer`  | `60000` |
+| `createTimeoutMillis`       | Time in milliseconds before timing out a create query attempt                                                                                                                              | `Integer`  | `30000` |
+| `destroyTimeoutMillis`      | Time in milliseconds before timing out a destroy query attempt                                                                                                                             | `Integer`  | `5000`  |
+| `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                        | `Integer`  | `30000` |
+| `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                     | `Integer`  | `1000`  |
+| `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                         | `Integer`  | `200`   |
 | `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
 
 ### `settings` configuration object

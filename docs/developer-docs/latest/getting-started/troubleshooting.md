@@ -53,6 +53,10 @@ If you used `--quickstart` to create your Strapi project, by default this uses t
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
+## Can Strapi be run in serverless environments?
+
+Strapi is not well suited for serverless environments due to how the application is structured. Several actions happen while Strapi is booting that can take several seconds. Serverless deployment usually requires an application to cold boot very quickly. Strapi is designed to run as an always-on service, and we don't plan to decrease the cold boot time for the foreseeable future. Therefore, running Strapi in serverless environments is not a great experience, as every request will take seconds to respond to instead of milliseconds. Choosing between a cold boot or a warm boot is an architectural decision that many software developers need to take from a very early stage, so please consider this when choosing to use Strapi.
+
 ## Can I store my Content Manager layout configurations in the model settings?
 
 Currently Strapi does not support this, a `config:dump` and `config:restore` command has been added to make migration of these settings easier when moving between different deployments and environments.
