@@ -234,7 +234,7 @@ This same process may be used to replace the login logo `AuthLogo` and menu logo
 
 1. (_optional_) Create a `./src/admin/extensions/` folder if the folder does not already exist.
 2. Upload your favicon into `src/admin/extensions/`.
-3. Replace the **favicon.ico** at`Strapi app root` with custom favicon.ico
+3. Replace the **favicon.ico** at`Strapi app root` with custom favicon.ico.
 4. Update your `src/admin/app.js` with the following:
 ```js
 // path: src/admin/app.js
