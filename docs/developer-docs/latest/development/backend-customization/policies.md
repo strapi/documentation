@@ -24,6 +24,7 @@ A new policy can be implemented:
   - `./src/plugins/[plugin-name]/policies/` for plugin policies
 
 <br/>
+
 Global policy implementation example:
 
 <code-group>
