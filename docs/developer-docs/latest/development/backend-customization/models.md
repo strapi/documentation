@@ -34,6 +34,10 @@ The content-types has the following models files:
 
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
+:::note
+In [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects schema typings can be generated using the `ts:generate-types` command.
+:::
+
 ### Components
 
 Component models can't be created with CLI tools. Use the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.

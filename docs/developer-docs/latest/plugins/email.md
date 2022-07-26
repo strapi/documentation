@@ -123,6 +123,7 @@ When using community providers, pass the full package name to the `provider` key
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
 **Path —** ``.
+
 <code-group>
 
 <code-block title="JAVASCRIPT">
@@ -177,8 +178,6 @@ export default = ({ env }) => ({
 </code-block>
 
 </code-group>
-
-
 
 ::: tip
 If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
