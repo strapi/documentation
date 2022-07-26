@@ -88,6 +88,10 @@ Available options:
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -103,6 +107,31 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</code-block>
+
+</code-group>
+
 
 :::warning
 Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
@@ -194,13 +223,37 @@ Before setting up a provider, you need to specify the absolute url of your backe
 
 **example -** `config/server.js`
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
+//path: config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: env('', 'http://localhost:1337'),
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+//path: config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('', 'http://localhost:1337'),
+});
+```
+</code-block>
+
+</code-group>
+
 
 :::tip
 Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommand to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
@@ -995,13 +1048,35 @@ JWT tokens can be verified and trusted because the information is digitally sign
 
 By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
 
-**Path -** `./extensions/users-permissions/config/jwt.js`.
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+//path: ./extensions/users-permissions/config/jwt.js
+
 module.exports = {
   jwtSecret: process.env.SOME_ENV_VAR,
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+//path: ./extensions/users-permissions/config/jwt.ts
+
+export default {
+  jwtSecret: process.env.SOME_ENV_VAR,
+};
+```
+
+</code-block>
+
+</code-group>
+
 
 ::: tip
 You can learn more on configuration in the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md).

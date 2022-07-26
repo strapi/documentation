@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. 
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 
 ::: note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
@@ -222,7 +222,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/latest/development/backend-customization/controllers.md), [content-types](/developer-docs/latest/development/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#creating-a-plugin), [policies](/developer-docs/latest/development/backend-customization/policies.md), [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) and [services](/developer-docs/latest/development/backend-customization/services.md).
+Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/latest/development/backend-customization/controllers.md), [content-types](/developer-docs/latest/development/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#create-a-plugin), [policies](/developer-docs/latest/development/backend-customization/policies.md), [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) and [services](/developer-docs/latest/development/backend-customization/services.md).
 
 ```sh
 strapi generate
@@ -230,7 +230,7 @@ strapi generate
 
 ## strapi templates:generate
 
-Create a template from the current strapi project
+Create a template from the current Strapi project.
 
 ```bash
 strapi templates:generate <path>
@@ -240,6 +240,23 @@ strapi templates:generate <path>
   Generates a Strapi template at `<path>`
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+
+## strapi ts:generate-types
+
+Generate [TypeScript](/developer-docs/latest/development/typescript.md) typings for the project schemas.
+
+```sh
+strapi ts:generate-types
+```
+
+* **strapi ts:generate-types --verbose**<br/>
+  Generate typings with the verbose mode enabled, displaying a detailed table of the generated schemas.
+* **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
+  Generate typings with the silent mode enabled, completely removing all the logs in the terminal.
+* **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
+  Generate typings specifying the output directory in which the file will be created.
+* **strapi ts:generate-types --file &#60;filename&#62;** or **strapi ts:generate-types -f &#60;filename&#62;**<br/>
+  Generate typings specifiying the name of the file to contain the types declarations.
 
 ## strapi routes:list
 

@@ -54,6 +54,28 @@ const user = [
   },
   {
     collapsable: false,
+    title: 'Media Library',
+    children: [
+      [
+        '/user-docs/latest/media-library/introduction-to-media-library.md',
+        'Introduction to the Media Library'
+      ],
+      [
+        '/user-docs/latest/media-library/adding-assets.md',
+        'Adding assets'
+      ],
+      [
+        '/user-docs/latest/media-library/managing-assets.md',
+        'Managing individual assets'
+      ],
+      [
+        '/user-docs/latest/media-library/organizing-assets-with-folders.md',
+        'Organizing assets with folders'
+      ],
+    ]
+  },
+  {
+    collapsable: false,
     title: 'Users, Roles & Permissions',
     children: [
       [

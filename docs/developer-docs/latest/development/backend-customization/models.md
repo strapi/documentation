@@ -34,6 +34,10 @@ The content-types use the following files:
 
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
+:::note
+In [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
+:::
+
 ### Components
 
 Component models can't be created with CLI tools. Use the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md) or create them manually.
@@ -606,6 +610,9 @@ To configure a content-type lifecycle hook, create a `lifecycles.js` file in the
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // ./src/api/[api-name]/content-types/restaurant/lifecycles.js
 
@@ -624,6 +631,34 @@ module.exports = {
   },
 };
 ```
+
+
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// ./src/api/[api-name]/content-types/restaurant/lifecycles.ts
+
+export default {
+  beforeCreate(event) {
+    const { data, where, select, populate } = event.params;
+
+    // let's do a 20% discount everytime
+    event.params.data.price = event.params.data.price * 0.8;
+  },
+
+  afterCreate(event) {
+    const { result, params } = event;
+
+    // do something to the result;
+  },
+};
+```
+
+</code-block>
+</code-group>
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
