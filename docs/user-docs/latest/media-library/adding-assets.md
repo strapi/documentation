@@ -29,5 +29,4 @@ A variety of media types and extensions are supported by the Media Library:
 | Audio      | - MP3<br>- WAV<br>- OGG                                         |
 | File       | - CSV<br>- ZIP<br>- PDF<br>- XLS, XLSX<br>- JSON                |
 
-There currently is a bug preventing the use of the drag & drop feature on Firefox and Chrome. Our team is currently working on solving this issue.
 ::: -->
