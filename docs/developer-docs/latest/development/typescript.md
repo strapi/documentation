@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescrip
 
 # TypeScript development
 
-::: callout 🚧  TypeScript documentation
+::: callout 🚧  JavaScript to TypeScript migration
 This section is still a work in progress and will continue to be updated and improved. Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
