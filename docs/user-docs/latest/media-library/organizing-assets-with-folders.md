@@ -6,7 +6,7 @@ canonicalUrl: http://docs.strapi.io/user-docs/latest/media-library/organizing-as
 
 # Organizing assets with folders
 
-Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
 
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
