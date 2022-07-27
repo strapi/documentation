@@ -27,6 +27,10 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 
 You can provide them by creating or editing the `./config/plugins.js` file. The following example sets the `max-age` header.
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -42,6 +46,30 @@ module.exports = ({ env })=>({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.js
+
+export default ({ env }) => ({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+    },
+  },
+});
+```
+
+</code-block>
+
+</code-group>
 
 ### Max file size
 
@@ -96,7 +124,7 @@ export default {
       jsonLimit: "256mb", // modify JSON body
       textLimit: "256mb", // modify text body
       formidable: {
-        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
       },
     },
   },
@@ -108,6 +136,49 @@ export default {
 
 </code-group>
 
+In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the `providerOptions` of the [plugin configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) in `./config/plugins.js`:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./config/plugins.js
+
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      providerOptions: {
+        sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+      }
+    }
+  }
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.js
+
+export default {
+  // ...
+  upload: {
+    config: {
+      providerOptions: {
+        sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+      }
+    }
+  }
+};
+```
+
+</code-block>
+
+</code-group>
 
 ### Responsive Images
 
