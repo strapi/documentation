@@ -30,7 +30,7 @@ The following operators are available:
 | Operator        | Description                              |
 | --------------- | ---------------------------------------- |
 | `$eq`           | Equal                                    |
-| `$eqi`          | Equal(case-sensitive)                    |
+| `$eqi`          | Equal (case-insensitive)                 |
 | `$ne`           | Not equal                                |
 | `$lt`           | Less than                                |
 | `$lte`          | Less than or equal to                    |
@@ -38,10 +38,10 @@ The following operators are available:
 | `$gte`          | Greater than or equal to                 |
 | `$in`           | Included in an array                     |
 | `$notIn`        | Not included in an array                 |
-| `$contains`     | Contains (case-sensitive)                |
-| `$notContains`  | Does not contain (case-sensitive)        |
-| `$containsi`    | Contains                                 |
-| `$notContainsi` | Does not contain                         |
+| `$contains`     | Contains                                 |
+| `$notContains`  | Does not contain                         |
+| `$containsi`    | Contains (case-insensitive)              |
+| `$notContainsi` | Does not contain (case-insensitive)      |
 | `$null`         | Is null                                  |
 | `$notNull`      | Is not null                              |
 | `$between`      | Is between                               |

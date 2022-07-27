@@ -17,7 +17,7 @@ In the Content Manager, when the Internationalization plugin is installed, some 
   - ![World icon](../assets/icons/world.svg) indicates that the field can be translated,
   - ![Striked world icon](../assets/icons/world_striked.svg) indicates that the field cannot be translated: its content is the same for every locale (i.e. changing the value of a non-localizable field changes it for all other locales).
 
-The Internationalization plugin also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organised differently as well.
+The Internationalization plugin also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organized differently as well.
 
 ::: caution
 Content can only be managed one locale at the time. It is not possible to edit or publish content for several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).

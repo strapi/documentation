@@ -157,7 +157,7 @@ Other custom conditions can be available if they have been created beforehand fo
 To set custom conditions:
 
 1. Click on the **Settings** button of the permission already granted for the role.
-2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
+2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
    - Click on the arrow button ![Carret icon](../assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).

@@ -48,6 +48,59 @@ Plugins configuration are defined in the `config/plugins.js` file. This configur
 ::: caution
 The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
 :::
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./config/plugins.js
+
+module.exports = {
+  //
+  graphql: {
+    config: {
+      endpoint: '/graphql',
+      shadowCRUD: true,
+      playgroundAlways: false,
+      depthLimit: 7,
+      amountLimit: 100,
+      apolloServer: {
+        tracing: false,
+      },
+    },
+  },
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default {
+  //
+  graphql: {
+    config: {
+      endpoint: '/graphql',
+      shadowCRUD: true,
+      playgroundAlways: false,
+      depthLimit: 7,
+      amountLimit: 100,
+      apolloServer: {
+        tracing: false,
+      },
+    },
+  },
+};
+```
+
+</code-block>
+
+</code-group>
+
 ## Shadow CRUD
 
 To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definitions, queries, mutations and resolvers based on your models.
@@ -169,6 +222,10 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 ::: details Example of GraphQL customizations
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./src/index.js
 
@@ -231,6 +288,77 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./src/index.ts
+
+export default {
+  /**
+   * An asynchronous register function that runs before
+   * your application is initialized.
+   *
+   * This gives you an opportunity to extend code.
+   */
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+    
+    extensionService.shadowCRUD('api::restaurant.restaurant').disable();
+    extensionService.shadowCRUD('api::category.category').disableQueries();
+    extensionService.shadowCRUD('api::address.address').disableMutations();
+    extensionService.shadowCRUD('api::document.document').field('locked').disable();
+    extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
+    
+    const extension = ({ nexus }) => ({
+      // Nexus
+      types: [
+        nexus.objectType({
+          name: 'Book',
+          definition(t) {
+            t.string('title');
+          },
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          name: 'MyPlugin',
+          onAfterBuild(schema) {
+            console.log(schema);
+          },
+        }),
+      ],
+      // GraphQL SDL
+      typeDefs: `
+          type Article {
+              name: String
+          }
+      `,
+      resolvers: {
+        Query: {
+          address: {
+            resolve() {
+              return { value: { city: 'Montpellier' } };
+            },
+          },
+        },
+      },
+      resolversConfig: {
+        'Query.address': {
+          auth: false,
+        },
+      },
+    });
+    extensionService.use(extension);
+  },
+};
+```
+
+</code-block>
+
+</code-group>
 
 :::
 
@@ -320,6 +448,10 @@ The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/).
 
 ::: details Example:
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 
 // path: ./src/index.js
@@ -343,6 +475,38 @@ module.exports = {
   }
 }
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extension = ({ nexus }) => ({
+      types: [
+        nexus.objectType({
+          …
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          …
+        })
+      ]
+    })
+
+    strapi.plugin('graphql').service('extension').use(extension)
+  }
+}
+```
+
+</code-block>
+
+</code-group>
 
 :::
 ::::
@@ -377,6 +541,10 @@ To change how the authorization is configured, use the resolver configuration de
 * or with a `scope` attribute that accepts an array of strings to define the permissions required to authorize the request.
 
 ::: details Examples of authorization configuration
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -413,6 +581,49 @@ module.exports = {
 
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          /**
+           * Querying the Categories content-type
+           * bypasses the authorization system.
+           */ 
+          auth: false
+        },
+        'Query.restaurants': {
+          /**
+           * Querying the Restaurants content-type
+           * requires the find permission
+           * on the 'Address' content-type
+           * of the 'Address' API
+           */
+          auth: {
+            scope: ['api::address.address.find']
+          }
+        },
+      }
+    })
+  }
+}
+
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 ##### Policies
@@ -428,6 +639,10 @@ The `context` object gives access to:
 * Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
 
 ::: details Example of a custom GraphQL policy applied to a resolver
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -458,6 +673,43 @@ module.exports = {
 }
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          policies: [
+            (context, { strapi }) => {
+              console.log('hello', context.parent)
+              /**
+               * If 'categories' have a parent, the function returns true,
+               * so the request won't be blocked by the policy.
+               */ 
+              return context.parent !== undefined;
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 #### Middlewares
@@ -473,6 +725,10 @@ Middlewares with GraphQL can even act on nested resolvers, which offer a more gr
 :::
 
 :::details Examples of custom GraphQL middlewares applied to a resolver
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -528,6 +784,68 @@ module.exports = {
 }
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          middlewares: [
+            /**
+             * Basic middleware example #1
+             * Log resolving time in console
+             */
+            async (next, parent, args, context, info) => {
+              console.time('Resolving categories');
+              
+              // call the next resolver
+              const res = await next(parent, args, context, info);
+              
+              console.timeEnd('Resolving categories');
+
+              return res;
+            },
+            /**
+             * Basic middleware example #2
+             * Enable server-side shared caching
+             */
+            async (next, parent, args, context, info) => {
+              info.cacheControl.setCacheHint({ maxAge: 60, scope: "PUBLIC" });
+              return next(parent, args, context, info);
+            },
+            /**
+             * Basic middleware example #3
+             * change the 'name' attribute of parent with id 1 to 'foobar'
+             */
+            (resolve, parent, ...rest) => {
+              if (parent.id === 1) {
+                return resolve({...parent, name: 'foobar' }, ...rest);
+              }
+
+              return resolve(parent, ...rest);
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 ## Usage with the Users & Permissions plugin
@@ -539,6 +857,7 @@ The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permission
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
 
 :::request Mutation
+
 ```graphql
 mutation {
   register(input: { username: "username", email: "email", password: "password" }) {
@@ -550,6 +869,7 @@ mutation {
   }
 }
 ```
+
 :::
 
 You should see a new user is created in the `Users` collection type in your Strapi admin panel.

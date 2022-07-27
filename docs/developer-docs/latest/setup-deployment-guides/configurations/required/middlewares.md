@@ -26,6 +26,9 @@ Strapi pre-populates the `./config/middlewares.js` file with built-in, internal 
 
 The `./config/middlewares.js` file exports an array, where order matters and controls the execution order of the middleware stack:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/middlewares.js
 
@@ -71,6 +74,41 @@ module.exports = [
   'strapi::public',
 ];
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```typescript
+// path: ./config/middlewares.ts
+
+export default [
+  // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
+  'strapi::cors',
+  'strapi::body',
+  'strapi::errors',
+  // ...
+  'my-custom-node-module', // custom middleware that does not require any configuration
+  {
+    // custom name to find a package or a path
+    name: 'my-custom-node-module',
+    config: {
+      foo: 'bar',
+    },
+  },
+  {
+    // custom resolve to find a package or a path
+    resolve: '../some-dir/custom-middleware',
+    config: {
+      foo: 'bar',
+    },
+  },
+];
+```
+
+</code-block>
+</code-group>
+
 
 :::tip
 If you aren't sure where to place a middleware in the stack, add it to the end of the list.

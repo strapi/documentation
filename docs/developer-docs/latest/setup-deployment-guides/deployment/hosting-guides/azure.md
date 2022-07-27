@@ -178,7 +178,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
 
 ### Deploy with an Azure Resource Manager template
 
-To deploy using an Azure Resource Manager template, use the botton below, or upload [this template](https://gist.githubusercontent.com/aaronpowell/f216f119ffe5ed52945b46d0bb55569b/raw/2490a9295ea25c905096dbaae57da6ef8edb0e43/azuredeploy.json) as a custom deployment in Azure.
+To deploy using an Azure Resource Manager template, use the button below, or upload [this template](https://gist.githubusercontent.com/aaronpowell/f216f119ffe5ed52945b46d0bb55569b/raw/2490a9295ea25c905096dbaae57da6ef8edb0e43/azuredeploy.json) as a custom deployment in Azure.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgist.githubusercontent.com%2Faaronpowell%2Ff216f119ffe5ed52945b46d0bb55569b%2Fraw%2F2490a9295ea25c905096dbaae57da6ef8edb0e43%2Fazuredeploy.json)
 
@@ -258,7 +258,7 @@ For the networking configuration you will want to leave the following as default
 - Accelerated networking
 - Load Balancing (off/no)
 
-However for the NIC network security group we will want to slect `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
+However for the NIC network security group we will want to select `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
 
 - SSH (TCP/22) - Already on be default
 - HTTPS (Any/443)
@@ -487,7 +487,12 @@ nano /srv/strapi/mystrapiapp/config/database.js
 
 Using the following example we will remove any private information:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
+// path: /srv/strapi/mystrapiapp/config/database.js
+
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
   connections: {
@@ -506,6 +511,36 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: /srv/strapi/mystrapiapp/config/database.ts
+
+export default ({ env }) => ({
+  defaultConnection: 'default',
+  connections: {
+    default: {
+      connector: 'bookshelf',
+      settings: {
+        client: 'mysql',
+        database: env('DB_NAME'),
+        host: env('DB_HOST'),
+        port: env('DB_PORT'),
+        username: env('DB_USER'),
+        password: env('DB_PASS'),
+      },
+      options: {},
+    },
+  },
+});
+```
+
+</code-block>
+</code-group>
 
 #### 3. Installing PM2 and running Strapi as a service
 

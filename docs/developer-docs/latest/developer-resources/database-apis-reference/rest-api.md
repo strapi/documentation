@@ -12,6 +12,7 @@ The REST API allows accessing the [content-types](/developer-docs/latest/develop
 ::: note
 The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md) to populate specific fields.
 :::
+
 ## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:

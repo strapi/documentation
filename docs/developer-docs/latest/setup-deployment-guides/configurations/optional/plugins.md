@@ -14,6 +14,10 @@ The configurations for all plugins are stored in `./config/plugins.js` (see [pro
 | `config`<br><br>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#configuration)) | Object  |
 | `resolve`<br> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
+
 ```js
 // path: ./config/plugins.js
 
@@ -38,6 +42,39 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // enable a plugin that doesn't require any configuration
+  i18n: true,
+
+  // enable a custom plugin
+  myplugin: {
+    // my-plugin is going to be the internal name used for this plugin
+    enabled: true,
+    resolve: './src/plugins/my-local-plugin',
+    config: {
+      // user plugin config goes here
+    },
+  },
+
+  // disable a plugin
+  myotherplugin: {
+    enabled: false, // plugin installed but disabled
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
 :::tip
 If no specific configuration is required, a plugin can also be declared with the shorthand syntax `'plugin-name': true`.
 :::
@@ -58,6 +95,9 @@ The [GraphQL plugin](/developer-docs/latest/plugins/graphql.md) has the followin
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on models should be created automatically (see [Shadow CRUD documentation](/developer-docs/latest/plugins/graphql.md#shadow-crud)). | Boolean | `true` |
 | `subscriptions`    | Enable GraphQL subscriptions (experimental feature).                                                                                                                                 | Boolean | `false` |
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -75,3 +115,27 @@ module.exports = () => ({
   }
 })
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default () => ({
+  graphql: {
+    enabled: true,
+    config: {
+      defaultLimit: 10,
+      maxLimit: 20
+    }
+  }
+})
+```
+
+
+</code-block>
+</code-group>
+

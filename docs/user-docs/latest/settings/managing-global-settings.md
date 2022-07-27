@@ -46,7 +46,7 @@ To configure the SSO feature settings:
 | Setting name      | Instructions                                                                                                                                                                                                                                                        |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Auto-registration | Click on **ON** to allow the automatic creation of a new Strapi administrator when an SSO login does not match an existing Strapi administrator account. If this setting is set on **OFF**, new Strapi administrators accounts must be created manually beforehand. |
-| Default role      | Choose among the drop-down list the role to attribute by default to auto-registrated Strapi administrators through SSO login.                                                                                                                                       |
+| Default role      | Choose among the drop-down list the role to attribute by default to auto-registered Strapi administrators through SSO login.                                                                                                                                       |
 
 3. Click the **Save** button.
 
@@ -78,6 +78,25 @@ To add a new locale:
 3. (optional) In the *Locale display name* textbox, write a new display name for your new locale.
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
 5. Click on the **Save** button to confirm the addition of your new locale.
+
+## Configuring the Media Library
+
+The [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+
+![Media Library settings](../assets/settings/settings_media-library.png)
+
+To configure the Media Library settings:
+
+1. Go to the *Global settings > Media Library* sub-section of the settings interface.
+2. Define your chosen new settings:
+
+    | Setting name               | Instructions                                                                                         | Default value |
+    | -------------------------- | ---------------------------------------------------------------------------------------------------- |---------------|
+    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset. | True          |
+    | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
+    | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+
+3. Click on the **Save** button.
 
 ## Managing API tokens
 
@@ -112,4 +131,3 @@ To create a new API token:
 ::: caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
 :::
-
