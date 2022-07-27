@@ -552,7 +552,6 @@ export default ({ env })=>({
 
 </code-group>
 
-
 ### Enabling the provider
 
 To enable the provider, create or edit the file at `./config/plugins.js`
@@ -616,7 +615,6 @@ export default ({ env }) => ({
 </code-block>
 
 </code-group>
-
 
 Make sure to read the provider's `README` to know what are the possible parameters.
 
