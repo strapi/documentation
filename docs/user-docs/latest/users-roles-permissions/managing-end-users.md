@@ -14,7 +14,7 @@ With the Users & Permissions plugin, the end users and their account information
 
 ![Managing end users via the Content Manager](../assets/users-permissions/end-user_content-manager.png)
 
-Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type (see [Introduction to the Content Mananger](../content-manager/introduction-to-content-manager.md) for more information about the Content Manager).
+Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type (see [Introduction to the Content Manager](../content-manager/introduction-to-content-manager.md) for more information about the Content Manager).
 
 ::: note
 If end users can register themselves on your front-end application (see [Managing Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings.md)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.

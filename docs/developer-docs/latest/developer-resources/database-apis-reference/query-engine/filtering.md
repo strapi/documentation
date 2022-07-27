@@ -144,6 +144,22 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
+### `$eqi`
+
+Attribute equals input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $eqi: 'HELLO World',
+    },
+  },
+});
+```
+
 ### `$ne`
 
 Attribute does not equal input value.
@@ -266,6 +282,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
+
 ### `$between`
 
 Attribute is between the 2 input values.
@@ -298,7 +315,6 @@ const entries = await strapi.db.query('api::article.article').findMany({
   },
 });
 ```
-
 
 ### `$notContains`
 

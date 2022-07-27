@@ -307,9 +307,12 @@ npm install pg
 
 Copy/paste the following:
 
-`Path: ./my-project/config/database.js`:
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./my-project/config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: "postgres",
@@ -325,6 +328,33 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./my-project/config/database.ts
+
+export default ({ env }) => ({
+  connection: {
+    client: "postgres",
+    connection: {
+      host: env("DATABASE_HOST", "127.0.0.1"),
+      port: env.int("DATABASE_PORT", 5432),
+      database: env("DATABASE_NAME", "strapi"),
+      user: env("DATABASE_USERNAME", ""),
+      password: env("DATABASE_PASSWORD", ""),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
 #### 3. Install the **Strapi AWS S3 Upload Provider**:
 
 Path: `./my-project/`.
@@ -334,6 +364,9 @@ npm install @strapi/provider-upload-aws-s3
 ```
 
 To enable and configure the provider, create or edit the file at `./config/plugins.js`.
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = ({ env }) => ({
@@ -362,7 +395,34 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/providers.md).
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default ({ env }) => ({
+  upload: {
+      config: {
+          provider: 'aws-s3',
+          providerOptions: {
+              accessKeyId: env('AWS_ACCESS_KEY_ID'),
+              secretAccessKey: env('AWS_ACCESS_SECRET'),
+              region: env('AWS_REGION'),
+              params: {
+                  Bucket: env('AWS_BUCKET_NAME'),
+              },
+          },
+      },
+  }
+});
+```
+
+</code-block>
+</code-group>
+
+
+
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
 
 #### 4. Push your local changes to your project's GitHub repository.
 
@@ -417,6 +477,9 @@ sudo nano ecosystem.config.js
 
 - Next, replace the boilerplate content in the file, with the following:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = {
   apps: [
@@ -441,6 +504,40 @@ module.exports = {
   ],
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  apps: [
+    {
+      name: 'your-app-name',
+      cwd: '/home/ubuntu/my-project',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
+        DATABASE_PORT: '5432',
+        DATABASE_NAME: 'strapi', // DB name under 'Configuration' tab
+        DATABASE_USERNAME: 'postgres', // default username
+        DATABASE_PASSWORD: 'Password',
+        AWS_ACCESS_KEY_ID: 'aws-access-key-id',
+        AWS_ACCESS_SECRET: 'aws-access-secret', // Find it in Amazon S3 Dashboard
+        AWS_REGION: 'aws-region',
+        AWS_BUCKET_NAME: 'my-project-bucket-name',
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+</code-group>
+
+
 
 You can also set your environment variables in a `.env` file in your project like so:
 
@@ -681,7 +778,7 @@ sudo systemctl status webhook
 
 - You can **add a domain name** or **use a subdomain name** for your Strapi project, you will need to [install NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) and [configure it](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/nodejs-platform-proxy.html).
   ::: tip
-  After setting up **NGINX**, for security purposes, you need to disable port access on `Port 1337`. You may do this easily from your **EC2 Dashboard**. In `Security Groups` (lefthand menu), click the checkbox of the group, eg. `strapi`, and below in the `inbound` tab, click `Edit`, and delete the rule for `Port Range` : `1337` by click the `x`.
+  After setting up **NGINX**, for security purposes, you need to disable port access on `Port 1337`. You may do this easily from your **EC2 Dashboard**. In `Security Groups` (left-hand menu), click the checkbox of the group, eg. `strapi`, and below in the `inbound` tab, click `Edit`, and delete the rule for `Port Range` : `1337` by click the `x`.
   :::
 - To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://certbot.eff.org/docs/using.html).
 

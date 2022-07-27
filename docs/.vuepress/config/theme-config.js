@@ -59,6 +59,11 @@ const themeConfig = {
                 '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
             },
             {
+              text: 'Media Library',
+              link:
+                '/user-docs/latest/media-library/introduction-to-media-library.html',
+            },
+            {
               text: 'Plugins',
               link: '/user-docs/latest/plugins/introduction-to-plugins.html',
             },

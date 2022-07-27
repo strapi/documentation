@@ -11,7 +11,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 In this guide we are going to:
 
 - Create a new Strapi project
-- Configure PostgreSQL for the production enviroment
+- Configure PostgreSQL for the production environment
 - Deploy the app to Google App Engine
 - Add the [Google Cloud Storage file uploading plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage) by [@Lith](https://github.com/Lith)
 
@@ -178,6 +178,9 @@ yarn add pg
 
 Adding the production database configuration for connect to GCP SQL.
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/env/production/database.js
 
@@ -193,6 +196,31 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/env/production/database.ts
+
+export default ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+        database: env('DATABASE_NAME'),
+        user: env('DATABASE_USER'),
+        password: env('DATABASE_PASSWORD'),
+    },
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 ### Auto-build after deploy
 
@@ -252,6 +280,9 @@ Read the documentation [here](/developer-docs/latest/setup-deployment-guides/con
 config/env/production/server.js
 ```
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = {
   admin: {
@@ -259,3 +290,20 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  admin: {
+    path: '/dashboard',
+  },
+};
+```
+
+</code-block>
+</code-group>
+
+

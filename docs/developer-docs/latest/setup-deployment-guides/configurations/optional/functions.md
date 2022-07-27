@@ -6,11 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Functions
 
-The `./src/index.js` file includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
+The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/developer-docs/latest/development/typescript.md) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
 ## Register
 
-The `register` found in `./src/index.js` lifecycle function is an asynchronous function that runs before the application is initialized.
+The `register` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application is initialized.
 It can be used to:
 
 - [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface)
@@ -19,7 +19,7 @@ It can be used to:
 
 ## Bootstrap
 
-The `bootstrap` lifecycle function found in `./src/index.js` is called at every server start.
+The `bootstrap` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is called at every server start.
 
 It can be used to:
 
@@ -31,13 +31,32 @@ The bootstrap function can be synchronous, asynchronous, or return a promise:
 
 **Synchronous function**
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = () => {
   // some sync code
 };
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default () => {
+  // some sync code
+};
+```
+
+</code-block>
+</code-group>
+
 **Asynchronous function**
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = async () => {
@@ -45,7 +64,23 @@ module.exports = async () => {
 };
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default async () => {
+  await someSetup();
+};
+```
+
+</code-block>
+</code-group>
+
 **Function returning a promise**
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 module.exports = () => {
@@ -53,9 +88,22 @@ module.exports = () => {
 };
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default () => {
+  return new Promise(/* some code */);
+};
+```
+
+</code-block>
+</code-group>
+
 ## Destroy
 
-The `destroy` function found in `./src/index.js` is an asynchronous function that runs before the application gets shut down.
+The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application gets shut down.
 
 It can be used to gracefully:
 

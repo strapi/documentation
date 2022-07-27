@@ -35,7 +35,7 @@ One project can have multiple apps running. This is convenient to group your bac
 ### 4. Add a PostgreSQL database
 * Click on add a **PostgreSQL** database.
 * Select the version
-* Give a name to your PostgreSQL databse.
+* Give a name to your PostgreSQL database.
 * Click on **next**.
 
 ### 5. Add a storage

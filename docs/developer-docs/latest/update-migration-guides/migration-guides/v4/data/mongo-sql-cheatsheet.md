@@ -616,7 +616,7 @@ In MongoDB, media links are stored on both sides of the relation. The `related` 
 - `kind` targets a specific collection
 - `field` targets a specific attribute
 
-MongoDB also includes a property in the entries, named like the media attributes of the models, which is either an array or a single `ObjectId` targetting the media(s).
+MongoDB also includes a property in the entries, named like the media attributes of the models, which is either an array or a single `ObjectId` targeting the media(s).
 
 In SQL databases, an `upload_file_morph` join table is created, with the following elements:
 
