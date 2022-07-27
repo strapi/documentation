@@ -107,6 +107,6 @@ TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code ex
 
 ## Is X feature available yet?
 
-You can see the [Public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet.
+You can see the [ProductBoard roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet.
 
 <!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->

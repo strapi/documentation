@@ -209,6 +209,10 @@ export default ({ env }) => ({
 
 </div>
 
+::: note
+[Folders](/user-docs/latest/media-library/organizing-assets-with-folders.md) are an admin panel feature and are not part of the REST or the GraphQL API. Files uploaded through the REST or GraphQL API are located in the automatically created "API Uploads" folder.
+:::
+
 ## Examples
 
 ### Upload files
