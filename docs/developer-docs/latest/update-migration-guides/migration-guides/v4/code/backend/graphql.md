@@ -419,7 +419,7 @@ module.exports = {
     extensionService.use(({ nexus }) => ({
       resolversConfig: {
         'Query.findItems': {
-          middleware: [
+          middlewares: [
             (resolve, ...args) => {
               console.log("We're in a middleware");
               return resolve(...args);
