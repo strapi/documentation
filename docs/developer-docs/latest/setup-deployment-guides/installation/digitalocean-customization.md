@@ -14,7 +14,7 @@ The Strapi application running on the droplet has the following softwares instal
 
 | Software                     | Version               | Comments                                                                                                                                 |
 | ---------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Node.js                      | 12                    | Installed via the offical [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
+| Node.js                      | 12                    | Installed via the official [apt repository](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)) |
 | Yarn                         | latest stable version | Installed via the official [apt repository](https://classic.yarnpkg.com/en/docs/install/#debian-stable))                                 |
 | Nginx                        | latest version        | Installed via Ubuntu default repository                                                                                                  |
 | UFW (Uncomplicated Firewall) | latest stable version | Configured to only allow incoming ports 80 (HTTP), 443 (HTTPS), and 22 (SSH)                                                             |

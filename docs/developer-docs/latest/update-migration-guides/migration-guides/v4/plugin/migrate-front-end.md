@@ -164,7 +164,7 @@ A Strapi v3 plugin adds a settings section by exporting a `settings` property du
 In Strapi v4, a plugin adds a settings section programmatically using the [Settings API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md#settings-api).
 :::
 
-To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appopriate Settings API method to use, and click on the method name to go to its dedicated documentation:
+To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appropriate Settings API method to use, and click on the method name to go to its dedicated documentation:
 
 | Action     | Method |
 |-----|----|

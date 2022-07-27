@@ -18,7 +18,7 @@ A Render account is necessary to follow this installation guide. Please visit [t
 
 ## Creating a Strapi project
 
-Render maintains 3 "Strapi on Render" example repositories (see [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi) for more information), which differ based on the databased used and the storage location of uploaded media library files:
+Render maintains 3 "Strapi on Render" example repositories (see [Render's Deploy Strapi guide](https://render.com/docs/deploy-strapi) for more information), which differ based on the database used and the storage location of uploaded media library files:
 
 - [Strapi with SQLite and uploads on disk](https://github.com/render-examples/strapi-sqlite)
 - [Strapi with PostgreSQL and uploads on Cloudinary](https://github.com/render-examples/strapi-postgres-cloudinary)

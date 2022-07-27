@@ -400,7 +400,7 @@ module.exports = {
 ```
 
 ::: note
-Strapi v4 policies are not inherited from controllers anymore since the resolvers are stand-alones.
+Strapi v4 policies are not inherited from controllers anymore since the resolvers are stand-alone.
 :::
 
 ## Adding middlewares
