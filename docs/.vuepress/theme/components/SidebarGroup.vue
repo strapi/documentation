@@ -133,6 +133,10 @@ export default {
       border-left-color $accentColor
     &:hover
       color $accentColor
+  img
+    max-width: 20px
+    max-height: 20px
+    vertical-align: text-bottom
 
 .sidebar-group-items
   transition height .1s ease-out
