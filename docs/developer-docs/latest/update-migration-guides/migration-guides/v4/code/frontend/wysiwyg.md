@@ -9,7 +9,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/code-migration-intro.md)!!!
 
 ::: strapi v3/v4 comparison
-In Strapi v3, the WYSIWYG is customised by overriding the original component and replacing the file.
+In Strapi v3, the WYSIWYG is customized by overriding the original component and replacing the file.
 
 In Strapi v4, file replacement is no longer supported. To customize the default WYSIWYG, the new `addFields()` method should be used with the [extensions system](/developer-docs/latest/development/admin-customization.md#extension).
 

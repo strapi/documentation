@@ -11,7 +11,7 @@ The [REST API](/developer-docs/latest/developer-resources/database-apis-referenc
 Using optional Strapi features can provide some more filters:
 
 - If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
-- If the [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) is enabled, it's possible to filter based on a `live` or `draft` state.
+- If the [Draft & Publish](/user-docs/latest/content-manager/saving-and-publishing-content.md) is enabled, it's possible to filter based on a `live` or `draft` state.
 
 :::: tip
 
@@ -30,6 +30,7 @@ The following operators are available:
 | Operator        | Description                              |
 | --------------- | ---------------------------------------- |
 | `$eq`           | Equal                                    |
+| `$eqi`          | Equal (case-insensitive)                 |
 | `$ne`           | Not equal                                |
 | `$lt`           | Less than                                |
 | `$lte`          | Less than or equal to                    |
@@ -37,10 +38,10 @@ The following operators are available:
 | `$gte`          | Greater than or equal to                 |
 | `$in`           | Included in an array                     |
 | `$notIn`        | Not included in an array                 |
-| `$contains`     | Contains (case-sensitive)                |
-| `$notContains`  | Does not contain (case-sensitive)        |
-| `$containsi`    | Contains                                 |
-| `$notContainsi` | Does not contain                         |
+| `$contains`     | Contains                                 |
+| `$notContains`  | Does not contain                         |
+| `$containsi`    | Contains (case-insensitive)              |
+| `$notContainsi` | Does not contain (case-insensitive)      |
 | `$null`         | Is null                                  |
 | `$notNull`      | Is not null                              |
 | `$between`      | Is between                               |
@@ -335,7 +336,7 @@ The `locale` API parameter can be used to [get entries from a specific locale](/
 ## Publication State
 
 :::prerequisites
-The [Draft & Publish](/developer-docs/latest/concepts/draft-and-publish.md) feature should be enabled.
+The [Draft & Publish](/user-docs/latest/content-manager/saving-and-publishing-content.md) feature should be enabled.
 :::
 
 Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
