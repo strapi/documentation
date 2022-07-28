@@ -391,6 +391,10 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
+## Custom fields
+
+
+
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
