@@ -162,6 +162,7 @@ and so we don't deploy local build artifacts, cache files and so on by including
 the `.gitignore` entries.
 
 ### Adding `.gitkeep` to database folder
+
 Google App Engine does not give `mkdir` permissions and the `database/migrations` folder is required for deployments. Make sure `git` keeps track of the `database/migrations` folder by adding a `.gitkeep` file to the folder. Use the following command:
 
 ```bash
@@ -188,10 +189,10 @@ module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
-        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
-        database: env('DATABASE_NAME'),
-        user: env('DATABASE_USER'),
-        password: env('DATABASE_PASSWORD'),
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USER'),
+      password: env('DATABASE_PASSWORD'),
     },
   },
 });
@@ -208,10 +209,10 @@ export default ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
-        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
-        database: env('DATABASE_NAME'),
-        user: env('DATABASE_USER'),
-        password: env('DATABASE_PASSWORD'),
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USER'),
+      password: env('DATABASE_PASSWORD'),
     },
   },
 });
@@ -219,8 +220,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
-
 
 ### Auto-build after deploy
 
@@ -277,18 +276,16 @@ Read the documentation [here](/developer-docs/latest/setup-deployment-guides/con
 **Changing the admin url**
 
 ```
-config/env/production/server.js
+config/env/production/admin.js
 ```
 
 <code-group>
 <code-block title="JAVASCRIPT">
 
 ```js
-module.exports = {
-  admin: {
-    path: '/dashboard',
-  },
-};
+module.exports = ({ env }) => ({
+  url: '/dashboard',
+});
 ```
 
 </code-block>
@@ -296,14 +293,10 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```js
-export default {
-  admin: {
-    path: '/dashboard',
-  },
-};
+export default ({ env }) => ({
+  url: '/dashboard',
+});
 ```
 
 </code-block>
 </code-group>
-
-
