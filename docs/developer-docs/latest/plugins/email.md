@@ -123,7 +123,6 @@ When using community providers, pass the full package name to the `provider` key
 Here is an example of a configuration made for the provider [@strapi/provider-email-sendgrid](https://www.npmjs.com/package/@strapi/provider-email-sendgrid).
 
 **Path —** ``.
-
 <code-group>
 
 <code-block title="JAVASCRIPT">
@@ -180,7 +179,7 @@ export default = ({ env }) => ({
 </code-group>
 
 ::: tip
-If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js`. More info here: [Environments](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
+If you're using a different provider depending on your environment, you can specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js` (see [environments configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)).
 :::
 
 ::: tip
@@ -188,8 +187,7 @@ Only one email provider will be active at all time. If the email provider settin
 :::
 
 ::: tip
-When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test.
-More info here: [Configure templates Locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates)
+When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template, with default no-reply@strapi.io need to be updated in according to your email provider, otherwise it will fail the test (see [Configure templates Locally](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates)).
 :::
 
 ## Create new provider
