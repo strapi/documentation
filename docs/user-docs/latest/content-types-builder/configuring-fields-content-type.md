@@ -403,6 +403,8 @@ Each custom field type can have basic and advanced settings. The [Marketplace](s
 
 <!-- ? where will the documentation for specific custom fields be hosted ? should we include documentation for "official" custom fields in docs.strapi.io ? -->
 
+<!-- TODO: Decide whether we describe how to edit CF (custom fields) (if possible) and delete them — and where we should host these documentation sections. We currently don't explain how to delete plugins (see Installing plugins from the marketplace section). -->
+
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
