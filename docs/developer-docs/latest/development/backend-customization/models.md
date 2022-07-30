@@ -614,7 +614,7 @@ Each event listener is called sequentially. They can be synchronous or asynchron
 <code-block title=JAVASCRIPT>
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 module.exports = {
   beforeCreate(event) {
@@ -639,7 +639,7 @@ module.exports = {
 <code-block title=TYPESCRIPT>
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.ts
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts
 
 export default {
   beforeCreate(event) {
@@ -663,7 +663,7 @@ export default {
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({
