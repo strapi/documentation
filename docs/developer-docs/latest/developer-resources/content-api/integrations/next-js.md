@@ -6,8 +6,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with Next.js
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Next.js](https://nextjs.org/) remains the same except that you will not fetch the same content.
@@ -64,6 +62,7 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 
 :::: tab axios
 ::: request Example GET request with axios
+
 ```js
 import axios from 'axios';
 
@@ -71,6 +70,7 @@ axios.get('http://localhost:1337/api/restaurants').then(response => {
   console.log(response);
 });
 ```
+
 :::
 
 ::::
@@ -94,38 +94,30 @@ fetch('http://localhost:1337/api/restaurants', {
 :::::
 
 :::response Example response
+
 ```json
-[
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-    "created_by": {
+{
+  "data": [
+    {
       "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "updated_by": {
-      "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "created_at": "2020-07-31T11:37:16.964Z",
-    "updated_at": "2020-07-31T11:37:16.975Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-07-31T11:36:23.164Z",
-        "updated_at": "2020-07-31T11:36:23.172Z"
+      "attributes": {
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "createdAt": "2021-11-18T13:34:53.885Z",
+        "updatedAt": "2021-11-18T13:59:05.035Z",
+        "publishedAt": "2021-11-18T13:59:05.033Z"
       }
-    ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
   }
-]
+}
 ```
 
 ::::
@@ -147,8 +139,8 @@ const Home = ({ restaurants, error }) => {
   }
   return (
     <ul>
-      {restaurants.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.name}</li>
+      {restaurants.data.map(restaurant => (
+        <li key={restaurant.id}>{restaurant.attributes.name}</li>
       ))}
     </ul>
   );
@@ -180,8 +172,8 @@ const Home = ({ restaurants, error }) => {
   }
   return (
     <ul>
-      {restaurants.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.name}</li>
+      {restaurants.data.map(restaurant => (
+        <li key={restaurant.id}>{restaurant.attributes.name}</li>
       ))}
     </ul>
   );
@@ -257,6 +249,7 @@ axios
 
 :::: tab fetch
 ::: request Example POST request with fetch
+
 ```js
 fetch('http://localhost:1337/api/restaurants', {
   method: 'POST',
@@ -278,6 +271,7 @@ fetch('http://localhost:1337/api/restaurants', {
 :::::
 
 :::response Example response
+
 ```json
 {
   "id": 2,
@@ -299,8 +293,8 @@ fetch('http://localhost:1337/api/restaurants', {
   ]
 }
 ```
-:::
 
+:::
 
 ### Example
 
@@ -585,6 +579,7 @@ axios
 
 :::: tab fetch
 ::: request Example PUT request with fetch
+
 ```js
 fetch('http://localhost:1337/api/restaurants/2', {
   method: 'PUT',
@@ -628,8 +623,8 @@ fetch('http://localhost:1337/api/restaurants/2', {
   ]
 }
 ```
-:::
 
+:::
 
 ## Starter
 
