@@ -36,10 +36,7 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 ::: request Example GET request
 
 ```python
-import requests
-
-response = requests.get("http://localhost:1337/api/restaurants")
-print(response.json())
+requests.get("http://localhost:1337/api/restaurants")
 ```
 
 :::
@@ -105,10 +102,7 @@ In this example a `japanese` category has been created which has the id: 3.
 ::: request Example POST request
 
 ```python
-import json
-import requests
-
-response = requests.post(
+requests.post(
     "http://localhost:1337/api/restaurants",
     headers={"Content-Type": "application/json"},
     params={"populate": "categories"},
@@ -122,8 +116,6 @@ response = requests.post(
         }
     ),
 )
-
-print(response.json())
 ```
 
 :::
@@ -215,10 +207,7 @@ Be sure that you activated the `put` permission for the `restaurant` collection 
 ::: request Example PUT request
 
 ```python
-import json
-import requests
-
-response = requests.put(
+requests.put(
     "http://localhost:1337/api/restaurants/2",
     params={"populate": "categories"},
     headers={"Content-Type": "application/json"},
@@ -230,8 +219,6 @@ response = requests.put(
         }
     ),
 )
-
-print(response.json())
 ```
 
 :::
