@@ -47,9 +47,7 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 ::: request Example GET request
 
 ```ruby
-require 'httparty'
-
-puts HTTParty.get('http://localhost:1337/api/restaurants/')
+HTTParty.get('http://localhost:1337/api/restaurants/')
 ```
 
 :::
@@ -115,9 +113,7 @@ In this example a `japanese` category has been created which has the id: 3.
 ::: request Example POST request
 
 ```ruby
-require 'httparty'
-
-puts HTTParty.post(
+HTTParty.post(
   'http://localhost:1337/api/restaurants/',
   body: {
     data: {
@@ -223,9 +219,7 @@ Add the `?populate=categories` query parameter to return the categories with the
 ::: request Example PUT request
 
 ```ruby
-require 'httparty'
-
-puts HTTParty.put(
+HTTParty.put(
   'http://localhost:1337/api/restaurants/2',
   body: {
     data: {
@@ -239,7 +233,6 @@ puts HTTParty.put(
     'populate': 'categories'
   }
 )
-
 ```
 
 :::
