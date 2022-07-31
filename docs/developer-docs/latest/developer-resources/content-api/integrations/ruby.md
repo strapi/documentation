@@ -141,23 +141,30 @@ puts HTTParty.post(
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T09:57:11.669Z",
-  "updated_at": "2020-08-04T09:57:11.669Z",
-  "categories": [
-    {
-      "id": 3,
-      "name": "Japanese",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-07-31T11:36:23.164Z",
-      "updated_at": "2020-07-31T11:36:23.172Z"
+  "data": {
+    "id": 2,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2022-07-31T18:29:58.876Z",
+      "updatedAt": "2022-07-31T18:29:58.876Z",
+      "publishedAt": "2022-07-31T18:29:58.875Z",
+      "categories": {
+        "data": [
+          {
+            "id": 3,
+            "attributes": {
+              "name": "japanese",
+              "createdAt": "2022-07-31T11:57:35.040Z",
+              "updatedAt": "2022-07-31T11:57:35.631Z",
+              "publishedAt": "2022-07-31T11:57:35.629Z"
+            }
+          }
+        ]
+      }
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 
