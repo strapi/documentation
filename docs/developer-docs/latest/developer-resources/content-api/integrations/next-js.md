@@ -582,8 +582,10 @@ and the id of your category is `2`.
 import axios from 'axios';
 
 axios
-  .put('http://localhost:1337/api/restaurants/2', {
-    categories: [2],
+  .put('http://localhost:1337/api/restaurants/2/?populate=categories', {
+    data: {
+      categories: [2],
+    },
   })
   .then(response => {
     console.log(response);
@@ -597,13 +599,15 @@ axios
 ::: request Example PUT request with fetch
 
 ```js
-fetch('http://localhost:1337/api/restaurants/2', {
+fetch('http://localhost:1337/api/restaurants/2/?populate=categories', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    categories: [2],
+    data: {
+      categories: [2],
+    },
   }),
 })
   .then(response => response.json())
@@ -620,23 +624,30 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T10:21:30.219Z",
-  "updated_at": "2020-08-04T10:21:30.219Z",
-  "categories": [
-    {
-      "id": 2,
-      "name": "Brunch",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-08-04T10:24:26.901Z",
-      "updated_at": "2020-08-04T10:24:26.911Z"
+  "data": {
+    "id": 2,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2022-07-31T09:14:12.569Z",
+      "updatedAt": "2022-07-31T11:17:31.598Z",
+      "publishedAt": "2022-07-31T09:14:12.566Z",
+      "categories": {
+        "data": [
+          {
+            "id": 2,
+            "attributes": {
+              "name": "Brunch",
+              "createdAt": "2022-07-30T09:23:57.857Z",
+              "updatedAt": "2022-07-30T09:26:37.236Z",
+              "publishedAt": "2022-07-30T09:26:37.233Z"
+            }
+          }
+        ]
+      }
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 
