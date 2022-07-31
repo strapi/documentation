@@ -145,7 +145,7 @@ print(response.json())
           {
             "id": 3,
             "attributes": {
-              "name": "Japanese Food",
+              "name": "japanese",
               "createdAt": "2022-07-31T11:57:35.040Z",
               "updatedAt": "2022-07-31T11:57:35.631Z",
               "publishedAt": "2022-07-31T11:57:35.629Z"
