@@ -235,9 +235,12 @@ import axios from 'axios';
 
 axios
   .post('http://localhost:1337/api/restaurants', {
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: 'Dolemon Sushi',
+      description:
+        'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    },
   })
   .then(response => {
     console.log(response);
@@ -257,9 +260,12 @@ fetch('http://localhost:1337/api/restaurants', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: 'Dolemon Sushi',
+      description:
+        'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    },
   }),
 })
   .then(response => response.json())
@@ -274,23 +280,17 @@ fetch('http://localhost:1337/api/restaurants', {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T09:57:11.669Z",
-  "updated_at": "2020-08-04T09:57:11.669Z",
-  "categories": [
-    {
-      "id": 3,
-      "name": "Japanese",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-07-31T11:36:23.164Z",
-      "updated_at": "2020-07-31T11:36:23.172Z"
+  "data": {
+    "id": 2,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2022-07-31T09:14:12.569Z",
+      "updatedAt": "2022-07-31T09:14:12.569Z",
+      "publishedAt": "2022-07-31T09:14:12.566Z"
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 
@@ -327,7 +327,9 @@ const Home = ({ allCategories, errorCategories }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:1337/api/restaurants', modifiedData);
+      const response = await axios.post('http://localhost:1337/api/restaurants', {
+        data: modifiedData,
+      });
       console.log(response);
     } catch (error) {
       setErrorRestaurants(error);
@@ -348,7 +350,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
+        <label htmlFor={category.id}>{category.attributes.name}</label>
         <input
           type="checkbox"
           checked={isChecked}
@@ -387,7 +389,7 @@ const Home = ({ allCategories, errorCategories }) => {
           <br />
           <b>Select categories</b>
           <br />
-          {allCategories.map(renderCheckbox)}
+          {allCategories.data.map(renderCheckbox)}
         </div>
         <br />
         <button type="submit">Submit</button>
@@ -455,7 +457,7 @@ const Home = ({ allCategories, errorCategories }) => {
       const response = await fetch('http://localhost:1337/api/restaurants', {
         method: 'POST',
         headers,
-        body: JSON.stringify(modifiedData),
+        body: JSON.stringify({ data: modifiedData }),
       })
         .then(checkStatus)
         .then(parseJSON);
@@ -478,7 +480,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
+        <label htmlFor={category.id}>{category.attributes.name}</label>
         <input
           type="checkbox"
           checked={isChecked}
@@ -519,7 +521,7 @@ const Home = ({ allCategories, errorCategories }) => {
           <br />
           <b>Select categories</b>
           <br />
-          {allCategories.map(renderCheckbox)}
+          {allCategories.data.map(renderCheckbox)}
         </div>
         <br />
         <button type="submit">Submit</button>
