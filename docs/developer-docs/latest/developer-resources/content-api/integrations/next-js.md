@@ -103,9 +103,9 @@ fetch('http://localhost:1337/api/restaurants', {
       "attributes": {
         "name": "Biscotte Restaurant",
         "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-        "createdAt": "2021-11-18T13:34:53.885Z",
-        "updatedAt": "2021-11-18T13:59:05.035Z",
-        "publishedAt": "2021-11-18T13:59:05.033Z"
+        "createdAt": "2022-07-31T09:14:12.569Z",
+        "updatedAt": "2022-07-31T09:14:12.569Z",
+        "publishedAt": "2022-07-31T09:14:12.569Z"
       }
     }
   ],
