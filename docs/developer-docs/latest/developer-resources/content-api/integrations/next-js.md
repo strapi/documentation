@@ -292,9 +292,9 @@ fetch('http://localhost:1337/api/restaurants/?populate=categories', {
       "categories": {
         "data": [
           {
-            "id": 4,
+            "id": 3,
             "attributes": {
-              "name": "Fast Food",
+              "name": "Japanese",
               "createdAt": "2022-07-31T10:49:03.933Z",
               "updatedAt": "2022-07-31T10:49:04.893Z",
               "publishedAt": "2022-07-31T10:49:04.890Z"
