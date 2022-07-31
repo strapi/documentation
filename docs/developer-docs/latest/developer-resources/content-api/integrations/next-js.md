@@ -67,7 +67,7 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 import axios from 'axios';
 
 axios.get('http://localhost:1337/api/restaurants').then(response => {
-  console.log(response);
+  console.log(response.data);
 });
 ```
 
@@ -222,6 +222,7 @@ export default Home;
 Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
 Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
+Add the `?populate=categories` query parameter to return categories with the response.
 
 In this example a `japanese` category has been created which has the id: 3.
 
@@ -234,7 +235,7 @@ In this example a `japanese` category has been created which has the id: 3.
 import axios from 'axios';
 
 axios
-  .post('http://localhost:1337/api/restaurants', {
+  .post('http://localhost:1337/api/restaurants/?populate=categories', {
     data: {
       name: 'Dolemon Sushi',
       description:
@@ -254,7 +255,7 @@ axios
 ::: request Example POST request with fetch
 
 ```js
-fetch('http://localhost:1337/api/restaurants', {
+fetch('http://localhost:1337/api/restaurants/?populate=categories', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -287,7 +288,20 @@ fetch('http://localhost:1337/api/restaurants', {
       "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
       "createdAt": "2022-07-31T09:14:12.569Z",
       "updatedAt": "2022-07-31T09:14:12.569Z",
-      "publishedAt": "2022-07-31T09:14:12.566Z"
+      "publishedAt": "2022-07-31T09:14:12.566Z",
+      "categories": {
+        "data": [
+          {
+            "id": 4,
+            "attributes": {
+              "name": "Fast Food",
+              "createdAt": "2022-07-31T10:49:03.933Z",
+              "updatedAt": "2022-07-31T10:49:04.893Z",
+              "publishedAt": "2022-07-31T10:49:04.890Z"
+            }
+          }
+        ]
+      }
     }
   },
   "meta": {}
