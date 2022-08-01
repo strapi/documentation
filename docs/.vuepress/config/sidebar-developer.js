@@ -521,7 +521,7 @@ const developer = [
     collapsable: true,
     children: [
       ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-      // ['/developer-docs/latest/guides/slug', 'Create a slug system'],
+      ['/developer-docs/latest/guides/slug', 'Built-in slug system'],
       // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
       // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
       // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],

@@ -22,6 +22,6 @@ After the `Slug` field has been created, it will automatically generate a slug w
 
 ![Slug Field Example](../assets/guides/slug/slug-example.png)
 
-## Fetch your entries by `slug`
+## Fetch entries by `slug`
 
 If you need to fetch any entry by its slug here is an example request `GET /api/pluralApiId?filters[slug]=my-slug`
