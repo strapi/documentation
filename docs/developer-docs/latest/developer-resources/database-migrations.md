@@ -62,10 +62,10 @@ module.exports = {
     // You have full access to the Knex.js API with an already initialized connection to the database
     // ------------------------
     // EXAMPLE: renaming a table
-    // knex.schema.renameTable('oldName', 'newName');
+    // await knex.schema.renameTable('oldName', 'newName');
     // ------------------------
     // EXAMPLE: renaming a column
-    // knex.schema.table('someTable', table => {
+    // await knex.schema.table('someTable', table => {
     //   table.renameColumn('oldName', 'newName');
     // });
     // ------------------------
