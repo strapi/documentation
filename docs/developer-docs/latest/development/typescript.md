@@ -12,10 +12,6 @@ TypeScript adds an additional type system layer above JavaScript, which means th
 To start developing in TypeScript, use the [CLI installation documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) to create a new TypeScript project. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [TypeScript configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources for understanding and configuring an application.
 :::
 
-::: callout 🚧  JavaScript to TypeScript migration
-Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or the community [Discord](https://discord.strapi.io).
-:::
-
 ## Start developing in TypeScript
 
 Starting the development environment for a TypeScript-enabled project requires building the admin panel prior to starting the server. In development mode, the application source code is compiled to the `./dist/build` directory and recompiled with each change in the Content-type Builder. To start the application, run the following commands in the root directory:
@@ -40,6 +36,84 @@ yarn develop
 
 </code-block>
 
+</code-group>
+
+## Add TypeScript support to an existing Strapi project
+
+Adding TypeScript support to an existing project requires modifications to the project files. Additionally the TypeScript flag `allowJs` should be set to `true` in the root `tsconfig.json` file to incrementally add TypeScript files to existing JavaScript projects. The `allowJs` flag allows `.ts` and `.tsx` files to coexist with JavaScript files. TypeScript support can be added to an existing Strapi project using the following procedure:
+
+1. Add a `tsconfig.json` file at the project root and copy the following code to the file with the `allowJs` flag:
+
+```json
+// path: ./tsconfig.json
+{
+    "extends": "@strapi/typescript-utils/tsconfigs/server",
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": ".",
+      "allowJs": true //enables the build without .ts files
+    },
+    "include": [
+      "./",
+      "src/**/*.json"
+    ],
+    "exclude": [
+      "node_modules/",
+      "build/",
+      "dist/",
+      ".cache/",
+      ".tmp/",
+      "src/admin/",
+      "**/*.test.ts",
+      "src/plugins/**"
+    ]
+   
+  }
+  
+```
+
+2. Add a `tsconfig.json` file in the `./src/admin/` directory and copy the following code to the file:
+
+```json
+// path: ./src/admin/tsconfig.json
+
+{
+    "extends": "@strapi/typescript-utils/tsconfigs/admin",
+    "include": [
+      "../plugins/**/admin/src/**/*",
+      "./"
+    ],
+    "exclude": [
+      "node_modules/",
+      "build/",
+      "dist/",
+      "**/*.test.ts"
+    ]
+  }
+  
+```
+
+3. Delete `.eslintrc` and `.eslintignore` from the project root.
+4. Rebuild the admin panel and start the development server:
+
+<code-group>
+<code-block title='NPM'>
+
+```sh
+npm run build
+npm run develop
+```
+
+</code-block>
+
+<code-block title='YARN'>
+
+```sh
+yarn build
+yarn develop
+```
+
+</code-block>
 </code-group>
 
 ## Use TypeScript typings
