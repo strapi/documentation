@@ -4,6 +4,9 @@ description: Learn how to build a custom field for Strapi using the color picker
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fields.html
 ---
 
+<!-- TODO: find a better title, and make it consistent with TOC entry -->
+# Building a "color" custom field
+
 <!-- TODO: add introduction -->
 
 To add a "color" type to the list of existing fields available in the [Content-Type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#configuring-fields-for-content-types), you can create a “color” custom field. This would require:
@@ -11,6 +14,8 @@ To add a "color" type to the list of existing fields available in the [Content-T
 1. creating a "color-picker" plugin (see [plugin creation documentation](/developer-docs/latest/development/plugins-development.md#create-a-plugin)),
 2. registering a new custom field on the server using `strapi-server.js`,
 3. and registering a new custom field on the front-end part of Strapi using `strapi-admin.js`.
+
+<!-- TODO: add sub-sections? -->
 
 To register the custom field in the back end of Strapi, you can use the following example:
 
