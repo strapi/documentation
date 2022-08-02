@@ -422,7 +422,7 @@ export default ({ env }) => ({
 
 
 
-Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/providers.md).
 
 #### 4. Push your local changes to your project's GitHub repository.
 
