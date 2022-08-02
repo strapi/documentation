@@ -52,7 +52,7 @@ module.exports = ({ env })=>({
 <code-block title="TYPESCRIPT">
 
 ```js
-// path: ./config/plugins.js
+// path: ./config/plugins.ts
 
 export default ({ env }) => ({
   upload: {
@@ -113,7 +113,7 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```js
-// path: ./config/middlewares.js
+// path: ./config/middlewares.ts
 
 export default {
   // ...
@@ -162,7 +162,7 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```js
-// path: ./config/plugins.js
+// path: ./config/plugins.ts
 
 export default {
   // ...
