@@ -42,10 +42,11 @@ yarn develop
 
 Adding TypeScript support to an existing project requires modifications to the project files. Additionally the TypeScript flag `allowJs` should be set to `true` in the root `tsconfig.json` file to incrementally add TypeScript files to existing JavaScript projects. The `allowJs` flag allows `.ts` and `.tsx` files to coexist with JavaScript files. TypeScript support can be added to an existing Strapi project using the following procedure:
 
-1. Add a `tsconfig.json` file at the project root and copy the following code to the file with the `allowJs` flag:
+1. Add a `tsconfig.json` file at the project root and copy the following code, with the `allowJs` flag, to the file:
 
 ```json
 // path: ./tsconfig.json
+
 {
     "extends": "@strapi/typescript-utils/tsconfigs/server",
     "compilerOptions": {
@@ -93,7 +94,7 @@ Adding TypeScript support to an existing project requires modifications to the p
   
 ```
 
-3. Delete `.eslintrc` and `.eslintignore` from the project root.
+3. Delete the `.eslintrc` and `.eslintignore` files from the project root.
 4. Rebuild the admin panel and start the development server:
 
 <code-group>
@@ -115,6 +116,8 @@ yarn develop
 
 </code-block>
 </code-group>
+
+After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
 
 ## Use TypeScript typings
 
