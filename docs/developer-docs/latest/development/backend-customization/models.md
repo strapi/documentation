@@ -598,7 +598,6 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
 | `model`  | Object            | Model object                                                                                                                                                       |
-| `em`     | EntityManagerObject           | EntityManager |                                                                                                                                                    |
 | `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
