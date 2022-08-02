@@ -32,7 +32,7 @@ A new controller can be implemented:
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
   // Method 1: Creating an entirely custom action
   async exampleAction(ctx) {
     try {
@@ -76,9 +76,9 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 ```js
 // path: ./src/api/restaurant/controllers/restaurant.ts
 
-import { factories } from '@strapi/strapi'; 
+import { factories } from '@strapi/strapi';
 
-export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
   // Method 1: Creating an entirely custom action
   async exampleAction(ctx) {
     try {
@@ -115,12 +115,8 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 }));
 ```
 
-
 </code-block>
 </code-group>
-
-
-
 
 Each controller action can be an `async` or `sync` function.
 Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
@@ -150,7 +146,7 @@ module.exports = {
 // path: ./src/api/hello/controllers/hello.js
 
 module.exports = {
-  async index(ctx, next) { // called by GET /hello 
+  async index(ctx, next) { // called by GET /hello
     ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
@@ -201,7 +197,7 @@ Default controllers and actions are created for each content-type. These default
 An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
-::::: details Collection type examples
+::::: details Collection type examples (Wrapping a core action)
 
 :::: tabs card
 
@@ -270,6 +266,96 @@ async delete(ctx) {
   // some more logic
 
   return response;
+}
+```
+
+:::
+::::
+:::::
+
+::::: details Collection type examples (Replacing a core action)
+
+:::: tabs card
+
+::: tab find()
+
+```js
+async find(ctx) {
+  const { query } = ctx;
+  // some logic here
+  const entity = await strapi.service('api::restaurant.restaurant').find(query);
+  const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+  // some logic here
+
+  return this.transformResponse(sanitizedEntity.results, {
+    pagination: sanitizedEntity.pagination,
+  });
+}
+```
+
+:::
+
+::: tab findOne()
+
+```js
+async findOne(ctx) {
+  const { id } = ctx.params;
+  const { query } = ctx;
+  // some logic here
+  const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
+  const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+  // some logic here
+
+  return this.transformResponse(sanitizedEntity);
+}
+```
+
+:::
+
+::: tab create()
+
+```js
+async create(ctx) {
+  const { request } = ctx;
+  // some logic here
+  const entity = await strapi.service('api::restaurant.restaurant').create(request.body);
+  const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+  // some logic here
+
+  return this.transformResponse(sanitizedEntity);
+}
+```
+
+:::
+
+::: tab update()
+
+```js
+async update(ctx) {
+  const { id } = ctx.params;
+  const { request } = ctx;
+  // some logic here
+  const entity = await strapi.service('api::restaurant.restaurant').update(id, request.body);
+  const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+  // some logic here
+
+  return this.transformResponse(sanitizedEntity);
+}
+```
+
+:::
+
+::: tab delete()
+
+```js
+async delete(ctx) {
+  const { id } = ctx.params;
+  // some logic here
+  const entity = await strapi.service('api::restaurant.restaurant').delete(id);
+  const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+  // some logic here
+
+  return this.transformResponse(sanitizedEntity);
 }
 ```
 
