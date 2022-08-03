@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Installation
 
-Strapi projects and applications can be installed either locally on a computer, manually on a remote server, or on third-party services offering one-click installations options. The following installation guides will guide you step-by-step to create a new Strapi project and get it started.
+Strapi projects and applications can be installed either locally on a computer or on a remote server. The following installation guides will guide you step-by-step instructions on how to install and create a new Strapi project.
 
 ## Local installations
 
