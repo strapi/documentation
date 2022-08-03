@@ -204,11 +204,26 @@ Both components could be declared as promises returning a React component import
 
 `app.customFields.register()` can pass additional options to be used for the base and advanced settings tabs of the Content-Type Builder. The `options` object accepts the following parameters:
 
-| Parameter name | Description                                                                     | Type                    |
+| Options parameter | Description                                                                     | Type                    |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
 | `base`         | Settings available in the _Base settings_ tab of the Content-Type Builder       | `Object` or  `Object[]` |
 | `advanced`     | Settings available in the _Advanced settings_ tab of the Content-Type Builder   | `Object` or  `Object[]` |
 | `validator`    | Validator function returning an object (useful to sanitize input, for instance) | `Function`              |
+
+Both `base` and `advanced` settings accept:
+
+- a `sectionTitle` (as an React `IntlObject`)
+- and a list of `items` as an array of objects, each object containing the following parameters:
+
+<!-- TODO: fix the table content as the parameters given in the [example from the RFC](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#example) and the [TS interface](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#admin) described in the RFC are inconsistent 🤷  -->
+
+| Items parameter | Description                                                                       | Type     |
+| --------------- | --------------------------------------------------------------------------------- | -------- |
+| `intlLabel`     | Label for the setting item, in the React Intl format                              | `Object` |
+| `name`          | Name of the setting to be used, in the following format: `options.<setting-name>` | `String` |
+| `type`          | ?                                                                                 | `String` |
+| `value`         | ?                                                                                 | `String` |
+| `metadatas`     | ?                                                                                 | `Object` |
 
 :::note
 When extending a custom field’s base and advanced forms in the Content-type Builder, it is not yet possible to import custom input components.
