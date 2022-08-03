@@ -5,19 +5,27 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fi
 ---
 
 <!-- TODO: find a better title, and make it consistent with TOC entry -->
-# Building a "color" custom field
+# Creating a color picker custom field
 
-<!-- TODO: add introduction -->
+This guide describes step-by-step instructions on how to create a color picker custom field that can be used in Strapi's admin panel. For a more complete description of the APIs, please refer to the [custom fields reference documentation](/developer-docs/latest/development/custom-fields/reference.md).
 
 To add a "color" type to the list of existing fields available in the [Content-Type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#configuring-fields-for-content-types), you can create a “color” custom field. This would require:
 
-1. creating a "color-picker" plugin (see [plugin creation documentation](/developer-docs/latest/development/plugins-development.md#create-a-plugin)),
-2. registering a new custom field on the server using `strapi-server.js`,
-3. and registering a new custom field on the front-end part of Strapi using `strapi-admin.js`.
+1. creating a "color-picker" plugin,
+2. registering a new "color" custom field on the back-end of Strapi using `strapi-server.js`,
+3. and registering this new "color" custom field on the front-end part of Strapi using `strapi-admin.js`, passing a few components and options to be used in the admin panel.
 
 <!-- TODO: add sub-sections? -->
 
-To register the custom field in the back end of Strapi, you can use the following example:
+## Creating a "color-picker" plugin
+
+Custom fields are plugins. Before registering our color picker custom field, use the [Create a plugin](/developer-docs/latest/development/plugins-development.md#create-a-plugin) section from the plugins development documentation to create and enable a plugin named "color-picker".
+
+Once the plugin is created and enabled, you should see a `color-picker` folder at `./src/plugins` and it should include at least a `strapi-admin.js` and a `strapi-server.js` file.
+
+## Registering the custom field on the server
+
+To register the color picker custom field on the Strapi server, replace the content of the `strapi-server.js` file of the `color-picker` plugin (created as a prerequisite to this guide) with the following code example:
 
 ```js
 // path: ./src/plugins/color-picker/strapi-server.js
@@ -34,82 +42,103 @@ module.exports = {
 };
 ```
 
-Then, to register the "color" custom field on the front-end (i.e. admin panel) part of Strapi, you could use the following code example. The codes provides the components, the name of the field and its underlying data type. For more control, the code also adds an option to let the developer select the color format in the base options of the custom field plugin:
+## Registering the custom field in the admin panel
 
-```jsx
-// path: ./src/plugins/color-picker/strapi-admin.js
+To register the "color" custom field in the admin panel of Strapi, we will replace the content of the `strapi-admin.js` file of the `color-picker` plugin (created as a prerequisite to this guide).
 
-register(app) {
-  // Registering the custom field in the back-end of Strapi
-  app.customFields.register({
-    name: "color",
-    pluginId: "color-picker",
-    type: "text", // store the color as a text 
-    intlLabel: {
-      id: "color-picker.color.label",
-      defaultMessage: "Color",
-    },
-    intlDescription: {
-      id: "color-picker.color.description",
-      defaultMessage: "Select any color",
-    } 
-    icon: ColorIcon,
-    components: {
-      Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
-      View: async () => import(/* webpackChunkName: "view-component" */ "./View"),
-    } 
-    options: {
-      base: [
-        {
-          sectionTitle: {
-            id: 'color-picker.color.section.format',
-            defaultMessage: 'Format',
-          },
-          items: [
+The example code provides the components, the name of the field and its underlying data type. For more control, the code also adds an option to let the developer select the color format in the base options of the custom field plugins.
+
+To create components to be used by the custom field in the Content Manager, and registering the custom field in the admin panel:
+
+1. Create a `./src/plugins/color-picker/admin/src/Input.js` file and copy and paste the following code example in this file:
+
+    ```jsx
+    // TODO: ask devs for the Input component code
+    ```
+
+2. Create a `./src/plugins/color-picker/admin/src/View.js` file and copy and paste the following code example in this file:
+
+    ```jsx
+    // TODO: ask devs for the View component code
+    ```
+
+3. Register the custom field, its components and options in Strapi's admin panel by replacing the content of `./src/plugins/color-picker/strapi-admin.js` with the following code:
+
+    ```jsx
+    // path: ./src/plugins/color-picker/strapi-admin.js
+
+    register(app) {
+      // Registering the custom field in the back-end of Strapi
+      app.customFields.register({
+        name: "color",
+        pluginId: "color-picker",
+        type: "text", // store the color as a text 
+        intlLabel: {
+          id: "color-picker.color.label",
+          defaultMessage: "Color",
+        },
+        intlDescription: {
+          id: "color-picker.color.description",
+          defaultMessage: "Select any color",
+        } 
+        icon: ColorIcon,
+        components: {
+          Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
+          View: async () => import(/* webpackChunkName: "view-component" */ "./View"),
+        } 
+        options: {
+          base: [
             {
-              intlLabel: {
-                id: 'color-picker.color.format.label',
-                defaultMessage: 'Color format',
+              sectionTitle: {
+                id: 'color-picker.color.section.format',
+                defaultMessage: 'Format',
               },
-              name: 'options.format',
-              type: 'select',
-              value: 'hex',
-              options: [
+              items: [
                 {
-                  key: 'hex',
+                  intlLabel: {
+                    id: 'color-picker.color.format.label',
+                    defaultMessage: 'Color format',
+                  },
+                  name: 'options.format',
+                  type: 'select',
                   value: 'hex',
-                  metadatas: {
-                    intlLabel: {
-                      id: 'color-picker.color.format.hex',
-                      defaultMessage: 'Hexadecimal',
+                  options: [
+                    {
+                      key: 'hex',
+                      value: 'hex',
+                      metadatas: {
+                        intlLabel: {
+                          id: 'color-picker.color.format.hex',
+                          defaultMessage: 'Hexadecimal',
+                        },
+                      },
                     },
-                  },
-                },
-                {
-                  key: 'rgba',
-                  value: 'rgba',
-                  metadatas: {
-                    intlLabel: {
-                      id: 'color-picker.color.format.rgba',
-                      defaultMessage: 'RGBA',
+                    {
+                      key: 'rgba',
+                      value: 'rgba',
+                      metadatas: {
+                        intlLabel: {
+                          id: 'color-picker.color.format.rgba',
+                          defaultMessage: 'RGBA',
+                        },
+                      },
                     },
-                  },
+                  ],
                 },
               ],
             },
           ],
+          advanced: [],
+          validator: (args) => ({
+            'color-picker': yup.object().shape({
+              format: yup.string().oneOf(['hex', 'rgba']),
+            }),
+          }),
         },
-      ],
-      advanced: [],
-      validator: (args) => ({
-        'color-picker': yup.object().shape({
-          format: yup.string().oneOf(['hex', 'rgba']),
-        }),
-      }),
-    },
-  });
-}
-```
+      });
+    }
+    ```
+
 
 When someone adds an attribute to a content type using our “color” custom field, the `schema.json` looks like the following:
 
@@ -129,3 +158,8 @@ When someone adds an attribute to a content type using our “color” custom fi
   }
 }
 ```
+
+::: tip
+To make the custom field available to the community, it can be turned into an npm package (see [turning a plugin as a npm package](/developer-docs/latest/development/plugins-development.md#converting-a-plugin-as-a-npm-package)).
+<!-- TODO: add this # to the plugins development instructions -->
+:::
