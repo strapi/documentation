@@ -227,7 +227,7 @@ const developer = [
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       {
-        title: 'Custom Fields',
+        title: 'Custom fields',
         children: [
           ['/developer-docs/latest/development/custom-fields/reference.md', 'Reference'],
           ['/developer-docs/latest/development/custom-fields/color-custom-fields-guide.md', 'Color custom field example'],
