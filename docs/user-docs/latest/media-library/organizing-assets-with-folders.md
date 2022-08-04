@@ -18,7 +18,7 @@ Folders follow the permission system of assets (see [Users, Roles & Permissions]
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
-- the folder title and the number of subfolders and assets the current folder contains (1)
+- the folder title and breadcrumbs to navigate through folders (1)
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
