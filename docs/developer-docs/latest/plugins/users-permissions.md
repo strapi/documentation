@@ -851,7 +851,7 @@ Congrats, you're done!
 
 ::: tab Change password flow
 
-You can also update an anthenticated user password through the `/change-password` API endpoint
+You can also update an authenticated user password through the `/change-password` API endpoint:
 
 ```js
 import axios from 'axios';
