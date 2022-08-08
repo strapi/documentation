@@ -12,9 +12,10 @@ Custom fields are [plugins](/developer-docs/latest/development/plugins-developme
 
 The present reference documentation is intended to custom fields creators. It describes how custom fields work and can be created from a developer point of view, describing the APIs available to build a new custom field. The [user guide](#) describes how to install and use custom fields from Strapi's admin panel.
 
-::: strapi Prefer to learn by building?
-If you'd rather directly jump to a concrete example, see the [Creating a color custom field guide](/developer-docs/latest/development/custom-fields/color-custom-fields-guide.md) page for step-by-step instructions on how to build your first custom field from scratch.
-:::
+<!-- TODO: uncomment and adjust content when blog post is ready -->
+<!-- ::: strapi Prefer to learn by building?
+If you'd rather directly jump to a concrete example, see our [Creating a color custom field guide](#) page for step-by-step instructions on how to build your first custom field from scratch.
+::: -->
 
 Custom fields are a specific type of Strapi plugins that include both a back-end (or server) part and a front-end (or admin panel) part. Both parts should be registered for the custom fields to be available and usable in Strapi's admin panel:
 
