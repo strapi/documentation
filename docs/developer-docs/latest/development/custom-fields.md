@@ -253,7 +253,7 @@ Each object in the `items` array can contain the following parameters:
 | `type`          | Type of setting (see [Setting types and specific options](#))                                 | `String` |
 
 <!-- TODO: add a super simple example with one base setting, one advanced setting, and a simple validator -->
-::: details Example: Declaring settings for an example "color" custom field:
+::: details Example: Declaring options for an example "color" custom field:
 
 ```jsx
 // path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
