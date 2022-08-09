@@ -242,13 +242,10 @@ Each object in the `items` array can contain the following parameters:
 
 | Items parameter | Description                                                                                  | Type     |
 | --------------- | -------------------------------------------------------------------------------------------- | -------- |
-| `intlLabel`     | Translation for the abel of the setting item                                                 | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `name`          | Name of the setting item<br/>Must use the `options.setting-name` format.                     | `String` |
-| `type`          | ?                                                                                            | `String` |
-| `value`         | ?                                                                                            | `String` |
-| `options`     | ?                                                                                              | `Array of Objects`  |
-
-
+| `description`   | Description of the setting item to use in the Content-type Builder                           | `String` |
+| `intlLabel`     | Translation for the abel of the setting item                                                 | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `type`          | Type of setting (see [Setting types and specific options](#))                                 | `String` |
 
 <!-- TODO: add a super simple example with one base setting, one advanced setting, and a simple validator -->
 ::: details Example: Declaring settings for an example "color" custom field:
