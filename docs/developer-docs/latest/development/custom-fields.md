@@ -104,7 +104,7 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 ::: details Example: Registering an example "color" custom field in the admin panel:
 
 ```jsx
-// path: ./src/plugins/color-picker/strapi-server.js
+// path: ./src/plugins/color-picker/strapi-admin.js
 
 register(app) {
   app.customFields.register({
@@ -190,6 +190,7 @@ register(app) {
   });
 }
 ```
+
 :::
 
 ::: note
@@ -209,7 +210,7 @@ Relations, components or dynamic zones can't be used as a custom field's `type` 
 
 <!-- ? can we declare components inline as well? like Input: async () => <MyReactComponent>…<MyReactComponent/>? What would be the most simple React.component example we could describe for a custom field? -->
 ```js
-// path: ./src/plugins/my-custom-field-plugin/strapi-server.js
+// path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
 
 register(app) {
   app.customFields.register({
@@ -222,6 +223,7 @@ register(app) {
   });
 }
 ```
+
 :::
 
 ### Options
@@ -254,7 +256,7 @@ Each object in the `items` array can contain the following parameters:
 ::: details Example: Declaring settings for an example "color" custom field:
 
 ```jsx
-// path: ./src/plugins/my-custom-field-plugin/strapi-server.js
+// path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
 
 register(app) {
   app.customFields.register({
@@ -311,6 +313,7 @@ register(app) {
   });
 }
 ```
+
 :::
 
 :::note
