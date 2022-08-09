@@ -494,6 +494,12 @@ The `tableName` key defines the name of the join table. It has to be specified o
 
 :::::
 
+#### Custom fields
+
+Custom fields' attributes should declare their `type` as `customField` and use the `customField` property to mention the registered custom field to use (see [model's custom fields documentation](/developer-docs/latest/development/backend-customization/models.md#custom-fields)).
+
+<!-- TODO: insert example here -->
+
 #### Components
 
 Component fields create a relation between a content-type and a component structure. Components are explicitly defined in the [attributes](#model-attributes) of a model with `type: 'component'` and accept the following additional parameters:
