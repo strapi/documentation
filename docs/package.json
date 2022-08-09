@@ -15,7 +15,9 @@
   "dependencies": {
     "@vuepress/plugin-html-redirect": "^0.1.4",
     "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "markdown-it": "^13.0.1",
     "markdown-it-include": "^2.0.0",
+    "markdown-it-multimd-table": "^4.2.0",
     "vuepress": "^1.8.2",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-element-tabs": "^0.2.8",

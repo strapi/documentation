@@ -313,3 +313,22 @@ register(app) {
 :::note
 When extending a custom field’s base and advanced forms in the Content-type Builder, it is not currently possible to import custom input components.
 :::
+
+<!-- TODO: decide whether we want to document all of these specific-settings 👇  -->
+<!-- 
+### Setting types and specific options
+
+When registering a custom field in the admin panel, each setting item defined in the `items` keys of the `base` and `advanced` properties can have a different `type`, and each type comes with additional, specific keys.
+
+#### `select` additional keys
+
+Any setting item in the `base` or `advanced` declared as a `select` type can declare the following additional keys:
+
+| Parameter | Description                                            | Type               | Available sub-keys                                                             |
+| --------- | ------------------------------------------------------ | ------------------ | ------------------------------------------------------------------------------ |
+| `options` | Options available in the dropdown                      | `Array of objects` | `key` (string): key name (will be used as an identifier in the model's schema) |
+^^          | ^^                                                     | ^^                 | `value` (string): value to display in the CTB                                  |
+^^          | ^^                                                     | ^^                 | `metadatas` (object): Used to declare the translation for the option, as an [IntlObject]() (i.e. with `id` and `defaultMessage` keys) |
+| `value`   | Default option to display in the Content-type Builder  | `String`           | -                                                                              | -->
+
+<!-- // TODO: add other possible additional keys for specific `type`s -->
