@@ -54,7 +54,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
     ```js
     // path: ./src/index.ts
 
-    import '@strapi/strapi';
+    import { Strapi } from '@strapi/strapi';
 
     export default {
       register( { strapi }: { strapi: Strapi }) {
