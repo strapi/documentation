@@ -35,6 +35,10 @@ Custom fields can not be used to register new database types in the Strapi backe
 
 ## Registering a custom field on the server
 
+::: prerequisites
+!!!include(developer-docs/latest/development/snippets/custom-field-requires-plugin.md)!!!
+:::
+
 Strapi's server needs to be aware of all the custom fields to ensure that an attribute using a custom field is valid.
 
 The `strapi.customFields` object exposes a `register()` method on the `Strapi` instance. This method is used to register custom fields on the server during the plugin's server [register lifecycle](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#register).
@@ -61,7 +65,7 @@ module.exports = {
   register({ strapi }) {
     strapi.customFields.register({
       name: 'color',
-      plugin: 'color-picker', // the custom 
+      plugin: 'color-picker',
       type: 'text',
     });
   },
@@ -71,6 +75,10 @@ module.exports = {
 :::
 
 ## Registering a custom field in the admin panel
+
+::: prerequisites
+!!!include(developer-docs/latest/development/snippets/custom-field-requires-plugin.md)!!!
+:::
 
 Custom fields must be registered in Strapi's admin panel to be available in the Content-type Builder and the Content Manager.
 
