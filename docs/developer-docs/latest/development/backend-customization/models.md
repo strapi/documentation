@@ -598,7 +598,6 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
 | `model`  | Object            | Model object                                                                                                                                                       |
-| `em`     | EntityManagerObject           | EntityManager |                                                                                                                                                    |
 | `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
@@ -614,7 +613,7 @@ Each event listener is called sequentially. They can be synchronous or asynchron
 <code-block title=JAVASCRIPT>
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 module.exports = {
   beforeCreate(event) {
@@ -639,7 +638,7 @@ module.exports = {
 <code-block title=TYPESCRIPT>
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.ts
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts
 
 export default {
   beforeCreate(event) {
@@ -663,7 +662,7 @@ export default {
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({

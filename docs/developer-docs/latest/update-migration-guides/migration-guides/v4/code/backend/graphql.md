@@ -43,7 +43,7 @@ The following code example adds a new `MyEnum` type definition to Strapi v3:
 
 module.exports = {
   definition: `
-    enum MyInput {
+    enum MyEnum {
       a
       b
       c
