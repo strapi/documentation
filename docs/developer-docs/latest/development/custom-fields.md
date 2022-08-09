@@ -232,13 +232,13 @@ register(app) {
 
 | Options parameter | Description                                                                     | Type                    |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
-| `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Object[]` |
-| `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Object[]` |
+| `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Array of Objects` |
+| `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
 | `validator`    | Validator function returning an object, used to sanitize input | `Function`              |
 
 Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section must include:
 
-- a `sectionTitle` to declare the title of the section as a `React IntlObject`
+- a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
 - and a list of `items` as an array of objects.
 
 Each object in the `items` array can contain the following parameters:
