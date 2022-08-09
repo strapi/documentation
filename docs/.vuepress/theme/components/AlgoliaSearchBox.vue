@@ -7,7 +7,7 @@
     <input
       id="algolia-search-input"
       class="search-query"
-      :placeholder="placeholder"
+      placeholder="Quick search..."
     >
   </form>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: ['options'],
   data () {
     return {
-      placeholder: undefined
+      placeholder: 'undefined'
     }
   },
   mounted () {
