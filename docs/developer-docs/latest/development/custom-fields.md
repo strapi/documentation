@@ -60,7 +60,6 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 Currently custom fields can not add new data types to Strapi and should use existing, built-in Strapi data types (e.g. string, number, JSON — see [models documentation](/developer-docs/latest/development/backend-customization/models.md#model-attributes) for the full list).
 :::
 
-<!-- TODO: check this example with developers or create another one. The goal was to have an example different from the advanced color picker described in the guide. -->
 ::: details Example: Registering an example "color" custom field on the server:
 
 ```js
@@ -102,7 +101,6 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 | `components`                     | Components needed to display the custom field in the Content Manager (see [components](#components))            |
 | `options`<br/><br/>(_optional_)  | Options to be used by the Content-type Builder (see [options](#options)) | `Object` |
 
-<!-- TODO: check this example with developers or create another one. The goal was to have the most simple example, different from the advanced color picker described in the guide. -->
 ::: details Example: Registering an example "color" custom field in the admin panel:
 
 ```jsx
