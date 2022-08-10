@@ -28,7 +28,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 
 ### register()
 
-This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
+This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md), the server part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-on-the-server), or database migrations.
 
 **Type**: `Function`
 
