@@ -15,7 +15,8 @@ It can be used to:
 
 - [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface)
 - extend [content-types](/developer-docs/latest/development/backend-customization/models.md) programmatically
-- load some [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
+- load some [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
+- register the server part of [custom fields](/developer-docs/latest/development/custom-fields.md) that would be used only by the current Strapi application.
 
 ## Bootstrap
 
@@ -26,6 +27,7 @@ It can be used to:
 - create an admin user if there isn't one
 - fill the database with some necessary data
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) feature
+- register the admin panel part of [custom fields](/developer-docs/latest/development/custom-fields.md) that would be used only by the current Strapi application.
 
 The bootstrap function can be synchronous, asynchronous, or return a promise:
 
