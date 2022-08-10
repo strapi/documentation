@@ -34,11 +34,11 @@ export default {
         const { algoliaOptions = {}} = userOptions
         docsearch(Object.assign(
           {},
-          // {
-          //   autocompleteOptions: {
-          //     debug: true
-          //   }
-          // },
+          {
+            autocompleteOptions: {
+              debug: true
+            }
+          },
           userOptions,
           {
             inputSelector: '#algolia-search-input',

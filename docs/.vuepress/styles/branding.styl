@@ -72,7 +72,17 @@ body
       .ds-suggestions
         margin-top: 0
     .ds-dropdown-menu
-      box-shadow 0 1px 3px 1px $neutral150
+      overflow: initial
+      margin: 10px 0 0
+      box-shadow 0 1px 3px 1px rgba(0,0,0,.15)
+      &:before
+        background $neutral100
+        border: 1px solid $neutral150
+        box-shadow 0 1px 3px 1px $neutral150
+      .ds-suggestion.ds-cursor
+        .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
+          .algolia-docsearch-suggestion--content
+            background-color: $primary100
     .algolia-docsearch-suggestion
       padding: 0
       .algolia-docsearch-suggestion--wrapper
@@ -90,7 +100,7 @@ body
       .algolia-docsearch-suggestion--title
         padding-right: 16px
         color $neutral900 !important
-        line-height 24px !important
+        line-height 22px !important
       .algolia-docsearch-suggestion--text
         padding-right: 16px
         color $neutral400 !important
