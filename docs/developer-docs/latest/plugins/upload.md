@@ -15,11 +15,10 @@ The providers maintained by Strapi include:
 - [Amazon S3](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3)
 - [Cloudinary](https://www.npmjs.com/package/@strapi/provider-upload-cloudinary)
 - [Local](https://www.npmjs.com/package/@strapi/provider-upload-local)
-- [Rackspace](https://www.npmjs.com/package/@strapi/provider-upload-rackspace)
 
 ## Configuration
 
-This section details configuration options for the default upload provider. If using another provider (e.g. AWS S3 or Rackspace), see the available configuration parameters in that provider's documentation.
+This section details configuration options for the default upload provider. If using another provider (e.g. AWS S3 or Cloudinary), see the available configuration parameters in that provider's documentation.
 
 ### Local server
 
