@@ -23,18 +23,6 @@ const developer = [
         children: [
           ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
           ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md',
-            'DigitalOcean One-Click',
-          ],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/platformsh.md',
-            'Platform.sh One-Click',
-          ],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/render.md',
-            'Render One-Click',
-          ],
         ],
       },
       ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
