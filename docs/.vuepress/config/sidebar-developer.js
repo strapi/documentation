@@ -216,10 +216,6 @@ const developer = [
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
       {
         title: 'Custom Fields',
-        // children: [
-          // ['/developer-docs/latest/development/custom-fields/reference.md', 'Reference'],
-          // ['/developer-docs/latest/development/custom-fields/color-custom-fields-guide.md', 'Color custom field example'],
-        // ]
       },
       ['/developer-docs/latest/development/typescript.md', 'TypeScript'],
       ['/developer-docs/latest/development/providers.md', 'Providers'],
