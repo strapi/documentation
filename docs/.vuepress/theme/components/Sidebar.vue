@@ -34,6 +34,8 @@ export default {
 
 <style lang="stylus">
 .sidebar
+  overflow: initial
+
   ul
     padding 0
     margin 0

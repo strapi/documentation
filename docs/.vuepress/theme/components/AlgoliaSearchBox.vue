@@ -34,12 +34,17 @@ export default {
         const { algoliaOptions = {}} = userOptions
         docsearch(Object.assign(
           {},
+          // {
+          //   autocompleteOptions: {
+          //     debug: true
+          //   }
+          // },
           userOptions,
           {
             inputSelector: '#algolia-search-input',
             // #697 Make docsearch work well at i18n mode.
             algoliaOptions: Object.assign({
-              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || [])
+              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || []),
             }, algoliaOptions),
             handleSelected: (input, event, suggestion) => {
               const { pathname, hash } = new URL(suggestion.url)
@@ -73,6 +78,7 @@ export default {
   .algolia-autocomplete
     .ds-dropdown-menu
       width: 500px
+      overflow: auto
     .algolia-docsearch-suggestion
       .algolia-docsearch-suggestion--category-header
         color: black
