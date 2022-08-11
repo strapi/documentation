@@ -82,7 +82,7 @@ Queries can accept a `populate` parameter to populate various field types:
 
 - [relations & media fields](#relation-media-fields)
 - [components & dynamic zones](#component-dynamic-zones)
-- [creator fields](#creator-fields)
+- [creator fields](#populating-createdby-and-updatedby)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
