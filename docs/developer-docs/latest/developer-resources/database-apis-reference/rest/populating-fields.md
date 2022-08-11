@@ -306,7 +306,7 @@ await request(`/api/articles?${query}`);
 :::
 ### Component & Dynamic Zones
 
-The `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
+The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 #### Deeply populate a 2-level component & media
 
@@ -481,7 +481,7 @@ The `populateCreatorFields` property is not available to the GraphQL API.
 
 ### Combining Population with other operators
 
-By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+By utilizing the `populate` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
 
 #### Populate with field selection
 
