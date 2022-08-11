@@ -82,6 +82,7 @@ Queries can accept a `populate` parameter to populate various field types:
 
 - [relations & media fields](#relation-media-fields)
 - [components & dynamic zones](#component-dynamic-zones)
+- [creator fields](#creator-fields)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
@@ -451,6 +452,32 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
+
+### Populating createdBy and updatedBy
+
+The creator fields `createdBy` and `updatedBy` are removed from the REST API response by default. The `createdBy` and `updatedBy` fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
+
+To add `createdBy` and `updatedBy` to the API response:
+
+1. Open the content-type `schema.json` file.
+2. Add `"populateCreatorFields": true` to the `options` object:
+
+```json
+"options": {
+    "draftAndPublish": true,
+    "populateCreatorFields": true
+  },
+```
+
+3. Save the `schema.json`.
+
+REST API requests using the `populate` parameter that include the `createdBy` or `updatedBy` fields will populate these fields.
+
+:::note
+
+The `populateCreatorFields` property is not available to the GraphQL API.
+:::
+
 
 ### Combining Population with other operators
 
