@@ -1,53 +1,87 @@
 ---
 title: Authenticated request - Strapi Developer Docs
-description: Learn in this guide how you can request the API of your Strapi project as an authenticated user.
+description: Learn how you can request the API of your Strapi project as an authenticated user.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/auth-request.html
 ---
 
 # Authenticated request
 
-In this guide you will see how you can request the API as an authenticated user.
+Learn how to make API requests as an authenticated user. 
 
 ## Introduction
 
-To show you many of the concepts on the [roles and permissions](/developer-docs/latest/plugins/users-permissions.md) part, we will use many users and roles.
+This guide shows you how to assign [roles and permissions](/developer-docs/latest/plugins/users-permissions.md) to multiple users and [authenticate API requests](/developer-docs/latest/plugins/users-permissions.md#authentication) with JSON Web Tokens (JWT).
 
-After that we will see the [authentication workflow](/developer-docs/latest/plugins/users-permissions.md#authentication) to get a `JWT` and use it for an API request.
+To demonstrate how roles work, you will create two different roles and grant each role certain permissions. 
 
-We will have one group of users that will be able to only fetch **Articles** and an other group that will be able to fetch, create and update **Articles**.
+**Authors** can fetch, create, and update Articles; **Readers** can only fetch Articles. 
 
-## Setup
+## Project Setup
 
-### Create Content Type
+To follow along, you must have a Strapi project. If you don’t have a Strapi project, run the following command: 
 
-Lets create a new Content Type **Article**
+<code-group>
 
-- Click on `Content-type Builder` in the left menu
-- Then `+ Create new content-type`
-- Fill `Display name` with `article`
-- Create 2 fields
-  - **Text** short named `title`
-  - **Rich text** named `content`
-- And save this new Content Type
+<code-block title="NPM">
+```sh
+npx create-strapi-app@latest my-project --quickstart
+```
+</code-block>
 
-Then create some **Articles** from the Content Manager.
+<code-block title="YARN">
+```sh
+yarn create strapi-app my-project --quickstart
+```
+</code-block>
 
-### Create Roles & Permissions
+</code-group>
 
-We will create 2 new groups to manage available actions for different kind of users.
+After creating your Strapi project, you will be redirected to your project’s [admin panel](http://localhost:1337/admin). 
 
-- Click on `Settings` in the left menu
-- Select the `Roles` under `USERS & PERMISSIONS PLUGIN` section
-- Then `+ Add New Role`
-- Fill `name` with `Author`
-- Check `Select All` for the Application Article Content Type.
-- And save the new role
+### Create a new Collection Type
 
-And repeat the operation for the `Reader` group and check `find`, `findOne` and `count`.
+Create an **Articles** collection type. 
+
+To create a new collection:
+1. In the left sidebar, select **Content-Type Builder**.
+2. Select **+ Create new collection type**.
+3. In the *Display Name* field, enter “Articles”. 
+  a. In the *API ID (Singular)* field, enter “article”.
+  b. In the *API ID (Plural)* field, enter “articles”. 
+4. Select **Continue**. 
+5. Select *Text*. 
+6. In the *Name* field, enter “title”, select *Short text*, and select **Finish**.
+7. Select **Add another field to this collection type** and select *Rich text*. 
+8. In the *Name* field, enter “content” and select **Finish**.
+9. Select **Save**.
+
+With your Articles content type ready, create some sample articles: 
+
+1. Go to *Content Manager*.
+2. Under *COLLECTION TYPES*, select *Articles*. 
+3. Select **+ Create new  entry**.
+4. Enter a title and some sample text in the content textbox.
+5. Select **Save** and then **Publish**.
+
+### Create Roles and Permissions
+
+Create an Author role and manage its permissions:
+1. From the left sidebar, select *Settings*.
+2. Under *Users & Permissions Plugin*, select *Roles*.
+3. Select **+ Add new role**.
+4. In the *Name* field, enter “Author” and enter a **Description** (for example, “User with author permissions”).
+5. Select the *Article* content type and **Select All**.
+6. Select **Save**.
+
+Create another role called Reader by repeating the steps above, but only select **find** and **findOne** from the Article content type permissions. 
+
+::: NOTE 
+Roles are authenticated by default. 
+:::
 
 ### Create users
 
-Finally create **2 users** with the following data.
+Create **two users** with the following data.
 
 **User 1**
 
@@ -65,11 +99,7 @@ Finally create **2 users** with the following data.
 
 ## Login as a Reader
 
-To login as a user your will have to follow the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login).
-
-Here is the API route for the authentication `/api/auth/local`.
-
-You have to request it in **POST**.
+To log in as a user with the role of Reader, you must send a **POST** request to the following API route: `/api/auth/local`.
 
 :::: tabs card
 
@@ -90,7 +120,7 @@ console.log(data);
 
 ::: tab Postman
 
-If you are using **Postman** for example you will have to set the `body` as `raw` with the `JSON (application/json)` type.
+If you use **Postman**, set the **body** to **raw** and select **JSON** as your data format:
 
 ```json
 {
@@ -116,13 +146,15 @@ The API response contains the **user's JWT** in the `jwt` key.
 }
 ```
 
-You will have to store this `JWT` in your application, it's important because you will have to use it the next requests.
+Save the `JWT` in your application or copy it to your clipboard. You will use it to make future requests. 
+
+::: NOTE
+See the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login) for more information.
+:::
 
 ### Fetch articles
 
-Let's fetch Articles you created.
-
-To do so, you will have to fetch `/articles` route in **GET**.
+Fetch the Articles you created earlier by sending a **GET** request to the `/articles` route:
 
 ```js
 import axios from 'axios';
