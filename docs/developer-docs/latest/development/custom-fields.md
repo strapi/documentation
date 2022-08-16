@@ -33,7 +33,7 @@ Though the recommended way to add a custom field is through creating a plugin, a
 ::: callout 🚧 Current custom fields limitations
 
 * Custom fields can not be used to register new database types in the Strapi backend.
-* Custom fields can not use the relation, component or dynamic zone data types.
+* Custom fields can not use the relation, media, component, or dynamic zone data types.
 * Custom fields can only be shared using plugins.
 
 :::
