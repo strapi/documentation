@@ -17,7 +17,7 @@ The present documentation is intended to custom fields creators: it describes wh
 If you'd rather directly jump to a concrete example, see our [Creating a color custom field guide](#) page for step-by-step instructions on how to build your first custom field from scratch.
 ::: -->
 
-The recommended way to create custom fields is through creating [plugins](/developer-docs/latest/development/plugins-development.md) that include both a server and an admin panel part. Both parts should be registered separately before a custom field is usable in Strapi's admin panel.
+It is recommended that you develop a dedicated [plugin](/developer-docs/latest/development/plugins-development.md) for custom fields. Custom-field plugins include both a server and admin panel part. The custom field must be registered in both parts before it is usable in Strapi's admin panel.
 
 Once created and used, in the attributes defined in `schema.json` files for the models, custom fields are defined as just another type of field (i.e. `type: 'custom-field'`) with a few additional attributes depending on the custom field used (see [models documentation](/developer-docs/latest/development/backend-customization/models.md#custom-fields)).
 <!-- The section linked above will be part of another PR, but basically it's about mentioning that in schema files, custom fields are defined with `type: 'custom-field'` and a possible additional `customField` key for the uid (`global::…` or `plugin::…`), plus possibly additional keys (e.g. `options` for a `select` setting, etc.) -->
