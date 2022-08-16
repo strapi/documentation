@@ -398,11 +398,8 @@ The UID field displays a field that sets a unique identifier, optionally based o
 ## Custom fields
 
 Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
-<!-- TODO: update the link above if a new section is created or if we update the h2 in the other page -->
 
 Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/) lists all available custom fields and hosts dedicated documentation for each custom field, including specific settings.
-
-<!-- TODO: Decide whether we describe how to edit CF (custom fields) (if possible) and delete them — and where we should host these documentation sections. We currently don't explain how to delete plugins (see Installing plugins from the marketplace section). -->
 
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 
