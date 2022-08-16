@@ -181,10 +181,12 @@ register(app) {
           of the field in the Content-Type Builder
         */ 
       ],
-      validator: (args) => ({
-        'color-picker': yup.object().shape({
-          format: yup.string().oneOf(['hex', 'rgba']),
+      validator: args => ({
+        format: yup.string().required({
+          id: 'options.color-picker.format.error',
+          defaultMessage: 'The color format is required',
         }),
+      })
       }),
     },
   });
