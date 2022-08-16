@@ -194,7 +194,7 @@ register(app) {
 :::
 
 ::: note
-Relations, components or dynamic zones can't be used as a custom field's `type` parameter.
+Relations, media, components, or dynamic zones can't be used as a custom field's `type` parameter.
 :::
 
 ### Components
