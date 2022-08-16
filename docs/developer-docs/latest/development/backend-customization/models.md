@@ -106,7 +106,7 @@ Many types of attributes are available:
 - Strapi-specific types, such as:
   - `media` for files uploaded through the [Media library](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#media)
   - `relation` to describe a [relation](#relations) between content-types
-  - `customFields` to describe [custom fields](#custom-fields) and their specific keys
+  - `customField` to describe [custom fields](#custom-fields) and their specific keys
   - `component` to define a [component](#components-2) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md)
