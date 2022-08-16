@@ -70,7 +70,7 @@ module.exports = {
     strapi.customFields.register({
       name: 'color',
       plugin: 'color-picker',
-      type: 'text',
+      type: 'string',
     });
   },
 };
