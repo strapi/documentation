@@ -210,7 +210,6 @@ Relations, media, components, or dynamic zones can't be used as a custom field's
 
 ::: details Example: Registering Input and View components imported from dedicated files:
 
-<!-- ? can we declare components inline as well? like Input: async () => <MyReactComponent>…<MyReactComponent/>? What would be the most simple React.component example we could describe for a custom field? -->
 ```js
 // path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
 
