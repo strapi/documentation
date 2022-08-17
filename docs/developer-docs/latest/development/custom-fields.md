@@ -305,10 +305,6 @@ register(app) {
 
 :::
 
-:::note
-When extending a custom field’s base and advanced forms in the Content-type Builder, it is not currently possible to import custom input components.
-:::
-
 <!-- TODO: decide whether we want to document all of these specific-settings 👇  -->
 <!-- 
 ### Setting types and specific options
