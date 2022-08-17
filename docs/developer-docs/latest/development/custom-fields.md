@@ -122,7 +122,6 @@ register(app) {
     icon: ColorIcon,
     components: {
       Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
-      View: async () => import(/* webpackChunkName: "view-component" */ "./View"),
     } 
     options: {
       base: [
@@ -201,13 +200,9 @@ Relations, media, components, or dynamic zones can't be used as a custom field's
 
 ### Components
 
-`app.customFields.register()` must pass a `components` object with 1 or 2 of the following components:
+`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
 
-| Component | Description                                                         |
-| --------- | ------------------------------------------------------------------- |
-| `Input`   | React component to use in the Content Manager's edit view           |
-
-::: details Example: Registering Input and View components imported from dedicated files:
+::: details Example: Registering an Input component
 
 ```js
 // path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
