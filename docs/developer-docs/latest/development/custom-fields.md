@@ -206,7 +206,6 @@ Relations, media, components, or dynamic zones can't be used as a custom field's
 | Component | Description                                                         |
 | --------- | ------------------------------------------------------------------- |
 | `Input`   | React component to use in the Content Manager's edit view           |
-| `View`    | Read-only React component to use in the Content Manager's list view |
 
 ::: details Example: Registering Input and View components imported from dedicated files:
 
@@ -218,7 +217,6 @@ register(app) {
     // …
     components: {
       Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
-      View: async () => import(/* webpackChunkName: "view-component" */ "./View"),
     } 
     // …
   });
