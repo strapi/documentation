@@ -57,7 +57,7 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 | `type`                         | The data type the custom field will use           | `String` |
 
 ::: note
-Currently custom fields can not add new data types to Strapi and should use existing, built-in Strapi data types (e.g. string, number, JSON — see [models documentation](/developer-docs/latest/development/backend-customization/models.md#model-attributes) for the full list).
+Currently, custom fields can not add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) documentation. Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, can not be used in custom fields.
 :::
 
 ::: details Example: Registering an example "color" custom field on the server:
