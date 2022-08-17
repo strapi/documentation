@@ -222,7 +222,7 @@ register(app) {
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
 | `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Array of Objects` |
 | `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
-| `validator`    | Validator function returning an object, used to sanitize input | `Function`              |
+| `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
 
 Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section must include:
 
@@ -292,9 +292,10 @@ register(app) {
         },
       ],
       advanced: [],
-      validator: (args) => ({
-        'color-picker': yup.object().shape({
-          format: yup.string().oneOf(['hex', 'rgba']),
+      validator: args => ({
+        format: yup.string().required({
+          id: 'options.color-picker.format.error',
+          defaultMessage: 'The color format is required',
         }),
       }),
     },
