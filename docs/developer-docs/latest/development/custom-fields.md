@@ -233,12 +233,12 @@ Each object in the `items` array can contain the following parameters:
 
 <!-- TODO: fix the table content as the parameters given in the [example from the RFC](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#example) and the [TS interface](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#admin) described in the RFC are inconsistent 🤷  -->
 
-| Items parameter | Description                                                                                  | Type     |
-| --------------- | -------------------------------------------------------------------------------------------- | -------- |
-| `name`          | Name of the setting item<br/>Must use the `options.setting-name` format.                     | `String` |
-| `description`   | Description of the setting item to use in the Content-type Builder                           | `String` |
-| `intlLabel`     | Translation for the abel of the setting item                                                 | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
-| `type`          | Type of setting (see [Setting types and specific options](#))                                 | `String` |
+| Items parameter | Description                                                        | Type                                                 |
+| --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
+| `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
+| `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
+| `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
 
 <!-- TODO: add a super simple example with one base setting, one advanced setting, and a simple validator -->
 ::: details Example: Declaring options for an example "color" custom field:
