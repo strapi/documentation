@@ -23,7 +23,7 @@ Once created and used, custom fields are defined like any other attribute in the
 <!-- The section linked above will be part of another PR, but basically it's about mentioning that in schema files, custom fields are defined with `type: 'custom-field'` and a possible additional `customField` key for the uid (`global::…` or `plugin::…`), plus possibly additional keys (e.g. `options` for a `select` setting, etc.) -->
 
 ::: note
-Though the recommended way to add a custom field is through creating a plugin, app-specific custom fields can also be registered within the global `bootstrap` and `register` [functions](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md) found in `./src/index.js`.
+Though the recommended way to add a custom field is through creating a plugin, app-specific custom fields can also be registered within the global `register` [function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md) found in `src/index.js` and `src/admin/app/js` files.
 :::
 
 <!-- TODO: make sure this # exists in the backend custom. > models docs — will come in another PR -->
