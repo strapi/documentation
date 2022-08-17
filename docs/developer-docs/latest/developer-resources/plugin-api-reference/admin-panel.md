@@ -49,6 +49,7 @@ Within the register function, a plugin can:
 * [create a new settings section](#createsettingsection)
 * define [injection zones](#injection-zones-api)
 * [add reducers](#reducers-api)
+* register the admin panel part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-in-the-admin-panel)
 
 #### registerPlugin()
 
@@ -112,7 +113,6 @@ Within the bootstrap function, a plugin can:
 * extend another plugin, using `getPlugin('plugin-name')`,
 * register hooks (see [Hooks API](#hooks-api))
 * [add links to a settings section](#settings-api)
-* register the admin panel part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-in-the-admin-panel)
 
 **Example:**
 
