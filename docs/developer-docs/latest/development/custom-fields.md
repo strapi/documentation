@@ -224,7 +224,7 @@ register(app) {
 | `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
 | `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
 
-Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section must include:
+Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
 
 - a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
 - and a list of `items` as an array of objects.
@@ -240,7 +240,8 @@ Each object in the `items` array can contain the following parameters:
 | `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
 
-<!-- TODO: add a super simple example with one base setting, one advanced setting, and a simple validator -->
+<!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
+
 ::: details Example: Declaring options for an example "color" custom field:
 
 ```jsx
@@ -252,46 +253,82 @@ register(app) {
     options: {
       base: [
         {
-          sectionTitle: {
-            id: 'color-picker.color.section.format',
-            defaultMessage: 'Format',
+          intlLabel: {
+            id: 'color-picker.color.format.label',
+            defaultMessage: 'Color format',
           },
-          items: [
+          name: 'options.format',
+          type: 'select',
+          value: 'hex',
+          options: [
             {
-              intlLabel: {
-                id: 'color-picker.color.format.label',
-                defaultMessage: 'Color format',
+              key: '__null_reset_value__',
+              value: '',
+              metadatas: {
+                intlLabel: {
+                  id: 'color-picker.color.format.placeholder',
+                  defaultMessage: 'Select a format',
+                },
+                hidden: true,
               },
-              name: 'options.format',
-              type: 'select',
+            },
+            {
+              key: 'hex',
               value: 'hex',
-              options: [
-                {
-                  key: 'hex',
-                  value: 'hex',
-                  metadatas: {
-                    intlLabel: {
-                      id: 'color-picker.color.format.hex',
-                      defaultMessage: 'Hexadecimal',
-                    },
-                  },
+              metadatas: {
+                intlLabel: {
+                  id: 'color-picker.color.format.hex',
+                  defaultMessage: 'Hexadecimal',
                 },
-                {
-                  key: 'rgba',
-                  value: 'rgba',
-                  metadatas: {
-                    intlLabel: {
-                      id: 'color-picker.color.format.rgba',
-                      defaultMessage: 'RGBA',
-                    },
-                  },
+              },
+            },
+            {
+              key: 'rgba',
+              value: 'rgba',
+              metadatas: {
+                intlLabel: {
+                  id: 'color-picker.color.format.rgba',
+                  defaultMessage: 'RGBA',
                 },
-              ],
+              },
             },
           ],
         },
       ],
-      advanced: [],
+      advanced: [
+        {
+          sectionTitle: {
+            id: 'global.settings',
+            defaultMessage: 'Settings',
+          },
+          items: [
+            {
+              name: 'required',
+              type: 'checkbox',
+              intlLabel: {
+                id: 'form.attribute.item.requiredField',
+                defaultMessage: 'Required field',
+              },
+              description: {
+                id: 'form.attribute.item.requiredField.description',
+                defaultMessage: "You won't be able to create an entry if this field is empty",
+              },
+            },
+            {
+              name: 'private',
+              type: 'checkbox',
+              intlLabel: {
+                id: 'form.attribute.item.privateField',
+                defaultMessage: 'Private field',
+              },
+              description: {
+                id: 'form.attribute.item.privateField.description',
+                defaultMessage: 'This field will not show up in the API response',
+              },
+            },
+          ],
+        },
+      ],
       validator: args => ({
         format: yup.string().required({
           id: 'options.color-picker.format.error',
@@ -305,21 +342,6 @@ register(app) {
 
 :::
 
-<!-- TODO: decide whether we want to document all of these specific-settings 👇  -->
-<!-- 
-### Setting types and specific options
-
-When registering a custom field in the admin panel, each setting item defined in the `items` keys of the `base` and `advanced` properties can have a different `type`, and each type comes with additional, specific keys.
-
-#### `select` additional keys
-
-Any setting item in the `base` or `advanced` declared as a `select` type can declare the following additional keys:
-
-| Parameter | Description                                            | Type               | Available sub-keys                                                             |
-| --------- | ------------------------------------------------------ | ------------------ | ------------------------------------------------------------------------------ |
-| `options` | Options available in the dropdown                      | `Array of objects` | `key` (string): key name (will be used as an identifier in the model's schema) |
-^^          | ^^                                                     | ^^                 | `value` (string): value to display in the CTB                                  |
-^^          | ^^                                                     | ^^                 | `metadatas` (object): Used to declare the translation for the option, as an [IntlObject]() (i.e. with `id` and `defaultMessage` keys) |
-| `value`   | Default option to display in the Content-type Builder  | `String`           | -                                                                              | -->
-
-<!-- // TODO: add other possible additional keys for specific `type`s -->
+::: tip
+The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.js) file for the `base` settings and the [`advancedForm.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.js) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
+:::
