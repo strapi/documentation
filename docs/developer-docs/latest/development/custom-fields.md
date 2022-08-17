@@ -70,7 +70,7 @@ module.exports = {
     strapi.customFields.register({
       name: 'color',
       plugin: 'color-picker',
-      type: 'string',
+      type: 'text',
     });
   },
 };
@@ -110,7 +110,7 @@ register(app) {
   app.customFields.register({
     name: "color",
     pluginId: "color-picker", // the custom field is created by a color-picker plugin
-    type: "text", // the color will be stored as text
+    type: "string", // the color will be stored as a string
     intlLabel: {
       id: "color-picker.color.label",
       defaultMessage: "Color",
