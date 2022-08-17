@@ -153,7 +153,7 @@ module.exports = ({ env }) => ({
       },
     },
     options: {
-      expiresIn: "7d",
+      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
