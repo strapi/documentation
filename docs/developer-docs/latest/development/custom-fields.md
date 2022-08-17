@@ -19,15 +19,10 @@ If you'd rather directly jump to a concrete example, see our [Creating a color c
 It is recommended that you develop a dedicated [plugin](/developer-docs/latest/development/plugins-development.md) for custom fields. Custom-field plugins include both a server and admin panel part. The custom field must be registered in both parts before it is usable in Strapi's admin panel.
 
 Once created and used, custom fields are defined like any other attribute in the model's `schema.json`. An attribute using a custom field will have its type represented as `customField` (i.e. `type: 'customField'`). Depending on the custom field being used a few additional properties may be present in the attribute's definition (see [models documentation](/developer-docs/latest/development/backend-customization/models.md#custom-fields)).
-<!-- The section linked above will be part of another PR, but basically it's about mentioning that in schema files, custom fields are defined with `type: 'custom-field'` and a possible additional `customField` key for the uid (`global::…` or `plugin::…`), plus possibly additional keys (e.g. `options` for a `select` setting, etc.) -->
 
 ::: note
 Though the recommended way to add a custom field is through creating a plugin, app-specific custom fields can also be registered within the global `register` [function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md) found in `src/index.js` and `src/admin/app/js` files.
 :::
-
-<!-- TODO: make sure this # exists in the backend custom. > models docs — will come in another PR -->
-
-<!-- ? should we document these? 👇 this was described in the [technical RFC](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#motivation) but I'm unsure about what to do with it -->
 
 ::: callout 🚧 Current custom fields limitations
 
