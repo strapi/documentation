@@ -157,7 +157,7 @@ Fetch the Articles you created earlier by sending a **GET** request to the `/art
 
 :::: tabs card
 
-::: axios
+::: tab axios
 
 ```js
 import axios from 'axios';
