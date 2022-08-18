@@ -75,7 +75,7 @@ Create an Author role and manage its permissions:
 
 Create another role called Reader by repeating the steps above, but only select **find** and **findOne** from the Article content type permissions. 
 
-::: NOTE 
+::: note 
 Roles are authenticated by default. 
 :::
 
@@ -147,7 +147,7 @@ If your request is successful, you will receive the **user's JWT** in the `jwt` 
 
 Save the `JWT` in your application or copy it to your clipboard. You will use it to make future requests. 
 
-::: NOTE
+::: note
 See the [login documentation](/developer-docs/latest/plugins/users-permissions.md#login) for more information.
 :::
 
