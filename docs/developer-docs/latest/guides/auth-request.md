@@ -156,6 +156,10 @@ See the [login documentation](/developer-docs/latest/plugins/users-permissions.m
 
 Fetch the Articles you created earlier by sending a **GET** request to the `/articles` route:
 
+:::: tabs card
+
+::: axios
+
 ```js
 import axios from 'axios';
 
@@ -163,6 +167,14 @@ const { data } = await axios.get('http://localhost:1337/api/articles');
 
 console.log(data);
 ```
+
+:::
+
+::: Postman
+
+:::
+
+::::
 
 Here you should receive a **403 error** because you are not allowed, as Public user, to access to the **articles**.
 
