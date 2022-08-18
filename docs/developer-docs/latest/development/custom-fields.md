@@ -47,7 +47,7 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 | Parameter                      | Description                                       | Type     |
 | ------------------------------ | ------------------------------------------------- | -------- |
 | `name`                         | The name of the custom field                      | `String` |
-| `plugin`<br/><br/>(_optional_) | The name of the plugin creating the custom fields<br/><br/>!!!include(developer-docs/latest/development/snippets/custom-field-plugin-optional.md)!!!          | `String` |
+| `plugin`<br/><br/>(_optional_) | The name of the plugin creating the custom fields | `String` |
 | `type`                         | The data type the custom field will use           | `String` |
 
 ::: note
@@ -87,7 +87,7 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 | Parameter                        | Description                                                              | Type                  |
 | -------------------------------- | ------------------------------------------------------------------------ | --------------------- |
 | `name`                           | Name of the custom field                                             | `String`              |
-| `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field<br/><br/>!!!include(developer-docs/latest/development/snippets/custom-field-plugin-optional.md)!!!                          | `String`              |
+| `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field                        | `String`              |
 | `type`                           | Existing Strapi data type the custom field will use                  | `String`              |
 | `icon`<br/><br/>(_optional_)     | Icon for the custom field                                            | `React.ComponentType` |
 | `intlLabel`                      | Translation for the name                                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
