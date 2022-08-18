@@ -238,7 +238,7 @@ Each object in the `items` array can contain the following parameters:
 | `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
 
-<!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
+
 
 ::: details Example: Declaring options for an example "color" custom field:
 
@@ -340,6 +340,7 @@ register(app) {
 
 :::
 
+<!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 ::: tip
-The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.js) file for the `base` settings and the [`advancedForm.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.js) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/21d06ce7d0dc22e6f1096d9afffbb2e2ef65c93c/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
+The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.js) file for the `base` settings and the [`advancedForm.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.js) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
 :::
