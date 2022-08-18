@@ -18,7 +18,7 @@ Folders follow the permission system of assets (see [Users, Roles & Permissions]
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
-- the folder title and the number of subfolders and assets the current folder contains (1)
+- the folder title and breadcrumbs to navigate to a parent folder (1)
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
@@ -27,6 +27,10 @@ By default, the Media Library displays folders and assets created at the root le
 From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/user-docs/latest/media-library/introduction-to-media-library.md)).
 
 To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
+
+::: tip
+The breadcrumb navigation can also be used to go back to a parent folder: click on a folder name to directly jump to it or click on the 3 dots `...` and select a parent folder from the drop-down list.
+:::
 
 ## Adding folders
 

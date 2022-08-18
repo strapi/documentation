@@ -188,7 +188,27 @@ TypeScript support can be added to an existing Strapi project using the followin
 ```
 
 3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root.
-4. Rebuild the admin panel and start the development server:
+4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
+
+```js
+//path: ./config/database.ts
+
+const path = require('path');
+
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+
+```
+
+
+5. Rebuild the admin panel and start the development server:
 
 <code-group>
 <code-block title='NPM'>
