@@ -21,7 +21,7 @@ Additional plugins that you can use to extend and customize your Strapi applicat
 
 From the admin panel, administrators are allowed to:
 
-- discover additional plugins, [providers](#providers), and [custom fields](#custom-fields) packages in the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ (see [Managing Marketplace plugins](/user-docs/latest/plugins/installing-plugins-via-marketplace.md))
+- discover additional plugins and [providers](#providers) in the ![Marketplace icon](../assets/icons/marketplace.svg) _Marketplace_ (see [Managing Marketplace plugins](/user-docs/latest/plugins/installing-plugins-via-marketplace.md))
 - review the currently installed plugins and [providers](#providers) in ![Plugins icon](../assets/icons/plugins.svg) _Plugins_
 
 ![Plugins settings](../assets/plugins/plugins-settings.png)
@@ -39,4 +39,4 @@ Currently, the only plugins designed to work with providers are the:
 
 Some plugins can add _custom fields_ to Strapi. Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components.
 
-Once [installed](/user-docs/latest/plugins/installing-plugins-via-marketplace.md), custom fields can be created in the [Content-type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) and used in the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
+Once added to Strapi (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) and used in the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
