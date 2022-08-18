@@ -99,7 +99,7 @@ Create **two users** with the following data.
 
 ## Login as a Reader
 
-To log in as a user with the role of Reader, you must send a **POST** request to the following API route: `/api/auth/local`.
+To log in as a user with the role of Reader, send a **POST** request to `/api/auth/local` API route.
 
 :::: tabs card
 
