@@ -75,7 +75,7 @@ Create an Author role and manage its permissions:
 
 Create another role called Reader by repeating the steps above, but only select **find** and **findOne** from the Article content type permissions. 
 
-::: NOTE 
+::: note
 Roles are authenticated by default. 
 :::
 
