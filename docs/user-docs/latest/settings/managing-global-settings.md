@@ -125,14 +125,14 @@ To create a new API token:
 1. Click on the **Add new entry** button.
 2. In the API token edition interface, configure the new API token:
 
-| Setting name   | Instructions                                                             |
-| -------------- | ------------------------------------------------------------------------ |
-| Name           | Write the name of the API token.                                         |
-| Description    | (optional) Write a description for the API token.                        |
-| Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
-| Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.<br/><br/>  |
+    | Setting name   | Instructions                                                             |
+    | -------------- | ------------------------------------------------------------------------ |
+    | Name           | Write the name of the API token.                                         |
+    | Description    | (optional) Write a description for the API token.                        |
+    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
+    | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
-3. (optional) For the *Custom* token type, define specific permissions for your Collection types and Single types by clicking on the *Collection types* or *Single types* tab, then clicking on the content-type name, and use checkboxes to enable or disable permissions.
+3. (optional) For the *Custom* token type, define specific permissions for your Collection types and Single types by clicking on the *Collection types* or *Single types* tab, then clicking on the content-type name, and using checkboxes to enable or disable permissions.
     
     <!-- TODO: update this Figma screenshot with a real-use one once the feature can be tested -->
     ![Custom API Token](../assets/settings/settings_api-token-custom.png)
