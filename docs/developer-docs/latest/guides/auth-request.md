@@ -81,25 +81,25 @@ Roles are authenticated by default.
 
 ### Create users
 
-Create **two users** with the following data.
+Create **two users** in the *User* collection type with the following data:
 
-**User 1**
+| **User 1**   | **User Data**       |
+|--------------|---------------------|
+| **username** | author              |
+| **email**    | author@strapi.io    |
+| **password** | strapi              |
+| **role**     | Author              |
 
-- **username**: author
-- **email**: author@strapi.io
-- **password**: strapi
-- **role**: Author
-
-**User 2**
-
-- **username**: reader
-- **email**: reader@strapi.io
-- **password**: strapi
-- **role**: Reader
+| **User 2**   | **User Data**       |
+|--------------|---------------------|
+| **username** | reader              |
+| **email**    | reader@strapi.io    |
+| **password** | strapi              |
+| **role**     | Reader              |
 
 ## Login as a Reader
 
-To log in as a user with the role of Reader, you must send a **POST** request to the following API route: `/api/auth/local`.
+To log in as a user with the role of Reader, send a **POST** request to the `/api/auth/local` API route.
 
 :::: tabs card
 
@@ -155,10 +155,6 @@ See the [login documentation](/developer-docs/latest/plugins/users-permissions.m
 
 Fetch the Articles you created earlier by sending a **GET** request to the `/articles` route:
 
-:::: tabs card
-
-::: axios
-
 ```js
 import axios from 'axios';
 
@@ -167,9 +163,9 @@ const { data } = await axios.get('http://localhost:1337/api/articles');
 console.log(data);
 ```
 
-:::
+In Postman: 
 
-::::
+![GET request in Postman](../assets/guides/postman-get-request/GET-request-unauth.png)
 
 Your response will return a `403 Forbidden` error. 
 
@@ -241,6 +237,6 @@ const { data } = await axios.post(
 
 You will receive a `403 Forbidden` response because you made this request as a user with the role Reader.
 
-Only users with the role Author can create Articles. Sign in as an Author user to receive your JWT. Then, send the **POST** request to the `/articles` endpoint by including the JWT in the `Authorization` header. 
+Only users with the role Author can create Articles. Sign in with the Author user credentials to receive your JWT. Then, send the **POST** request to the `/articles` endpoint by including the JWT in the `Authorization` header. 
 
 You will receive a `200 OK` response and see your new article in the payload.
