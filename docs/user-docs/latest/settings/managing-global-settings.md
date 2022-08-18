@@ -132,9 +132,6 @@ To create a new API token:
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
 :::
 
-## Managing settings for custom fields
+## Configuring other plugins
 
-[Custom fields](/user-docs/latest/plugins/introduction-to-plugins.md#custom-fields) can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below settings for Strapi built-in plugins.
-
-<!-- TODO: update this screenshot with a real example (color picker maybe?) -->
-![Custom fields settings](../assets/settings/settings_custom-fields.png)
+Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for Strapi built-in plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
