@@ -241,6 +241,6 @@ const { data } = await axios.post(
 
 You will receive a `403 Forbidden` response because you made this request as a user with the role Reader.
 
-Only users with the role Author can create Articles. Sign in as an Author user to receive your JWT. Then, send the **POST** request to the `/articles` endpoint by including the JWT in the `Authorization` header. 
+Only users with the role Author can create Articles. Sign in with the Author user credentials to receive your JWT. Then, send the **POST** request to the `/articles` endpoint by including the JWT in the `Authorization` header. 
 
 You will receive a `200 OK` response and see your new article in the payload.
