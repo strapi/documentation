@@ -100,6 +100,11 @@ To configure the Media Library settings:
 
 ## Managing API tokens
 
+::: prerequisites
+* Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#plugins-and-settings)).
+* The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
+:::
+
 API tokens allow users to authenticate their Content API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
 ![API tokens](../assets/settings/settings_api-token.png)
