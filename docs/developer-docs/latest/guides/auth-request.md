@@ -132,8 +132,7 @@ If you use **Postman**, set the **body** to **raw** and select **JSON** as your 
 :::
 
 ::::
-
-The API response contains the **user's JWT** in the `jwt` key.
+If your request is successful, you will receive the **user's JWT** in the `jwt` key:  
 
 ```json
 {
@@ -170,15 +169,13 @@ console.log(data);
 
 :::
 
-::: Postman
-
-:::
-
 ::::
 
-Here you should receive a **403 error** because you are not allowed, as Public user, to access to the **articles**.
+Your response will return a `403 Forbidden` error. 
 
-You should use the `JWT` in the request to say that you can access to this data as **Reader user**.
+When a user sends an unauthorized request (a request that omits an `Authorization` header), Strapi assigns that user a [Public role](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#public-role) by default.
+
+To authenticate a user’s request, use the bearer authentication scheme by including an `Authorization` header signed with the user’s JWT ( `Bearer [JWT Token]`):  
 
 ```js
 import axios from 'axios';
@@ -193,11 +190,15 @@ const { data } = await axios.get('http://localhost:1337/api/articles', {
 console.log(data);
 ```
 
-And tada you have access to the data.
+With your bearer token included in the `Authorization` header, you will receive a `Status: 200 OK` response and a payload containing your articles. 
 
 ### Create an Article
 
-To do so, you will have to request the `/api/articles` route in **POST**.
+Now, create an Article by sending a **POST** request to the `/api/articles` route: 
+
+:::: tabs card
+
+::: tab axios 
 
 ```js
 import axios from 'axios';
@@ -221,8 +222,25 @@ const { data } = await axios.post(
     console.log(data);
 ```
 
-If you request this as a **Reader user**, you will receive a **403 error**. It's because the **Reader role** does not have access to the create function of the **Article** Content Type.
+:::
 
-To fix that you will have to login with the **Author user** and use its `JWT` into the request to create an **Article**.
+::: tab Postman
 
-With that done, you will be able to create an **Article**.
+```json
+{
+  "data": {
+    "title": "my article",
+    "content": "my super article content"
+    }
+}
+```
+
+:::
+
+::::
+
+You will receive a `403 Forbidden` response because you made this request as a user with the role Reader.
+
+Only users with the role Author can create Articles. Sign in as an Author user to receive your JWT. Then, send the **POST** request to the `/articles` endpoint by including the JWT in the `Authorization` header. 
+
+You will receive a `200 OK` response and see your new article in the payload.
