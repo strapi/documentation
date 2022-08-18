@@ -231,8 +231,6 @@ Both `base` and `advanced` settings accept an object or an array of objects, eac
 
 Each object in the `items` array can contain the following parameters:
 
-<!-- TODO: fix the table content as the parameters given in the [example from the RFC](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#example) and the [TS interface](https://github.com/strapi/rfcs/blob/3eb034e169746558315d719ca5fb49cec854640a/rfcs/xxxx-custom-fields-api.md#admin) described in the RFC are inconsistent 🤷  -->
-
 | Items parameter | Description                                                        | Type                                                 |
 | --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
 | `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
