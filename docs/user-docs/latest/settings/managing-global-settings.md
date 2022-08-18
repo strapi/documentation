@@ -125,13 +125,19 @@ To create a new API token:
 1. Click on the **Add new entry** button.
 2. In the API token edition interface, configure the new API token:
 
-| Setting name | Instructions                                              |
-|--------------|-----------------------------------------------------------|
-| Name         | Write the name of the API token.                          |
-| Description  | (optional) Write a description for the API token.         |
-| Token type   | Choose a token type: either *Read-only* or *Full access*. |
+| Setting name   | Instructions                                                             |
+| -------------- | ------------------------------------------------------------------------ |
+| Name           | Write the name of the API token.                                         |
+| Description    | (optional) Write a description for the API token.                        |
+| Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
+| Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.<br/><br/>  |
 
-3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
+3. (optional) For the *Custom* token type, define specific permissions for your Collection types and Single types by clicking on the *Collection types* or *Single types* tab, then clicking on the content-type name, and use checkboxes to enable or disable permissions.
+    
+    <!-- TODO: update this Figma screenshot with a real-use one once the feature can be tested -->
+    ![Custom API Token](../assets/settings/settings_api-token-custom.png)
+
+4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
 ::: caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
