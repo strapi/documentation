@@ -128,6 +128,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
+| API Tokens | <ul><li>General</li><ul><li>"Create" - allows to create API tokens</li><li>"Read" - allows to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows to edit API tokens</li><li>"Delete" - allows to delete API tokens</li></ul></ul> 👉 Path reminder to API Tokens settings: <br> *General > Settings > Global Settings - API Tokens* |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br> *General > Settings > Global Settings - Media Library* |
 | Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br> *General > Settings > Global Settings - Internationalization* |
 | Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br> *General > Settings > Global Settings - Single Sign-On* |
