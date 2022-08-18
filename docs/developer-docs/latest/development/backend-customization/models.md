@@ -502,7 +502,7 @@ Custom fields attributes also accept:
 
 - the `customField` additional parameter to mention the registered custom field to use, using:
   - either the `plugin::plugin-name.fieldname` format for a custom field created by a plugin
-  - or the `global::api-name.fieldname` for a custom field specific to the current Strapi application
+  - or the `global::fieldname` for a custom field specific to the current Strapi application
 - additional parameters depending on what has been defined when registering the custom field (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)).
 
 ```json
