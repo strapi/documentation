@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fi
 
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or installed, custom fields can be used in the Content-Types Builder and Content Manager just like built-in fields.
 
-The present documentation is intended for custom field creators: it describes which APIs and functions developers must use to create a new custom field. The [user guide](#/user-docs/latest/plugins/introduction-to-plugins.md#custom-fields) describes how to install and use custom fields from Strapi's admin panel.
+The present documentation is intended for custom field creators: it describes which APIs and functions developers must use to create a new custom field. The [user guide](/user-docs/latest/plugins/introduction-to-plugins.md#custom-fields) describes how to install and use custom fields from Strapi's admin panel.
 
 <!-- TODO: uncomment and adjust content when blog post is ready -->
 <!-- ::: strapi Prefer to learn by building?
