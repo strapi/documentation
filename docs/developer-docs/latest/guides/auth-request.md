@@ -97,7 +97,7 @@ Create **two users** with the following data.
 | **password** | strapi              |
 | **role**     | Reader              |
 
-## Login as a Reader
+## Log in as a Reader
 
 To log in as a user with the role of Reader, send a **POST** request to the `/api/auth/local` API route.
 
