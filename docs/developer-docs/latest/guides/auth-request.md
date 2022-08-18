@@ -75,13 +75,13 @@ Create an Author role and manage its permissions:
 
 Create another role called Reader by repeating the steps above, but only select **find** and **findOne** from the Article content type permissions. 
 
-::: note 
+::: note
 Roles are authenticated by default. 
 :::
 
 ### Create users
 
-Create **two users** in the *User* collection type with the following data:
+Create **two users** with the following data.
 
 | **User 1**   | **User Data**       |
 |--------------|---------------------|
