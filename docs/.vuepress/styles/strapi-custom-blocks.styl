@@ -22,57 +22,74 @@
     margin-bottom 2rem
     border-left-width: .25rem
     border-left-style solid
+    color: $neutral800
+    .custom-block-title
+      font-weight 600
+
+  &.callout
+  &.callout-alt
+  &.prerequisites
+    background-color $neutral100
+    border-color $neutral500
+    .custom-block-title
+      color: $neutral800
+    a
+      color $primary600
+    code
+      background-color $primary200
+  &.callout-alt
+    border-radius: 10px
+    background-color: #eff5f7
+    border: none
   &.strapi
     background-color $primary100
     border-color $primary600
     .custom-block-title
       color $primary700
-      font-weight 600
     a
       color $primary600
-      font-weight 600
     code
       background-color $primary200
-  &.callout
-  &.callout-alt
-  &.prerequisites
-    background-color #f8f8f8
-    border-color #bbbbba
-  &.callout-alt
-    border-radius: 10px
-    background-color: #eff5f7
-    border: none
-  &.note
-    background-color #f4fcff
-    border-color #0193C2
-  &.caution
-    border-color #E7C000
-    background-color rgba(255,229,100,.3)
-    color #6b5900
-    .custom-block-title
-      color #B29400
-    a
-      color #2c3e50
   &.warning
-    border-color #cc0000
-    background-color rgb(255, 230, 230)
-    color #4d0000
+    background-color $danger100
+    border-color $danger600
     .custom-block-title
-      color #900
+      color $danger700
     a
-      color #2c3e50
+      color $danger600
+    code
+      background-color $danger200
+      color: $danger600
+  &.caution
+    background-color $warning100
+    border-color $warning600
+    .custom-block-title
+      color $warning700
+    a
+      color $warning600
+    code
+      background-color $warning200
+      color: $warning600
   &.tip
     background-color $success100
     border-color $success600
     .custom-block-title
       color $success700
-      font-weight 600
     a
       color $success600
-      font-weight 600
     code
       background-color $success200
       color: $success600
+  &.note
+    background-color $secondary100
+    border-color $secondary600
+    .custom-block-title
+      color $secondary700
+    a
+      color $secondary600
+    code
+      background-color $secondary200
+      color: $secondary600
   /**
    * API CALLS
   */
