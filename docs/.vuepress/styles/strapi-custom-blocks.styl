@@ -23,15 +23,16 @@
     border-left-width: .25rem
     border-left-style solid
   &.strapi
-    background-color rgba(129,107,250, .05)
-    border-color rgb(129,107,250)
+    background-color $primary100
+    border-color $primary600
     .custom-block-title
-      color #816bfa
-      font-weight 700
-    p, li
-      color #2c3e50
-      a
-        color #007eff
+      color $primary700
+      font-weight 600
+    a
+      color $primary600
+      font-weight 600
+    code
+      background-color $primary200
   &.callout
   &.callout-alt
   &.prerequisites
@@ -62,6 +63,17 @@
       color #2c3e50
   &.tip
     background-color #EFFDF6
+    background-color $success100
+    border-color $success600
+    .custom-block-title
+      color $success700
+      font-weight 600
+    a
+      color $success600
+      font-weight 600
+    code
+      background-color $success200
+      color: $success600
   /**
    * API CALLS
   */
@@ -241,4 +253,35 @@
 
 .custom-block.details
   color rgb(44, 62, 80)
+
+.install-link
+  // text-decoration: none
+  background-color: #4945FF
+  border-radius: 6px
+  padding: 20px
+  color: $primary100
+  justify-content: space-between
+
+  .text
+    flex-grow: 1
+
+  .title
+    color: $neutral0
+
+  .description
+    color: $primary100
+
+  .arrow
+    width: 24px
+    height: 24px
+
+  &:hover
+    .title
+      color: $neutral0
+      text-decoration: underline
+    .description
+      color: $neutral0
+      // text-decoration: none
+    .arrow
+      // TODO:
 
