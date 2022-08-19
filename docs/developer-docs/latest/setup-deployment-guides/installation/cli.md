@@ -38,21 +38,21 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 1. In a terminal, run the following command:
 
-<code-group>
+    <code-group>
 
-<code-block title="NPM">
-```sh
-npx create-strapi-app@latest my-project
-```
-</code-block>
+    <code-block title="NPM">
+    ```sh
+    npx create-strapi-app@latest my-project
+    ```
+    </code-block>
 
-<code-block title="YARN">
-```sh
-yarn create strapi-app my-project
-```
-</code-block>
+    <code-block title="YARN">
+    ```sh
+    yarn create strapi-app my-project
+    ```
+    </code-block>
 
-</code-group>
+    </code-group>
 
 2. Choose an installation type:
 
@@ -62,6 +62,12 @@ yarn create strapi-app my-project
 3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
 
 4. (Custom installation type only) Name your project's database.
+
+::: tip
+Experimental Strapi versions are released everyday. You can build a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
+
+Please use these experimental builds at your own risk. It is not recommended to use them in production.
+:::
 
 ## Running Strapi
 
