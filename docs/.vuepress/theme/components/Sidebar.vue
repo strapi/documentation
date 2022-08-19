@@ -34,7 +34,7 @@ export default {
 
 <style lang="stylus">
 .sidebar
-  overflow: initial
+  overflow: initial // TODO: fix — This makes the sidebar not scrollable
 
   ul
     padding 0
