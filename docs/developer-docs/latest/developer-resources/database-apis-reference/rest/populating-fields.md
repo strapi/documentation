@@ -89,7 +89,7 @@ It is also possible to [combine population with multiple operators](#combining-p
 ::: note
 
 - By default Strapi will not populate any type of fields.
-- It's currently not possible to return just an array of IDs. This is something that is currently under discussion
+- It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
 
 :::
 
@@ -162,7 +162,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  populate: '*', 
+  populate: '*',
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -174,12 +174,16 @@ await request(`/api/articles?${query}`);
 
 #### Populate 1 level
 
-To populate only specific relations one-level deep, use the relation name (e.g. `categories`) in combination with the `populate` parameter.
+To populate only specific relations one-level deep, use one of the following method:
+- Use the populate parameter as an array and put the relation name inside.
+- Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following value: `*, true, false, t, f, 1, 0`.
 
 ::::api-call
 :::request Example request: populate categories
 
 `GET /api/articles?populate[0]=categories`
+
+`GET /api/articles?populate[categories]=true`
 
 :::
 
@@ -221,9 +225,23 @@ To populate only specific relations one-level deep, use the relation name (e.g. 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
-  populate: ['categories'], 
+  populate: ['categories'],
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+```js
+// Object method
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    categories: true,
+  },
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -241,6 +259,8 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 :::request Example request: populate author and author.company
 
 `GET /api/articles?populate[author][populate][0]=company`
+
+`GET /api/articles?populate[author][populate][company]=true`
 
 :::
 
@@ -289,13 +309,32 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: {
     author: {
       populate: ['company'],
     }
-  } 
+  }
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+```js
+// Object method
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    author: {
+      populate: {
+        company: true
+      },
+    }
+  }
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -304,6 +343,11 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
+
+:::note
+There is no limit on the number of levels that can be populated. However, the more nested populate there are, the more the request will take time to be performed.
+:::
+
 ### Component & Dynamic Zones
 
 The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
