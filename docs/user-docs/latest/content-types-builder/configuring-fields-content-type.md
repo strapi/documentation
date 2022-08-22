@@ -16,7 +16,7 @@ Content-types are composed of one or several fields. Each field is designed to c
 In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of custom fields, components, and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: note
-Depending on what content-type or component is being created or edited, not all fields — including components and dynamic zones — are always available.
+Depending on which content-type or component is being created or edited, not all fields — including components and dynamic zones — are always available.
 :::
 
 <!-- TODO update screenshot with final version -->
