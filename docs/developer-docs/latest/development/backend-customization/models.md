@@ -498,7 +498,7 @@ The `tableName` key defines the name of the join table. It has to be specified o
 #### Custom fields
 
 [Custom fields](/developer-docs/latest/development/custom-field.md) extend Strapi’s capabilities by adding new types of fields to content-types. Custom fields are explicitly defined in the [attributes](#model-attributes) of a model with `type: customField`.
-Custom fields attributes also accept:
+Custom fields' attributes also accept:
 
 - the `customField` additional parameter to mention the registered custom field to use, using:
   - either the `plugin::plugin-name.fieldname` format for a custom field created by a plugin
