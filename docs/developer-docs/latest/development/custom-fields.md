@@ -81,7 +81,7 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 | -------------------------------- | ------------------------------------------------------------------------ | --------------------- |
 | `name`                           | Name of the custom field                                             | `String`              |
 | `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field                        | `String`              |
-| `type`                           | Existing Strapi data type the custom field will use                  | `String`              |
+| `type`                           | Existing Strapi data type the custom field will use<br/><br/>❗️ Relations, media, components, or dynamic zones can't be used.                  | `String`              |
 | `icon`<br/><br/>(_optional_)     | Icon for the custom field                                            | `React.ComponentType` |
 | `intlLabel`                      | Translation for the name                                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `intlDescription`                | Translation for the description                                      | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
@@ -179,10 +179,6 @@ register(app) {
 }
 ```
 
-:::
-
-::: note
-Relations, media, components, or dynamic zones can't be used as a custom field's `type` parameter.
 :::
 
 ### Components
