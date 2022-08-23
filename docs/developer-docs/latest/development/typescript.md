@@ -112,8 +112,8 @@ Strapi can be run programmatically by using the `strapi()` factory. Since the co
 // path: ./server.js 
 
 const strapi = require('@strapi/strapi');
-
 const app = strapi({ distDir: './dist' });
+app.start(); 
 ```
 
 ### Use the `strapi.compile()` function
