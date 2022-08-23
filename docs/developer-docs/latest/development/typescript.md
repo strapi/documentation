@@ -124,8 +124,7 @@ The `strapi.compile()` function should be mostly used for developing tools that 
 
 const strapi = require('@strapi/strapi');
 
-const appContext = await strapi.compile();
-const app = await strapi(appContext);
+strapi.compile().then(appContext => strapi(appContext).start());
 
 ```
 
