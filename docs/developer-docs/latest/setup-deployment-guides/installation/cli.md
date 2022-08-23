@@ -64,7 +64,7 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 4. (Custom installation type only) Name your project's database.
 
 ::: tip
-Experimental Strapi versions are released every day. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
+Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
 
 Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
