@@ -214,6 +214,7 @@ const developer = [
       ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ['/developer-docs/latest/development/custom-fields.md', 'Custom fields'],
       ['/developer-docs/latest/development/typescript.md', 'TypeScript'],
       ['/developer-docs/latest/development/providers.md', 'Providers'],
     ],
