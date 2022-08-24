@@ -134,4 +134,4 @@ For security reasons, API tokens are only shown right after they have been creat
 
 ## Configuring other plugins
 
-Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for Strapi built-in plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
+Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
