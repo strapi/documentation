@@ -44,12 +44,35 @@ table > tbody > tr:nth-child(2n)
 table > tr, th, td
   border-color $neutral200
 
-// code blocks // TODO
+/**
+ * Code blocks
+ */
+[class^="language-"]
+  background-color $neutral900 !important
+[class^="language-"]::after
+  background-color $neutral900 !important
+  border-right-color: $neutral900 !important
+
+.line-number
+  color $neutral600
+
+code
+  .token
+    &.comment
+      color $neutral400
+
+/**
+ * Update code group styles
+ */
+.theme-code-group__nav
+  background-color $neutral900 !important
+  // TODO: override CodeGroup.vue to avoid !important
+
+.el-tabs__content
+  .theme-code-group__li
+    .theme-code-group__nav-tab.theme-code-group__nav-tab-active
+      border-bottom-color $primary500 !important
 
 // API calls // TODO
 
 // QSG tabs // TODO might be done in markdown file directly
-
-// navigation // TODO
-
-// details blocks // TODO
