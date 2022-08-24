@@ -82,13 +82,14 @@ Queries can accept a `populate` parameter to populate various field types:
 
 - [relations & media fields](#relation-media-fields)
 - [components & dynamic zones](#component-dynamic-zones)
+- [creator fields](#populating-createdby-and-updatedby)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
 ::: note
 
 - By default Strapi will not populate any type of fields.
-- It's currently not possible to return just an array of IDs. This is something that is currently under discussion
+- It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
 
 :::
 
@@ -161,7 +162,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  populate: '*', 
+  populate: '*',
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -173,12 +174,16 @@ await request(`/api/articles?${query}`);
 
 #### Populate 1 level
 
-To populate only specific relations one-level deep, use the relation name (e.g. `categories`) in combination with the `populate` parameter.
+To populate only specific relations one-level deep, use one of the following method:
+- Use the populate parameter as an array and put the relation name inside.
+- Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following values: `*, true, false, t, f, 1, 0`.
 
 ::::api-call
 :::request Example request: populate categories
 
 `GET /api/articles?populate[0]=categories`
+
+`GET /api/articles?populate[categories]=true`
 
 :::
 
@@ -220,9 +225,23 @@ To populate only specific relations one-level deep, use the relation name (e.g. 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
-  populate: ['categories'], 
+  populate: ['categories'],
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+```js
+// Object method
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    categories: true,
+  },
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -240,6 +259,8 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 :::request Example request: populate author and author.company
 
 `GET /api/articles?populate[author][populate][0]=company`
+
+`GET /api/articles?populate[author][populate][company]=true`
 
 :::
 
@@ -288,13 +309,32 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: {
     author: {
       populate: ['company'],
     }
-  } 
+  }
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+```js
+// Object method
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    author: {
+      populate: {
+        company: true
+      },
+    }
+  }
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -303,9 +343,14 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
+
+:::note
+There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
+:::
+
 ### Component & Dynamic Zones
 
-The `population` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
+The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 #### Deeply populate a 2-level component & media
 
@@ -452,9 +497,35 @@ await request(`/api/articles?${query}`);
 
 :::
 
+### Populating createdBy and updatedBy
+
+The creator fields `createdBy` and `updatedBy` are removed from the REST API response by default. The `createdBy` and `updatedBy` fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
+
+To add `createdBy` and `updatedBy` to the API response:
+
+1. Open the content-type `schema.json` file.
+2. Add `"populateCreatorFields": true` to the `options` object:
+
+```json
+"options": {
+    "draftAndPublish": true,
+    "populateCreatorFields": true
+  },
+```
+
+3. Save the `schema.json`.
+
+REST API requests using the `populate` parameter that include the `createdBy` or `updatedBy` fields will populate these fields.
+
+:::note
+
+The `populateCreatorFields` property is not available to the GraphQL API.
+:::
+
+
 ### Combining Population with other operators
 
-By utilizing the `population` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+By utilizing the `populate` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
 
 #### Populate with field selection
 
