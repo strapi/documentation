@@ -109,11 +109,11 @@ To start Strapi programmatically in a TypeScript project the Strapi instance req
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js
-// path: ./src/plugins/<plugin-name>/server/index.js 
+// path: ./server.js 
 
 const strapi = require('@strapi/strapi');
-
-const app = await strapi({ distDir: './dist' });
+const app = strapi({ distDir: './dist' });
+app.start(); 
 ```
 
 ### Use the `strapi.compile()` function
@@ -124,8 +124,7 @@ The `strapi.compile()` function should be mostly used for developing tools that 
 
 const strapi = require('@strapi/strapi');
 
-const appContext = await strapi.compile();
-const app = await strapi(appContext);
+strapi.compile().then(appContext => strapi(appContext).start());
 
 ```
 
@@ -188,7 +187,27 @@ TypeScript support can be added to an existing Strapi project using the followin
 ```
 
 3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root.
-4. Rebuild the admin panel and start the development server:
+4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
+
+```js
+//path: ./config/database.ts
+
+const path = require('path');
+
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+
+```
+
+
+5. Rebuild the admin panel and start the development server:
 
 <code-group>
 <code-block title='NPM'>
