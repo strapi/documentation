@@ -144,119 +144,120 @@ TypeScript support can be added to an existing Strapi project using the followin
 
 1. Add a `tsconfig.json` file at the project root and copy the following code, with the `allowJs` flag, to the file:
 
-```json
-// path: ./tsconfig.json
-
-{
-    "extends": "@strapi/typescript-utils/tsconfigs/server",
-    "compilerOptions": {
-      "outDir": "dist",
-      "rootDir": ".",
-      "allowJs": true, // copy *.js files in outDir
-      "checkJs": false, // do not validate *.js files for now
-      "paths": {
-        "~": [
-          "."
+    ```json
+    // path: ./tsconfig.json
+    
+    {
+        "extends": "@strapi/typescript-utils/tsconfigs/server",
+        "compilerOptions": {
+          "outDir": "dist",
+          "rootDir": ".",
+          "allowJs": true, // copy *.js files in outDir
+          "checkJs": false, // do not validate *.js files for now
+          "paths": {
+            "~": [
+              "."
+            ],
+            "~/*": [
+              "./*"
+            ]
+          }
+        },
+        "include": [
+          "./",
+          "src/**/*.json"
         ],
-        "~/*": [
-          "./*"
+        "exclude": [
+          "node_modules/",
+          "build/",
+          "dist/",
+          ".cache/",
+          ".tmp/",
+          "src/admin/",
+          "**/*.test.ts"
         ]
+       
       }
-    },
-    "include": [
-      "./",
-      "src/**/*.json"
-    ],
-    "exclude": [
-      "node_modules/",
-      "build/",
-      "dist/",
-      ".cache/",
-      ".tmp/",
-      "src/admin/",
-      "**/*.test.ts"
-    ]
-   
-  }
-  
-```
+      
+    ```
 
-::: note
-The `@strapi/typescript-utils/tsconfigs/server` use node 14 as default target. You can override with your own, depending on your environment, more info in the [typescript wiki](https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping)
-:::
+    ::: note
+    The `@strapi/typescript-utils/tsconfigs/server` use node 14 as default target. You can override with your own, depending on your environment, more info in the         [typescript wiki](https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping)
+    :::
 
 2. Add a `tsconfig.json` file in the `./src/admin/` directory and copy the following code to the file:
 
-```json
-// path: ./src/admin/tsconfig.json
-
-{
-    "extends": "@strapi/typescript-utils/tsconfigs/admin",
-    "include": [
-      "../plugins/**/admin/src/**/*",
-      "./"
-    ],
-    "exclude": [
-      "node_modules/",
-      "build/",
-      "dist/",
-      "**/*.test.ts"
-    ]
-  }
-  
-```
+    ```json
+    // path: ./src/admin/tsconfig.json
+    
+    {
+        "extends": "@strapi/typescript-utils/tsconfigs/admin",
+        "include": [
+          "../plugins/**/admin/src/**/*",
+          "./"
+        ],
+        "exclude": [
+          "node_modules/",
+          "build/",
+          "dist/",
+          "**/*.test.ts"
+        ]
+      }
+      
+    ```
 
 3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root. Alternatively, you can use [`@strapi-community`](https://github.com/strapi-community/eslint-config) configuration which allows both typescript and javascript.
 4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
 
-```js
-//path: ./config/database.ts
-
-const path = require('path');
-
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'sqlite',
-    connection: {
-      filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
-    },
-    useNullAsDefault: true,
-  },
-});
-
-```
+    ```js
+    //path: ./config/database.ts
+    
+    const path = require('path');
+    
+    module.exports = ({ env }) => ({
+      connection: {
+        client: 'sqlite',
+        connection: {
+          filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        },
+        useNullAsDefault: true,
+      },
+    });
+    
+    ```
 
 5. Map your custom plugins server entrypoint to compiled typesript output `src/plugins/**/strapi-server.js`:
 
-```js
-'use strict';
-
-const { join } = require('node:path');
-module.exports = require(join(strapi.dirs.dist.src, 'plugins/<xxx>/server'));
-```
+    ```js
+    'use strict';
+    
+    const { join } = require('node:path');
+    module.exports = require(join(strapi.dirs.dist.src, 'plugins/<xxx>/server'));
+    ```
 
 
 6. Rebuild the admin panel and start the development server:
 
-<code-group>
-<code-block title='NPM'>
+    <code-group>
+    <code-block title='NPM'>
 
-```sh
-npm run build
-npm run develop
-```
+    ```sh
+    npm run build
+    npm run develop
+    ```
 
-</code-block>
+    </code-block>
 
-<code-block title='YARN'>
+    <code-block title='YARN'>
+    
+    ```sh
+    yarn build
+    yarn develop
+    ```
+    
+    </code-block>
+    </code-group>
 
-```sh
-yarn build
-yarn develop
-```
-
-</code-block>
-</code-group>
 
 After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
 
@@ -292,8 +293,4 @@ Once you are ready, you can allow TypeScript compiler to check typing in  `*.js`
   }
 }
 ```
-
-
-
-
 
