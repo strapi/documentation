@@ -105,7 +105,7 @@
       margin: 0 -12rem 2rem 0
       align-items: stretch
   &.request
-    background-color: #666687
+    background-color: $neutral700
     padding: 0 1rem 1rem
     border-radius: 12px
     font-size: 100%
@@ -117,7 +117,7 @@
       border-radius: 12px 12px 0 0
       padding: .5rem 1rem
       font-weight: 700
-      background-color: #32324D
+      background-color: $neutral600
       color: #F6F6F9
       font-size: 90%;
     .custom-block-title+p
@@ -134,10 +134,15 @@
     ul, ol
       padding-left: 3rem
     [class^="language-"]
-      background-color: transparent
-      font-size: 110%
+      background-color $neutral700 !important
+      font-size: 100%
       &::before
         color: #EAEAEF
+      &::after
+        background-color $neutral700 !important
+        border-right-color $neutral700 !important
+    .line-number
+      color $neutral500
     pre
       padding: 1rem 0 0 1rem
     code
@@ -160,17 +165,17 @@
         &.comment
           color: #d9d9d9
   &.response
-    background-color: #DCDCE4
+    background-color: $neutral900
     margin-top: 2rem
     padding: 0 1rem 1rem
     border-radius: 12px
     font-size: 100%
-    color: #666687
+    color: $neutral200
     .extra-class::before
-      color: #666687
+      color: $neutral200
     .custom-block-title
-      background-color: #C0C0CF
-      color: #32324D
+      background-color: $neutral800
+      color: $neutral0
       border-radius: 12px 12px 0 0
       margin-left: -1rem
       margin-right: -1rem
@@ -181,23 +186,23 @@
       margin-bottom: .5rem
     [class^="language-"]
       background-color: transparent
-      font-size: 110%
+      font-size: 100%
       &::before
-        color: #666687
+        color: $neutral200
     pre
       padding: 1rem 0 0 1rem
     code
-      color: #666687 !important
+      color: $neutral200 !important
       .token
-        color: #666687 // catch-all for undefined colors
+        color: $neutral200 // catch-all for undefined colors
         &.punctuation
         &.operator
         &.property
-          color: #666687
+          color: $neutral200
         &.string
-          color: #2B7732
+          color: $success500
         &.number
-          color: #B7322A
+          color: $danger500
         &.comment
           color: #8585b2
   &.request
