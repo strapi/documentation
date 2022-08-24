@@ -87,8 +87,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
 ::: prerequisites
-Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation) on your machine. It is also possible to use Yarn instead of npm (see [install the Yarn package](https://yarnpkg.com/en/)).
+
+!!!include(developer-docs/latest/developer-resources/cli/snippets/installation-prerequisites.md)!!!
+
 :::
+
 
 👇 Let's get started! Using the big buttons below, please choose between:
 

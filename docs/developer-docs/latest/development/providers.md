@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/providers
 
 Certain [plugins](../../../user-docs/latest/plugins/introduction-to-plugins.md) can be extended via the installation and configuration of additional [providers](../../../user-docs/latest/plugins/introduction-to-plugins.md#providers).
 
-Providers add an extension to the core capabilities of the plugin, for example to upload media files to Rackspace instead of the local server, or using Amazon SES for emails instead of Sendmail.
+Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
 ::: note
 Only the [Upload](../plugins/upload.md) and [Email](../plugins/email.md) plugins are currently designed to work with providers. 
