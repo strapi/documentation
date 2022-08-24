@@ -503,10 +503,8 @@ Custom fields' attributes also accept:
 Custom fields' attributes also show the following specificities:
 - a `customField` attribute whose value acts as a unique identifier to indicate which registered custom field should be used. Its value follows:
    - either the `plugin::plugin-name.field-name` format if a plugin created the custom field 
-   - or the `global::field-name` format for a custom field specific to the current Strapi application.
-  - either the `plugin::plugin-name.fieldname` format for a custom field created by a plugin
-  - or the `global::fieldname` for a custom field specific to the current Strapi application
-- additional parameters depending on what has been defined when registering the custom field (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)).
+   - or the `global::field-name` format for a custom field specific to the current Strapi application
+- and additional parameters depending on what has been defined when registering the custom field (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)).
 
 ```json
 // path: ./src/api/[apiName]/[content-type-name]/content-types/schema.json
