@@ -130,6 +130,14 @@ strapi.compile().then(appContext => strapi(appContext).start());
 
 ## Add TypeScript support to an existing Strapi project
 
+You can migrate an existing JavaScript project to TypeScript with incremental steps without needing complete refactor.
+
+The first step is to create new content in TypeScript beside existing JavaScript. 
+Then we can start to enable typechecking on specific JavaScript files, when we are done we can enable JavaScript check on the entire project.
+This will give us time to migrate all JavaScript content over the time 
+
+### Add TypeScript Compiler, with `allowJs`
+
 Adding TypeScript support to an existing project requires adding 2 `tsconfig.json` files and rebuilding the admin panel. Additionally, the `eslintrc` and `eslintignore` files can be optionally removed. The TypeScript flag `allowJs` should be set to `true` in the root `tsconfig.json` file to incrementally add TypeScript files to existing JavaScript projects. The `allowJs` flag allows `.ts` and `.tsx` files to coexist with JavaScript files.
 
 TypeScript support can be added to an existing Strapi project using the following procedure:
@@ -144,7 +152,16 @@ TypeScript support can be added to an existing Strapi project using the followin
     "compilerOptions": {
       "outDir": "dist",
       "rootDir": ".",
-      "allowJs": true //enables the build without .ts files
+      "allowJs": true, // copy *.js files in outDir
+      "checkJs": false, // do not validate *.js files for now
+      "paths": {
+        "~": [
+          "."
+        ],
+        "~/*": [
+          "./*"
+        ]
+      }
     },
     "include": [
       "./",
@@ -157,13 +174,16 @@ TypeScript support can be added to an existing Strapi project using the followin
       ".cache/",
       ".tmp/",
       "src/admin/",
-      "**/*.test.ts",
-      "src/plugins/**"
+      "**/*.test.ts"
     ]
    
   }
   
 ```
+
+::: note
+The `@strapi/typescript-utils/tsconfigs/server` use node 14 as default target. You can override with your own, depending on your environment, more info in the [typescript wiki](https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping)
+:::
 
 2. Add a `tsconfig.json` file in the `./src/admin/` directory and copy the following code to the file:
 
@@ -186,7 +206,7 @@ TypeScript support can be added to an existing Strapi project using the followin
   
 ```
 
-3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root.
+3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root. Alternatively, you can use [`@strapi-community`](https://github.com/strapi-community/eslint-config) configuration which allows both typescript and javascript.
 4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
 
 ```js
@@ -206,8 +226,17 @@ module.exports = ({ env }) => ({
 
 ```
 
+5. Map your custom plugins server entrypoint to compiled typesript output `src/plugins/**/strapi-server.js`:
 
-5. Rebuild the admin panel and start the development server:
+```js
+'use strict';
+
+const { join } = require('node:path');
+module.exports = require(join(strapi.dirs.dist.src, 'plugins/<xxx>/server'));
+```
+
+
+6. Rebuild the admin panel and start the development server:
 
 <code-group>
 <code-block title='NPM'>
@@ -230,3 +259,41 @@ yarn develop
 </code-group>
 
 After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
+
+
+### Enable typechecking in JavaScript
+
+TypeScript compiler can be enabled on a specific file by adding `// @ts-check` content on the first line of a JavaScript file.
+
+We can then use JSDoc to anotate the JavaScript:
+
+```js
+// @ts-check
+
+'use strict';
+
+/**
+ * @param {{ strapi: import('@strapi/strapi').Strapi }} options
+ */
+module.exports = ({ strapi }) => ({
+  register() {
+    // ...
+  },
+});
+```
+
+
+Once you are ready, you can allow TypeScript compiler to check typing in  `*.js` files. This can be done for all JavaScript files in the project in the `tsconfig.json`. 
+
+```json
+{
+  "compilerOptions": {
+    "checkJs": true, // validate all *.js files
+  }
+}
+```
+
+
+
+
+
