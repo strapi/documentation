@@ -8,6 +8,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
+:::warning
+ Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
+:::
+
 :::strapi Supported databases
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
 :::
@@ -110,7 +114,7 @@ In order to fix it, you have to set the `ssl:{}` object as a boolean in order to
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: env('DATABASE_SSL', false)
@@ -128,7 +132,7 @@ const fs = require('fs');
 
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: {

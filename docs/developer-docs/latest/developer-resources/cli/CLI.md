@@ -71,17 +71,8 @@ You should never use this command to run a Strapi application in production.
 
 Start a Strapi application with autoReload disabled.
 
-This command is there to run a Strapi application without restarts and file writes (aimed at production usage).
-Certain features are disabled in the `strapi start` mode because they require application restarts.
-
-Allowed environment variables:
-| Property | Description | Type | Default |
-| --------- | ----------- | ----- | ------- |
-| STRAPI_HIDE_STARTUP_MESSAGE | If `true` then Strapi will not show startup message on boot. Values can be `true` or `false` | string | `false` |
-| STRAPI_LOG_LEVEL | Values can be 'fatal', 'error', 'warn', 'info', 'debug', 'trace' | string | `debug` |
-| STRAPI_LOG_TIMESTAMP | Enables or disables the inclusion of a timestamp in the log message. Values can be `true` or `false` | string | `false`|
-| STRAPI_LOG_FORCE_COLOR | Values can be `true` or `false` | string | `true` |
-| STRAPI_LOG_PRETTY_PRINT | If `true` then pino-pretty module will be used to format logs. Values can be `true` or `false` | string | `true` |
+This command is to run a Strapi application without restarts and file writes, primarily for use in production.
+Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) to customize the application start.
 
 ## strapi build
 
