@@ -43,8 +43,10 @@ h2
   color: $primary600 !important
   // TODO: override NavLinks.vue to avoid !important
 
-// disabling alternating row colors
-table > tbody > tr:nth-child(2n)
+/**
+ * Tables
+ */
+table > tbody > tr:nth-child(2n) // disable alternating row colors
   background-color: white
 table > tr, th, td
   border-color $neutral200
