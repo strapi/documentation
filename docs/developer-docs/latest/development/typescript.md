@@ -63,6 +63,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 3. Choose `runLifecyclesfunction` from the list.
 4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
+
 ## Generate typings for project schemas
 
 To generate typings for your project schemas use the [`ts:generate-types` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns a detailed table of the generated schemas.
@@ -89,6 +90,105 @@ yarn strapi ts:generate-types --verbose #optional flag
 </code-block>
 </code-group>
 
+
+## Extends global strapi typings
+
+You can extends the Strapi interface that define the global `strapi` instance via the [declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)
+
+This is a basic example to provide typing for two services: `strapi.service('api::apiName.myService')` and `strapi.service('api::apiName.mySecondService')`
+
+```ts
+// file: shims-strapi-services.d.ts
+
+interface MyService {
+  findBySlug: (slug?: string) => Promise<void>
+}
+interface MySecondService {
+  getSlugStats: (slug?: string) => Promise<void>
+}
+
+declare module '@strapi/strapi/lib/types/core/strapi' {
+  export interface Strapi {
+    // everything added here will be available on:
+    // - global strapi instances
+    // - import('@strapi/strapi).Strapi base class typing
+
+    service(name: 'api::apiName.myService'): MyService;
+    service(name: 'api::apiName.mySecondService'): MySecondService;
+  }
+}
+
+// this export is required unless we use import statement
+export {};
+```
+
+::: note
+You should avoid declaring interface for your controllers, interfaces, utils and let typescript infer them
+:::
+
+This is a more complete example on how to infer typing for an embeded plugin.
+
+1. Assume we have a plugin with services defined
+ 
+    ```ts
+    // file: ./src/plugins/my-custom-plugin/server/services/index.ts
+
+    import slug from './slug'
+
+    export default {
+      slug,
+      anotherService: {
+        anotherAction() {
+          // { ... }
+        }
+      }
+    }
+    ```
+
+    ```ts
+    // file: ./src/plugins/my-custom-plugin/server/services/slug.ts
+
+    import { Strapi } from '@strapi/strapi';
+
+    export default ({ strapi }: { strapi: Strapi }) => ({
+      async getSlugStats(slug?: string) {
+        // { ... }
+      }
+    })
+    ```
+
+1. We can then infer the services instead of declaring an interface
+
+    ```ts
+    // file: shims-strapi-plugin-custom.d.ts
+
+    import Services from './src/plugins/my-custom-plugin/server/services';
+
+    type ServicesType = typeof Services;
+
+    interface MyCustomPlugin {
+      service<T extends keyof ServicesType>(
+        service: T
+      ): ServicesType[T] extends (...args: any) => any
+        ? ReturnType<ServicesType[T]>
+        : ServicesType[T];
+
+    }
+
+    declare module '@strapi/strapi/lib/types/core/strapi' {
+      export interface Strapi {
+        plugin(name: 'my-custom-plugin'): MyCustomPlugin;
+      }
+    }
+
+    export {};
+
+    ```
+
+You will now have typechecking on `strapi.plugin('my-custom-plugin').service('slug').getSlugStats()` and `strapi.plugin('my-custom-plugin').service('anotherService').anotherAction()`
+    
+
+
 ## Develop a plugin using TypeScript
 
 New plugins can be generated following the [plugins development documentation](/developer-docs/latest/development/plugins-development.md). There are 2 important distinctions for TypeScript applications:
@@ -99,6 +199,8 @@ New plugins can be generated following the [plugins development documentation](/
 ::: note
 It is not necessary to repeat the `yarn` or `npm install` command after the initial installation. The `yarn build` or `npm run build` command is necessary to implement any plugin development that affects the admin panel.
 :::
+
+
 
 ## Start Strapi programmatically
 
@@ -277,7 +379,7 @@ We can then use JSDoc to anotate the JavaScript:
  * @param {{ strapi: import('@strapi/strapi').Strapi }} options
  */
 module.exports = ({ strapi }) => ({
-  register() {
+  myServiceAction() {
     // ...
   },
 });
