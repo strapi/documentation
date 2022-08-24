@@ -410,6 +410,8 @@ git commit -am "Changes to my-project noted"
 git push heroku HEAD:main
 heroku open
 ```
+If you are facing issue with git push command. 'heroku' does not appear to be a git repository. You need to run below command 
+heroku git:remote -a your-app-name
 
 ## File Uploads
 
