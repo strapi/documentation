@@ -176,7 +176,7 @@ await request(`/api/articles?${query}`);
 
 To populate only specific relations one-level deep, use one of the following method:
 - Use the populate parameter as an array and put the relation name inside.
-- Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following value: `*, true, false, t, f, 1, 0`.
+- Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following values: `*, true, false, t, f, 1, 0`.
 
 ::::api-call
 :::request Example request: populate categories
