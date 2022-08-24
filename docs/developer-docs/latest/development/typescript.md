@@ -109,11 +109,11 @@ To start Strapi programmatically in a TypeScript project the Strapi instance req
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js
-// path: ./src/plugins/<plugin-name>/server/index.js 
+// path: ./server.js 
 
 const strapi = require('@strapi/strapi');
-
-const app = await strapi({ distDir: './dist' });
+const app = strapi({ distDir: './dist' });
+app.start(); 
 ```
 
 ### Use the `strapi.compile()` function
@@ -124,8 +124,7 @@ The `strapi.compile()` function should be mostly used for developing tools that 
 
 const strapi = require('@strapi/strapi');
 
-const appContext = await strapi.compile();
-const app = await strapi(appContext);
+strapi.compile().then(appContext => strapi(appContext).start());
 
 ```
 
