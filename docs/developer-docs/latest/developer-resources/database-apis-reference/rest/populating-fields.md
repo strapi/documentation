@@ -345,7 +345,7 @@ await request(`/api/articles?${query}`);
 :::
 
 :::note
-There is no limit on the number of levels that can be populated. However, the more nested populate there are, the more the request will take time to be performed.
+There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
 
 ### Component & Dynamic Zones
