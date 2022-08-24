@@ -76,8 +76,27 @@ const themeConfig = {
       ],
     },
     {
-      text: 'v3 documentation',
-      link: 'https://docs-v3.strapi.io',
+      text: 'Other docs',
+      items: [
+        {
+          text: 'Older documentation',
+          items: [
+            {
+              text: 'v3 documentation',
+              link: 'https://docs-v3.strapi.io',
+            },
+          ]
+        },
+        {
+          text: 'Pre-release documentation',
+          items: [
+            {
+              text: 'docs-next',
+              link: 'https://docs-next.strapi.io',
+            },
+          ]
+        },
+      ],
     },
     {
       text: 'Ecosystem',
