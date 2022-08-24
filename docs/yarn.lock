@@ -5242,11 +5242,6 @@ markdown-it-include@^2.0.0:
   resolved "https://registry.yarnpkg.com/markdown-it-include/-/markdown-it-include-2.0.0.tgz#e86e3b3c68c8f0e0437e179ba919ffd28443127a"
   integrity sha512-wfgIX92ZEYahYWiCk6Jx36XmHvAimeHN420csOWgfyZjpf171Y0xREqZWcm/Rwjzyd0RLYryY+cbNmrkYW2MDw==
 
-markdown-it-multimd-table@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-multimd-table/-/markdown-it-multimd-table-4.2.0.tgz#4b74c352a422dc5b2dad5c6b1f8c54443e53a692"
-  integrity sha512-wFpb8TSQ9josQrAlOg1toEAHHSGYQZ4krBKfpejPQ+lq3oudnxCNW4S6gYMcRbkrtrfX/ND2njr4belnKt3fBg==
-
 markdown-it-table-of-contents@^0.4.0:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
