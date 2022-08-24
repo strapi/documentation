@@ -31,7 +31,7 @@ To write or edit content:
 | JSON        | Write your content, in JSON format, in the code textbox.                                                                                                                                                                                                                                                                                                                  |
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows to automatically generate a UID based on the content-type name.                                                                                                                                                                                                |
 ::: note
-Filling up a [custom field](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
+Filling out a [custom field](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 <!-- TODO: once we have a direct link for a filtered list of custom fields plugins on the Marketplace website, update the link above  -->
 :::
 
