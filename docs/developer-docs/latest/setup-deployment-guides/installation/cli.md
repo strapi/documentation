@@ -21,6 +21,10 @@ A database is also required for any Strapi project. Strapi currently supports th
 | MySQL      | 5.7.8           |
 | MariaDB    | 10.2.7          |
 
+::: caution
+Strapi v4 does not support MongoDB.
+:::
+
 ## Creating a Strapi project
 
 ::: strapi CLI installation options
