@@ -74,5 +74,6 @@ Plugins can register with the server and/or the admin panel, by looking for entr
   - `strapi-admin.js` for the admin panel (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md)).
 
 ::: strapi Custom fields plugins
-Plugins can also be used to add [custom fields](/developer-docs/latest/development/custom-fields/reference.md) to Strapi.
+Plugins can also be used to add [custom fields](/developer-docs/latest/development/custom-fields.md) to Strapi.
 :::
+
