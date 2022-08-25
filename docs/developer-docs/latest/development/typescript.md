@@ -64,6 +64,32 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
 
+:::details You can also create a helper function to automaticaly type strapi parameter:
+
+```ts
+// path: ./src/utils.ts
+
+import { Strapi } from '@strapi/strapi';
+
+export function withStrapi<T>(fn: (ctx: { strapi: Strapi }) => T) {
+  return fn;
+}
+```
+
+```js
+// path: ./src/index.ts
+
+import { withStrapi } from './utils';
+
+export default {
+  register: withStrapi({ strapi } => {
+    // ...
+  }),
+};
+```
+:::
+
+
 ## Generate typings for project schemas
 
 To generate typings for your project schemas use the [`ts:generate-types` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns a detailed table of the generated schemas.
