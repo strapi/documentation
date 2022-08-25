@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fi
 
 # Custom fields
 
-::: 🚧  Pre-release feature
+::: callout 🚧  Pre-release feature
 Custom fields are a pre-release feature. To create a new Strapi application with custom fields, run `npx create-strapi-app@custom-fields --quickstart name-of-the-project`.
 :::
 
