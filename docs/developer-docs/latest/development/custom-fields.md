@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fi
 # Custom fields
 
 ::: 🚧  Pre-release feature
-Custom fields are a pre-release feature. To create a new Strapi application with custom fields, run `npx create-strapi-app@custom-fields`.
+Custom fields are a pre-release feature. To create a new Strapi application with custom fields, run `npx create-strapi-app@custom-fields --quickstart name-of-the-project`.
 :::
 
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or installed, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
