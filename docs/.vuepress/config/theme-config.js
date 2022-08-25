@@ -76,19 +76,19 @@ const themeConfig = {
       ],
     },
     {
-      text: 'Other docs',
+      text: 'Other Docs',
       items: [
         {
-          text: 'Older documentation',
+          text: 'Older Documentation',
           items: [
             {
-              text: 'v3 documentation',
+              text: 'v3 Documentation',
               link: 'https://docs-v3.strapi.io',
             },
           ]
         },
         {
-          text: 'Pre-release documentation',
+          text: 'Pre-release Documentation',
           items: [
             {
               text: 'docs-next',
