@@ -43,7 +43,7 @@ But here we are facing an issue. In your project you don't have a `.js` file to 
 
 So first let's create a `server.js` file that will let you run the `pm2` command.
 ::: note
-TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the following TypeScript code example or the [TypeScript documentation](/developer-docs/latest/development/typescript.md) for additional details.
+TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the following TypeScript code example or the [TypeScript documentation](/developer-docs/latest/development/typescript.md#start-strapi-programmatically) for additional details.
 :::
 
 <code-group>
