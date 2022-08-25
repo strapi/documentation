@@ -305,7 +305,7 @@ await request(`/api/articles?${query}`);
 
 :::
 
-<!-- ? should we keep this tip even if populate=true is not implemented? -->
+<!-- ? should we keep this note even if populate=true is not implemented? -->
 :::note
 There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
