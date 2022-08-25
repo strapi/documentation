@@ -34,3 +34,9 @@ Currently, the only plugins designed to work with providers are the:
 
 * [Email plugin](/developer-docs/latest/plugins/email.md), and
 * Media Library plugin (implemented via the [Upload plugin](/developer-docs/latest/plugins/upload.md)).
+
+## Custom fields
+
+Some plugins can add _custom fields_ to Strapi. Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components.
+
+Once added to Strapi (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) and used in the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
