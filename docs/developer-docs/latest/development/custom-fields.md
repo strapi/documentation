@@ -109,11 +109,11 @@ register(app) {
     intlDescription: {
       id: "color-picker.color.description",
       defaultMessage: "Select any color",
-    } 
+    },
     icon: ColorIcon,
     components: {
       Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
-    } 
+    },
     options: {
       base: [
         /*
