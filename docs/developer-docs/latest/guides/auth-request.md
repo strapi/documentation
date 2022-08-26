@@ -155,6 +155,10 @@ See the [login documentation](/developer-docs/latest/plugins/users-permissions.m
 
 Fetch the Articles you created earlier by sending a **GET** request to the `/articles` route:
 
+:::: tabs card
+
+::: tab axios
+
 ```js
 import axios from 'axios';
 
@@ -163,9 +167,17 @@ const { data } = await axios.get('http://localhost:1337/api/articles');
 console.log(data);
 ```
 
-In Postman: 
+:::
 
-![GET request in Postman](../assets/guides/postman-get-request/GET-request-unauth.png)
+::: request Postman
+
+```js
+GET http://localhost:1337/api/articles
+```
+
+:::
+
+::::
 
 Your response will return a `403 Forbidden` error. 
 
