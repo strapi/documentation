@@ -392,6 +392,54 @@ export default {
 
 If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
 
+##### Extending translations files
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./my-app/src/admin/app.js
+
+import fr from './extensions/fr.json';
+
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      'fr': fr,
+    },
+  },
+  bootstrap() {},
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+// path: ./my-app/src/admin/app.ts
+
+import fr from './extensions/fr.json';
+
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      'fr': fr,
+    },
+  },
+  bootstrap() {},
+};
+```
+
+</code-block>
+</code-group>
+
+
 #### Logos
 
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
