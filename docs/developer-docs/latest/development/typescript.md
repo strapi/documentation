@@ -21,6 +21,10 @@ Starting the development environment for a TypeScript-enabled project requires b
 <code-block title="NPM">
 
 ```sh
+# create a project
+npx create-strapi-app@latest my-typescript-strapi --ts
+
+# run build before first develop
 npm run build
 npm run develop
 ```
@@ -30,6 +34,10 @@ npm run develop
  <code-block title="YARN">
 
 ```sh
+# create a project
+yarn create strapi-app --ts my-typescript-strapi
+
+# run build before first develop
 yarn build
 yarn develop
 ```
