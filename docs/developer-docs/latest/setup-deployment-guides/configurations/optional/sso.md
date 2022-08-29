@@ -521,10 +521,12 @@ module.exports = ({ env }) => ({
                 ),
             },
             (accessToken, refreshToken, params, profile, done) => {
-              var waadProfile = jwt.decode(params.id_token, "", true);
+              let waadProfile = jwt.decode(params.id_token, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
               });
             }
           ),
@@ -566,10 +568,12 @@ export default ({ env }) => ({
                 ),
             },
             (accessToken, refreshToken, params, profile, done) => {
-              var waadProfile = jwt.decode(params.id_token, "", true);
+              let waadProfile = jwt.decode(params.id_token, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
               });
             }
           ),
