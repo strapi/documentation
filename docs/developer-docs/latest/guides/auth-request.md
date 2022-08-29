@@ -169,16 +169,15 @@ console.log(data);
 
 :::
 
-::: request Postman
+::: tab Postman
 
-```js
+```http
 GET http://localhost:1337/api/articles
 ```
 
 :::
 
 ::::
-
 Your response will return a `403 Forbidden` error. 
 
 When a user sends an unauthorized request (a request that omits an `Authorization` header), Strapi assigns that user a [Public role](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#public-role) by default.
