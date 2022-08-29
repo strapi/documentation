@@ -551,7 +551,7 @@ The `options` key is used to define specific behaviors and accepts the following
 
 {
   "options": {
-    "privateAttributes": ["id", "created_at"],
+    "privateAttributes": ["id", "createdAt"],
     "draftAndPublish": true
   }
 }
