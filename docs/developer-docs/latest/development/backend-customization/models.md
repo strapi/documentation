@@ -1,6 +1,26 @@
 ---
 title: Models - Strapi Developer Docs
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
+_tags: [
+  "beforeCreate",
+  "beforeCreateMany",
+	"afterCreate",
+	"afterCreateMany",
+	"beforeUpdate",
+	"beforeUpdateMany",
+	"afterUpdate",
+	"afterUpdateMany",
+	"beforeDelete",
+	"beforeDeleteMany",
+  "afterDelete",
+	"afterDeleteMany",
+	"beforeCount",
+	"afterCount",
+	"beforeFindOne",
+	"afterFindOne",
+	"beforeFindMany",
+	"afterFindMany"
+]
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html
 ---
