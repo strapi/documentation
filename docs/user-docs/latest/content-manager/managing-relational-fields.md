@@ -25,12 +25,10 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 ![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields.png)
 
-The relational fields of a content-type are managed from the Relations box, located in the right side of the edit view interface. It lists the names of the relational fields. Under each relational field name is displayed a drop-down list containing all available entry titles.
-
-The Relations box allows to choose which entries the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
+The relational fields of a content-type are displayed among regular fields, but can be distinguished by their grey background. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
 ::: tip
-Instead of choosing an entry by scrolling the list, you can click any drop-down list from the Relations box and type to search a specific entry.
+Instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 :::
 
 ::: note
@@ -49,7 +47,7 @@ Many-to-one, one-to-one, and one-way types of relation only allow to choose one 
 
 To select the only relevant relational field's entry:
 
-1. In the Relations box of your content-type's edit view, click on the drop-down list of the relational field.
+1. In the content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 
 ::: tip
@@ -66,7 +64,7 @@ Many-to-many, one-to-many, and many-ways types of relation allow to choose sever
 
 To select the relevant relational field's entries:
 
-1. In the Relations box of your content-type's edit view, click on the drop-down list of the relational field.
+1. In the content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 3. Repeat step 2 until all relevant entries have been chosen.
 
