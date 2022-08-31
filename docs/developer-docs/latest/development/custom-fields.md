@@ -54,7 +54,7 @@ Currently, custom fields cannot add new data types to Strapi and must use existi
 ::: details Example: Registering an example "color" custom field on the server:
 
 ```js
-// path: ./src/plugins/my-custom-field-plugin/strapi-server.js
+// path: ./src/plugins/color-picker/strapi-server.js
 
 module.exports = {
   register({ strapi }) {
