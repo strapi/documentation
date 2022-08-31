@@ -388,10 +388,12 @@ For Azure managed databases you can use the following:
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MySQL >= 5.7.8
-- MariaDB >= 10.2.7
-- PostgreSQL >= 10
-- SQLite >= 3
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
 
 In our example we will be using MariaDB 10.4 LTS using the MariaDB apt repo. Per the [documentation](https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release=bionic--ubuntu_bionic&mirror=digitalocean-sfo&version=10.4) we will use the following commands:
 

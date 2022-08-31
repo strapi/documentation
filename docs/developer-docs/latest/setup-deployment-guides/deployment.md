@@ -14,28 +14,41 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 
 ## General guidelines
 
-::: prerequisites
+### Prerequisites
+
 To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
 
 - Node LTS (v14 or v16) **Note that odd-number releases of Node will never be supported (e.g. v13, v15).**
 - NPM v6 or whatever ships with the LTS Node versions
 - Typical standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
-- At least 1 CPU core (Highly recommended at least 2)
-- At least 2 GB of RAM (Moderately recommended 4)
-- Minimum required storage space recommended by your OS or 32 GB of **free** space
-- A supported database version
-  - MySQL >= 5.7.8
-  - MariaDB >= 10.2.7
-  - PostgreSQL >= 10
-  - SQLite >= 3
-- A supported operating system
-  - Ubuntu >= 18.04 (LTS-Only)
-  - Debian >= 9.x
-  - CentOS/RHEL >= 8
-  - macOS Mojave or newer (ARM not supported)
-  - Windows 10
-  - Docker - [docker repo](https://github.com/strapi/strapi-docker)
-:::
+- Hardware specifications for your server (CPU, RAM, storage):
+
+| Hardware | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU      | 1 core  | 2+ cores    |
+| Memory   | 2GB     | 4GB+        |
+| Disk     | 8GB     | 32GB+       |
+
+- A supported database version:
+
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
+
+- A supported operating system:
+
+| Operating System | Minimum | Recommended |
+|------------------|---------|-------------|
+| Ubuntu (LTS)     | 20.04   | 22.04       |
+| Debian           | 10.x    | 11.x        |
+| CentOS/RHEL      | 8.x     | 9.x         |
+| macOS            | 10.15   | 11.0        |
+| Windows Desktop  | 10      | 11          |
+| Windows Server   | 2019    | 2022        |
+
 ### Application Configuration
 
 #### 1. Configure
