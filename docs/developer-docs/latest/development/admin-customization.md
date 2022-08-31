@@ -388,6 +388,56 @@ export default {
 </code-block>
 </code-group>
 
+To extend a plugin's key/value pair (which are declared independently in the plugin's files at `./admin/src/translations/[language-name].json`), you can similarly extend these in the `config.translations` key by prefixing the key with the plugin's name `[plugin name].[key]: 'value'` :
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./my-app/src/admin/app.js
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      fr: {
+        'Auth.form.email.label': 'test',
+        // Translate a plugin's key/value pair by adding the plugin's name as a prefix
+        // In this case, we translate the "plugin.name" key of plugin "content-type-builder"
+        "content-type-builder.plugin.name": "Constructeur de Type-Contenu",
+      },
+    },
+  },
+  bootstrap() {},
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+// path: ./my-app/src/admin/app.ts
+
+export default {
+  config: {
+    locales: ['fr'],
+    translations: {
+      fr: {
+        'Auth.form.email.label': 'test',
+        // Translate a plugin's key/value pair by adding the plugin's name as a prefix
+        // In this case, we translate the "plugin.name" key of plugin "content-type-builder"
+        "content-type-builder.plugin.name": "Constructeur de Type-Contenu",
+      },
+    },
+  },
+  bootstrap() {},
+};
+```
+
+</code-block>
+</code-group>
 
 
 If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
