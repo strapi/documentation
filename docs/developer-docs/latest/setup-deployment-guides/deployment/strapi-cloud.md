@@ -60,3 +60,27 @@ You will be redirected to GitHub to authorize Strapi Cloud to access your reposi
     * **Default branch**: The default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository and cannot be edited from Strapi Cloud.
 
 6. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
+
+## Managing projects
+
+The **Projects** page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
+
+// screenshot
+
+Each project card displays the following information:
+
+* Project name
+* Status: 
+    * **Running**: The project is running and your application is accessible from the project menu.
+    * **Not running**: The deployment failed and project is not running. Trigger a new deployment or go to the project's page for additional details.
+    * **Deploying**: During deployment you cannot access your application or trigger new deployments. Deployment can be cancelled from the `...` menu.
+* Last deployment date: Timestamp of the last deployment.
+* Options menu (`...`): The available options vary depending on the project's status.
+    * For **Running** projects, you can:
+        * **Visit App**: Access the project application.
+        * **Go to Deploys**: Access the Deploys tab of the project page.
+        * **Go to Settings**: Access the Settings tab of the project page.
+    * For **Not running** projects, you can:
+        * Test
+    * For **Deploying** projects, you can:
+        * **Cancel deploy**: Cancel the pending deployment.
