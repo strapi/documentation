@@ -14,7 +14,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 
 ## General guidelines
 
-### Prerequisites
+### Hardware and software requirements
 
 To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
 
