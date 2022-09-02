@@ -78,9 +78,46 @@ Each project card displays the following information:
 * Options menu (`...`): The available options vary depending on the project's status.
     * For **Running** projects, you can:
         * **Visit App**: Access the project application.
-        * **Go to Deploys**: Access the Deploys tab of the project page.
-        * **Go to Settings**: Access the Settings tab of the project page.
+        * **Go to Deploys**: Access the [Deploys](#deploys) tab of the project page.
+        * **Go to Settings**: Access the [Settings](#settings) tab of the project page.
     * For **Not running** projects, you can:
-        * Test
+        * **Go to Deploys**: Access the [Deploys](#deploys) tab of the project page.
+        * **Go to Settings**: Access the [Settings](#settings) tab of the project page.
     * For **Deploying** projects, you can:
         * **Cancel deploy**: Cancel the pending deployment.
+
+## Project details
+
+From the **Projects** page, click on any project card to access that project's details page.
+
+// screenshot
+
+The project details page displays the following tabs: **Deploys** and **Settings**.
+
+### Deploys
+
+The **Deploys** tab displays a chronological list of cards with the details of all historical deployments for the project.
+
+Each card displays the following information:
+
+// screenshot
+
+* Commit SHA
+* Commit message
+* Deployment status
+* Production branch
+* Last deployment date
+
+From this page you can also trigger a new deployment and access the application using the corresponding buttons.
+
+## Settings
+
+The **Settings** enables you to edit the following details for the project:
+
+// screenshot
+
+* Project name
+* Production branch
+* Connected GitHub repository
+
+
