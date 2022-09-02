@@ -109,7 +109,7 @@ const developer = [
         children: [
           {
             title: "Strapi Cloud",
-            path: '/developer-docs/latest/setup-deployment-guides/strapi-cloud.md',
+            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
             collapsable: false,
           },
           {
