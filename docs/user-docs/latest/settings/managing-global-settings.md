@@ -111,9 +111,9 @@ API tokens allow users to authenticate their Content API queries (see [Developer
 
 The *API Tokens* settings sub-section displays a table listing all created API tokens.
 
-For each API token, the table displays its name, description, type and date of creation. From the table, administrators can also:
+For each API token, the table displays its name, description, type, date of creation and date of last use. From the table, administrators can also:
 
-- Click on the edit button <!-- icon --> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-aa-api-token).
+- Click on the edit button <!-- icon --> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
 - Click on the delete button <!-- icon --> to delete an API token.
 
 ### Creating a new API token
