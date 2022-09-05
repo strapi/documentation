@@ -118,11 +118,9 @@ For each API token, the table displays its name, description, type and date of c
 
 ### Creating a new API token
 
-All API tokens created by administrators of the Strapi application are permanent tokens that cannot be regenerated.
-
 To create a new API token:
 
-1. Click on the **Add new entry** button.
+1. Click on the **Create new API Token** button.
 2. In the API token edition interface, configure the new API token:
 
     | Setting name   | Instructions                                                             |
