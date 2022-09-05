@@ -113,8 +113,8 @@ The *API Tokens* settings sub-section displays a table listing all created API t
 
 For each API token, the table displays its name, description, type and date of creation. From the table, administrators can also:
 
-- Click on the edit button <!-- icon --> to edit an API token's name, description or type
-- Click on the delete button <!-- icon --> to delete an API token
+- Click on the edit button <!-- icon --> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-aa-api-token).
+- Click on the delete button <!-- icon --> to delete an API token.
 
 ### Creating a new API token
 
@@ -131,8 +131,7 @@ To create a new API token:
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
 3. (optional) For the *Custom* token type, define specific permissions for your Collection types and Single types by clicking on the *Collection types* or *Single types* tab, then clicking on the content-type name, and using checkboxes to enable or disable permissions.
-    
-    <!-- TODO: update this Figma screenshot with a real-use one once the feature can be tested -->
+
     ![Custom API Token](../assets/settings/settings_api-token-custom.png)
 
 4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
@@ -140,3 +139,12 @@ To create a new API token:
 ::: caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
 :::
+
+### Regenerating an API token
+
+To regenerate an API token:
+
+1. Click on the API token's edit button.
+2. Click on the **regenerate** button.
+3. In the pop-up window, click on the **regenerate** button to confirm.
+4. Copy the new API token displayed at the top of the interface.
