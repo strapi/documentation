@@ -130,7 +130,7 @@ To create a new API token:
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
-3. (optional) For the *Custom* token type, define specific permissions for your Collection types and Single types by clicking on the *Collection types* or *Single types* tab, then clicking on the content-type name, and using checkboxes to enable or disable permissions.
+3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
 
     ![Custom API Token](../assets/settings/settings_api-token-custom.png)
 
