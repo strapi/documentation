@@ -109,9 +109,9 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [Develo
 
 ![API tokens](../assets/settings/settings_api-token.png)
 
-The *API Tokens* settings sub-section displays a table listing all created API tokens.
+The *API Tokens* settings sub-section displays a table listing all of the created API tokens.
 
-The table displays each API token's name, description, type, date of creation, and date of last use. From the table, administrators can also:
+The table displays each API token's name, description, date of creation, and date of last use. From the table, administrators can also:
 
 - Click on the edit button <!-- icon --> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
 - Click on the delete button <!-- icon --> to delete an API token.
@@ -146,5 +146,5 @@ To regenerate an API token:
 
 1. Click on the API token's edit button.
 2. Click on the **regenerate** button.
-3. Click on the **regenerate** button to confirm in the pop-up window.
+3. Click on the **regenerate** button to confirm in the dialog.
 4. Copy the new API token displayed at the top of the interface.
