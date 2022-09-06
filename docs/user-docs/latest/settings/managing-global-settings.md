@@ -131,10 +131,9 @@ To create a new API token:
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
+4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button. <!-- icon -->
 
     ![Custom API Token](../assets/settings/settings_api-token-custom.png)
-
-4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
 ::: caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
@@ -145,6 +144,6 @@ For security reasons, API tokens are only shown right after they have been creat
 To regenerate an API token:
 
 1. Click on the API token's edit button.
-2. Click on the **regenerate** button.
-3. Click on the **regenerate** button to confirm in the dialog.
+2. Click on the **Regenerate** button.
+3. Click on the **Regenerate** button to confirm in the dialog.
 4. Copy the new API token displayed at the top of the interface.
