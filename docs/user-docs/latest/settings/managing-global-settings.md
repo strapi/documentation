@@ -105,13 +105,13 @@ To configure the Media Library settings:
 * The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
 :::
 
-API tokens allow users to authenticate their Content API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
+API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
 ![API tokens](../assets/settings/settings_api-token.png)
 
 The *API Tokens* settings sub-section displays a table listing all created API tokens.
 
-For each API token, the table displays its name, description, type, date of creation and date of last use. From the table, administrators can also:
+The table displays each API token's name, description, type, date of creation, and date of last use. From the table, administrators can also:
 
 - Click on the edit button <!-- icon --> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
 - Click on the delete button <!-- icon --> to delete an API token.
@@ -146,5 +146,5 @@ To regenerate an API token:
 
 1. Click on the API token's edit button.
 2. Click on the **regenerate** button.
-3. In the pop-up window, click on the **regenerate** button to confirm.
+3. Click on the **regenerate** button to confirm in the pop-up window.
 4. Copy the new API token displayed at the top of the interface.
