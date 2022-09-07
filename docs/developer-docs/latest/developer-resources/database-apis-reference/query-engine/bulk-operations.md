@@ -12,9 +12,12 @@ To avoid performance issues, bulk operations are not allowed on relations.
 
 ## createMany()
 
-Creates multiple entries.
+Creates multiple entries and returns the number of entries created along with their IDs.
 
-Syntax: `createMany(parameters) => { count: number }`
+If you are using MySQL as your RDMS, `createMany` will not return the IDs of the newly created entries.
+
+
+Syntax: `createMany(parameters) => { count: number, ids: number[] }`
 
 ### Parameters
 
@@ -36,7 +39,7 @@ await strapi.db.query('api::blog.article').createMany({
   ],
 });
 
-// { count: 2 }
+// { count: 2, ids: [1, 2] }
 ```
 
 ## updateMany()
