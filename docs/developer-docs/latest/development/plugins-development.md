@@ -61,7 +61,9 @@ Strapi provides a [command line interface (CLI)](/developer-docs/latest/develope
 </code-group>
 
 7. (*TypeScript-specific*) Run `npm install` or `yarn install` in the newly-created plugin directory.
-8. Run `yarn build` or `npm run build` to build the plugin.
+8. (*TypeScript-specific*) Run `yarn build` or `npm run build` in the plugin directory. This step transpiles the JavaScript files in a `dist` directory unique to the plugin.
+9. Run `yarn build` or `npm run build` at the project root.
+10. Run `yarn develop` or `npm run develop` at the project root.
 
 Plugins created using the preceding directions are located in the `plugins` directory of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
