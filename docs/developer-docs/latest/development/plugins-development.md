@@ -65,10 +65,6 @@ Strapi provides a [command line interface (CLI)](/developer-docs/latest/develope
 
 Plugins created using the preceding directions are located in the `plugins` directory of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
-::: tip
-Check [this blog post](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-publish-on-npm-6-6) to learn how to publish your Strapi plugin on npm.
-:::
-
 ## Add features to a plugin
 
 Strapi provides programmatic APIs for plugins to hook into some of Strapi's features.
@@ -76,8 +72,3 @@ Strapi provides programmatic APIs for plugins to hook into some of Strapi's feat
 Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
   - `strapi-server.js` for the Server (see [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)),
   - `strapi-admin.js` for the admin panel (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md)).
-
-::: strapi Custom fields plugins
-Plugins can also be used to add [custom fields](/developer-docs/latest/development/custom-fields.md) to Strapi.
-:::
-

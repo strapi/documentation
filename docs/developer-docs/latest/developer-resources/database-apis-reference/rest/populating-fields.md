@@ -89,7 +89,7 @@ It is also possible to [combine population with multiple operators](#combining-p
 ::: note
 
 - By default Strapi will not populate any type of fields.
-- It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
+- It's currently not possible to return just an array of IDs. This is something that is currently under discussion
 
 :::
 
@@ -162,7 +162,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  populate: '*',
+  populate: '*', 
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -223,7 +223,7 @@ To populate only specific relations one-level deep, use the relation name (e.g. 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  populate: ['categories'],
+  populate: ['categories'], 
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -295,7 +295,7 @@ const query = qs.stringify({
     author: {
       populate: ['company'],
     }
-  }
+  } 
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -304,12 +304,6 @@ await request(`/api/articles?${query}`);
 ```
 
 :::
-
-<!-- ? should we keep this tip even if populate=true is not implemented? -->
-:::note
-There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
-:::
-
 ### Component & Dynamic Zones
 
 The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.

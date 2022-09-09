@@ -63,7 +63,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
     font-size: 110%;
     width: 50%;
     border-radius: 0 8px 8px 0 !important;
-    border: solid 1px #C0C0CF !important;
+    border: solid 1px #bbbbba !important;
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
@@ -72,8 +72,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active) {
-    background-color: #F6F6F9;
-    color: #8E8EA9;
+    background-color: #f8f8f8;
+    color: #787878;
   }
 
   .image--50 {

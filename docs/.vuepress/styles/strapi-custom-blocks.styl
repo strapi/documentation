@@ -22,77 +22,46 @@
     margin-bottom 2rem
     border-left-width: .25rem
     border-left-style solid
-    color: $neutral800
+  &.strapi
+    background-color rgba(129,107,250, .05)
+    border-color rgb(129,107,250)
     .custom-block-title
-      font-weight 600
-
+      color #816bfa
+      font-weight 700
+    p, li
+      color #2c3e50
+      a
+        color #007eff
   &.callout
   &.callout-alt
   &.prerequisites
-    background-color $neutral100
-    border-color $neutral500
-    .custom-block-title
-      color: $neutral800
-    a
-      color $primary600
-    code
-      background-color $primary200
+    background-color #f8f8f8
+    border-color #bbbbba
   &.callout-alt
     border-radius: 10px
     background-color: #eff5f7
     border: none
-  &.strapi
-    background-color $primary100
-    border-color $primary600
-    .custom-block-title
-      color $primary700
-    a
-      color $primary600
-    code
-      background-color $primary200
-  &.warning
-    background-color $danger100
-    border-color $danger600
-    .custom-block-title
-      color $danger700
-    a
-      color $danger600
-    code
-      background-color $danger200
-      color: $danger600
-  &.caution
-    background-color $warning100
-    border-color $warning600
-    .custom-block-title
-      color $warning700
-    a
-      color $warning600
-    code
-      background-color $warning200
-      color: $warning600
-  &.tip
-    background-color $success100
-    border-color $success600
-    .custom-block-title
-      color $success700
-    a
-      color $success600
-    code
-      background-color $success200
-      color: $success600
   &.note
-    background-color $secondary100
-    border-color $secondary600
+    background-color #f4fcff
+    border-color #0193C2
+  &.caution
+    border-color #E7C000
+    background-color rgba(255,229,100,.3)
+    color #6b5900
     .custom-block-title
-      color $secondary700
+      color #B29400
     a
-      color $secondary600
-    code
-      background-color $secondary200
-      color: $secondary600
-  &.details
-    background-color $neutral150
-    border-radius 6px
+      color #2c3e50
+  &.warning
+    border-color #cc0000
+    background-color rgb(255, 230, 230)
+    color #4d0000
+    .custom-block-title
+      color #900
+    a
+      color #2c3e50
+  &.tip
+    background-color #EFFDF6
   /**
    * API CALLS
   */
@@ -105,7 +74,7 @@
       margin: 0 -12rem 2rem 0
       align-items: stretch
   &.request
-    background-color: $neutral700
+    background-color: #666687
     padding: 0 1rem 1rem
     border-radius: 12px
     font-size: 100%
@@ -117,7 +86,7 @@
       border-radius: 12px 12px 0 0
       padding: .5rem 1rem
       font-weight: 700
-      background-color: $neutral600
+      background-color: #32324D
       color: #F6F6F9
       font-size: 90%;
     .custom-block-title+p
@@ -134,15 +103,10 @@
     ul, ol
       padding-left: 3rem
     [class^="language-"]
-      background-color $neutral700 !important
-      font-size: 100%
+      background-color: transparent
+      font-size: 110%
       &::before
         color: #EAEAEF
-      &::after
-        background-color $neutral700 !important
-        border-right-color $neutral700 !important
-    .line-number
-      color $neutral500
     pre
       padding: 1rem 0 0 1rem
     code
@@ -165,17 +129,17 @@
         &.comment
           color: #d9d9d9
   &.response
-    background-color: $neutral900
+    background-color: #DCDCE4
     margin-top: 2rem
     padding: 0 1rem 1rem
     border-radius: 12px
     font-size: 100%
-    color: $neutral200
+    color: #666687
     .extra-class::before
-      color: $neutral200
+      color: #666687
     .custom-block-title
-      background-color: $neutral800
-      color: $neutral0
+      background-color: #C0C0CF
+      color: #32324D
       border-radius: 12px 12px 0 0
       margin-left: -1rem
       margin-right: -1rem
@@ -186,23 +150,23 @@
       margin-bottom: .5rem
     [class^="language-"]
       background-color: transparent
-      font-size: 100%
+      font-size: 110%
       &::before
-        color: $neutral200
+        color: #666687
     pre
       padding: 1rem 0 0 1rem
     code
-      color: $neutral200 !important
+      color: #666687 !important
       .token
-        color: $neutral200 // catch-all for undefined colors
+        color: #666687 // catch-all for undefined colors
         &.punctuation
         &.operator
         &.property
-          color: $neutral200
+          color: #666687
         &.string
-          color: $success500
+          color: #2B7732
         &.number
-          color: $danger500
+          color: #B7322A
         &.comment
           color: #8585b2
   &.request
@@ -277,38 +241,4 @@
 
 .custom-block.details
   color rgb(44, 62, 80)
-
-.install-link
-  // text-decoration: none
-  background-color: #4945FF
-  border-radius: 6px
-  padding: 20px
-  color: $primary100
-  justify-content: space-between
-
-  .text
-    flex-grow: 1
-
-  .title
-    color: $neutral0
-
-  .description
-    color: $primary100
-
-  .arrow
-    width: 24px
-    height: 24px
-    transform: translateX(-8px)
-    transition: all .2s ease-in-out
-
-  &:hover
-    .title
-      color: $neutral0
-      text-decoration: underline
-    .description
-      color: $neutral0
-      // text-decoration: none
-    .arrow
-      transform: translateX(0)
-
 
