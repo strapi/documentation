@@ -158,7 +158,7 @@ module.exports = createCoreService('api::email.email', ({ strapi }) => ({
 // path: ./src/api/email/services/email.ts
 
 
-import { factories } from '@strapi/strapi'; //check with soup
+import { factories } from '@strapi/strapi'; 
 const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
 
 // Create reusable transporter object using SMTP transport.

@@ -106,3 +106,100 @@ body
         color $neutral400 !important
     .algolia-docsearch-footer
       display: none !important
+  font-family system-ui
+  color $neutral800
+
+a
+  color $primary600
+  font-weight 600
+.theme-default-content:not(.custom)
+  a.header-anchor
+    text-decoration none
+.dropdown-title
+  font-weight 600 !important
+
+h1, h2, h3, h4, h5, h6
+  color: $neutral900
+
+h2
+  border-bottom-color $neutral150
+
+.theme-default-content:not(.custom)
+  max-width 840px
+
+.theme-default-content code
+  background-color $primary100
+  color $primary600
+  border-radius 4px
+  // more neutral version 👇
+  // background-color: $primary100
+  // color: $neutral700
+
+.sidebar-links a:hover
+.sidebar-heading.router-link-active
+.nav-link.router-link-active
+.sidebar-heading.clickable.active
+  color: $primary600 !important
+.sidebar-heading.clickable.active
+  border-left-color $primary600 !important
+.dropdown-wrapper .nav-dropdown .dropdown-item a.router-link-active::after
+  border-left-color $primary600 !important
+
+.nav-links a
+.nav-links a.router-link-active
+  font-weight 600
+  color: $neutral700
+
+.nav-links a:hover
+.nav-links a.active
+.sidebar-link.active
+  color: $primary600 !important
+  // TODO: override NavLinks.vue to avoid !important
+
+/**
+ * Tables
+ */
+table > tbody > tr:nth-child(2n) // disable alternating row colors
+  background-color: white
+table > tr, th, td
+  border-color $neutral200
+
+/**
+ * Code blocks
+ */
+[class^="language-"]
+  background-color $neutral900 !important
+[class^="language-"]::after
+  background-color $neutral900 !important
+  border-right-color: $neutral900 !important
+
+.line-number
+  color $neutral600
+
+code
+  .token
+    &.comment
+      color $neutral400
+
+/**
+ * Update code group styles
+ */
+.theme-code-group__nav
+  background-color $neutral900 !important
+  // TODO: override CodeGroup.vue to avoid !important
+
+.theme-code-group
+.el-tabs__content
+  .theme-code-group__li
+    .theme-code-group__nav-tab.theme-code-group__nav-tab-active
+      border-bottom-color $primary500 !important
+
+/**
+ * Update "tabs card" styles
+ */
+.el-tabs__header
+  .el-tabs__item.is-active
+  .el-tabs__item:not(.is-disabled):hover
+    color $primary600
+  .el-tabs__active-bar
+    background-color $primary600 !important

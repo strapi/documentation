@@ -6,14 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescrip
 
 # TypeScript development
 
-TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.2.0 and above. TypeScript-enabled projects allow developing plugins with TypeScript as well as using TypeScript typings.
+TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.3.0 and above. Existing JavaScript projects can [add TypeScript support](#add-typescript-support-to-an-existing-strapi-project) through a conversion procedure. TypeScript-enabled projects allow developing plugins with TypeScript as well as using TypeScript typings.
 
 ::: strapi Getting started with TypeScript
-To start developing in TypeScript, use the [CLI installation documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) to create a new TypeScript project. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [TypeScript configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources for understanding and configuring an application.
-:::
-
-::: callout 🚧  JavaScript to TypeScript migration
-Migrating existing Strapi applications written in JavaScript is not currently recommended. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or the community [Discord](https://discord.strapi.io).
+To start developing in TypeScript, use the [CLI installation documentation](/developer-docs/latest/setup-deployment-guides/installation/cli.md) to create a new TypeScript project. For existing projects, [TypeScript support can be added](#add-typescript-support-to-an-existing-strapi-project) with the provided conversion steps. Additionally, the [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md) and [TypeScript configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md) sections have TypeScript-specific resources for understanding and configuring an application.
 :::
 
 ## Start developing in TypeScript
@@ -54,7 +50,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
     ```js
     // path: ./src/index.ts
 
-    import '@strapi/strapi';
+    import { Strapi } from '@strapi/strapi';
 
     export default {
       register( { strapi }: { strapi: Strapi }) {
@@ -113,11 +109,11 @@ To start Strapi programmatically in a TypeScript project the Strapi instance req
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js
-// path: ./src/plugins/<plugin-name>/server/index.js 
+// path: ./server.js 
 
 const strapi = require('@strapi/strapi');
-
-const app = await strapi({ distDir: './dist' });
+const app = strapi({ distDir: './dist' });
+app.start(); 
 ```
 
 ### Use the `strapi.compile()` function
@@ -128,7 +124,109 @@ The `strapi.compile()` function should be mostly used for developing tools that 
 
 const strapi = require('@strapi/strapi');
 
-const appContext = await strapi.compile();
-const app = await strapi(appContext);
+strapi.compile().then(appContext => strapi(appContext).start());
 
 ```
+
+## Add TypeScript support to an existing Strapi project
+
+Adding TypeScript support to an existing project requires adding 2 `tsconfig.json` files and rebuilding the admin panel. Additionally, the `eslintrc` and `eslintignore` files can be optionally removed. The TypeScript flag `allowJs` should be set to `true` in the root `tsconfig.json` file to incrementally add TypeScript files to existing JavaScript projects. The `allowJs` flag allows `.ts` and `.tsx` files to coexist with JavaScript files.
+
+TypeScript support can be added to an existing Strapi project using the following procedure:
+
+1. Add a `tsconfig.json` file at the project root and copy the following code, with the `allowJs` flag, to the file:
+
+```json
+// path: ./tsconfig.json
+
+{
+    "extends": "@strapi/typescript-utils/tsconfigs/server",
+    "compilerOptions": {
+      "outDir": "dist",
+      "rootDir": ".",
+      "allowJs": true //enables the build without .ts files
+    },
+    "include": [
+      "./",
+      "src/**/*.json"
+    ],
+    "exclude": [
+      "node_modules/",
+      "build/",
+      "dist/",
+      ".cache/",
+      ".tmp/",
+      "src/admin/",
+      "**/*.test.ts",
+      "src/plugins/**"
+    ]
+   
+  }
+  
+```
+
+2. Add a `tsconfig.json` file in the `./src/admin/` directory and copy the following code to the file:
+
+```json
+// path: ./src/admin/tsconfig.json
+
+{
+    "extends": "@strapi/typescript-utils/tsconfigs/admin",
+    "include": [
+      "../plugins/**/admin/src/**/*",
+      "./"
+    ],
+    "exclude": [
+      "node_modules/",
+      "build/",
+      "dist/",
+      "**/*.test.ts"
+    ]
+  }
+  
+```
+
+3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root.
+4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
+
+```js
+//path: ./config/database.ts
+
+const path = require('path');
+
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+
+```
+
+
+5. Rebuild the admin panel and start the development server:
+
+<code-group>
+<code-block title='NPM'>
+
+```sh
+npm run build
+npm run develop
+```
+
+</code-block>
+
+<code-block title='YARN'>
+
+```sh
+yarn build
+yarn develop
+```
+
+</code-block>
+</code-group>
+
+After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.

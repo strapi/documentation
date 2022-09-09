@@ -1,5 +1,5 @@
 const themeConfig = {
-  logo: '/assets/logo.svg',
+  logo: '/assets/logo-beta.png',
   nav: [
     {
       text: 'Resource Center',
@@ -76,8 +76,27 @@ const themeConfig = {
       ],
     },
     {
-      text: 'v3 documentation',
-      link: 'https://docs-v3.strapi.io',
+      text: 'Other Docs',
+      items: [
+        {
+          text: 'Older Documentation',
+          items: [
+            {
+              text: 'v3 Documentation',
+              link: 'https://docs-v3.strapi.io',
+            },
+          ]
+        },
+        {
+          text: 'Stable Documentation',
+          items: [
+            {
+              text: 'v4 Documentation',
+              link: 'https://docs.strapi.io',
+            },
+          ]
+        },
+      ],
     },
     {
       text: 'Ecosystem',
