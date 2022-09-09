@@ -36,7 +36,7 @@ export default {
           {},
           {
             autocompleteOptions: {
-              debug: true
+              debug: false
             }
           },
           userOptions,
@@ -126,6 +126,9 @@ export default {
         .ds-dropdown-menu
           min-width 515px !important
 @media (max-width: $MQMobile)
+  .search-box input
+    left: 0 !important
+
   .algolia-search-wrapper
     .ds-dropdown-menu
       min-width calc(100vw - 4rem) !important
