@@ -196,7 +196,7 @@ It would help getting a bit more organized if our restaurants directory had some
 
 ![Admin Panel screenshot: relations](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
-9. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
+11. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
 ### Step 2: Use the collection types to create new entries
 
