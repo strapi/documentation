@@ -496,20 +496,19 @@ Using the following example we will remove any private information:
 // path: /srv/strapi/mystrapiapp/config/database.js
 
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: env('DB_NAME'),
-        host: env('DB_HOST'),
-        port: env('DB_PORT'),
-        username: env('DB_USER'),
-        password: env('DB_PASS'),
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      options: {},
     },
+    debug: false,
   },
 });
 ```
@@ -522,21 +521,20 @@ module.exports = ({ env }) => ({
 ```js
 // path: /srv/strapi/mystrapiapp/config/database.ts
 
-export default ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: env('DB_NAME'),
-        host: env('DB_HOST'),
-        port: env('DB_PORT'),
-        username: env('DB_USER'),
-        password: env('DB_PASS'),
+  export default ({ env }) => ({
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      options: {},
     },
+    debug: false,
   },
 });
 ```
