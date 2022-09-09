@@ -29,7 +29,7 @@ The `./config/admin.js` file can include the following parameters:
 | `port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                            | string        | `8000`                                                                                                                           |
 | `serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md) | boolean       | `true`                                                                                                                           |
 | `forgotPassword`                  | Settings to customize the forgot password email (see [Forgot Password Email](/developer-docs/latest/development/admin-customization.md#forgotten-password-email))                             | object        | {}                                                                                                                               |
-| `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/plugins/email.md#using-the-sendtemplatedemail-function)                                                                                                  | object        | [Default template](https://github.com/strapi/strapi/tree/master/packages/strapi-admin/config/email-templates/forgot-password.js) |
+| `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/developer-docs/latest/plugins/email.md#using-the-sendtemplatedemail-function)                                                                                                  | object        | [Default template](https://github.com/strapi/strapi/blob/main/packages/core/admin/server/config/email-templates/forgot-password.js) |
 | `forgotPassword.from`             | Sender mail address                                                                                                                                                                                      | string        | Default value defined in your [provider configuration](/developer-docs/latest/development/providers.md#configuring-providers)             |
 | `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                           | string        | Default value defined in your [provider configuration](/developer-docs/latest/development/providers.md#configuring-providers)             |
 
@@ -111,7 +111,7 @@ module.exports = ({ env }) => ({
       },
     },
     options: {
-      expiresIn: "7d",
+      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
@@ -153,7 +153,7 @@ module.exports = ({ env }) => ({
       },
     },
     options: {
-      expiresIn: "7d",
+      expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },

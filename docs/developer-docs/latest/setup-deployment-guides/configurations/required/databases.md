@@ -114,7 +114,7 @@ In order to fix it, you have to set the `ssl:{}` object as a boolean in order to
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: env('DATABASE_SSL', false)
@@ -132,7 +132,7 @@ const fs = require('fs');
 
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: {
