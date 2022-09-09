@@ -67,6 +67,12 @@ Strapi provides a [command line interface (CLI)](/developer-docs/latest/develope
 
 Plugins created using the preceding directions are located in the `plugins` directory of the application (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
 
+## Develop a plugin
+
+During the plugin development phase...
+
+
+
 ## Add features to a plugin
 
 Strapi provides programmatic APIs for plugins to hook into some of Strapi's features.
