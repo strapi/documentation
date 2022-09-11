@@ -156,7 +156,7 @@ You can find the official Docker image for Strapi in the [Docker Hub](https://hu
     docker-compose pull
     ```
 
-## Running Strapi
+## Running Strapi 
 
 To run your Strapi project created with Docker, use one of the following commands:
 
@@ -167,3 +167,25 @@ docker-compose up -d
 # Execute Docker image without detaching the terminal
 docker-compose up
 ```
+
+## Running Strapi from an existing project
+
+You can also use strapi/strapi to run a project you already have created (or cloned) on your computer.
+
+First make sure to delete the node_modules folder if you have already installed your dependencies on your host machine. Then run:
+
+```bash
+cd my-project
+docker run -it -p 1337:1337 -v `pwd`:/srv/app strapi/strapi
+```
+
+This will start by installing the dependencies and then run strapi develop in the project.
+
+::: note 
+If you are using environment variables in your code you can pass them with the -e option. 
+
+Find more information on [our github](https://github.com/strapi/strapi-docker) or on [docker](https://www.docker.com/)'s documentation.
+:::
+
+
+
