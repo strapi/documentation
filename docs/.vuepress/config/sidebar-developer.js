@@ -114,10 +114,6 @@ const developer = [
             collapsable: true,
             children: [
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.md',
-                '21YunBox',
-              ],
-              [
                 '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.md',
                 'Amazon AWS',
               ],
@@ -140,18 +136,6 @@ const developer = [
               [
                 '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.md',
                 'Heroku',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.md',
-                'Qovery',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
-                'Render',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/microtica.md',
-                'Microtica',
               ],
             ],
             sidebarDepth: 2,
