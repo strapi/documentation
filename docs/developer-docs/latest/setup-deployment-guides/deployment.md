@@ -61,9 +61,9 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 
 We recommend using environment variables to configure your application based on the environment, for example:
 
-**Path —** `./config/server.js`.
-
 ```js
+// Path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('APP_HOST', '0.0.0.0'),
   port: env.int('NODE_PORT', 1337),
@@ -72,9 +72,9 @@ module.exports = ({ env }) => ({
 
 Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
 
-**Path —** `.env`.
-
 ```
+// Path: .env
+
 APP_HOST=10.0.0.1
 NODE_PORT=1338
 ```
