@@ -28,7 +28,7 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 The relational fields of a content-type are displayed among regular fields, but can be distinguished by their grey background. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
 ::: tip
-Instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
+Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 :::
 
 ::: note
