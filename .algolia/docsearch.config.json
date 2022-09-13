@@ -32,7 +32,7 @@
     },
 
     "tags": {
-      "selector": "/html/head/meta[@name='filters']/@content",
+      "selector": "/html/head/meta[@name='tags']/@content",
       "type": "xpath",
       "global": true
     }
