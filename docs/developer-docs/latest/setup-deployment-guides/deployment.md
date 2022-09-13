@@ -73,8 +73,6 @@ module.exports = ({ env }) => ({
 Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
 
 ```
-// Path: .env
-
 APP_HOST=10.0.0.1
 NODE_PORT=1338
 ```
