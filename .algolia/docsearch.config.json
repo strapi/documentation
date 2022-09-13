@@ -30,10 +30,12 @@
       "type": "xpath",
       "global": true
     },
+
     "filters": {
       "selector": "/html/head/meta[@name='filters']/@content",
       "type": "xpath",
       "global": true
+    }
 
   },
   "strip_chars": " .,;:#",
