@@ -50,17 +50,17 @@ You will be redirected to GitHub to authorize Strapi Cloud to access your reposi
 ![Project Import - Select Repository](../assets/deployment/cloud/import.png)
 
 3. Click **Next** to proceed to the Project Set up page and enter the following information:
-
-![Project Setup](../assets/deployment/cloud/setup.png)
     * **Project name**: The name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`).
     * **GitHub branch**: The default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository but can be changed via the drop-down.
     * Deploy on push: When enabled, this will automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes.
 
-4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
+![Project Setup](../assets/deployment/cloud/setup.png)
 
-![Advanced Setup](../assets/deployment/cloud/advanced.png)
+4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
     * [**Environment variables**](../configurations/optional/environment.md): Environment variables are used to configure your Strapi app.
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository.
+
+![Advanced Setup](../assets/deployment/cloud/advanced.png)
 
 5. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
 
