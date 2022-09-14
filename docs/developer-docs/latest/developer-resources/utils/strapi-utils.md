@@ -7,6 +7,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/u
 
 # Core Utilities package: @strapi/utils
 
+<!-- Should we base the functions off what is exported in https://github.com/strapi/strapi/blob/main/packages/core/utils/lib/index.js instead? -->
+
 | Utils function | Description | Is Experimental |
 | --- | --- | --- |
 | `build-query` | Convert Strapi query params to Knex query | false |
