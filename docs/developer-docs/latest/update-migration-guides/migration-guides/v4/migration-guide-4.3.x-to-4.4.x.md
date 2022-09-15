@@ -45,16 +45,15 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 ## Updating the sizeLimit provider configuration
 
-This step is only required if you were using the https://docs.strapi.io/developer-docs/latest/plugins/upload.html#max-file-size for your upload provider.
+This step is only required if you were using the [sizeLimit configuration](https://docs.strapi.io/developer-docs/latest/plugins/upload.html#max-file-size) for your upload provider.
 
 :::caution
-The sizeLimit was specified to be in bytes, but it was actually in kilobytes. We have now fixed it to follow the docs, and the limit will be read as bytes.
+The docs required the sizeLimit to be in bytes, but it was actually in kilobytes. This is now fixed, and the limit will be interpreted as bytes.
 
-If you, for some reason, were limiting the file size as kilobytes, you should update the value to be in bytes.
+If you, for some reason, were limiting the file size to kilobytes, you should update the value to be in bytes.
 :::
 
 We recommend to move the sizeLimit outside the provider options like the following, as it will be deprecated in the next major version.
-
 <code-group>
 
 <code-block title="JAVASCRIPT">
