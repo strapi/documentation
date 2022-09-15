@@ -53,7 +53,7 @@ The sizeLimit was specified to be in bytes, but it was actually in kilobytes. We
 If you, for some reason, were limiting the file size as kilobytes, you should update the value to be in bytes.
 :::
 
-We recommend to move the sizeLimit outside the provider options like the following, as we will deprecate 
+We recommend to move the sizeLimit outside the provider options like the following, as it will be deprecated in the next major version.
 
 <code-group>
 
