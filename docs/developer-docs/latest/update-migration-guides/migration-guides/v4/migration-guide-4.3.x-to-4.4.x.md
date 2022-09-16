@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 The Strapi v4.3.x to v4.4.x migration guide upgrades versions of v4.3.x and above to v4.4.x. This migration guide is needed for all users who were limiting media size for the local upload provider. The migration to 4.4.x consists of 3 steps:
 
 - Upgrading the application dependencies
-- Updating the local upload provider sizeLimit
+- Updating the local upload provider `sizeLimit`
 - Reinitializing the application
 
 ## Upgrading the application dependencies to 4.4.x (x is the latest minor version of v4.4)
