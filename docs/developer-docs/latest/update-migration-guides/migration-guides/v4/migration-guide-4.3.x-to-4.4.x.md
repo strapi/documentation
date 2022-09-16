@@ -102,7 +102,7 @@ export default {
 To change the script:
 
 1. In the `./config/plugins.js` file, Identify the upload configuration if you have one.
-2. Move your sizeLimit, if you have one, one level above providerOptions.
+2. (_optional_) If you have a `sizeLimit`, move it one level above `providerOptions`.
 
 
 !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Rebuild-and-start-snippet.md)!!!
