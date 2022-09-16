@@ -109,10 +109,11 @@ From this page you can also trigger a new deployment and access the application 
 ## Settings
 
 The **Settings** enables you to edit the following details for the project:
-    * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
-    * **Production branch**: The branch of the linked repository to use for production deployments.
-    * **Environment variables**: Environment variables are used to configure the environment (e.g. `dev`, `staging`, `production`) of your Strapi app.
-    * **Connected GitHub repository**: The Git repository linked to the project.
-    * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
+
+* **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
+* **Production branch**: The branch of the linked repository to use for production deployments.
+* **Environment variables**: Environment variables are used to configure the environment (e.g. `dev`, `staging`, `production`) of your Strapi app.
+* **Connected GitHub repository**: The Git repository linked to the project.
+* **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
 
 ![Project settings](../assets/deployment/cloud/settings.png)
