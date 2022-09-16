@@ -110,7 +110,7 @@ const developer = [
           {
             title: "Strapi Cloud",
             path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
-            collapsable: false,
+            collapsable: true,
           },
           {
             title: 'Hosting Provider Guides',

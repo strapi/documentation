@@ -8,6 +8,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 ::: warning
 Strapi Cloud is currently in Closed Beta release. Features and functionality may change prior to General Availability.
+
+Sign up for the waitlist [here](https://strapi.io/cloud).
 :::
 
 This is a step-by-step guide for deploying your Strapi application on Strapi Cloud.
@@ -107,10 +109,10 @@ From this page you can also trigger a new deployment and access the application 
 ## Settings
 
 The **Settings** enables you to edit the following details for the project:
+    * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
+    * **Production branch**: The branch of the linked repository to use for production deployments.
+    * **Environment variables**: Environment variables are used to configure the environment (e.g. `dev`, `staging`, `production`) of your Strapi app.
+    * **Connected GitHub repository**: The Git repository linked to the project.
+    * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
 
 ![Project settings](../assets/deployment/cloud/settings.png)
-
-* Project name
-* Production branch
-* Environment variables
-* Connected GitHub repository
