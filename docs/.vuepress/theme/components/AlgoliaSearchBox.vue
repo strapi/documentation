@@ -30,13 +30,17 @@ export default {
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.js'),
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.css')
       ]).then(([docsearch]) => {
-        docsearch = docsearch.default
-        const { algoliaOptions = {}} = userOptions
+        const sidebar = document.querySelector(".sidebar");
+
+        docsearch = docsearch.default;
+
+        const { algoliaOptions = {}} = userOptions;
+
         docsearch(Object.assign(
           {},
           {
             autocompleteOptions: {
-              debug: false
+              debug: true
             }
           },
           userOptions,
@@ -50,8 +54,12 @@ export default {
               const { pathname, hash } = new URL(suggestion.url)
               const removedBase = config.base ? '/' + pathname.replace(config.base, '') : pathname;
               this.$router.push(`${removedBase}${hash}`)
-            }
-          }
+              sidebar.style.width = '20rem';
+            },
+            queryHook: function(query) {
+              sidebar.style.width = '40rem';
+            },
+          },
         ))
       })
     },
@@ -72,12 +80,11 @@ export default {
 </script>
 
 <style lang="stylus">
-
 .al
 .algolia-search-wrapper
   .algolia-autocomplete
     .ds-dropdown-menu
-      width: 500px
+      width: 40rem
       overflow: auto
     .algolia-docsearch-suggestion
       .algolia-docsearch-suggestion--category-header

@@ -1,17 +1,20 @@
 <template>
   <aside class="sidebar">
-    <AlgoliaSearchBox
-      :options="algolia"
-    />
-    <NavLinks />
+    <div class="sidebar-box">
+      <AlgoliaSearchBox
+        :options="algolia"
+      />
 
-    <slot name="top" />
+      <NavLinks />
 
-    <SidebarLinks
-      :depth="0"
-      :items="items"
-    />
-    <slot name="bottom" />
+      <slot name="top" />
+
+      <SidebarLinks
+        :depth="0"
+        :items="items"
+      />
+      <slot name="bottom" />
+    </div>
   </aside>
 </template>
 
@@ -33,8 +36,21 @@ export default {
 </script>
 
 <style lang="stylus">
+
 .sidebar
-  overflow: initial // TODO: fix — This makes the sidebar not scrollable
+  overflow: scroll
+  width: 20rem
+  background-color: transparent
+  border: none
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-box
+    width: calc(20rem - 1px)
+    background: #fff
+    border-right: 1px solid #eee
 
   ul
     padding 0
@@ -43,6 +59,9 @@ export default {
   a
     display inline-block
   .nav-links
+    position: absolute
+    left: 0
+    top: 0
     display none
     border-bottom 1px solid $borderColor
     padding 0.5rem 0 0.75rem 0
