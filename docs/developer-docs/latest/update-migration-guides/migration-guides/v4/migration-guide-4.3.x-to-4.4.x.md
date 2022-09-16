@@ -101,7 +101,7 @@ export default {
 
 To change the script:
 
-1. In the `./config/plugins.js` file, Identify the upload configuration if you have one.
+1. In the `./config/plugins.js` file, identify the upload configuration if you have one.
 2. (_optional_) If you have a `sizeLimit`, move it one level above `providerOptions`.
 
 
