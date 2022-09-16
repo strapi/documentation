@@ -22,9 +22,11 @@ For more information, please refer to the [Koa response documentation](http://ko
 
 ## Accessing the request context anywhere
 
-_**Added in:** v4.3.9_
+::: callout ✨ New in v4.3.9
+The `strapi.requestContext` works with Strapi v4.3.9+.
+:::
 
-Strapi exposes a way to access the current request context from anywhere in the code. (e.g lifecycle functions)
+Strapi exposes a way to access the current request context from anywhere in the code (e.g. lifecycle functions).
 
 You can access the request as follows:
 
@@ -68,6 +70,6 @@ module.exports = {
 };
 ```
 
-::: tip
+::: note
 Strapi uses a Node.js feature called [AsyncLocalStorage](https://nodejs.org/docs/latest-v16.x/api/async_context.html#class-asynclocalstorage) to make the context available anywhere.
 :::
