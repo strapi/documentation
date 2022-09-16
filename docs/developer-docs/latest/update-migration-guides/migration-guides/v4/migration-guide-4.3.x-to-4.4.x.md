@@ -53,7 +53,7 @@ The documentation required the `sizeLimit` to be in bytes, but it was actually i
 If you, for some reason, were limiting the file size to kilobytes, you should update the value to be in bytes.
 :::
 
-We recommend to move the sizeLimit outside the provider options like the following, as it will be deprecated in the next major version.
+We recommend to move the `sizeLimit` outside the provider options like the following, as it will be deprecated in the next major version.
 <code-group>
 
 <code-block title="JAVASCRIPT">
