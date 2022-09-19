@@ -22,7 +22,7 @@
         "type": "xpath",
         "global": true
       },
-      "lvl4": {
+      "lvl3": {
         "selector": "//h2/text()",
         "type": "xpath",
         "global": true
