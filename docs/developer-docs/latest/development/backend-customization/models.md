@@ -79,7 +79,7 @@ General settings for the model can be configured with the following parameters:
 
 | Parameter                                          | Type   | Description                                                                                                            |
 | -------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `tableName`                                  | String | Database table name in which the data should be stored                                                    |
+| `collectionName`                                  | String | Database table name in which the data should be stored                                                    |
 | `kind`<br><br>_Optional,<br>only for content-types_ | String | Defines if the content-type is:<ul><li>a collection type (`collectionType`)</li><li>or a single type (`singleType`)</li></ul> |
 
 ```json
@@ -87,7 +87,7 @@ General settings for the model can be configured with the following parameters:
 
 {
   "kind": "collectionType",
-  "tableName": "Restaurants_v1",
+  "collectionName": "Restaurants_v1",
 }
 ```
 
