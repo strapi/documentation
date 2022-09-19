@@ -180,23 +180,20 @@ In your code editor, you will need to edit a file called `database.js`. Replace 
 // path: ./config/database.js`
 
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
+  connection: {
+    client: 'postgres', 
+  connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', ''),
+        user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
       },
-      options: {
-        ssl: false,
-      },
-    },
-  },
+      debug: false,
+   },
 });
 ```
 
@@ -204,31 +201,29 @@ module.exports = ({ env }) => ({
 
 <code-block title="TYPESCRIPT">
 
-```js
+```ts
+// path: ./config/database.ts`
+
 export default ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
+  connection: {
+    client: 'postgres', 
+  connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', ''),
+        user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
       },
-      options: {
-        ssl: false,
-      },
-    },
-  },
+      debug: false,
+   },
 });
 ```
 
 </code-block>
 </code-group>
-
 
 
 You are now ready to push these changes to Github:
