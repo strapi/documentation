@@ -26,11 +26,14 @@ export default {
   },
   methods: {
     initialize (userOptions, config, lang) {
+      const self = this;
+
       Promise.all([
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.js'),
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.css')
       ]).then(([docsearch]) => {
-        const sidebar = document.querySelector(".sidebar");
+        const sidebar = document.querySelector('.sidebar');
+        const input = document.getElementById('algolia-search-input');
 
         docsearch = docsearch.default;
 
@@ -40,7 +43,7 @@ export default {
           {},
           {
             autocompleteOptions: {
-              debug: true
+              debug: false
             }
           },
           userOptions,
@@ -51,10 +54,18 @@ export default {
               'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || []),
             }, algoliaOptions),
             handleSelected: (input, event, suggestion) => {
-              const { pathname, hash } = new URL(suggestion.url)
+              const { pathname, hash } = new URL(suggestion.url);
               const removedBase = config.base ? '/' + pathname.replace(config.base, '') : pathname;
-              this.$router.push(`${removedBase}${hash}`)
+
+              // Redirect to the resource
+              this.$router.push(`${removedBase}${hash}`);
+
+
+              console.log(input, self.placeholder)
+              // Reset parameters for better UX
               sidebar.style.width = '20rem';
+              input.setVal(self.placeholder);
+
             },
             queryHook: function(query) {
               sidebar.style.width = '40rem';
