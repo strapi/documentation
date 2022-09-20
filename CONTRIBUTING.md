@@ -62,7 +62,7 @@ The following procedure allows you to work locally on the Strapi documentation.
     cd documentation/docs/user-docs
     ```
     
-4. Choose the branch from which to work: either `main` for a contribution on the latest, current version or Strapi ; or `v[x]` for a contribution on a previous version of Strapi.
+4. Choose the branch from which to work: either `main` for a contribution on the current version of Strapi or `v[x]` for a contribution on a previous version of Strapi.
     
     ```bash
     #current version of Strapi (i.e. v4)
@@ -83,7 +83,7 @@ The following procedure allows you to work locally on the Strapi documentation.
     git pull
     ```
     
-6. Create your own branch, based on either `main` or `v[x]` , to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
+6. Create your branch, based on either `main` or `v[x]`, to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
     
     ```bash
     # developer documentation
