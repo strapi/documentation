@@ -48,7 +48,7 @@ npm install better-sqlite3
 
 <code-block title="YARN">
 ```sh
-yarn install better-sqlite3
+yarn add better-sqlite3
 ```
 </code-block>
 
