@@ -40,6 +40,8 @@ If you are using docker-compose, you can skip setting the environment variables 
 
 !!!include(developer-docs/latest/setup-deployment-guides/snippets/docker-env-table.md)!!!
 
+For more information on the `Dockerfile` and its commands, please refer to the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/cli/).
+
 Sample `Dockerfile`:
 
 <code-group>
@@ -92,11 +94,15 @@ CMD ["npm", "run", "develop"]
 
 </code-group>
 
-For more information on the `Dockerfile` and its commands, please refer to the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/cli/).
-
 ### (Optional) Docker Compose
 
 The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
+
+::: note
+For more information about running Docker compose and it's commands, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
+:::
+
+Sample `docker-compose.yml`:
 
 <code-group>
 
@@ -306,8 +312,6 @@ networks:
 </code-block>
 
 </code-group>
-
-For more information about running Docker compose, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
 
 ## Production Environments
 
