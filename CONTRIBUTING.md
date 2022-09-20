@@ -25,9 +25,9 @@ Bug reports help to improve the documentation. Please use our [Documentation Bug
 - Check for existing pull requests that may address the same issue.
 - Check for related open issues, if so, please provide context on the existing issue.
 - Follow the issue template and fill out as much information as you can.
-- Verify The issue is with the Strapi **documentation only**, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repo issues.
+- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
   
-Technical questions should be directed at the following resources:
+Technical questions should be asked using the following resources:
 
 - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
 - Talk with other community members on our [Community Discord](https://discord.strapi.io)
@@ -36,9 +36,9 @@ Technical questions should be directed at the following resources:
 
 ## Submitting a Pull Request
 
-The core team will review your pull request and will either merge it, request changes to it, or close it. You can open a documentation pull request by either:
+The core team will review your pull request and will either merge, request changes, or comment and close it. You can open a documentation pull request by:
 
-- following the `Improve this page` link at the bottom of each documentation page to directly edit in GitHub,
+- clicking the `Improve this page` link at the bottom of any documentation page to directly edit in GitHub,
 - forking the `documentation` repository and working locally.
 
 ### Setup and pull request creation
@@ -125,7 +125,7 @@ When you are finished writing, create a pull request from your forked repository
 
 ### Pull request review and management
 
-The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is: 
+The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is:
 
 1. The pull request is assigned to a member of the Documentation team.
 2. At least 1 member of the Documentation team will review the pull request for:
