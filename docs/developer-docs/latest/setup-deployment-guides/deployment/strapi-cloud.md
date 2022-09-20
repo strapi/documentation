@@ -19,10 +19,10 @@ This is a step-by-step guide for deploying your Strapi application on Strapi Clo
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
 * A [GitHub](https://github.com) account
-* GitHub repository for each Strapi application to be deployed
+* GitHub repository for your Strapi application(s)
 
 ::: tip
-Each Strapi app must be in a separate repository. Your Strapi Cloud account can link to multiple repositories to deploy multiple apps, if needed.
+The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 :::
 
 ## Getting started
@@ -42,7 +42,7 @@ Each Strapi app must be in a separate repository. Your Strapi Cloud account can 
 1. From the **Projects** page, click the **Create Project** button. You are prompted to **Connect with GitHub**.
 
 ::: tip
-Connect the GitHub account that owns the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+Connect the GitHub account and/or Organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
 
 You will be redirected to GitHub to authorize Strapi Cloud to access your repository.
 :::
@@ -54,13 +54,13 @@ You will be redirected to GitHub to authorize Strapi Cloud to access your reposi
 3. Click **Next** to proceed to the Project Set up page and enter the following information:
     * **Project name**: The name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`).
     * **GitHub branch**: The default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository but can be changed via the drop-down.
-    * Deploy on push: When enabled, this will automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes.
+    * **Deploy on push**: When enabled, this will automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes.
 
 ![Project Setup](../assets/deployment/cloud/setup.png)
 
 4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
     * [**Environment variables**](../configurations/optional/environment.md): Environment variables are used to configure your Strapi app.
-    * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository.
+    * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
 
 ![Advanced Setup](../assets/deployment/cloud/advanced.png)
 
@@ -94,7 +94,12 @@ Each card displays the following information:
 
 * Commit SHA
 * Commit message
-* Deployment status: Whether the project is **Deploying**, the **Build failed**, or the deployment is **Done**.
+* Deployment status: Whether the project is 
+    * **Deploying**
+    * **Done**
+    * **Cancelled**
+    * **Build failed**
+    * **Deploy failed**
 * Last deployment time: When the deployment was triggered and the duration.
 * Production branch
 * Options menu (`...`): The available options vary depending on the deployment status.
@@ -102,6 +107,8 @@ Each card displays the following information:
     * For **Deploying** status, you can:
         * **Cancel deploy**
     * For **Build failed** status, you can:
+        * **Download error logs**
+    * For **Deploy failed** status, you can:
         * **Download error logs**
 
 From this page you can also trigger a new deployment and access the application using the corresponding buttons.
@@ -112,7 +119,7 @@ The **Settings** enables you to edit the following details for the project:
 
 * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
 * **Production branch**: The branch of the linked repository to use for production deployments.
-* **Environment variables**: Environment variables are used to configure the environment (e.g. `dev`, `staging`, `production`) of your Strapi app.
+* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
 * **Connected GitHub repository**: The Git repository linked to the project.
 * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
 
