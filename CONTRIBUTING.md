@@ -43,7 +43,7 @@ The core team will review your pull request and will either merge it, request ch
 
 ### Setup and pull request creation
 
-Follow the procedure below to contribute to the Strapi documentation.
+The following procedure allows you to work locally on the Strapi documentation.
 
 1. Fork the `documentation` repository.
 2. Clone your forked `documentation` repository.
@@ -83,7 +83,7 @@ Follow the procedure below to contribute to the Strapi documentation.
     git pull
     ```
     
-6. Create your own branch, based on either `main` or `v[x]` , on which you will work on your documentation contribution. Make sure the name of your branch indicates both the type of documentation and the topic.
+6. Create your own branch, based on either `main` or `v[x]` , to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
     
     ```bash
     # developer documentation
@@ -115,41 +115,26 @@ Follow the procedure below to contribute to the Strapi documentation.
 
   The project is now up and running at http://localhost:8080 and you should be able to access it in your browser.
 
-
 You are now ready to contribute to the Strapi documentation! 🚀
 
 🤗 Make sure to follow the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and the [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) when writing your documentation contribution. These documents are meant to help you write a contribution that fits the whole Strapi documentation and make the reviewing process easier and quicker.
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information).
 
-✋ To be able to submit your contribution, you must sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
+✋ Sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
 
 ### Pull request review and management
 
-Read the information below to know how your contribution will be handled by the Strapi Documentation team until it is merged and deployed.
+The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is: 
 
-#### Handling
+1. The pull request is assigned to a member of the Documentation team.
+2. At least 1 member of the Documentation team will review the pull request for:
 
-When a new pull request is submitted in the Strapi `documentation` repository, it is handled in the following week, meaning that the Strapi team:
+- accuracy,
+- quality,
+- alignment with the documentation scope and roadmap.
 
-- acknowledges the new pull request, leaving a 👀 reaction on the description
-- tags the pull request, to indicate the type of documentation that is being updated, and optionally the level of priority for the contribution
-- assigns the pull request to a member of the Strapi Documentation team, who will be in charge of the reviewing and merging
-
-#### Review
-
-Once all of the handling steps are done by the Strapi team, you can expect your pull request to be reviewed in the next week or so.
-
-Here is what the Strapi Documentation team will review in your pull request:
-
-- The accuracy and coherence of the contribution, by testing any new piece of code or action for example,
-- The quality of the technical writing, to make sure it is proper technical documentation that is easy to understand (see [12 Rules of Technical Writing](https://www.notion.so/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04))
-- The fit of the contribution among the rest of the Strapi documentation (see [Strapi Documentation Style Guide](https://www.notion.so/Strapi-Documentation-Style-Guide-b9c21387732741ed8b0a3f9701612577))
-
-The pull request will be validated once the contribution ticks all the boxes. At least the validation of the Strapi Documentation team member in charge of the pull request is necessary for it to be merged.
-
-#### Deployment
-
-When your pull request is validated and merged, it will be assigned to a Milestone with a deployment version and date. The Strapi Documentation team typically deploys the documentation on Wednesdays, but not every week.
+3. Reviewers will either approve, ask for changes, or reject the pull request.
+4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays, but not every week.
 
 Every documentation deployment is communicated through a message in [the "News" section of the Strapi forum](https://forum.strapi.io/c/news/5).
