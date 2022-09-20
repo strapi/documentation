@@ -1,169 +1,53 @@
 ---
-title: Install from Docker - Strapi Developer Docs
-description: Quickly create a Strapi application using our official Strapi Docker images.
+title: Custom Docker Container - Strapi Developer Docs
+description: Quickly create a Docker container from a local project.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/docker.html
 ---
 
-# Installing using Docker
+# Running Strapi in a Docker container
 
 :::caution
-This Docker image is only for Strapi v3. For now, Strapi will not update the image for v4.
-However, to build an image compatible with Strapi v4, we recommend following [this guide](https://blog.dehlin.dev/docker-with-strapi-v4) by Simen Daehlin, Community Star at Strapi.
-
-If you would like an official v4 image, please share it on the [roadmap](https://feedback.strapi.io/developer-experience).
-
+Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions, please reach out to the community on [Discord](https://discord.strapi.io).
 :::
 
-The following documentation will guide you through the installation of a new Strapi project using [Docker](https://www.docker.com/).
+The following documentation will guide you through the process of building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
 
-Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies).
+Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.
 
-::: note
-You can find the official Docker image for Strapi in the [Docker Hub](https://hub.docker.com/r/strapi/strapi).
-:::
+## Prerequisites
 
-## Creating a Strapi project
+To follow the instructions below, the following will be needed:
 
-1. Create an empty folder.
-2. In your empty folder, create a `docker-compose.yaml` file. It is where the new Strapi project will be created, and it defines the database and Strapi service to use.
+- [Docker](https://www.docker.com/) installed on your machine
+- [Supported version of Node.js](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met)
+- An existing Strapi v4 project, or a new one created with [Strapi Quick Start](/developer-docs/latest/getting-started/quick-start.md)
+- (Optional) [Yarn](https://yarnpkg.com/) installed on your machine
+- (Optional) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
 
-    ::::: tabs card
+## Development and/or Staging environments
 
-    :::: tab SQLite
+### Dockerfile
 
-    ```yaml
-    version: '3'
-    services:
-      strapi:
-        image: strapi/strapi
-        volumes:
-          - ./app:/srv/app
-        ports:
-          - '1337:1337'
-    ```
+### Building the development container
 
-    ::::
+### (Optional) Docker Compose
 
-    :::: tab PostgreSQL
+## Production Environments
 
-    ```yaml
-    version: '3'
-    services:
-      strapi:
-        image: strapi/strapi
-        environment:
-          DATABASE_CLIENT: postgres
-          DATABASE_NAME: strapi
-          DATABASE_HOST: postgres
-          DATABASE_PORT: 5432
-          DATABASE_USERNAME: strapi
-          DATABASE_PASSWORD: strapi
-        volumes:
-          - ./app:/srv/app
-        ports:
-          - '1337:1337'
-        depends_on:
-          - postgres
+### Dockerfile
 
-      postgres:
-        image: postgres
-        environment:
-          POSTGRES_DB: strapi
-          POSTGRES_USER: strapi
-          POSTGRES_PASSWORD: strapi
-        volumes:
-          - ./data:/var/lib/postgresql/data
-    ```
+### Building the production container
 
-    ::::
+### (Optional) Publishing the container to a registry
 
-    :::: tab MySQL
+### (Optional) Deploying to various cloud providers
 
-    ```yaml
-    version: '3'
-    services:
-      strapi:
-        image: strapi/strapi
-        environment:
-          DATABASE_CLIENT: mysql
-          DATABASE_HOST: mysql
-          DATABASE_PORT: 3306
-          DATABASE_NAME: strapi
-          DATABASE_USERNAME: strapi
-          DATABASE_PASSWORD: strapi
-          DATABASE_SSL: 'false'
-        volumes:
-          - ./app:/srv/app
-        ports:
-          - '1337:1337'
-        depends_on:
-          - mysql
+## Community Tools
 
-      mysql:
-        image: mysql
-        command: mysqld --default-authentication-plugin=mysql_native_password
-        volumes:
-          - ./data:/var/lib/mysql
-        environment:
-          MYSQL_ROOT_PASSWORD: strapi
-          MYSQL_DATABASE: strapi
-          MYSQL_USER: strapi
-          MYSQL_PASSWORD: strapi
-    ```
+### @strapi-community/dockerize
 
-    ::::
+## Docker FAQ
 
-    :::: tab MariaDB
+### Why doesn't Strapi provide official Docker images?
 
-    ```yaml
-    version: '3'
-    services:
-      strapi:
-        image: strapi/strapi
-        environment:
-          DATABASE_CLIENT: mysql
-          DATABASE_HOST: mariadb
-          DATABASE_PORT: 3306
-          DATABASE_NAME: strapi
-          DATABASE_USERNAME: strapi
-          DATABASE_PASSWORD: strapi
-          DATABASE_SSL: 'false'
-        volumes:
-          - ./app:/srv/app
-        ports:
-          - '1337:1337'
-        depends_on:
-          - mariadb
-
-      mariadb:
-        image: mariadb
-        volumes:
-          - ./data:/var/lib/mysql
-        environment:
-          MYSQL_ROOT_PASSWORD: strapi
-          MYSQL_DATABASE: strapi
-          MYSQL_USER: strapi
-          MYSQL_PASSWORD: strapi
-    ```
-
-    ::::
-
-    :::::
-
-3. Pull the latest images using the following command:
-
-    ```
-    docker-compose pull
-    ```
-
-## Running Strapi
-
-To run your Strapi project created with Docker, use one of the following commands:
-
-```bash
-# Execute Docker image detaching the terminal
-docker-compose up -d
-
-# Execute Docker image without detaching the terminal
-docker-compose up
-```
+### Why do we have different Dockerfiles for development and production?

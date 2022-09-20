@@ -39,7 +39,7 @@ Strapi projects and applications can be installed either locally on a computer o
 		</template>
 		<template #title>Docker</template>
 		<template #description>
-      Create a project on your local machine using Docker.
+      Create a custom Docker container from a local project.
     </template>
 	</InstallLink>
 </div>
