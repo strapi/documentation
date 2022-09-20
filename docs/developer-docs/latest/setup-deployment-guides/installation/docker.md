@@ -38,28 +38,17 @@ The following `Dockerfile` can be used to build a non-production Docker image fo
 If you are using docker-compose, you can skip setting the environment variables manually, as they will be set in the `docker-compose.yml` file or a `.env` file.
 :::
 
-There are several environment variables that are required to be set in order to run Strapi in a Docker container, there are also several [optional variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) you can also set.
+!!!include(developer-docs/latest/setup-deployment-guides/snippets/docker-env-table.md)!!!
 
-The following environment variables are required:
-
-| Variable name | Description |
-|---------------|-------------|
-| `NODE_ENV` | The environment in which the application is running. |
-| `DATABASE_CLIENT` | The database client to use. |
-| `DATABASE_HOST` | The database host. |
-| `DATABASE_PORT` | The database port. |
-| `DATABASE_NAME` | The database name. |
-| `DATABASE_USERNAME` | The database username. |
-| `DATABASE_PASSWORD` | The database password. |
-| `JWT_SECRET` | The secret used to sign the JWT for the Users-Permissions plugin. |
-| `ADMIN_JWT_SECRET` | The secret used to sign the JWT for the Admin panel. |
-| `APP_KEYS` | The secret keys used to sign the session cookies. |
+Sample `Dockerfile`:
 
 <code-group>
 
 <code-block title="YARN">
 
 ```Dockerfile
+# path: ./Dockerfile
+
 FROM node:16-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add  build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
@@ -81,6 +70,8 @@ CMD ["yarn", "develop"]
 <code-block title="NPM">
 
 ```Dockerfile
+# path: ./Dockerfile
+
 FROM node:16-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add  build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
@@ -110,6 +101,8 @@ The following `docker-compose.yml` can be used to start up a database container 
 <code-block title="MySQL">
 
 ```yml
+# path: ./docker-compose.yml
+
 version: '3'
 services:
   strapi:
@@ -177,6 +170,8 @@ networks:
 <code-block title="MariaDB">
 
 ```yml
+# path: ./docker-compose.yml
+
 version: '3'
 services:
   strapi:
@@ -243,6 +238,8 @@ networks:
 <code-block title="PostgreSQL">
 
 ```yml
+# path: ./docker-compose.yml
+
 version: '3'
 services:
   strapi:
@@ -319,6 +316,8 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 <code-block title="YARN">
 
 ```Dockerfile
+# path: ./Dockerfile.prod
+
 FROM node:16-alpine as build
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add build-base gcc autoconf automake zlib-dev libpng-dev vips-dev && rm -rf /var/cache/apk/* > /dev/null 2>&1
@@ -351,6 +350,8 @@ CMD ["yarn", "start"]
 <code-block title="NPM">
 
 ```Dockerfile
+# path: ./Dockerfile.prod
+
 FROM node:16-alpine as build
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add build-base gcc autoconf automake zlib-dev libpng-dev vips-dev && rm -rf /var/cache/apk/* > /dev/null 2>&1
@@ -391,12 +392,31 @@ CMD ["npm", "run","start"]
 
 ## Community Tools
 
+There are several community tools that can be used to deploy Strapi to various cloud providers and can assist you in setting up Docker both in a development and production environment.
+
+We strongly support our community efforts and encourage you to check out the following tools, please do help support them by contributing to their development.
+
+If you would like to add your tool to this list, please open a pull request on the [Strapi documentation repository](https://github.com/strapi/documentation).
+
 ### @strapi-community/dockerize
 
+The `@strapi-community/dockerize` package is a CLI tool that can be used to generate a Dockerfile and docker-compose.yml file for a Strapi project.
+
+To get started you simply need to run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
+
+For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-dockerize) or the [npm package](https://www.npmjs.com/package/@strapi-community/dockerize).
+
+<!-- TODO: Wait for community to finish up on some things before adding the below section. -->
 <!-- ### @strapi-community/deployify -->
 
 ## Docker FAQ
 
 ### Why doesn't Strapi provide official Docker images?
 
+Strapi is a framework that can be used to build many different types of applications. As such, it is not possible to provide a single Docker image that can be used for all use cases.
+
 ### Why do we have different Dockerfiles for development and production?
+
+The primary cause for the need for various Docker images is due to the way our Admin panel is built. The Admin panel is built using React and is bundled into the Strapi application during the build process. This means that Strapi backend is simply acting as a web server to serve the Admin panel and thus certain environment variables are statically compiled into the built Admin panel.
+
+It is generally considered a best practice with Strapi to build different Docker images for development and production environments. This is because the development environment is not optimized for performance and is not intended to be exposed to the public internet.
