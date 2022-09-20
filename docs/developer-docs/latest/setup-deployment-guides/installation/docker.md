@@ -92,6 +92,8 @@ CMD ["npm", "run", "develop"]
 
 </code-group>
 
+For more information on the `Dockerfile` and its commands, please refer to the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/cli/).
+
 ### (Optional) Docker Compose
 
 The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
@@ -305,6 +307,8 @@ networks:
 
 </code-group>
 
+For more information about running Docker compose, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
+
 ## Production Environments
 
 ### Dockerfile
@@ -386,9 +390,33 @@ CMD ["npm", "run","start"]
 
 ### Building the production container
 
+Building production Docker images can have several options. The following example uses the `docker build` command to build a production Docker image for a Strapi project. However, it is recommended you review the [Docker documentation](https://docs.docker.com/engine/reference/commandline/build/) for more information on building Docker images with more advanced options.
+
+To build a production Docker image for a Strapi project, run the following command:
+
+```bash
+docker build \
+  --build-arg NODE_ENV=production \
+  # --build-arg STRAPI_URL=https://api.example.com \ # Uncomment to set the Strapi Server URL
+  -t mystrapiapp:latest \ # Replace with your image name
+  -f Dockerfile.prod .
+```
+
 ### (Optional) Publishing the container to a registry
 
-### (Optional) Deploying to various cloud providers
+After you have built a production Docker image for a Strapi project, you can publish the image to a Docker registry. Ideally for production usage this should be a private registry as your Docker image will contain sensitive information.
+
+Depending on your hosting provider you may need to use a different command to publish your image. It is recommended you review the [Docker documentation](https://docs.docker.com/engine/reference/commandline/push/) for more information on publishing Docker images with more advanced options.
+
+Some popular hosting providers are:
+
+- [AWS ECR](https://aws.amazon.com/ecr/)
+- [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/)
+- [GCP Container Registry](https://cloud.google.com/container-registry)
+- [Digital Ocean Container Registry](https://www.digitalocean.com/products/container-registry/)
+- [IBM Cloud Container Registry](https://www.ibm.com/cloud/container-registry)
+- [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+- [Gitlab Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/)
 
 ## Community Tools
 
