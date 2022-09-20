@@ -193,7 +193,7 @@ module.exports = ({ env }) => ({
        },
       },
       debug: false,
-   },
+  },
 });
 ```
 
@@ -218,7 +218,7 @@ export default ({ env }) => ({
        },
       },
       debug: false,
-   },
+  },
 });
 ```
 
