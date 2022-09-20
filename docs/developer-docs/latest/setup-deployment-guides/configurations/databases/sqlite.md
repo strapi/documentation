@@ -10,7 +10,7 @@ SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quic
 
 ## Install SQLite using starter
 
-Simply use one of the following commands.
+Use one of the following commands:
 
 <code-group>
 
