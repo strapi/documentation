@@ -53,7 +53,6 @@ npm install better-sqlite3
 ```sh
 yarn add better-sqlite3
 ```
-
 </code-block>
 
 </code-group>
