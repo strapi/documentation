@@ -426,7 +426,7 @@ Some popular hosting providers are:
 
 There are several community tools that can be used to deploy Strapi to various cloud providers and can assist you in setting up Docker both in a development and production environment.
 
-We strongly support our community efforts and encourage you to check out the following tools, please do help support them by contributing to their development.
+We strongly support our community efforts and encourage you to check out the following tools, please help support them by contributing to their development.
 
 If you would like to add your tool to this list, please open a pull request on the [Strapi documentation repository](https://github.com/strapi/documentation).
 
