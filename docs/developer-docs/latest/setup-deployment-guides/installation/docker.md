@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 # Running Strapi in a Docker container
 
 :::caution
-Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions, please reach out to the community on [Discord](https://discord.strapi.io).
+Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
 :::
 
 The following documentation will guide you through the process of building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
