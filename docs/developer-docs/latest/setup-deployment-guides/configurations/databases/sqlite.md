@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 SQLite is the default ([Quick Start](/developer-docs/latest/getting-started/quick-start.md)) and recommended database to quickly create an app locally.
 
-## Install SQLite using starter
+## Install SQLite during app creation
 
 Use one of the following commands:
 
@@ -102,4 +102,3 @@ Refer to the [configuration section](/developer-docs/latest/setup-deployment-gui
 ::: tip
 Most cloud service providers offer a managed SQL database service, which is a hassle-free way to get your database up and running. To get up and running locally, you might want to try using a Docker container.
 :::
-
