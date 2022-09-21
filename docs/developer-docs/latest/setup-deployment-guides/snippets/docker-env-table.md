@@ -1,4 +1,4 @@
-There are several environment variables that are required to be set in order to run Strapi in a Docker container, there are also several [optional variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) you can also set.
+There are several environment variables that are required in order to run Strapi in a Docker container, there are also several [optional variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) you can set.
 
 The following environment variables are required:
 
