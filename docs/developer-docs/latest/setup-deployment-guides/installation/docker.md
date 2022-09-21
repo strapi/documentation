@@ -12,7 +12,7 @@ Strapi does not build any official container images. The following instructions 
 
 The following documentation will guide you through the process of building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
 
-Docker is an open platform that allows to develop, ship and run applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries and configuration files; they can communicate with each other through well-defined channels.
+Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
 
 ## Prerequisites
 
