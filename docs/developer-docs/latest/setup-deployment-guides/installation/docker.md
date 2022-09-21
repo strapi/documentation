@@ -14,15 +14,15 @@ The following documentation will guide you through the process of building a cus
 
 Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
 
-## Prerequisites
-
-To follow the instructions below, the following will be needed:
+::: prerequisites
 
 - [Docker](https://www.docker.com/) installed on your machine
 - [Supported version of Node.js](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met)
 - An existing Strapi v4 project, or a new one created with [Strapi Quick Start](/developer-docs/latest/getting-started/quick-start.md)
 - (Optional) [Yarn](https://yarnpkg.com/) installed on your machine
 - (Optional) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
+
+:::
 
 ## Development and/or Staging environments
 
