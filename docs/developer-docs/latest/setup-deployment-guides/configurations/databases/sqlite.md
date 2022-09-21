@@ -41,3 +41,4 @@ Refer to the [configuration section](/developer-docs/latest/setup-deployment-gui
 ::: tip
 Most cloud service providers offer a managed SQL database service, which is a hassle-free way to get your database up and running. To get up and running locally, you might want to try using a Docker container.
 :::
+
