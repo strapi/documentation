@@ -434,7 +434,7 @@ If you would like to add your tool to this list, please open a pull request on t
 
 The `@strapi-community/dockerize` package is a CLI tool that can be used to generate a Dockerfile and docker-compose.yml file for a Strapi project.
 
-To get started you simply need to run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
+To get started run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
 
 For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-dockerize) or the [npm package](https://www.npmjs.com/package/@strapi-community/dockerize).
 
