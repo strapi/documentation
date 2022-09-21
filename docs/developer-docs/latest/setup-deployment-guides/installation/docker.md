@@ -449,6 +449,6 @@ Strapi is a framework that can be used to build many different types of applicat
 
 ### Why do we have different Dockerfiles for development and production?
 
-The primary cause for the need for various Docker images is due to the way our Admin panel is built. The Admin panel is built using React and is bundled into the Strapi application during the build process. This means that Strapi backend is simply acting as a web server to serve the Admin panel and thus certain environment variables are statically compiled into the built Admin panel.
+The primary reason for various Docker images is due to the way our Admin panel is built. The Admin panel is built using React and is bundled into the Strapi application during the build process. This means that the Strapi backend is acting as a web server to serve the Admin panel and thus certain environment variables are statically compiled into the built Admin panel.
 
 It is generally considered a best practice with Strapi to build different Docker images for development and production environments. This is because the development environment is not optimized for performance and is not intended to be exposed to the public internet.
