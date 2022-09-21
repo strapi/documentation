@@ -240,7 +240,7 @@ mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 ```
 
-- Create (or modify) a `~/.profile` file and add this line:
+- Create (or modify) a `~/.profile` file:
 
 ```bash
 sudo nano ~/.profile
