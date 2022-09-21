@@ -422,7 +422,7 @@ Some popular hosting providers are:
 - [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 - [Gitlab Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/)
 
-## Community Tools
+## Community tools
 
 There are several community tools that can be used to deploy Strapi to various cloud providers and can assist you in setting up Docker both in a development and production environment.
 
