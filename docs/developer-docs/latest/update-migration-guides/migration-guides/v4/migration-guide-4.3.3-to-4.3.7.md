@@ -22,7 +22,7 @@ The Strapi v4.3.3+ to v4.3.7 migration guide upgrades versions of v4.3.3 and abo
 Stop the server before starting the upgrade.
 :::
 
-1. Upgrade all of the Strapi packages in `package.json` to `4.3.7`.
+1. Upgrade all of the Strapi packages in `package.json` to `4.3.7`:
 
 ```json
 // path: package.json
