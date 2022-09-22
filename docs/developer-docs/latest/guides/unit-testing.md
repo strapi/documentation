@@ -135,6 +135,9 @@ async function cleanupStrapi() {
   //close server to release the db-file
   await strapi.server.httpServer.close();
 
+  // close the connection to the database before deletion
+  await strapi.db.connection.destroy();
+
   //delete test database after all tests have completed
   if (dbSettings && dbSettings.filename) {
     const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
@@ -142,8 +145,6 @@ async function cleanupStrapi() {
       fs.unlinkSync(tmpDbFile);
     }
   }
-  // close the connection to the database
-  await strapi.db.connection.destroy();
 }
 
 module.exports = { setupStrapi, cleanupStrapi };
@@ -296,7 +297,7 @@ it("should login user and return jwt token", async () => {
 
 it('should return users data for authenticated user', async () => {
   /** Gets the default user role */
-  const defaultRole = await strapi.query('role', 'users-permissions').findOne({}, []);
+  const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
   const role = defaultRole ? defaultRole.id : null;
 
