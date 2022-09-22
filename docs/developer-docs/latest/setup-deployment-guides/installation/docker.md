@@ -19,7 +19,7 @@ Docker is an open platform that allows developing, shipping, and running applica
 - [Docker](https://www.docker.com/) installed on your machine
 - [Supported version of Node.js](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met)
 - An existing Strapi v4 project, or a new one created with [Strapi Quick Start](/developer-docs/latest/getting-started/quick-start.md)
-- (Optional) [Yarn](https://yarnpkg.com/) installed on your machine
+- (_optional_) [Yarn](https://yarnpkg.com/) installed on your machine
 - (Optional) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
 
 :::
