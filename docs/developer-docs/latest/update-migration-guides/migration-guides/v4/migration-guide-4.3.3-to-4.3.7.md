@@ -22,10 +22,25 @@ The Strapi v4.3.3+ to v4.3.7 migration guide upgrades versions of v4.3.3 and abo
 Stop the server before starting the upgrade.
 :::
 
-1. Upgrade all of the Strapi packages in the `package.json` to `4.3.7`.
-2. Change the `sqlite3` package to `better-sqlite3` version `7.4.6`:
+1. Upgrade all of the Strapi packages in `package.json` to `4.3.7`.
 
-```jsx
+```json
+// path: package.json
+
+{
+  // ...
+  "dependencies": {
+    "@strapi/strapi": "4.3.7",
+    "@strapi/plugin-users-permissions": "4.3.7",
+    "@strapi/plugin-i18n": "4.3.7",
+    // ...
+  }
+}
+```
+
+2. Change the `sqlite3` package to `better-sqlite3` version `7.4.6` in `package.json`:
+
+```json{9}
 // path: package.json
 
 {
