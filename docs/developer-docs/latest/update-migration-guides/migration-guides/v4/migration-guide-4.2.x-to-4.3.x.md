@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.2.x to v4.3.x migration guide
 
-The Strapi v4.2.x to v4.3.x migration guide upgrades versions of v4.2.x and above to v4.3.x. This migration guide is needed for all users who are using the default SQLite database config in their application. The migration to 4.3.x consists of 3 steps:
+The Strapi v4.2.x to v4.3.x migration guide upgrades versions of v4.2.x and above to v4.3.x. This migration guide is needed for all TypeScript users who are using the default SQLite database configuration in their application. The migration to 4.3.3 consists of 3 steps:
 
 - Upgrading the application dependencies
 - Updating the database configuration script
@@ -18,9 +18,9 @@ The Strapi v4.2.x to v4.3.x migration guide upgrades versions of v4.2.x and abov
 Stop the server before starting the upgrade. At the time of writing this, the latest version of Strapi is v4.3.3.
 :::
 
-1. Upgrade all of the Strapi packages in the `package.json` to `4.3.3`:
+1. Upgrade all of the Strapi packages in the `package.json` to `4.3.3` or higher:
 
-```jsx
+```json
 // path: package.json
 
 {
@@ -45,16 +45,16 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 ## Updating the database configuration script
 
-This step is only required if you use the default SQLite database configuration.
+This step is only required if you use the default SQLite database configuration in a TypeScript project.
 
-To make sure you don't lose your data everytime the development server restarts, you need to make a modification to the `<project_folder>/config/database.js` file. This modification will tell Strapi to use the correct file for your database as per the v4.3.x update.
+To make sure you don't lose your data every time the development server restarts, you need to make a modification to the `./config/database.ts` file. This modification tells Strapi to use the correct file for your database.
 
 To change the script:
 
-1. In the `./config/database.js` file, Identify the default SQLite database configuration.
-2. Copy and paste the following line to the replace the `filename` key of the sqlite configuration:
+1. In the `./config/database.ts` file, Identify the default SQLite database configuration.
+2. Copy and paste the following line to the replace the `filename` key of the SQLite configuration:
 
-```js
+```ts
 filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
 ```
 
