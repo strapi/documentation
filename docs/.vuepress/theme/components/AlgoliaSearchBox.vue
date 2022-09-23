@@ -7,7 +7,7 @@
     <input
       id="algolia-search-input"
       class="search-query"
-      placeholder="Quick search..."
+      :placeholder="placeholder"
     >
   </form>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: ['options'],
   data () {
     return {
-      placeholder: 'undefined'
+      placeholder: undefined
     }
   },
   mounted () {
@@ -26,51 +26,27 @@ export default {
   },
   methods: {
     initialize (userOptions, config, lang) {
-      const self = this;
-
       Promise.all([
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.js'),
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.css')
       ]).then(([docsearch]) => {
-        const sidebar = document.querySelector('.sidebar');
-        const input = document.getElementById('algolia-search-input');
-
-        docsearch = docsearch.default;
-
-        const { algoliaOptions = {}} = userOptions;
-
+        docsearch = docsearch.default
+        const { algoliaOptions = {}} = userOptions
         docsearch(Object.assign(
           {},
-          {
-            autocompleteOptions: {
-              debug: false
-            }
-          },
           userOptions,
           {
             inputSelector: '#algolia-search-input',
             // #697 Make docsearch work well at i18n mode.
             algoliaOptions: Object.assign({
-              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || []),
+              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || [])
             }, algoliaOptions),
             handleSelected: (input, event, suggestion) => {
-              const { pathname, hash } = new URL(suggestion.url);
+              const { pathname, hash } = new URL(suggestion.url)
               const removedBase = config.base ? '/' + pathname.replace(config.base, '') : pathname;
-
-              // Redirect to the resource
-              this.$router.push(`${removedBase}${hash}`);
-
-
-              console.log(input, self.placeholder)
-              // Reset parameters for better UX
-              sidebar.style.width = '20rem';
-              input.setVal(self.placeholder);
-
-            },
-            queryHook: function(query) {
-              sidebar.style.width = '40rem';
-            },
-          },
+              this.$router.push(`${removedBase}${hash}`)
+            }
+          }
         ))
       })
     },
@@ -91,12 +67,12 @@ export default {
 </script>
 
 <style lang="stylus">
+
 .al
 .algolia-search-wrapper
   .algolia-autocomplete
     .ds-dropdown-menu
-      width: 40rem
-      overflow: auto
+      width: 500px
     .algolia-docsearch-suggestion
       .algolia-docsearch-suggestion--category-header
         color: black
@@ -144,9 +120,6 @@ export default {
         .ds-dropdown-menu
           min-width 515px !important
 @media (max-width: $MQMobile)
-  .search-box input
-    left: 0 !important
-
   .algolia-search-wrapper
     .ds-dropdown-menu
       min-width calc(100vw - 4rem) !important

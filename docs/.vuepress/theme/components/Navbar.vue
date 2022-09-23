@@ -38,16 +38,21 @@
         'max-width': linksWrapMaxWidth + 'px'
       } : {}"
     >
+      <AlgoliaSearchBox
+        :options="algolia"
+      />
       <NavLinks class="can-hide"/>
     </div>
   </header>
 </template>
 
 <script>
+import AlgoliaSearchBox from '@theme/components/AlgoliaSearchBox'
+import SearchBox from '@SearchBox'
 import SidebarButton from '@parent-theme/components/SidebarButton.vue'
 import NavLinks from '@parent-theme/components/NavLinks.vue'
 export default {
-  components: { SidebarButton, NavLinks },
+  components: { SidebarButton, NavLinks, AlgoliaSearchBox, SearchBox},
   data () {
     return {
       linksWrapMaxWidth: null,
@@ -69,6 +74,11 @@ export default {
     window.addEventListener('resize', handleLinksWrapWidth, false)
     this.isBeta = /documentation\/3.0.0-beta.x/.test(window.location.href)
   },
+  computed: {
+    algolia () {
+      return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
+    }
+  }
 }
 function css (el, property) {
   // NOTE: Known bug, will return 'auto' if style value is 'auto'
