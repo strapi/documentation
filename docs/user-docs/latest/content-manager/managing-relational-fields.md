@@ -23,7 +23,7 @@ I want to assign a category to each of my restaurants, therefore I have establis
 In the Content Manager, from the edit view of my Restaurant entries, I can manage the Category relational field, and choose which entry of Category is relevant for my restaurant.
 :::
 
-![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields.png)
+![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields2.png)
 
 The relational fields of a content-type are displayed among regular fields, but can be distinguished by their grey background. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
@@ -43,7 +43,7 @@ If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
-<img src="../assets/content-manager/RF_one-choice.png" alt="One-choice relational fields" width="30%">
+<img src="../assets/content-manager/RF_one-choice2.png" alt="One-choice relational fields" width="30%">
 
 To select the only relevant relational field's entry:
 
@@ -60,7 +60,7 @@ To remove the entry selected in the drop-down list, click on the delete button !
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
-<img src="../assets/content-manager/RF_multiple-choices.png" alt="Multiple choices relational fields" width="30%">
+<img src="../assets/content-manager/RF_multiple-choices2.png" alt="Multiple choices relational fields" width="30%">
 
 To select the relevant relational field's entries:
 

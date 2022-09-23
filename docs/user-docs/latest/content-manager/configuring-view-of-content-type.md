@@ -69,7 +69,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 In the edit view of a content-type, in the right side of the interface, a **Configure the view** button is displayed. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
 
-![Configuring the edit view of the Content Manager](../assets/content-manager/edit-view-config.png)
+![Configuring the edit view of the Content Manager](../assets/content-manager/edit-view-config2.png)
 
 ### Edit view settings
 
