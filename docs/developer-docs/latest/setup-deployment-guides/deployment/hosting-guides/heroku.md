@@ -256,7 +256,9 @@ heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= 
 heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
 ```
 
-If you are using Windows, you can manually set the variables using `heroku config:set VARIABLE=key` for each variable, or use [WSL](https://docs.microsoft.com/en-us/windows/wsl/about).
+:::tip
+On Windows, variables can be set manually by running the `heroku config:set VARIABLE=your-key-here` for each variable.
+:::
 
 The following `openssl` commands will generate random new secrets (Mac and Linux only):
 
