@@ -388,7 +388,7 @@ export default {
 </code-block>
 </code-group>
 
-To extend a plugin's key/value pair (which are declared independently in the plugin's files at `./admin/src/translations/[language-name].json`), you can similarly extend these in the `config.translations` key by prefixing the key with the plugin's name `[plugin name].[key]: 'value'` :
+A plugin's key/value pairs are declared independently in the plugin's files at `./admin/src/translations/[language-name].json`. These key/value pairs can similarly be extended in the `config.translations` key by prefixing the key with the plugin's name (i.e. `[plugin name].[key]: 'value'`) as in the following example:
 
 <code-group>
 <code-block title="JAVASCRIPT">
