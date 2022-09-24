@@ -1,5 +1,5 @@
 ---
-title: Saving & Publishishing content - Strapi User Guide
+title: Saving & Publishing content - Strapi User Guide
 description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html
 ---
