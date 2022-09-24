@@ -31,7 +31,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
     "@strapi/strapi": "4.4.0",
     "@strapi/plugin-users-permissions": "4.3.9",
     "@strapi/plugin-i18n": "4.4.0",
-    "sqlite3": "5.0.2"
+    "better-sqlite3": "7.4.6"
     // ...
   }
 }
