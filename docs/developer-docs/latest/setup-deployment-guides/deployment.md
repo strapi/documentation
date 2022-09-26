@@ -52,7 +52,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 | Debian           | 10.x    | 11.x        |
 | CentOS/RHEL      | 8.x     | 9.x         |
 | macOS            | 10.15   | 11.0        |
-| Windows Desktop  | 10      | 12          |
+| Windows Desktop  | 10      | 11          |
 | Windows Server   | 2019    | 2022        |
 
 ### Application Configuration
