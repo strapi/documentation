@@ -129,8 +129,12 @@ export default () => ({
   graphql: {
     enabled: true,
     config: {
+      playgroundAlways: false,
       defaultLimit: 10,
-      maxLimit: 20
+      maxLimit: 20,
+      apolloServer: {
+        tracing: true,
+      },
     }
   }
 })
