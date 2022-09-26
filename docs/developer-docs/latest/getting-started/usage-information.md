@@ -35,7 +35,13 @@ The following data is collected:
 - Build configurations
 
 ::: caution GDPR
-The collected data are of a non-sensitive nature and no personal data is collected. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
+The collected data are of a non-sensitive nature and no personal data is collected by Strapi's telemetry system. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
+:::
+
+::: note
+If you check the box "Keep me updated about new features & upcoming improvements (by doing this, you accept the terms and the privacy policy)" on the first registration screen, your email address, first name, and role in the company will be sent to our marketing team.
+
+These data are used for marketing-related purposes only (e.g., the Strapi newsletter) and are not sent to Strapi's telemetry system. This collected usage information is opt-out by default: the data aren't sent if you don't check the box.
 :::
 
 ### Opt-out

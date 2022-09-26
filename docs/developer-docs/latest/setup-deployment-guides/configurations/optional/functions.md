@@ -8,6 +8,128 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/developer-docs/latest/development/typescript.md) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
+The functions can be synchronous, asynchronous, or return a promise.
+
+**Synchronous function**
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+module.exports = {
+  register() {
+    // some sync code
+  },
+  bootstrap() {
+    // some sync code
+  },
+  destroy() {
+    // some sync code
+  }
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  register() {
+    // some sync code
+  },
+  bootstrap() {
+    // some sync code
+  },
+  destroy() {
+    // some sync code
+  }
+};
+```
+
+</code-block>
+</code-group>
+
+**Asynchronous function**
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+module.exports = {
+  async register() {
+    // some async code
+  },
+  async bootstrap() {
+    // some async code
+  },
+  async destroy() {
+    // some async code
+  }
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  async register() {
+    // some async code
+  },
+  async bootstrap() {
+    // some async code
+  },
+  async destroy() {
+    // some async code
+  }
+};
+```
+
+</code-block>
+</code-group>
+
+**Function returning a promise**
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+module.exports = {
+  register() {
+    return new Promise(/* some code */);
+  },
+  bootstrap() {
+    return new Promise(/* some code */);
+  },
+  destroy() {
+    return new Promise(/* some code */);
+  }
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
+  register() {
+    return new Promise(/* some code */);
+  },
+  bootstrap() {
+    return new Promise(/* some code */);
+  },
+  destroy() {
+    return new Promise(/* some code */);
+  }
+};
+```
+  
+</code-block>
+</code-group>
+
 ## Register
 
 The `register` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application is initialized.
@@ -28,80 +150,6 @@ It can be used to:
 - fill the database with some necessary data
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md) feature
 
-The bootstrap function can be synchronous, asynchronous, or return a promise:
-
-**Synchronous function**
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-module.exports = () => {
-  // some sync code
-};
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-export default () => {
-  // some sync code
-};
-```
-
-</code-block>
-</code-group>
-
-**Asynchronous function**
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-module.exports = async () => {
-  await someSetup();
-};
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-export default async () => {
-  await someSetup();
-};
-```
-
-</code-block>
-</code-group>
-
-**Function returning a promise**
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-module.exports = () => {
-  return new Promise(/* some code */);
-};
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-export default () => {
-  return new Promise(/* some code */);
-};
-```
-
-</code-block>
-</code-group>
-
 ## Destroy
 
 The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application gets shut down.
@@ -109,4 +157,4 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 It can be used to gracefully:
 
 - stop [services](/developer-docs/latest/development/backend-customization/services.md) that are running
-- [clean up plugin actions](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#destroy) (e.g. close connections, remove listeners, etc.).
+- [clean up plugin actions](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#destroy) (e.g. close connections, remove listeners, etc.)

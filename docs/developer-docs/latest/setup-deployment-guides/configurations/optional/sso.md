@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO) - Strapi Developer Docs
-description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Entreprise Edition with a Gold plan.
+description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
@@ -111,7 +111,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 - If `error` is not set to `null`, then the data sent is ignored, and the controller will throw an error.
 - If the SSO's auto-registration feature is disabled, then the `data` object only need to be composed of an `email` property.
-- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` oject.
+- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` object.
 
 ### Adding a provider
 
@@ -521,10 +521,12 @@ module.exports = ({ env }) => ({
                 ),
             },
             (accessToken, refreshToken, params, profile, done) => {
-              var waadProfile = jwt.decode(params.id_token, "", true);
+              let waadProfile = jwt.decode(params.id_token, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
               });
             }
           ),
@@ -566,10 +568,12 @@ export default ({ env }) => ({
                 ),
             },
             (accessToken, refreshToken, params, profile, done) => {
-              var waadProfile = jwt.decode(params.id_token, "", true);
+              let waadProfile = jwt.decode(params.id_token, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
               });
             }
           ),

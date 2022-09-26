@@ -42,6 +42,12 @@ The basic usage to start an application with PM2 will be to run a command like t
 But here we are facing an issue. In your project you don't have a `.js` file to run your Strapi application.
 
 So first let's create a `server.js` file that will let you run the `pm2` command.
+::: note
+TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the following TypeScript code example or the [TypeScript documentation](/developer-docs/latest/development/typescript.md#start-strapi-programmatically) for additional details.
+:::
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: `./server.js`
@@ -49,6 +55,20 @@ So first let's create a `server.js` file that will let you run the `pm2` command
 const strapi = require('@strapi/strapi');
 strapi().start();
 ```
+
+</code-block>
+<code-block title="TYPESCRIPT">
+
+```js
+// path: `./server.js`
+
+const strapi = require('@strapi/strapi');
+const app = strapi({ distDir: '<path_to_your_out_dir>' });
+app.start();
+```
+
+</code-block>
+</code-group>
 
 Now you will be able to start your server by running `pm2 start server.js`.
 

@@ -163,13 +163,13 @@ module.exports = {
 // path: ./src/plugins/my-plugin/server/content-types/content-type-a.js
 
 module.exports = {
+  kind: 'collectionType',
+  collectionName: 'content-type',
   info: {
-    tableName: 'content-type',
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
     description: 'A regular content-type',
-    kind: 'collectionType',
   },
   options: {
     draftAndPublish: true,
