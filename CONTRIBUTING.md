@@ -30,18 +30,18 @@ Bug reports help to improve the documentation. Please use our [Documentation Bug
 Technical questions should be asked using the following resources:
 
 - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
-- Talk with other community members on our [Community Discord](https://discord.strapi.io)
+- Engage with other community members on our [Community Discord](https://discord.strapi.io)
 
 ---
 
 ## Submitting a Pull Request
 
-The core team will review your pull request and will either merge, request changes, or comment and close it. You can open a documentation pull request by:
+The core team reviews community pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
 - clicking the `Improve this page` link at the bottom of any documentation page to directly edit in GitHub,
 - forking the `documentation` repository and working locally.
 
-### Setup and pull request creation
+### Setup and write locally
 
 The following procedure allows you to work locally on the Strapi documentation.
 
@@ -117,6 +117,8 @@ The following procedure allows you to work locally on the Strapi documentation.
 
 You are now ready to contribute to the Strapi documentation! 🚀
 
+### Write technical documentation
+
 🤗 Make sure to follow the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and the [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) when writing your documentation contribution. These documents are meant to help you write a contribution that fits the whole Strapi documentation and make the reviewing process easier and quicker.
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information).
@@ -130,9 +132,9 @@ The pull request review process and timeline are based on the availability of St
 1. The pull request is assigned to a member of the Documentation team.
 2. At least 1 member of the Documentation team will review the pull request for:
 
-- accuracy,
-- quality,
-- alignment with the documentation scope and roadmap.
+  - accuracy,
+  - quality,
+  - alignment with the documentation scope and roadmap.
 
 3. Reviewers will either approve, ask for changes, or reject the pull request.
 4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays, but not every week.
