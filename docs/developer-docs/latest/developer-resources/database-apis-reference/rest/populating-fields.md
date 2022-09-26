@@ -183,6 +183,8 @@ To populate only specific relations one-level deep, use one of the following met
 
 `GET /api/articles?populate[0]=categories`
 
+`GET /api/articles?populate[categories]=true`
+
 :::
 
 :::response Example response
@@ -223,6 +225,7 @@ To populate only specific relations one-level deep, use one of the following met
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: ['categories'],
@@ -241,6 +244,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
+await request(`/api/articles?${query}`);
+```
+
 :::
 
 #### Populate 2 levels
@@ -251,6 +257,8 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 :::request Example request: populate author and author.company
 
 `GET /api/articles?populate[author][populate][0]=company`
+
+`GET /api/articles?populate[author][populate][company]=true`
 
 :::
 
@@ -299,6 +307,7 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: {
@@ -309,6 +318,24 @@ const query = qs.stringify({
 }, {
   encodeValuesOnly: true, // prettify URL
 });
+await request(`/api/articles?${query}`);
+```
+
+```js
+// Object method
+const qs = require('qs');
+const query = qs.stringify({
+  populate: {
+    author: {
+      populate: {
+        company: true
+      },
+    }
+  }
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
 await request(`/api/articles?${query}`);
 ```
 
