@@ -255,7 +255,7 @@ export default ({ env }) => ({
 </code-group>
 
 :::tip
-Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommand to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
+Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
 :::
 
 #### Setting up the provider - examples
