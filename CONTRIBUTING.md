@@ -34,7 +34,7 @@ Technical questions should be asked using the following resources:
 
 ---
 
-## Submitting a Pull Request
+## Pull Requests
 
 The core team reviews community pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
@@ -119,22 +119,25 @@ You are now ready to contribute to the Strapi documentation! 🚀
 
 ### Write technical documentation
 
-🤗 Make sure to follow the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and the [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) when writing your documentation contribution. These documents are meant to help you write a contribution that fits the whole Strapi documentation and make the reviewing process easier and quicker.
+For lengthier contributions, we provide general guidelines that can help you write clear and concise documentation:
 
-When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information).
+- The [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) gives an overview of how to structure and write clear documentation.
+- The [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) has formatting guidelines and how to implement formatting in markdown files.
+
+When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information) or use the _Create a new branch for this commit and start a pull request_ option if you are using the GitHub web browser interface (see [the GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)).
 
 ✋ Sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
 
-### Pull request review and management
+### Review and management of pull requests
 
 The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is:
 
 1. The pull request is assigned to a member of the Documentation team.
 2. At least 1 member of the Documentation team will review the pull request for:
 
-  - accuracy,
-  - quality,
-  - alignment with the documentation scope and roadmap.
+- accuracy,
+- quality,
+- alignment with the documentation scope and roadmap.
 
 3. Reviewers will either approve, ask for changes, or reject the pull request.
 4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays, but not every week.
