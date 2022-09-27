@@ -140,6 +140,6 @@ The pull request review process and timeline are based on the availability of St
 - alignment with the documentation scope and roadmap.
 
 3. Reviewers will either approve, ask for changes, or reject the pull request.
-4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays, but not every week.
+4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays every 2 weeks.
 
 Every documentation deployment is communicated through a message in [the "News" section of the Strapi forum](https://forum.strapi.io/c/news/5).
