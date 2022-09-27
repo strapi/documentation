@@ -17,7 +17,7 @@ Keep in mind that v3 and v4 plugins are not cross-compatible, but that providers
 <!-- TODO: replace this Figma screenshot with an actual one while testing the feature -->
 ![The Marketplace interface](../assets/plugins/installed-providers.png)
 
-The Plugins and Providers tabs display each package on individual cards containing:
+The Plugins and Providers tabs display each plugin/provider on individual cards containing:
 
 - their name, sometimes followed by either of the following badges:
   - ![maintained by Strapi icon](../assets/icons/official-market.svg) to indicate it is made by Strapi,
