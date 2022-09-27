@@ -1,7 +1,7 @@
 ---
 title: Migrate from 4.3.6 to 4.3.7 - Strapi Developer Docs
-description: Learn how you can migrate your Strapi application from 4.3.3+ to 4.3.7.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.3-to-4.3.7.html
+description: Learn how you can migrate your Strapi application from 4.3.6 to 4.3.7.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.6-to-4.3.7.html
 ---
 
 # v4.3.6 to v4.3.7 migration guide
