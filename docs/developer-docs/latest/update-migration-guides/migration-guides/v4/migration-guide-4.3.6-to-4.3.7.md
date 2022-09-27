@@ -1,12 +1,12 @@
 ---
-title: Migrate from 4.3.3+ to 4.3.7 - Strapi Developer Docs
+title: Migrate from 4.3.6 to 4.3.7 - Strapi Developer Docs
 description: Learn how you can migrate your Strapi application from 4.3.3+ to 4.3.7.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.3-to-4.3.7.html
 ---
 
-# v4.3.3+ to v4.3.7 migration guide
+# v4.3.6 to v4.3.7 migration guide
 
-The Strapi v4.3.3+ to v4.3.7 migration guide upgrades versions of v4.3.3 and above to v4.3.7. The migration changes the SQLite database package from `sqlite3`  to `better-sqlite3`. The migration guide consists of:
+The Strapi v4.3.6 to v4.3.7 migration guide upgrades v4.3.6 to v4.3.7. The migration changes the SQLite database package from `sqlite3`  to `better-sqlite3`. The migration guide consists of:
 
 - upgrading the application dependencies,
 - changing the `sqlite3` package to `better-sqlite3`,
