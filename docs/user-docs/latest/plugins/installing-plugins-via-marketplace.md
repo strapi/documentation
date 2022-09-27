@@ -14,7 +14,6 @@ The Marketplace in the admin panel only displays v4 plugins, but all plugins for
 Keep in mind that v3 and v4 plugins are not cross-compatible, but that providers are compatible both with v3 and v4 plugins.
 :::
 
-<!-- TODO: replace this Figma screenshot with an actual one while testing the feature -->
 ![The Marketplace interface](../assets/plugins/installed-providers.png)
 
 The Plugins and Providers tabs display each plugin/provider on individual cards containing:
