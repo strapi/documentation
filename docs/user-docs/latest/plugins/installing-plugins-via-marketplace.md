@@ -26,7 +26,6 @@ The Plugins and Providers tabs display each package on individual cards containi
 - a **Learn more** button for additional information, including detailed implementation instructions
 - a **Copy install command** button to copy the installation command to the local clipboard. For any installed plugins and providers, this button is replaced by an indicator that it is already installed.
 
-<!-- ? does the text on the button change based on the tab (Submit your plugin/Submit your provider/Submit your custom field) ? -->
 In the top right corner of the Marketplace, the **Submit your plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
 
 ::: tip
