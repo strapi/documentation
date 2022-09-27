@@ -183,8 +183,6 @@ To populate only specific relations one-level deep, use one of the following met
 
 `GET /api/articles?populate[0]=categories`
 
-`GET /api/articles?populate[categories]=true`
-
 :::
 
 :::response Example response
@@ -258,8 +256,6 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 
 `GET /api/articles?populate[author][populate][0]=company`
 
-`GET /api/articles?populate[author][populate][company]=true`
-
 :::
 
 :::response Example response
@@ -307,7 +303,6 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
-// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: {
@@ -321,26 +316,9 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-```js
-// Object method
-const qs = require('qs');
-const query = qs.stringify({
-  populate: {
-    author: {
-      populate: {
-        company: true
-      },
-    }
-  }
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/articles?${query}`);
-```
-
 :::
 
+<!-- ? should we keep this tip even if populate=true is not implemented? -->
 :::note
 There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::

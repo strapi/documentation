@@ -138,6 +138,7 @@ It can be used to:
 - [extend plugins](/developer-docs/latest/development/plugins-extension.md#extending-a-plugin-s-interface)
 - extend [content-types](/developer-docs/latest/development/backend-customization/models.md) programmatically
 - load some [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)
+- register a [custom field](/developer-docs/latest/development/custom-fields.md) that would be used only by the current Strapi application.
 
 ## Bootstrap
 
