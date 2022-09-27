@@ -6,11 +6,9 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/managing-r
 
 # Managing relational fields
 
-Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields".
+Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields". 
 
-Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)).
-
-However, relational fields can point to one or several entries of the other content-type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
+The content of relational fields is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
 
 ::: details Example
 In my Strapi admin panel I have created 2 collection types:
@@ -25,7 +23,7 @@ In the Content Manager, from the edit view of my Restaurant entries, I can manag
 
 ![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields2.png)
 
-The relational fields of a content-type are displayed among regular fields, but can be distinguished by their grey background. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
+The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
 ::: tip
 Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
@@ -51,7 +49,7 @@ To select the only relevant relational field's entry:
 2. Among the list of entries, choose one.
 
 ::: tip
-Click on **Details** to be redirected to the edit view of the content-type the relational field originally belongs to. Make sure you save your page first, to avoid losing your last modifications.
+You can click on the name of the selected entry to be redirected to the edit view of the relational field's content type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
 To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](../assets/icons/clear.svg).
@@ -69,7 +67,7 @@ To select the relevant relational field's entries:
 3. Repeat step 2 until all relevant entries have been chosen.
 
 ::: tip
-All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the content-type the relational field originally belongs to.
+All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
 To remove an entry, click on the remove button ![Minus icon](../assets/icons/minus.svg) in the selected entries list.
