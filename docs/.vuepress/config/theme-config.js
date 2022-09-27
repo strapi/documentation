@@ -88,11 +88,11 @@ const themeConfig = {
           ]
         },
         {
-          text: 'Stable Documentation',
+          text: 'Pre-release Documentation',
           items: [
             {
-              text: 'v4 Documentation',
-              link: 'https://docs.strapi.io',
+              text: 'docs-next',
+              link: 'https://docs-next.strapi.io',
             },
           ]
         },
