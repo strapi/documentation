@@ -71,6 +71,10 @@ Plugins created using the preceding directions are located in the `plugins` dire
 During plugin development it is helpful to use the `--watch-admin` flag to toggle hot reloading of the admin panel. See the [Admin panel customization](/developer-docs/latest/development/admin-customization.md) documentation for more details. (TypeScript specific) While developing your plugin, you can run `yarn develop` or `npm run develop` in the plugin directory to watch the changes to the TypeScript server files.
 :::
 
+::: tip
+Check [this blog post](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-publish-on-npm-6-6) to learn how to publish your Strapi plugin on npm.
+:::
+
 ## Add features to a plugin
 
 Strapi provides programmatic APIs for plugins to hook into some of Strapi's features.
@@ -78,3 +82,8 @@ Strapi provides programmatic APIs for plugins to hook into some of Strapi's feat
 Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
   - `strapi-server.js` for the Server (see [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.md)),
   - `strapi-admin.js` for the admin panel (see [Admin Panel API](/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md)).
+
+::: strapi Custom fields plugins
+Plugins can also be used to add [custom fields](/developer-docs/latest/development/custom-fields.md) to Strapi.
+:::
+

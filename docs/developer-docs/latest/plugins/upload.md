@@ -142,11 +142,12 @@ In addition to the middleware configuration, you can pass the `sizeLimit`, which
 <code-block title="JAVASCRIPT">
 
 ```js
-// path: ./config/plugins.js
+// path: ./config/middlewares.js
 
-module.exports = {
+export default {
   // ...
-  upload: {
+  {
+    name: "strapi::body",
     config: {
       providerOptions: {
         sizeLimit: 250 * 1024 * 1024 // 256mb in bytes

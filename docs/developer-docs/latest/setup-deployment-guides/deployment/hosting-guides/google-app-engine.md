@@ -265,6 +265,10 @@ Deploy so that the server app includes the dependency from `package.json`.
 
 Follow the [documentation of the plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage/blob/master/README.md) for the full configuration.
 
+::: note
+If thumbnails fail to load in the Media Library, try setting `publicFiles: true` in the upload provider `config` object in the `plugins.js` configuration file.
+:::
+
 ### Post-setup configuration
 
 **CORS**

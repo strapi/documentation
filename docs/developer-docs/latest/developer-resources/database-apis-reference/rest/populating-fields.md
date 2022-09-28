@@ -223,6 +223,7 @@ To populate only specific relations one-level deep, use one of the following met
 !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
 
 ```js
+// Array method
 const qs = require('qs');
 const query = qs.stringify({
   populate: ['categories'],
@@ -240,6 +241,9 @@ const query = qs.stringify({
   }, {
   encodeValuesOnly: true, // prettify URL
 });
+
+await request(`/api/articles?${query}`);
+```
 
 :::
 

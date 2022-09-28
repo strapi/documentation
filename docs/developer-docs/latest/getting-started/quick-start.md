@@ -63,7 +63,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
     font-size: 110%;
     width: 50%;
     border-radius: 0 8px 8px 0 !important;
-    border: solid 1px #bbbbba !important;
+    border: solid 1px #C0C0CF !important;
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
@@ -72,8 +72,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active) {
-    background-color: #f8f8f8;
-    color: #787878;
+    background-color: #F6F6F9;
+    color: #8E8EA9;
   }
 
   .image--50 {
@@ -134,7 +134,7 @@ The quick start installation sets up Strapi with a SQLite database. Other databa
 
 Once the installation is complete, your browser automatically opens a new tab.
 
-By completing the form, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+By completing the form, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
@@ -351,7 +351,7 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 Once the installation is complete, your browser automatically opens a tab at ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)). It's for Strapi's admin panel, the back end of your application.
 
-By completing the form in the admin panel tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+By completing the form in the admin panel tab, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
 
 Now, open [http://localhost:3000](http://localhost:3000) in another tab. This is the front end of your application, and you can already see the Next blog in action.
 

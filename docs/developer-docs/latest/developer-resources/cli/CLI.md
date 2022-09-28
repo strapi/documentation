@@ -247,7 +247,7 @@ strapi ts:generate-types
 * **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
   Generate typings specifying the output directory in which the file will be created.
 * **strapi ts:generate-types --file &#60;filename&#62;** or **strapi ts:generate-types -f &#60;filename&#62;**<br/>
-  Generate typings specifiying the name of the file to contain the types declarations.
+  Generate typings specifying the name of the file to contain the types declarations.
 
 ## strapi routes:list
 
