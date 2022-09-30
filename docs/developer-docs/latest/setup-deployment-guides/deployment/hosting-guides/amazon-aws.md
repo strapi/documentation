@@ -436,6 +436,10 @@ git push
 
 You will next deploy your Strapi project to your EC2 instance by **cloning it from GitHub**.
 
+::: note
+Cloning a GitHub repository requires a personal access token. See the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for how to generate and use a personal access token.
+:::
+
 From your terminal and logged into your EC2 instance as the `ubuntu` user:
 
 ```bash
