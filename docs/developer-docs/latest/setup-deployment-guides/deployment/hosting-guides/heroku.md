@@ -412,7 +412,7 @@ heroku open
 ```
 
 ::: tip
-If you see the following issue while running the `git push` command: `'heroku' does not appear to be a git repository`, 
+If you see the following issue while running the `git push` command: `'heroku' does not appear to be a git repository`, run the following command: `heroku git:remote -a your-app-name`.
 :::
 
 ## File Uploads
