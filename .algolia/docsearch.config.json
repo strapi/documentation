@@ -24,7 +24,7 @@
       "type": "xpath",
       "global": true
     },
-    "text": ".content__default p, .content__default ul>li a, .content__default ul>li code,",
+    "text": ".content__default p, .content__default ul>li a, .content__default ul>li code, .content__default table > tr, th, td, p, code",
     "lang": {
       "selector": "/html/@lang",
       "type": "xpath",
