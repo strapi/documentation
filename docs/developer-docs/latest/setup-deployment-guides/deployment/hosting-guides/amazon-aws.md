@@ -240,7 +240,7 @@ mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 ```
 
-- Create (or modify) a `~/.profile` file and add this line:
+- Create (or modify) a `~/.profile` file:
 
 ```bash
 sudo nano ~/.profile
@@ -489,6 +489,10 @@ module.exports = {
       script: 'npm', // For this example we're using npm, could also be yarn
       args: 'start', // Script to start the Strapi server, `start` by default
       env: {
+        APP_KEYS: 'your app keys', // you can find it in your project .env file.
+        API_TOKEN_SALT: 'your api token salt',
+        ADMIN_JWT_SECRET: 'your admin jwt secret',
+        JWT_SECRET: 'your jwt secret',
         NODE_ENV: 'production',
         DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
         DATABASE_PORT: '5432',

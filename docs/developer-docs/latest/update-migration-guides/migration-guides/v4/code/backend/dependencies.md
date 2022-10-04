@@ -96,7 +96,7 @@ The following examples show a comparison of a Strapi v3 `package.json` and a Str
     "uuid": "b8aa7baf-d6dc-4c50-93d4-7739bc88c3fd"
   },
   "engines": {
-    "node": ">=14.19.1 <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

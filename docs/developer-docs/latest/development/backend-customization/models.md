@@ -1,6 +1,26 @@
 ---
 title: Models - Strapi Developer Docs
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
+_tags: [
+  "beforeCreate",
+  "beforeCreateMany",
+	"afterCreate",
+	"afterCreateMany",
+	"beforeUpdate",
+	"beforeUpdateMany",
+	"afterUpdate",
+	"afterUpdateMany",
+	"beforeDelete",
+	"beforeDeleteMany",
+  "afterDelete",
+	"afterDeleteMany",
+	"beforeCount",
+	"afterCount",
+	"beforeFindOne",
+	"afterFindOne",
+	"beforeFindMany",
+	"afterFindMany"
+]
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html
 ---
@@ -59,7 +79,7 @@ General settings for the model can be configured with the following parameters:
 
 | Parameter                                          | Type   | Description                                                                                                            |
 | -------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `tableName`                                  | String | Database table name in which the data should be stored                                                    |
+| `collectionName`                                  | String | Database table name in which the data should be stored                                                    |
 | `kind`<br><br>_Optional,<br>only for content-types_ | String | Defines if the content-type is:<ul><li>a collection type (`collectionType`)</li><li>or a single type (`singleType`)</li></ul> |
 
 ```json
@@ -67,7 +87,7 @@ General settings for the model can be configured with the following parameters:
 
 {
   "kind": "collectionType",
-  "tableName": "Restaurants_v1",
+  "collectionName": "Restaurants_v1",
 }
 ```
 
@@ -581,7 +601,7 @@ The `options` key is used to define specific behaviors and accepts the following
 
 {
   "options": {
-    "privateAttributes": ["id", "created_at"],
+    "privateAttributes": ["id", "createdAt"],
     "draftAndPublish": true
   }
 }

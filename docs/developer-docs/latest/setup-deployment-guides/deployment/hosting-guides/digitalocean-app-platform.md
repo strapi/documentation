@@ -179,7 +179,7 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
 
     | Variable name       | Value            |
     |---------------------|------------------|
-    |`URL`                | `${APP_URL}`     |
+    | `APP_URL`           | `${APP_URL}`     |
     | `DATABASE_HOST`     | `${db.HOSTNAME}` |
     | `DATABASE_PORT`     | `${db.PORT}`     |
     | `DATABASE_NAME`     | `${db.DATABASE}` |
