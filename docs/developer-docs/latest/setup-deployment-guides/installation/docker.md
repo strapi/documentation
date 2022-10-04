@@ -99,7 +99,7 @@ CMD ["npm", "run", "develop"]
 The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
 
 ::: note
-For more information about running Docker compose and it's commands, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
+For more information about running Docker compose and its commands, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
 :::
 
 Sample `docker-compose.yml`:
