@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-c
 
 # Database migrations
 
-Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application.
+Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 ::: callout 🚧  Experimental feature
 Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
@@ -17,6 +17,10 @@ Database migrations are experimental. This feature is still a work in progress a
 Migrations are run using JavaScript migration files stored in `./database/migrations`.
 
 Strapi automatically detects migration files and run them once at the next startup in alphabetical order. Every new file is executed once. Migrations are run before the database tables are synced with the content-types schemas.
+
+::: warning
+Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
+:::
 
 Migration files should export 2 functions `up()` and `down()`:
 
