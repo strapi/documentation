@@ -30,7 +30,7 @@ For working with Strapi locally on your host machine you can use the [Dockerfile
 
 Both methods require an existing Strapi project or a new one created (see [Quick Start](/developer-docs/latest/getting-started/quick-start.md) guide).
 
-### Dockerfile
+### Development Dockerfile
 
 The following `Dockerfile` can be used to build a non-production Docker image for a Strapi project.
 
@@ -315,7 +315,12 @@ networks:
 
 ## Production Environments
 
-### Dockerfile
+The Docker image in production is different from the one used in development/staging environments because of the differences in the admin build process in addition to the command used to run the application. Typical production environments will use a reverse proxy to serve the application and the admin panel. The Docker image is built with the production build of the admin panel and the command used to run the application is `strapi start`.
+
+Once the [Dockerfile](#production-dockerfile) is created, the [production container](l#building-the-production-container) can be built. Optionally, the container can be published to a [registry](#optional-publishing-the-container-to-a-registry) to [blah blah — make it available to the community?]. [Community tools](#community-tools) can help you
+in the process of building a production Docker image and deploying it to a production environment.
+
+### Production Dockerfile
 
 The following `Dockerfile` can be used to build a production Docker image for a Strapi project.
 
@@ -438,8 +443,13 @@ To get started run `npx @strapi-community/dockerize@latest` within an existing S
 
 For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-dockerize) or the [npm package](https://www.npmjs.com/package/@strapi-community/dockerize).
 
-<!-- TODO: Wait for community to finish up on some things before adding the below section. -->
-<!-- ### @strapi-community/deployify -->
+### @strapi-community/deployify
+
+The `@strapi-community/deployify` package is a CLI tool that can be used to deploy your application to various cloud providers and hosting services. Several of these also support deploying a Strapi project with a Docker container and will call on the `@strapi-community/dockerize` package to generate the required files if they don't already exist.
+
+To get started run `npx @strapi-community/deployify@latest` within an existing Strapi project folder and follow the CLI prompts.
+
+For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-deployify) or the [npm package](https://www.npmjs.com/package/@strapi-community/deployify).
 
 ## Docker FAQ
 
