@@ -37,6 +37,18 @@ export default {
 
         docsearch = docsearch.default;
 
+        // Handle the edge case when the user remove their search manually.
+        input.addEventListener('keyup', () => {
+          if (input.value === null || input.value === '') {
+            sidebar.style.width = '20rem';
+          }
+        });
+
+        // Handle the edge case when there is no results, and the user focus somewhere else.
+        input.addEventListener('focusout', () => {
+          sidebar.style.width = '20rem';
+        });
+
         const { algoliaOptions = {}} = userOptions;
 
         docsearch(Object.assign(
@@ -53,15 +65,13 @@ export default {
             algoliaOptions: Object.assign({
               'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || []),
             }, algoliaOptions),
-            handleSelected: (input, event, suggestion) => {
+            handleSelected: (input, event, suggestion, dataSetNumber, context) => {
               const { pathname, hash } = new URL(suggestion.url);
               const removedBase = config.base ? '/' + pathname.replace(config.base, '') : pathname;
 
               // Redirect to the resource
               this.$router.push(`${removedBase}${hash}`);
 
-
-              console.log(input, self.placeholder)
               // Reset parameters for better UX
               sidebar.style.width = '20rem';
               input.setVal(self.placeholder);
