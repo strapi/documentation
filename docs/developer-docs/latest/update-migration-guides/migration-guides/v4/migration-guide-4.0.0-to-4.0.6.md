@@ -1,12 +1,12 @@
 ---
-title: Migrate from 4.0.5 to 4.0.6 - Strapi Developer Docs
-description: Learn how you can migrate your Strapi application from 4.0.5 to 4.0.6.
+title: Migrate from 4.0.0+ to 4.0.6 - Strapi Developer Docs
+description: Learn how you can migrate your Strapi application from 4.0.0+ to 4.0.6.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to4.0.6.html
 ---
 
-# v4.0.x to v4.0.6 migration guide
+# v4.0.0+ to v4.0.6 migration guide
 
-The Strapi v4.0.x to v4.0.6 migration guide upgrades all prior versions of v4.0.x to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#session) and is necessary to fix the login provider feature of the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md). Additionally, password protection in the [Documentation plugin](/developer-docs/latest/plugins/documentation.md) uses the `session` middleware. The migration guide consists of 3 sections:
+The Strapi v4.0.0+ to v4.0.6 migration guide upgrades versions of v4.0.0 and above to v4.0.6. The migration adds the `session` middleware to the middleware array and configures the `session` middleware. The `session` middleware is based on [koa-session](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#session) and is necessary to fix the login provider feature of the [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md). Additionally, password protection in the [Documentation plugin](/developer-docs/latest/plugins/documentation.md) uses the `session` middleware. The migration guide consists of 3 sections:
 
 - upgrading the application dependencies
 - migrating the breaking changes to the middleware
@@ -79,7 +79,7 @@ It is a security risk to expose static session middleware keys in a deployed env
 ```js
 APP_KEYS=[someSecret, anotherSecret, additionalSecrets]
 
-or 
+or
 
 APP_KEYS=someSecret,anotherSecret,additionalSecrets
 ```

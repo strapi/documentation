@@ -111,7 +111,7 @@ $homepageItem = $strapi->single('homepage', 'content');
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
-$entries = $strapi->entriesByField('restaurants', 'slug', 'test-restuarant-name');
+$entries = $strapi->entriesByField('restaurants', 'slug', 'test-restaurant-name');
 ```
 
 ## Single item from collection

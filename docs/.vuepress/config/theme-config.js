@@ -59,6 +59,11 @@ const themeConfig = {
                 '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
             },
             {
+              text: 'Media Library',
+              link:
+                '/user-docs/latest/media-library/introduction-to-media-library.html',
+            },
+            {
               text: 'Plugins',
               link: '/user-docs/latest/plugins/introduction-to-plugins.html',
             },
@@ -71,8 +76,27 @@ const themeConfig = {
       ],
     },
     {
-      text: 'v3 documentation',
-      link: 'https://docs-v3.strapi.io',
+      text: 'Other Docs',
+      items: [
+        {
+          text: 'Older Documentation',
+          items: [
+            {
+              text: 'v3 Documentation',
+              link: 'https://docs-v3.strapi.io',
+            },
+          ]
+        },
+        {
+          text: 'Pre-release Documentation',
+          items: [
+            {
+              text: 'docs-next',
+              link: 'https://docs-next.strapi.io',
+            },
+          ]
+        },
+      ],
     },
     {
       text: 'Ecosystem',

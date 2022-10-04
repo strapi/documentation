@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. 
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 
 ::: note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
@@ -71,17 +71,8 @@ You should never use this command to run a Strapi application in production.
 
 Start a Strapi application with autoReload disabled.
 
-This command is there to run a Strapi application without restarts and file writes (aimed at production usage).
-Certain features are disabled in the `strapi start` mode because they require application restarts.
-
-Allowed environment variables:
-| Property | Description | Type | Default |
-| --------- | ----------- | ----- | ------- |
-| STRAPI_HIDE_STARTUP_MESSAGE | If `true` then Strapi will not show startup message on boot. Values can be `true` or `false` | string | `false` |
-| STRAPI_LOG_LEVEL | Values can be 'fatal', 'error', 'warn', 'info', 'debug', 'trace' | string | `debug` |
-| STRAPI_LOG_TIMESTAMP | Enables or disables the inclusion of a timestamp in the log message. Values can be `true` or `false` | string | `false`|
-| STRAPI_LOG_FORCE_COLOR | Values can be `true` or `false` | string | `true` |
-| STRAPI_LOG_PRETTY_PRINT | If `true` then pino-pretty module will be used to format logs. Values can be `true` or `false` | string | `true` |
+This command is to run a Strapi application without restarts and file writes, primarily for use in production.
+Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) to customize the application start.
 
 ## strapi build
 
@@ -222,7 +213,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/latest/development/backend-customization/controllers.md), [content-types](/developer-docs/latest/development/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#creating-a-plugin), [policies](/developer-docs/latest/development/backend-customization/policies.md), [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) and [services](/developer-docs/latest/development/backend-customization/services.md).
+Run a fully interactive CLI to generate APIs, [controllers](/developer-docs/latest/development/backend-customization/controllers.md), [content-types](/developer-docs/latest/development/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#create-a-plugin), [policies](/developer-docs/latest/development/backend-customization/policies.md), [middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) and [services](/developer-docs/latest/development/backend-customization/services.md).
 
 ```sh
 strapi generate
@@ -230,7 +221,7 @@ strapi generate
 
 ## strapi templates:generate
 
-Create a template from the current strapi project
+Create a template from the current Strapi project.
 
 ```bash
 strapi templates:generate <path>
@@ -240,6 +231,23 @@ strapi templates:generate <path>
   Generates a Strapi template at `<path>`
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
+
+## strapi ts:generate-types
+
+Generate [TypeScript](/developer-docs/latest/development/typescript.md) typings for the project schemas.
+
+```sh
+strapi ts:generate-types
+```
+
+* **strapi ts:generate-types --verbose**<br/>
+  Generate typings with the verbose mode enabled, displaying a detailed table of the generated schemas.
+* **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
+  Generate typings with the silent mode enabled, completely removing all the logs in the terminal.
+* **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
+  Generate typings specifying the output directory in which the file will be created.
+* **strapi ts:generate-types --file &#60;filename&#62;** or **strapi ts:generate-types -f &#60;filename&#62;**<br/>
+  Generate typings specifying the name of the file to contain the types declarations.
 
 ## strapi routes:list
 
@@ -333,6 +341,22 @@ options [--delete-files]
 :::caution
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::
+
+## strapi telemetry:disable
+
+Disable data collection for the project (see [Usage Information](/developer-docs/latest/getting-started/usage-information.md)).
+
+```bash
+strapi telemetry:disable
+```
+
+## strapi telemetry:enable
+
+Re-enable data collection for the project after it was disabled (see [Usage Information](/developer-docs/latest/getting-started/usage-information.md)).
+
+```bash
+strapi telemetry:enable
+```
 
 ## strapi console
 

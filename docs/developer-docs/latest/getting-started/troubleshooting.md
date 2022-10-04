@@ -53,6 +53,10 @@ If you used `--quickstart` to create your Strapi project, by default this uses t
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
+## Can Strapi be run in serverless environments?
+
+Strapi is not well suited for serverless environments due to how the application is structured. Several actions happen while Strapi is booting that can take several seconds. Serverless deployment usually requires an application to cold boot very quickly. Strapi is designed to run as an always-on service, and we don't plan to decrease the cold boot time for the foreseeable future. Therefore, running Strapi in serverless environments is not a great experience, as every request will take seconds to respond to instead of milliseconds. Choosing between a cold boot or a warm boot is an architectural decision that many software developers need to take from a very early stage, so please consider this when choosing to use Strapi.
+
 ## Can I store my Content Manager layout configurations in the model settings?
 
 Currently Strapi does not support this, a `config:dump` and `config:restore` command has been added to make migration of these settings easier when moving between different deployments and environments.
@@ -97,8 +101,12 @@ Likewise since Strapi is Node.js based, in order for changes with the SSL certif
 
 Due to these two issues, it is recommended you use a proxy application such as [Nginx](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md), [Caddy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md), [HAProxy](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
+## Can I use TypeScript in a Strapi project?
+
+TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/developer-docs/latest/development/typescript.md).
+
 ## Is X feature available yet?
 
-You can see the [ProductBoard roadmap](https://portal.productboard.com/strapi) to see which feature requests are currently being worked on and which have not been started yet.
+You can see the [public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
 
 <!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->

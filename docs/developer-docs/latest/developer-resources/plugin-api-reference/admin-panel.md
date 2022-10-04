@@ -49,6 +49,7 @@ Within the register function, a plugin can:
 * [create a new settings section](#createsettingsection)
 * define [injection zones](#injection-zones-api)
 * [add reducers](#reducers-api)
+* register the admin panel part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-in-the-admin-panel)
 
 #### registerPlugin()
 
@@ -121,9 +122,7 @@ module.exports = () => {
     // ...
     bootstrap(app) {
       // execute some bootstrap code
-      app
-        .getPlugin('content-manager')
-        .injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
     },
   };
 };
@@ -182,6 +181,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
 | Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers-api)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
+| Register the admin panel part of a custom field | APIs for custom fields (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)) | `app.customFields.register()` | `register()` |
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
@@ -617,37 +617,42 @@ export default {
 
 #### Predefined hook
 
-Strapi includes a predefined `cm/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
+Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/latest/content-manager/introduction-to-content-manager.md).
 
-::: details Example: 'cm/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
+::: details Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column
 
 ```jsx
 // ./plugins/my-plugin/admin/src/index.js
+import get from 'lodash/get';
+import cellFormatter from './components/cellFormatter';
 
 export default {
   bootstrap(app) {
-	  app.registerHook('cm/inject-column-in-table', ({ displayedHeaders, layout }) => {
+	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
 			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
 
 			if (!isFieldLocalized) {
-			  return displayedHeaders;
+			  return { displayedHeaders, layout };
 			}
 
-			return [
-			  ...displayedHeaders,
-			  {
-			    key: '__locale_key__', // Needed for the table
-			    fieldSchema: { type: 'string' }, // Schema of the attribute
-			    metadatas: {
-						label: 'Content available in', // Label of the header,
-						sortable: false|true // Define in the column is sortable
-					}, // Metadatas for the label
-					// Name of the key in the data we will display
-			    name: 'locales',
-					// Custom renderer
-			    cellFormatter: props => <div>Object.keys(props).map(key => <p key={key}>key</p>)</div>,
-			  },
-			];
+			return {
+        layout,
+        displayedHeaders: [
+          ...displayedHeaders,
+          {
+            key: '__locale_key__', // Needed for the table
+            fieldSchema: { type: 'string' }, // Schema of the attribute
+            metadatas: {
+              label: 'Content available in', // Label of the header,
+              sortable: true|false // Define if the column is sortable
+            }, // Metadatas for the label
+            // Name of the key in the data we will display
+            name: 'locales',
+            // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+            cellFormatter,
+          },
+			  ]
+      };
     });
   },
 }

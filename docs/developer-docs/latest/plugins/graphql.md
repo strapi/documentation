@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 
 # GraphQL
 
-By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
 The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
@@ -15,7 +15,7 @@ The [GraphQL API reference](/developer-docs/latest/developer-resources/database-
 
 ## Usage
 
-To get started with GraphQL in your app, please install the plugin first. To do that, open your terminal and run the following command:
+To get started with GraphQL in your application, please install the plugin first. To do that, open your terminal and run the following command:
 
 <code-group>
 
@@ -33,23 +33,25 @@ yarn strapi install graphql
 
 </code-group>
 
-Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should see the interface (**GraphQL Playground**) that will help you to write GraphQL query to explore your data.
+Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
-## Configurations
-
-By default, the [Shadow CRUD](#shadow-crud) feature is enabled and the GraphQL path is set to `/graphql`. The Playground is enabled by default for both the development and staging environments, however it is disabled in production. By changing the config option `playgroundAlways` to true, you can enable it.
-
-<!-- TODO: update these paragraphs 👇 (format as a table — check with JS) -->
-
-Security limits on maximum number of items in your response by default is limited to 100, however you can change this on the following config option `amountLimit`. This should only be changed after careful consideration of the drawbacks of a large query which can cause what would basically be a DDoS (Distributed Denial of Service). And may cause abnormal load on your Strapi server, as well as your database server.
-
-You can also setup any [Apollo Server options](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) with the `apolloServer` option. For example, you can enable the tracing feature, which is supported by the playground to track the response time of each part of your query. To enable this feature just change/add the `"tracing": true` option in the GraphQL settings file. You can read more about the tracing feature from Apollo [here](https://www.apollographql.com/docs/apollo-server/federation/metrics/).
-
-You can edit these [configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) by creating the following file:
-
-:::caution
-Please note the setting for GraphQL `tracing` as changed and has been moved to `apolloServer.tracing`
+:::note
+The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
 :::
+
+## Configuration
+
+Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
+
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+
+::: caution
+The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
+:::
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/plugins.js
@@ -70,6 +72,34 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default {
+  //
+  graphql: {
+    config: {
+      endpoint: '/graphql',
+      shadowCRUD: true,
+      playgroundAlways: false,
+      depthLimit: 7,
+      amountLimit: 100,
+      apolloServer: {
+        tracing: false,
+      },
+    },
+  },
+};
+```
+
+</code-block>
+
+</code-group>
 
 ## Shadow CRUD
 
@@ -192,6 +222,10 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 ::: details Example of GraphQL customizations
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./src/index.js
 
@@ -254,6 +288,77 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./src/index.ts
+
+export default {
+  /**
+   * An asynchronous register function that runs before
+   * your application is initialized.
+   *
+   * This gives you an opportunity to extend code.
+   */
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+    
+    extensionService.shadowCRUD('api::restaurant.restaurant').disable();
+    extensionService.shadowCRUD('api::category.category').disableQueries();
+    extensionService.shadowCRUD('api::address.address').disableMutations();
+    extensionService.shadowCRUD('api::document.document').field('locked').disable();
+    extensionService.shadowCRUD('api::like.like').disableActions(['create', 'update', 'delete']);
+    
+    const extension = ({ nexus }) => ({
+      // Nexus
+      types: [
+        nexus.objectType({
+          name: 'Book',
+          definition(t) {
+            t.string('title');
+          },
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          name: 'MyPlugin',
+          onAfterBuild(schema) {
+            console.log(schema);
+          },
+        }),
+      ],
+      // GraphQL SDL
+      typeDefs: `
+          type Article {
+              name: String
+          }
+      `,
+      resolvers: {
+        Query: {
+          address: {
+            resolve() {
+              return { value: { city: 'Montpellier' } };
+            },
+          },
+        },
+      },
+      resolversConfig: {
+        'Query.address': {
+          auth: false,
+        },
+      },
+    });
+    extensionService.use(extension);
+  },
+};
+```
+
+</code-block>
+
+</code-group>
 
 :::
 
@@ -343,6 +448,10 @@ The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/).
 
 ::: details Example:
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 
 // path: ./src/index.js
@@ -366,6 +475,38 @@ module.exports = {
   }
 }
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extension = ({ nexus }) => ({
+      types: [
+        nexus.objectType({
+          …
+        }),
+      ],
+      plugins: [
+        nexus.plugin({
+          …
+        })
+      ]
+    })
+
+    strapi.plugin('graphql').service('extension').use(extension)
+  }
+}
+```
+
+</code-block>
+
+</code-group>
 
 :::
 ::::
@@ -400,6 +541,10 @@ To change how the authorization is configured, use the resolver configuration de
 * or with a `scope` attribute that accepts an array of strings to define the permissions required to authorize the request.
 
 ::: details Examples of authorization configuration
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -436,6 +581,49 @@ module.exports = {
 
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          /**
+           * Querying the Categories content-type
+           * bypasses the authorization system.
+           */ 
+          auth: false
+        },
+        'Query.restaurants': {
+          /**
+           * Querying the Restaurants content-type
+           * requires the find permission
+           * on the 'Address' content-type
+           * of the 'Address' API
+           */
+          auth: {
+            scope: ['api::address.address.find']
+          }
+        },
+      }
+    })
+  }
+}
+
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 ##### Policies
@@ -451,6 +639,10 @@ The `context` object gives access to:
 * Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
 
 ::: details Example of a custom GraphQL policy applied to a resolver
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -481,6 +673,43 @@ module.exports = {
 }
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          policies: [
+            (context, { strapi }) => {
+              console.log('hello', context.parent)
+              /**
+               * If 'categories' have a parent, the function returns true,
+               * so the request won't be blocked by the policy.
+               */ 
+              return context.parent !== undefined;
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 #### Middlewares
@@ -496,6 +725,10 @@ Middlewares with GraphQL can even act on nested resolvers, which offer a more gr
 :::
 
 :::details Examples of custom GraphQL middlewares applied to a resolver
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -551,6 +784,68 @@ module.exports = {
 }
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+
+// path: ./src/index.ts
+
+export default {
+  register({ strapi }) {
+    const extensionService = strapi.plugin('graphql').service('extension');
+
+    extensionService.use({
+      resolversConfig: {
+        'Query.categories': {
+          middlewares: [
+            /**
+             * Basic middleware example #1
+             * Log resolving time in console
+             */
+            async (next, parent, args, context, info) => {
+              console.time('Resolving categories');
+              
+              // call the next resolver
+              const res = await next(parent, args, context, info);
+              
+              console.timeEnd('Resolving categories');
+
+              return res;
+            },
+            /**
+             * Basic middleware example #2
+             * Enable server-side shared caching
+             */
+            async (next, parent, args, context, info) => {
+              info.cacheControl.setCacheHint({ maxAge: 60, scope: "PUBLIC" });
+              return next(parent, args, context, info);
+            },
+            /**
+             * Basic middleware example #3
+             * change the 'name' attribute of parent with id 1 to 'foobar'
+             */
+            (resolve, parent, ...rest) => {
+              if (parent.id === 1) {
+                return resolve({...parent, name: 'foobar' }, ...rest);
+              }
+
+              return resolve(parent, ...rest);
+            }
+          ],
+          auth: false,
+        },
+      }
+    })
+  }
+}
+```
+
+</code-block>
+
+</code-group>
+
 :::
 
 ## Usage with the Users & Permissions plugin
@@ -562,6 +857,7 @@ The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permission
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
 
 :::request Mutation
+
 ```graphql
 mutation {
   register(input: { username: "username", email: "email", password: "password" }) {
@@ -573,6 +869,7 @@ mutation {
   }
 }
 ```
+
 :::
 
 You should see a new user is created in the `Users` collection type in your Strapi admin panel.

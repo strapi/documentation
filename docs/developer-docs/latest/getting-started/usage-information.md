@@ -19,7 +19,7 @@ However, these above actions alone are often insufficient to maintain an overall
 - How long does setting up a project take? If the global install time increases, does it mean that users are encountering issues or the process is simply too complicated?
 - What type of errors our users are facing?
 - What are the most used plugins?
-- Should we focus our efforts to being compatible with Node 12? Maybe our community uses version 12, in greater percentages than the global Node.js community?
+- Should we focus our efforts on being compatible with Node 16? Maybe our community uses version 16 in greater percentages than the global Node.js community?
 - And more...
 
 Without these metrics, we wouldn't be able to make the right choices as we continue to move forward with the roadmap and provide what you, the community and users, are asking for.
@@ -35,7 +35,13 @@ The following data is collected:
 - Build configurations
 
 ::: caution GDPR
-The collected data are of a non-sensitive nature and no personal data is collected. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
+The collected data are of a non-sensitive nature and no personal data is collected by Strapi's telemetry system. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
+:::
+
+::: note
+If you check the box "Keep me updated about new features & upcoming improvements (by doing this, you accept the terms and the privacy policy)" on the first registration screen, your email address, first name, and role in the company will be sent to our marketing team.
+
+These data are used for marketing-related purposes only (e.g., the Strapi newsletter) and are not sent to Strapi's telemetry system. This collected usage information is opt-out by default: the data aren't sent if you don't check the box.
 :::
 
 ### Opt-out
@@ -68,7 +74,9 @@ yarn strapi telemetry:disable
 
 </code-group>
 
-Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection. Deleting the flag or setting it to false will re-enable data collection.
+Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection.
+
+Data collection can later be re-enabled by deleting the flag or setting it to false, or by using the `telemetry:enable` command.
 
 ::: note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).

@@ -61,7 +61,7 @@ For that you will have to install `slugify` node module in your application.
 
 When it's done, you have to update the lifecycle of the **Article** Content Type to auto complete the `slug` field.
 
-**Path —** `./api/article/models/Article.js`
+**Path —** `./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js`
 
 :::: tabs card
 
@@ -71,20 +71,16 @@ When it's done, you have to update the lifecycle of the **Article** Content Type
 const slugify = require('slugify');
 
 module.exports = {
-  /**
-   * Triggered before user creation.
-   */
-  lifecycles: {
-    async beforeCreate(data) {
-      if (data.title) {
-        data.slug = slugify(data.title, {lower: true});
-      }
-    },
-    async beforeUpdate(params, data) {
-      if (data.title) {
-        data.slug = slugify(data.title, {lower: true});
-      }
-    },
+
+  async beforeCreate(event) {
+    if (event.params.data.title) {
+      event.params.data.slug = slugify(event.params.data.title, { lower: true });
+    }
+  },
+  async beforeUpdate(event) {
+    if (event.params.data.title) {
+      event.params.data.slug = slugify(event.params.data.title, { lower: true });
+    }
   },
 };
 ```

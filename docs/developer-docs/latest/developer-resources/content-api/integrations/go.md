@@ -170,7 +170,7 @@ func postD() {
   resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
   //Handle Error
   if error != nil {
-    log.Fatalf("An Error Occured %v", error)
+    log.Fatalf("An Error Occurred %v", error)
   }
   defer resp.Body.Close()
   //Read the response body
@@ -195,7 +195,7 @@ PUT Request is sligtly different as we need to target the particular thing we wa
 
 ```go
 putRest, _ := json.Marshal(map[string]string {
-  "name": "Resturant Homes",    
+  "name": "Restaurant Homes",    
 })
 client := &http.Client{}
 url := "http://localhost:1337/api/restaurants/1"
@@ -209,7 +209,7 @@ req.Header.Set("Content-Type", "application/json")
 ```json
 {
   "id": 1,
-  "name": "Resturant Homes",
+  "name": "Restaurant Homes",
   "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
   "published_at": "2021-03-07T10:10:46.949Z",
   "created_at": "2021-03-07T10:08:53.929Z",
@@ -290,7 +290,7 @@ func postD() {
 }
 func putD() {
 	putRest, _ := json.Marshal(map[string]string{
-		"name": "Resturant Homes",
+		"name": "Restaurant Homes",
 	})
 	client := &http.Client{}
 	url := "http://localhost:1337/api/restaurants/1"
@@ -318,4 +318,4 @@ func putD() {
 
 Here is how to request your collection types in Strapi using Go. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).

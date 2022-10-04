@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "4.0.0",
+  "version": "4.4.0",
   "main": "index.js",
   "scripts": {
     "dev": "yarn create:config-file && vuepress dev",
@@ -13,6 +13,7 @@
     "create:user-config-file": "node ./scripts/create-user-docs-config-file.js"
   },
   "dependencies": {
+    "@vuepress/plugin-html-redirect": "^0.1.4",
     "@vuepress/plugin-medium-zoom": "^1.8.2",
     "markdown-it-include": "^2.0.0",
     "vuepress": "^1.8.2",

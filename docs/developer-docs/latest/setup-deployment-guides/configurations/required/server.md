@@ -47,6 +47,9 @@ The `./config/server.js` file should at least include a minimal configuration wi
 
 The default configuration created with any new project should at least include the following:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/server.js
 
@@ -59,11 +62,33 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+</code-block>
+</code-group>
+
 ::::
 
 :::: tab Full configuration
 
 The following is an example of a full configuration file. Not all of these keys are required (see [available options](#available-options)).
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/server.js
@@ -83,6 +108,30 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  socket: '/tmp/nginx.socket', // only use if absolutely required
+  emitErrors: false,
+  url: env('PUBLIC_URL', 'https://api.example.com'),
+  proxy: env.bool('IS_PROXIED', true),
+  cron: {
+    enabled: env.bool('CRON_ENABLED', false),
+  },
+});
+```
+</code-block>
+</code-group>
 
 ::::
 

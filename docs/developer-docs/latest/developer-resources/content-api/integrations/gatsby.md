@@ -159,7 +159,7 @@ query {
   strapiCategory(data: { elemMatch: { id: { eq: 1 } } }) {
     data {
       id
-      atrributes {
+      attributes {
         name
         restaurants {
           name
@@ -216,7 +216,7 @@ const query = graphql`
     strapiCategory(data: { elemMatch: { id: { eq: 1 } } }) {
       data {
         id
-        atrributes {
+        attributes {
           name
           restaurants {
             id

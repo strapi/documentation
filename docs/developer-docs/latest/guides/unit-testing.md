@@ -106,7 +106,7 @@ The whole file will look like this:
 
 ### Strapi instance
 
-In order to test anything we need to have a strapi instance that runs in the testing eviroment,
+In order to test anything we need to have a strapi instance that runs in the testing environment,
 basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](process-manager.md).
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
@@ -114,25 +114,39 @@ These tasks require adding some files - let's create a folder `tests` where all 
 **Path —** `./tests/helpers/strapi.js`
 
 ```js
-const Strapi = require('strapi');
-const http = require('http');
+const Strapi = require("@strapi/strapi");
+const fs = require("fs");
 
 let instance;
 
 async function setupStrapi() {
   if (!instance) {
-    /** the following code in copied from `./node_modules/strapi/lib/Strapi.js` */
     await Strapi().load();
-    instance = strapi; // strapi is global now
-    await instance.app
-      .use(instance.router.routes()) // populate KOA routes
-      .use(instance.router.allowedMethods()); // populate KOA methods
-
-    instance.server = http.createServer(instance.app.callback());
+    instance = strapi;
+    
+    await instance.server.mount();
   }
   return instance;
 }
-module.exports = { setupStrapi };
+
+async function cleanupStrapi() {
+  const dbSettings = strapi.config.get("database.connections.default.settings");
+
+  //close server to release the db-file
+  await strapi.server.httpServer.close();
+
+  //delete test database after all tests have completed
+  if (dbSettings && dbSettings.filename) {
+    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
+    }
+  }
+  // close the connection to the database
+  await strapi.db.connection.destroy();
+}
+
+module.exports = { setupStrapi, cleanupStrapi };
 ```
 
 ### Test strapi instance
@@ -143,30 +157,17 @@ We need a main entry file for our tests, one that will also test our helper file
 
 ```js
 const fs = require('fs');
-const { setupStrapi } = require('./helpers/strapi');
+const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
-/** this code is called once before any test is called */
 beforeAll(async () => {
-  await setupStrapi(); // singleton so it can be called many times
+  await setupStrapi();
 });
 
-/** this code is called once before all the tested are finished */
 afterAll(async () => {
-  const dbSettings = strapi.config.get('database.connections.default.settings');
-  
-  //close server to release the db-file
-  await strapi.server.close();
-
-  //delete test database after all tests
-  if (dbSettings && dbSettings.filename) {
-    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
-    if (fs.existsSync(tmpDbFile)) {
-      fs.unlinkSync(tmpDbFile);
-    }
-  }
+  await cleanupStrapi();
 });
 
-it('strapi is defined', () => {
+it("strapi is defined", () => {
   expect(strapi).toBeDefined();
 });
 ```
@@ -210,14 +211,15 @@ Let's create a separate test file where `supertest` will be used to check if end
 ```js
 const request = require('supertest');
 
-it('should return hello world', async () => {
-  await request(strapi.server) // app server is an instance of Class: http.Server
-    .get('/hello')
+it("should return hello world", async () => {
+  await request(strapi.server.httpServer)
+    .get("/api/hello")
     .expect(200) // Expect response http code 200
-    .then(data => {
-      expect(data.text).toBe('Hello World!'); // expect the response text
+    .then((data) => {
+      expect(data.text).toBe("Hello World!"); // expect the response text
     });
 });
+
 ```
 
 Then include this code to `./tests/app.test.js` at the bottom of that file
@@ -263,31 +265,31 @@ const request = require('supertest');
 
 // user mock data
 const mockUserData = {
-  username: 'tester',
-  email: 'tester@strapi.com',
-  provider: 'local',
-  password: '1234abc',
+  username: "tester",
+  email: "tester@strapi.com",
+  provider: "local",
+  password: "1234abc",
   confirmed: true,
   blocked: null,
 };
 
-it('should login user and return jwt token', async () => {
+it("should login user and return jwt token", async () => {
   /** Creates a new user and save it to the database */
-  await strapi.plugins['users-permissions'].services.user.add({
+  await strapi.plugins["users-permissions"].services.user.add({
     ...mockUserData,
   });
 
-  await request(strapi.server) // app server is an instance of Class: http.Server
-    .post('/auth/local')
-    .set('accept', 'application/json')
-    .set('Content-Type', 'application/json')
+  await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .post("/api/auth/local")
+    .set("accept", "application/json")
+    .set("Content-Type", "application/json")
     .send({
       identifier: mockUserData.email,
       password: mockUserData.password,
     })
-    .expect('Content-Type', /json/)
+    .expect("Content-Type", /json/)
     .expect(200)
-    .then(data => {
+    .then((data) => {
       expect(data.body.jwt).toBeDefined();
     });
 });
@@ -310,8 +312,8 @@ it('should return users data for authenticated user', async () => {
     id: user.id,
   });
 
-  await request(strapi.server) // app server is an instance of Class: http.Server
-    .get('/users/me')
+  await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get('/api/users/me')
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)

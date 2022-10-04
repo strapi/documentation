@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO) - Strapi Developer Docs
-description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Entreprise Edition with a Gold plan.
+description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
@@ -29,6 +29,9 @@ The providers' configuration should be written within the `auth.providers` path 
 
 `auth.providers` is an array of [provider configuration](#setting-up-provider-configuration).
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```javascript
 // path: ./config/admin.js
 
@@ -39,6 +42,27 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```javascript
+// path: ./config/admin.ts
+
+export default ({ env }) => ({
+  // ...
+  auth: {
+    providers: [], // The providers' configuration lives there
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 ## Setting up provider configuration
 
@@ -87,7 +111,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 - If `error` is not set to `null`, then the data sent is ignored, and the controller will throw an error.
 - If the SSO's auto-registration feature is disabled, then the `data` object only need to be composed of an `email` property.
-- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` oject.
+- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` object.
 
 ### Adding a provider
 
@@ -132,6 +156,10 @@ yarn add passport-google-oauth2
 </code-group>
 
 ::: details Configuration example for Google:
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -172,6 +200,52 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/admin.ts
+
+import GoogleStrategy from "passport-google-oauth2";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "google",
+        displayName: "Google",
+        icon: "https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png",
+        createStrategy: (strapi) =>
+          new GoogleStrategy(
+            {
+              clientID: env("GOOGLE_CLIENT_ID"),
+              clientSecret: env("GOOGLE_CLIENT_SECRET"),
+              scope: [
+                "https://www.googleapis.com/auth/userinfo.email",
+                "https://www.googleapis.com/auth/userinfo.profile",
+              ],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("google"),
+            },
+            (request, accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                firstname: profile.given_name,
+                lastname: profile.family_name,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+```
+
+</code-block>
+</code-group>
+
 :::
 
 #### Github
@@ -195,6 +269,10 @@ yarn add passport-github2
 </code-group>
 
 ::: details Configuration example for Github:
+
+<br/>
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -231,6 +309,50 @@ module.exports = ({ env }) => ({
 });
 
 ```
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/admin.ts
+
+import GithubStrategy from "passport-github2";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "github",
+        displayName: "Github",
+        icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
+        createStrategy: (strapi) =>
+          new GithubStrategy(
+            {
+              clientID: env("GITHUB_CLIENT_ID"),
+              clientSecret: env("GITHUB_CLIENT_SECRET"),
+              scope: ["user:email"],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("github"),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.emails[0].value,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+
+```
+
+</code-block>
+</code-group>
+
+
 
 :::
 
@@ -255,6 +377,10 @@ yarn add passport-discord
 </code-group>
 
 ::: details Configuration example for Discord:
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -293,6 +419,53 @@ module.exports = ({ env }) => ({
 });
 ```
 
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```jsx
+// path: ./config/admin.ts
+
+import DiscordStrategy from "passport-discord";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "discord",
+        displayName: "Discord",
+        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
+        createStrategy: (strapi) =>
+          new DiscordStrategy(
+            {
+              clientID: env("DISCORD_CLIENT_ID"),
+              clientSecret: env("DISCORD_SECRET"),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "discord"
+                ),
+              scope: ["identify", "email"],
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: `${profile.username}#${profile.discriminator}`,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
 :::
 
 #### Microsoft
@@ -316,6 +489,10 @@ yarn add passport-azure-ad-oauth2 jsonwebtoken
 </code-group>
 
 ::: details Configuration example for Microsoft:
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -344,10 +521,12 @@ module.exports = ({ env }) => ({
                 ),
             },
             (accessToken, refreshToken, params, profile, done) => {
-              var waadProfile = jwt.decode(params.id_token, "", true);
+              let waadProfile = jwt.decode(params.id_token, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
               });
             }
           ),
@@ -356,6 +535,59 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/admin.ts
+
+import AzureAdOAuth2Strategy from "passport-azure-ad-oauth2";
+import jwt from "jsonwebtoken";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "azure_ad_oauth2",
+        displayName: "Microsoft",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
+        createStrategy: (strapi) =>
+          new AzureAdOAuth2Strategy(
+            {
+              clientID: env("MICROSOFT_CLIENT_ID", ""),
+              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
+              scope: ["user:email"],
+              tenant: env("MICROSOFT_TENANT_ID", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "azure_ad_oauth2"
+                ),
+            },
+            (accessToken, refreshToken, params, profile, done) => {
+              let waadProfile = jwt.decode(params.id_token, "", true);
+              done(null, {
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
 
 :::
 
@@ -380,6 +612,10 @@ yarn add passport-keycloak-oauth2-oidc
 </code-group>
 
 ::: details Configuration example for Keycloak (OpenID Connect):
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -421,6 +657,52 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/admin.ts
+
+import KeyCloakStrategy from "passport-keycloak-oauth2-oidc";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "keycloak",
+        displayName: "Keycloak",
+        icon: "https://raw.githubusercontent.com/keycloak/keycloak-admin-ui/main/themes/keycloak/logo.svg",
+        createStrategy: (strapi) =>
+          new KeyCloakStrategy(
+            {
+              clientID: env("KEYCLOAK_CLIENT_ID", ""),
+              realm: env("KEYCLOAK_REALM", ""),
+              publicClient: env.bool("KEYCLOAK_PUBLIC_CLIENT", false),
+              clientSecret: env("KEYCLOAK_CLIENT_SECRET", ""),
+              sslRequired: env("KEYCLOAK_SSL_REQUIRED", "external"),
+              authServerURL: env("KEYCLOAK_AUTH_SERVER_URL", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "keycloak"
+                ),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
+```
+
+</code-block>
+</code-group>
 :::
 
 #### Okta
@@ -444,6 +726,10 @@ yarn add passport-okta-oauth20
 </code-group>
 
 ::: details Configuration example for Okta:
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```jsx
 // path: ./config/admin.js
@@ -479,7 +765,51 @@ module.exports = ({ env }) => ({
     ],
   },
 });
+ ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/admin.ts
+
+import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20")
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "okta",
+        displayName: "Okta",
+        icon: "https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png",
+        createStrategy: (strapi) =>
+          new OktaOAuth2Strategy(
+            {
+              clientID: env("OKTA_CLIENT_ID"),
+              clientSecret: env("OKTA_CLIENT_SECRET"),
+              audience: env("OKTA_DOMAIN"),
+              scope: ["openid", "email", "profile"],
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL("okta"),
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: profile.username,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
 ```
+
+</code-block>
+</code-group>
+
 
 :::
 
@@ -502,6 +832,9 @@ The easiest way to do so is to plug into the verify function of your strategy an
 
 For example, if you want to allow only people with an official strapi.io email address, you can instantiate your strategy like this:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```javascript
 // path: ./config/admin.js
 
@@ -517,12 +850,40 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```javascript
+// path: ./config/admin.ts
+
+const strategyInstance = new Strategy(configuration, ({ email, username }, done) => {
+  // If the email ends with @strapi.io
+  if (email.endsWith('@strapi.io')) {
+    // then we continue with the data given by the provider
+    return done(null, { email, username });
+  }
+
+  // Otherwise, we continue by sending an error to the done function
+  done(new Error('Forbidden email address'));
+});
+```
+
+
+</code-block>
+</code-group>
+
+
 ### Authentication Events
 
 The SSO feature adds a new [authentication event](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```javascript
 // path: ./config/admin.js
@@ -545,3 +906,36 @@ module.exports = () => ({
     },
 });
 ```
+
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```javascript
+// path: ./config/admin.ts
+
+export default () => ({
+    auth: {
+      // ...
+      events: {
+        onConnectionSuccess(e) {},
+        onConnectionError(e) {},
+        // ...
+        onSSOAutoRegistration(e) {
+          const { user, provider } = e;
+
+          console.log(
+            `A new user (${user.id}) has been automatically registered using ${provider}`
+          );
+        },
+      },
+    },
+});
+```
+
+
+</code-block>
+</code-group>
+

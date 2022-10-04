@@ -96,7 +96,7 @@ The following examples show a comparison of a Strapi v3 `package.json` and a Str
     "uuid": "b8aa7baf-d6dc-4c50-93d4-7739bc88c3fd"
   },
   "engines": {
-    "node": ">=14.x.x <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"
@@ -112,8 +112,8 @@ The following table highlights new and removed packages:
 - Packages with a ✨ emoji before their name have a new name in Strapi v4 but do not need to be defined in your `package.json`.
 - Packages identified with the ❌  emoji have been removed from Strapi v4 and all references to these packages should be removed from the code.
 
-| Package name in Strapi v3          | Package name in Strapi v4             |
-| ---------------------------------- | ------------------------------------- |
+| Package name in Strapi v3          | Package name in Strapi v4              |
+| ---------------------------------- | -------------------------------------- |
 | strapi                             | ❗ @strapi/strapi                      |
 | strapi-database                    | ✨ @strapi/database                    |
 | strapi-admin                       | ✨ @strapi/admin                       |
@@ -131,22 +131,22 @@ The following table highlights new and removed packages:
 | strapi-provider-upload-local       | ✨ @strapi/provider-upload-local       |
 | strapi-provider-upload-aws-s3      | 🔌 @strapi/provider-upload-aws-s3      |
 | strapi-provider-upload-cloudinary  | 🔌 @strapi/provider-upload-cloudinary  |
-| strapi-provider-upload-rackspace   | 🔌 @strapi/provider-upload-rackspace   |
 | strapi-provider-email-sendmail     | ✨ @strapi/provider-email-sendmail     |
 | strapi-provider-email-amazon-ses   | 🔌 @strapi/provider-email-amazon-ses   |
 | strapi-provider-email-mailgun      | 🔌 @strapi/provider-email-mailgun      |
 | strapi-provider-email-nodemailer   | 🔌 @strapi/provider-email-nodemailer   |
 | strapi-provider-email-sendgrid     | 🔌 @strapi/provider-email-sendgrid     |
-| create-strapi-starter              | create-strapi-starter                 |
-| create-strapi-app                  | create-strapi-app                     |
-| strapi-generate-policy             | strapi-generate-policy                |
-| strapi-generate-controller         | strapi-generate-model                 |
-| strapi-generate-model              | strapi-generate-controller            |
-| strapi-generate-new                | strapi-generate-new                   |
-| strapi-generate                    | strapi-generate                       |
-| strapi-generate-api                | strapi-generate-api                   |
-| strapi-generate-plugin             | strapi-generate-plugin                |
-| strapi-generate-service            | strapi-generate-service               |
+| create-strapi-starter              | create-strapi-starter                  |
+| create-strapi-app                  | create-strapi-app                      |
+| strapi-generate-policy             | strapi-generate-policy                 |
+| strapi-generate-controller         | strapi-generate-model                  |
+| strapi-generate-model              | strapi-generate-controller             |
+| strapi-generate-new                | strapi-generate-new                    |
+| strapi-generate                    | strapi-generate                        |
+| strapi-generate-api                | strapi-generate-api                    |
+| strapi-generate-plugin             | strapi-generate-plugin                 |
+| strapi-generate-service            | strapi-generate-service                |
+| strapi-provider-upload-rackspace   | ❌ (removed from v4)                   |
 | strapi-connector-mongoose          | ❌ (removed from v4)                   |
 | strapi-connector-bookshelf         | ❌ (removed from v4)                   |
 | strapi-hook-redis                  | ❌ (removed from v4)                   |

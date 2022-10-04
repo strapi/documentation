@@ -30,4 +30,4 @@ Each part of Strapi's back end can be customized:
 
 - the [responses](/developer-docs/latest/development/backend-customization/requests-responses.md#responses) sent to the application that sent the request,
 
-- and the [webhooks](/developer-docs/latest/development/backend-customization/webhooks.md) that are used to notify other applications of events that occured.
+- and the [webhooks](/developer-docs/latest/development/backend-customization/webhooks.md) that are used to notify other applications of events that occurred.

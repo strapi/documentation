@@ -10,7 +10,7 @@ The Users & Permissions plugin is managed from the *Users & Permissions plugin* 
 
 ## Configuring providers
 
-The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a font-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
+The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
 
 ![Providers interface](../assets/settings/up_providers.png)
 
@@ -69,7 +69,7 @@ All settings related to the Users & Permissions plugin are managed from the *Adv
 | Setting name                         | Instructions                                                                                                                                                       |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Default role for authenticated users | Click the drop-down list to choose the default role for new end users.                                                                                             |
-| One account per email address        | Click on the **ON** button to limit to 1 the number of end-user accounts with the same email address. Click on **OFF** to disable this limitation and allow several end-user accounts to be associated with the same email addess (e.g. `kai.doe@strapi.io` can be used when logging in via several different providers).  |
+| One account per email address        | Click on the **ON** button to limit to 1 the number of end-user accounts with the same email address. Click on **OFF** to disable this limitation and allow several end-user accounts to be associated with the same email address (e.g. `kai.doe@strapi.io` can be used when logging in via several different providers).  |
 | Enable sign-ups                      | Click on the **ON** button to enable end-user sign-ups. Click on **OFF** to prevent end-user registration to your front-end application(s).                        |
 | Reset password page                  | Indicate the URL of the reset password page for your front-end application(s).                                                                                     |
 | Enable email confirmation            | Click on the **ON** button to enable end-user account confirmation by sending them a confirmation email. Click on **OFF** to disable account confirmation.         |

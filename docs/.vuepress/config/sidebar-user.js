@@ -54,6 +54,28 @@ const user = [
   },
   {
     collapsable: false,
+    title: 'Media Library',
+    children: [
+      [
+        '/user-docs/latest/media-library/introduction-to-media-library.md',
+        'Introduction to the Media Library'
+      ],
+      [
+        '/user-docs/latest/media-library/adding-assets.md',
+        'Adding assets'
+      ],
+      [
+        '/user-docs/latest/media-library/managing-assets.md',
+        'Managing individual assets'
+      ],
+      [
+        '/user-docs/latest/media-library/organizing-assets-with-folders.md',
+        'Organizing assets with folders'
+      ],
+    ]
+  },
+  {
+    collapsable: false,
     title: 'Users, Roles & Permissions',
     children: [
       [
@@ -85,7 +107,7 @@ const user = [
       ['/user-docs/latest/plugins/introduction-to-plugins', 'Introduction to plugins'],
       [
         '/user-docs/latest/plugins/installing-plugins-via-marketplace',
-        'Managing Marketplace plugins',
+        'Using the Marketplace',
       ],
       ['/user-docs/latest/plugins/strapi-plugins', 'List of Strapi plugins'],
     ],

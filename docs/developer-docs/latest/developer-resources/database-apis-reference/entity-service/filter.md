@@ -143,6 +143,22 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 });
 ```
 
+### `$eqi`
+
+Attribute equals input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  filters: {
+    title: {
+      $eqi: 'HELLO World',
+    },
+  },
+});
+```
+
 ### `$ne`
 
 Attribute does not equal input value.

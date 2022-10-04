@@ -43,7 +43,7 @@ The following code example adds a new `MyEnum` type definition to Strapi v3:
 
 module.exports = {
   definition: `
-    enum MyInput {
+    enum MyEnum {
       a
       b
       c
@@ -208,7 +208,7 @@ module.exports = {
             type: nexus.nonNull('Boolean'),
 
             // Args definition
-            args: { ItemID: nexus.nonNull('ID'), email: nexus.nonNull('String)' },
+            args: { ItemID: nexus.nonNull('ID'), email: nexus.nonNull('String') },
 
             // Resolver definition
             resolve(parent, args, context) {
@@ -400,7 +400,7 @@ module.exports = {
 ```
 
 ::: note
-Strapi v4 policies are not inherited from controllers anymore since the resolvers are stand-alones.
+Strapi v4 policies are not inherited from controllers anymore since the resolvers are stand-alone.
 :::
 
 ## Adding middlewares
@@ -419,7 +419,7 @@ module.exports = {
     extensionService.use(({ nexus }) => ({
       resolversConfig: {
         'Query.findItems': {
-          middleware: [
+          middlewares: [
             (resolve, ...args) => {
               console.log("We're in a middleware");
               return resolve(...args);

@@ -14,7 +14,7 @@ In this guide we will see how you can customize your API's response.
 
 To be able to update the default data response you have first to understand how it works.
 
-When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
 
 Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content-type is created.
 

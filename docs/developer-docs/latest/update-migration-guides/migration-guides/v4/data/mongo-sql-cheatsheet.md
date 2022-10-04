@@ -6,7 +6,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # MongoDB vs. SQL implementation differences in Strapi v3
 
-This documentation explains the key structural differences to take into account when migrating data from MongoDB to SQL in the context of a Strapi v3 project. It should be used as a reference when migrating data locally (see [MongoDB to SQL migration in Strapi v3](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html)).
+This documentation explains the key structural differences to take into account when migrating data from MongoDB to SQL in the context of a Strapi v3 project. It should be used as a reference when migrating data locally (see [MongoDB to SQL migration in Strapi v3](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md)).
 
 ## Model settings
 
@@ -616,7 +616,7 @@ In MongoDB, media links are stored on both sides of the relation. The `related` 
 - `kind` targets a specific collection
 - `field` targets a specific attribute
 
-MongoDB also includes a property in the entries, named like the media attributes of the models, which is either an array or a single `ObjectId` targetting the media(s).
+MongoDB also includes a property in the entries, named like the media attributes of the models, which is either an array or a single `ObjectId` targeting the media(s).
 
 In SQL databases, an `upload_file_morph` join table is created, with the following elements:
 
@@ -764,4 +764,4 @@ The following table highlights some specific uses cases and their possible resol
 | Custom id types         | Custom ID types are only used in SQL. No migration is required since the feature is not supported in MongoDB. |
 | Custom indexing         | Custom indexing is not a supported feature. Equivalent indexes must be created in SQL manually.               |
 | Custom join table names | Custom join table names should be taken into account when migrating the [relations](#relations) to find the right table name               (see [SQL join table names](#sql-join-table-names)). |
-| Custom DB queries       | Migrate to v3 SQL then to Strapi v4, and finally migrate the custom queries with the [Query Engine](0/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) of Strapi v4. |
+| Custom DB queries       | Migrate to v3 SQL then to Strapi v4, and finally migrate the custom queries with the [Query Engine](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) of Strapi v4. |

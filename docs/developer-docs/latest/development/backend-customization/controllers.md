@@ -24,6 +24,9 @@ A new controller can be implemented:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
   - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/developer-docs/latest/developer-resources/plugin-api-reference/server.md))
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // path: ./src/api/restaurant/controllers/restaurant.js
 
@@ -66,12 +69,68 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 }));
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/controllers/restaurant.ts
+
+import { factories } from '@strapi/strapi'; 
+
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+  // Method 1: Creating an entirely custom action
+  async exampleAction(ctx) {
+    try {
+      ctx.body = 'ok';
+    } catch (err) {
+      ctx.body = err;
+    }
+  },
+
+  // Method 2: Wrapping a core action (leaves core logic in place)
+  async find(ctx) {
+    // some custom logic here
+    ctx.query = { ...ctx.query, local: 'en' }
+    
+    // Calling the default core action
+    const { data, meta } = await super.find(ctx);
+
+    // some more custom logic
+    meta.date = Date.now()
+
+    return { data, meta };
+  },
+
+  // Method 3: Replacing a core action
+  async findOne(ctx) {
+    const { id } = ctx.params;
+    const { query } = ctx;
+
+    const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
+    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
+
+    return this.transformResponse(sanitizedEntity);
+  }
+}));
+```
+
+
+</code-block>
+</code-group>
+
+
+
+
 Each controller action can be an `async` or `sync` function.
 Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/developer-docs/latest/development/backend-customization/requests-responses.md#requests) and the [response context](/developer-docs/latest/development/backend-customization/requests-responses.md#responses).
 
 ::: details Example: GET /hello route calling a basic controller
 
 A specific `GET /hello` [route](/developer-docs/latest/development/backend-customization/routes.md) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
 // path: ./src/api/hello/routes/hello.js
@@ -96,6 +155,37 @@ module.exports = {
   },
 };
 ```
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/hello/routes/hello.ts
+
+export default {
+  routes: [
+    {
+      method: 'GET',
+      path: '/hello',
+      handler: 'hello.index',
+    }
+  ]
+}
+```
+
+```js
+// path: ./src/api/hello/controllers/hello.ts
+
+export default {
+  async index(ctx, next) { // called by GET /hello 
+    ctx.body = 'Hello World!'; // we could also send a JSON
+  },
+};
+```
+
+</code-block>
+</code-group>
 
 :::
 

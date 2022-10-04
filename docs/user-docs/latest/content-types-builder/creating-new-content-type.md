@@ -23,7 +23,7 @@ To create a new content-type:
 1. Choose whether you want to create a collection type or a single type.
 2. In the category of the content-type you want to create, click on **Create a new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
-4. Check the *API UID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralised when displayed in the Content Manager. It is recommended to opt for singular names, but the *API UID* field allows to fix any pluralisation mistake.
+4. Check the *API UID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API UID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
 
 | Setting name    | Instructions                                                                                                                                     |

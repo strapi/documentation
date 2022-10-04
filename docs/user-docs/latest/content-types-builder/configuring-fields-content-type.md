@@ -13,15 +13,18 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/conf
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content.md)).
 
-In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
+In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of custom fields, components, and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: note
-Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
+Depending on which content-type or component is being created or edited, not all fields — including components and dynamic zones — are always available.
 :::
 
+<!-- TODO update screenshot with final version -->
 <img src="../assets/content-types-builder/fields-selection.png" alt="Field selection" width="80%">
 
 ## Regular fields
+
+Regular fields are Strapi's default, built-in types of fields. Regular fields are listed in the _Default_ tab when selecting a field for a content-type.
 
 ### <img width="28" src="../assets/icons/ctb_text.svg"> Text
 
@@ -141,6 +144,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
+| Time interval  | The interval (in minutes) the timepicker will allow to select (for fields of type datetime and time). |
 
 :::
 
@@ -302,6 +306,10 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 ::::
 
+::: caution
+Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
+:::
+
 ### <img width="28" src="../assets/icons/ctb_media.svg"> Media
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
@@ -387,6 +395,13 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 ::::
 
+<!-- TODO: maybe add an icon to the title below, just like with all other sections, if we have generic "custom field" icon? -->
+## Custom fields
+
+Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
+
+Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
+
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
@@ -450,3 +465,7 @@ Dynamic zones are a combination of components that can be added to content-types
 ::::
 
 After configuring the settings of the dynamic zone, its components must be configured as well. It is possible to either choose an existing component or create a new one.
+
+::: caution
+When using dynamic zones, different components cannot have the same field name with different types (or with enumeration fields, different values).
+:::

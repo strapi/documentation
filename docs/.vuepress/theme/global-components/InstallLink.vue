@@ -3,14 +3,21 @@
 		<span class="icon">
 			<slot name="icon" />
 		</span>
-		<span>
+		<span class="text">
 			<p class="title"><slot name="title" /></p>
 			<p class="description"><slot name="description" /></p>
 		</span>
+    <span class="arrow">
+     <!-- <IconSVG /> -->
+     <img :src="$withBase('/assets/NextIcon.svg')" alt="foo">
+    </span>
+
 	</router-link>
 </template>
 
 <script>
+	// import IconSVG from '../icons/NextIcon.svg';
+
 	export default {
 		name: 'InstallLink',
 		props: {
@@ -18,20 +25,26 @@
 				type: String,
 				required: true
 			}
-		}
+		},
+		// components: {IconSVG}
 	}
 </script>
 
 <style lang="scss" scoped>
+// TODO: overrides branding.styl
 .install-link {
-	background-color: #3498DB;
 	display: flex;
 	align-items: center;
-	color: white;
-	padding: 16px;
-	border-radius: 8px;
+	// color: white;
+	// padding: 16px;
+	border-radius: 6px;
 	margin: 16px 0; // You'd normally do layout margins etc from the parent, but seeing the parent
 					// is a markdown file, that's a bit annoying
+
+  &:hover {
+    text-decoration: none !important;
+  }
+
 	.icon {
 		flex-shrink: 0;
 		width: 32px;

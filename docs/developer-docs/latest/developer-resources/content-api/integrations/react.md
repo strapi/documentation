@@ -141,45 +141,33 @@ fetch('http://localhost:1337/api/restaurants', {
 `./src/App.js`
 
 ```js
-import React from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-class App extends React.Component {
-  // State of your application
-  state = {
-    restaurants: [],
-    error: null,
-  };
+const App = () => {
+  const [error, setError] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
 
-  // Fetch your restaurants immediately after the component is mounted
-  componentDidMount = async () => {
-    try {
-      const response = await axios.get('http://localhost:1337/api/restaurants');
-      this.setState({ restaurants: response.data });
-    } catch (error) {
-      this.setState({ error });
-    }
-  };
+  useEffect(() => {
+    axios
+      .get('http://localhost:1337/api/restaurants')
+      .then(({ data }) => setRestaurants(data))
+      .catch((error) => setError(error))
+  }, [])
 
-  render() {
-    const { error, restaurant } = this.state;
-
+  if (error) {
     // Print errors if any
-    if (error) {
-      return <div>An error occured: {error.message}</div>;
-    }
-
-    return (
-      <div className="App">
-        <ul>
-          {this.state.restaurants.map(restaurant => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
-      </div>
-    );
+    return <div>An error occured: {error.message}</div>;
   }
-}
+
+  return (
+    <div className="App">
+      <ul>
+        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+      </ul>
+    </div>
+  );
+};
 
 export default App;
 ```
@@ -191,65 +179,49 @@ export default App;
 `./src/App.js`
 
 ```js
-import React from 'react';
+import { useEffect, useState } from 'react';
 
-class App extends React.Component {
-  // State of your application
-  state = {
-    restaurants: [],
-    error: null,
-  };
+// Parses the JSON returned by a network request
+const parseJSON = (resp) => (resp.json ? resp.json() : resp);
 
-  // Fetch your restaurants immediately after the component is mounted
-  componentDidMount = async () => {
-    // Parses the JSON returned by a network request
-    const parseJSON = resp => (resp.json ? resp.json() : resp);
-
-    // Checks if a network request came back fine, and throws an error if not
-    const checkStatus = resp => {
-      if (resp.status >= 200 && resp.status < 300) {
-        return resp;
-      }
-      return parseJSON(resp).then(resp => {
-        throw resp;
-      });
-    };
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      const restaurants = await fetch('http://localhost:1337/api/restaurants', {
-        method: 'GET',
-        headers: headers,
-      })
-        .then(checkStatus)
-        .then(parseJSON);
-      this.setState({ restaurants });
-    } catch (error) {
-      this.setState({ error });
-    }
-  };
-
-  render() {
-    const { error, restaurant } = this.state;
-
-    // Print errors if any
-    if (error) {
-      return <div>An error occured: {error.message}</div>;
-    }
-
-    return (
-      <div className="App">
-        <ul>
-          {this.state.restaurants.map(restaurant => (
-            <li key={restaurant.id}>{restaurant.name}</li>
-          ))}
-        </ul>
-      </div>
-    );
+// Checks if a network request came back fine, and throws an error if not
+const checkStatus = (resp) => {
+  if (resp.status >= 200 && resp.status < 300) {
+    return resp;
   }
-}
+
+  return parseJSON(resp).then(resp => {
+    throw resp;
+  });
+};
+
+const headers = { 'Content-Type': 'application/json' };
+
+const App = () => {
+  const [error, setError] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:1337/api/restaurants', { headers, method: 'GET' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(({ data }) => setRestaurants(data))
+      .catch((error) => setError(error))
+  }, [])
+
+  if (error) {
+    // Print errors if any
+    return <div>An error occured: {error.message}</div>;
+  }
+
+  return (
+    <div className="App">
+      <ul>
+        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+      </ul>
+    </div>
+  );
+};
 
 export default App;
 ```
@@ -344,135 +316,107 @@ fetch('http://localhost:1337/api/restaurants', {
 `./src/App.js`
 
 ```js
-import React from 'react';
 import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
+  <div key={category.id}>
+    <label htmlFor={category.id}>{category.name}</label>
+    <input
+      type="checkbox"
+      checked={isChecked}
+      onChange={isChecked ? onAddCategory : onRemoveCategory}
+      name="categories"
+      id={category.id}
+    />
+  </div>
+);
 
-    // State of your application
-    this.state = {
-      modifiedData: {
-        name: '',
-        description: '',
-        categories: [],
-      },
-      allCategories: [],
-      error: null,
-    };
-  }
+const App = () => {
+  const [allCategories, setAllCategories] = useState([]);
+  const [error, setError] = useState(null);
+  const [modifiedData, setModifiedData] = useState({ categories: [], description: '', name: '' });
 
-  // Fetch your categories immediately after the component is mounted
-  componentDidMount = async () => {
-    try {
-      const response = await axios.get('http://localhost:1337/api/categories');
-      this.setState({ allCategories: response.data });
-    } catch (error) {
-      this.setState({ error });
-    }
-  };
-
-  handleInputChange = ({ target: { name, value } }) => {
-    this.setState(prev => ({
-      ...prev,
-      modifiedData: {
-        ...prev.modifiedData,
-        [name]: value,
-      },
-    }));
-  };
-
-  handleSubmit = async e => {
+  const handleInputChange = useCallback(({ target: { name, value } }) => {
+    setModifiedData((prevData) => ({ ...prevData, [name]: value }));
+  }, []);
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        'http://localhost:1337/api/restaurants',
-        this.state.modifiedData
-      );
-      console.log(response);
-    } catch (error) {
-      this.setState({ error });
-    }
+    await axios
+      .post("http://localhost:1337/api/restaurants", modifiedData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        setError(error);
+      });
   };
 
-  renderCheckbox = category => {
-    const {
-      modifiedData: { categories },
-    } = this.state;
-    const isChecked = categories.includes(category.id);
-    const handleChange = () => {
-      if (!categories.includes(category.id)) {
-        this.handleInputChange({
-          target: { name: 'categories', value: categories.concat(category.id) },
-        });
-      } else {
-        this.handleInputChange({
-          target: {
-            name: 'categories',
-            value: categories.filter(v => v !== category.id),
-          },
-        });
-      }
-    };
+  useEffect(() => {
+    axios
+      .get('http://localhost:1337/api/categories')
+      .then(({ data }) => setAllCategories(data))
+      .catch((error) => setError(error))
+  }, [])
 
-    return (
-      <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleChange}
-          name="categories"
-          id={category.id}
-        />
-      </div>
-    );
-  };
-
-  render() {
-    const { error, allCategories, modifiedData } = this.state;
-
+  if (error) {
     // Print errors if any
-    if (error) {
-      return <div>An error occured: {error.message}</div>;
-    }
-
-    return (
-      <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <h3>Restaurants</h3>
-          <br />
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              onChange={this.handleInputChange}
-              value={modifiedData.name}
-            />
-          </label>
-          <label>
-            Description:
-            <input
-              type="text"
-              name="description"
-              onChange={this.handleInputChange}
-              value={modifiedData.description}
-            />
-          </label>
-          <div>
-            <br />
-            <b>Select categories</b>
-            {allCategories.map(this.renderCheckbox)}
-          </div>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    );
+    return <div>An error occured: {error.message}</div>;
   }
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <h3>Restaurants</h3>
+        <br />
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            onChange={handleInputChange}
+            value={modifiedData.name}
+          />
+        </label>
+        <label>
+          Description:
+          <input
+            type="text"
+            name="description"
+            onChange={handleInputChange}
+            value={modifiedData.description}
+          />
+        </label>
+        <div>
+          <br />
+          <b>Select categories</b>
+          {allCategories.map((category) => (
+            <Checkbox
+              category={category}
+              isChecked={modifiedData.categories.includes(category.id)}
+              onAddCategory={() =>
+                setModifiedData((prevData) => ({
+                  ...prevData,
+                  categories: [...prevData.categories, category.id],
+                }))
+              }
+              onRemoveCategory={() =>
+                setModifiedData((prevData) => ({
+                  ...prevData,
+                  categories: prevData.categories.filter(
+                    (id) => id !== category.id
+                  ),
+                }))
+              }
+            />
+          ))}
+        </div>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default App;
@@ -485,154 +429,123 @@ export default App;
 `./src/App.js`
 
 ```js
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 // Parses the JSON returned by a network request
-const parseJSON = resp => (resp.json ? resp.json() : resp);
+const parseJSON = (resp) => (resp.json ? resp.json() : resp);
 
 // Checks if a network request came back fine, and throws an error if not
-const checkStatus = resp => {
+const checkStatus = (resp) => {
   if (resp.status >= 200 && resp.status < 300) {
     return resp;
   }
+
   return parseJSON(resp).then(resp => {
     throw resp;
   });
 };
-const headers = {
-  'Content-Type': 'application/json',
-};
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modifiedData: {
-        name: '',
-        description: '',
-        categories: [],
-      },
-      allCategories: [],
-      error: null,
-    };
-  }
+const headers = { 'Content-Type': 'application/json' };
 
-  componentDidMount = async () => {
-    try {
-      const allCategories = await fetch('http://localhost:1337/api/categories', {
-        method: 'GET',
-        headers: headers,
-      })
-        .then(checkStatus)
-        .then(parseJSON);
-      this.setState({ allCategories });
-    } catch (error) {
-      this.setState({ error });
-    }
-  };
+const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
+  <div key={category.id}>
+    <label htmlFor={category.id}>{category.name}</label>
+    <input
+      type="checkbox"
+      checked={isChecked}
+      onChange={isChecked ? onAddCategory : onRemoveCategory}
+      name="categories"
+      id={category.id}
+    />
+  </div>
+);
 
-  handleInputChange = ({ target: { name, value } }) => {
-    this.setState(prev => ({
-      ...prev,
-      modifiedData: {
-        ...prev.modifiedData,
-        [name]: value,
-      },
-    }));
-  };
+const App = () => {
+  const [allCategories, setAllCategories] = useState([]);
+  const [error, setError] = useState(null);
+  const [modifiedData, setModifiedData] = useState({ categories: [], description: '', name: '' });
 
-  handleSubmit = async e => {
+  const handleInputChange = useCallback(({ target: { name, value } }) => {
+    setModifiedData((prevData) => ({ ...prevData, [name]: value }));
+  }, []);
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await fetch('http://localhost:1337/api/restaurants', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(this.state.modifiedData),
+    await axios
+      .post("http://localhost:1337/api/restaurants", modifiedData)
+      .then((response) => {
+        console.log(response);
       })
-        .then(checkStatus)
-        .then(parseJSON);
-    } catch (error) {
-      this.setState({ error });
-    }
+      .catch((error) => {
+        setError(error);
+      });
   };
 
-  renderCheckbox = category => {
-    const {
-      modifiedData: { categories },
-    } = this.state;
-    const isChecked = categories.includes(category.id);
-    const handleChange = () => {
-      if (!categories.includes(category.id)) {
-        this.handleInputChange({
-          target: { name: 'categories', value: categories.concat(category.id) },
-        });
-      } else {
-        this.handleInputChange({
-          target: {
-            name: 'categories',
-            value: categories.filter(v => v !== category.id),
-          },
-        });
-      }
-    };
+  useEffect(() => {
+    fetch('http://localhost:1337/api/categories', { headers, method: 'GET' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(({ data }) => setAllCategories(data))
+      .catch((error) => setError(error))
+  }, [])
 
-    return (
-      <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleChange}
-          name="categories"
-          id={category.id}
-        />
-      </div>
-    );
-  };
-
-  render() {
-    const { error, allCategories, modifiedData } = this.state;
-
-    // Print error if any
-    if (error) {
-      return <div>An error occured: {error.message}</div>;
-    }
-
-    return (
-      <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <h3>Restaurants</h3>
-          <br />
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              onChange={this.handleInputChange}
-              value={modifiedData.name}
-            />
-          </label>
-          <label>
-            Description:
-            <input
-              type="text"
-              name="description"
-              onChange={this.handleInputChange}
-              value={modifiedData.description}
-            />
-          </label>
-          <div>
-            <br />
-            <b>Select categories</b>
-            {allCategories.map(this.renderCheckbox)}
-          </div>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    );
+  if (error) {
+    // Print errors if any
+    return <div>An error occured: {error.message}</div>;
   }
+
+  return (
+    <div className="App">
+      <form onSubmit={handleSubmit}>
+        <h3>Restaurants</h3>
+        <br />
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            onChange={handleInputChange}
+            value={modifiedData.name}
+          />
+        </label>
+        <label>
+          Description:
+          <input
+            type="text"
+            name="description"
+            onChange={handleInputChange}
+            value={modifiedData.description}
+          />
+        </label>
+        <div>
+          <br />
+          <b>Select categories</b>
+          {allCategories.map((category) => (
+            <Checkbox
+              category={category}
+              isChecked={modifiedData.categories.includes(category.id)}
+              onAddCategory={() =>
+                setModifiedData((prevData) => ({
+                  ...prevData,
+                  categories: [...prevData.categories, category.id],
+                }))
+              }
+              onRemoveCategory={() =>
+                setModifiedData((prevData) => ({
+                  ...prevData,
+                  categories: prevData.categories.filter(
+                    (id) => id !== category.id
+                  ),
+                }))
+              }
+            />
+          ))}
+        </div>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default App;
@@ -726,4 +639,4 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 Here is how to request your collection types in Strapi using React. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).

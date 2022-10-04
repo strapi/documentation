@@ -67,11 +67,11 @@ axios
       Authorization: `Bearer ${token}`,
     },
   })
-  .then((response) => {
+  .then(response => {
     // Handle success.
     console.log('Data: ', response.data);
   })
-  .catch((error) => {
+  .catch(error => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -88,6 +88,10 @@ Available options:
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/plugins.js
 
@@ -103,6 +107,30 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</code-block>
+
+</code-group>
 
 :::warning
 Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
@@ -125,13 +153,13 @@ axios
     email: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then((response) => {
+  .then(response => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch((error) => {
+  .catch(error => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -154,13 +182,13 @@ axios
     identifier: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then((response) => {
+  .then(response => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch((error) => {
+  .catch(error => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -194,7 +222,13 @@ Before setting up a provider, you need to specify the absolute url of your backe
 
 **example -** `config/server.js`
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
+//path: config/server.js
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -202,8 +236,26 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+//path: config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: env('', 'http://localhost:1337'),
+});
+```
+
+</code-block>
+
+</code-group>
+
 :::tip
-Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommand to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
+Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
 :::
 
 #### Setting up the provider - examples
@@ -722,9 +774,13 @@ Now you can make authenticated requests 🎉 More info here: [token usage](#toke
 - **You can't access your admin panel**: It's most likely because you built it with the backend url set with a ngrok url and you stopped/restarted ngrok. You need to replace the backend url with the new ngrok url and run `yarn build` or `npm run build` again.
   :::
 
-### Forgotten & reset password
+### Reset password
 
 **Can only be used for users registered using the email provider.**
+
+:::: tabs card
+
+::: tab Forgot & Reset flow
 
 The flow was thought this way:
 
@@ -757,10 +813,10 @@ axios
   .post('http://localhost:1337/api/auth/forgot-password', {
     email: 'user@strapi.io', // user's email
   })
-  .then((response) => {
+  .then(response => {
     console.log('Your user received an email');
   })
-  .catch((error) => {
+  .catch(error => {
     console.log('An error occurred:', error.response);
   });
 ```
@@ -782,15 +838,43 @@ axios
     password: 'userNewPassword',
     passwordConfirmation: 'userNewPassword',
   })
-  .then((response) => {
+  .then(response => {
     console.log("Your user's password has been reset.");
   })
-  .catch((error) => {
+  .catch(error => {
     console.log('An error occurred:', error.response);
   });
 ```
 
 Congrats, you're done!
+:::
+
+::: tab Change password flow
+
+You can also update an authenticated user password through the `/change-password` API endpoint:
+
+```js
+import axios from 'axios';
+
+// Request API.
+axios.post(
+  'http://localhost:1337/api/auth/change-password',
+  {
+    currentPassword: 'currentPassword',
+    password: 'userNewPassword',
+    passwordConfirmation: 'userNewPassword',
+  },
+  {
+    headers: {
+      Authorization: 'Bearer <user jwt token>',
+    },
+  }
+);
+```
+
+:::
+
+::::
 
 ### Email validation
 
@@ -812,10 +896,10 @@ axios
   .post(`http://localhost:1337/api/auth/send-email-confirmation`, {
     email: 'user@strapi.io', // user's email
   })
-  .then((response) => {
+  .then(response => {
     console.log('Your user received an email');
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('An error occurred:', error.response);
   });
 ```
@@ -829,7 +913,7 @@ The `user` object is available to successfully authenticated requests.
 - The authenticated `user` object is a property of `ctx.state`.
 
 ```js
-create: async (ctx) => {
+create: async ctx => {
   const { id } = ctx.state.user;
 
   const depositObj = {
@@ -995,13 +1079,33 @@ JWT tokens can be verified and trusted because the information is digitally sign
 
 By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
 
-**Path -** `./extensions/users-permissions/config/jwt.js`.
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+//path: ./extensions/users-permissions/config/jwt.js
+
 module.exports = {
   jwtSecret: process.env.SOME_ENV_VAR,
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+//path: ./extensions/users-permissions/config/jwt.ts
+
+export default {
+  jwtSecret: process.env.SOME_ENV_VAR,
+};
+```
+
+</code-block>
+
+</code-group>
 
 ::: tip
 You can learn more on configuration in the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md).

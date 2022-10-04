@@ -6,7 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file is used to define database connections that will be used to store the application content.
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
+
+:::warning
+ Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
+:::
 
 :::strapi Supported databases
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
@@ -14,31 +18,32 @@ The CLI installation guide details [supported database and versions](/developer-
 
 ## Configuration structure
 
-The `./config/database.js` accepts 2 main configuration objects:
+The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 main configuration objects:
 
 - [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
 - [`settings`](#settings-configuration-object) for Strapi-specific database settings
 
 ### `connection` configuration object
 
-| Parameter                                                          | Description                                                                  | Type      |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- | --------- |
-| `client`                                                           | Database client to create the connection. `sqlite` or `postgres` or `mysql`. | `String`  |
-| `connection`                                                       | Database [connection information](#connection-parameters)                    | `Object`  |
-| `debug`                                                            | Show database exchanges and errors.                                          | `Boolean` |
-| `useNullAsDefault`<br/><br />_Optional, only for SQLite_           | Use `NULL` as a default value                                                | `Boolean` |
-| `pool`<br /><br />_Optional_                                       | [Database pooling options](#database-pooling-options)                        | `Object`  |
+| Parameter                                                | Description                                                                                           | Type      | Default |
+|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
+| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
+| `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
+| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
+| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 #### Connection parameters
 
-The `connection.connection` object found in `./config/database.js` is used to pass database connection information and accepts the following parameters:
+The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
 | Parameter  | Description                                                                                                                   | Type                  |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+|------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
-| `user` | Username used to establish the connection                                                                                     | `String`              |
+| `user`     | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
@@ -46,26 +51,30 @@ The `connection.connection` object found in `./config/database.js` is used to pa
   
 #### Database pooling options
 
-The `connection.pool` object optionally found in `./config/database.js` is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
+The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
-| Parameter                   | Description                                                                                                                                                                       | Type       | Default |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- |
-| `min`                       | Minimum number of database connections to keepalive                                                                                                                               | `Integer`  | `0`     |
-| `max`                       | Maximum number of database connections to keepalive                                                                                                                               | `Integer`  | `10`    |
-| `acquireTimeoutMillis`      | Time in ms before timing out a database connection attempt                                                                                                                        | `Integer`  | -       |
-| `createTimeoutMillis`       | Time in ms before timing out a create query attempt                                                                                                                               | `Integer`  | -       |
-| `destroyTimeoutMillis`      | Time in ms before timing out a destroy query attempt                                                                                                                              | `Integer`  | -       |
-| `idleTimeoutMillis`         | Time in ms before free database connections are destroyed                                                                                                                         | `Integer`  | -       |
-| `reapIntervalMillis`        | Time in ms to check for idle database connections to destroy                                                                                                                      | `Integer`  | -       |
-| `createRetryIntervalMillis` | Time in ms to idle before retrying failed create actions                                                                                                                          | `Integer`  | -       |
+::: caution
+When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see [Tarn.js's pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
+:::
+
+| Parameter                   | Description                                                                                                                                                                                | Type       | Default |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
+| `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `2`     |
+| `max`                       | Maximum number of database connections to keepalive                                                                                                                                        | `Integer`  | `10`    |
+| `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                       | `Integer`  | `60000` |
+| `createTimeoutMillis`       | Time in milliseconds before timing out a create query attempt                                                                                                                              | `Integer`  | `30000` |
+| `destroyTimeoutMillis`      | Time in milliseconds before timing out a destroy query attempt                                                                                                                             | `Integer`  | `5000`  |
+| `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                        | `Integer`  | `30000` |
+| `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                     | `Integer`  | `1000`  |
+| `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                         | `Integer`  | `200`   |
 | `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
 
 | Parameter        | Description                                      | Type      | Default |
-| ---------------- | ------------------------------------------------ | --------- | ------- |
+|------------------|--------------------------------------------------|-----------|---------|
 | `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
@@ -77,6 +86,8 @@ The `settings` object found in `./config/database.js` is used to configure Strap
 :::: tab PostgreSQL
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
@@ -103,7 +114,7 @@ In order to fix it, you have to set the `ssl:{}` object as a boolean in order to
 ```js
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: env('DATABASE_SSL', false)
@@ -121,7 +132,7 @@ const fs = require('fs');
 
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: 'postgres',
     connection: {
       ...
       ssl: {
@@ -137,6 +148,8 @@ module.exports = ({ env }) => ({
 :::: tab MySQL/MariaDB
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'mysql',
@@ -158,8 +171,13 @@ module.exports = ({ env }) => ({
 ::::
 
 :::: tab SQLite
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'sqlite',
@@ -171,6 +189,35 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/database.ts
+
+import path from 'path';
+
+export default ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(
+        __dirname,
+        '..',
+        '..',
+        env('DATABASE_FILENAME', path.join('.tmp', 'data.db'))
+      ),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</code-block>
+
+</code-group>
 
 ::::
 

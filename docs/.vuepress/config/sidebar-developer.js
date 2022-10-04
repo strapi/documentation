@@ -23,18 +23,6 @@ const developer = [
         children: [
           ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
           ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md',
-            'DigitalOcean One-Click',
-          ],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/platformsh.md',
-            'Platform.sh One-Click',
-          ],
-          [
-            '/developer-docs/latest/setup-deployment-guides/installation/render.md',
-            'Render One-Click',
-          ],
         ],
       },
       ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
@@ -105,7 +93,11 @@ const developer = [
                 '/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md',
                 'Role-Based Access Control (RBAC)',
               ],
+              [
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md',
+                'TypeScript',
             ],
+          ],
           },
         ],
       },
@@ -121,10 +113,6 @@ const developer = [
               '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
             collapsable: true,
             children: [
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.md',
-                '21YunBox',
-              ],
               [
                 '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.md',
                 'Amazon AWS',
@@ -148,18 +136,6 @@ const developer = [
               [
                 '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.md',
                 'Heroku',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.md',
-                'Qovery',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
-                'Render',
-              ],
-              [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/microtica.md',
-                'Microtica',
               ],
             ],
             sidebarDepth: 2,
@@ -222,6 +198,9 @@ const developer = [
       ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
       ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
       ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
+      ['/developer-docs/latest/development/custom-fields.md', 'Custom fields'],
+      ['/developer-docs/latest/development/typescript.md', 'TypeScript'],
+      ['/developer-docs/latest/development/providers.md', 'Providers'],
     ],
   },
   {
@@ -231,118 +210,108 @@ const developer = [
     sidebarDepth: 2,
     children: [
       {
-        title: 'APIs Reference',
+        title: 'REST API',
+        path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
         collapsable: true,
-        sidebarDepth: 1,
+        initialOpenGroupIndex: -1,
+        sidebarDepth: 3,
         children: [
+          ['/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html', 'API endpoints'],
           {
-            title: 'REST API',
-            path: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
+            title: 'API parameters',
+            path: '/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html',
             collapsable: true,
             initialOpenGroupIndex: -1,
-            // sidebarDepth: 3,
             children: [
-              {
-                title: 'API Parameters',
-                collapsable: true,
-                initialOpenGroupIndex: -1,
-                children: [
-                  [
-                    '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
-                    'Filtering, Locale, and Publication State'
-                  ],
-                  [
-                    '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
-                    'Population & Field Selection'
-                  ],
-                  [
-                    '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
-                    'Sort & Pagination'
-                  ],
-                ]
-              },
               [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
-                'API Endpoints'
-              ]
-            ],
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
+                'Filtering, Locale, and Publication State'
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
+                'Population & Field Selection'
+              ],
+              [
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
+                'Sort & Pagination'
+              ],
+            ]
           },
+        ],
+      },
+      [
+        '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
+        'GraphQL API',
+      ],
+      {
+        title: 'Entity Service API',
+        path:
+          '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+        collapsable: true,
+        children: [
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
-            'GraphQL API',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+            'CRUD operations',
           ],
-          {
-            title: 'Entity Service API',
-            path:
-              '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
-            collapsable: true,
-            children: [
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
-                'CRUD operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
-                'Filters',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
-                'Populate',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
-                'Ordering & pagination',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
-                'Components and dynamic zones',
-              ],
-            ],
-          },
-          {
-            title: 'Query Engine API',
-            path:
-              '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
-            collapsable: true,
-            // sidebarDepth: 3,
-            children: [
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
-                'Single Operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
-                'Bulk Operations',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
-                'Filtering',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
-                'Populating',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
-                'Ordering & pagination',
-              ],
-            ],
-          },
-
-          {
-            title: 'Plugin APIs Reference',
-            collapsable: true,
-            children: [
-              [
-                '/developer-docs/latest/developer-resources/plugin-api-reference/server.md',
-                'Server API for plugins',
-              ],
-              [
-                '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
-                'Admin Panel API for plugins',
-              ],
-            ],
-          },
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+            'Filters',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+            'Populate',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+            'Ordering & pagination',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+            'Components and dynamic zones',
+          ],
+        ],
+      },
+      {
+        title: 'Query Engine API',
+        path:
+          '/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html',
+        collapsable: true,
+        // sidebarDepth: 3,
+        children: [
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+            'Single Operations',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+            'Bulk Operations',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+            'Filtering',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+            'Populating',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+            'Ordering & pagination',
+          ],
+        ],
+      },
+      {
+        title: 'Plugin APIs',
+        collapsable: true,
+        children: [
+          [
+            '/developer-docs/latest/developer-resources/plugin-api-reference/server.md',
+            'Server API for plugins',
+          ],
+          [
+            '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
+            'Admin Panel API for plugins',
+          ],
         ],
       },
       ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
@@ -426,6 +395,7 @@ const developer = [
       ['/developer-docs/latest/plugins/users-permissions', 'Users & Permissions'],
       ['/developer-docs/latest/plugins/email', 'Email'],
       ['/developer-docs/latest/plugins/upload', 'Upload'],
+      ['/developer-docs/latest/plugins/sentry', 'Sentry'],
       ['/developer-docs/latest/plugins/documentation', 'API Documentation'],
     ],
     sidebarDepth: 1,

@@ -1,6 +1,26 @@
 ---
 title: Models - Strapi Developer Docs
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
+_tags: [
+  "beforeCreate",
+  "beforeCreateMany",
+	"afterCreate",
+	"afterCreateMany",
+	"beforeUpdate",
+	"beforeUpdateMany",
+	"afterUpdate",
+	"afterUpdateMany",
+	"beforeDelete",
+	"beforeDeleteMany",
+  "afterDelete",
+	"afterDeleteMany",
+	"beforeCount",
+	"afterCount",
+	"beforeFindOne",
+	"afterFindOne",
+	"beforeFindMany",
+	"afterFindMany"
+]
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html
 ---
@@ -27,12 +47,16 @@ Content-types in Strapi can be created:
 - with the [Content-type Builder in the admin panel](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md),
 - or with [Strapi's interactive CLI `strapi generate`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) command.
 
-The content-types has the following models files:
+The content-types use the following files:
 
 - `schema.json` for the model's [schema](#model-schema) definition. (generated automatically, when creating content-type with either method)
 - `lifecycles.js` for [lifecycle hooks](#lifecycle-hooks). This file must be created manually.
 
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/developer-docs/latest/setup-deployment-guides/file-structure.md)).
+
+:::note
+In [TypeScript](/developer-docs/latest/development/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
+:::
 
 ### Components
 
@@ -55,7 +79,7 @@ General settings for the model can be configured with the following parameters:
 
 | Parameter                                          | Type   | Description                                                                                                            |
 | -------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `tableName`                                  | String | Database table name in which the data should be stored                                                    |
+| `collectionName`                                  | String | Database table name in which the data should be stored                                                    |
 | `kind`<br><br>_Optional,<br>only for content-types_ | String | Defines if the content-type is:<ul><li>a collection type (`collectionType`)</li><li>or a single type (`singleType`)</li></ul> |
 
 ```json
@@ -63,7 +87,7 @@ General settings for the model can be configured with the following parameters:
 
 {
   "kind": "collectionType",
-  "tableName": "Restaurants_v1",
+  "collectionName": "Restaurants_v1",
 }
 ```
 
@@ -76,8 +100,8 @@ The `info` key in the model's schema describes information used to display the m
 | Parameter            | Type   | Description                                                                                                                                 |
 | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `displayName`  | String | Default name to use in the admin panel                                                                                                      |
-| `singularName` | String | Singular form of the collection type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
-| `pluralName`   | String | Plural form of the collection type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
+| `singularName` | String | Singular form of the content-type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
+| `pluralName`   | String | Plural form of the content-type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
 | `description`  | String | Description of the model                                                                                                                   |
 | `icon`<br><br>_Optional,_<br>_only for Components_       | String      | [FontAwesome](https://fontawesome.com/) (v5) icon name to use for the component's icon in the admin panel
 
@@ -100,8 +124,9 @@ Many types of attributes are available:
 
 - scalar types (e.g. strings, dates, numbers, booleans, etc.),
 - Strapi-specific types, such as:
-  - `media`, for files uploaded through the [Media library](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#media)
+  - `media` for files uploaded through the [Media library](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#media)
   - `relation` to describe a [relation](#relations) between content-types
+  - `customField` to describe [custom fields](#custom-fields) and their specific keys
   - `component` to define a [component](#components-2) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md)
@@ -114,7 +139,7 @@ The `type` parameter of an attribute should be one of the following values:
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
 | Other generic types |<ul><li>`boolean`</li><li>`array`</li><li>`json`</li></ul> |
-| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zones)</li></ul> |
+| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`<Fa-Link color="grey" size="1x"/>](#relations)</li><li>[`customField`<Fa-Link color="grey" size="1x"/>](#custom-fields)</li><li>[`component`<Fa-Link color="grey" size="1x"/>](#components)</li><li>[`dynamiczone`<Fa-Link color="grey" size="1x"/>](#dynamic-zones)</li></ul> |
 | Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/developer-docs/latest/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
 #### Validations
@@ -490,6 +515,35 @@ The `tableName` key defines the name of the join table. It has to be specified o
 
 :::::
 
+#### Custom fields
+
+[Custom fields](/developer-docs/latest/development/custom-field.md) extend Strapi’s capabilities by adding new types of fields to content-types. Custom fields are explicitly defined in the [attributes](#model-attributes) of a model with `type: customField`.
+Custom fields' attributes also accept:
+
+Custom fields' attributes also show the following specificities:
+- a `customField` attribute whose value acts as a unique identifier to indicate which registered custom field should be used. Its value follows:
+   - either the `plugin::plugin-name.field-name` format if a plugin created the custom field 
+   - or the `global::field-name` format for a custom field specific to the current Strapi application
+- and additional parameters depending on what has been defined when registering the custom field (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)).
+
+```json
+// path: ./src/api/[apiName]/[content-type-name]/content-types/schema.json
+
+{
+  // …
+  "attributes": {
+    "attributeName": { // attributeName would be replaced by the actual attribute name
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "options": {
+        "format": "hex"
+      }
+    }
+  }
+  // …
+}
+```
+
 #### Components
 
 Component fields create a relation between a content-type and a component structure. Components are explicitly defined in the [attributes](#model-attributes) of a model with `type: 'component'` and accept the following additional parameters:
@@ -537,20 +591,18 @@ Dynamic zones are explicitly defined in the [attributes](#model-attributes)  of 
 
 The `options` key is used to define specific behaviors and accepts the following parameter:
 
-| Parameter                     | Type                        | Description                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `privateAttributes`     | Array of strings            | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps.<br><br>The set of `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
-| `populateCreatorFields` | Boolean                     | Toggles including the `created_by` and `updated_by` fields in the API response.<br><br>Default value: `false`                                                                                                                                                                                                                 |
-| `draftAndPublish`       | Boolean                     | Enables the draft and publish feature.<br><br>Default value: `false`                                                                                                                                                                                                                                                                          |
+| Parameter           | Type             | Description                                                                                                                                                                                                                                                                                                        |
+|---------------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `privateAttributes` | Array of strings | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps. <br><br> The `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
+| `draftAndPublish`   | Boolean          | Enables the draft and publish feature. <br><br> Default value: `true` (`false` if the content-type is created from the interactive CLI).                                                                                                                                                                                    |
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
   "options": {
-    "privateAttributes": ["id", "created_at"],
-    "populateCreatorFields": true,
-    "draftAndPublish": false
+    "privateAttributes": ["id", "createdAt"],
+    "draftAndPublish": true
   }
 }
 ```
@@ -596,7 +648,6 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
 | `model`  | Object            | Model object                                                                                                                                                       |
-| `em`     | EntityManagerObject           | EntityManager |                                                                                                                                                    |
 | `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br><br>Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
@@ -608,8 +659,11 @@ To configure a content-type lifecycle hook, create a `lifecycles.js` file in the
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 module.exports = {
   beforeCreate(event) {
@@ -627,10 +681,38 @@ module.exports = {
 };
 ```
 
+
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts
+
+export default {
+  beforeCreate(event) {
+    const { data, where, select, populate } = event.params;
+
+    // let's do a 20% discount everytime
+    event.params.data.price = event.params.data.price * 0.8;
+  },
+
+  afterCreate(event) {
+    const { result, params } = event;
+
+    // do something to the result;
+  },
+};
+```
+
+</code-block>
+</code-group>
+
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
 ```js
-// ./src/api/[api-name]/content-types/restaurant/lifecycles.js
+// ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({

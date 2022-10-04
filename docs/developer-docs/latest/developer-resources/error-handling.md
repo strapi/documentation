@@ -19,7 +19,7 @@ Errors are included in the response object with the `error` key and include info
 
 ### REST errors
 
-Errors thrown by the REST API are included in the [response](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#unified-response-format) that has the following format:
+Errors thrown by the REST API are included in the [response](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#requests) that has the following format:
 
 ```json
 {
@@ -27,7 +27,7 @@ Errors thrown by the REST API are included in the [response](/developer-docs/lat
   "error": {
     "status": "", // HTTP status
     "name": "", // Strapi error name ('ApplicationError' or 'ValidationError')
-    "message": "", // A human reable error message
+    "message": "", // A human readable error message
     "details": {
       // error info specific to the error type
     }
@@ -63,12 +63,15 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) respond with the correct status and body.
 
-This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be camel-cased to be used by Strapi (e.g. `badRequest`).
+This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
 Error functions accept 2 parameters that correspond to the `error.message` and `error.details` attributes [received](#receiving-errors) by a developer querying the API:
 
 - the first parameter of the function is the error `message`
 - and the second one is the object that will be set as `details` in the response received
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 
@@ -85,6 +88,32 @@ module.exports = {
 }
 
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+
+```js
+
+// path: ./src/api/[api-name]/controllers/my-controller.ts
+
+export default {
+  renameDog: async (ctx, next) => {
+    const newName = ctx.request.body.name;
+    if (!newName) {
+      return ctx.badRequest('name is missing', { foo: 'bar' })
+    }
+    ctx.body = strapi.service('api::dog.dog').rename(newName);
+  }
+}
+
+```
+
+</code-block>
+</code-group>
+
 
 :::note
 [Services](/developer-docs/latest/development/backend-customization/services.md) don't have access to the controller's `ctx` object. If services need to throw errors, these need to be caught by the controller, that in turn is in charge of calling the proper error function.
