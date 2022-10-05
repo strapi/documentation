@@ -6,9 +6,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Deployment
 
-Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider. 
+Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
+
+<div class="custom-block prerequisites"><p class="custom-block-title">☁️ Strapi Cloud</p>
+<p>Don't want to deploy Strapi by yourself? <a href="https://strapi.io/cloud" target="_blank" id="deployment-section-cloud-link">Join the cloud waitlist</a> to soon get access to a platform to easily deploy and host your project.</p>
+</div>
 
 ::: strapi Community Guides
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
@@ -26,7 +30,7 @@ To provide the best possible environment for Strapi the following requirements a
 - Hardware specifications for your server (CPU, RAM, storage):
 
 | Hardware | Minimum | Recommended |
-|----------|---------|-------------|
+| -------- | ------- | ----------- |
 | CPU      | 1 core  | 2+ cores    |
 | Memory   | 2GB     | 4GB+        |
 | Disk     | 8GB     | 32GB+       |
@@ -38,7 +42,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 :::
 
 | Database   | Minimum | Recommended |
-|------------|---------|-------------|
+| ---------- | ------- | ----------- |
 | MySQL      | 5.7.8   | 8.0         |
 | MariaDB    | 10.3    | 10.6        |
 | PostgreSQL | 11.0    | 14.0        |
@@ -47,7 +51,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 - A supported operating system:
 
 | Operating System | Minimum | Recommended |
-|------------------|---------|-------------|
+| ---------------- | ------- | ----------- |
 | Ubuntu (LTS)     | 20.04   | 22.04       |
 | Debian           | 10.x    | 11.x        |
 | CentOS/RHEL      | 8.x     | 9.x         |
@@ -259,7 +263,6 @@ Manual guides for deployment on the following platforms:
 	</InstallLink>
 </div>
 
-
 ## Optional Software Guides
 
 Additional guides for optional software additions that compliment or improve the deployment process when using Strapi in a production or production-like environment.
@@ -300,4 +303,3 @@ Additional guides for optional software additions that compliment or improve the
 		</template>
 	</InstallLink>
 </div>
-
