@@ -6,47 +6,44 @@ All efforts to contribute are highly appreciated, we recommend you talk to a mai
 
 ## Open Development & Community Driven
 
-Strapi is an open-source project. See the [LICENSE](https://github.com/strapi/documentation/blob/main/LICENSE) file for licensing information. All the work done is available on GitHub.
+Strapi is an open-source project. See the [LICENSE](https://github.com/strapi/documentation/blob/main/LICENSE) file for licensing information. All of the work is available on GitHub.
 
 The core team and the contributors send pull requests which go through the same validation process.
 
-## Documentation Requests
-
-Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
-
 ## Code of Conduct
 
-This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please read the [full text](CODE_OF_CONDUCT.md) so that you can read which actions may or may not be tolerated.
+This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold the code.
+
+## Documentation Requests
+
+Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template. If you are requesting documentation, please feel free to open a pull request.
 
 ## Bugs
 
-We are using [GitHub Issues](https://github.com/strapi/documentation/issues) to manage our public bugs. Before submitting an issue you need to make sure:
+Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. Before submitting an issue:
 
-- Checked for any existing pull requests that may address the same issue
-- Checked for any open issues related to your issue, if so, please provide context on that issue
-- Follow the issue template and try to fill out as much information as you can
-  - Issues not following the templates **will be closed**
-  - You may update the closed issue with the required information and it will be reopened
-- The issue is with the Strapi **documentation only**, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repo issues
-- If you are requesting documentation, please do feel free to make a pull request
-  - Documentation requests will be handled when we have free room within our roadmap
-  - Open requests **are not handled** in a "first come, first serve" basis, they are handled on a "best-effort" depending on the time required to produce
-- Do not ask technical questions about how to do something
-  - Questions should be directed at the following resources
-    - Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
-    - Talk with other community members on our [Community Discord](https://discord.strapi.io)
+- Check for existing pull requests that may address the same issue.
+- Check for related open issues, if so, please provide context on the existing issue.
+- Follow the issue template and fill out as much information as you can.
+- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+  
+Technical questions should be asked using the following resources:
 
-Please note that rude or impolite comments on issues that violate our [Code of Conduct](./CODE_OF_CONDUCT.md) will be deleted and issues that violate the COC will be closed.
+- Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
+- Engage with other community members on our [Community Discord](https://discord.strapi.io)
 
 ---
 
-## Submitting a Pull Request
+## Pull Requests
 
-The core team will review your pull request and will either merge it, request changes to it, or close it.
+The core team reviews community pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
-### Setup and pull request creation
+- clicking the `Improve this page` link at the bottom of any documentation page to directly edit in GitHub,
+- forking the `documentation` repository and working locally.
 
-Follow the procedure below to contribute to the Strapi documentation.
+### Setup and write locally
+
+The following procedure allows you to work locally on the Strapi documentation.
 
 1. Fork the `documentation` repository.
 2. Clone your forked `documentation` repository.
@@ -65,7 +62,7 @@ Follow the procedure below to contribute to the Strapi documentation.
     cd documentation/docs/user-docs
     ```
     
-4. Choose the branch from which to work: either `main` for a contribution on the latest, current version or Strapi ; or `v[x]` for a contribution on a previous version of Strapi.
+4. Choose the branch from which to work: either `main` for a contribution on the current version of Strapi or `v[x]` for a contribution on a previous version of Strapi.
     
     ```bash
     #current version of Strapi (i.e. v4)
@@ -86,7 +83,7 @@ Follow the procedure below to contribute to the Strapi documentation.
     git pull
     ```
     
-6. Create your own branch, based on either `main` or `v[x]` , on which you will work on your documentation contribution. Make sure the name of your branch indicates both the type of documentation and the topic.
+6. Create your branch, based on either `main` or `v[x]`, to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
     
     ```bash
     # developer documentation
@@ -118,43 +115,31 @@ Follow the procedure below to contribute to the Strapi documentation.
 
   The project is now up and running at http://localhost:8080 and you should be able to access it in your browser.
 
-
 You are now ready to contribute to the Strapi documentation! 🚀
 
-🤗 Make sure to follow the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) and the [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) when writing your documentation contribution. These documents are meant to help you write a contribution that fits the whole Strapi documentation and make the reviewing process easier and quicker.
+### Write technical documentation
 
-When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information).
+For lengthier contributions, we provide general guidelines that can help you write clear and concise documentation:
 
-✋ To be able to submit your contribution, you must sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
+- The [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) gives an overview of how to structure and write clear documentation.
+- The [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) has formatting guidelines and how to implement formatting in markdown files.
 
-### Pull request review and management
+When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information) or use the _Create a new branch for this commit and start a pull request_ option if you are using the GitHub web browser interface (see [the GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)).
 
-Read the information below to know how your contribution will be handled by the Strapi Documentation team until it is merged and deployed.
+✋ Sign the CLA (Contributor License Agreement), directly via GitHub (see [our dedicated blog post](https://strapi.io/blog/switching-from-dco-to-cla) for more information).
 
-#### Handling
+### Review and management of pull requests
 
-When a new pull request is submitted in the Strapi `documentation` repository, it is handled in the following week, meaning that the Strapi team:
+The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is:
 
-- acknowledges the new pull request, leaving a 👀 reaction on the description
-- tags the pull request, to indicate the type of documentation that is being updated, and optionally the level of priority for the contribution
-- assigns the pull request to a member of the Strapi Documentation team, who will be in charge of the reviewing and merging
+1. The pull request is assigned to a member of the Documentation team.
+2. At least 1 member of the Documentation team will review the pull request for:
 
-#### Review
+- accuracy,
+- quality,
+- alignment with the documentation scope and roadmap.
 
-Once all of the handling steps are done by the Strapi team, you can expect your pull request to be reviewed in the next week or so.
-
-Here is what the Strapi Documentation team will review in your pull request:
-
-- The accuracy and coherence of the contribution, by testing any new piece of code or action for example,
-- The quality of the technical writing, to make sure it is proper technical documentation that is easy to understand (see [12 Rules of Technical Writing](https://www.notion.so/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04))
-- The fit of the contribution among the rest of the Strapi documentation (see [Strapi Documentation Style Guide](https://www.notion.so/Strapi-Documentation-Style-Guide-b9c21387732741ed8b0a3f9701612577))
-
-The pull request will be validated once the contribution ticks all the boxes. At least the validation of the Strapi Documentation team member in charge of the pull request is necessary for it to be merged.
-
-#### Deployment
-
-Once your pull request is validated and merged, it will be deployed with the next batch of merged pull requests. The Strapi Documentation team only deploys the documentation on Wednesdays, but not every week.
+3. Reviewers will either approve, ask for changes, or reject the pull request.
+4. Accepted pull requests will be merged and deployed as part of the regular documentation deployments on Wednesdays every 2 weeks.
 
 Every documentation deployment is communicated through a message in [the "News" section of the Strapi forum](https://forum.strapi.io/c/news/5).
-
-

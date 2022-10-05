@@ -7,7 +7,7 @@
     <input
       id="algolia-search-input"
       class="search-query"
-      :placeholder="placeholder"
+      placeholder="Quick search..."
     >
   </form>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: ['options'],
   data () {
     return {
-      placeholder: undefined
+      placeholder: 'undefined'
     }
   },
   mounted () {
@@ -26,27 +26,61 @@ export default {
   },
   methods: {
     initialize (userOptions, config, lang) {
+      const self = this;
+
       Promise.all([
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.js'),
         import(/* webpackChunkName: "docsearch" */ 'docsearch.js/dist/cdn/docsearch.min.css')
       ]).then(([docsearch]) => {
-        docsearch = docsearch.default
-        const { algoliaOptions = {}} = userOptions
+        const sidebar = document.querySelector('.sidebar');
+        const input = document.getElementById('algolia-search-input');
+
+        docsearch = docsearch.default;
+
+        // Handle the edge case when the user remove their search manually.
+        input.addEventListener('keyup', () => {
+          if (input.value === null || input.value === '') {
+            sidebar.style.width = '20rem';
+          }
+        });
+
+        // Handle the edge case when there is no results, and the user focus somewhere else.
+        input.addEventListener('focusout', () => {
+          sidebar.style.width = '20rem';
+        });
+
+        const { algoliaOptions = {}} = userOptions;
+
         docsearch(Object.assign(
           {},
+          {
+            autocompleteOptions: {
+              debug: false
+            }
+          },
           userOptions,
           {
             inputSelector: '#algolia-search-input',
             // #697 Make docsearch work well at i18n mode.
             algoliaOptions: Object.assign({
-              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || [])
+              'facetFilters': [`lang:${lang}`].concat(algoliaOptions.facetFilters || []),
             }, algoliaOptions),
-            handleSelected: (input, event, suggestion) => {
-              const { pathname, hash } = new URL(suggestion.url)
+            handleSelected: (input, event, suggestion, dataSetNumber, context) => {
+              const { pathname, hash } = new URL(suggestion.url);
               const removedBase = config.base ? '/' + pathname.replace(config.base, '') : pathname;
-              this.$router.push(`${removedBase}${hash}`)
-            }
-          }
+
+              // Redirect to the resource
+              this.$router.push(`${removedBase}${hash}`);
+
+              // Reset parameters for better UX
+              sidebar.style.width = '20rem';
+              input.setVal(self.placeholder);
+
+            },
+            queryHook: function(query) {
+              sidebar.style.width = '40rem';
+            },
+          },
         ))
       })
     },
@@ -67,12 +101,12 @@ export default {
 </script>
 
 <style lang="stylus">
-
 .al
 .algolia-search-wrapper
   .algolia-autocomplete
     .ds-dropdown-menu
-      width: 500px
+      width: 40rem
+      overflow: auto
     .algolia-docsearch-suggestion
       .algolia-docsearch-suggestion--category-header
         color: black
@@ -120,6 +154,9 @@ export default {
         .ds-dropdown-menu
           min-width 515px !important
 @media (max-width: $MQMobile)
+  .search-box input
+    left: 0 !important
+
   .algolia-search-wrapper
     .ds-dropdown-menu
       min-width calc(100vw - 4rem) !important
