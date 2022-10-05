@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Deployment
 
-Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
+Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider. 
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
@@ -30,7 +30,7 @@ To provide the best possible environment for Strapi the following requirements a
 - Hardware specifications for your server (CPU, RAM, storage):
 
 | Hardware | Minimum | Recommended |
-| -------- | ------- | ----------- |
+|----------|---------|-------------|
 | CPU      | 1 core  | 2+ cores    |
 | Memory   | 2GB     | 4GB+        |
 | Disk     | 8GB     | 32GB+       |
@@ -42,7 +42,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 :::
 
 | Database   | Minimum | Recommended |
-| ---------- | ------- | ----------- |
+|------------|---------|-------------|
 | MySQL      | 5.7.8   | 8.0         |
 | MariaDB    | 10.3    | 10.6        |
 | PostgreSQL | 11.0    | 14.0        |
@@ -51,7 +51,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 - A supported operating system:
 
 | Operating System | Minimum | Recommended |
-| ---------------- | ------- | ----------- |
+|------------------|---------|-------------|
 | Ubuntu (LTS)     | 20.04   | 22.04       |
 | Debian           | 10.x    | 11.x        |
 | CentOS/RHEL      | 8.x     | 9.x         |
@@ -262,6 +262,7 @@ Manual guides for deployment on the following platforms:
 		</template>
 	</InstallLink>
 </div>
+
 
 ## Optional Software Guides
 
