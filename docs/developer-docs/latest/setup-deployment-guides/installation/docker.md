@@ -17,8 +17,8 @@ Docker is an open platform that allows developing, shipping, and running applica
 ::: prerequisites
 
 - [Docker](https://www.docker.com/) installed on your machine
-- [Supported version of Node.js](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met)
-- An existing Strapi v4 project, or a new one created with [Strapi Quick Start](/developer-docs/latest/getting-started/quick-start.md)
+- A [supported version of Node.js](/developer-docs/latest/setup-deployment-guides/installation/cli.md#step-1-make-sure-requirements-are-met)
+- An existing Strapi v4 project, or a new one created with the [Quick Start guide](/developer-docs/latest/getting-started/quick-start.md)
 - (_optional_) [Yarn](https://yarnpkg.com/) installed on your machine
 - (_optional_) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
 
@@ -35,7 +35,7 @@ Both methods require an existing Strapi project or a new one created (see [Quick
 The following `Dockerfile` can be used to build a non-production Docker image for a Strapi project.
 
 ::: note
-If you are using docker-compose, you can skip setting the environment variables manually, as they will be set in the `docker-compose.yml` file or a `.env` file.
+If you are using `docker-compose`, you can skip setting the environment variables manually, as they will be set in the `docker-compose.yml` file or a `.env` file.
 :::
 
 !!!include(developer-docs/latest/setup-deployment-guides/snippets/docker-env-table.md)!!!
@@ -317,7 +317,7 @@ networks:
 
 The Docker image in production is different from the one used in development/staging environments because of the differences in the admin build process in addition to the command used to run the application. Typical production environments will use a reverse proxy to serve the application and the admin panel. The Docker image is built with the production build of the admin panel and the command used to run the application is `strapi start`.
 
-Once the [Dockerfile](#production-dockerfile) is created, the [production container](l#building-the-production-container) can be built. Optionally, the container can be published to a [registry](#optional-publishing-the-container-to-a-registry) to [blah blah — make it available to the community?]. [Community tools](#community-tools) can help you
+Once the [Dockerfile](#production-dockerfile) is created, the [production container](#building-the-production-container) can be built. Optionally, the container can be published to a [registry](#optional-publishing-the-container-to-a-registry) to make it available to the community. [Community tools](#community-tools) can help you
 in the process of building a production Docker image and deploying it to a production environment.
 
 ### Production Dockerfile
@@ -429,7 +429,7 @@ Some popular hosting providers are:
 
 ## Community tools
 
-There are several community tools available to assist you in deploying Strapi to various cloud providers and setting up Docker in a development or production environment.
+Several community tools are available to assist you in deploying Strapi to various cloud providers and setting up Docker in a development or production environment.
 
 We strongly support our community efforts and encourage you to check out the following tools, please help support them by contributing to their development.
 

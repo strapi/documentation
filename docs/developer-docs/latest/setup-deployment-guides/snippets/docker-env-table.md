@@ -1,6 +1,4 @@
-There are several environment variables that are required in order to run Strapi in a Docker container, there are also several [optional variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables) you can set.
-
-The following environment variables are required:
+The following environment variables are required in order to run Strapi in a Docker container:
 
 | Variable name | Description |
 |---------------|-------------|
@@ -14,3 +12,5 @@ The following environment variables are required:
 | `JWT_SECRET` | The secret used to sign the JWT for the Users-Permissions plugin. |
 | `ADMIN_JWT_SECRET` | The secret used to sign the JWT for the Admin panel. |
 | `APP_KEYS` | The secret keys used to sign the session cookies. |
+
+You can also set some [optional environment variables](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables).
