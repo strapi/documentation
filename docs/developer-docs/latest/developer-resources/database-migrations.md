@@ -22,9 +22,7 @@ Strapi automatically detects migration files and run them once at the next start
 Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
 :::
 
-Migration files should export the function `up()`:
-
-- The `up()` function is used when upgrading (e.g. adding a new table `my_new_table`).
+Migration files should export the function `up()`, which is used when upgrading (e.g. adding a new table `my_new_table`).
 
 The `up()` function runs in a database transaction which means if a query fails during the migration, the whole migration is cancelled, and no changes are applied to the database. If another transaction is created within the migration function, it will act as a nested transaction.
 
