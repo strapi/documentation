@@ -135,7 +135,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::email.email', ({ strapi }) => ({
+module.exports = createCoreService('plugin::email.email', ({ strapi }) => ({
   send(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
@@ -189,7 +189,7 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 </code-block>
 </code-group>
 
-The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
+The service is now available through the `strapi.service('plugin::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
 
 <code-group>
 <code-block title=JAVASCRIPT>
@@ -206,7 +206,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('plugin::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -232,7 +232,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
     const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('plugin::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
