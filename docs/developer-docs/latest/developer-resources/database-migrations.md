@@ -22,17 +22,14 @@ Strapi automatically detects migration files and run them once at the next start
 Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
 :::
 
-Migration files should export 2 functions `up()` and `down()`:
+Migration files should export the function `up()`:
 
 - The `up()` function is used when upgrading (e.g. adding a new table `my_new_table`).
-- The `down()` function is used to reverse the `up()` function when downgrading (e.g. deleting `my_new_table`).
 
-`up()` and `down()` functions run in a database transaction which means if a query fails during the migration, the whole migration is cancelled, and no changes are applied to the database. If another transaction is created within the migration function, it will act as a nested transaction.
-
-There are no ways to use the downgrade feature for the moment, hence `down()` is not usable for the moment.
+The `up()` function runs in a database transaction which means if a query fails during the migration, the whole migration is cancelled, and no changes are applied to the database. If another transaction is created within the migration function, it will act as a nested transaction.
 
 ::: note
-Currently, there is no CLI to manually execute the database migrations.
+There is no CLI to manually execute the database migrations.
 :::
 
 ## Creating a migration file
@@ -48,13 +45,11 @@ To create a migration file:
 
 async function up(knex) {}
 
-async function down(knex) {}
-
-module.exports = { up, down };
+module.exports = { up };
 ```
 
-3. Fill in the template by adding actual migration code inside the `up()` and `down()` functions.
-`up()` and `down()` receive a [Knex instance](https://knexjs.org/), already in a transaction state, that can be used to run the database queries.
+3. Fill in the template by adding actual migration code inside the `up()` function.
+`up()` receives a [Knex instance](https://knexjs.org/), already in a transaction state, that can be used to run the database queries.
 
 ::: details Example of migration file
 
@@ -64,21 +59,17 @@ module.exports = { up, down };
 module.exports = {
   async up(knex) {
     // You have full access to the Knex.js API with an already initialized connection to the database
-    // ------------------------
+
     // EXAMPLE: renaming a table
-    // await knex.schema.renameTable('oldName', 'newName');
-    // ------------------------
+    await knex.schema.renameTable('oldName', 'newName');
+
     // EXAMPLE: renaming a column
-    // await knex.schema.table('someTable', table => {
-    //   table.renameColumn('oldName', 'newName');
-    // });
-    // ------------------------
+    await knex.schema.table('someTable', table => {
+      table.renameColumn('oldName', 'newName');
+    });
+
     // EXAMPLE: updating data
-    // await knex.from('someTable').update({ columnName: 'newValue' }).where({ columnName: 'oldValue' });
-    // ------------------------
-  },
-  async down(knex) {
-    // This one isn't implemented yet, will be eventually
+    await knex.from('someTable').update({ columnName: 'newValue' }).where({ columnName: 'oldValue' });
   },
 };
 ```
