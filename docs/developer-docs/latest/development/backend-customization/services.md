@@ -170,7 +170,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+export default factories.createCoreService('api::email.email', ({ strapi }) => ({
   send(from, to, subject, text) {
     // Setup e-mail data. 
     const options = {
