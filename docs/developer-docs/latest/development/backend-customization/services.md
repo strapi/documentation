@@ -396,5 +396,3 @@ strapi.service('plugin::pluginName.serviceName');
 ::: tip
 To list all the available services, run `yarn strapi services:list`.
 :::
-
-:::
