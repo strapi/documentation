@@ -244,14 +244,12 @@ const { ApplicationError } = utils.errors;
 
 export default {
   beforeCreate(event) {
-    beforeCreate(event) {
-      let okay = false;
+    let okay = false;
 
-      // Throwing an error will prevent the entity from being created
-      if (!okay) {
-        throw new ApplicationError('Something went wrong', { foo: 'bar' });
-      }
-    },
+    // Throwing an error will prevent the entity from being created
+    if (!okay) {
+      throw new ApplicationError('Something went wrong', { foo: 'bar' });
+    }
   },
 };
 
