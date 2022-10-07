@@ -8,11 +8,15 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 ::: warning
 Strapi Cloud is currently in Closed Beta release. Features and functionality may change prior to General Availability.
-
-Sign up for the waitlist [here](https://strapi.io/cloud).
 :::
 
-This is a step-by-step guide for deploying your Strapi application on Strapi Cloud.
+This is a step-by-step guide for deploying your Strapi application on Strapi Cloud. Before you are able to access Strapi Cloud, you must first [request access](#requesting-access) to the Beta release.
+
+## Requesting access
+
+To request access you must sign up for the waitlist [here](https://strapi.io/cloud). Be sure to enter your correct GitHub username and Discord ID as these are used to grant access to the Strapi Cloud Beta.
+
+Onboarding of users will be done in batches. You will be notified via email when you have been granted access to Strapi Cloud.
 
 ## Prerequisites
 
@@ -47,7 +51,7 @@ Connect the GitHub account and/or Organizations that own the repository or repos
 You will be redirected to GitHub to authorize Strapi Cloud to access your repository.
 :::
 
-2. After granting the required access form GitHub, from the **Projects** page select your desired repository to install Strapi Cloud.
+2. After granting the required access from GitHub, from the **Projects** page select your desired repository to install Strapi Cloud.
 
 ![Project Import - Select Repository](../assets/deployment/cloud/import.png)
 
@@ -74,9 +78,9 @@ The **Projects** page displays a list of all your Strapi Cloud projects. From he
 
 Each project card displays the following information:
 
-* Project name
-* Status: Displays a **Disconnected** warning if the project repository is not connected to Strapi Cloud.
-* Last deployment date: Timestamp of the last deployment.
+* **Project name**
+* **Status**: Displays a **Disconnected** warning if the project repository is not connected to Strapi Cloud.
+* **Last deployment date**: Timestamp of the last deployment.
 
 ## Project details
 
@@ -92,17 +96,17 @@ The **Deploys** tab displays a chronological list of cards with the details of a
 
 Each card displays the following information:
 
-* Commit SHA
-* Commit message
-* Deployment status: Whether the project is 
+* **Commit SHA**
+* **Commit message**
+* **Deployment status**: Whether the project is 
     * **Deploying**
     * **Done**
     * **Cancelled**
     * **Build failed**
     * **Deploy failed**
-* Last deployment time: When the deployment was triggered and the duration.
-* Production branch
-* Options menu (`...`): The available options vary depending on the deployment status.
+* **Last deployment time**: When the deployment was triggered and the duration.
+* **Production branch**
+* **Options** menu (`...`): The available options vary depending on the deployment status.
     * For **Done** status: No further options.
     * For **Deploying** status, you can:
         * **Cancel deploy**
