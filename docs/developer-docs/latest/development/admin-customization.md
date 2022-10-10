@@ -192,6 +192,7 @@ export default {
     },
     // Override or extend the theme
     theme: {
+      // overwrite light theme properties
       light: {
         colors: {
           primary100: '#f6ecfc',
@@ -201,6 +202,11 @@ export default {
           primary700: '#8312d1',
           danger700: '#b72b1a'
         },
+      },
+      
+      // overwrite dark theme properties
+      dark: {
+         // ...
       }
     },
     // Extend the translations
