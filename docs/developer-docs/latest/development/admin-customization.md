@@ -157,7 +157,7 @@ The `config` object accepts the following parameters:
 | `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#locales)) |
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
-| `theme.light` and `theme.dark` | Object           | Override or [extend the theme](#theme-extension) for Light and Dark modes                                                         |
+| `theme.light` and `theme.dark` | Object           | [Overwrite theme properties](#theme-extension) for Light and Dark modes                                                         |
 | `tutorials`     | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
 | `notifications` | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
 
