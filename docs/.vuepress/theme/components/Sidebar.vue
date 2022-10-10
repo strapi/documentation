@@ -59,7 +59,7 @@ export default {
   a
     display inline-block
   .nav-links
-    position: absolute
+    position: relative
     left: 0
     top: 0
     display none
