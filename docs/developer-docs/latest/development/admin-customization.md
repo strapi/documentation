@@ -505,7 +505,7 @@ To disable notifications about new Strapi releases, set the `config.notification
 
 #### Theme extension
 
-Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), and both can be extended through custom theme development.
+Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
 
 To extend the theme, use either:
 
