@@ -523,7 +523,7 @@ The default [Strapi theme](https://github.com/strapi/design-system/tree/main/pac
 :::
 
 ::: caution
-The former syntax `config.theme` to extend the theme will soon be deprecated by Strapi, and will stop being supported when the next major release is available. We encourage you to update any custom theme using the new syntax that supports custom development for both Light and Dark modes.
+The former syntax for `config.theme` without `light` or `dark` keys is deprecated and will be removed in the next major release. We encourage you to update your custom theme to use the new syntax that supports light and dark modes.
 :::
 
 ### WYSIWYG editor
