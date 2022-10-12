@@ -14,7 +14,8 @@ The `uid` parameter used in function calls for this API is a `string` built with
 
 For example a correct `uid` to get users of the Strapi admin panel is `admin::user` or for the upload plugin: `plugin::upload.file`. For user-defined custom content-types if follows `api::[content-type]`. For example if a content-type `article` exists it is referenced by `api::article.article`.
 
-For better understing of a specific Strapi intance It is possible to get all possible content-type `uid`s by running [`strapi content-types:list`](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html#strapi-content-types-list) command.
+::: tip
+Run the `strapi content-types:list`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-content-types-list) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
 
 ## findOne()
 
