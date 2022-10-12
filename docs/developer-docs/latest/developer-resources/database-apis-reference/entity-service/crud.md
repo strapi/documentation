@@ -8,7 +8,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) is built on top of the the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and uses it to perform CRUD operations on entities.
 
-## Note about `uid`
 
 The `uid` parameter used in function calls for this API is a `string` built with the following format: `[category]::[content-type]` where `category` is one of: `admin`, `plugin` or `api`.
 
