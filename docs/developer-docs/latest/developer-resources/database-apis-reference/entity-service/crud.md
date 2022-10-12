@@ -18,6 +18,7 @@ Examples:
 
 ::: tip
 Run the `strapi content-types:list`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-content-types-list) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
+:::
 
 ## findOne()
 
