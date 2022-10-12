@@ -11,7 +11,10 @@ The [Entity Service API](/developer-docs/latest/developer-resources/database-api
 
 The `uid` parameter used in function calls for this API is a `string` built with the following format: `[category]::[content-type]` where `category` is one of: `admin`, `plugin` or `api`.
 
-For example a correct `uid` to get users of the Strapi admin panel is `admin::user` or for the upload plugin: `plugin::upload.file`. For user-defined custom content-types if follows `api::[content-type]`. For example if a content-type `article` exists it is referenced by `api::article.article`.
+Examples:
+- A correct `uid` to get users of the Strapi admin panel is `admin::user`.
+- A possible `uid` for the Upload plugin could be `plugin::upload.file`.
+- As the `uid`s for user-defined custom content-types follow the `api::[content-type]` syntax, if a content-type `article` exists, it is referenced by `api::article.article`.
 
 ::: tip
 Run the `strapi content-types:list`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-content-types-list) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
