@@ -1,59 +1,123 @@
 ---
-title: Roles & Permissions - Strapi Developer Docs
+title: Users & Permissions - Strapi Developer Docs
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 sidebarDepth: 2
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html
 ---
 
-# Roles & Permissions
+# Users & Permissions
 
-This plugin provides a way to protect your API with a full authentication process based on JWT. This plugin comes also with an ACL strategy that allows you to manage the permissions between the groups of users.
+This plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API. It also provides an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
-To access the plugin admin panel, click on the **Settings** link in the left menu and then everything will be under the **USERS & PERMISSIONS PLUGIN** section.
+To access the plugin admin panel, click on the **Settings** link in the left menu of your Strapi application dashboard and under the **USERS & PERMISSIONS PLUGIN** section you will find sections for managing **Roles**, **Providers**, **Email Templates**, and **Advanced Settings**.
 
 ## Concept
 
 When this plugin is installed, it adds an access layer on your application.
-The plugin uses [`jwt token`](https://en.wikipedia.org/wiki/JSON_Web_Token) to authenticate users.
+The plugin uses `JWTs` to authenticate users. Your JWT contains your user ID, which is matched to the group your user is in and used to determine whether to allow access to the route.
 
-Each time an API request is sent, the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
-
-To do so, your JWT contains your user ID and we are able to match the group your user is in and at the end to know if the group allows access to the route.
+Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 ## Manage role permissions
 
 ### Public role
 
-This role is used when you receive a request that doesn't have an `Authorization` header.
-If you allow some permissions in this role, everybody will be able to access the endpoints you selected.
-This is common practice to select `find` / `findOne` endpoints when you want your front-end application to access all the content without developing user authentication and authorization.
+This is the default role used when the server receives a request without an `Authorization` header. Any permissions (i.e. accessible endpoints) granted to this role will be accessible by anyone.
+
+It is common practice to select `find` / `findOne` endpoints when you want your front-end application to access all the content without requiring user authentication and authorization.
 
 ### Authenticated role
 
-This is the default role that is given to every **new user** if no role is provided at creation. In this role you will be able to define routes that a user can access.
+This is the default role that is given to every **new user** at creation if no role is provided. In this role you define routes that a user can access.
 
 ### Permissions management
 
-By clicking on the **Role** name, you will be able to see all functions available in your application (and these functions are related to a specific route)
+By clicking on the **Role** name, you can see all functions available in your application (with these functions related to the specific route displayed).
 
-If you check a function name, it makes this route accessible by the current role you are editing.
-On the right sidebar you will be able to see the URL related to this function.
+If you check a function name, it makes this route accessible by the current role you are editing. On the right sidebar you can see the URL related to this function.
 
 ### Update the default role
 
-When you create a user without a role or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
+When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 
 To change the default role, go to the `Advanced settings` tab and update the `Default role for authenticated users` option.
 
 ## Authentication
 
+### Login
+
+Submit the user's identifier and password credentials for authentication. On successful authentication the response data will have the user's information along with an authentication token.
+
+#### Local
+
+The `identifier` param can be an **email** or **username**.
+
+:::: tabs card
+
+::: tab axios
+
+```js
+import axios from 'axios';
+
+// Request API.
+axios
+  .post('http://localhost:1337/api/auth/local', {
+    identifier: 'user@strapi.io',
+    password: 'strapiPassword',
+  })
+  .then(response => {
+    // Handle success.
+    console.log('Well done!');
+    console.log('User profile', response.data.user);
+    console.log('User token', response.data.jwt);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
+```
+
+:::
+
+::: tab Postman
+
+If you use **Postman**, set the **body** to **raw** and select **JSON** as your data format:
+
+```json
+{
+  "identifier": "user@strapi.io",
+  "password": "strapiPassword"
+}
+```
+
+If the request is successful you will receive the **user's JWT** in the `jwt` key:  
+
+```json
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
+    "user": {
+        "id": 1,
+        "username": "user",
+        ...
+    }
+}
+``` 
+
+:::
+
+::::
+
 ### Token usage
 
-A jwt token may be used for making permission-restricted API requests. To make an API request as a user, place the jwt token into an `Authorization` header of the GET request. A request without a token, will assume the `public` role permissions by default. Modify the permissions of each user's role in admin dashboard. Authentication failures return a 401 (unauthorized) error.
+The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request. 
+
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin dashboard. 
+
+Authentication failures return a `401 (unauthorized)` error.
 
 #### Usage
 
-- The `token` variable is the `data.jwt` received when logging in or registering.
+The `token` variable is the `data.jwt` received when logging in or registering.
 
 ```js
 import axios from 'axios';
@@ -80,12 +144,13 @@ axios
 ### JWT configuration
 
 You can configure the JWT generation by using the [plugins configuration file](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md).
-We are using [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
+
+Strapi uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
 
 Available options:
 
 - `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#strapi-s-environment-variables).
-- `jwt.expiresIn`: expressed in seconds or a string describing a time span zeit/ms.<br>
+- `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 <code-group>
@@ -133,7 +198,7 @@ export default ({ env }) => ({
 </code-group>
 
 :::warning
-Setting JWT expiry for more than 30 days is **absolutely not recommended** due to massive security concerns.
+Setting JWT expiry for more than 30 days is **not recommended** due to security concerns.
 :::
 
 ### Registration
@@ -165,60 +230,32 @@ axios
   });
 ```
 
-### Login
-
-Submit the user's identifier and password credentials for authentication. When the authentication is successful, the response data returned will have the user's information along with a jwt authentication token.
-
-#### Local
-
-- The `identifier` param can either be an **email** or a **username**.
-
-```js
-import axios from 'axios';
-
-// Request API.
-axios
-  .post('http://localhost:1337/api/auth/local', {
-    identifier: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
-
 ### Providers
 
-Thanks to [Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest), you can easily use OAuth and OAuth2 providers to enable authentication in your application.
+Thanks to [Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest), you can use OAuth and OAuth2 providers to enable authentication in your application.
 
-For better understanding, you may find as follows the description of the login flow. To simplify the explanation, we used `github` as the provider but it works the same for the other providers.
+For better understanding, review the following description of the login flow. We used `github` as the provider but it works the same for other providers.
 
 #### Understanding the login flow
 
-Let's say that strapi's backend is located at: strapi.website.com.
-Let's say that your app frontend is located at: website.com.
+Let's say that:
+* Strapi's backend is located at: `strapi.website.com`, and
+* Your app frontend is located at: `website.com`
 
-1. The user goes on your frontend app (`https://website.com`) and click on your button `connect with Github`.
-2. The frontend redirect the tab to the backend URL: `https://strapi.website.com/api/connect/github`.
+1. The user goes on your frontend app (`https://website.com`) and clicks on your button `connect with Github`.
+2. The frontend redirects the tab to the backend URL: `https://strapi.website.com/api/connect/github`.
 3. The backend redirects the tab to the GitHub login page where the user logs in.
 4. Once done, Github redirects the tab to the backend URL:`https://strapi.website.com/api/connect/github/callback?code=abcdef`.
-5. The backend uses the given `code` to get from Github an `access_token` that can be used for a period of time to make authorized requests to Github to get the user info (the email of the user of example).
-6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`)
-7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/api/auth/github/callback?access_token=eyfvg` that returns the strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address)
+5. The backend uses the given `code` to get an `access_token` from Github that can be used for a period of time to make authorized requests to Github to get the user info.
+6. Then, the backend redirects the tab to the url of your choice with the param `access_token` (example: `http://website.com/connect/github/redirect?access_token=eyfvg`).
+7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/api/auth/github/callback?access_token=eyfvg` that returns the Strapi user profile with its `jwt`. <br> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address).
 8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
 An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
 
 #### Setting up the server url
 
-Before setting up a provider, you need to specify the absolute url of your backend in `server.js`.
+Before setting up a provider you must specify the absolute url of your backend in `server.js`.
 
 **example -** `config/server.js`
 
