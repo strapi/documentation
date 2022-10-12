@@ -135,16 +135,16 @@ export default async (ctx, next) => {
 
 ### Services and Model Lifecycles
 
-Once you are working at a deeper layer than the controllers or middlewares there are dedicated error classes that can be used to throw errors. These classes are extensions of [Node Error Class](https://nodejs.org/api/errors.html#errors_class_error) and are specifically targeted for certain use-cases.
+Once you are working at a deeper layer than the controllers or middlewares there are dedicated error classes that can be used to throw errors. These classes are extensions of [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error) and are specifically targeted for certain use-cases.
 
-These error classes are imported through the `@strapi/utils` package and can be called from several different layers and are not just limited to services and model lifecycles but all examples below are using the service layer. When throwing errors in the model lifecycle layer, it's strongly recommended to use the `ApplicationError` class so that proper error messages are shown in the admin panel.
+These error classes are imported through the `@strapi/utils` package and can be called from several different layers. The following examples use the service layer but error classes are not just limited to services and model lifecycles. When throwing errors in the model lifecycle layer, it's recommended to use the `ApplicationError` class so that proper error messages are shown in the admin panel.
 
 ::: note
 See the [default error classes](#default-error-classes) section for more information on the error classes provided by Strapi.
 :::
 
 ::: details Example: Throwing an error in a service
-This example shows wrapping a [core service](/developer-docs/latest/development/backend-customization/services.md#extending-core-services) and doing a custom validation on the `create` method.
+This example shows wrapping a [core service](/developer-docs/latest/development/backend-customization/services.md#extending-core-services) and doing a custom validation on the `create` method:
 
 <code-group>
 <code-block title="JAVASCRIPT">
@@ -262,12 +262,12 @@ export default {
 
 ### Policies
 
-[Policies](/developer-docs/latest/development/backend-customization/policies.md) are a special type of middleware that are executed before a controller. They are used to check if the user is allowed to perform the action or not. If the user is not allowed to perform the action and a `return false` is used then a generic error will be thrown. As an alternative, you can throw a custom error message using a nested class extensions from the Strapi [Forbidden Error Class, [Application Error Class, and finally the [Node Error Class](https://nodejs.org/api/errors.html#errors_class_error).
+[Policies](/developer-docs/latest/development/backend-customization/policies.md) are a special type of middleware that are executed before a controller. They are used to check if the user is allowed to perform the action or not. If the user is not allowed to perform the action and a `return false` is used then a generic error will be thrown. As an alternative, you can throw a custom error message using a nested class extensions from the Strapi `ForbiddenError` class, `ApplicationError` class (see [Default error classes](#default-error-classes) for both classes), and finally the [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error).
 
 The `PolicyError` class is available from `@strapi/utils` package and accepts 2 parameters:
 
 - the first parameter of the function is the error `message`
-- (optional) the second parameter is the object that will be set as `details` in the response received and it's generally a best practice to set a `policy` key with the name of the policy that threw the error.
+- (optional) the second parameter is the object that will be set as `details` in the response received; a best practice is to set a `policy` key with the name of the policy that threw the error.
 
 ::: details Example: Throwing a PolicyError in a custom policy
 This example shows building a [custom policy](/developer-docs/latest/development/backend-customization/policies.md) that will throw a custom error message and stop the request.
@@ -326,11 +326,11 @@ export default (policyContext, config, { strapi }) => {
 
 :::
 
-### Default Error Classes
+### Default error classes
 
 The default error classes are available from the `@strapi/utils` package and can be imported and used in your code. Any of the default error classes can be extended to create a custom error class. The custom error class can then be used in your code to throw errors.
 
-:::: tabs
+:::: tabs card
 
 ::: tab Application
 
