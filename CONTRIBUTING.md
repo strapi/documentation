@@ -119,6 +119,8 @@ You are now ready to contribute to the Strapi documentation! 🚀
 
 ### Write technical documentation
 
+The Strapi documentation follows the [Google Style Guide](https://developers.google.com/style). The [Highlights](https://developers.google.com/style/highlights) section provides information on tone, structure, and formatting.
+
 For lengthier contributions, we provide general guidelines that can help you write clear and concise documentation:
 
 - The [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) gives an overview of how to structure and write clear documentation.
