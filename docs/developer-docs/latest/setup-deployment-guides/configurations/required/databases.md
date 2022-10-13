@@ -40,7 +40,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`|                    |                   |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.                    | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
