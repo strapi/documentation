@@ -234,7 +234,7 @@ axios
 
 Thanks to [Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest), you can use OAuth and OAuth2 providers to enable authentication in your application.
 
-For better understanding, review the following description of the login flow. We used `github` as the provider but it works the same for other providers.
+For better understanding, review the following description of the login flow. We use `github` as the provider but it works the same for other providers.
 
 #### Understanding the login flow
 
@@ -292,12 +292,12 @@ export default ({ env }) => ({
 </code-group>
 
 :::tip
-Later on you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
+Later you will give this url to your provider. <br> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
 :::
 
 #### Setting up the provider - examples
 
-Instead of a generic explanation, for better understanding, we decided to show an example for each provider.
+Instead of a generic explanation we decided to show an example for each provider.
 
 In the following examples, the frontend app will be the [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react). <br>
 It (the frontend app) will be running on `http://localhost:3000`. <br>
@@ -819,28 +819,28 @@ Now you can make authenticated requests 🎉 More info here: [token usage](#toke
 
 ::: tab Forgot & Reset flow
 
-The flow was thought this way:
+The assumed general flow:
 
-1. The user goes to your **forgotten password page**
-2. The user enters his/her email address
-3. Your forgotten password page sends a request to the backend to send an email with the reset password link to the user
-4. The user receives the email, and clicks on the special link
-5. The link redirects the user to your **reset password page**
-6. The user enters his/her new password
-7. The **reset password page** sends a request to the backend with the new password
-8. If the request contains the code contained in the link at step 3., the password is updated
-9. The user can log in with the new password
+1. The user goes to your **forgotten password page**.
+2. The user enters their email address.
+3. Your forgotten password page sends a request to the backend to send an email with the reset password link to the user.
+4. The user receives the email and clicks on the special link.
+5. The link redirects the user to your **reset password page**.
+6. The user enters their new password.
+7. The **reset password page** sends a request to the backend with the new password.
+8. If the request contains the code contained in the link at step 3, the password is updated.
+9. The user can log in with the new password.
 
 In the following section we will detail steps 3. and 7..
 
 #### Forgotten password: ask for the reset password link
 
-This action sends an email to a user with the link to your own reset password page.
-The link will be enriched with the url param `code` that is needed for the [reset password](#reset-password) at step 7..
+This action sends an email to a user with the link to your reset password page.
+The link will be enriched with the url param `code` that is needed for the [reset password](#reset-password) at step 7.
 
 First, you must specify the url to your reset password page in the admin panel: **Settings > USERS & PERMISSIONS PLUGIN > Advanced Settings > Reset Password Page**.
 
-Then, your **forgotten password page** has to make the following request to your backend.
+Then, your **forgotten password page** has to make the following request to your backend:
 
 ```js
 import axios from 'axios';
@@ -861,9 +861,9 @@ axios
 #### Reset Password: send the new password
 
 This action will update the user password.
-Also works with the [GraphQL Plugin](./graphql.md), with the `resetPassword` mutation.
+This also works with the [GraphQL Plugin](./graphql.md), with the `resetPassword` mutation.
 
-Your **reset password page** has to make the following request to your backend.
+Your **reset password page** has to make the following request to your backend:
 
 ```js
 import axios from 'axios';
@@ -903,7 +903,7 @@ axios.post(
   },
   {
     headers: {
-      Authorization: 'Bearer <user jwt token>',
+      Authorization: 'Bearer <user jwt>',
     },
   }
 );
@@ -919,11 +919,11 @@ axios.post(
 In production, make sure the `url` config property is set. Otherwise the validation link will redirect to `localhost`. More info on the config [here](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 :::
 
-After having registered, if you have set **Enable email confirmation** to **ON**, the user will receive a confirmation link by email. The user has to click on it to validate his/her registration.
+After registering, if you have set **Enable email confirmation** to **ON**, the user will receive a confirmation link by email. The user has to click on it to validate their registration.
 
 _Example of the confirmation link:_ `https://yourwebsite.com/api/auth/email-confirmation?confirmation=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTk0OTgxMTE3LCJleHAiOjE1OTc1NzMxMTd9.0WeB-mvuguMyr4eY8CypTZDkunR--vZYzZH6h6sChFg`
 
-If needed, you can re-send the confirmation email by making the following request.
+If needed you can re-send the confirmation email by making the following request:
 
 ```js
 import axios from 'axios';
@@ -945,9 +945,7 @@ axios
 
 The `user` object is available to successfully authenticated requests.
 
-#### Usage
-
-- The authenticated `user` object is a property of `ctx.state`.
+The authenticated `user` object is a property of `ctx.state`.
 
 ```js
 create: async ctx => {
@@ -964,6 +962,8 @@ create: async ctx => {
   ctx.created(data);
 };
 ```
+
+<!-- Needs to be updated to v4>
 
 ## Adding a new provider (to your project)
 
@@ -1085,12 +1085,11 @@ discord: {
   ]
 },
 ```
-
-<!-- #### Tests -->
+-->
 
 ## Templating emails
 
-By default, this plugin comes with only two templates (reset password and email address confirmation) at the moment. More templates will come later. The templates use Lodash's template() method to populate the variables.
+By default this plugin comes with two templates: reset password and email address confirmation. More templates will come later. The templates use Lodash's `template()` method to populate the variables.
 
 You can update these templates under **Plugins** > **Roles & Permissions** > **Email Templates** tab in the admin panel.
 
@@ -1112,7 +1111,9 @@ You can update these templates under **Plugins** > **Roles & Permissions** > **E
 
 ## Security configuration
 
-JWT tokens can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates one that is stored in `./extensions/users-permissions/config/jwt.js`. This is useful during development but for security reasons it is **recommended** to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
+JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `./extensions/users-permissions/config/jwt.js`. 
+
+This is useful during development but for security reasons it is **recommended** to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
 
 By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
 
@@ -1145,5 +1146,5 @@ export default {
 </code-group>
 
 ::: tip
-You can learn more on configuration in the documentation [here](/developer-docs/latest/setup-deployment-guides/configurations.md).
+You can learn more about configuration [here](/developer-docs/latest/setup-deployment-guides/configurations.md).
 :::
