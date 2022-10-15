@@ -14,7 +14,7 @@ The Content Manager is accessible from ![Content icon](../assets/icons/content.s
 Click the search icon ![Search icon](../assets/icons/search.svg) in the sub navigation to use a text search and find one of your content-types more quickly!
 :::
 
-## Collection types
+## Collection types 
 
 The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](../assets/icons/content.svg) Content Manager sub navigation.
 
