@@ -1,5 +1,6 @@
 ---
 title: Strapi Cloud Deployment - Strapi Developer Docs
+sidebarDepth: 3
 description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html
 ---
@@ -34,40 +35,40 @@ The connected repository can contain multiple Strapi applications. Each Strapi a
 
 1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
 
-![Strapi Cloud login page](../assets/deployment/cloud/login.png)
+    ![Strapi Cloud login page](../assets/deployment/cloud/login.png)
 
 2. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
 
 3. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
 
-![Strapi Cloud Projects page](../assets/deployment/cloud/projects_empty.png)
+    ![Strapi Cloud Projects page](../assets/deployment/cloud/projects_empty.png)
 
 ### Create a project
 
 1. From the **Projects** page, click the **Create Project** button. You are prompted to **Connect with GitHub**.
 
-::: tip
-Connect the GitHub account and/or Organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    ::: tip
+    Connect the GitHub account and/or Organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
 
-You will be redirected to GitHub to authorize Strapi Cloud to access your repository.
-:::
+    You will be redirected to GitHub to authorize Strapi Cloud to access your repository.
+    :::
 
 2. After granting the required access from GitHub, from the **Projects** page select your desired repository to install Strapi Cloud.
 
-![Project Import - Select Repository](../assets/deployment/cloud/import.png)
+    ![Project Import - Select Repository](../assets/deployment/cloud/import.png)
 
 3. Click **Next** to proceed to the Project Set up page and enter the following information:
     * **Project name**: The name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`).
     * **GitHub branch**: The default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository but can be changed via the drop-down.
     * **Deploy on push**: When enabled, this will automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes.
 
-![Project Setup](../assets/deployment/cloud/setup.png)
+    ![Project Setup](../assets/deployment/cloud/setup.png)
 
 4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
     * [**Environment variables**](../configurations/optional/environment.md): Environment variables are used to configure your Strapi app.
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
 
-![Advanced Setup](../assets/deployment/cloud/advanced.png)
+    ![Advanced Setup](../assets/deployment/cloud/advanced.png)
 
 5. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
 
@@ -118,9 +119,9 @@ Each card displays the following information:
 
 From this page you can also trigger a new deployment and access the application using the corresponding buttons.
 
-## Settings
+### Settings
 
-The **Settings** enables you to edit the following details for the project:
+The **Settings** tab enables you to edit the following details for the project:
 
 * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
 * **Production branch**: The branch of the linked repository to use for production deployments.
