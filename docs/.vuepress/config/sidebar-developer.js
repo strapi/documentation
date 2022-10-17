@@ -108,6 +108,11 @@ const developer = [
         initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
         children: [
           {
+            title: "Strapi Cloud",
+            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
+            collapsable: true,
+          },
+          {
             title: 'Hosting Provider Guides',
             path:
               '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
