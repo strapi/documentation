@@ -24,6 +24,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 * A [GitHub](https://github.com) account
 * GitHub repository for your Strapi application(s)
+* Strapi version 4.1+
 
 ::: tip
 The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
