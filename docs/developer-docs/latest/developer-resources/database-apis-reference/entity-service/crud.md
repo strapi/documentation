@@ -8,6 +8,18 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) is built on top of the the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) and uses it to perform CRUD operations on entities.
 
+
+The `uid` parameter used in function calls for this API is a `string` built with the following format: `[category]::[content-type]` where `category` is one of: `admin`, `plugin` or `api`.
+
+Examples:
+- A correct `uid` to get users of the Strapi admin panel is `admin::user`.
+- A possible `uid` for the Upload plugin could be `plugin::upload.file`.
+- As the `uid`s for user-defined custom content-types follow the `api::[content-type]` syntax, if a content-type `article` exists, it is referenced by `api::article.article`.
+
+::: tip
+Run the [`strapi content-types:list`](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-content-types-list) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
+:::
+
 ## findOne()
 
 Finds the first entry matching the parameters.
