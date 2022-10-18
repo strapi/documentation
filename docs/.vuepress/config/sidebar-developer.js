@@ -510,7 +510,7 @@ const developer = [
         'New WYSIWYG field in admin panel',
       ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
-      //['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
+      
     ],
   },
 ];
