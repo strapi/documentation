@@ -1089,7 +1089,7 @@ discord: {
 
 ## Templating emails
 
-By default this plugin comes with two templates: reset password and email address confirmation. More templates will come later. The templates use Lodash's `template()` method to populate the variables.
+By default this plugin comes with two templates: reset password and email address confirmation. The templates use Lodash's `template()` method to populate the variables.
 
 You can update these templates under **Plugins** > **Roles & Permissions** > **Email Templates** tab in the admin panel.
 
