@@ -304,3 +304,16 @@ Additional guides for optional software additions that compliment or improve the
 		</template>
 	</InstallLink>
 </div>
+
+<div>
+	<InstallLink link="deployment/optional-software/process-manager.html">
+    <template #icon>
+    <!-- <img src="assets/deployment/caddy-monotone.svg"/> -->
+    PM2
+    </template>
+		<template #title> PM2 Process Manager</template>
+		<template #description>
+			Overview of using the PM2 process manager with Strapi.
+		</template>
+	</InstallLink>
+</div>
