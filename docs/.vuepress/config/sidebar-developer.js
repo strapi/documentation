@@ -497,7 +497,6 @@ const developer = [
       // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
       // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
       // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
-      ['/developer-docs/latest/guides/draft', 'Draft system'],
       // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
       // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
       ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
