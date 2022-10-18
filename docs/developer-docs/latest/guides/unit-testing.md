@@ -90,11 +90,7 @@ module.exports = ({ env }) => ({
       filename: env('DATABASE_FILENAME', '.tmp/test.db'),
     },
     useNullAsDefault: true,
-    debug: false,
-    pool: {
-      min: 0,
-      max: 1
-    }
+    debug: false
   },
 });
 ```
