@@ -14,9 +14,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/process-manage
 
 # Process manager
 
-Start a Strapi application using the [PM2](https://pm2.keymetrics.io/) process manager. Process managers allow you to keep your Strapi application running and to reload it without downtime. The following documentation covers: 
+Start a Strapi application using the [PM2](https://pm2.keymetrics.io/) process manager. Process managers allow you to keep your Strapi application running and to reload it without downtime. The following documentation covers:
 
-- installation,
+- installing PM2,
+- starting strapi using a `server.js` file,
+- starting strapi using the `strapi` command, 
+- starting and managing strapi using an `ecosystem.config.js` file.
 
 
 
@@ -42,7 +45,7 @@ npm install pm2 -g
 
 ## Basic usage
 
-There are multiple approaches to starting an application with the PM2 process manager. 
+There are multiple approaches to starting an application with the PM2 process manager.
 
 ### Starting with server.js file
 
@@ -94,11 +97,30 @@ You can also start your process manager using the `yarn start` command.
 
 ## Using PM2 with cloud hosting providers
 
-PM2 lets you create a config file to save all information to start your server properly at anytime.
+A PM2 configuration file allows you to save the information to start your server properly at anytime. This is commonly used for cloud hosting providers, where you might not have access to a terminal window to start the server. To use a configuration file:
 
-By running `pm2 init` it will create an `ecosystem.config.js` in your application.
+1. Run `pm2 init` at the application root to create an `ecosystem.config.js` file.
+2. Replace the `ecosystem.config.js` file content with the following code example:
 
-Then replace the content of this file by the following code.
+<code-group>
+
+<code-block title="YARN">
+
+```js
+module.exports = {
+  apps: [
+    {
+      name: 'app',
+      script: 'yarn',
+      args: 'start',
+    },
+  ],
+};
+```
+
+</code-block>
+
+<code-block title="NPM">
 
 ```js
 module.exports = {
@@ -112,6 +134,11 @@ module.exports = {
 };
 ```
 
-And then run `pm2 start ecosystem.config.js` to start the pm2 process.
+</code-block>
+</code-group>
 
-The [PM2 ecosystem file documentation](https://pm2.keymetrics.io/docs/usage/application-declaration/) provides all of the configuration options. 
+3. Run `pm2 start ecosystem.config.js` to start the pm2 process.
+
+::: note
+The `ecosystem.config.js` code example is the minimum configuration. The [PM2 ecosystem file documentation](https://pm2.keymetrics.io/docs/usage/application-declaration/) provides all of the configuration options.
+:::
