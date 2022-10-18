@@ -321,6 +321,7 @@ const developer = [
       },
       ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
       ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+      ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
       ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
       {
         title: 'Integrations',
@@ -509,7 +510,7 @@ const developer = [
         'New WYSIWYG field in admin panel',
       ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
-      ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
+      //['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
     ],
   },
 ];
