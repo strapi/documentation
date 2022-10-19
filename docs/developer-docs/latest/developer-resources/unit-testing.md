@@ -7,8 +7,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.h
 
 # Unit testing
 
-!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
-
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
 ::: tip
@@ -76,32 +74,23 @@ Test framework must have a clean empty environment to perform valid test and als
 
 Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) (switching `NODE_ENV` to `test`)
 so we need to create a special environment setting for this purpose.
-Create a new config for test env `./config/env/test/database.json` and add the following value `"filename": ".tmp/test.db"` - the reason of that is that we want to have a separate sqlite database for tests, so our test will not touch real data.
+Create a new config for test env `./config/env/test/database.js` and add the following value `"filename": ".tmp/test.db"` - the reason of that is that we want to have a separate sqlite database for tests, so our test will not touch real data.
 This file will be temporary, each time test is finished, we will remove that file that every time tests are run on the clean database.
 The whole file will look like this:
 
-**Path —** `./config/env/test/database.json`
+**Path —** `./config/env/test/database.js`
 
-```json
-{
-  "defaultConnection": "default",
-  "connections": {
-    "default": {
-      "connector": "bookshelf",
-      "settings": {
-        "client": "sqlite",
-        "filename": ".tmp/test.db"
-      },
-      "options": {
-        "useNullAsDefault": true,
-        "pool": {
-          "min": 0,
-          "max": 1
-        }
-      }
-    }
-  }
-}
+```js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: env('DATABASE_FILENAME', '.tmp/test.db'),
+    },
+    useNullAsDefault: true,
+    debug: false
+  },
+});
 ```
 
 ### Strapi instance
@@ -130,7 +119,7 @@ async function setupStrapi() {
 }
 
 async function cleanupStrapi() {
-  const dbSettings = strapi.config.get("database.connections.default.settings");
+  const dbSettings = strapi.config.get("database.connection");
 
   //close server to release the db-file
   await strapi.server.httpServer.close();
@@ -139,8 +128,8 @@ async function cleanupStrapi() {
   await strapi.db.connection.destroy();
 
   //delete test database after all tests have completed
-  if (dbSettings && dbSettings.filename) {
-    const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
+  if (dbSettings && dbSettings.connection && dbSettings.connection.filename) {
+    const tmpDbFile = dbSettings.connection.filename;
     if (fs.existsSync(tmpDbFile)) {
       fs.unlinkSync(tmpDbFile);
     }
