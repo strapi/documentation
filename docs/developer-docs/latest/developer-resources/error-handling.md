@@ -61,7 +61,7 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 ## Throwing errors
 
-### Controllers & Middlewares
+### Controllers and middlewares
 
 The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [middleware](/developer-docs/latest/development/backend-customization/) respond with the correct status and body.
 
@@ -133,7 +133,7 @@ export default async (ctx, next) => {
 </code-block>
 </code-group>
 
-### Services and Model Lifecycles
+### Services and models lifecycles
 
 Once you are working at a deeper layer than the controllers or middlewares there are dedicated error classes that can be used to throw errors. These classes are extensions of [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error) and are specifically targeted for certain use-cases.
 
