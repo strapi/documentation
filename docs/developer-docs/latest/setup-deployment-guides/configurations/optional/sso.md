@@ -207,7 +207,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GoogleStrategy from "passport-google-oauth2";
+import {Strategy as GoogleStrategy } from "passport-google-oauth2";
 
 export default ({ env }) => ({
   auth: {
@@ -316,7 +316,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GithubStrategy from "passport-github2";
+import { Strategy as GithubStrategy } from "passport-github2";
 
 export default ({ env }) => ({
   auth: {
@@ -428,7 +428,8 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import DiscordStrategy from "passport-discord";
+import { Strategy as DiscordStrategy } from "passport-discord";
+
 
 export default ({ env }) => ({
   auth: {
@@ -544,7 +545,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import AzureAdOAuth2Strategy from "passport-azure-ad-oauth2";
+import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
 import jwt from "jsonwebtoken";
 
 export default ({ env }) => ({
@@ -664,7 +665,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import KeyCloakStrategy from "passport-keycloak-oauth2-oidc";
+import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
 
 export default ({ env }) => ({
   auth: {
@@ -774,7 +775,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20")
+import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
 
 export default ({ env }) => ({
   auth: {
