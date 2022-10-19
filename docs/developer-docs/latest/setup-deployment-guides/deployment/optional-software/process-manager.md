@@ -18,10 +18,10 @@ Start a Strapi application using the [PM2](https://pm2.keymetrics.io/) process m
 
 - installing PM2,
 - starting strapi using a `server.js` file,
-- starting strapi using the `strapi` command, 
+- starting strapi using the `strapi` command,
 - starting and managing strapi using an `ecosystem.config.js` file.
 
-
+The appropriate procedure for starting PM2 depends on the hosting provider and application configuration.
 
 ## Install PM2
 
@@ -43,11 +43,10 @@ npm install pm2 -g
 
 </code-group>
 
-## Basic usage
 
 There are multiple approaches to starting an application with the PM2 process manager.
 
-### Starting with server.js file
+## Starting PM2 with a `server.js` file
 
 The basic usage to start an application with PM2 is to run a command such as `pm2 start server.js`. To configure and run your application:
 
@@ -84,7 +83,7 @@ TypeScript projects require additional code in the `server.js` file to identify 
 
 3. Start the server by running `pm2 start server.js` in the project root directory.
 
-### Starting with strapi command
+## Starting PM2 with the `strapi` command
 
 By default there are 2 important commands.
 
@@ -95,7 +94,7 @@ You can also start your process manager using the `yarn start` command.
 
 `pm2 start npm --name app -- run start`
 
-## Using PM2 with cloud hosting providers
+## Starting and configuring PM2 with a `config.js` file
 
 A PM2 configuration file allows you to save the information to start your server properly at anytime. This is commonly used for cloud hosting providers, where you might not have access to a terminal window to start the server. To use a configuration file:
 
@@ -137,7 +136,7 @@ module.exports = {
 </code-block>
 </code-group>
 
-3. Run `pm2 start ecosystem.config.js` to start the pm2 process.
+3. Run `pm2 start ecosystem.config.js` to start the PM2 process.
 
 ::: note
 The `ecosystem.config.js` code example is the minimum configuration. The [PM2 ecosystem file documentation](https://pm2.keymetrics.io/docs/usage/application-declaration/) provides all of the configuration options.
