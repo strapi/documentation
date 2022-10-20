@@ -52,7 +52,6 @@ npm install better-sqlite3 --save-dev
 </code-block>
 </code-group>
 
-
 2. Add `test` to the `package.json` file `scripts` section:
 
 ``` json{6}
@@ -65,11 +64,13 @@ npm install better-sqlite3 --save-dev
   },
 ```
 
-3. Add a `jest` section to the `package.json file with the following code:
+3. Add a `jest` section to the `package.json` file with the following code:
 
 ```json
+//path: ./package.json
+
   "jest": {
-    "testPathIgnorePatterns": [
+    "testPathIgnorePatterns": [ //informs Jest to ignore these directories.
       "/node_modules/",
       ".tmp",
       ".cache"
@@ -78,9 +79,9 @@ npm install better-sqlite3 --save-dev
   }
 ```
 
-Those will inform `Jest` not to look for test inside the folder where it shouldn't.
-
 ## Create a testing environment
+
+### Create a database configuration file
 
 The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database database.
 
@@ -105,14 +106,16 @@ module.exports = ({ env }) => ({
 });
 ```
 
-3. 
-
-### Strapi instance
+### Create a Strapi instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
 basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](process-manager.md).
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
+
+1. Create a `tests` directory at the application root. 
+2. Create a `helpers` directory inside `tests`.
+3. Create the file `strapi.js` in the `helpers` directory and add the following code:
 
 ```js
 //path: ./tests/helpers/strapi.js
@@ -152,9 +155,9 @@ async function cleanupStrapi() {
 module.exports = { setupStrapi, cleanupStrapi };
 ```
 
-## Test strapi instance
+## Test the strapi instance
 
-We need a main entry file for our tests, one that will also test our helper file.
+You need a main entry file for the tests, one that will also test the helper file. To do this create `app.test.js` in the `tests` directory and add the following code:
 
 ```js
 //path: ./tests/app.test.js
@@ -174,9 +177,6 @@ it("strapi is defined", () => {
   expect(strapi).toBeDefined();
 });
 ```
-
-
-
 
 Run the unit test to confirm it is working correctly:
 
