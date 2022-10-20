@@ -2,13 +2,13 @@
 
 Strapi is an open-source project administered by [the Strapi team](https://strapi.io/company). We appreciate your interest and efforts to contribute to Strapi.
 
-All efforts to contribute are highly appreciated, we recommend you talk to a maintainer prior to spending a lot of time making a pull request that may not align with the project roadmap. Please note that contributions, pull requests, and issues should be written in English.
+All contributions are highly appreciated, we recommend you talk to a maintainer prior to investing a lot of time in a pull request that may not align with the project roadmap. Please note that contributions, pull requests, and issues should be written in English.
 
 ## Open Development & Community Driven
 
 Strapi is an open-source project. See the [LICENSE](https://github.com/strapi/documentation/blob/main/LICENSE) file for licensing information. All of the work is available on GitHub.
 
-The core team and the contributors send pull requests which go through the same validation process.
+The core team and contributors submit pull requests that go through the same validation process.
 
 ## Code of Conduct
 
@@ -16,14 +16,12 @@ This project and everyone participating in it are governed by the [Strapi Code o
 
 ## Documentation Requests
 
-Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template. If you are requesting documentation, please feel free to open a pull request.
+Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
 
 ## Bugs
 
-Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. Before submitting an issue:
+Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
 
-- Check for existing pull requests that may address the same issue.
-- Check for related open issues, if so, please provide context on the existing issue.
 - Follow the issue template and fill out as much information as you can.
 - Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
   
@@ -121,10 +119,7 @@ You are now ready to contribute to the Strapi documentation! 🚀
 
 The Strapi documentation follows the [Google Style Guide](https://developers.google.com/style). The [Highlights](https://developers.google.com/style/highlights) section provides information on tone, structure, and formatting.
 
-For lengthier contributions, we provide general guidelines that can help you write clear and concise documentation:
-
-- The [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) gives an overview of how to structure and write clear documentation.
-- The [Strapi Documentation Style Guide](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide) has formatting guidelines and how to implement formatting in markdown files.
+The Strapi [Formatting Style Guide](https://github.com/strapi/documentation/blob/main/formatting_style_guide.pdf) has formatting guidelines and how to implement formatting in markdown files.
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information) or use the _Create a new branch for this commit and start a pull request_ option if you are using the GitHub web browser interface (see [the GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)).
 
