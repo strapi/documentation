@@ -113,9 +113,8 @@ basically we want to get instance of strapi app as object, similar like creating
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 
-**Path —** `./tests/helpers/strapi.js`
-
 ```js
+//path: ./tests/helpers/strapi.js
 const Strapi = require("@strapi/strapi");
 const fs = require("fs");
 
@@ -152,13 +151,13 @@ async function cleanupStrapi() {
 module.exports = { setupStrapi, cleanupStrapi };
 ```
 
-### Test strapi instance
+## Test strapi instance
 
 We need a main entry file for our tests, one that will also test our helper file.
 
-**Path —** `./tests/app.test.js`
-
 ```js
+//path: ./tests/app.test.js
+
 const fs = require('fs');
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
@@ -178,7 +177,7 @@ it("strapi is defined", () => {
 
 
 
-Run the unit test to confirm it is working correctly: 
+Run the unit test to confirm it is working correctly:
 
 <code-group>
 <code-block title=YARN>
@@ -187,7 +186,7 @@ Run the unit test to confirm it is working correctly:
 yarn test
 ```
 </code-block>
-<code-block>
+<code-block title=NPM>
 
 ```sh
 npm run test
@@ -195,18 +194,20 @@ npm run test
 </code-block>
 </code-group>
 
+The test output in your terminal should be the following:
+
 ```bash
-yarn run v1.13.0
-$ jest
+yarn run v1.22.18
+$ jest --forceExit --detectOpenHandles
  PASS  tests/app.test.js
-  ✓ strapi is defined (2 ms)
+  ✓ strapi is defined (1 ms)
 
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        4.187 s
+Time:        2.043 s, estimated 3 s
 Ran all test suites.
-✨  Done in 5.73s.
+✨  Done in 2.90s.
 ```
 
 :::tip
@@ -214,7 +215,7 @@ If you receive a timeout error for Jest, please add the following line right bef
 :::
 
 
-### Testing basic endpoint controller.
+## Testing basic endpoint controller
 
 ::: tip
 In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) section.
@@ -272,16 +273,16 @@ Ran all test suites.
 If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
 :::
 
-### Testing `auth` endpoint controller.
+## Testing `auth` endpoint controller
 
 In this scenario we'll test authentication login endpoint with two tests
 
 1. Test `/auth/local` that should login user and return `jwt` token
 2. Test `/users/me` that should return users data based on `Authorization` header
 
-**Path —** `./tests/user/index.js`
-
 ```js
+// path: `./tests/user/index.js`
+
 const request = require('supertest');
 
 // user mock data
