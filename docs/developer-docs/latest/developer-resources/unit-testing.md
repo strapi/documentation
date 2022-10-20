@@ -18,30 +18,44 @@ In this example we will use  Testing Framework with a focus on simplicity and
 Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
 :::
 
-## Install test tools
+## Install and configure the test tools
 
 `Jest` contains a set of guidelines or rules used for creating and designing test cases - a combination of practices and tools that are designed to help testers test more efficiently.
 
-`Supertest` allows you to test all the `api` routes as they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
+`Supertest` allows you to test all the `api` routes as if they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
 
-`sqlite3` is used to create an on-disk database that is created and deleted between tests.
+`better-sqlite3` is used to create an on-disk database that is created and deleted between tests.
+<!-- TODO rewrite this intro section-->
+**Procedure**
 
-:::: tabs card
+1. Add the tools to the dev dependencies:
 
-::: tab yarn
-`yarn add --dev jest supertest sqlite3`
-:::
+<code-group>
+<code-block title=YARN>
 
-::: tab npm
-`npm install jest supertest sqlite3 --save-dev`
-:::
-::::
+```sh
+yarn add jest --dev
+yarn add supertest --dev 
+yarn add better-sqlite3 --dev 
+  ```
 
-Once this is done add this to `package.json` file
+  </code-block>
 
-add `test` command to `scripts` section
+<code-block title=NPM>
 
-```json
+```sh
+npm install jest --save-dev
+npm install supertest --save-dev
+npm install better-sqlite3 --save-dev
+```
+
+</code-block>
+</code-group>
+
+
+2. Add `test` to the `package.json` file `scripts` section:
+
+``` json{6}
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -51,7 +65,7 @@ add `test` command to `scripts` section
   },
 ```
 
-and add those line at the bottom of file
+3. Add a `jest` section to the `package.json file with the following code:
 
 ```json
   "jest": {
@@ -66,21 +80,18 @@ and add those line at the bottom of file
 
 Those will inform `Jest` not to look for test inside the folder where it shouldn't.
 
-## Introduction
+## Create a testing environment
 
-### Testing environment
+The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database database.
 
-Test framework must have a clean empty environment to perform valid test and also not to interfere with current database.
+Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) by switching `NODE_ENV` to `test`.
 
-Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) (switching `NODE_ENV` to `test`)
-so we need to create a special environment setting for this purpose.
-Create a new config for test env `./config/env/test/database.js` and add the following value `"filename": ".tmp/test.db"` - the reason of that is that we want to have a separate sqlite database for tests, so our test will not touch real data.
-This file will be temporary, each time test is finished, we will remove that file that every time tests are run on the clean database.
-The whole file will look like this:
-
-**Path —** `./config/env/test/database.js`
+1. Create a new database configuration file for the test env: `./config/env/test/database.js`.
+2. add the following code to `./config/env/test/database.js:
 
 ```js
+// path: ./config/env/test/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: 'sqlite',
@@ -92,6 +103,8 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+3. 
 
 ### Strapi instance
 
@@ -162,7 +175,25 @@ it("strapi is defined", () => {
 });
 ```
 
-Actually this is all we need for writing unit tests. Just run `yarn test` and see a result of your first test
+
+
+
+Run the unit test to confirm it is working correctly: 
+
+<code-group>
+<code-block title=YARN>
+
+```sh
+yarn test
+```
+</code-block>
+<code-block>
+
+```sh
+npm run test
+```
+</code-block>
+</code-group>
 
 ```bash
 yarn run v1.13.0
