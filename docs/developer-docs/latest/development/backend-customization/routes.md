@@ -414,7 +414,8 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
         },
       ]
     }
-  }
+  },
+  only: ['find', 'findOne'],
 });
 ```
 
@@ -430,7 +431,7 @@ import { factories } from '@strapi/strapi';
 export default factories.createCoreRouter('api::restaurant.restaurant', {
   config: {
     find: {
-      middlwares: [
+      middlewares: [
         // point to a registered middleware
         'middleware-name', 
 
@@ -443,7 +444,8 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
         },
       ]
     }
-  }
+  },
+  only: ['find', 'findOne'],
 });
 ```
 
