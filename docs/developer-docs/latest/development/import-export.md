@@ -18,3 +18,7 @@ details here.
 details here.
 
 `yarn strapi export`
+
+## Transfer between environments
+
+## Activate or deactivate maintenance mode
