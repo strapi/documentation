@@ -190,7 +190,7 @@ yarn test
 <code-block title=NPM>
 
 ```sh
-npm run test
+npm test
 ```
 </code-block>
 </code-group>
@@ -216,7 +216,7 @@ If you receive a timeout error for Jest, please add the following line right bef
 :::
 
 
-## Testing basic endpoint controller
+## Testing an endpoint controller
 
 ::: tip
 In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) section.
