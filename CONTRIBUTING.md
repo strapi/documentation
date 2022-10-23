@@ -2,13 +2,13 @@
 
 Strapi is an open-source project administered by [the Strapi team](https://strapi.io/company). We appreciate your interest and efforts to contribute to Strapi.
 
-All efforts to contribute are highly appreciated, we recommend you talk to a maintainer prior to spending a lot of time making a pull request that may not align with the project roadmap. Please note that contributions, pull requests, and issues should be written in English.
+All efforts to contribute are highly appreciated. We recommend you talk to a maintainer prior to spending a lot of time making a pull request that may not align with the project roadmap. Please note that contributions, pull requests, and issues should be written in English.
 
 ## Open Development & Community Driven
 
 Strapi is an open-source project. See the [LICENSE](https://github.com/strapi/documentation/blob/main/LICENSE) file for licensing information. All of the work is available on GitHub.
 
-The core team and the contributors send pull requests which go through the same validation process.
+The core team and the contributors send pull requests that go through the same validation process.
 
 ## Code of Conduct
 
@@ -16,16 +16,16 @@ This project and everyone participating in it are governed by the [Strapi Code o
 
 ## Documentation Requests
 
-Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template. If you are requesting documentation, please feel free to open a pull request.
+Requests for new documentation are strongly encouraged, including not only new additions but also changes or additional information on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template. If you are requesting documentation, please feel free to open a pull request.
 
 ## Bugs
 
 Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. Before submitting an issue:
 
 - Check for existing pull requests that may address the same issue.
-- Check for related open issues, if so, please provide context on the existing issue.
+- Check for related open issues. If so, please provide context on the existing issue.
 - Follow the issue template and fill out as much information as you can.
-- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+- Verify the issue is only with the Strapi documentation. Code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
   
 Technical questions should be asked using the following resources:
 
@@ -39,14 +39,14 @@ Technical questions should be asked using the following resources:
 The core team reviews community pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
 - clicking the `Improve this page` link at the bottom of any documentation page to directly edit in GitHub,
-- forking the `documentation` repository and working locally.
+- working locally by forking the `documentation`.
 
 ### Setup and write locally
 
 The following procedure allows you to work locally on the Strapi documentation.
 
 1. Fork the `documentation` repository.
-2. Clone your forked `documentation` repository.
+2. Clone the `documentation` repository that you forked.
     
     ```bash
     git clone git@github.com:yourgithubname/documentation.git
@@ -62,7 +62,7 @@ The following procedure allows you to work locally on the Strapi documentation.
     cd documentation/docs/user-docs
     ```
     
-4. Choose the branch from which to work: either `main` for a contribution on the current version of Strapi or `v[x]` for a contribution on a previous version of Strapi.
+4. Choose a branch to work on, either `main` for contributions on the current Strapi version or `v[x]` for contributions to previous versions of Strapi.
     
     ```bash
     #current version of Strapi (i.e. v4)

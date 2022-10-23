@@ -3,7 +3,7 @@
     <img src="./images/logo.png" width="318px" alt="Strapi logo" />
   </a>
 </p>
-<h3 align="center">API creation made simple, secure and fast.</h3>
+<h3 align="center">API creation made simple, secure, and fast.</h3>
 <p align="center">The most advanced open-source headless CMS to build powerful APIs with no effort.</p>
 <br />
 
@@ -13,16 +13,16 @@ If you are looking for the Strapi code, please see the [Strapi Monorepo](https:/
 
 ---
 
-Strapi is a free and open-source headless CMS delivering your content anywhere you need.
+Strapi is a free and open-source headless CMS that delivers your content wherever you need it.
 
 - **Keep control over your data**. With Strapi, you know where your data is stored, and you keep full control at all times.
-- **Self-hosted**. You can host and scale Strapi projects the way you want. You can choose any hosting platform you want: AWS, Netlify, Heroku, a VPS, or a dedicated server. You can scale as you grow, 100% independent.
+- **Self-hosted**. You can host and scale Strapi projects the way you want. You can choose any hosting platform you want: AWS, Netlify, Heroku, a VPS, or a dedicated server. You can scale as you grow, 100% independently.
 - **Database agnostic**. You can choose the database you prefer. Strapi works with SQL databases: PostgreSQL, MySQL, MariaDB, and SQLite.
 - **Customizable**. You can quickly build your logic by fully customizing APIs, routes, or plugins to fit your needs perfectly.
 
 ## Documentation Contribution Requirements
 
-The following are required if you are submitting pull requests to the documentation. For more information on how to contribute please see our [contribution guide](./CONTRIBUTING.md)
+The following are required if you are submitting pull requests for the documentation. For more information on how to contribute please see our [contribution guide](./CONTRIBUTING.md)
 
 - NodeJS >=14.19.1 <=18.x.x
 - NPM >= 6.x
