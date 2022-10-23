@@ -39,7 +39,7 @@ Technical questions should be asked using the following resources:
 The core team reviews community pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
 - clicking the `Improve this page` link at the bottom of any documentation page to directly edit in GitHub,
-- working locally by forking the `documentation`.
+- working locally by forking the `documentation` repository.
 
 ### Setup and write locally
 
