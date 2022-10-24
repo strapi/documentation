@@ -26,26 +26,40 @@ Please note that this guide will not work if you are on Windows using the SQLite
 
 `better-sqlite3` is used to create an on-disk database that is created and deleted between tests.
 <!-- TODO rewrite this intro section-->
-**Procedure**
+
+### Install for JavaScript applications
 
 1. Add the tools to the dev dependencies:
 
 <code-group>
-<code-block title=YARN>
+<code-block title=JAVASCRIPT>
 
 ```sh
 yarn add jest --dev
 yarn add supertest --dev 
 yarn add better-sqlite3 --dev 
-  ```
 
-  </code-block>
+OR
 
-<code-block title=NPM>
-
-```sh
 npm install jest --save-dev
 npm install supertest --save-dev
+npm install better-sqlite3 --save-dev
+  ```
+  
+  </code-block>
+
+<code-block title=TYPESCRIPT>
+
+<!-- TODO: test the TS commands-->
+```sh
+yarn add jest ts-jest @types/jest --dev
+yarn add supertest --dev 
+yarn add better-sqlite3 --dev 
+
+OR
+
+npm install jest ts-jest @types/jest --save-dev
+npm install @types/supertest --save-dev
 npm install better-sqlite3 --save-dev
 ```
 
@@ -81,7 +95,9 @@ npm install better-sqlite3 --save-dev
 
 ## Create a testing environment
 
-### Create a database configuration file
+The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. A testing database and a testing Strapi instance are necessary to successfully run unit tests.
+
+### Create a test environment database configuration file
 
 The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database database.
 
@@ -109,7 +125,7 @@ module.exports = ({ env }) => ({
 ### Create a Strapi instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
-basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](process-manager.md).
+basically we want to get instance of strapi app as an object, similar to creating an instance for the [process manager](process-manager.md).
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 
