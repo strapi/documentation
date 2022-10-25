@@ -129,7 +129,7 @@ basically we want to get instance of strapi app as an object, similar to creatin
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 
-1. Create a `tests` directory at the application root. 
+1. Create a `tests` directory at the application root.
 2. Create a `helpers` directory inside `tests`.
 3. Create the file `strapi.js` in the `helpers` directory and add the following code:
 
@@ -150,7 +150,7 @@ async function setupStrapi() {
   return instance;
 }
 
-async function cleanupStrapi() {
+async function teardownStrapi() {
   const dbSettings = strapi.config.get("database.connection");
 
   //close server to release the db-file
@@ -168,8 +168,12 @@ async function cleanupStrapi() {
   }
 }
 
-module.exports = { setupStrapi, cleanupStrapi };
+module.exports = { setupStrapi, teardownStrapi };
 ```
+
+::: note
+The command to close the database connection is not working, which results in an open handle in Jest. The `--force-exit` flag temporarily solves this problem.
+:::
 
 ## Test the strapi instance
 
@@ -179,7 +183,7 @@ You need a main entry file for the tests, one that will also test the helper fil
 //path: ./tests/app.test.js
 
 const fs = require('fs');
-const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
+const { setupStrapi, teardownStrapi } = require("./helpers/strapi");
 
 beforeAll(async () => {
   await setupStrapi();
