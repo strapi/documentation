@@ -299,7 +299,7 @@ This test requires a public endpoint. Create an API using the `strapi generate` 
 
 The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string.
 
-1. Create a test file `publicRoute.js` in `./tests`. 
+1. Create a test file `publicRoute.js` in `./tests`.
 2. Add the following code to `publicRoute.js`:
 
     ```js
@@ -333,12 +333,15 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
 If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
 :::
 
-### Testing `auth` endpoint controller
+### test an authenticated API endpoint
 
 In this scenario we'll test authentication login endpoint with two tests
 
-1. Test `/auth/local` that should login user and return `jwt` token
-2. Test `/users/me` that should return users data based on `Authorization` header
+- Test `/auth/local` that should login user and return `jwt` token
+- Test `/users/me` that should return users data based on `Authorization` header
+
+<!--This code example does not work as-is-->
+
 
 ```js
 // path: `./tests/user/index.js`
