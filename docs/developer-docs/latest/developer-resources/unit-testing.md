@@ -235,6 +235,13 @@ Ran all test suites.
 If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as you need.
 :::
 
+## Use the testing environment
+
+<!--TODO: little intro here-->
+
+## Run a unit test
+
+
 
 ## Testing an endpoint controller
 
