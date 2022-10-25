@@ -23,7 +23,7 @@ Customizing the admin panel is helpful to better reflect your brand identity or 
 - The [access URL, host and port](#access-url) can be modified through the server configuration.
 - The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
 - The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
-- The [forgotten password email](#forgotten-password-email) can be customized with a template and variables.
+- The [email templates](#email-templates) should be customized using the Users and Permissions plugin.
 - The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
 ### Access URL
@@ -157,7 +157,7 @@ The `config` object accepts the following parameters:
 | `locales`       | Array of Strings | Defines availables locales (see [updating locales](/developer-docs/latest/development/admin-customization.md#locales)) |
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
-| `theme`         | Object           | Overrides or [extends the theme](#theme-extension)                                                                                          |
+| `theme.light` and `theme.dark` | Object           | [Overwrite theme properties](#theme-extension) for Light and Dark modes                                                         |
 | `tutorials`     | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
 | `notifications` | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
 
@@ -192,14 +192,22 @@ export default {
     },
     // Override or extend the theme
     theme: {
-      colors: {
-        primary100: '#f6ecfc',
-        primary200: '#e0c1f4',
-        primary500: '#ac73e6',
-        primary600: '#9736e8',
-        primary700: '#8312d1',
-        danger700: '#b72b1a'
+      // overwrite light theme properties
+      light: {
+        colors: {
+          primary100: '#f6ecfc',
+          primary200: '#e0c1f4',
+          primary500: '#ac73e6',
+          primary600: '#9736e8',
+          primary700: '#8312d1',
+          danger700: '#b72b1a'
+        },
       },
+      
+      // overwrite dark theme properties
+      dark: {
+         // ...
+      }
     },
     // Extend the translations
     translations: {
@@ -503,14 +511,19 @@ To disable notifications about new Strapi releases, set the `config.notification
 
 #### Theme extension
 
-To extend the theme, use the `config.theme` key.
+Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
+
+To extend the theme, use either:
+
+- the `config.theme.light` key for the Light mode
+- the `config.theme.dark` key for the Dark mode
 
 ::: strapi Strapi Design System
-The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme` key in `./admin/src/app.js`. The [Strapi Design System](https://design-system.strapi.io/) is fully customizable and has a dedicated [StoryBook](https://design-system-git-main-strapijs.vercel.app) documentation.
+The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The [Strapi Design System](https://design-system.strapi.io/) is fully customizable and has a dedicated [StoryBook](https://design-system-git-main-strapijs.vercel.app) documentation.
 :::
 
-::: note
-Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/latest/getting-started/introduction.md#setting-up-your-administrator-profile)), however custom theme extension is only applied for Light mode. When choosing Dark mode for a Strapi application, theme customizations are ignored.
+::: caution
+The former syntax for `config.theme` without `light` or `dark` keys is deprecated and will be removed in the next major release. We encourage you to update your custom theme to use the new syntax that supports light and dark modes.
 :::
 
 ### WYSIWYG editor
@@ -554,92 +567,9 @@ export default {
 </code-group>
 
 
-### 'Forgotten password' email
+### Email templates
 
-To customize the 'Forgotten password' email, provide your own template (formatted as a [lodash template](https://lodash.com/docs/4.17.15#template)).
-
-The template will be compiled with the following variables: `url`, `user.email`, `user.username`, `user.firstname`, `user.lastname`.
-
-**Example**:
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-// path: ./config/admin.js
-
-const forgotPasswordTemplate = require('./email-templates/forgot-password');
-
-module.exports = ({ env }) => ({
-  // ...
-  forgotPassword: {
-    from: 'support@mywebsite.fr',
-    replyTo: 'support@mywebsite.fr',
-    emailTemplate: forgotPasswordTemplate,
-  },
-  // ...
-});
-```
-
-```js
-// path: ./config/email-templates/forgot-password.js
-
-const subject = `Reset password`;
-
-const html = `<p>Hi <%= user.firstname %></p>
-<p>Sorry you lost your password. You can click here to reset it: <%= url %></p>`;
-
-const text = `Hi <%= user.firstname %>
-Sorry you lost your password. You can click here to reset it: <%= url %>`;
-
-module.exports = {
-  subject,
-  text,
-  html,
-};
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-// path: ./config/admin.ts
-
-import forgotPasswordTemplate from './email-templates/forgot-password';
-
-export default ({ env }) => ({
-  // ...
-  forgotPassword: {
-    from: 'support@mywebsite.fr',
-    replyTo: 'support@mywebsite.fr',
-    emailTemplate: forgotPasswordTemplate,
-  },
-  // ...
-});
-```
-
-```js
-// path: ./config/email-templates/forgot-password.ts
-
-const subject = `Reset password`;
-
-const html = `<p>Hi <%= user.firstname %></p>
-<p>Sorry you lost your password. You can click here to reset it: <%= url %></p>`;
-
-const text = `Hi <%= user.firstname %>
-Sorry you lost your password. You can click here to reset it: <%= url %>`;
-
-export default {
-  subject,
-  text,
-  html,
-};
-```
-
-</code-block>
-</code-group>
-
+Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates).
 
 
 ### Webpack configuration

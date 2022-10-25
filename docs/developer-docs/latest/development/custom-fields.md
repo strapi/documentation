@@ -168,7 +168,6 @@ register(app) {
           defaultMessage: 'The color format is required',
         }),
       })
-      }),
     },
   });
 }

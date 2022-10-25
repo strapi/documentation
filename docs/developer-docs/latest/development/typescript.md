@@ -225,4 +225,4 @@ yarn develop
 </code-block>
 </code-group>
 
-After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
+After completing the preceding procedure a `dist` directory will be added at the project root and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.

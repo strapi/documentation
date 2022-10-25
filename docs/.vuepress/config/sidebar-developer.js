@@ -108,6 +108,11 @@ const developer = [
         initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
         children: [
           {
+            title: "Strapi Cloud",
+            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
+            collapsable: true,
+          },
+          {
             title: 'Hosting Provider Guides',
             path:
               '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
@@ -316,6 +321,7 @@ const developer = [
       },
       ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
       ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+      ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
       ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
       {
         title: 'Integrations',
@@ -491,7 +497,6 @@ const developer = [
       // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
       // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
       // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
-      ['/developer-docs/latest/guides/draft', 'Draft system'],
       // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
       // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
       ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
@@ -503,6 +508,7 @@ const developer = [
         'New WYSIWYG field in admin panel',
       ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
+
     ],
   },
 ];
