@@ -122,7 +122,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-### Create a Strapi instance
+### Create a `strapi` instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
 basically we want to get instance of strapi app as an object, similar to creating an instance for the [process manager](process-manager.md).
@@ -175,7 +175,7 @@ module.exports = { setupStrapi, teardownStrapi };
 The command to close the database connection is not working, which results in an open handle in Jest. The `--force-exit` flag temporarily solves this problem.
 :::
 
-## Test the strapi instance
+## Test the `strapi` instance
 
 You need a main entry file for the tests, one that will also test the helper file. To do this create `app.test.js` in the `tests` directory and add the following code:
 
@@ -237,13 +237,45 @@ If you receive a timeout error for Jest, please add the following line right bef
 
 ## Use the testing environment
 
-<!--TODO: little intro here-->
+With the testing environment set up, you can create and run tests on functions or API routes. To construct your own tests you need to:
 
-## Run a unit test
+1. Add the test criteria to the `app.test.js` file or write a new `your-file-name.test.js` file.
+2. Add the file path for the path for the code to be tested to the `app.test.js`.
+3. Run the test.
+
+The following documentation provides examples for how to setup:
+
+- unit tests,
+- public API endpoints,
+- authenticated API endpoints
+
+### Run a unit test
+
+Unit tests are designed to test individual units such as functions and methods. The following procedure sets up a unit test for a function to demonstrate the functionality:
+
+1. Create the file `sum.js` at the application root.
+2. Add the following code to the `sum.js` file:
+
+    ```js
+    function sum(a, b) {
+    return a + b;
+      }
+      module.exports = sum;
+  
+    ```
+
+3. Add the following code to the `app.test.js` file:
+
+    ```js{4}
+
+    // path: ./tests/app.test.js
+    //...
+    const sum = require('../sum');
+    //...
 
 
 
-## Testing an endpoint controller
+### Testing an endpoint controller
 
 ::: tip
 In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) section.
@@ -301,7 +333,7 @@ Ran all test suites.
 If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
 :::
 
-## Testing `auth` endpoint controller
+### Testing `auth` endpoint controller
 
 In this scenario we'll test authentication login endpoint with two tests
 
