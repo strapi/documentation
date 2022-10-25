@@ -264,7 +264,7 @@ Unit tests are designed to test individual units such as functions and methods. 
   
     ```
 
-3. Add the following code to the `app.test.js` file:
+3. Add the location of the code to be tested to the `app.test.js` file:
 
     ```js{4}
 
@@ -273,18 +273,31 @@ Unit tests are designed to test individual units such as functions and methods. 
     const sum = require('../sum');
     //...
 
+4. Add the test criteria to the `app.test.js` file:
+
+```js{4-6}
+
+    // path: ./tests/app.test.js
+    //...
+    test('adds 1 + 2 to equal 3', () => {
+    expect(sum(1, 2)).toBe(3);
+    });
+    //...
+
+```
+
+5. Save the files and run `yarn test` or `npm test` in the project root directory. 
 
 
-### Testing an endpoint controller
+### Test a public endpoint
 
-::: tip
-In the example we'll use and example `Hello world` `/hello` endpoint from [controllers](/developer-docs/latest/development/backend-customization/controllers.md) section.
-<!-- the link below is reported to have a missing hash by the check-links plugin, but everything is fine 🤷 -->
+:::prerequisite
+<!--TODO: add links-->
+This test requires a public endpoint. Create an API using the `strapi generate` CLI command and allow public access to the `get` route.
+
 :::
 
-Some might say that API tests are not unit but limited integration tests, regardless of nomenclature, let's continue with testing first endpoint.
-
-We'll test if our endpoint works properly and route `/hello` does return `Hello World`
+The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string.
 
 Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
 
@@ -293,12 +306,12 @@ Let's create a separate test file where `supertest` will be used to check if end
 ```js
 const request = require('supertest');
 
-it("should return hello world", async () => {
+it("should return some text here", async () => {
   await request(strapi.server.httpServer)
     .get("/api/hello")
     .expect(200) // Expect response http code 200
     .then((data) => {
-      expect(data.text).toBe("Hello World!"); // expect the response text
+      expect(data.text).toBe("some text here"); // expect the response text
     });
 });
 
