@@ -299,48 +299,35 @@ This test requires a public endpoint. Create an API using the `strapi generate` 
 
 The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string.
 
-Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
+1. Create a test file `publicRoute.js` in `./tests`. 
+2. Add the following code to `publicRoute.js`:
 
-**Path —** `./tests/hello/index.js`
+    ```js
 
-```js
-const request = require('supertest');
+    // path: ./tests/hello/index.js
 
-it("should return some text here", async () => {
-  await request(strapi.server.httpServer)
-    .get("/api/hello")
-    .expect(200) // Expect response http code 200
-    .then((data) => {
-      expect(data.text).toBe("some text here"); // expect the response text
+    const request = require('supertest');
+
+    it("should return some text here", async () => {
+      await request(strapi.server.httpServer)
+        .get("/api/your-api-route") //add your API route here
+        .expect(200) // Expect response http code 200
+        .then((data) => {
+          expect(data.text).toBe("some text here"); // expect the response text
+        });
     });
-});
 
-```
+    ```
+3. Customize the `.get` route.
+4. (optional) Customize the response text.
+5. Add the following code to `./tests/app.test.js
 
-Then include this code to `./tests/app.test.js` at the bottom of that file
+    ```js
+    require('./publicRoute');
 
-```js
-require('./hello');
-```
-
-and run `yarn test` which should return
-
-```bash
-➜  my-project yarn test
-yarn run v1.13.0
-$ jest --detectOpenHandles
- PASS  tests/app.test.js (5.742 s)
-  ✓ strapi is defined (4 ms)
-  ✓ should return hello world (208 ms)
-
-[2020-05-22T14:37:38.018Z] debug GET /hello (58 ms) 200
-Test Suites: 1 passed, 1 total
-Tests:       2 passed, 2 total
-Snapshots:   0 total
-Time:        6.635 s, estimated 7 s
-Ran all test suites.
-✨  Done in 9.09s.
-```
+    ```
+6. Save your code changes.
+7. run `yarn test` or `npm test`
 
 :::tip
 If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
