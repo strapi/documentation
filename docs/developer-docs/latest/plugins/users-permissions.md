@@ -835,10 +835,12 @@ In the following section we will detail steps 3. and 7..
 
 #### Forgotten password: ask for the reset password link
 
-This action sends an email to a user with the link to your reset password page.
-The link will be enriched with the url param `code` that is needed for the [reset password](#reset-password) at step 7.
+This action sends an email to a user with the link to your reset password page. The link will be enriched with the url param `code` that is needed for the [reset password](#reset-password) at step 7.
 
-First, you must specify the url to your reset password page in the admin panel: **Settings > USERS & PERMISSIONS PLUGIN > Advanced Settings > Reset Password Page**.
+First, you must specify the following:
+
+*  In the admin panel: **Settings > USERS & PERMISSIONS PLUGIN > Advanced Settings > Reset Password** page, the `url` to your reset password page.
+* In the admin panel: **Settings > USERS & PERMISSIONS PLUGIN > Email Template** page, the **Shipper email**.
 
 Then, your **forgotten password page** has to make the following request to your backend:
 
