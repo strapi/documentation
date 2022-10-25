@@ -104,44 +104,44 @@ A PM2 configuration file allows you to save the information necessary to start y
 1. Run `pm2 init` at the application root to create an `ecosystem.config.js` file.
 2. Replace the `ecosystem.config.js` file content with the following code example:
 
-<code-group>
+    <code-group>
 
-<code-block title="YARN">
+   <code-block title="YARN">
 
-```js
-// path: ./ecosystem.config.js
+   ```js
+   // path: ./ecosystem.config.js
 
-module.exports = {
-  apps: [
-    {
-      name: 'app',
-      script: 'yarn',
-      args: 'start',
-    },
-  ],
-};
-```
+    module.exports = {
+      apps: [
+        {
+          name: 'app',
+          script: 'yarn',
+          args: 'start',
+        },
+      ],
+    };
+    ```
 
-</code-block>
+   </code-block>
 
-<code-block title="NPM">
+    <code-block title="NPM">
 
-```js
-// path: ./ecosystem.config.js
+    ```js
+    // path: ./ecosystem.config.js
 
-module.exports = {
-  apps: [
-    {
-      name: 'app',
-      script: 'npm',
-      args: 'start',
-    },
-  ],
-};
-```
+    module.exports = {
+      apps: [
+        {
+          name: 'app',
+          script: 'npm',
+          args: 'start',
+        },
+      ],
+    };
+    ```
 
-</code-block>
-</code-group>
+    </code-block>
+    </code-group>
 
 3. Run `pm2 start ecosystem.config.js` to start the PM2 process.
 
