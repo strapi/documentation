@@ -103,13 +103,18 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 
 ::: details Example: Registering an example "color" custom field in the admin panel:
 
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/developer-docs/latest/plugins-development.md)):
+
 ```jsx
-// path: ./src/plugins/color-picker/strapi-admin.js
+// path: ./src/plugins/color-picker/admin/src/index.js
 
-import ColorPickerIcon from './admin/src/components/ColorPickerIcon';
+import ColorPickerIcon from './components/ColorPicker/ColorPickerIcon';
 
-module.exports = {
+export default {
   register(app) {
+    // ... app.addMenuLink() goes here
+    // ... app.registerPlugin() goes here
+
     app.customFields.register({
       name: "color",
       pluginId: "color-picker", // the custom field is created by a color-picker plugin
@@ -122,10 +127,92 @@ module.exports = {
         id: "color-picker.color.description",
         defaultMessage: "Select any color",
       },
-      icon: ColorPickerIcon,
+      icon: ColorPickerIcon, // don't forget to create/import your icon component 
       components: {
         Input: async () => import(/* webpackChunkName: "input-component" */ "./admin/src/components/Input"),
       },
+      options: {
+        // declare options here
+      },
+    });
+  } 
+
+  // ... bootstrap() goes here
+};
+```
+
+:::
+
+### Components
+
+`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
+
+::: details Example: Registering an Input component
+
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/developer-docs/latest/plugins-development.md)):
+
+```jsx
+// path: ./src/plugins/color-picker/admin/src/index.js
+
+export default {
+  register(app) {
+    app.customFields.register({
+      // …
+      components: {
+        Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
+      } 
+      // …
+    });
+  }
+}
+```
+
+:::
+
+::: tip
+The `Input` React component receives several props. The [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPicker/ColorPickerInput/index.js#L71-L82) in the Strapi codebase gives you an example of how they can be used.
+:::
+
+
+### Options
+
+`app.customFields.register()` can pass an additional `options` object with the following parameters:
+
+| Options parameter | Description                                                                     | Type                    |
+| -------------- | ------------------------------------------------------------------------------- | ----------------------- |
+| `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Array of Objects` |
+| `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
+| `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
+
+Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
+
+- a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
+- and a list of `items` as an array of objects.
+
+Each object in the `items` array can contain the following parameters:
+
+| Items parameter | Description                                                        | Type                                                 |
+| --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
+| `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
+| `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
+| `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
+
+::: details Example: Declaring options for an example "color" custom field:
+
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/developer-docs/latest/plugins-development.md)):
+
+```jsx
+// path: ./src/plugins/color-picker/admin/src/index.js
+
+// imports go here (ColorPickerIcon, pluginId, yup package…)
+
+export default {
+  register(app) {
+    // ... app.addMenuLink() goes here
+    // ... app.registerPlugin() goes here
+    app.customFields.register({
+    // …
       options: {
         base: [
           /*
@@ -192,159 +279,6 @@ module.exports = {
       },
     });
   }
-}
-```
-
-:::
-
-### Components
-
-`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
-
-::: details Example: Registering an Input component
-
-```js
-// path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
-
-register(app) {
-  app.customFields.register({
-    // …
-    components: {
-      Input: async () => import(/* webpackChunkName: "input-component" */ "./Input"),
-    } 
-    // …
-  });
-}
-```
-
-:::
-
-::: tip
-The `Input` React component receives several props. The [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPicker/ColorPickerInput/index.js#L71-L82) in the Strapi codebase gives you an example of how they can be used.
-:::
-
-
-### Options
-
-`app.customFields.register()` can pass an additional `options` object with the following parameters:
-
-| Options parameter | Description                                                                     | Type                    |
-| -------------- | ------------------------------------------------------------------------------- | ----------------------- |
-| `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Array of Objects` |
-| `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
-| `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
-
-Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
-
-- a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
-- and a list of `items` as an array of objects.
-
-Each object in the `items` array can contain the following parameters:
-
-| Items parameter | Description                                                        | Type                                                 |
-| --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
-| `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
-| `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
-| `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
-| `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
-
-
-
-::: details Example: Declaring options for an example "color" custom field:
-
-```jsx
-// path: ./src/plugins/my-custom-field-plugin/strapi-admin.js
-
-register(app) {
-  app.customFields.register({
-    // …
-    options: {
-      base: [
-        {
-          intlLabel: {
-            id: 'color-picker.color.format.label',
-            defaultMessage: 'Color format',
-          },
-          name: 'options.format',
-          type: 'select',
-          value: 'hex',
-          options: [
-            {
-              key: '__null_reset_value__',
-              value: '',
-              metadatas: {
-                intlLabel: {
-                  id: 'color-picker.color.format.placeholder',
-                  defaultMessage: 'Select a format',
-                },
-                hidden: true,
-              },
-            },
-            {
-              key: 'hex',
-              value: 'hex',
-              metadatas: {
-                intlLabel: {
-                  id: 'color-picker.color.format.hex',
-                  defaultMessage: 'Hexadecimal',
-                },
-              },
-            },
-            {
-              key: 'rgba',
-              value: 'rgba',
-              metadatas: {
-                intlLabel: {
-                  id: 'color-picker.color.format.rgba',
-                  defaultMessage: 'RGBA',
-                },
-              },
-            },
-          ],
-        },
-      ],
-      advanced: [
-        {
-          sectionTitle: {
-            id: 'global.settings',
-            defaultMessage: 'Settings',
-          },
-          items: [
-            {
-              name: 'required',
-              type: 'checkbox',
-              intlLabel: {
-                id: 'form.attribute.item.requiredField',
-                defaultMessage: 'Required field',
-              },
-              description: {
-                id: 'form.attribute.item.requiredField.description',
-                defaultMessage: "You won't be able to create an entry if this field is empty",
-              },
-            },
-            {
-              name: 'private',
-              type: 'checkbox',
-              intlLabel: {
-                id: 'form.attribute.item.privateField',
-                defaultMessage: 'Private field',
-              },
-              description: {
-                id: 'form.attribute.item.privateField.description',
-                defaultMessage: 'This field will not show up in the API response',
-              },
-            },
-          ],
-        },
-      ],
-      validator: args => ({
-        format: yup.string().required({
-          id: 'options.color-picker.format.error',
-          defaultMessage: 'The color format is required',
-        }),
-      }),
-    },
-  });
 }
 ```
 
