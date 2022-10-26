@@ -396,7 +396,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 ::::
 
 ::: tip
-The UID field can be used to create a slug based on the _Attached field_.
+The UID field can be used to create a slug based on the Attached field.
 :::
 
 <!-- TODO: maybe add an icon to the title below, just like with all other sections, if we have generic "custom field" icon? -->
