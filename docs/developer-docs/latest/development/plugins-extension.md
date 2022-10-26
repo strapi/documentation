@@ -33,12 +33,9 @@ Plugins can be extended in 2 ways:
 - [extending the plugin's content-types](#extending-a-plugin-s-content-types)
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
-::: note
-Currently it's not possible to extend the admin panel part of a plugin. Consider using [patch-package](https://www.npmjs.com/package/patch-package) if admin panel customizations are required.
-:::
-
 :::warning
-New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required.
+* New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required. 
+* Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future major versions of Strapi.
 :::
 
 ## Extending a plugin's content-types

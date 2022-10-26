@@ -5,3 +5,8 @@
 /developer-docs/latest/setup-deployment-guides/installation/platformsh.html /developer-docs/latest/setup-deployment-guides/installation/installation.html
 /developer-docs/latest/setup-deployment-guides/installation/digitalocean-customization.html /developer-docs/latest/setup-deployment-guides/installation/installation.html
 /developer-docs/latest/concepts/draft-and-publish.html /user-docs/latest/content-manager/saving-and-publishing-content.html
+/developer-docs/latest/guides/process-manager.html /developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html
+/developer-docs/latest/guides/draft.html /user-docs/latest/content-manager/saving-and-publishing-content.html
+/developer-docs/latest/guides/unit-testing.html /developer-docs/latest/developer-resources/unit-testing.html
+/developer-docs/latest/guides/auth-request.html /developer-docs/latest/plugins/users-permissions.html
+/developer-docs/latest/guides/registering-a-field-in-admin.html /developer-docs/latest/development/custom-fields.html
