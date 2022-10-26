@@ -1,13 +1,13 @@
 ---
-title: Unit Testing - Strapi Developer Docs
+title: Unit and Route Testing - Strapi Developer Docs
 description: Learn in this guide how you can run basic unit tests for a Strapi application using a testing framework.
 sidebarDepth: 2
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.html
 ---
 
-# Unit testing
+# Unit and Route Testing
 
-Running unit tests in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes an API endpoint unit test and an API endpoint unit test with authorization. Refer to the testing framework documentation for other use cases.
+Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes API endpoint unit test and an API endpoint unit test with authorization. Refer to the testing framework documentation for other use cases.
 
 ::: tip
 In this example we will use  Testing Framework with a focus on simplicity and
