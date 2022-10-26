@@ -492,7 +492,6 @@ const developer = [
     title: '📚 Guides',
     collapsable: true,
     children: [
-      ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
       // ['/developer-docs/latest/guides/slug', 'Create a slug system'],
       // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
       // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
@@ -504,12 +503,7 @@ const developer = [
       ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
       // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
       // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-      [
-        '/developer-docs/latest/guides/registering-a-field-in-admin',
-        'New WYSIWYG field in admin panel',
-      ],
       // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
-      
     ],
   },
 ];
