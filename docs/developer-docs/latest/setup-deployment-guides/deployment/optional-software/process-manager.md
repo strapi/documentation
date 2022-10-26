@@ -97,7 +97,7 @@ pm2 start npm --name app -- run start
 </code-block>
 </code-group>
 
-## Start and configuring PM2 with a `config.js` file
+## Start and configure PM2 with a `config.js` file
 
 A PM2 configuration file allows you to save the information necessary to start your server properly at any time. This is commonly used for cloud hosting providers, where you might not have access to a terminal window to start the server. To use a configuration file:
 
