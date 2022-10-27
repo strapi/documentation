@@ -59,22 +59,36 @@ Then we will update the `published_at` of all these articles.
 **Path —** `./config/functions/cron.js`
 
 ```js
-module.exports = {
-  '*/1 * * * *': async () => {
-    // fetch articles to publish
-    const draftArticleToPublish = await strapi.api.article.services.article.find({
-      _publicationState: 'preview', // preview returns both draft and published entries
-      published_at_null: true,      // so we add another condition here to filter entries that have not been published
-      publish_at_lt: new Date(),
-    });
+// path: ./config/cron-tasks.js
 
-    // update published_at of articles
+module.exports = {
+  /**
+   * Scheduled publication workflow.
+   * Checks every minute if there are draft articles to publish.
+   */
+
+  '*/1 * * * *': async () => {
+    console.log('1 minute later');
+    // fetch articles to publish;
+    const draftArticleToPublish = await strapi.entityService.findMany('api::article.article', {
+      publicationState: 'preview', // preview returns both draft and published entries
+      filters: {
+        publishedAt: {
+          $null: true, // so we add another condition here to filter entries that have not been published
+        },
+        publish_at: {
+          $lt: new Date() // and we keep only articles with a 'publish_at' datetime value that is lower than the current datetime
+        }
+      }
+    });
+    // update the publish_at of articles previously fetched
     await Promise.all(draftArticleToPublish.map(article => {
-      return strapi.api.article.services.article.update(
-        { id: article.id },
-        { published_at: new Date() }
-      );
-    }));
+      return strapi.entityService.update('api::article.article', article.id, {
+        data: {
+          publishedAt: new Date(),
+        }
+      });
+    }))
   },
 };
 ```
