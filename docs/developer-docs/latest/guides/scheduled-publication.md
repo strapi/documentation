@@ -8,11 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/scheduled-publ
 
 !!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
 
-This guide will explain how to create an article schedule system.
-
-## Introduction
-
-What we want here is to be able to set a publication date for an article, and at this date, switch the `draft` state to `published`.
+This guide will help you set a publication date for an article, and at this date, switch the `draft` state to `published`.
 
 ## Example
 
