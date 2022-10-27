@@ -93,6 +93,26 @@ npm install better-sqlite3 --save-dev
   }
 ```
 
+4.(TypeScript only) Create a Jest-TypeScript configuration file:
+
+<code-group>
+<code-block title=YARN>
+
+```sh
+yarn ts-jest config:init
+```
+
+</code-block>
+<code-block title=NPM>
+
+```sh
+npx ts-jest config:init
+```
+
+</code-block>
+</code-group>
+
+
 ## Create a testing environment
 
 The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. A testing database and a testing Strapi instance are necessary to successfully run unit tests.
