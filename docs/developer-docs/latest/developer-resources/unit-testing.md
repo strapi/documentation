@@ -322,115 +322,46 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
 6. Save your code changes.
 7. run `yarn test` or `npm test`
 
-:::tip
-If you receive an error `Jest has detected the following 1 open handles potentially keeping Jest from exiting` check `jest` version as `26.6.3` works without an issue.
-:::
-
 ### test an authenticated API endpoint
 
-In this scenario we'll test authentication login endpoint with two tests
+Testing authenticated API endpoints requires:
 
-- Test `/auth/local` that should login user and return `jwt` token
-- Test `/users/me` that should return users data based on `Authorization` header
+- create a test user,
+- login the test user and return a `jwt`,
+- make an authenticated request for the user's data.
 
-<!--This code example does not work as-is-->
+The authenticated API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
+
+ <!-- In this scenario we'll test authentication login endpoint with two tests
+
+- Test `api/auth/local` that should login user and return `jwt` token
+- Test `/users/me` that should return users data based on `Authorization` header -->
+
+#### Create a `createUser` helper file
+
+A `createUser` helper file is used to create a fake user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `createUser helper file: 
+
+1. Create `createUser.js` in the `./tests/helpers` directory.
+2. Add the following code to the `createUser.js` file:
+
+    ```js
 
 
-```js
-// path: `./tests/user/index.js`
+    ```
 
-const request = require('supertest');
+3. Save the file.  
 
-// user mock data
-const mockUserData = {
-  username: "tester",
-  email: "tester@strapi.com",
-  provider: "local",
-  password: "1234abc",
-  confirmed: true,
-  blocked: null,
-};
 
-it("should login user and return jwt token", async () => {
-  /** Creates a new user and save it to the database */
-  await strapi.plugins["users-permissions"].services.user.add({
-    ...mockUserData,
-  });
+#### Create an `auth.test.js` test file
 
-  await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .post("/api/auth/local")
-    .set("accept", "application/json")
-    .set("Content-Type", "application/json")
-    .send({
-      identifier: mockUserData.email,
-      password: mockUserData.password,
-    })
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .then((data) => {
-      expect(data.body.jwt).toBeDefined();
-    });
-});
+The `auth.test.js` file contains the test conditions 
 
-it('should return users data for authenticated user', async () => {
-  /** Gets the default user role */
-  const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
-  const role = defaultRole ? defaultRole.id : null;
+#### Run an authenticated API endpoint test
 
-  /** Creates a new user an push to database */
-  const user = await strapi.plugins['users-permissions'].services.user.add({
-    ...mockUserData,
-    username: 'tester2',
-    email: 'tester2@strapi.com',
-    role,
-  });
 
-  const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
-    id: user.id,
-  });
 
-  await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get('/api/users/me')
-    .set('accept', 'application/json')
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer ' + jwt)
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then(data => {
-      expect(data.body).toBeDefined();
-      expect(data.body.id).toBe(user.id);
-      expect(data.body.username).toBe(user.username);
-      expect(data.body.email).toBe(user.email);
-    });
-});
-```
 
-Then include this code to `./tests/app.test.js` at the bottom of that file
 
-```js
-require('./user');
-```
 
-All the tests above should return an console output like
 
-```bash
-➜  my-project git:(master) yarn test
-
-yarn run v1.13.0
-$ jest --forceExit --detectOpenHandles
-[2020-05-27T08:30:30.811Z] debug GET /hello (10 ms) 200
-[2020-05-27T08:30:31.864Z] debug POST /auth/local (891 ms) 200
- PASS  tests/app.test.js (6.811 s)
-  ✓ strapi is defined (3 ms)
-  ✓ should return hello world (54 ms)
-  ✓ should login user and return jwt token (1049 ms)
-  ✓ should return users data for authenticated user (163 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       4 passed, 4 total
-Snapshots:   0 total
-Time:        6.874 s, estimated 9 s
-Ran all test suites.
-✨  Done in 8.40s.
-```
