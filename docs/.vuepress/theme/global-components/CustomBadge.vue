@@ -36,16 +36,45 @@ export default {
   &.bronze
     background-color #15bb70
   &.alpha
-    background-color transparent
-    border solid 2px #f00
+    position relative
+    top -.2em
+    left .6em
+    background-color $danger100
+    text-transform uppercase
+    font-size .4em
+    font-weight 700
+    color $neutral800
+    border 1px solid #F6ECFC
     border-radius 4px
-    color #f00
-    margin-bottom 2px
+    padding .3em .6em .25em 1.2em
+    &::before
+      position absolute
+      content: '•'
+      font-size 1.5em
+      color $danger600
+      left .25em
+      top .15em
+      content: '•'
+      font-size 1.5em
+      color $danger600
   &.beta
-    background-color transparent
-    border solid 2px #4945ff
+    position relative
+    top -.2em
+    left .6em
+    background-color $alternative100
+    text-transform uppercase
+    font-size .4em
+    font-weight 700
+    color $neutral800
+    border 1px solid #F6ECFC
     border-radius 4px
-    color #4945ff
-    margin-bottom 2px
+    padding .3em .6em .25em 1.2em
+    &::before
+      position absolute
+      left .25em
+      top .15em
+      content: '•'
+      font-size 1.5em
+      color $alternative600
 </style>
 
