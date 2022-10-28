@@ -35,5 +35,17 @@ export default {
     background-color #00b6c8
   &.bronze
     background-color #15bb70
+  &.alpha
+    background-color transparent
+    border solid 2px #f00
+    border-radius 4px
+    color #f00
+    margin-bottom 2px
+  &.beta
+    background-color transparent
+    border solid 2px #4945ff
+    border-radius 4px
+    color #4945ff
+    margin-bottom 2px
 </style>
 
