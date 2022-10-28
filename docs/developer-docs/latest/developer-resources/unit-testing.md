@@ -7,12 +7,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.h
 
 # Unit and Route Testing
 
-Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes API endpoint unit test and an API endpoint unit test with authorization. Refer to the testing framework documentation for other use cases.
+Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes implementing:
 
-::: tip
-In this example we will use  Testing Framework with a focus on simplicity and
- Super-agent driven library for testing node.js HTTP servers using a fluent API
-:::
+- a unit test for a function,
+- a public API endpoint unit test,
+- and an API endpoint unit test with authorization.
+
+Refer to the testing framework documentation for other use cases and for the full set of testing options and configurations.
 
 :::caution
 Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
@@ -22,7 +23,7 @@ Please note that this guide will not work if you are on Windows using the SQLite
 
 `Jest` contains a set of guidelines or rules used for creating and designing test cases - a combination of practices and tools that are designed to help testers test more efficiently.
 
-`Supertest` allows you to test all the `api` routes as if they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
+`Supertest` allows you to test the API routes as if they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
 
 `better-sqlite3` is used to create an on-disk database that is created and deleted between tests.
 <!-- TODO rewrite this intro section-->
@@ -32,34 +33,25 @@ Please note that this guide will not work if you are on Windows using the SQLite
 1. Add the tools to the dev dependencies:
 
 <code-group>
-<code-block title=JAVASCRIPT>
+<code-block title=YARN>
 
 ```sh
 yarn add jest --dev
 yarn add supertest --dev 
 yarn add better-sqlite3 --dev 
 
-OR
 
-npm install jest --save-dev
-npm install supertest --save-dev
-npm install better-sqlite3 --save-dev
+
+
   ```
   
   </code-block>
 
-<code-block title=TYPESCRIPT>
+<code-block title=NPM>
 
-<!-- TODO: test the TS commands-->
 ```sh
-yarn add jest ts-jest @types/jest --dev
-yarn add supertest --dev 
-yarn add better-sqlite3 --dev 
-
-OR
-
-npm install jest ts-jest @types/jest --save-dev
-npm install @types/supertest --save-dev
+npm install jest --save-dev
+npm install supertest --save-dev
 npm install better-sqlite3 --save-dev
 ```
 
@@ -92,25 +84,6 @@ npm install better-sqlite3 --save-dev
     "testEnvironment": "node"
   }
 ```
-
-4.(TypeScript only) Create a Jest-TypeScript configuration file:
-
-<code-group>
-<code-block title=YARN>
-
-```sh
-yarn ts-jest config:init
-```
-
-</code-block>
-<code-block title=NPM>
-
-```sh
-npx ts-jest config:init
-```
-
-</code-block>
-</code-group>
 
 
 ## Create a testing environment
@@ -257,7 +230,7 @@ If you receive a timeout error for Jest, please add the following line right bef
 
 ## Use the testing environment
 
-With the testing environment set up, you can create and run tests on functions or API routes. To construct your own tests you need to:
+With the testing environment set up, you can create and run tests on functions or API routes, for example. To construct your own tests you need to:
 
 1. Add the test criteria to the `app.test.js` file or write a new `your-file-name.test.js` file.
 2. Add the file path for the path for the code to be tested to the `app.test.js`.
