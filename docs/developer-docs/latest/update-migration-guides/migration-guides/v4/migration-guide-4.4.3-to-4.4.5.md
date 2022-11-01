@@ -6,9 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.4.3 to v4.4.5 migration guide
 
-The Strapi v4.4.3 to v4.4.5 migration guide upgrades v4.4.3 to v4.4.5. The migration changes the name of the favicon. The migration guide consists of:
-
-- renaming the `favicon.ico` file to `favicon.png`.
+The Strapi v4.4.3 to v4.4.5 migration guide upgrades v4.4.3 to v4.4.5. The migration changes the name of the favicon from `favicon.ico` to `favicon.png`.
 
 :::caution
  - This migration guide skips v4.4.4, which introduced a problem in `koa/cors` due to a missing dependency update.
@@ -36,9 +34,9 @@ Stop the server before starting the upgrade.
 }
 ```
 
-2. Replace the existing `favicon.ico` with [`favicon.png`](https://user-images.githubusercontent.com/8593673/198366643-7261700d-c8c4-4ebb-83c8-792a330ab4a5.png):
+2. Save the edited `package.json` file.
 
-3. Save the edited `package.json` file.
+3. Replace the existing `favicon.ico` with [`favicon.png`](https://user-images.githubusercontent.com/8593673/198366643-7261700d-c8c4-4ebb-83c8-792a330ab4a5.png):
 
 4. Run either `yarn` or `npm install` to install the new version.
 
