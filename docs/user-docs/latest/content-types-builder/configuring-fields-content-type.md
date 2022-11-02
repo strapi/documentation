@@ -404,7 +404,7 @@ The UID field can be used to create a slug based on the Attached field.
 
 Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
 
-Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
+Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 

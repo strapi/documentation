@@ -11,4 +11,4 @@
 /developer-docs/latest/guides/auth-request.html /developer-docs/latest/plugins/users-permissions.html
 /developer-docs/latest/guides/registering-a-field-in-admin.html /developer-docs/latest/development/custom-fields.html
 /developer-docs/latest/guides/scheduled-publication.html /user-docs/latest/content-manager/saving-and-publishing-content.html
-/developer-docs/latest/guides/slug.html /developer-docs/latest/development/backend-customization/models.html
+/developer-docs/latest/guides/jwt-validation.html /developer-docs/latest/plugins/users-permissions.html
