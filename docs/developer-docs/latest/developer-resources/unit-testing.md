@@ -39,12 +39,8 @@ The tests described below are incompatible with Windows using the SQLite databas
 yarn add jest --dev
 yarn add supertest --dev 
 yarn add better-sqlite3 --dev 
-
-
-
-
   ```
-  
+
   </code-block>
 
 <code-block title=NPM>
@@ -72,6 +68,7 @@ npm install better-sqlite3 --save-dev
 
 3. Add a `jest` section to the `package.json` file with the following code:
 
+<!-- add the ellipses to acknowledge the missing code-->
 ```json
 //path: ./package.json
 
@@ -85,19 +82,21 @@ npm install better-sqlite3 --save-dev
   }
 ```
 
-
 ## Create a testing environment
 
-The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. A testing database and a testing Strapi instance are necessary to successfully run unit tests.
+The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. To achieve this the following instructions will add:
+
+- a testing database,
+- a `strapi` instance for testing,
+- and file directories to organize the testing environment.
 
 ### Create a test environment database configuration file
 
-The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database database.
+The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database. Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) by switching `NODE_ENV` to `test`.
 
-Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) by switching `NODE_ENV` to `test`.
-
-1. Create a new database configuration file for the test env: `./config/env/test/database.js`.
-2. add the following code to `./config/env/test/database.js:
+1. Create the subdirectories `env/test/` in the `./config/` directory.
+2. Create a new database configuration file `database.js` for the test env in `./config/env/test/`.
+3. Add the following code to `./config/env/test/database.js`:
 
 ```js
 // path: ./config/env/test/database.js
@@ -117,13 +116,10 @@ module.exports = ({ env }) => ({
 
 ### Create a `strapi` instance
 
-To setup test  need to have a `strapi` instance that runs in the testing environment,
-basically we want to get instance of strapi app as an object, similar to creating an instance for the [process manager](process-manager.md).
+The testing environment requires a `strapi` instance as an object, similar to creating an instance for the [process manager](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.md). `strapi.js`.
 
-These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file `strapi.js`.
-
-1. Create a `tests` directory at the application root.
-2. Create a `helpers` directory inside `tests`.
+1. Create a `tests` directory at the application root, which hosts all of the tests.
+2. Create a `helpers` directory inside `tests`, which hosts the `strapi` instance and other supporting functions.
 3. Create the file `strapi.js` in the `helpers` directory and add the following code:
 
 ```js
@@ -170,7 +166,10 @@ The command to close the database connection is not working, which results in an
 
 ## Test the `strapi` instance
 
-You need a main entry file for the tests, one that will also test the helper file. To do this create `app.test.js` in the `tests` directory and add the following code:
+You need a main entry file for tests, one that will also test the `strapi` instance.
+
+1. Create `app.test.js` in the `tests` directory.
+2. Add the following code to `app.test.js`:
 
 ```js
 //path: ./tests/app.test.js
@@ -191,7 +190,7 @@ it("strapi is defined", () => {
 });
 ```
 
-Run the unit test to confirm it is working correctly:
+3. Run the unit test to confirm it is working correctly:
 
 <code-group>
 <code-block title=YARN>
@@ -208,7 +207,7 @@ npm test
 </code-block>
 </code-group>
 
-The test output in your terminal should be the following:
+4. Confirm the test is working. The test output in the terminal window should be the following:
 
 ```bash
 yarn run v1.22.18
@@ -224,23 +223,26 @@ Ran all test suites.
 ✨  Done in 2.90s.
 ```
 
-:::tip
-If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as you need.
+:::note
+
+- Jest detects test files by looking for the filename `{your-file}.test.js`.
+
+- If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
 :::
 
 ## Use the testing environment
 
 With the testing environment set up, you can create and run tests on functions or API routes, for example. To construct your own tests you need to:
 
-1. Add the test criteria to the `app.test.js` file or write a new `your-file-name.test.js` file.
-2. Add the file path for the path for the code to be tested to the `app.test.js`.
+1. Add the test criteria to the `app.test.js` file or write a new `{your-file}.test.js` file.
+2. Add the file path for the code to be tested to the `app.test.js`.
 3. Run the test.
 
-The following documentation provides examples for how to setup:
+The following sections provide examples for how to setup:
 
 - unit tests,
 - public API endpoints,
-- authenticated API endpoints
+- authenticated API endpoints.
 
 ### Run a unit test
 
@@ -250,6 +252,9 @@ Unit tests are designed to test individual units such as functions and methods. 
 2. Add the following code to the `sum.js` file:
 
     ```js
+
+    // path: ./sum.js
+
     function sum(a, b) {
     return a + b;
       }
@@ -279,14 +284,13 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 ```
 
-5. Save the files and run `yarn test` or `npm test` in the project root directory. 
-
+5. Save the files and run `yarn test` or `npm test` in the project root directory. Jest should return a test summary that the test suite and test were successful.
 
 ### Test a public endpoint
 
 :::prerequisite
 <!--TODO: add links-->
-This test requires a public endpoint. Create an API using the `strapi generate` CLI command and allow public access to the `get` route.
+This test requires a public endpoint. Create an API using the [`strapi generate` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) and allow public access to the `get` route.
 
 :::
 
