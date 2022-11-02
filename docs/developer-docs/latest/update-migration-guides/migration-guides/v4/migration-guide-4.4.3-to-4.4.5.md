@@ -20,19 +20,19 @@ Stop the server before starting the upgrade.
 
 1. Upgrade all of the Strapi packages in `package.json` to `4.4.5`:
 
-```json
-// path: package.json
+    ```json
+    // path: package.json
 
-{
-  // ...
-  "dependencies": {
-    "@strapi/strapi": "4.4.5",
-    "@strapi/plugin-users-permissions": "4.4.5",
-    "@strapi/plugin-i18n": "4.4.5",
-    // ...
-  }
-}
-```
+    {
+      // ...
+      "dependencies": {
+        "@strapi/strapi": "4.4.5",
+        "@strapi/plugin-users-permissions": "4.4.5",
+        "@strapi/plugin-i18n": "4.4.5",
+        // ...
+      }
+    }
+    ```
 
 2. Save the edited `package.json` file.
 
