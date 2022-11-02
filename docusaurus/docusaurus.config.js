@@ -98,7 +98,7 @@ const config = {
             position: 'left',
             label: 'Developer Docs',
           },
-          {to: '/blog', label: 'Blog', position: 'right'},
+          // {to: '/blog', label: 'Blog', position: 'right'},
           // {
           //   type: 'docsVersionDropdown' // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions
           // },
@@ -116,9 +116,9 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
-          {
-            type: 'docsVersionDropdown'
-          }
+          // {
+          //   type: 'docsVersionDropdown', // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions
+          // }
         ],
       },
       footer: {
