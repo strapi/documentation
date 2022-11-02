@@ -488,19 +488,4 @@ const developer = [
       },
     ],
   },
-  {
-    title: '📚 Guides',
-    collapsable: true,
-    children: [
-      // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
-      // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
-      // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
-      // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
-      // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
-      ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
-      // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
-      // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-      // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
-    ],
-  },
 ];
