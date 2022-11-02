@@ -16,7 +16,7 @@ Testing code units and API routes in a Strapi application can be done with [Jest
 Refer to the testing framework documentation for other use cases and for the full set of testing options and configurations.
 
 :::caution
-Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
+The tests described below are incompatible with Windows using the SQLite database due to how Windows locks the SQLite file.
 :::
 
 ## Install and configure the test tools
@@ -117,10 +117,10 @@ module.exports = ({ env }) => ({
 
 ### Create a `strapi` instance
 
-In order to test anything we need to have a strapi instance that runs in the testing environment,
+To setup test  need to have a `strapi` instance that runs in the testing environment,
 basically we want to get instance of strapi app as an object, similar to creating an instance for the [process manager](process-manager.md).
 
-These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
+These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file `strapi.js`.
 
 1. Create a `tests` directory at the application root.
 2. Create a `helpers` directory inside `tests`.
