@@ -23,7 +23,7 @@ Customizing the admin panel is helpful to better reflect your brand identity or 
 - The [access URL, host and port](#access-url) can be modified through the server configuration.
 - The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
 - The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
-- The [forgotten password email](#forgotten-password-email) can be customized with a template and variables.
+- The [email templates](#email-templates) should be customized using the Users and Permissions plugin.
 - The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
 ### Access URL
@@ -567,92 +567,9 @@ export default {
 </code-group>
 
 
-### 'Forgotten password' email
+### Email templates
 
-To customize the 'Forgotten password' email, provide your own template (formatted as a [lodash template](https://lodash.com/docs/4.17.15#template)).
-
-The template will be compiled with the following variables: `url`, `user.email`, `user.username`, `user.firstname`, `user.lastname`.
-
-**Example**:
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-// path: ./config/admin.js
-
-const forgotPasswordTemplate = require('./email-templates/forgot-password');
-
-module.exports = ({ env }) => ({
-  // ...
-  forgotPassword: {
-    from: 'support@mywebsite.fr',
-    replyTo: 'support@mywebsite.fr',
-    emailTemplate: forgotPasswordTemplate,
-  },
-  // ...
-});
-```
-
-```js
-// path: ./config/email-templates/forgot-password.js
-
-const subject = `Reset password`;
-
-const html = `<p>Hi <%= user.firstname %></p>
-<p>Sorry you lost your password. You can click here to reset it: <%= url %></p>`;
-
-const text = `Hi <%= user.firstname %>
-Sorry you lost your password. You can click here to reset it: <%= url %>`;
-
-module.exports = {
-  subject,
-  text,
-  html,
-};
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-// path: ./config/admin.ts
-
-import forgotPasswordTemplate from './email-templates/forgot-password';
-
-export default ({ env }) => ({
-  // ...
-  forgotPassword: {
-    from: 'support@mywebsite.fr',
-    replyTo: 'support@mywebsite.fr',
-    emailTemplate: forgotPasswordTemplate,
-  },
-  // ...
-});
-```
-
-```js
-// path: ./config/email-templates/forgot-password.ts
-
-const subject = `Reset password`;
-
-const html = `<p>Hi <%= user.firstname %></p>
-<p>Sorry you lost your password. You can click here to reset it: <%= url %></p>`;
-
-const text = `Hi <%= user.firstname %>
-Sorry you lost your password. You can click here to reset it: <%= url %>`;
-
-export default {
-  subject,
-  text,
-  html,
-};
-```
-
-</code-block>
-</code-group>
-
+Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates).
 
 
 ### Webpack configuration
