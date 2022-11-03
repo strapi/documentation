@@ -29,7 +29,11 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-.admonition--strapi a {
+[data-theme='dark'] .admonition--strapi a {
+  color: #FFF8E6;
+  text-decoration-color: #271fe0;
+}
+[data-theme='light'] .admonition--strapi a {
   color: #4945ff;
   text-decoration-color: #4945ff;
 }
