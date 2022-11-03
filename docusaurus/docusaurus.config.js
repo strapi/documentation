@@ -10,7 +10,8 @@ const config = {
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://strapi-docs-docusaurus-poc.vercel.app/',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  // onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
