@@ -284,13 +284,15 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 ```
 
-5. Save the files and run `yarn test` or `npm test` in the project root directory. Jest should return a test summary that the test suite and test were successful.
+5. Save the files and run `yarn test` or `npm test` in the project root directory. Jest should return a test summary that confirms the test suite and test were successful.
 
 ### Test a public endpoint
 
 :::prerequisite
-<!--TODO: add links-->
-This test requires a public endpoint. Create an API using the [`strapi generate` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) and allow public access to the `get` route.
+
+- This test requires a public endpoint. Create an API using the [`strapi generate` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
+- Allow public access to the `get` route by [configuring the core router](/developer-docs/latest/development/backend-customization/routes.md#configuring-core-routers).
+- The public API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
 
 :::
 
@@ -315,6 +317,7 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
     });
 
     ```
+
 3. Customize the `.get` route.
 4. (optional) Customize the response text.
 5. Add the following code to `./tests/app.test.js
@@ -323,27 +326,27 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
     require('./publicRoute');
 
     ```
-6. Save your code changes.
-7. run `yarn test` or `npm test`
 
-### test an authenticated API endpoint
+6. Save your code changes.
+7. run `yarn test` or `npm test` to confirm the test is successful.
+
+### Test an authenticated API endpoint
+
+::: prerequisite
+
+The authenticated API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
+
+:::
 
 Testing authenticated API endpoints requires:
 
 - create a test user,
-- login the test user and return a `jwt`,
+- login the test user and return a `jwt` secret,
 - make an authenticated request for the user's data.
-
-The authenticated API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
-
- <!-- In this scenario we'll test authentication login endpoint with two tests
-
-- Test `api/auth/local` that should login user and return `jwt` token
-- Test `/users/me` that should return users data based on `Authorization` header -->
 
 #### Create a `createUser` helper file
 
-A `createUser` helper file is used to create a fake user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `createUser helper file: 
+A `createUser` helper file is used to create a mock user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `createUser` helper file:
 
 1. Create `createUser.js` in the `./tests/helpers` directory.
 2. Add the following code to the `createUser.js` file:
@@ -358,7 +361,7 @@ A `createUser` helper file is used to create a fake user account in the test dat
 
 #### Create an `auth.test.js` test file
 
-The `auth.test.js` file contains the test conditions 
+The `auth.test.js` file contains the authenticated endpoint test conditions. 
 
 
 #### Run an authenticated API endpoint test
