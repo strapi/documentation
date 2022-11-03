@@ -19,6 +19,7 @@ const sidebars = {
   // But you can create a sidebar manually
   devDocsSidebar: [
     'dev-docs/hello',
+    'dev-docs/quick-start',
     {
       type: 'category',
       label: '🔧 Development',
