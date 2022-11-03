@@ -1,14 +1,10 @@
 ---
-sidebar_label: 'Welcome!'
+sidebar_label: 'Introduction'
 displayed_sidebar: devDocsSidebar
 sidebar_position: 1
 ---
 
 # Welcome to the Strapi Developer Docs!
-
-:::caution Canary build 🐥
-You're reading the bleeding edge version of our documentation. Some features might still be buggy.
-:::
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
@@ -45,30 +41,3 @@ You can join [GitHub](https://github.com/strapi/strapi), the [Forum](https://for
 Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
 
 For enterprise support, please see our [Enterprise Support platform](https://support.strapi.io/support/home), please note that you will need to have an active enterprise license to place tickets.
-
-***
-
-💡 Docusaurus supports interactive code blocks. Try the one below:
-
-```jsx live
-function Clock(props) {
-  const [date, setDate] = useState(new Date());
-  useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
-
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
-
-  function tick() {
-    setDate(new Date());
-  }
-
-  return (
-    <div>
-      <h2>It is {date.toLocaleTimeString()}.</h2>
-    </div>
-  );
-}
-```
