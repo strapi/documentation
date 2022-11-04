@@ -182,7 +182,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await cleanupStrapi();
+  await teardownStrapi();
 });
 
 it("strapi is defined", () => {
