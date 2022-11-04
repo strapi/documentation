@@ -26,7 +26,7 @@
       "type": "xpath",
       "global": true
     },
-    "text": ".content__default p, .content__default ul>li a, .content__default ul>li code, .content__default table > tr, th, td, p, code",
+    "text": ".content__default p, .content__default p>code, .content__default ol, .content__default ol, .content__default ol code, .content__default ul>li, .content__default ul>li code, .content__default table>tbody code, .content__default table>tbody td, .content__default table > p, .content__default custom-block.tip p, .content__default custom-block.tip code",
     "lang": {
       "selector": "/html/@lang",
       "type": "xpath",
@@ -43,3 +43,4 @@
     ]
   }
 }
+

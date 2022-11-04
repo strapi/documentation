@@ -32,6 +32,10 @@ When a content is not a draft anymore, but has been published, it is indicated o
 
 ![Editing published version](../assets/content-manager/editing_published_version.png)
 
+::: tip
+To schedule publication, i.e. convert a draft to a published entry at a given date and time, you can follow [this technical guide](https://forum.strapi.io/t/schedule-publications/23184) which requires adding custom code to the Strapi application.
+:::
+
 ### Unpublishing content
 
 Published contents can be unpublished, switching back to being drafts again.
