@@ -55,7 +55,7 @@ export default {
       content: '•'
       font-size 1.5em
   &.alpha
-    background-color $danger100
+    background-color $danger100 // check palette.styl for values
     &::before
       color $danger600
   &.beta
