@@ -87,15 +87,15 @@ const themeConfig = {
             },
           ]
         },
-        {
-          text: 'Pre-release Documentation',
-          items: [
-            {
-              text: 'docs-next',
-              link: 'https://docs-next.strapi.io',
-            },
-          ]
-        },
+        // { // temporarily disabled while we move to Docusaurus
+        //   text: 'Pre-release Documentation',
+        //   items: [
+        //     {
+        //       text: 'docs-next',
+        //       link: 'https://docs-next.strapi.io',
+        //     },
+        //   ]
+        // },
       ],
     },
     {
