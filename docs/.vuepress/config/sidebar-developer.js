@@ -108,6 +108,11 @@ const developer = [
         initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
         children: [
           {
+            title: "Strapi Cloud",
+            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
+            collapsable: true,
+          },
+          {
             title: 'Hosting Provider Guides',
             path:
               '/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides',
@@ -316,6 +321,8 @@ const developer = [
       },
       ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
       ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+      ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
+      ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
       {
         title: 'Integrations',
         path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -479,31 +486,6 @@ const developer = [
           // ['/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides', 'v3 migration guides'], // commented out as it creates a "visual bug" and this is just a link to v3 docs after all
         ],
       },
-    ],
-  },
-  {
-    title: '📚 Guides',
-    collapsable: true,
-    children: [
-      ['/developer-docs/latest/guides/auth-request', 'Authenticated request'],
-      // ['/developer-docs/latest/guides/slug', 'Create a slug system'],
-      // ['/developer-docs/latest/guides/is-owner', 'Create is owner policy'],
-      // ['/developer-docs/latest/guides/custom-admin', 'Custom admin'],
-      // ['/developer-docs/latest/guides/custom-data-response', 'Custom data response'],
-      ['/developer-docs/latest/guides/draft', 'Draft system'],
-      // ['/developer-docs/latest/guides/error-catching', 'Error catching'],
-      // ['/developer-docs/latest/guides/external-data', 'Fetching external data'],
-      ['/developer-docs/latest/guides/jwt-validation', 'JWT validation'],
-      ['/developer-docs/latest/guides/process-manager', 'Process manager'],
-      ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
-      // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
-      // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-      [
-        '/developer-docs/latest/guides/registering-a-field-in-admin',
-        'New WYSIWYG field in admin panel',
-      ],
-      // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
-      ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
     ],
   },
 ];

@@ -90,7 +90,7 @@ You can pass configuration to the middleware directly by setting it in the [`bod
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: "strapi::body",
@@ -104,7 +104,7 @@ module.exports = {
     },
   },
   // ...
-};
+];
 ```
 
 </code-block>
@@ -114,7 +114,7 @@ module.exports = {
 ```js
 // path: ./config/middlewares.ts
 
-export default {
+export default [
   // ...
   {
     name: "strapi::body",
@@ -128,7 +128,7 @@ export default {
     },
   },
   // ...
-};
+];
 ```
 
 </code-block>

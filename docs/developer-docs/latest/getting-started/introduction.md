@@ -23,8 +23,7 @@ As it goes hand in hand with the open-source ecosystem, Strapi is open to contri
 - [`strapi/strapi`](https://github.com/strapi/strapi): main repository of Strapi, which contains the core of the project. You can find the admin panel, core plugins, plugin providers, and the whole code that runs your Strapi application. Please read the [`CONTRIBUTING.md`](https://github.com/strapi/strapi/blob/master/CONTRIBUTING.md) file to have more information about contributions to the main repository.
 - [`strapi/documentation`](https://github.com/strapi/documentation): contains the whole documentation of Strapi. Please read the [contribution guide](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) to have more information about contributions to the Strapi documentation.
 - [`strapi/design-system`](https://github.com/strapi/design-system): is the design system that is used in the admin panel. It brings consistency between the different admin plugins.
-- [`strapi/strapi-docker`](https://github.com/strapi/strapi-docker): contains the code used to generate the official Docker images for Strapi (available through our [Docker Hub](https://hub.docker.com/r/strapi/strapi)).
-- [`strapi/awesome-strapi`](https://github.com/strapi/awesome-strapi): contains everything the community built and all managed plugins. It is used as a central place to find and submit new packages such as plugins, middlewares, hooks, and general enhancements to the core of Strapi.
+- [`strapi-community/awesome-strapi`](https://github.com/strapi-community/awesome-strapi): contains everything the community built and all managed plugins. It is used as a central place to find and submit new packages such as plugins, middlewares, hooks, and general enhancements to the core of Strapi. 
 
 ## Strapi Community
 

@@ -10,6 +10,10 @@ Strapi provides many deployment options for your project or application. Your St
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
+::: callout ☁️ Strapi Cloud
+Don't want to deploy Strapi by yourself? <a href="https://strp.cc/3rywrsu" target="_blank" id="deployment-section-cloud-link">Join the cloud waitlist</a> to soon get access to a platform to easily deploy and host your project.
+:::
+
 ::: strapi Community Guides
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
 :::
@@ -301,3 +305,15 @@ Additional guides for optional software additions that compliment or improve the
 	</InstallLink>
 </div>
 
+<div>
+	<InstallLink link="deployment/optional-software/process-manager.html">
+    <template #icon>
+    <!-- <img src="assets/deployment/caddy-monotone.svg"/> -->
+    PM2
+    </template>
+		<template #title> PM2 Process Manager</template>
+		<template #description>
+			Overview of using the PM2 process manager with Strapi.
+		</template>
+	</InstallLink>
+</div>
