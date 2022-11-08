@@ -330,7 +330,7 @@ After creating the managed database, navigate to the application page:
 3. Use the picklist to select the previously created database.
 4. Click **Attach Database**.
 
-### Configure environment variables for production ready managed database ###
+### Configure environment variables for production-ready managed database
 Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables:
 
     | Variable name       | Value                          |
