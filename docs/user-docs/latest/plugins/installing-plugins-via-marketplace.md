@@ -14,7 +14,7 @@ The Marketplace in the admin panel only displays v4 plugins, but all plugins for
 Keep in mind that v3 and v4 plugins are not cross-compatible, but that providers are compatible both with v3 and v4 plugins.
 :::
 
-![The Marketplace interface](../assets/plugins/installed-providers-temp.png)
+![The Marketplace interface](../assets/plugins/marketplace-plugins.png)
 
 The Plugins and Providers tabs display each plugin/provider on individual cards containing:
 
