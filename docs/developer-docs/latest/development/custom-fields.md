@@ -5,7 +5,7 @@ sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/custom-fields.html
 ---
 
-# Custom fields <AlphaBadge />
+# Custom fields
 
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or installed, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
 
@@ -20,7 +20,7 @@ Once created and used, custom fields are defined like any other attribute in the
 * Custom fields can only be shared using plugins.
 :::
 
-## Registering a custom field on the server <BetaBadge />
+## Registering a custom field on the server
 
 ::: prerequisites
 !!!include(developer-docs/latest/development/snippets/custom-field-requires-plugin.md)!!!
