@@ -331,7 +331,7 @@ After creating the managed database, navigate to the application page:
 4. Click **Attach Database**.
 
 ### Configure environment variables for production-ready managed database
-Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables:
+Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables, inserting your database name (e.g. `db-postgresql-nyc3-1234`) in place of `dbClusterName`:
 
     | Variable name       | Value                          |
     |---------------------|--------------------------------|
