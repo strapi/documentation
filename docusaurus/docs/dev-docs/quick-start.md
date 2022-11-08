@@ -14,20 +14,11 @@ import InstallPrerequisites from '../snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
-Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
+Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch.
 
 ::: prerequisites
 <InstallPrerequisites components={props.components} />
 :::
-
-
-👇 Let's get started! Using the big buttons below, please choose between:
-
-- the **Hands-on** path for a DIY approach to run your project
-- or the **Starters** path for the quickest way to spin up a fullstack application powered by a Strapi back end.
-
-<Tabs>
-  <TabItem value="handson" label="Hands-on">
 
 ## 🚀 Part A: Create a new project with Strapi
 
@@ -202,7 +193,8 @@ There you are: the list of restaurants is accessible at [http://localhost:1337/a
 
 Try it now! The result should be similar to the example response below 👇.
 
-::: details Click me to view an example of API response
+<details>
+<summary>Click me to view an example of API response</summary>
 
 ```json
 {
@@ -229,160 +221,18 @@ Try it now! The result should be similar to the example response below 👇.
 }
 ```
 
-:::
+</details>
 
 ::: callout 🥳 CONGRATULATIONS!  
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
 
-## ⏩ What to do next?
+<!-- TODO: uncomment once corresponding links are rewritten -->
+<!-- ## ⏩ What to do next?
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-<!-- - 👉 [create an API token](/user-docs/latest/settings/managing-global-settings.md#managing-api-tokens) to restrict access to your API, -->
-<!-- - 👉 learn how to use Strapi's [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs to query the content, -->
-<!-- - 👉 and [customize your Strapi back end](/developer-docs/latest/development/backend-customization.md) and [admin panel](/developer-docs/latest/development/admin-customization.md). -->
-
-</TabItem>
-
-<TabItem value="starters" label="Starters">
-
-## 🚀 Part A: Create a new project with Strapi starters
-
-Strapi [starters](https://strapi.io/starters) are the fastest way to kickstart your project. They cover many use cases (blog, e-commerce solution, corporate website, portfolio) and integrate with various technologies (Next, Gridsome, Nuxt).
-
-This quick start guide has been specifically tailored to use the [Next blog starter](https://strapi.io/starters/strapi-starter-next-js-blog). We highly recommend you to follow along with this starter. Once you get a better understanding of Strapi, you will be able to play with other starters on your own.
-
-### Step 1: Run the installation script
-
-To create a [Next](https://nextjs.org/) blog using Strapi, run the following command in a terminal:
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="npm" label="npm">
-
-```bash
-  npx create-strapi-starter my-project next-blog
-```
-
-</TabItem>
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-  yarn create strapi-starter my-project next-blog
-```
-
-</TabItem>
-</Tabs>
-
-During the installation, when terminal asks `Choose your installation type`: select the default `Quickstart (recommended)` option by pressing Enter. The installation then resumes — just let the magic happen!
-
-### Step 2: Register & have a look at your blog
-
-Once the installation is complete, your browser automatically opens a tab at ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)). It's for Strapi's admin panel, the back end of your application.
-
-By completing the form in the admin panel tab, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
-
-Now, open [http://localhost:3000](http://localhost:3000) in another tab. This is the front end of your application, and you can already see the Next blog in action.
-
-<!-- TODO: fix these as they should be displayed side-by-side, we used specific classNames for that in VuePress -->
-<img src="/img/assets/quick-start-guide/qsg-starters-part1-01-register.png" alt="Register screen" />
-<img src="/img/assets/quick-start-guide/qsg-starters-part1-01-next_fe.png" alt="Next blog frontend screenshot" />
-
-:::callout CONGRATULATIONS! 🥳
-Your blog is ready! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
-
-Writing a blog is not your cup of tea? You can leave this guide and play with other [Starters](https://strapi.io/starters) on your own.
-:::
-
-## 🎨 Part B: Play with your content
-
-Strapi [starters](https://strapi.io/starters) build a full stack application and a data structure for you, so you can start playing with your content faster.
-
-We are about to contribute to the blog we have just created. Let's play with your application, by adding yourself as a writer and creating your own article, updating the homepage, and restarting the servers to look at the final result.
-
-:::tip
-If the Strapi server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
-:::
-
-### Step 1: Add yourself as a writer
-
-You have several ideas for great articles in mind. But first, the world needs to know who you are!
-
-Click on ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Writer](http://localhost:1337/admin/content-manager/collectionType/api::writer.writer) in the navigation, and click the **Add new entry** button.
-
-![Screenshot: Create a new writer in admin panel](/img/assets/quick-start-guide/qsg-starters-part2-01-writer.png)
-
-1. Add your _Name_ and _Email_ in the corresponding fields.
-2. Add your favorite selfie in the _Picture_ field. You can either drag and drop an image or click the field and upload a file. Saying 'Cheese!' during the process is optional. 😄
-3. Click **Save**.
-
-### Step 2: Write & publish your first article
-
-To write an article, we need to add a new entry to the "Article" collection type and fill in a few fields.
-
-![Animated GIF to create an article](/img/assets/quick-start-guide/qsg-starters-part2-03-write_publish_article.gif)
-
-Click on ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article) in the main navigation, and click the **Add new entry** button.
-
-#### Give your article a title, a description, and add some content
-
-1. Type `Hello World!` in the _Title_ field.
-2. Type `My very first article with Strapi` in the _Description_ field.
-3. Write a few lines in the _Content_ field. If you're lacking some inspiration, just type `This is my first blog article with Strapi and using it feels like a breeze!`.
-4. Scroll down and add a picture in the _Image_ field.
-
-#### Choose an author and a category for your article
-
-In the sidebar on the right, choose your name in the _Author_ drop-down list. You have just signed your first article with Strapi. Take a few seconds to contemplate this historic moment!
-
-While there, you might also want to choose a _Category_ for your article from the list.
-
-🤓 Don't forget to click on **Save** to save the article.
-
-#### Turn your draft into a publication
-
-By default, your new article would be saved as a draft. Let's not be too shy and publish it right away.
-
-To publish an article, click the **Publish** button at the top of the window.
-
-You have just created and published your first article, "Hello World!". You can find it in the ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Article](http://localhost:1337/admin/content-manager/collectionType/api::article.article?page=1&pageSize=10&sort=id:DESC) view.
-
-### Step 3: Update the `Homepage` single type
-
-It's time to make this blog a bit more yours.
-
-Click on ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Single types - Homepage](http://localhost:1337/admin/content-manager/singleType/api::homepage.homepage) in the main navigation. Let's edit this homepage:
-
-1. Replace the image in the _ShareImage_ field.
-2. At the bottom of the page, update the _Title_ to `My Wonderful Strapi Blog` in the _Hero_ field group.
-3. Click **Save**.
-
-### Step 4: Restart the servers to reflect latest changes
-
-Next is a static-site generator. It means that you need to restart the servers for changes to appear on the front end:
-
-1. In your terminal, press `Ctrl-C` to stop the servers.
-2. Make sure you are in the `my-project` folder. If not, type `cd my-project` and press Enter.
-3. Restart the servers by typing `npm run develop` (or `yarn develop`) and press Enter.
-
-After a few moments, you should see your blog with its updated title running at [http://localhost:3000](http://localhost:3000). The "Hello World!" article you have just created is also visible at the bottom of the page.
-
-![GIF: Updated Next blog front end](/img/assets/quick-start-guide/qsg-starters-part2-04-restart_servers.gif)
-
-:::callout CONGRATULATIONS! 🥳
-Now you know how to use Strapi to create and update your blog. Keep on creating amazing content!
-:::
-
-## ⏩ What to do next?
-
-Now that you know the basics of kickstarting your project with a Strapi starter, we encourage you to explore and play a bit further:
-
-* 👉  Start another project! We have lots of other [Starters](https://strapi.io/starters) you can use to kickstart your blog, e-commerce, corporate website, or portfolio project.
-* 👉  Read more about the [starters CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli) on our blog.
-
-</TabItem>
-
-</Tabs>
+- 👉 [create an API token](/user-docs/latest/settings/managing-global-settings.md#managing-api-tokens) to restrict access to your API,
+- 👉 learn how to use Strapi's [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs to query the content,
+- 👉 and [customize your Strapi back end](/developer-docs/latest/development/backend-customization.md) and [admin panel](/developer-docs/latest/development/admin-customization.md). -->
