@@ -10,7 +10,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import InstallPrerequisites from '../snippets/installation-prerequisites.md'
+import InstallPrerequisites from '../snippets/installation-prerequisisites.md'
 
 # Quick Start Guide
 
