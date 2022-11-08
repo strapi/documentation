@@ -184,7 +184,15 @@ const config = {
       },
     }),
 
-  plugins: [require.resolve("@cmfcmf/docusaurus-search-local")],
+  plugins: [
+    // 'plugin-image-zoom', // temp. disabled while we fix the bug
+    /**
+     * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
+     * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
+     * related to the Docusaurus canary build or not.
+     */
+    require.resolve("@cmfcmf/docusaurus-search-local")
+  ],
 };
 
 module.exports = config;
