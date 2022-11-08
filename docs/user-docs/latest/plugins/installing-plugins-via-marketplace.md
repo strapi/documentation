@@ -31,7 +31,7 @@ In the top right corner of the Marketplace, the **Submit your plugin** button re
 ::: tip TIPS
 
 - The search bar displays incremental search results based on the plugin/provider name and description.
-- Use the "sort by" button or set filters to find plugins more easily.
+- Use the "Sort by" button or set filters to find plugins more easily.
 
 :::
 
