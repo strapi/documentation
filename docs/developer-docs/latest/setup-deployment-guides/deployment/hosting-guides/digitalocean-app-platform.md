@@ -338,13 +338,6 @@ Remove the previously added 'DATABASE_*' global variables added for connecting t
     | `DATABASE_URL`      | `${dbClusterName.DATABASE_URL}`|
     | `DATABASE_CA`       | `${dbClusterName.CA_CERT}`     |
 
-For example:
-
-    | Variable name       | Value                                    |
-    |---------------------|------------------------------------------|
-    | `DATABASE_URL`      | `${db-postgresql-nyc3-1234.DATABASE_URL}`|
-    | `DATABASE_CA`       | `${db-postgresql-nyc3-1234.CA_CERT}`     |
-
 After attaching the database, DigitalOcean will attempt to auto-deploy the application. If the deployment is successful a link to the application will be provided at the top of the application page.
 
 ::: caution
