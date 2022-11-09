@@ -26,18 +26,18 @@ Run the following command in a terminal:
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="npm" label="npm">
-
-```bash
-npx create-strapi-app@latest my-project --quickstart
-```
-
-</TabItem>
-
 <TabItem value="yarn" label="yarn">
 
 ```bash
 yarn create strapi-app my-project --quickstart
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npx create-strapi-app@latest my-project --quickstart
 ```
 
 </TabItem>

@@ -45,21 +45,25 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 1. In a terminal, run the following command:
 
-    <code-group>
+    <Tabs groupId="yarn-npm">
 
-    <code-block title="NPM">
-    ```sh
-    npx create-strapi-app@latest my-project
-    ```
-    </code-block>
+      <TabItem value="yarn" label="yarn">
 
-    <code-block title="YARN">
-    ```sh
-    yarn create strapi-app my-project
-    ```
-    </code-block>
+      ```sh
+      yarn create strapi-app my-project
+      ```
 
-    </code-group>
+      </TabItem>
+
+      <TabItem value="npm" label="npm">
+
+      ```sh
+      npx create-strapi-app@latest my-project
+      ```
+      
+      </TabItem>
+
+    </Tabs>
 
 2. Choose an installation type:
 
@@ -80,18 +84,22 @@ Please use these experimental builds at your own risk. It is not recommended to 
 
 To start the Strapi application, run the following command in the project folder:
 
-<code-group>
+<Tabs groupId="yarn-npm">
 
-<code-block title="NPM">
-```bash
-npm run develop
-```
-</code-block>
+<TabItem value="yarn" label="yarn">
 
-<code-block title="YARN">
 ```sh
 yarn develop
 ```
-</code-block>
 
-</code-group>
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run develop
+```
+
+</TabItem>
+
+</Tabs>
