@@ -290,6 +290,7 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 :::prerequisites
 
+<!-- this needs to be done using the simple custom route/controller since the generator is broken-->
 - This test requires a public endpoint. Create an API using the [`strapi generate` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
 - Allow public access to the `get` route by [configuring the core router](/developer-docs/latest/development/backend-customization/routes.md#configuring-core-routers).
 - The public API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) section.
@@ -298,12 +299,12 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string.
 
-1. Create a test file `publicRoute.js` in `./tests`.
-2. Add the following code to `publicRoute.js`:
+1. Create a test file `public.js` in `./tests`.
+2. Add the following code to `public.js`:
 
     ```js
 
-    // path: ./tests/publicRoute.js
+    // path: ./tests/public.js
 
     const request = require('supertest');
 
