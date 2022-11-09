@@ -22,6 +22,30 @@ const sidebars = {
     'dev-docs/quick-start',
     {
       type: 'category',
+      label: '⚙️ Setup & Deployment',
+      items: [
+        {
+          type: 'category',
+          label: 'Installation',
+          link: {
+            /**
+            * Use the 2 lines below to make sure that
+            * "Installation" in the TOC is a clickable link
+            * pointing to a page (i.e., type: 'doc') whose link target
+            * is defined as the 'id' property.
+            */
+            type: 'doc',
+            id: 'dev-docs/setup-deployment-guides/installation',
+          },
+          items: [
+            'dev-docs/setup-deployment-guides/installation/cli',
+            'dev-docs/setup-deployment-guides/installation/docker',
+          ]
+        }
+      ]
+    },
+    {
+      type: 'category',
       label: '🔧 Development',
       items: [
         {
