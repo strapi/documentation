@@ -24,7 +24,7 @@ The Plugins and Providers tabs display each plugin/provider on individual cards 
 - the number of times the plugin/provider was starred on GitHub and downloaded
 - the description
 - a **Learn more** button for additional information, including detailed implementation instructions
-- a **Copy install command** button to copy the installation command to the local clipboard. This button is disabled if the plugin is not compatible with your current Strapi version. For any installed plugins and providers, this button is replaced by an indicator that it is already installed.
+- a **Copy install command** button to copy the installation command to the local clipboard. This button is disabled if the plugin is not compatible with your current Strapi version. Hovering a disabled button displays the Strapi version with which the plugin is compatible. For any installed plugins and providers, this button is replaced by an indicator that it is already installed.
 
 In the top right corner of the Marketplace, the **Submit your plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
 
