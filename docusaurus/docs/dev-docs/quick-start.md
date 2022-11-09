@@ -8,8 +8,6 @@ description: Get ready to get Strapi, your favorite open-source headless cms up 
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick-start.html
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import InstallPrerequisites from '../snippets/installation-prerequisisites.md'
 
 # Quick Start Guide
