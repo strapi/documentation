@@ -98,6 +98,11 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
+## strapi export
+
+## strapi import
+
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
