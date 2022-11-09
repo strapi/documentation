@@ -53,8 +53,7 @@ Sample `Dockerfile`:
 
 <TabItem value="yarn" label="yarn">
 
-```Dockerfile
-# path: ./Dockerfile
+```dockerfile title="./Dockerfile"
 
 FROM node:16-alpine
 # Installing libvips-dev for sharp Compatibility
@@ -74,10 +73,9 @@ CMD ["yarn", "develop"]
 
 </TabItem>
 
-<TabItem value="npm" label="NPM">
+<TabItem value="npm" label="npm">
 
-```Dockerfile
-# path: ./Dockerfile
+```dockerfile title="./Dockerfile"
 
 FROM node:16-alpine
 # Installing libvips-dev for sharp Compatibility
@@ -113,8 +111,7 @@ Sample `docker-compose.yml`:
 
 <TabItem value="mysql" label="MySQL">
 
-```yml
-# path: ./docker-compose.yml
+```yml title="./docker-compose.yml"
 
 version: '3'
 services:
@@ -182,8 +179,7 @@ networks:
 
 <TabItem value="mariadb" label="MariaDB">
 
-```yml
-# path: ./docker-compose.yml
+```yml title="./docker-compose.yml"
 
 version: '3'
 services:
@@ -250,8 +246,7 @@ networks:
 
 <TabItem value="postgresql" label="PostgreSQL">
 
-```yml
-# path: ./docker-compose.yml
+```yml title="./docker-compose.yml"
 
 version: '3'
 services:
@@ -333,8 +328,7 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 
 <TabItem value="yarn" label="yarn">
 
-```Dockerfile
-# path: ./Dockerfile.prod
+```dockerfile title="./Dockerfile.prod"
 
 FROM node:16-alpine as build
 # Installing libvips-dev for sharp Compatibility
@@ -367,8 +361,7 @@ CMD ["yarn", "start"]
 
 <TabItem value="npm" label="npm">
 
-```Dockerfile
-# path: ./Dockerfile.prod
+```dockerfile title="./Dockerfile.prod"
 
 FROM node:16-alpine as build
 # Installing libvips-dev for sharp Compatibility
