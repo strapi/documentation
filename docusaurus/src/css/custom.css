@@ -33,7 +33,16 @@
   color: #FFF8E6;
   text-decoration-color: #271fe0;
 }
+[data-theme='dark'] .admonition--strapi {
+  color: #F0F0FF;
+}
+[data-theme='dark'] .admonition--strapi code {
+  background-color: #4945ff;
+}
 [data-theme='light'] .admonition--strapi a {
   color: #4945ff;
   text-decoration-color: #4945ff;
+}
+[data-theme='light'] .admonition--strapi code {
+  background-color: #D9D8FF
 }
