@@ -17,7 +17,7 @@ The following documentation will guide you through building a custom [Docker](ht
 
 Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
 
-::: prerequisites
+:::prerequisites
 
 - [Docker](https://www.docker.com/) installed on your machine
 - A [supported version of Node.js](./cli.md#step-1-make-sure-requirements-are-met)
@@ -103,7 +103,7 @@ CMD ["npm", "run", "develop"]
 
 The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
 
-::: note
+:::note
 For more information about running Docker compose and its commands, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
 :::
 
