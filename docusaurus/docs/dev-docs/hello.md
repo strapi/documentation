@@ -9,7 +9,7 @@ sidebar_position: 1
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
 :::strapi Can't wait to start using Strapi?
-You can directly head to the [Quick Start](#)! <br/> If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
+You can directly head to the [Quick Start](./quick-start.md)! <br/> If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
 :::
 
 The original purpose of the project was to help Boot**strap** your **API**: that's how Strapi was created. Now, Strapi is an open-source headless CMS that gives developers the freedom to choose their favorite tools and frameworks and allows editors to manage and distribute their content using their application's admin panel. Based on a plugin system, Strapi is a flexible CMS whose admin panel and API are extensible - and which every part is customizable to match any use case. Strapi also has a built-in user system to manage in detail what the administrators and end users have access to.
