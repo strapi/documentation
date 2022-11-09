@@ -2,6 +2,8 @@ import React from 'react';
 // Import the original mapper
 import MDXComponents from '@theme-original/MDXComponents';
 import DocCardList from '@theme/DocCardList';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 export default {
   // Re-use the default mapping
@@ -12,6 +14,7 @@ export default {
    * at the top of a Markdown file before being able to use these components
   *  — see https://docusaurus.io/docs/next/markdown-features/react#mdx-component-scope
    */
-  // Map the "DocCardList" component
   DocCardList: DocCardList,
+  Tabs: Tabs,
+  TabItem: TabItem,
 };
