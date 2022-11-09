@@ -5,20 +5,27 @@ sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/import-export.html
 ---
 
-# Data import-export transfer system
+<!-- more details including the file structure of exp data on this page-->
+# Data Import Export
 
-Intro text here.
-
-## Importing data using the CLI tool
-
-details here.
 
 ## Export data using the CLI tool
 
 details here.
 
+- encrypt outcome
+- filter content
+- exclude files
+- other
+
+## Import data using the CLI tool
+
+details here.
+
+
+
 `yarn strapi export`
 
-## Transfer between environments
+<!--## Transfer between environments **new page**
 
-## Activate or deactivate maintenance mode
+## Activate or deactivate maintenance mode -->
