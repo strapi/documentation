@@ -31,7 +31,7 @@ Docker is an open platform that allows developing, shipping, and running applica
 
 For working with Strapi locally on your host machine you can use the [Dockerfile](https://docs.docker.com/engine/reference/builder/), and if needed the [docker-compose.yml](https://docs.docker.com/compose/compose-file/) can also be used to start up a database container.
 
-Both methods require an existing Strapi project or a new one created (see [Quick Start](/docs/dev-docs/quick-start.md) guide).
+Both methods require an existing Strapi project or a new one created (see [Quick Start guide](/docs/dev-docs/quick-start.md)).
 
 ### Development Dockerfile
 

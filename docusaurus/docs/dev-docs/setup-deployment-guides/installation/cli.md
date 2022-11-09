@@ -34,11 +34,11 @@ Strapi v4 does not support MongoDB.
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
-- Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
-- Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/developer-docs/latest/development/typescript.md).
+- Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](./templates)).
+- Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/dev-docs/development/typescript).
 - Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
 
-For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md).
+For more information on available flags, see our [CLI documentation](/docs/dev-docs/developer-resources/cli/cli).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::
