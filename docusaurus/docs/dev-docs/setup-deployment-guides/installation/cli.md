@@ -24,13 +24,13 @@ A database is also required for any Strapi project. Strapi currently supports th
 | PostgreSQL | 11.0    | 14.0        |
 | SQLite     | 3       | 3           |
 
-::: caution
+:::caution
 Strapi v4 does not support MongoDB.
 :::
 
 ## Creating a Strapi project
 
-::: strapi CLI installation options
+:::strapi CLI installation options
 The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
 
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
@@ -74,7 +74,7 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 
 4. (Custom installation type only) Name your project's database.
 
-::: tip
+:::tip
 Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
 
 Please use these experimental builds at your own risk. It is not recommended to use them in production.
