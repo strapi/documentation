@@ -8,7 +8,7 @@ description: Get ready to get Strapi, your favorite open-source headless cms up 
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick-start.html
 ---
 
-import InstallPrerequisites from '../snippets/installation-prerequisisites.md'
+import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 

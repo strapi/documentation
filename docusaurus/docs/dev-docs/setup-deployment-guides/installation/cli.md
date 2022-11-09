@@ -5,13 +5,15 @@ description: Fast-track local install for getting Strapi running on your compute
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/cli.html
 ---
 
+import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
+
 # Installing from CLI
 
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
 
 ## Preparing the installation
 
-!!!include(developer-docs/latest/developer-resources/cli/snippets/installation-prerequisites.md)!!!
+<InstallPrerequisites components={props.components} />
 
 A database is also required for any Strapi project. Strapi currently supports the following databases:
 
