@@ -68,10 +68,9 @@ npm install better-sqlite3 --save-dev
 
 3. Add a `jest` section to the `package.json` file with the following code:
 
-<!-- add the ellipses to acknowledge the missing code-->
 ```json
 //path: ./package.json
-
+//...
   "jest": {
     "testPathIgnorePatterns": [ //informs Jest to ignore these directories.
       "/node_modules/",
@@ -80,6 +79,7 @@ npm install better-sqlite3 --save-dev
     ],
     "testEnvironment": "node"
   }
+  //...
 ```
 
 ## Create a testing environment
