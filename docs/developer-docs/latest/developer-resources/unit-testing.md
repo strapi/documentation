@@ -230,7 +230,7 @@ Ran all test suites.
 - If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
 :::
 
-## Use the testing environment
+## Use the testing environment <!--think about the title and structure here-->
 
 With the testing environment set up, you can create and run tests on functions or API routes, for example. To construct your own tests you need to:
 
@@ -291,13 +291,60 @@ Unit tests are designed to test individual units such as functions and methods. 
 :::prerequisites
 
 <!-- this needs to be done using the simple custom route/controller since the generator is broken-->
-- This test requires a public endpoint. Create an API using the [`strapi generate` CLI command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate).
-- Allow public access to the `get` route by [configuring the core router](/developer-docs/latest/development/backend-customization/routes.md#configuring-core-routers).
+- This test requires a public endpoint.
+
 - The public API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) section.
 
 :::
 
-The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string.
+The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string. This example uses a custom route and controller, but the same structure works with APIs [generated using the Content-type Builder](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
+
+#### Create a public route and controller
+
+<!--some text here-->
+
+1. Add a directory `public` to `./src/api`.
+2. Add sub directories `routes` and `controllers` inside the new `./src/api/public` directory.
+3. Create a `public.js` file inside the `routes` directory and add the following code:
+
+    ```js
+    module.exports = {
+      routes: [
+        {
+          method: 'GET',
+          path: '/public',
+          handler: 'public.index',
+          config: {
+            auth: false, // enables the public route
+      
+          },
+        },
+      ],
+    };
+
+    ```
+
+4. Create a `public.js` file inside the `controllers` directory and add the following code:
+
+    ```js
+
+    module.exports = {
+      async index(ctx, next) {
+        // called by GET /public
+        ctx.body = 'Hello World!'; // A JSON can also be sent.
+      },
+    };
+
+    ```
+5. Save both `public.js` files.
+
+#### Create a public endpoint test
+
+An endpoint test has 3 components:
+
+- the strapi instance created in the [create a strapi instance](#create-a-strapi-instance) section,
+- a modified `app.test.js` file created in [Test the strapi instance](#test-the-strapi-instance) that contains the `Jest` test functions,
+- and a `public.js` file in the `./tests` directory that contains the testing criteria.
 
 1. Create a test file `public.js` in `./tests`.
 2. Add the following code to `public.js`:
