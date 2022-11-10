@@ -1,6 +1,6 @@
 import React from 'react';
 import DefaultAdmonitionTypes from '@theme-original/Admonition/Types';
-import { useColorMode } from '@docusaurus/theme-common';
+import CheckboxIcon from '../../components/CheckBoxIcon.svg';
 
 function StrapiAdmonition(props) {
   return (
@@ -44,7 +44,7 @@ function PrerequisitesAdmonition(props) {
       className="theme-admonition theme-admonition-caution admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--prerequisites">
       <div className="admonitionHeading_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module">
         <span className="admonitionIcon_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module admonition__custom-title">
-          PREREQUISITES
+        <CheckboxIcon className="checkbox-icon"/> PREREQUISITES
         </span>
       </div>
       <div

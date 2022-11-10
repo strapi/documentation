@@ -33,6 +33,8 @@
 .admonition__custom-title {
   text-transform: uppercase;
 }
+.admonition--prerequisites .checkbox-icon {
+  vertical-align: middle;
 }
 
 /**
