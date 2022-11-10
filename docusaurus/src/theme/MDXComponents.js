@@ -4,6 +4,9 @@ import MDXComponents from '@theme-original/MDXComponents';
 import DocCardList from '@theme/DocCardList';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Request from '../components/Request';
+import Response from '../components/Response';
+import ApiCall from '../components/ApiCall';
 
 export default {
   // Re-use the default mapping
@@ -17,4 +20,7 @@ export default {
   DocCardList: DocCardList,
   Tabs: Tabs,
   TabItem: TabItem,
+  Request: Request,
+  Response: Response,
+  ApiCall: ApiCall,
 };
