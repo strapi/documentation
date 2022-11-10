@@ -492,8 +492,8 @@ Don't forget to update the server url in the backend config file `config/server.
 - Click on the **Twitter** provider
 - Fill the information (replace with your own client ID and secret):
   - **Enable**: `ON`
-  - **Client ID**: yfN4ycGGmKXiS1njtIYxuN5IH
-  - **Client Secret**: Nag1en8S4VwqurBvlW5OaFyKlzqrXFeyWhph6CZlpGA2V3VR3T
+  - **API Key**: yfN4ycGGmKXiS1njtIYxuN5IH
+  - **Api Secret**: Nag1en8S4VwqurBvlW5OaFyKlzqrXFeyWhph6CZlpGA2V3VR3T
   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/twitter/redirect`
 
 :::
