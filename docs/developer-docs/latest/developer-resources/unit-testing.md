@@ -186,7 +186,7 @@ afterAll(async () => {
 });
 
 it("strapi is defined", () => {
-  expect(strapi).toBeDefined();
+  expect(strapi).toBeDefined(); //tests that the strapi instance exists
 });
 ```
 
@@ -230,21 +230,9 @@ Ran all test suites.
 - If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
 :::
 
-## Use the testing environment <!--think about the title and structure here-->
 
-With the testing environment set up, you can create and run tests on functions or API routes, for example. To construct your own tests you need to:
 
-1. Add the test criteria to the `app.test.js` file or write a new `{your-file}.test.js` file.
-2. Add the file path for the code to be tested to the `app.test.js`.
-3. Run the test.
-
-The following sections provide examples for how to setup:
-
-- unit tests,
-- public API endpoints,
-- authenticated API endpoints.
-
-### Run a unit test
+## Run a unit test
 
 Unit tests are designed to test individual units such as functions and methods. The following procedure sets up a unit test for a function to demonstrate the functionality:
 
@@ -286,34 +274,27 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 5. Save the files and run `yarn test` or `npm test` in the project root directory. Jest should return a test summary that confirms the test suite and test were successful.
 
-### Test a public endpoint
+## Test public endpoints
 
-:::prerequisites
+The goal of this test is to evaluate if an endpoint works properly. In this example both the route and controller logic have to work for the test to be successul. This example uses a custom route and controller, but the same structure works with APIs [generated using the Content-type Builder](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 
-<!-- this needs to be done using the simple custom route/controller since the generator is broken-->
-- This test requires a public endpoint.
+### Create a public route and controller
 
-- The public API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) section.
-
-:::
-
-The goal of this test is to evaluate if the endpoint works properly and if the route returns a specified string. This example uses a custom route and controller, but the same structure works with APIs [generated using the Content-type Builder](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
-
-#### Create a public route and controller
-
-<!--some text here-->
+Routes direct incoming requests to the server while controllers contain the business logic. For this example, the route authorizes `GET` for `/public` and calls the `hello` method in the `public` controller.
 
 1. Add a directory `public` to `./src/api`.
 2. Add sub directories `routes` and `controllers` inside the new `./src/api/public` directory.
 3. Create a `public.js` file inside the `routes` directory and add the following code:
 
     ```js
+    // path: ./src/api/public/routes/public.js
+
     module.exports = {
       routes: [
         {
           method: 'GET',
           path: '/public',
-          handler: 'public.index',
+          handler: 'public.hello',
           config: {
             auth: false, // enables the public route
       
@@ -327,18 +308,20 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
 4. Create a `public.js` file inside the `controllers` directory and add the following code:
 
     ```js
+    // path: ./src/api/public/controllers/public.js
 
     module.exports = {
-      async index(ctx, next) {
+      async hello(ctx, next) {
         // called by GET /public
         ctx.body = 'Hello World!'; // A JSON can also be sent.
       },
     };
 
     ```
+
 5. Save both `public.js` files.
 
-#### Create a public endpoint test
+### Create a public endpoint test
 
 An endpoint test has 3 components:
 
@@ -357,28 +340,26 @@ An endpoint test has 3 components:
 
     it("should return some text here", async () => {
       await request(strapi.server.httpServer)
-        .get("/api/your-api-route") //add your API route here
+        .get("/api/public") //add your API route here
         .expect(200) // Expect response http code 200
         .then((data) => {
-          expect(data.text).toBe("some text here"); // expect the response text
+          expect(data.text).toBe("Hello World!"); // expect the response text
         });
     });
-
     ```
 
-3. Customize the `.get` route.
-4. (optional) Customize the response text.
-5. Add the following code to `./tests/app.test.js
+3. Add the following code to `./tests/app.test.js
 
     ```js
+    //...
     require('./public');
-
+    //...
     ```
 
-6. Save your code changes.
-7. run `yarn test` or `npm test` to confirm the test is successful.
+4. Save your code changes.
+5. run `yarn test` or `npm test` to confirm the test is successful.
 
-### Test an authenticated API endpoint
+## Test an authenticated API endpoint
 
 ::: prerequisite
 
@@ -392,7 +373,7 @@ Testing authenticated API endpoints requires:
 - login the test user and return a `jwt` secret,
 - make an authenticated request for the user's data.
 
-#### Create a `createUser` helper file
+### Create a `createUser` helper file
 
 A `createUser` helper file is used to create a mock user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `createUser` helper file:
 
@@ -407,12 +388,12 @@ A `createUser` helper file is used to create a mock user account in the test dat
 3. Save the file.  
 
 
-#### Create an `auth.test.js` test file
+### Create an `auth.test.js` test file
 
 The `auth.test.js` file contains the authenticated endpoint test conditions. 
 
 
-#### Run an authenticated API endpoint test
+### Run an authenticated API endpoint test
 
 
 
