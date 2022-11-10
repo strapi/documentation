@@ -14,7 +14,7 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch.
 
-::: prerequisites
+:::prerequisites
 <InstallPrerequisites components={props.components} />
 :::
 
@@ -44,8 +44,8 @@ npx create-strapi-app@latest my-project --quickstart
 
 </Tabs>
 
-:::note
-The quick start installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](./setup-deployment-guides/installation/cli)).
+:::info
+The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](./setup-deployment-guides/installation/cli)).
 :::
 
 ### Step 2: Register the first administrator user
@@ -58,7 +58,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 
 ![Admin panel screenshot: dashboard](/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel_2.png)
 
-::: callout 🥳 CONGRATULATIONS!
+:::callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
 :::
 
@@ -221,7 +221,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 </details>
 
-::: callout 🥳 CONGRATULATIONS!  
+:::callout 🥳 CONGRATULATIONS!  
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
