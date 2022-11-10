@@ -324,7 +324,7 @@ The goal of this test is to evaluate if the endpoint works properly and if the r
 5. Add the following code to `./tests/app.test.js
 
     ```js
-    require('./publicRoute');
+    require('./public');
 
     ```
 
