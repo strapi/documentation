@@ -186,7 +186,7 @@ afterAll(async () => {
 });
 
 it("strapi is defined", () => {
-  expect(strapi).toBeDefined(); //tests that the strapi instance exists
+  expect(strapi).toBeDefined(); //confirms that the strapi instance is defined
 });
 ```
 
@@ -230,8 +230,6 @@ Ran all test suites.
 - If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
 :::
 
-
-
 ## Run a unit test
 
 Unit tests are designed to test individual units such as functions and methods. The following procedure sets up a unit test for a function to demonstrate the functionality:
@@ -247,7 +245,7 @@ Unit tests are designed to test individual units such as functions and methods. 
     return a + b;
       }
       module.exports = sum;
-  
+
     ```
 
 3. Add the location of the code to be tested to the `app.test.js` file:
@@ -326,8 +324,9 @@ Routes direct incoming requests to the server while controllers contain the busi
 An endpoint test has 3 components:
 
 - the strapi instance created in the [create a strapi instance](#create-a-strapi-instance) section,
-- a modified `app.test.js` file created in [Test the strapi instance](#test-the-strapi-instance) that contains the `Jest` test functions,
-- and a `public.js` file in the `./tests` directory that contains the testing criteria.
+
+- a `public.js` file in the `./tests` directory that contains the testing criteria,
+- and a modified `app.test.js` file created in [Test the strapi instance](#test-the-strapi-instance) that contains the `Jest` test functions.
 
 1. Create a test file `public.js` in `./tests`.
 2. Add the following code to `public.js`:
@@ -348,7 +347,11 @@ An endpoint test has 3 components:
     });
     ```
 
-3. Add the following code to `./tests/app.test.js
+    :::tip
+    The test logic can be added directly to the `app.test.js` file as well. If you write a lot of tests using separate files for the test logic can helpful.
+    :::
+
+3. Add the following code to `./tests/app.test.js`
 
     ```js
     //...
@@ -369,8 +372,15 @@ The authenticated API endpoint test utilizes the `strapi.js` helper file created
 
 Testing authenticated API endpoints requires:
 
-- create a test user,
-- login the test user and return a `jwt` secret,
+<!--
+  Steps to do in the test application: 
+    1. create an admin user with credentials
+    2. login the admin user and return JWT(?)
+    3. test that the user can get their info 
+-->
+
+- create a test admin user,
+- login the test admin user and return a `jwt` secret,
 - make an authenticated request for the user's data.
 
 ### Create a `createUser` helper file
