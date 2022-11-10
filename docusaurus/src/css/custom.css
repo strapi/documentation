@@ -30,7 +30,10 @@
 }
 
 
-
+.admonition__custom-title {
+  text-transform: uppercase;
+  font-weight: bold;
+}
 
 /**
  * Custom admonitions - dark mode
