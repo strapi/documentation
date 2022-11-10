@@ -63,11 +63,7 @@ const sidebars = {
       label: '💻 APIs',
       items: [
         'dev-docs/api/admin-panel-api',
-        {
-          type: 'link',
-          label: 'REST API',
-          href: '/openapi'
-        },
+        'dev-docs/api/rest-api',
       ]
     }
   ],
