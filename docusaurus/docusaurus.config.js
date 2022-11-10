@@ -44,7 +44,7 @@ const config = {
           // lastVersion: '0.1.0',
           admonitions: {
             tag: ':::',
-            keywords: ['strapi'],
+            keywords: ['strapi', 'callout', 'prerequisites'],
             extendDefaults: true,
           },
         },

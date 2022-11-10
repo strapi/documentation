@@ -29,20 +29,72 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-[data-theme='dark'] .admonition--strapi a {
-  color: #FFF8E6;
-  text-decoration-color: #271fe0;
+
+
+
+/**
+ * Custom admonitions - dark mode
+ */
+[data-theme='dark'] .admonition--callout,
+[data-theme='dark'] .admonition--prerequisites {
+  color: #E3E3E3;
+  background-color: #32324D; /* neutral--800 */
+  border-left-color: #C0C0CF; /* neutral--300 */
+ }
+[data-theme='dark'] .admonition--callout a,
+[data-theme='dark'] .admonition--prerequisites a {
+  color: #E3E3E3;
+  text-decoration-color: #F6F6F9;
 }
+[data-theme='dark'] .admonition--callout code,
+[data-theme='dark'] .admonition--prerequisites code {
+  background-color: #212134;
+}
+
 [data-theme='dark'] .admonition--strapi {
   color: #F0F0FF;
+  background-color: #252264; /* not included in Figma palette */
+  border-left-color: #4945ff;
+}
+[data-theme='dark'] .admonition--strapi a {
+  color: #F0F0FF;
+  text-decoration-color: #7b79ff;
 }
 [data-theme='dark'] .admonition--strapi code {
-  background-color: #4945ff;
+  background-color: #181644; /* not included in the Figma palette */
+}
+
+/* style={isDarkMode ? {backgroundColor: '#7b79ff', borderLeftColor: '#4945ff'} : {backgroundColor: '#f0f0ff', borderLeftColor: '#4945ff'}} */
+/* style={isDarkMode ? {color: '#FFF8E6'} : {color: '#4945ff'}}  TITRE */
+
+/**
+ * Custom admonitions - light mode
+ */
+
+[data-theme='light'] .admonition--strapi {
+  color: #252264;
+  background-color: #F0F0FF;
+  border-left-color: #4945FF;
 }
 [data-theme='light'] .admonition--strapi a {
-  color: #4945ff;
+  color: #252264;
   text-decoration-color: #4945ff;
 }
 [data-theme='light'] .admonition--strapi code {
   background-color: #D9D8FF
+}
+[data-theme='light'] .admonition--callout,
+[data-theme='light'] .admonition--prerequisites {
+  color: #32324D;
+  background-color: #f6f6f9; /* neutral--100 */
+  border-left-color: #666687; /* neutral--600 */
+}
+[data-theme='light'] .admonition--callout code,
+[data-theme='light'] .admonition--prerequisites code {
+  background-color: #dcdce4;
+}
+[data-theme='light'] .admonition--callout a,
+[data-theme='light'] .admonition--prerequisites a {
+  color: #32324D;
+  text-decoration-color: #32324D;
 }
