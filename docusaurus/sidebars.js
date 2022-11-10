@@ -55,7 +55,8 @@ const sidebars = {
             'dev-docs/development/backend-customization/controllers',
             'dev-docs/development/backend-customization/middlewares',
           ]
-        }
+        },
+        'dev-docs/development/typescript'
       ]
     },
     {
