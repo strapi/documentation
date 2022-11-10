@@ -34,6 +34,8 @@
   text-transform: uppercase;
 }
 .admonition--prerequisites .checkbox-icon {
+  position: relative;
+  top: -.15em; /* visual centering fix */
   vertical-align: middle;
 }
 
