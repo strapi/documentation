@@ -415,7 +415,7 @@ Both the `injectComponent()` and `injectContentManagerComponent()` methods accep
 <details>
 <summary>Example: Inject a component in the informations box of the Edit View of the Content Manager:</summary>
 
-```jsx title="path: my-plugin/admin/src/index.js"
+```jsx title="my-plugin/admin/src/index.js"
 
 export default {
   bootstrap(app) {
@@ -432,9 +432,8 @@ export default {
 <details>
 <summary>Example: Creating a new injection zone and injecting it from a plugin to another one:</summary>
 
-```jsx
+```jsx title="my-plugin/admin/src/injectionZones.js"
 // Use the injection zone in a view
-// path: my-plugin/admin/src/injectionZones.js
 
 import { InjectionZone } from '@strapi/helper-plugin';
 
@@ -446,9 +445,10 @@ const HomePage = () => {
     </main>
   );
 };
+```
 
+```jsx title="my-plugin/admin/src/index.js"
 // Declare this injection zone in the register lifecycle of the plugin
-// path: my-plugin/admin/src/index.js
 
 export default {
   register() {
@@ -462,9 +462,10 @@ export default {
     });
   },
 }
+```
 
+```jsx title="my-other-plugin/admin/src/index.js"
 // Inject the component from a plugin in another plugin
-// path: my-other-plugin/admin/src/index.js
 
 export default {
   register() {
