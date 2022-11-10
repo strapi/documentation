@@ -143,7 +143,7 @@
   color: var(--strapi-neutral-100);
 }
 [data-theme='light'] .request {
-  background-color: var(--strapi-primary-100);
+  background-color: var(--strapi-neutral-100);
 }
 [data-theme='light'] .request p code {
   background-color: var(--strapi-primary-200);
@@ -196,18 +196,8 @@
 .request pre {
   padding: 1rem 0 0 1rem;
 }
-.request code {
-  /* color: var(--strapi-neutral-100); */
-}
-.request code .token {
-  /* color: var(--strapi-neutral-100); */
-}
 .request code .token.punctuation {
   color: #d3d3d3;
-}
-.request code .token.operator,
-.request code .token.property {
-  /* color: var(--strapi-neutral-100); */
 }
 .request code .token.string,
 .request code .token.attr-name,
@@ -248,7 +238,7 @@
   font-size: 100%;
 }
 [data-theme="light"] .response {
-  background-color: var(--strapi-primary-200);
+  background-color: var(--strapi-primary-100);
 }
 [data-theme="light"] .response-title {
   background-color: var(--strapi-neutral-800);
