@@ -275,6 +275,7 @@ export default ({ env }) => ({
 | GET    | /api/upload/files     | Get a list of files |
 | GET    | /api/upload/files/:id | Get a specific file |
 | POST   | /api/upload           | Upload files        |
+| POST   | /api/upload?id=x      | Update file info    |
 | DELETE | /api/upload/files/:id | Delete a file       |
 
 </div>
@@ -539,4 +540,32 @@ In our second example, you can upload and attach multiple pictures to the restau
   }
   // ...
 }
+```
+
+### Update file info
+
+Update a file in your application.
+
+The following parameters are accepted:
+
+- `fileInfo`: The fileInfo to update.
+
+```js
+import { FormData } from 'formdata-node';
+import fetch from 'node-fetch';
+
+const fileId = 50;
+const newFileData = {
+  alternativeText: 'My new alternative text for this image!',
+};
+
+const form = new FormData();
+
+form.append('fileInfo', JSON.stringify(newFileData));
+
+const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
+  method: 'post',
+  body: form,
+});
+
 ```
