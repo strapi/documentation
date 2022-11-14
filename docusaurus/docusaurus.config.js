@@ -83,7 +83,7 @@ const config = {
     ({
       announcementBar: {
         id: 'support_us',
-        content: "We're rebuilding everything from the ground up on this WIP website (see <a href='/docs/status.html'>status</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>",
+        content: "We're rebuilding everything from the ground up on this WIP website (see <a href='/docs/status.html'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>",
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
