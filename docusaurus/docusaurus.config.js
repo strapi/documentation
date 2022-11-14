@@ -8,17 +8,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://strapi-docs-docusaurus-poc.vercel.app/',
+  url: 'https://docs-next.strapi.io/',
   baseUrl: '/',
-  // onBrokenLinks: 'throw',
-  onBrokenLinks: 'warn',
+  onBrokenLinks: 'warn', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'warn',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'strapi', // Usually your GitHub org/user name.
-  projectName: 'documentation', // Usually your repo name.
+  // organizationName: 'strapi', // Usually your GitHub org/user name.
+  // projectName: 'documentation', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -40,7 +39,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/pwizla/documentation',
+            'https://github.com/strapi/documentation',
           // lastVersion: '0.1.0',
           admonitions: {
             tag: ':::',
@@ -84,7 +83,7 @@ const config = {
     ({
       announcementBar: {
         id: 'support_us',
-        content: "We're rebuilding everything from the ground up on this WIP website. Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>",
+        content: "We're rebuilding everything from the ground up on this WIP website (see <a href='/docs/status.html'>status</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>",
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
