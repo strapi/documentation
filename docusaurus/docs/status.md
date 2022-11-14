@@ -9,7 +9,7 @@ We will switch this website to be the main documentation once content parity wit
 Once the initial content is fully converted (see the progress below), we will gradually improve the documentation further, for instance, introducing a new structure and adding more content for both beginners and more advanced users. Stay tuned!
 
 <!-- TODO: update with actual communication link -->
-In the meantime, we would love to hear your feedback, [please let us know](https://forum.strapi.io).
+In the meantime, we would love to hear your feedback, so [please let us know](https://forum.strapi.io)!
 
 ***
 
