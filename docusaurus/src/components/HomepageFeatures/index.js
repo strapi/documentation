@@ -31,7 +31,7 @@ const FeatureList = [
         Learn how to consume Strapi's REST APIs by reading our API reference documentation.
       </>
     ),
-    link: '/openapi/'
+    link: '/docs/dev-docs/api/rest-api'
   },
 ];
 
