@@ -35,6 +35,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -47,13 +48,7 @@ const config = {
             extendDefaults: true,
           },
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://strapi.io/blog/',
-        },
+        blog: false, // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -83,7 +78,7 @@ const config = {
     ({
       announcementBar: {
         id: 'support_us',
-        content: "We're rebuilding our documentation from the ground up (see <a href='/docs/status.html'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
+        content: "We're rebuilding our documentation from the ground up (see <a href='/'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
         backgroundColor: '#fafbfc',
         textColor: '#091E42',
         isCloseable: false,
@@ -105,13 +100,6 @@ const config = {
             position: 'left',
             label: 'Developer Docs',
           },
-          // {to: '/blog', label: 'Blog', position: 'right'},
-          // {
-          //   type: 'docsVersionDropdown' // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions
-          // },
-          // {
-          //   type: 'localeDropdown' // disabled as I couldn't make i18n work: navbar shows up but files seem 404s 🤷
-          // }
           {
             type: 'doc',
             docId: 'user-docs/intro',

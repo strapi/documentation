@@ -1,12 +1,17 @@
+---
+slug: /
+custom_edit_url: null
+---
+
 # Welcome to the future 🚀<br/>(of Strapi Documentation)!
 
-We are transitioning to [a new documentation tool](https://docusaurus.io) to provide you with better, more inclusive, and more interactive documentation in the near future.
+We are transitioning to a new documentation tool to provide you with better, more inclusive, and more interactive documentation in the near future.
 
 This beta website contains the current draft of the new documentation.
 
-We will switch this website to be the main documentation once content parity with the existing, current Strapi [documentation](https://docs.strapi.io) is reached.
+We will switch this website to be the main documentation once content parity with the existing, complete Strapi documentation available at [docs.strapi.io](https://docs.strapi.io) is reached.
 
-Once the initial content is fully converted (see the progress below), we will gradually improve the documentation further, for instance, introducing a new structure and adding more content for both beginners and more advanced users. Stay tuned!
+Once the initial content is fully converted (see the progress below), we will gradually improve the documentation further, for instance, introducing a new structure and adding more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
 
 <!-- TODO: update with actual communication link -->
 In the meantime, we would love to hear your feedback, so [please let us know](https://forum.strapi.io)!
