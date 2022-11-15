@@ -63,8 +63,21 @@ const sidebars = {
       type: 'category',
       label: '💻 APIs',
       items: [
+        {
+          type: 'category',
+          label: 'REST API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest',
+          },
+          items: [
+            'dev-docs/api/rest/parameters',
+            'dev-docs/api/rest/populate-select',
+            'dev-docs/api/rest/filters-locale-publication',
+            'dev-docs/api/rest/sort-pagination',
+          ]
+        },
         'dev-docs/api/admin-panel-api',
-        'dev-docs/api/rest-api',
       ]
     }
   ],

@@ -1,15 +1,15 @@
 ---
 title: REST API 
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest.html
 ---
 
 # REST API
 
-The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) can be used when querying API endpoints to refine the results.
+The REST API allows accessing the [content-types](/docs/dev-docs/development/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) can be used when querying API endpoints to refine the results.
 
 :::caution
-The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md) to populate specific fields.
+The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/docs/dev-docs/api/rest/populate-select) to populate specific fields.
 :::
 
 ## Endpoints
@@ -77,7 +77,7 @@ For each Content-Type, the following endpoints are automatically generated:
 </details>
 
 :::note
-[Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
+[Components](/docs/dev-docs/development/backend-customization/models#components) don't have API endpoints.
 :::
 
 ## Requests
@@ -187,7 +187,7 @@ Returns an entry by `id`.
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/docs/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
 
 <ApiCall>
 
@@ -270,7 +270,7 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 </ApiCall>
 
 :::note
-Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
+Even with the [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/docs/dev-docs/plugins/i18n.md#updating-an-entry).
 :::
 
 ### Delete an entry

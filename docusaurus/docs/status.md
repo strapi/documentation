@@ -73,9 +73,9 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
     - [ ] TypeScript
     - [ ] Providers
   - [ ] 💻 Developer Resources
-    - [ ] [REST API](/docs/dev-docs/api/rest-api)
-      - [x] [API endpoints](/docs/dev-docs/api/rest-api)
-      - [ ] API parameters
+    - [ ] [REST API](/docs/dev-docs/api/rest)
+      - [x] [API endpoints](/docs/dev-docs/api/rest)
+      - [x] [API parameters](/docs/dev-docs/api/rest/parameters.md)
         - [ ] Filtering, Locale, and Publication State
         - [ ] Population & Field Selection
         - [ ] Sort & Pagination
