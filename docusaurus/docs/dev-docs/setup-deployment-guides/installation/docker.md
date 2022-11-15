@@ -1,5 +1,5 @@
 ---
-title: Custom Docker Container
+title: Docker
 displayed_sidebar: devDocsSidebar
 description: Quickly create a Docker container from a local project.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/docker.html
