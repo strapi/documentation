@@ -20,7 +20,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 
   - [ ] 🚀 Getting Started
     - [ ] Introduction
-    - [ ] [Quick Start Guide](/docs/dev-docs/quick-start)
+    - [x] [Quick Start Guide](/docs/dev-docs/quick-start)
     - [ ] FAQ
     - [ ] Usage information
   - [ ] ⚙️ Setup & Deployment
@@ -70,7 +70,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
     - [ ] Plugins extension
     - [ ] Plugins development
     - [ ] Custom fields
-    - [ ] TypeScript
+    - [x] [TypeScript](/docs/dev-docs/development/typescript)
     - [ ] Providers
   - [ ] 💻 Developer Resources
     - [ ] [REST API](/docs/dev-docs/api/rest)
