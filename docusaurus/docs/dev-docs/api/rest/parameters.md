@@ -9,19 +9,19 @@ import QsIntroShort from '/docs/snippets/qs-intro-short.md'
 
 # API parameters
 
-API parameters can be used with the [REST API](/docs/dev-docs/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
+API parameters can be used with the [REST API](/dev-docs/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
 
 The following API parameters are available:
 
 | Operator           | Type          | Description                                           |
 | ------------------ | ------------- | ----------------------------------------------------- |
-| `sort`             | String or Array  | [Sort the response](/docs/dev-docs/api/rest/sort-pagination.md#sorting) |
-| `filters`          | Object        | [Filter the response](/docs/dev-docs/api/rest/filters-locale-publication#filtering) |
-| `populate`         | String or Object | [Populate relations, components, or dynamic zones](/docs/dev-docs/api/rest/populate-select#population) |
-| `fields`           | Array         | [Select only specific fields to display](/docs/dev-docs/api/rest/populate-select#field-selection) |
-| `pagination`       | Object        | [Page through entries](/docs/dev-docs/api/rest/sort-pagination.md#pagination) |
-| `publicationState` | String        | [Select the Draft & Publish state](/docs/dev-docs/api/rest/filters-locale-publication#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
-| `locale`           | String or Array  | [Select one or multiple locales](/docs/dev-docs/api/rest/filters-locale-publication#locale) |
+| `sort`             | String or Array  | [Sort the response](/dev-docs/api/rest/sort-pagination.md#sorting) |
+| `filters`          | Object        | [Filter the response](/dev-docs/api/rest/filters-locale-publication#filtering) |
+| `populate`         | String or Object | [Populate relations, components, or dynamic zones](/dev-docs/api/rest/populate-select#population) |
+| `fields`           | Array         | [Select only specific fields to display](/dev-docs/api/rest/populate-select#field-selection) |
+| `pagination`       | Object        | [Page through entries](/dev-docs/api/rest/sort-pagination.md#pagination) |
+| `publicationState` | String        | [Select the Draft & Publish state](/dev-docs/api/rest/filters-locale-publication#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
+| `locale`           | String or Array  | [Select one or multiple locales](/dev-docs/api/rest/filters-locale-publication#locale) |
 
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)
 
