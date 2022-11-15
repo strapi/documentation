@@ -13,7 +13,7 @@ The [REST API](/docs/dev-docs/api/rest) offers the ability to filter results fou
 Using optional Strapi features can provide some more filters:
 
 - If the [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
-- If the [Draft & Publish](/user-docs/latest/content-manager/saving-and-publishing-content.md) is enabled, it's possible to filter based on a `live` or `draft` state.
+- If the [Draft & Publish](/docs/user-docs/content-manager/saving-and-publishing-content) is enabled, it's possible to filter based on a `live` or `draft` state.
 
 :::tip
 
@@ -330,7 +330,7 @@ await request(`/api/restaurants?${query}`);
 :::prerequisites
 
 - The [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) should be installed.
-- [Localization should be enabled for the content-type](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
+- [Localization should be enabled for the content-type](/user-docs/latest/content-type-builder/creating-new-content-type.md#creating-a-new-content-type).
 :::
 
 The `locale` API parameter can be used to [get entries from a specific locale](/docs/dev-docs/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter).
@@ -338,7 +338,7 @@ The `locale` API parameter can be used to [get entries from a specific locale](/
 ## Publication State
 
 :::prerequisites
-The [Draft & Publish](/user-docs/latest/content-manager/saving-and-publishing-content.md) feature should be enabled.
+The [Draft & Publish](/docs/user-docs/content-manager/saving-and-publishing-content) feature should be enabled.
 :::
 
 Queries can accept a `publicationState` parameter to fetch entries based on their publication state:

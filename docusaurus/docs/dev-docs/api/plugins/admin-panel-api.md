@@ -1,7 +1,3 @@
----
-id: admin-panel-api
----
-
 # Admin Panel API for plugins
 
 A Strapi [plugin](#) can interact with both the [back end](#) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/docs/user-docs/intro).

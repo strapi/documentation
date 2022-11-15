@@ -6,6 +6,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
+import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Sort & Pagination
 
@@ -29,14 +31,14 @@ The sorting order can be defined with:
 - `:asc` for ascending order (default order, can be omitted)
 - or `:desc` for descending order.
 
-::::api-call
-:::request Example request: Sort using 2 fields
+<ApiCall>
+<Request title="Example request: Sort using 2 fields">
 
 `GET /api/articles?sort[0]=title&sort[1]=slug`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -64,12 +66,13 @@ The sorting order can be defined with:
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle /></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -82,16 +85,16 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
-::::api-call
-:::request Example request: Sort using 2 fields and set the order
+<ApiCall>
+<Request title="Example request: Sort using 2 fields and set the order">
 
 `GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -119,9 +122,9 @@ await request(`/api/articles?${query}`);
 }
 ```
 
-:::
+</Response>
 
-::::
+</ApiCall>
 
 ::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
 

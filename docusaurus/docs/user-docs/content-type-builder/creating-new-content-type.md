@@ -12,7 +12,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 
 ## Creating a new content-type
 
-![Content-type creation](/img/assets/content-types-builder/content-type-creation.png)
+![Content-type creation](/img/assets/content-type-builder/content-type-creation.png)
 
 Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder sub navigation.
 
@@ -30,7 +30,7 @@ To create a new content-type:
       | Enable localization for this Content-Type | (if the [Internationalization plugin](#) is installed) Tick the box to allow the content-type to be managed in various locales. |
 
 6. Click on the **Continue** button.
-7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/docs/user-docs/content-types-builder/configuring-fields-content-type)).
+7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/docs/user-docs/content-type-builder/configuring-fields-content-type)).
 8. Click on the **Save** button.
 
 :::caution
@@ -39,7 +39,7 @@ New content-types are only considered created once they have been saved. Saving 
 
 ## Creating a new component
 
-![Component creation](/img/assets/content-types-builder/component-creation.png)
+![Component creation](/img/assets/content-type-builder/component-creation.png)
 
 Components are created from the same-named category of the Content-type Builder's sub navigation.
 
@@ -51,5 +51,5 @@ To create a new component:
    - Select an available category, or enter in the textbox a new category name to create one.
    - Choose an icon to represent the new component.
 3. Click on the **Continue** button.
-4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/docs/user-docs/content-types-builder/configuring-fields-content-type)).
+4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/docs/user-docs/content-type-builder/configuring-fields-content-type)).
 5. Click on the **Save** button.

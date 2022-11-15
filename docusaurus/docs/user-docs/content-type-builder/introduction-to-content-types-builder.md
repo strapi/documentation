@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+slug: /user-docs/content-type-builder
 ---
 
 # Introduction to the Content-type Builder
@@ -8,7 +9,7 @@ The Content-type Builder is a core plugin of Strapi. It is a feature that is alw
 
 Administrators can access the Content-type Builder from ![CTB icon](/img/assets/icons/content_types_builder.svg) _Content-type Builder_ in the main navigation of the admin panel.
 
-![Content-type Builder interface](/img/assets/content-types-builder/content-types-builder.png)
+![Content-type Builder interface](/img/assets/content-type-builder/content-types-builder.png)
 
 From the Content-type Builder, administrators can create and manage content-types: collection types and single types but also components.
 
@@ -20,8 +21,8 @@ All 3 are displayed as categories in the sub navigation of the Content-type Buil
 
 From each category of the Content-type Builder sub navigation, it is possible to:
 
-- click on an existing content-type or component to access it and edit it (see [Managing content-types](/docs/user-docs/content-types-builder/managing-content-types)),
-- or create a new content-type or component (see [Creating content-types](/docs/user-docs/content-types-builder/creating-new-content-type)).
+- click on an existing content-type or component to access it and edit it (see [Managing content-types](/docs/user-docs/content-type-builder/managing-content-types)),
+- or create a new content-type or component (see [Creating content-types](/docs/user-docs/content-type-builder/creating-new-content-type)).
 
 :::tip
 Click the search icon ![Search icon](/img/assets/icons/search.svg) in the Content-type Builder sub navigation to find a specific collection type, single type, or component.

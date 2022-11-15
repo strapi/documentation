@@ -19,7 +19,7 @@ In the Content-type Builder, fields can be added at the creation of a new conten
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
-<img src="/img/assets/content-types-builder/fields-selection.png" alt="Field selection" width="80%" />
+<img src="/img/assets/content-type-builder/fields-selection.png" alt="Field selection" width="80%" />
 
 ## Regular fields
 
@@ -397,7 +397,7 @@ Components are a combination of several fields. Components allow to create reusa
 
 When configuring a component through the Content-type Builder, it is possible to either:
 
-- create a new component by clicking on *Create a new component* (see [Creating a new component](/docs/user-docs/content-types-builder/creating-new-content-type#creating-a-new-component)),
+- create a new component by clicking on *Create a new component* (see [Creating a new component](/docs/user-docs/content-type-builder/creating-new-content-type#creating-a-new-component)),
 - or use an existing one by clicking on *Use an existing component*.
 
 <Tabs>

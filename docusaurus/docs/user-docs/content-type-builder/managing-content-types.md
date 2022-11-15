@@ -12,11 +12,11 @@ To manage a content-type or a component, click on its name in the Collection typ
 
 Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type of component, the right side of the Content-type Builder interface displays all available editing options.
 
-![Content-type Builder's edition interface](/img/assets/content-types-builder/content-types-builder_edition.png)
+![Content-type Builder's edition interface](/img/assets/content-type-builder/content-types-builder_edition.png)
 
 - Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/edit.svg) **Edit** button (1) allows to access the general settings of the content-type or component.
 - In the top right corner:
-  - the **Add new field** and **Save** buttons (2) allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/docs/user-docs/content-types-builder/configuring-fields-content-type)), or save any ongoing modification.
+  - the **Add new field** and **Save** buttons (2) allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/docs/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
   - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](#))
 - Below the previous editing options, a table (3) lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
   - Click on the edit button ![Edit icon](/img/assets/icons/edit.svg) to edit a field

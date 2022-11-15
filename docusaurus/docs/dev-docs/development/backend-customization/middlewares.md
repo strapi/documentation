@@ -1,9 +1,6 @@
 ---
-sidebar_label: Middlewares
+title: Middlewares
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Middlewares customization
 
@@ -11,9 +8,9 @@ import TabItem from '@theme/TabItem';
 
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are [configured and enabled](#) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](#)).
+- **Strapi middlewares** are [configured and enabled](/dev-docs/setup-deployment-guides/configurations/required/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
 
-- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](#).
+- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/development/backend-customization/routes#middlewares).
 
 :::
 
@@ -21,11 +18,11 @@ In Strapi, 2 middleware concepts coexist:
 
 A new application-level or API-level middleware can be implemented:
 
-- with the [interactive CLI command `strapi generate`](#)
-- or manually by creating a JavaScript file in the appropriate folder (see [project structure](#)):
+- with the [interactive CLI command `strapi generate`](/dev-docs/developer-resources/cli#strapi-generate)
+- or manually by creating a JavaScript file in the appropriate folder (see [project structure](/dev-docs/setup-deployment-guides/project-structure)):
   - `./src/middlewares/` for application-level middlewares
   - `./src/api/[api-name]/middlewares/` for API-level middlewares
-  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](#)
+  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/dev-docs/api/plugins/server-api#middlewares)
 
 Middlewares working with the REST API are functions like the following:
 
@@ -53,7 +50,7 @@ export default (config, { strapi })=> {
 </TabItem>
 </Tabs>
 
-Once created, custom middlewares should be added to the [middlewares configuration file](#) or Strapi won't load them.
+Once created, custom middlewares should be added to the [middlewares configuration file](/dev-docs/setup-deployment-guides/configurations/required/middlewares#loading-order) or Strapi won't load them.
 
 <details>
 <summary>Example of a custom timer middleware</summary>
@@ -97,7 +94,7 @@ export default () => {
 
 </details>
 
-The GraphQL plugin also allows [implementing custom middlewares](#), with a different syntax.
+The GraphQL plugin also allows [implementing custom middlewares](/dev-docs/plugins/graphql#middlewares), with a different syntax.
 
 ## Usage
 
