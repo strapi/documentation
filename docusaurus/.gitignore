@@ -20,5 +20,6 @@ yarn-debug.log*
 yarn-error.log*
 
 docs/.vuepress*
-docs/node_modules*
+docs/.vuepress/config.js
+docs/node_modules/**
 ../docs*
