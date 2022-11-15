@@ -154,7 +154,7 @@ const config = {
             items: [
               {
                 label: 'Blog',
-                to: '/blog',
+                to: 'https://strapi.io/blog',
               },
               {
                 label: 'GitHub',
