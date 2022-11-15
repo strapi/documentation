@@ -5,19 +5,21 @@ sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html
 ---
 
+import QsIntroFull from '/docs/snippets/qs-intro-full.md'
+import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
+
 # REST API: Population & Field Selection
 
 The [REST API](/docs/dev-docs/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
 
 :::tip
-
 <QsIntroFull />
-
-::::
+:::
 
 ## Field selection
 
-Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/docs/dev-docs/development/backend-customization/models#model-attributes) are returned:
+Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/development/backend-customization/models#model-attributes) are returned:
 
 - string types: string, text, richtext, enumeration, email, password, and uid,
 - date types: date, time, datetime, and timestamp,
@@ -26,14 +28,14 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 
 Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
 
-::::api-call
-:::request Example request: Return only title and body fields
+<ApiCall>
+<Request title="Example request: Return only title and body fields">
 
 `GET /api/users?fields[0]=title&fields[1]=body`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -52,12 +54,13 @@ Field selection does not work on relational, media, component, or dynamic zone f
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -70,7 +73,7 @@ const query = qs.stringify({
 await request(`/api/users?${query}`);
 ```
 
-:::
+</details>
 
 :::tip
 By default, fields are selected except relations, media, dynamic zones, and components, but you can specify a wildcard `*` instead of an array.
@@ -80,20 +83,20 @@ By default, fields are selected except relations, media, dynamic zones, and comp
 
 Queries can accept a `populate` parameter to populate various field types:
 
-- [relations & media fields](#relation-media-fields)
-- [components & dynamic zones](#component-dynamic-zones)
+- [relations & media fields](#relations--media-fields)
+- [components & dynamic zones](#components--dynamic-zones)
 - [creator fields](#populating-createdby-and-updatedby)
 
 It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
 
-::: note
+:::note
 
 - By default Strapi will not populate any type of fields.
 - It's currently not possible to return just an array of IDs. This is something that is currently under discussion.
 
 :::
 
-### Relation & Media fields
+### Relations & Media fields
 
 Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
 
@@ -105,14 +108,14 @@ If the Users & Permissions plugin is installed, the `find` permission must be en
 
 To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
 
-::::api-call
-:::request Example request
+<ApiCall>
+<Request title="Example request">
 
 `GET /api/articles?populate=%2A`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -152,12 +155,13 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -170,7 +174,7 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 #### Populate 1 level
 
@@ -178,14 +182,14 @@ To populate only specific relations one-level deep, use one of the following met
 - Use the populate parameter as an array and put the relation name inside.
 - Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following values: `true, false, t, f, 1, 0`.
 
-::::api-call
-:::request Example request: populate categories
+<ApiCall>
+<Request title="Example request: populate categories">
 
 `GET /api/articles?populate[0]=categories`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -215,12 +219,13 @@ To populate only specific relations one-level deep, use one of the following met
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 // Array method
@@ -232,6 +237,7 @@ const query = qs.stringify({
 });
 await request(`/api/articles?${query}`);
 ```
+
 ```js
 // Object method
 const qs = require('qs');
@@ -245,20 +251,20 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 #### Populate 2 levels
 
 To populate specific relations, one or several levels deep, use the LHS bracket notation for fields names in combination with the `populate` parameter.
 
-::::api-call
-:::request Example request: populate author and author.company
+<ApiCall>
+<Request title="Example request: populate author and author.company">
 
 `GET /api/articles?populate[author][populate][0]=company`
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -295,12 +301,13 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -316,27 +323,26 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 :::note
 There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
 
-### Component & Dynamic Zones
+### Components & Dynamic Zones
 
 The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 #### Deeply populate a 2-level component & media
 
-::::api-call
-:::request Example request
+<ApiCall>
+<Request title="Example request">
 
 `GET /api/articles?populate[0]=seoData&populate[1]=seoData.sharedImage&populate[2]=seoData.sharedImage.media`
 
+</Request>
 
-:::
-
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -377,12 +383,13 @@ The `populate` parameter is used to explicitly define which Dynamic zones, compo
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -399,19 +406,18 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 #### Deeply populate a dynamic zone with 2 components
 
-::::api-call
-:::request Example request
+<ApiCall>
+<Request title="Example request">
 
 `GET /api/articles?populate[testDZ][populate]=%2A`
 
+</Request>
 
-:::
-
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -446,13 +452,13 @@ await request(`/api/articles?${query}`);
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -469,7 +475,7 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 ### Populating createdBy and updatedBy
 
@@ -496,10 +502,9 @@ REST API requests using the `populate` parameter that include the `createdBy` or
 The `populateCreatorFields` property is not available to the GraphQL API.
 :::
 
-
 ### Combining Population with other operators
 
-By utilizing the `population` operator it is possible to combine other operators such as [field selection](/docs/dev-docs/api/rest/populate-select#field-selection), [filters](/docs/dev-docs/api/rest/filters-locale-publication), and [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. 
+By utilizing the `population` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
 
 :::caution
 The population and pagination operators cannot be combined.
@@ -509,15 +514,14 @@ See the following complex population examples:
 
 #### Populate with field selection
 
-::::api-call
-:::request Example request
+<ApiCall>
+<Request title="Example request">
 
 `GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
 
+</Request>
 
-:::
-
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -545,12 +549,13 @@ See the following complex population examples:
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -568,19 +573,18 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 #### Populate with filtering
 
-::::api-call
-:::request Example request
+<ApiCall>
+<Request title="Example request">
 
 `GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
 
+</Request>
 
-:::
-
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -610,12 +614,13 @@ await request(`/api/articles?${query}`);
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle/></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -637,4 +642,4 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>

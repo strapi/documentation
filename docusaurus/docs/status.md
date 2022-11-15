@@ -82,7 +82,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
       - [x] [API endpoints](/dev-docs/api/rest)
       - [x] [API parameters](/dev-docs/api/rest/parameters.md)
         - [ ] Filtering, Locale, and Publication State (→ [docs.strapi.io](#))
-        - [ ] Population & Field Selection (→ [docs.strapi.io](#))
+        - [x] [Population & Field Selection](/dev-docs/api/rest/populate-select)
         - [ ] Sort & Pagination (→ [docs.strapi.io](#))
     - [ ] GraphQL API (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html))
     - [ ] Entity Service API (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html))
