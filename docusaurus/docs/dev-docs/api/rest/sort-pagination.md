@@ -11,7 +11,7 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Sort & Pagination
 
-Entries that are returned by queries to the [REST API](/docs/dev-docs/api/rest) can be sorted and paginated.
+Entries that are returned by queries to the [REST API](/dev-docs/api/rest) can be sorted and paginated.
 
 :::tip
 
@@ -126,9 +126,10 @@ await request(`/api/articles?${query}`);
 
 </ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle /></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -141,7 +142,7 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 ## Pagination
 
@@ -164,13 +165,13 @@ To paginate results by page, use the following parameters:
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
-:::: api-call
-::: request Example request: Return only 10 entries on page 1
+<ApiCall>
+<Request title="Example request: Return only 10 entries on page 1">
 
 `GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
 
-:::
-::: response Example response
+</Request>
+<Response title="Example response">
 
 ```json
 {
@@ -188,12 +189,13 @@ To paginate results by page, use the following parameters:
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle /></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -209,7 +211,7 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
-:::
+</details>
 
 ### Pagination by offset
 
@@ -221,18 +223,18 @@ To paginate results by offset, use the following parameters:
 | `pagination[limit]`     | Integer | Number of entries to return                                    | 25      |
 | `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
 
-::: tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+:::tip
+The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/setup-deployment-guides/configurations/optional/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
 
-:::: api-call
-::: request Example request: Return only the first 10 entries using offset
+<ApiCall>
+<Request title="Example request: Return only the first 10 entries using offset">
 
 `GET /api/articles?pagination[start]=0&pagination[limit]=10`
 
+</Request>
 
-:::
-::: response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -249,12 +251,13 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
-::: details !!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-title.md)!!!
+<details>
+<summary><QsForQueryTitle /></summary>
 
-!!!include(developer-docs/latest/developer-resources/database-apis-reference/rest/snippets/qs-for-query-body.md)!!!
+<QsForQueryBody />
 
 ```js
 const qs = require('qs');
@@ -269,4 +272,5 @@ const query = qs.stringify({
 
 await request(`/api/articles?${query}`);
 ```
-:::
+
+</details>

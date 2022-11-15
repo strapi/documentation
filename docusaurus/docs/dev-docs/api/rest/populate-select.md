@@ -11,7 +11,7 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Population & Field Selection
 
-The [REST API](/docs/dev-docs/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
+The [REST API](/dev-docs/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
 
 :::tip
 <QsIntroFull />
