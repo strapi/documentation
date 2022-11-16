@@ -109,7 +109,7 @@ Exports your project data. The default file format is `.tar` compressed using `g
 | --encrypt        | boolean | Encrypt output file using the `aes-128-ecb` algorithm                                                                                   | true    |
 | --compress       | boolean | Compress output file using `gzip` compression                                                                                           | true    |
 | --archive        | boolean | Exports all backup files to a single `tar` archive                                                                                      | true    |
-| --key            | string  | requires `--encrypt true`,  pass the encryption key: --key [string] |                                                                                                           |         |
+| --key            | string  | requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string] |                                                                                                           |         |
 | --max-size       | integer | split final file when exceeding size in MB                                                                                              |         |
 | --max-size-jsonl | integer | split internal jsonl files when exceeding max size in MB                                                                                |         |
 | --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration) |         |
