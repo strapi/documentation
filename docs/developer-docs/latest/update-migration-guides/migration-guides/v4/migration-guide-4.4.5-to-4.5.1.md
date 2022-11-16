@@ -55,12 +55,13 @@ error: alter table <SOME_TABLE> add constraint <SOME_TABLE_INDEX>
 unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABLE>
 ```
 
-To remove the duplicated relationships, the following migration script file must be added to `./database/migrations`. The script automatically removes duplicates of any relationship in your database. The script will be automatically executed only once at the next launch of Strapi.
+To remove the duplicated relationships easily, the following migration script file was created. To use it, it has to be added added to `./database/migrations`. The script automatically removes duplicates of any relationship in the database. The script will be automatically executed only once at the next launch of Strapi.
 
-To add the script:
+To run the migration:
 
-1. In the `./database/migrations` folder, create a file named `2022.11.16T00.00.00.remove_duplicated_relationships.js`.
-2. Copy and paste the following code into the previously created file:
+1. Make a backup of the database in case something unexpected happens.
+2. In the `./database/migrations` folder, create a file named `2022.11.16T00.00.00.remove_duplicated_relationships.js`.
+3. Copy and paste the following code into the previously created file:
 
 ```jsx
 'use strict';
@@ -69,7 +70,6 @@ To add the script:
  * Get the link tables names that need to be updated
  */
 const getLinkTables = ({ strapi }) => {
-  // What about polymorphic relations?
   const contentTypes = strapi.db.metadata;
   const tablesToUpdate = {};
 
@@ -101,7 +101,7 @@ async function up(trx) {
     try {
       // Query to delete duplicates from a link table
       let query = `
-        CREATE TEMPORARY TABLE tmp as SELECT DISTINCT t2.id as id 
+        CREATE TEMPORARY TABLE tmp as SELECT DISTINCT t2.id as id
         FROM ?? as t1 JOIN ?? as t2
         ON t1.id < t2.id
       `;
@@ -109,9 +109,8 @@ async function up(trx) {
 
       // For each pivot column, add a on condition to the query
       table.pivotColumns.forEach(column => {
-        query = query + `AND t1.?? = t2.?? `;
-        pivotWhereParams.push(column);
-        pivotWhereParams.push(column);
+        query += ` AND t1.?? = t2.??`;
+        pivotWhereParams.push(column, column);
       });
 
       // Create temporary table with the ids of the repeated rows
@@ -121,7 +120,7 @@ async function up(trx) {
       await trx.raw(`DELETE FROM ?? WHERE id in (SELECT * FROM tmp)`, [table.name]);
     } finally {
       // Drop temporary table
-      await trx.raw(`DROP TABLE tmp`).catch(error => {}) /* Ignore error */;
+      await trx.raw(`DROP TABLE IF EXISTS tmp `);
     }
   }
 }
