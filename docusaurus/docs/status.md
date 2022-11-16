@@ -82,7 +82,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/services.html))
       - [ ] Models (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html))
       - [ ] Webhooks (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/webhooks.html))
-    - [ ] Admin panel customization (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/admin-customization.html))
+    - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
     - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
     - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
     - [ ] Custom fields (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/custom-fields.html#))
