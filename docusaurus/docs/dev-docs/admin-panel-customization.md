@@ -36,17 +36,16 @@ To make the admin panel accessible from `http://localhost:1337/dashboard`, use t
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
-//path: ./config/server.js
+```js title="./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
 
 });
+```
 
-
-// path: ./config/admin.js
+```js title="./config/admin.js"
 
 module.exports = ({ env }) => ({
   url: '/dashboard',
@@ -57,17 +56,16 @@ module.exports = ({ env }) => ({
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-//path: ./config/server.ts
+```js title="./config/server.ts"
 
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
 
 });
+```
 
-
-// path: ./config/admin.ts
+```js title="./config/admin.ts"
 
 export default ({ env }) => ({
   url: '/dashboard',
@@ -88,16 +86,15 @@ By default, the front end development server runs on `localhost:8000` but this c
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./config/server.js
+```js title="./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
 });
+```
 
-
-// path: ./config/admin.js
+```js title="./config/admin.js"
 
 module.exports = ({ env }) => ({
   host: 'my-host', // only used along with `strapi develop --watch-admin` command
@@ -110,16 +107,15 @@ module.exports = ({ env }) => ({
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./config/server.ts
+```js title="./config/server.ts"
 
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
 });
+```
 
-
-// path: ./config/admin.ts
+```js title="./config/admin.ts"
 
 export default ({ env }) => ({
   host: 'my-host', // only used along with `strapi develop --watch-admin` command
@@ -163,8 +159,7 @@ The `config` object accepts the following parameters:
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```jsx
-// path: ./my-app/src/admin/app.js
+```jsx title="./my-app/src/admin/app.js"
 
 import AuthLogo from './extensions/my-logo.png';
 import MenuLogo from './extensions/logo.png';
@@ -230,8 +225,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```jsx
-// path: ./my-app/src/admin/app.ts
+```jsx title="./my-app/src/admin/app.ts"
 
 import AuthLogo from './extensions/my-logo.png';
 import MenuLogo from './extensions/logo.png';
@@ -297,8 +291,7 @@ To update the list of available locales in the admin panel, use the `config.loca
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```jsx
-// path: ./my-app/src/admin/app.js
+```jsx title="./my-app/src/admin/app.js"
 
 export default {
   config: {
@@ -312,8 +305,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```jsx
-// path: ./my-app/src/admin/app.ts
+```jsx title="./my-app/src/admin/app.ts"
 
 export default {
   config: {
@@ -340,8 +332,7 @@ Translation key/value pairs are declared in `@strapi/admin/admin/src/translation
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./my-app/src/admin/app.js
+```js title="./my-app/src/admin/app.js"
 
 export default {
   config: {
@@ -364,8 +355,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./my-app/src/admin/app.ts
+```js title="./my-app/src/admin/app.ts"
 
 export default {
   config: {
@@ -392,8 +382,7 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./my-app/src/admin/app.js
+```js title="./my-app/src/admin/app.js"
 
 export default {
   config: {
@@ -415,8 +404,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./my-app/src/admin/app.ts
+```js title="./my-app/src/admin/app.ts"
 
 export default {
   config: {
@@ -522,7 +510,7 @@ To change the current WYSIWYG, you can install a [third-party plugin](https://ma
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
+```js title="./src/admin/app.js"
 // path: ./src/admin/app.js
 
 import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
@@ -538,8 +526,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./src/admin/app.ts
+```js title="./src/admin/app.ts"
 
 import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
 
@@ -606,21 +593,27 @@ Before deployment, the admin panel needs to be built, by running the following c
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
+
 ```sh
 yarn build
 ```
+
 </TabItem>
 
 <TabItem value="npm" label="NPM">
+
 ```sh
 npm run build
 ```
+
 </TabItem>
 
 <TabItem value="strapi-cli" label="Strapi CLI">
+
 ```sh
 strapi build
 ```
+
 </TabItem>
 
 </Tabs>
@@ -642,17 +635,15 @@ To deploy the front end and the back end on different servers, use the following
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./config/server.js
+```js title="./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});
+});```
 
-
-// path: ./config/admin.js
+```js title="./config/admin.js"
 
 module.exports = ({ env }) => ({
   url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
@@ -664,17 +655,15 @@ module.exports = ({ env }) => ({
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./config/server.ts
+```js title="./config/server.ts"
 
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});
+});```
 
-
-// path: ./config/admin.ts
+```js title="./config/admin.ts"
 
 export default ({ env }) => ({
   url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
