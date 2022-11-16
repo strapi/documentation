@@ -40,11 +40,7 @@ Stop the server before starting the upgrade.
 
 2. Save the edited `package.json` file.
 
-<!-- TODO: add additional steps if required -->
-
-3. …
-
-4. Run either `yarn` or `npm install` to install the new version.
+3. Run either `yarn` or `npm install` to install the new version.
 
 ::: tip
 If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
@@ -55,8 +51,8 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 This step is only required if you have relationship duplicates in your application. If you have them, the application will not start and you will see an error message in the terminal similar to:
 
 ```
-error: alter table <SOME_TABLE> add constraint <SOME_TABLE_INDEX> unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABLE>
-
+error: alter table <SOME_TABLE> add constraint <SOME_TABLE_INDEX>
+unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABLE>
 ```
 
 To remove the duplicated relationships, the following migration script file must be added to `./database/migrations`. The script automatically removes duplicates from any relationship in your database. The script will be automatically executed only once at the next launch of Strapi.
@@ -102,7 +98,8 @@ async function up(trx) {
     try {
       // Query to delete duplicates from a link table
       let query = `
-        CREATE TEMPORARY TABLE tmp as SELECT DISTINCT t2.id as id FROM ?? as t1 JOIN ?? as t2
+        CREATE TEMPORARY TABLE tmp as SELECT DISTINCT t2.id as id 
+        FROM ?? as t1 JOIN ?? as t2
         ON t1.id < t2.id
       `;
       const pivotWhereParams = [];
