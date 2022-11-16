@@ -100,20 +100,22 @@ options: [--browser <name>]
 
 ## strapi export <BetaBadge />
 
-Exports your project data.
+Exports your project data. The default file format is `.tar` compressed using `gzip` and encrypted using `aes-128-ecb`. The following table provides all of the available options as command line flags:
 
 **Options**
 
-| Option           | Type    | Description                                        | default |
-|------------------|---------|----------------------------------------------------|---------|
-| --encrypt        | boolean |                                                    | true    |
-| --compress       | boolean |                                                    | true    |
-| --archive        | boolean | Exports all backup files to a single `tar` archive | true    |
-| --key            | string  |                                                    |         |
-| --max-size       | integer |                                                    |         |
-| --max-size-jsonl | integer |                                                    |         |
-| --exclude        | string  |                                                    |         |
-| --help           |         | display the strapi export help                     |         |
+| Option           | Type    | Description                                                                                                                             | default |
+|------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
+| --encrypt        | boolean | Encrypt output file using the `aes-128-ecb` algorithm                                                                                   | true    |
+| --compress       | boolean | Compress output file using `gzip` compression                                                                                           | true    |
+| --archive        | boolean | Exports all backup files to a single `tar` archive                                                                                      | true    |
+| --key            | string  | requires `--encrypt true`,  pass the encryption key: --key [string] |                                                                                                           |         |
+| --max-size       | integer | split final file when exceeding size in MB                                                                                              |         |
+| --max-size-jsonl | integer | split internal jsonl files when exceeding max size in MB                                                                                |         |
+| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration) |         |
+| --help           |         | display the `strapi export` help commands                                                                                               |         |                                                                                |         |
+
+
 <!--## strapi import -->
 
 
