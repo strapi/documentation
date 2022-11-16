@@ -93,6 +93,9 @@ async function up(trx) {
 
   // Remove duplicates from link tables
   for (const table of linkTablesToUpdate) {
+    const tableExists = await strapi.db.getSchemaConnection().hasTable(table.name);
+    if (!tableExists) continue;
+
     strapi.log.info(`Deleting duplicates of table ${table.name}...`);
 
     try {
