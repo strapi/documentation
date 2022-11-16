@@ -98,9 +98,23 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
-## strapi export
+## strapi export <BetaBadge />
 
-## strapi import
+Exports your project data.
+
+**Options**
+
+| Option          | Type   | Description                        | Required |
+| --------------- | ------ | ---------------------------------- | -------- |
+| --encrypt | boolean | The administrator's first name     | true      |
+| --compress | string | The administrator's last name      | No       |
+| --key     | string | The administrator's email          | Yes      |
+| --max-size   | string | (max MB per file) | No       |
+| --max-size-jsonl |  XX   | XX                      |   |
+| --exclude | XX |xx | XX|
+| -h, --help      |        | display help for command           |          |
+
+<!--## strapi import -->
 
 
 ## strapi configuration:dump
