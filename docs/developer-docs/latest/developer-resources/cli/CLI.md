@@ -106,7 +106,7 @@ Exports your project data. The default file format is `.tar` compressed using `g
 
 | Option           | Type    | Description                                                                                                                             | default |
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
-| --encrypt        | boolean | Encrypt output file using the `aes-128-ecb` algorithm                                                                                   | true    |
+| --encrypt        | boolean | Encrypt output file using the `aes-128-ecb`. When set to true, the user will be prompted to enter an encryption key unless it is set using the `--key` option. algorithm                                                                                   | true    |
 | --compress       | boolean | Compress output file using `gzip` compression                                                                                           | true    |
 | --archive        | boolean | Exports all backup files to a single `tar` archive                                                                                      | true    |
 | --key            | string  | requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string] |                                                                                                           |         |
