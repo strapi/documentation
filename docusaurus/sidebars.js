@@ -41,6 +41,26 @@ const sidebars = {
             'dev-docs/installation/cli',
             'dev-docs/installation/docker',
           ]
+        },
+        {
+          type: 'category',
+          label: 'Configuration',
+          link: {
+            /**
+            * Use the 2 lines below to make sure that
+            * "Installation" in the TOC is a clickable link
+            * pointing to a page (i.e., type: 'doc') whose link target
+            * is defined as the 'id' property.
+            */
+            type: 'doc',
+            id: 'dev-docs/configurations',
+          },
+          items: [
+            // 'dev-docs/configurations/database',
+            // 'dev-docs/configurations/server',
+            // 'dev-docs/configurations/admin-panel',
+            // 'dev-docs/configurations/middlewares',
+          ]
         }
       ]
     },
