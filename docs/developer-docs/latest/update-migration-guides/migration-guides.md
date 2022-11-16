@@ -21,7 +21,7 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
 - [Migration guide from 4.2.x to 4.3.x](migration-guides/v4/migration-guide-4.2.x-to-4.3.x.md)
 - [Migration guide from 4.3.6 to 4.3.8](migration-guides/v4/migration-guide-4.3.6-to-4.3.8.md)
 - [Migration guide from 4.4.3 to 4.4.5](migration-guides/v4/migration-guide-4.4.3-to-4.4.5.md)
-- [Migration guide from 4.5.0 to 4.5.1](migration-guides/v4/migration-guide-4.4.5-to-4.5.1.md)
+- [Migration guide from 4.4.5 to 4.5.1](migration-guides/v4/migration-guide-4.4.5-to-4.5.1.md)
 
 ## v3 to v4 migration guides
 
