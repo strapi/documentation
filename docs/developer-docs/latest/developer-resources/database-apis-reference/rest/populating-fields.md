@@ -499,7 +499,13 @@ The `populateCreatorFields` property is not available to the GraphQL API.
 
 ### Combining Population with other operators
 
-By utilizing the `populate` operator it's possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) & [sort & pagination](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. See the following complex population examples:
+By utilizing the `population` operator it is possible to combine other operators such as [field selection](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection), [filters](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md), and [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md) in the population queries. 
+
+:::caution
+The population and pagination operators cannot be combined.
+:::
+
+See the following complex population examples:
 
 #### Populate with field selection
 
