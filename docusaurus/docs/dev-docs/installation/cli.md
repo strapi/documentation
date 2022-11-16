@@ -36,7 +36,7 @@ The following installation guide covers the most basic installation option using
 - Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
 <!-- 👇 Temporarily disabled while we update the Templates documentation -->
 <!-- - Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](./templates)). -->
-- Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/dev-docs/development/typescript).
+- Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/dev-docs/typescript).
 - Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
 
 For more information on available flags, see our [CLI documentation](/dev-docs/cli).
