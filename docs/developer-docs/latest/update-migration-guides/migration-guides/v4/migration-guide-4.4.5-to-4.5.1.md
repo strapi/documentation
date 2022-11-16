@@ -57,7 +57,7 @@ unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABL
 
 To remove the duplicated relationships easily, the following migration script file was created. It will automatically remove duplicates of any relationship in the database and will be executed only once at the next launch of Strapi.
 
-To run the migration:
+To prepare the migration:
 
 1. Make a backup of the database in case something unexpected happens.
 2. In the `./database/migrations` folder, create a file named `2022.11.16T00.00.00.remove_duplicated_relationships.js`.
