@@ -7,7 +7,7 @@ next: ./filtering-locale-publication.md
 
 import QsIntroShort from '/docs/snippets/qs-intro-short.md'
 
-# API parameters
+# REST API parameters
 
 API parameters can be used with the [REST API](/dev-docs/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
 
