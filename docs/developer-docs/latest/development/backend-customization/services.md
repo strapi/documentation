@@ -112,15 +112,15 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
 :::
 
-:::: details Example of an email service
+:::: details Example of a custom email service (using Nodemailer)
 
-The goal of a service is to store reusable functions. An `email` service could be useful to send emails from different functions in our codebase:
+The goal of a service is to store reusable functions. A `sendNewsletter` service could be useful to send emails from different functions in our codebase that have a specific purpose:
 
 <code-group>
 <code-block title=JAVASCRIPT>
 
 ```js
-// path: ./src/api/email/services/email.js
+// path: ./src/api/restaurant/services/restaurant.js
 
 
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -135,8 +135,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::email.email', ({ strapi }) => ({
-  send(from, to, subject, text) {
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+  sendNewsletter(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
       from,
@@ -155,7 +155,7 @@ module.exports = createCoreService('api::email.email', ({ strapi }) => ({
 <code-block title=TYPESCRIPT>
 
 ```js
-// path: ./src/api/email/services/email.ts
+// path: ./src/api/restaurant/services/restaurant.ts
 
 
 import { factories } from '@strapi/strapi'; 
@@ -171,7 +171,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
-  send(from, to, subject, text) {
+  sendNewsletter(from, to, subject, text) {
     // Setup e-mail data. 
     const options = {
       from,
@@ -189,13 +189,13 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 </code-block>
 </code-group>
 
-The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
+The service is now available through the `strapi.service('api::restaurant.restaurant').sendNewsletter(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
 
 <code-group>
 <code-block title=JAVASCRIPT>
 
 ```js
-// path: ./src/api/user/controllers/user.js
+// path: ./src/api/restaurant/controllers/restaurant.js
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
@@ -206,7 +206,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -221,7 +221,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 <code-block title=TYPESCRIPT>
 
 ```js
-// path: ./src/api/user/controllers/user.ts
+// path: ./src/api/restaurant/controllers/restaurant.ts
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
@@ -232,7 +232,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
     const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
