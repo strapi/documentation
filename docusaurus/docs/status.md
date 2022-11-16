@@ -9,9 +9,15 @@ We are transitioning to a new documentation tool to provide you with better, mor
 
 This beta website contains the current draft of the new documentation.
 
-We will switch this website to be the main documentation once content parity with the existing, complete Strapi documentation → [docs.strapi.io](https:/.strapi.io) is reached.
+We will switch this website to be the main documentation once content parity with the existing, complete Strapi documentation available at [docs.strapi.io](https:/.strapi.io) is reached.
 
-Once the initial content is fully converted (see the progress below), we will gradually improve the documentation further, for instance, introducing a new structure and adding more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
+To find what you're looking for on this beta website:
+
+- click on one of the Developer Docs or User Guide links at the top of the page then browse from there
+- use the search bar at the top right
+- or use the content conversion progress section below for a complete list of existing and upcoming pages
+
+Once the initial content is fully converted, we will gradually improve the documentation further, adding a new homepage, introducing a new structure, and adding more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
 
 <!-- TODO: update with actual communication link -->
 In the meantime, we would love to hear your feedback, so [please let us know](https://forum.strapi.io)!
@@ -22,6 +28,11 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 
 <details>
 <summary>Developer documentation ▮▯▯▯▯▯▯▯▯▯ ~5% complete</summary>
+
+The following list is a sitemap of all the current and upcoming content for the Developer Docs:
+
+- Pages that have been already updated have a ticked checkbox next to their name. Click on the page title to visit the page.
+- For pages that have not been updated yet, click on the "→ docs.strapi.io" link to visit the page on our current, complete website.
 
   - [ ] 🚀 Getting Started
     - [ ] Introduction (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html))
@@ -170,6 +181,11 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 
 <details>
 <summary>User Guide ▮▮▯▯▯▯▯▯▯▯ ~15% complete</summary>
+
+The following list is a sitemap of all the current and upcoming content for the User Guide:
+
+- Pages that have been already updated have a ticked checkbox next to their name. Click on the page title to visit the page.
+- For pages that have not been updated yet, click on the "→ docs.strapi.io" link to visit the page on our current, complete website.
 
   - [x] [Introduction](/user-docs/intro)
   - [ ] Content Manager 
