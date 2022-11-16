@@ -100,7 +100,7 @@ options: [--browser <name>]
 
 ## strapi export <BetaBadge />
 
-Exports your project data. The default file format is `.tar` compressed using `gzip` and encrypted using `aes-128-ecb`. The following table provides all of the available options as command line flags:
+Exports your project data when you specify a filename. The default file format is `.tar` compressed using `gzip` and encrypted using `aes-128-ecb`. The following table provides all of the available options as command line flags:
 
 **Options**
 
@@ -113,7 +113,20 @@ Exports your project data. The default file format is `.tar` compressed using `g
 | --max-size       | integer | split final file when exceeding size in MB                                                                                              |         |
 | --max-size-jsonl | integer | split internal jsonl files when exceeding max size in MB                                                                                |         |
 | --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration) |         |
-| --help           |         | display the `strapi export` help commands                                                                                               |         |                                                                                |         |
+| --help           |         | display the `strapi export` help commands                                             |         |            |
+
+
+**Examples**
+
+``` sh
+
+#examples of strapi export:
+
+yarn strapi export <your-filename.tar> #exports your data with the default parameters
+
+yarn strapi export <your-filename.tar> --encrypt false #exports your data without encryption
+
+```
 
 
 <!--## strapi import -->
