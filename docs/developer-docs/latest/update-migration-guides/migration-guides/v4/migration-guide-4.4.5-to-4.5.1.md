@@ -55,7 +55,7 @@ error: alter table <SOME_TABLE> add constraint <SOME_TABLE_INDEX>
 unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABLE>
 ```
 
-To remove the duplicated relationships easily, the following migration script file was created. It will automatically removes duplicates of any relationship in the database and will be executed only once at the next launch of Strapi.
+To remove the duplicated relationships easily, the following migration script file was created. It will automatically remove duplicates of any relationship in the database and will be executed only once at the next launch of Strapi.
 
 To run the migration:
 
