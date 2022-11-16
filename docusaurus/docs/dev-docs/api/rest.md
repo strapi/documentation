@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API
 
-The REST API allows accessing the [content-types](/docs/dev-docs/development/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/api-parameters) can be used when querying API endpoints to refine the results.
+The REST API allows accessing the [content-types](/docs/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/api-parameters) can be used when querying API endpoints to refine the results.
 
 :::caution
 The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/docs/dev-docs/api/rest/populate-select) to populate specific fields.
@@ -77,7 +77,7 @@ For each Content-Type, the following endpoints are automatically generated:
 </details>
 
 :::note
-[Components](/docs/dev-docs/development/backend-customization/models#components) don't have API endpoints.
+[Components](/docs/dev-docs/backend-customization/models#components) don't have API endpoints.
 :::
 
 ## Requests

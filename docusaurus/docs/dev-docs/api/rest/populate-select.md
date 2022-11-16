@@ -19,7 +19,7 @@ The [REST API](/dev-docs/api/rest) by default does not populate any relations, m
 
 ## Field selection
 
-Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/development/backend-customization/models#model-attributes) are returned:
+Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/backend-customization/models#model-attributes) are returned:
 
 - string types: string, text, richtext, enumeration, email, password, and uid,
 - date types: date, time, datetime, and timestamp,

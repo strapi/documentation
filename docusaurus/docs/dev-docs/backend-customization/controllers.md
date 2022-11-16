@@ -3,9 +3,9 @@ import TabItem from '@theme/TabItem';
 
 # Controllers
 
-Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/development/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/development/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
+Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
 
-In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/development/backend-customization/services) to organize the code into re-usable parts.
+In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/backend-customization/services) to organize the code into re-usable parts.
 
 ## Implementation
 
@@ -15,7 +15,7 @@ Controllers can be [generated or added manually](#adding-a-new-controller). Stra
 
 A new controller can be implemented:
 
-- with the [interactive CLI command `strapi generate`](/dev-docs/developer-resources/cli)
+- with the [interactive CLI command `strapi generate`](/dev-docs/cli)
 - or manually by creating a JavaScript file:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
   - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/dev-docs/api/plugins/server-api))
@@ -113,12 +113,12 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </Tabs>
 
 Each controller action can be an `async` or `sync` function.
-Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/development/backend-customization/requests-responses#requests) and the [response context](/dev-docs/development/backend-customization/requests-responses#responses).
+Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#requests) and the [response context](/dev-docs/backend-customization/requests-responses#responses).
 
 <details>
 <summary>Example: GET /hello route calling a basic controller</summary>
 
-A specific `GET /hello` [route](/dev-docs/development/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
+A specific `GET /hello` [route](/dev-docs/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
 
 <Tabs groupId="js-ts">
 
@@ -179,7 +179,7 @@ export default {
 </details>
 
 :::note
-When a new [content-type](/dev-docs/development/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
+When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
 ### Extending core controllers
@@ -316,7 +316,7 @@ async delete(ctx) {
 
 ## Usage
 
-Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/dev-docs/development/backend-customization/services) can call controllers, and in this case the following syntax should be used:
+Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/dev-docs/backend-customization/services) can call controllers, and in this case the following syntax should be used:
 
 ```js
 // access an API controller
