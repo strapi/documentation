@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API
 
-The REST API allows accessing the [content-types](/docs/dev-docs/development/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) can be used when querying API endpoints to refine the results.
+The REST API allows accessing the [content-types](/docs/dev-docs/development/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/api-parameters) can be used when querying API endpoints to refine the results.
 
 :::caution
 The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/docs/dev-docs/api/rest/populate-select) to populate specific fields.
@@ -94,7 +94,7 @@ Requests return a response as an object which usually includes the following key
 
 - `meta` (object): information about pagination, publication state, available locales, etc.
 
-- `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
+- `error` (object, _optional_): information about any [error](/dev-docs/error-handling) thrown by the request
 
 :::note
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
@@ -102,7 +102,7 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 ### Get entries
 
-Returns entries matching the query filters (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) documentation).
+Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/api-parameters) documentation).
 
 <ApiCall>
 

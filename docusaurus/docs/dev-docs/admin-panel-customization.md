@@ -133,7 +133,7 @@ export default ({ env }) => ({
 Before configuring any admin panel customization option, make sure to:
 
 - rename the default `app.example.js` file into `app.js`,
-- and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/dev-docs/development/plugins-extension.md)).
+- and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/dev-docs/plugins-extension)).
 :::
 
 The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
@@ -146,7 +146,7 @@ The `config` object accepts the following parameters:
 | --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#logos) on login screen                                                    |
 | `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#favicon)                                                        |
-| `locales`       | Array of Strings | Defines availables locales (see [updating locales](/dev-docs/development/admin-panel-customization#locales)) |
+| `locales`       | Array of Strings | Defines availables locales (see [updating locales](#locales)) |
 | `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
 | `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
 | `theme.light` and `theme.dark` | Object           | [Overwrite theme properties](#theme-extension) for Light and Dark modes                                                         |
@@ -505,13 +505,12 @@ The former syntax for `config.theme` without `light` or `dark` keys is deprecate
 
 ### WYSIWYG editor
 
-To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/api/admin-panel#bootstrap) and the [extensions](#extension) system:
+To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/api/plugins/admin-panel-api#bootstrap) and the [extensions](#extension) system:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
 ```js title="./src/admin/app.js"
-// path: ./src/admin/app.js
 
 import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
 
@@ -542,7 +541,7 @@ export default {
 
 ### Email templates
 
-Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/latest/settings/configuring-users-permissions-plugin-settings.md#configuring-email-templates).
+Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
 
 ### Webpack configuration
 
@@ -575,7 +574,7 @@ Only `./src/admin/app.js` and the files under the `./src/admin/extensions` folde
 
 There are 2 use cases to extend the admin panel:
 
-- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/dev-docs/api/admin-panel).
+- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/dev-docs/api/plugins/admin-panel-api).
 
 - A Strapi user only needs to extend a specific instance of a Strapi application. This can be done by directly updating the `./src/admin/app.js` file, which can import any file located in `./src/admin/extensions`.
 
@@ -679,5 +678,5 @@ After running `yarn build` with this configuration, the `build` folder will be c
 The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
 
 :::note
-If you add a path to the `url` option, it won't prefix your app. To do so, use a proxy server like Nginx (see [optional software guides](/developer-docs/latest/setup-deployment-guides/deployment.md#optional-software-guides)).
+If you add a path to the `url` option, it won't prefix your app. To do so, use a proxy server like Nginx (see [optional software guides](/dev-docs/deployment#optional-software-guides)).
 :::
