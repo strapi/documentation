@@ -104,16 +104,16 @@ Exports your project data.
 
 **Options**
 
-| Option          | Type   | Description                        | Required |
-| --------------- | ------ | ---------------------------------- | -------- |
-| --encrypt | boolean | The administrator's first name     | true      |
-| --compress | string | The administrator's last name      | No       |
-| --key     | string | The administrator's email          | Yes      |
-| --max-size   | string | (max MB per file) | No       |
-| --max-size-jsonl |  XX   | XX                      |   |
-| --exclude | XX |xx | XX|
-| -h, --help      |        | display help for command           |          |
-
+| Option           | Type    | Description                                        | default |
+|------------------|---------|----------------------------------------------------|---------|
+| --encrypt        | boolean |                                                    | true    |
+| --compress       | boolean |                                                    | true    |
+| --archive        | boolean | Exports all backup files to a single `tar` archive | true    |
+| --key            | string  |                                                    |         |
+| --max-size       | integer |                                                    |         |
+| --max-size-jsonl | integer |                                                    |         |
+| --exclude        | string  |                                                    |         |
+| --help           |         | display the strapi export help                     |         |
 <!--## strapi import -->
 
 
