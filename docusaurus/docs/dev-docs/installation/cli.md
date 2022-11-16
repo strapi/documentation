@@ -39,7 +39,7 @@ The following installation guide covers the most basic installation option using
 - Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/dev-docs/development/typescript).
 - Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
 
-For more information on available flags, see our [CLI documentation](/docs/dev-docs/developer-resources/cli/cli).
+For more information on available flags, see our [CLI documentation](/dev-docs/cli).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 :::

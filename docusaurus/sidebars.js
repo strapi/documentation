@@ -18,7 +18,7 @@ const sidebars = {
 
   // But you can create a sidebar manually
   devDocsSidebar: [
-    'dev-docs/hello',
+    'dev-docs/intro',
     'dev-docs/quick-start',
     {
       type: 'category',
@@ -35,11 +35,11 @@ const sidebars = {
             * is defined as the 'id' property.
             */
             type: 'doc',
-            id: 'dev-docs/setup-deployment-guides/installation',
+            id: 'dev-docs/installation',
           },
           items: [
-            'dev-docs/setup-deployment-guides/installation/cli',
-            'dev-docs/setup-deployment-guides/installation/docker',
+            'dev-docs/installation/cli',
+            'dev-docs/installation/docker',
           ]
         }
       ]
@@ -48,19 +48,20 @@ const sidebars = {
       type: 'category',
       label: '🔧 Development',
       items: [
+        'dev-docs/admin-panel-customization',
         {
           type: 'category',
           label: 'Back-end customization',
           link: {
             type: 'doc',
-            id: 'dev-docs/development/backend-customization',
+            id: 'dev-docs/backend-customization',
           },
           items: [
-            'dev-docs/development/backend-customization/controllers',
-            'dev-docs/development/backend-customization/middlewares',
+            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/middlewares',
           ]
         },
-        'dev-docs/development/typescript'
+        'dev-docs/typescript'
       ]
     },
     {

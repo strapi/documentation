@@ -59,7 +59,7 @@ You now have access to the [admin panel](http://localhost:1337/admin):
 ![Admin panel screenshot: dashboard](/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel_2.png)
 
 :::callout 🥳 CONGRATULATIONS!
-You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
+You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/intro), or proceed to part B below.
 :::
 
 ## 🛠 Part B: Build your content
@@ -231,6 +231,6 @@ Keep on creating amazing content!
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-- 👉 [create an API token](/user-docs/latest/settings/managing-global-settings.md#managing-api-tokens) to restrict access to your API,
-- 👉 learn how to use Strapi's [REST](/docs/dev-docs/api/rest) and [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) APIs to query the content,
-- 👉 and [customize your Strapi back end](/developer-docs/latest/development/backend-customization.md) and [admin panel](/developer-docs/latest/development/admin-customization.md). -->
+- 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API,
+- 👉 learn how to use Strapi's [REST](/docs/dev-docs/api/rest) and [GraphQL](/dev-docs/api/graphql) APIs to query the content,
+- 👉 and [customize your Strapi back end](/developer-docs/latest/development/backend-customization.md) and [admin panel](/dev-docs/development/admin-panel-customization). -->

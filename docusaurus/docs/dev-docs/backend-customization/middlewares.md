@@ -26,7 +26,7 @@ A new application-level or API-level middleware can be implemented:
 
 Middlewares working with the REST API are functions like the following:
 
-<Tabs groupId="jsts">
+<Tabs groupId="js-ts">
 <TabItem value="js" label="JAVASCRIPT">
 
 ```js title="./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.js"
@@ -55,7 +55,7 @@ Once created, custom middlewares should be added to the [middlewares configurati
 <details>
 <summary>Example of a custom timer middleware</summary>
 
-<Tabs groupId="jsts">
+<Tabs groupId="js-ts">
 <TabItem value="js" label="JAVASCRIPT">
 
 ```js title="path: /config/middlewares.js"

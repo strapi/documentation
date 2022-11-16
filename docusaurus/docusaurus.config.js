@@ -96,7 +96,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'dev-docs/hello',
+            docId: 'dev-docs/intro',
             position: 'left',
             label: 'Developer Docs',
           },
@@ -128,7 +128,7 @@ const config = {
               },
               {
                 label: 'Dev Docs',
-                to: '/docs/dev-docs/hello',
+                to: '/docs/dev-docs/intro',
               },
             ],
           },

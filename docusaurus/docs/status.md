@@ -40,9 +40,9 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [ ] FAQ (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/troubleshooting.html))
     - [ ] Usage information (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/usage-information.html))
   - [ ] ⚙️ Setup & Deployment
-    - [x] [Installation](/dev-docs/setup-deployment-guides/installation)
-      - [x] [CLI](/dev-docs/setup-deployment-guides/installation/cli)
-      - [x] [Docker](/dev-docs/setup-deployment-guides/installation/docker)
+    - [x] [Installation](/dev-docs/installation)
+      - [x] [CLI](/dev-docs/installation/cli)
+      - [x] [Docker](/dev-docs/installation/docker)
     - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
     - [ ] Required configurations
         - [ ] Database configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html))
@@ -74,10 +74,10 @@ The following list is a sitemap of all the current and upcoming content for the 
         - [ ] HAProxy (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html))
         - [ ] Nginx (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html))
   - [ ] 🔧 Development
-    - [x] [Back-end customization](/dev-docs/development/backend-customization)
+    - [x] [Back-end customization](/dev-docs/backend-customization)
       - [ ] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/routes.html))
-      - [x] [Middlewares](/dev-docs/development/backend-customization/middlewares)
-      - [x] [Controllers](/dev-docs/development/backend-customization/controllers)
+      - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
+      - [x] [Controllers](/dev-docs/backend-customization/controllers)
       - [ ] Requests & Responses (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#requests))
       - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/services.html))
       - [ ] Models (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html))
@@ -86,7 +86,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
     - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
     - [ ] Custom fields (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/custom-fields.html#))
-    - [x] [TypeScript](/dev-docs/development/typescript)
+    - [x] [TypeScript](/dev-docs/typescript)
     - [ ] Providers (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/providers.html))
   - [ ] 💻 Developer Resources
     - [x] [REST API](/dev-docs/api/rest)

@@ -20,7 +20,7 @@ A new controller can be implemented:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
   - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/dev-docs/api/plugins/server-api))
 
-<Tabs groupId="jsts">
+<Tabs groupId="js-ts">
 <TabItem value="js" label="JAVASCRIPT">
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
@@ -120,7 +120,7 @@ Every action receives a context object (`ctx`) as a parameter. `ctx` contains th
 
 A specific `GET /hello` [route](/dev-docs/development/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
 
-<Tabs groupId="jsts">
+<Tabs groupId="js-ts">
 
 <TabItem value="js" label="JAVASCRIPT">
 
