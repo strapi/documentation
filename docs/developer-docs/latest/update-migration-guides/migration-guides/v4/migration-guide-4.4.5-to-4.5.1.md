@@ -1,12 +1,12 @@
 ---
-title: Migrate from 4.5.0 to 4.5.1 - Strapi Developer Docs
-description: Learn how you can migrate your Strapi application from 4.5.0 to 4.5.1.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.5.0-to-4.5.1.html
+title: Migrate from 4.4.5 to 4.5.1 - Strapi Developer Docs
+description: Learn how you can migrate your Strapi application from 4.4.5 to 4.5.1.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.4.5-to-4.5.1.html
 ---
 
-# v4.5.0 to v4.5.1 migration guide
+# v4.4.5 to v4.5.1 migration guide
 
-The Strapi v4.5.0 to v4.5.1 migration guide upgrades v4.5.0 to v4.5.1. We introduced unique indices on relationships tables and the application will not start if there are duplicated relationships. The migration guide consists of:
+The Strapi v4.4.5 to v4.5.1 migration guide upgrades v4.4.5 to v4.5.1. We introduced unique indices on relationships tables and the application will not start if there are duplicated relationships. The migration guide consists of:
 
 - Upgrading the application dependencies,
 - Installing database migration script (optional)
