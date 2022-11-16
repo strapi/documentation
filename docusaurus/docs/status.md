@@ -74,7 +74,8 @@ The following list is a sitemap of all the current and upcoming content for the 
         - [ ] HAProxy (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html))
         - [ ] Nginx (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html))
   - [ ] 🔧 Development
-    - [x] [Back-end customization](/dev-docs/backend-customization)
+    - [ ] Back-end customization
+      - [x] [Introduction](/dev-docs/backend-customization)
       - [ ] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/routes.html))
       - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
       - [x] [Controllers](/dev-docs/backend-customization/controllers)
