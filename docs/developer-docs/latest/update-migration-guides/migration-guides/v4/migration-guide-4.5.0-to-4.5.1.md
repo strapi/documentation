@@ -6,36 +6,42 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 # v4.5.0 to v4.5.1 migration guide
 
-The Strapi v4.5.0 to v4.5.1 migration guide upgrades v4.5.0 to v4.5.1. The migration … 
+The Strapi v4.5.0 to v4.5.1 migration guide upgrades v4.5.0 to v4.5.1. We introduced unique indices on relationships tables and the application will not start if it has duplicates. The migration guide consists of:
+
+- Upgrading the application dependencies,
+- Installing database migration script (optional)
+- Reinitializing the application.
 
 <!-- TODO: explain what the migration focuses on (i.e. what breaking changes it fixes). -->
 
-## Upgrading the application dependencies
+## Upgrading the application dependencies to 4.5.1
 
 :::prerequisites
 Stop the server before starting the upgrade.
 :::
 
 <!-- TODO: update version numbers below 👇 -->
+
 1. Upgrade all of the Strapi packages in `package.json` to `4.5.1`:
 
-    ```json
-    // path: package.json
+   ```json
+   // path: package.json
 
-    {
-      // ...
-      "dependencies": {
-        "@strapi/strapi": "4.5.1",
-        "@strapi/plugin-users-permissions": "4.5.1",
-        "@strapi/plugin-i18n": "4.5.1",
-        // ...
-      }
-    }
-    ```
+   {
+     // ...
+     "dependencies": {
+       "@strapi/strapi": "4.5.1",
+       "@strapi/plugin-users-permissions": "4.5.1",
+       "@strapi/plugin-i18n": "4.5.1"
+       // ...
+     }
+   }
+   ```
 
 2. Save the edited `package.json` file.
 
 <!-- TODO: add additional steps if required -->
+
 3. …
 
 4. Run either `yarn` or `npm install` to install the new version.
@@ -44,7 +50,86 @@ Stop the server before starting the upgrade.
 If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
 :::
 
-## Fixing the breaking changes
+## Installing database migration script (optional)
+
+This step is only required if you have relationship duplicates in your application. If you have them, the application will not start and you will see an error message in the terminal similar to:
+
+```
+error: alter table <SOME_TABLE> add constraint <SOME_TABLE_INDEX> unique (<COLUMN_NAME>, <COLUMN_NAME>) - could not create unique index <SOME_TABLE>
+
+```
+
+To remove the duplicated relationships, the following migration script file must be added to `./database/migrations`. The script automatically removes duplicates from any relationship in your database. The script will be automatically executed only once at the next launch of Strapi.
+
+To add the script:
+
+1. In the `./database/migrations` folder, create a file named `2022.11.16T00.00.00.remove_duplicated_relationships.js`.
+2. Copy and paste the following code into the previously created file:
+
+```jsx
+'use strict';
+
+/**
+ * Get the link tables names that need to be updated
+ */
+const getLinkTables = ({ strapi }) => {
+  // What about polymorphic relations?
+  const contentTypes = strapi.db.metadata;
+  const tablesToUpdate = {};
+
+  contentTypes.forEach(contentType => {
+    // Get attributes
+    const attributes = contentType.attributes;
+
+    // For each relation type, add the joinTable name to tablesToUpdate
+    Object.values(attributes).forEach(attribute => {
+      if (attribute.type === 'relation' && attribute.joinTable) {
+        tablesToUpdate[attribute.joinTable.name] = attribute.joinTable;
+      }
+    });
+  });
+
+  return Object.values(tablesToUpdate);
+};
+
+async function up(trx) {
+  const linkTablesToUpdate = getLinkTables({ strapi });
+
+  // Remove duplicates from link tables
+  for (const table of linkTablesToUpdate) {
+    strapi.log.info(`Deleting duplicates of table ${table.name}...`);
+
+    try {
+      // Query to delete duplicates from a link table
+      let query = `
+        CREATE TEMPORARY TABLE tmp as SELECT DISTINCT t2.id as id FROM ?? as t1 JOIN ?? as t2
+        ON t1.id < t2.id
+      `;
+      const pivotWhereParams = [];
+
+      // For each pivot column, add a on condition to the query
+      table.pivotColumns.forEach(column => {
+        query = query + `AND t1.?? = t2.?? `;
+        pivotWhereParams.push(column);
+        pivotWhereParams.push(column);
+      });
+
+      // Create temporary table with the ids of the repeated rows
+      await trx.raw(query, [table.name, table.name, ...pivotWhereParams]);
+
+      // Delete repeated rows from the original table
+      await trx.raw(`DELETE FROM ?? WHERE id in (SELECT * FROM tmp)`, [table.name]);
+    } finally {
+      // Drop temporary table
+      await trx.raw(`DROP TABLE tmp`).catch(error => {}) /* Ignore error */;
+    }
+  }
+}
+
+async function down() {}
+
+module.exports = { up, down };
+```
 
 <!-- TODO: complete this part -->
 
