@@ -23,9 +23,9 @@ Onboarding of users will be done in batches. You will be notified via email when
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* A [GitHub](https://github.com) account
-* GitHub repository for your Strapi application(s)
-* Strapi version 4.1+
+* Strapi version `4.4.x` or higher
+* Database: PostgreSQL, MySQL, or MariaDB
+* Project(s) source code hosted on [GitHub](https://github.com)
 
 ::: tip
 The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
