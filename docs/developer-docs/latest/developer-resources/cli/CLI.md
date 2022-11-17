@@ -126,11 +126,11 @@ The following table provides all of the available options as command line flags:
 
 #examples of strapi export:
 
-strapi export <your-filename.tar> #exports your data with the default parameters.
+strapi export <your-filename> #exports your data with the default parameters.
 
-strapi export <your-filename.tar> --encrypt false #exports your data without encryption.
+strapi export <your-filename> --encrypt false #exports your data without encryption.
 
-strapi export <your-filename.tar> --max-size 100 #exports your data as multiple files with a maximum file size of 100 MB. 
+strapi export <your-filename> --max-size 100 #allows a maximum file size of 100 MB. 
 
 ```
 
