@@ -5,7 +5,7 @@ description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html
 ---
 
-# Strapi Cloud
+# Strapi Cloud <BetaBadge />
 
 ::: warning
 Strapi Cloud is currently in Closed Beta release. Features and functionality may change prior to General Availability.
