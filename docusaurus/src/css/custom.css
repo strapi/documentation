@@ -57,10 +57,16 @@
   vertical-align: middle;
 }
 .admonition--prerequisites,
+.admonition--callout,
 .admonition--strapi {
   margin-bottom: 1em;
 }
 
+.admonition--prerequisites *:last-child,
+.admonition--callout *:last-child,
+.admonition--strapi *:last-child {
+  margin-bottom: 0 !important
+}
 
 /**
  * Custom admonitions - dark mode
