@@ -1,5 +1,5 @@
 ---
-title: Plugins extensions
+title: Plugins extension
 displayed_sidebar: devDocsSidebar
 ---
 

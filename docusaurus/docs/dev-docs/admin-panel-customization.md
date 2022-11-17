@@ -591,7 +591,7 @@ Before deployment, the admin panel needs to be built, by running the following c
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="Yarn">
+<TabItem value="yarn" label="yarn">
 
 ```sh
 yarn build
@@ -599,7 +599,7 @@ yarn build
 
 </TabItem>
 
-<TabItem value="npm" label="NPM">
+<TabItem value="npm" label="npm">
 
 ```sh
 npm run build
