@@ -1,8 +1,8 @@
 ---
-title: Data import export transfer system - Strapi Developer Docs
+title: Data export-import transfer system - Strapi Developer Docs
 description: Import, export, and transfer data using the Strapi CLI
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/import-export.html
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-import.html
 ---
 
 <!-- more details including the file structure of exp data on this page-->
@@ -31,6 +31,7 @@ details here.
 - other
 
 `yarn strapi export`
+
 <!-- ## Import data using the CLI tool
 
 details here.
