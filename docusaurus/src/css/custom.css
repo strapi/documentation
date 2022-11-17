@@ -75,6 +75,9 @@
 [data-theme='dark'] .admonition--prerequisites code {
   background-color: #212134;
 }
+[data-theme='dark'] .admonition--prerequisites svg {
+  fill: #e3e3e3;
+}
 
 [data-theme='dark'] .admonition--strapi {
   color: var(--strapi-primary-100);
