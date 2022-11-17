@@ -20,6 +20,8 @@ const sidebars = {
   devDocsSidebar: [
     'dev-docs/intro',
     'dev-docs/quick-start',
+    'dev-docs/faq',
+    'dev-docs/usage-information',
     {
       type: 'category',
       label: '⚙️ Setup & Deployment',

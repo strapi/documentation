@@ -34,11 +34,11 @@ The following list is a sitemap of all the current and upcoming content for the 
 - Pages that have been already updated have a ticked checkbox next to their name. Click on the page title to visit the page.
 - For pages that have not been updated yet, click on the "→ docs.strapi.io" link to visit the page on our current, complete website.
 
-  - [ ] 🚀 Getting Started
-    - [ ] Introduction (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html))
+  - [x] 🚀 Getting Started
+    - [x] [Introduction](/dev-docs/intro)
     - [x] [Quick Start Guide](/dev-docs/quick-start)
-    - [ ] FAQ (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/troubleshooting.html))
-    - [ ] Usage information (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/getting-started/usage-information.html))
+    - [x] [FAQ](/dev-docs/faq)
+    - [x] [Usage information](/dev-docs/usage-information)
   - [ ] ⚙️ Setup & Deployment
     - [x] [Installation](/dev-docs/installation)
       - [x] [CLI](/dev-docs/installation/cli)
