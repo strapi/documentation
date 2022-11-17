@@ -18,12 +18,20 @@ const sidebars = {
 
   // But you can create a sidebar manually
   devDocsSidebar: [
-    'dev-docs/intro',
-    'dev-docs/quick-start',
-    'dev-docs/faq',
-    'dev-docs/usage-information',
     {
       type: 'category',
+      collapsed: false,
+      label: '🚀 Getting Started',
+      items: [
+        'dev-docs/intro',
+        'dev-docs/quick-start',
+        'dev-docs/faq',
+        'dev-docs/usage-information',
+      ]
+    },
+    {
+      type: 'category',
+      collapsed: false,
       label: '⚙️ Setup & Deployment',
       items: [
         {
@@ -69,6 +77,7 @@ const sidebars = {
     {
       type: 'category',
       label: '🔧 Development',
+      collapsed: false,
       items: [
         'dev-docs/admin-panel-customization',
         {
@@ -88,6 +97,7 @@ const sidebars = {
     },
     {
       type: 'category',
+      collapsed: false,
       label: '💻 APIs',
       items: [
         {
@@ -112,6 +122,7 @@ const sidebars = {
     'user-docs/intro',
     {
       type: 'category',
+      collapsed: false,
       label: 'Content-type Builder',
       items: [
         {
