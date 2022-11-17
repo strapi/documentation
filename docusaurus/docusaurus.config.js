@@ -92,6 +92,7 @@ const config = {
         logo: {
           alt: 'Strapi Documentation Logo',
           src: 'img/logo-beta.png',
+          srcDark: 'img/logo-beta-dark.png',
         },
         items: [
           {
