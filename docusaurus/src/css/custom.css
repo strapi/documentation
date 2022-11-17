@@ -301,8 +301,7 @@
 }
 
 
-
-/**
+/*
 * plus aéré
 * whitespace entre TOC, main et 2ndary TOC
 text too dark, color rgb(44, 62, 80)
@@ -311,7 +310,6 @@ text too dark, color rgb(44, 62, 80)
     - mettre en gras les catégories de TOC
     - ajouter un padding bottom sur le dernier élément de la catégorie quand elle est ouverte
  *  niveaux 1 et 2 dépliés par défaut dans TOC → config docusaurus? */
-*/
 
 
 /**
