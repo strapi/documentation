@@ -16,7 +16,7 @@ The `strapi export` CLI command and all of the available options are listed in t
 
 ## Export data using the CLI tool
 
-The `strapi export` command exports data as an encrypted and compressed `tar.gz` file. 
+The `strapi export` command exports data as an encrypted and compressed `tar.gz` file.
 
 - encrypt outcome
 - filter content
