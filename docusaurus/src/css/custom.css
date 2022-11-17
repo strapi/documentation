@@ -307,6 +307,9 @@
 main article {
   padding-left: 8em;
   padding-right: 4em;
+}
+
+[data-theme="light"] main article {
   color: rgb(44, 62, 80);
 }
 
