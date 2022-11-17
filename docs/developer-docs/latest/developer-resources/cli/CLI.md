@@ -100,20 +100,24 @@ options: [--browser <name>]
 
 ## strapi export <BetaBadge />
 
-Exports your project data when you specify a filename. The default file format is `.tar` compressed using `gzip` and encrypted using `aes-128-ecb`. The following table provides all of the available options as command line flags:
+Exports your project data. The default file format is `.tar` compressed using `gzip` and encrypted using `aes-128-ecb`.
 
-**Options**
+```sh
+strapi export
+```
+
+The following table provides all of the available options as command line flags:
 
 | Option           | Type    | Description                                                                                                                             | default |
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
-| --encrypt        | boolean | Encrypt output file using the `aes-128-ecb`. When set to true, the user will be prompted to enter an encryption key unless it is set using the `--key` option. algorithm                                                                                   | true    |
-| --compress       | boolean | Compress output file using `gzip` compression                                                                                           | true    |
-| --archive        | boolean | Exports all backup files to a single `tar` archive                                                                                      | true    |
-| --key            | string  | requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string] |                                                                                                           |         |
-| --max-size       | integer | split final file when exceeding size in MB                                                                                              |         |
-| --max-size-jsonl | integer | split internal jsonl files when exceeding max size in MB                                                                                |         |
-| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration) |         |
-| --help           |         | display the `strapi export` help commands                                             |         |            |
+| --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
+| --compress       | boolean | Compress output file using `gzip` compression.                                        | true    |
+| --archive        | boolean | Exports all backup files to a single `tar` archive.                                   | true    |
+| --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
+| --max-size       | integer | Split final file when exceeding size in MB.                                           |         |
+| --max-size-jsonl | integer | Split internal jsonl files when exceeding max size in MB.                             |         |
+| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |
+| -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
 
 
 **Examples**
@@ -122,9 +126,11 @@ Exports your project data when you specify a filename. The default file format i
 
 #examples of strapi export:
 
-yarn strapi export <your-filename.tar> #exports your data with the default parameters
+strapi export <your-filename.tar> #exports your data with the default parameters.
 
-yarn strapi export <your-filename.tar> --encrypt false #exports your data without encryption
+strapi export <your-filename.tar> --encrypt false #exports your data without encryption.
+
+strapi export <your-filename.tar> --max-size 100 #exports your data as multiple files with a maximum file size of 100 MB. 
 
 ```
 
