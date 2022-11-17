@@ -140,7 +140,7 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
   only: ['find'],
   config: {
     find: {
-      auth: false
+      auth: false,
       policies: [],
       middlewares: [],
     }
