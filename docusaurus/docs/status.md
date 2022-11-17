@@ -17,7 +17,7 @@ To find what you're looking for on this beta website:
 - use the search bar at the top right
 - or use the content conversion progress section below for a complete list of existing and upcoming pages
 
-Once the initial content is fully converted, we will gradually improve the documentation further, adding a new homepage, introducing a new structure, and adding more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
+Once the initial content is fully converted, we will gradually improve the documentation further, for instance, adding a new homepage and more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
 
 <!-- TODO: update with actual communication link -->
 In the meantime, we would love to hear your feedback, so [please let us know](https://forum.strapi.io)!
