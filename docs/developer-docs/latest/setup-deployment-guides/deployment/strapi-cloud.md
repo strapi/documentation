@@ -29,7 +29,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 
 ::: warning
-Importing data from an existing Strapi application and data backups for a Strapi Cloud application are not supported at this time. These features are in active development and will be available in the future.
+Importing data from an existing Strapi application and data backups for a Strapi Cloud application are not supported at this time. These features will be available in the future.
 :::
 
 ## Getting started
