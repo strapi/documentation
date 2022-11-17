@@ -26,9 +26,10 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 * Strapi version `4.4.x` or higher
 * Database: PostgreSQL, MySQL, or MariaDB
 * Project(s) source code hosted on [GitHub](https://github.com)
+    * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 
-::: tip
-The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+::: warning
+Importing data from an existing Strapi application and data backups for a Strapi Cloud application are not supported at this time. These features are in active development and will be available in the future.
 :::
 
 ## Getting started
