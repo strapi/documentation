@@ -21,7 +21,7 @@ Docker is an open platform that allows developing, shipping, and running applica
 
 - [Docker](https://www.docker.com/) installed on your machine
 - A [supported version of Node.js](./cli.md#step-1-make-sure-requirements-are-met)
-- An existing Strapi v4 project, or a new one created with the [Quick Start guide](/docs/dev-docs/quick-start.md)
+- An existing Strapi v4 project, or a new one created with the [Quick Start guide](/dev-docs/quick-start.md)
 - (_optional_) [Yarn](https://yarnpkg.com/) installed on your machine
 - (_optional_) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
 
@@ -31,7 +31,7 @@ Docker is an open platform that allows developing, shipping, and running applica
 
 For working with Strapi locally on your host machine you can use the [Dockerfile](https://docs.docker.com/engine/reference/builder/), and if needed the [docker-compose.yml](https://docs.docker.com/compose/compose-file/) can also be used to start up a database container.
 
-Both methods require an existing Strapi project or a new one created (see [Quick Start guide](/docs/dev-docs/quick-start.md)).
+Both methods require an existing Strapi project or a new one created (see [Quick Start guide](/dev-docs/quick-start.md)).
 
 ### Development Dockerfile
 

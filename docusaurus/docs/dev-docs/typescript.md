@@ -10,7 +10,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescrip
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.3.0 and above. Existing JavaScript projects can [add TypeScript support](#add-typescript-support-to-an-existing-strapi-project) through a conversion procedure. TypeScript-enabled projects allow developing plugins with TypeScript as well as using TypeScript typings.
 
 :::strapi Getting started with TypeScript
-To start developing in TypeScript, use the [CLI installation documentation](/dev-docs/installation/cli) to create a new TypeScript project. For existing projects, [TypeScript support can be added](#add-typescript-support-to-an-existing-strapi-project) with the provided conversion steps. Additionally, the [project structure](/dev-docs/setup-deployment-guides/project-structure) and [TypeScript configuration](/dev-docs/setup-deployment-guides/configurations/optional/typescript) sections have TypeScript-specific resources for understanding and configuring an application.
+To start developing in TypeScript, use the [CLI installation documentation](/dev-docs/installation/cli) to create a new TypeScript project. For existing projects, [TypeScript support can be added](#add-typescript-support-to-an-existing-strapi-project) with the provided conversion steps. Additionally, the [project structure](/dev-docs/project-structure) and [TypeScript configuration](/dev-docs/configurations/typescript) sections have TypeScript-specific resources for understanding and configuring an application.
 :::
 
 ## Start developing in TypeScript
@@ -65,7 +65,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 
 ## Generate typings for project schemas
 
-To generate typings for your project schemas use the [`ts:generate-types` CLI command](/dev-docs/developer-resources/cli#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns a detailed table of the generated schemas.
+To generate typings for your project schemas use the [`ts:generate-types` CLI command](/dev-docs/cli#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns a detailed table of the generated schemas.
 
 To use `ts:generate-types`run the following code in a terminal at the project root:
 

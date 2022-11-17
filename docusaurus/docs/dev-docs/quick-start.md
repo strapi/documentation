@@ -230,6 +230,9 @@ Keep on creating amazing content!
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-- 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API,
-- 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) and [GraphQL](/dev-docs/api/graphql) APIs to query the content,
+<!-- TODO: uncomment this one when API token page is ready -->
+<!-- - 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API, -->
+<!-- TODO: uncomment this one and make it replace the duplicate line without GraphQL -->
+<!-- - 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) and [GraphQL](/dev-docs/api/graphql) APIs to query the content, -->
+- 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
 - 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization).

@@ -6,10 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API
 
-The REST API allows accessing the [content-types](/docs/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/api-parameters) can be used when querying API endpoints to refine the results.
+The REST API allows accessing the [content-types](/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
 :::caution
-The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/docs/dev-docs/api/rest/populate-select) to populate specific fields.
+The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields.
 :::
 
 ## Endpoints
@@ -77,7 +77,7 @@ For each Content-Type, the following endpoints are automatically generated:
 </details>
 
 :::note
-[Components](/docs/dev-docs/backend-customization/models#components) don't have API endpoints.
+[Components](/dev-docs/backend-customization/models#components) don't have API endpoints.
 :::
 
 ## Requests
@@ -102,7 +102,7 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 ### Get entries
 
-Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/api-parameters) documentation).
+Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
 
 <ApiCall>
 
@@ -187,7 +187,7 @@ Returns an entry by `id`.
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/docs/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
 
 <ApiCall>
 
@@ -270,7 +270,7 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 </ApiCall>
 
 :::note
-Even with the [Internationalization (i18n) plugin](/docs/dev-docs/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/docs/dev-docs/plugins/i18n.md#updating-an-entry).
+Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n.md#updating-an-entry).
 :::
 
 ### Delete an entry

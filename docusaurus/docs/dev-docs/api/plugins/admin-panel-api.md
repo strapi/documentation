@@ -1,6 +1,6 @@
 # Admin Panel API for plugins
 
-A Strapi [plugin](#) can interact with both the [back end](#) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/docs/user-docs/intro).
+A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
@@ -177,11 +177,11 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
-:::strapi Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of the [register lifecycle](#register) (see [new WYSIWYG field in the admin panel](#) guide).
+:::tip Replacing the WYSIWYG
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
 :::
 
-:::tip
+:::info
 The admin panel supports dotenv variables.
 
 All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
@@ -380,7 +380,8 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 
 #### Using predefined injection zones
 
-Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/docs/user-docs/intro#):
+<!-- TODO: link to the proper page once CM section of user guide is converted -->
+Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/intro):
 
 <!-- TODO: maybe add screenshots once the design system is ready? -->
 
@@ -606,6 +607,7 @@ export default {
 
 #### Predefined hook
 
+<!-- TODO: use proper link when CM section of user guide is converted -->
 Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/docs/user-docs/intro).
 
 <details>
