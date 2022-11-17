@@ -8,16 +8,16 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/import-ex
 <!-- more details including the file structure of exp data on this page-->
 # Data Export-Import System <BetaBadge />
 
-Strapi provides a CLI-based data export and data import tool that allows you to move data between Strapi instances.Examples of when the export-import system is useful include: 
+Strapi provides a CLI-based data tool that allows you to export data from a Strapi application. Examples of when the export system is useful include:
 
 - example 1
 - example 2
 - example 3.
 
-The following documentation details examples of how to use the `strapi export` and `strapi import` commands. 
+The following documentation details examples of how to use the `strapi export` command.
 
 ::: strapi
-The `strapi export` and `strapi import` CLI commands and all of the available flags are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md).
+The `strapi export` CLI command and all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
 :::
 
 ## Export data using the CLI tool
@@ -30,16 +30,17 @@ details here.
 - compress outcome
 - other
 
-## Import data using the CLI tool
+`yarn strapi export`
+<!-- ## Import data using the CLI tool
 
 details here.
 
 - decrypt outcome
 - decompress outcome,
 - other
+ -->
 
 
-`yarn strapi export`
 
 <!--## Transfer between environments **new page**
 
