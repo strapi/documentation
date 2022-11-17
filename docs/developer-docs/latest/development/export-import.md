@@ -8,13 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 <!-- more details including the file structure of exp data on this page-->
 # Data Export-Import System <BetaBadge />
 
-Strapi provides a CLI-based data tool that allows you to export data from a Strapi application. Examples of when the export system is useful include:
-
-- example 1
-- example 2
-- example 3.
-
-The following documentation details examples of how to use the `strapi export` command.
+Strapi provides a CLI-based tool that allows you to export data from a Strapi application. The data export tool is useful, for example, to create a backup of your project data. The following documentation details examples of how to use the `strapi export` command.
 
 ::: strapi
 The `strapi export` CLI command and all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
@@ -22,7 +16,7 @@ The `strapi export` CLI command and all of the available options are listed in t
 
 ## Export data using the CLI tool
 
-details here.
+The `strapi export` command exports data as an encrypted and compressed `tar.gz` file. 
 
 - encrypt outcome
 - filter content
