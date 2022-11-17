@@ -299,3 +299,45 @@
     margin-top: 4rem;
   }
 }
+
+
+
+/**
+* plus aéré
+* whitespace entre TOC, main et 2ndary TOC
+text too dark, color rgb(44, 62, 80)
+ - améliorations TOC:
+    - font-weight var(--ifm-font-weight-medium) instead of semibold sur les éléments de TOC classique,
+    - mettre en gras les catégories de TOC
+    - ajouter un padding bottom sur le dernier élément de la catégorie quand elle est ouverte
+ *  niveaux 1 et 2 dépliés par défaut dans TOC → config docusaurus? */
+*/
+
+
+/**
+ * Temporary notes from our live editiing session 👇
+/*
+.menu {
+  font-weight: var(--ifm-font-weight-medium);
+}
+
+.theme-doc-sidebar-item-link-level-2 > a:nth-child(1) {
+  padding-bottom: 1.5em;
+}
+
+.docItemCol_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module {
+  padding-left: 10em;
+  padding-right: 5em;
+}
+
+.theme-doc-sidebar-item-link-level-2 > a:nth-child(1) {
+  padding-bottom: 1.5em;
+}
+
+li.theme-doc-sidebar-item-category:nth-child(3) > div:nth-child(1) > a:nth-child(1) {
+  font-weight: var(--ifm-font-weight-bold);
+}
+
+li.theme-doc-sidebar-item-category:nth-child(4) > div:nth-child(1) > a:nth-child(1) {
+  font-weight: var(--ifm-font-weight-bold);
+} */
