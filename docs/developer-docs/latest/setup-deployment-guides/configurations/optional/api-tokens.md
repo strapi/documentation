@@ -7,7 +7,7 @@ description: Using API tokens allows executing a request on Strapi's REST API en
 
 Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in API token feature.
 
-Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) endpoints as an authenticated user.
+Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) or [GraphQL API](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) endpoints as an authenticated user.
 
 ## Creation
 
