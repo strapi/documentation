@@ -114,14 +114,14 @@ The following table provides all of the available options as command line flags:
 | --compress       | boolean | Compress output file using `gzip` compression.                                        | true    |
 | --archive        | boolean | Exports all backup files to a single `tar` archive.                                   | true    |
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
-| --max-size       | integer | Split final file when exceeding size in MB.                                           |         |
+| --max-size       | integer | Split final file when exceeding size in MB. Requires `--archive true.                 |         |
 | --max-size-jsonl | integer | Split internal jsonl files when exceeding max size in MB.                             |         |
 | --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |
 | -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
 
 **Examples**
 
-``` sh
+```sh
 
 #examples of strapi export:
 
