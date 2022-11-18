@@ -76,27 +76,6 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: '🔧 Development',
-      collapsed: false,
-      items: [
-        'dev-docs/admin-panel-customization',
-        {
-          type: 'category',
-          label: 'Back-end customization',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/backend-customization',
-          },
-          items: [
-            'dev-docs/backend-customization/controllers',
-            'dev-docs/backend-customization/middlewares',
-          ]
-        },
-        'dev-docs/typescript'
-      ]
-    },
-    {
-      type: 'category',
       collapsed: false,
       label: '💻 APIs',
       items: [
@@ -116,7 +95,28 @@ const sidebars = {
         },
         'dev-docs/api/plugins/admin-panel-api',
       ]
-    }
+    },
+    {
+      type: 'category',
+      label: '🔧 Development',
+      collapsed: false,
+      items: [
+        'dev-docs/admin-panel-customization',
+        {
+          type: 'category',
+          label: 'Back-end customization',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/backend-customization',
+          },
+          items: [
+            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/middlewares',
+          ]
+        },
+        'dev-docs/typescript'
+      ]
+    },
   ],
   userDocsSidebar: [
     'user-docs/intro',
