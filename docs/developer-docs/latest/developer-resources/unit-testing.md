@@ -10,8 +10,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.h
 Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes implementing:
 
 - a unit test for a function,
-- a public API endpoint unit test,
-- and an API endpoint unit test with authorization.
+- a public API endpoint test,
+- and an API endpoint test with authorization.
 
 Refer to the testing framework documentation for other use cases and for the full set of testing options and configurations.
 
@@ -84,9 +84,9 @@ npm install better-sqlite3 --save-dev
 
 ## Create a testing environment
 
-The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. To achieve this the following instructions will add:
+The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. To achieve this the following instructions add:
 
-- a testing database,
+- a test database,
 - a `strapi` instance for testing,
 - and file directories to organize the testing environment.
 
