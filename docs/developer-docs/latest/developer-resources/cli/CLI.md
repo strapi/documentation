@@ -111,11 +111,11 @@ The following table provides all of the available options as command line flags:
 | Option           | Type    | Description                                                                                                                             | default |
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
 | --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
-| --compress       | boolean | Compress output file using `gzip` compression.                                        | true    |
+| --compress       | boolean | Compress the output file using `gzip` compression.                                    | true    |
 | --archive        | boolean | Exports all backup files to a single `tar` archive.                                   | true    |
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
-| --max-size       | integer | Split final file when exceeding size in MB. Requires `--archive true.                 |         |
-| --max-size-jsonl | integer | Split internal jsonl files when exceeding max size in MB.                             |         |
+| --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
+| --max-size-jsonl | integer | Split the internal jsonl files when exceeding the specified size in MB. Requires `--archive true.                            |         |
 | --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |
 | -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
 
