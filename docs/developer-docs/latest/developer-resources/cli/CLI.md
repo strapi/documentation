@@ -106,7 +106,7 @@ Exports your project data. The default settings create a `.tar` file, compressed
 strapi export
 ```
 
-The following table provides all of the available options as command line flags:
+The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately,you can specify the filename directly after the `export` command. The following table provides all of the available options as command line flags:
 
 | Option           | Type    | Description                                                                                                                             | default |
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
@@ -125,16 +125,12 @@ The following table provides all of the available options as command line flags:
 
 #examples of strapi export:
 
-strapi export <your-filename> #exports your data with the default parameters.
-
-strapi export <your-filename> --encrypt false #exports your data without encryption.
-
-strapi export <your-filename> --max-size 100 #allows a maximum file size of 100 MB. 
+strapi export myData #exports your data with the default parameters using the filename myData.
+strapi export --encrypt false #exports your data without encryption.
+strapi export --max-size 100 #allows a maximum file size of 100 MB. 
+strapi export --exclude XXXXXX #exports your data excluding XXXXX.
 
 ```
-
-<!--## strapi import -->
-
 
 ## strapi configuration:dump
 
