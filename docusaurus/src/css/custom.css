@@ -318,9 +318,18 @@
  * Quick & easy theme improvements
  */
 
-main article {
-  padding-left: 8em;
-  padding-right: 4em;
+@media (min-width: 800px) {
+  main article {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+}
+
+@media (min-width: 1500px) {
+  main article {
+    padding-left: 8em;
+    padding-right: 4em;
+  }
 }
 
 [data-theme="light"] main article {
