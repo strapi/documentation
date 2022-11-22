@@ -102,7 +102,7 @@ options: [--browser <name>]
 
 Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
-```sh
+```console
 strapi export
 ```
 
@@ -115,7 +115,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | --archive        | boolean | Exports all backup files to a single `tar` archive.                                   | true    |
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
 | --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
-| --max-size-jsonl | integer | Split the internal jsonl files when exceeding the specified size in MB. Requires `--archive true.                            |         |
+| --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
 | --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |
 | -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
 
