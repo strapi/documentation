@@ -337,6 +337,7 @@ main article {
   font-weight: var(--aa-font-weight-medium);
 }
 
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2:last-child {
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2:last-child,
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2:last-child {
   padding-bottom: 1.5em;
 }

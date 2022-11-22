@@ -61,7 +61,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] Role-Based Access Control (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html#))
       - [ ] TypeScript (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.html))
     - [ ] Deployment
-      - [ ] Strapi Cloud (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html))
+      - [x] [Strapi Cloud](/dev-docs/deployment/strapi-cloud)
       - [ ] Hosting Provider Guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides))
         - [ ] Amazon AWS (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html#))
         - [ ] Azure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html#))
