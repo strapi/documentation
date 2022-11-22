@@ -112,7 +112,6 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
 | --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
 | --compress       | boolean | Compress the output file using `gzip` compression.                                    | true    |
-| --archive        | boolean | Exports all backup files to a single `tar` archive.                                   | true    |
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
 | --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
 | --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
