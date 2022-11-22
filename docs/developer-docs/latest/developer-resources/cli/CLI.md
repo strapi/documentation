@@ -106,7 +106,7 @@ Exports your project data. The default settings create a `.tar` file, compressed
 strapi export
 ```
 
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately,you can specify the filename directly after the `export` command. The following table provides all of the available options as command line flags:
+The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename directly after the `export` command. The following table provides all of the available options as command line flags:
 
 | Option           | Type    | Description                                                                                                                             | default |
 |------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
