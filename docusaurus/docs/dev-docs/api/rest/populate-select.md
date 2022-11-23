@@ -426,7 +426,7 @@ await request(`/api/articles?${query}`);
 
 #### Deeply populate a dynamic zone with 2 components
 
-Dynamic-zones are highly dynamic content structures by essence.
+Dynamic zones are highly dynamic content structures by essence.
 When populating dynamic zones, you can choose between:
 
 - a shared population strategy, applying a unique behavior for all the dynamic zone's components
