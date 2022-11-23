@@ -115,8 +115,9 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
 | --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
 | --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
-| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |
 | -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
+
+<!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
 
 **Examples**
 
@@ -124,10 +125,9 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 #examples of strapi export:
 
-strapi export myData #exports your data with the default parameters using the filename myData.
+strapi export myData #exports your data with the default parameters and the filename myData.
 strapi export --encrypt false #exports your data without encryption.
 strapi export --max-size 100 #allows a maximum file size of 100 MB. 
-strapi export --exclude XXXXXX #exports your data excluding XXXXX.
 
 ```
 
