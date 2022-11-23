@@ -508,7 +508,7 @@ await request(`/api/articles?${query}`);
 
 <Request title="Example request for detailed populate strategy">
 
-`GET /api/articles?populate[testDz][on][test.test-compo][fields][0]=testString&populate[testDz][on][test.test-compo][populate]=%2A&populate[testDz][on][test.test-compo2][fields][0]=testInt`
+`GET /api/articles?populate[testDz][on][test.test-compo][fields][0]=testString&populate[testDz][on][test.test-compo][populate]=*&populate[testDz][on][test.test-compo2][fields][0]=testInt`
 
 </Request>
 
