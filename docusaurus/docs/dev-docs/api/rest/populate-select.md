@@ -28,7 +28,7 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 
 Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request: Return only title and body fields">
 
 `GET /api/users?fields[0]=title&fields[1]=body`
@@ -44,7 +44,7 @@ Field selection does not work on relational, media, component, or dynamic zone f
       "id": 1,
       "attributes": {
         "title": "test1",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       }
     }
   ],
@@ -64,11 +64,14 @@ Field selection does not work on relational, media, component, or dynamic zone f
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  fields: ['title', 'body'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+const query = qs.stringify(
+  {
+    fields: ['title', 'body'],
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/users?${query}`);
 ```
@@ -108,7 +111,7 @@ If the Users & Permissions plugin is installed, the `find` permission must be en
 
 To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request">
 
 `GET /api/articles?populate=%2A`
@@ -135,7 +138,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
               "alternativeText": "17520.jpg",
               "formats": {
                 // ...
-              },
+              }
               // ...
             }
           }
@@ -165,11 +168,14 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  populate: '*',
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+const query = qs.stringify(
+  {
+    populate: '*',
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```
@@ -179,10 +185,11 @@ await request(`/api/articles?${query}`);
 #### Populate 1 level
 
 To populate only specific relations one-level deep, use one of the following method:
+
 - Use the populate parameter as an array and put the relation name inside.
 - Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following values: `true, false, t, f, 1, 0`.
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request: populate categories">
 
 `GET /api/articles?populate[0]=categories`
@@ -204,7 +211,7 @@ To populate only specific relations one-level deep, use one of the following met
             {
               "id": 1,
               "attributes": {
-                "name": "Food",
+                "name": "Food"
                 // ...
               }
             }
@@ -230,11 +237,14 @@ To populate only specific relations one-level deep, use one of the following met
 ```js
 // Array method
 const qs = require('qs');
-const query = qs.stringify({
-  populate: ['categories'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+const query = qs.stringify(
+  {
+    populate: ['categories'],
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 await request(`/api/articles?${query}`);
 ```
 
@@ -257,7 +267,7 @@ await request(`/api/articles?${query}`);
 
 To populate specific relations, one or several levels deep, use the LHS bracket notation for fields names in combination with the `populate` parameter.
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request: populate author and author.company">
 
 `GET /api/articles?populate[author][populate][0]=company`
@@ -284,7 +294,7 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
                 "data": {
                   "id": 1,
                   "attributes": {
-                    "name": "Strapi",
+                    "name": "Strapi"
                     // ...
                   }
                 }
@@ -311,15 +321,18 @@ To populate specific relations, one or several levels deep, use the LHS bracket 
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  populate: {
-    author: {
-      populate: ['company'],
-    }
+const query = qs.stringify(
+  {
+    populate: {
+      author: {
+        populate: ['company'],
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
   }
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+);
 await request(`/api/articles?${query}`);
 ```
 
@@ -335,7 +348,7 @@ The `populate` parameter is used to explicitly define which Dynamic zones, compo
 
 #### Deeply populate a 2-level component & media
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request">
 
 `GET /api/articles?populate[0]=seoData&populate[1]=seoData.sharedImage&populate[2]=seoData.sharedImage.media`
@@ -393,15 +406,18 @@ The `populate` parameter is used to explicitly define which Dynamic zones, compo
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  populate: [
-    'seoData',
-    'seoData.sharedImage',
-    'seoData.sharedImage.media',
-  ],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+const query = qs.stringify(
+  {
+    populate: [
+      'seoData',
+      'seoData.sharedImage',
+      'seoData.sharedImage.media',
+    ],
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```
@@ -410,14 +426,20 @@ await request(`/api/articles?${query}`);
 
 #### Deeply populate a dynamic zone with 2 components
 
-<ApiCall>
-<Request title="Example request">
+Dynamic-zones are highly dynamic content structures by essence.
+When populating dynamic zones, you can choose between:
 
-`GET /api/articles?populate[testDZ][populate]=%2A`
+- a shared population strategy, applying a unique behavior for all the dynamic zone's components
+- or a detailed population strategy, defining per-component populate queries using the `on` property.
+
+<ApiCall noSideBySide>
+<Request title="Example request for shared populate strategy">
+
+`GET /api/articles?populate[testDZ][populate]=*`
 
 </Request>
 
-<Response title="Example response">
+<Response title="Example response for shared populate strategy">
 
 ```json
 {
@@ -434,6 +456,78 @@ await request(`/api/articles?${query}`);
             "testString": "test1",
             "testNestedCompo": {
               "id": 3,
+              "testNestedString": "testNested1"
+                        },
+            "otherField": "test"
+          },
+          {
+            "id": 1,
+            "__component": "test.test-compo2",
+            "testInt": 1,
+            "otherField": "test"
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    // ...
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+<details>
+<summary><QsForQueryTitle/></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify(
+  {
+    populate: {
+      testDZ: {
+        populate: '*',
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
+
+await request(`/api/articles?${query}`);
+```
+
+</details>
+
+<ApiCall noSideBySide>
+
+<Request title="Example request for detailed populate strategy">
+
+`GET /api/articles?populate[testDz][on][test.test-compo][fields][0]=testString&populate[testDz][on][test.test-compo][populate]=%2A&populate[testDz][on][test.test-compo2][fields][0]=testInt`
+
+</Request>
+
+<Response title="Example response for detailed populate strategy">
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "testString": "test1",
+        // ...
+        "testDZ": [
+          {
+            "id": 3,
+            "__component": "test.test-compo",
+            "testString": "test1",
+            "testNestedCompo": {
               "testNestedString": "testNested1"
             }
           },
@@ -462,15 +556,26 @@ await request(`/api/articles?${query}`);
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  populate: {
-    testDZ: {
-      populate: '*',
+const query = qs.stringify(
+  {
+    populate: {
+      testDz: {
+        on: {
+          'test.test-compo': {
+            fields: ['testString'],
+            populate: '*',
+          },
+          'test.test-compo2': {
+            fields: ['testInt'],
+          },
+        },
+      },
     },
   },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```
@@ -514,7 +619,7 @@ See the following complex population examples:
 
 #### Populate with field selection
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request">
 
 `GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
@@ -559,16 +664,19 @@ See the following complex population examples:
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  fields: ['title', 'slug'],
-  populate: {
-    headerImage: {
-      fields: ['name', 'url'],
+const query = qs.stringify(
+  {
+    fields: ['title', 'slug'],
+    populate: {
+      headerImage: {
+        fields: ['name', 'url'],
+      },
     },
   },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```
@@ -577,7 +685,7 @@ await request(`/api/articles?${query}`);
 
 #### Populate with filtering
 
-<ApiCall>
+<ApiCall noSideBySide>
 <Request title="Example request">
 
 `GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
@@ -599,7 +707,7 @@ await request(`/api/articles?${query}`);
             {
               "id": 2,
               "attributes": {
-                "name": "Cars",
+                "name": "Cars"
                 // ...
               }
             }
@@ -624,20 +732,23 @@ await request(`/api/articles?${query}`);
 
 ```js
 const qs = require('qs');
-const query = qs.stringify({
-  populate: {
-    categories: {
-      sort: ['name:asc'],
-      filters: {
-        name: {
-          $eq: 'Cars',
+const query = qs.stringify(
+  {
+    populate: {
+      categories: {
+        sort: ['name:asc'],
+        filters: {
+          name: {
+            $eq: 'Cars',
+          },
         },
       },
     },
   },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```
