@@ -417,7 +417,9 @@ await request(`/api/articles?${query}`);
 
 Dynamic-zones are highly dynamic content structures by essence.
 
-When populating them you have the choice between applying a unique behavior for all the dynamic zone's components or defining per-component's populate queries using the `on` property.
+When populating dynamic zones, you can choose between:
+- a shared population strategy, applying a unique behavior for all the dynamic zone's components 
+- or a detailed population strategy, defining per-component populate queries using the `on` property.
 
 ::::api-call
 :::request Example request for shared populate strategy
