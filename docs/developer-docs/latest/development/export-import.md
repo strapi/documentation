@@ -26,6 +26,15 @@ The `strapi export` command exports data as an encrypted and compressed `tar.gz`
 
 `yarn strapi export`
 
+## Export data structure
+
+- configuration
+- entities
+- links
+- media
+- schemas
+- `metadata.json`
+
 <!-- ## Import data using the CLI tool
 
 details here.
