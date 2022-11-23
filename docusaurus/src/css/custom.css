@@ -29,7 +29,12 @@
   --strapi-primary-200: #D9D8FF;
   --strapi-primary-100: #F0F0FF;
   --strapi-success-500: #5CB176;
+  --strapi-danger-800: #4B1113; /* not actually existing in Figma */
+  --strapi-danger-700: #B72B1A;
+  --strapi-danger-600: #D02B20;
   --strapi-danger-500: #EE5E52;
+  --strapi-danger-100: #FCECEA;
+  --strapi-alternative-600: #9736E8;
   --strapi-alternative-500: #AC73E6;
   --strapi-alternative-200: #E0C1F4;
   --strapi-alternative-100: #F6ECFC;
@@ -349,4 +354,59 @@
 .theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2:last-child,
 .theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2:last-child {
   padding-bottom: 1.5em;
+}
+
+/**
+ * Alpha/beta badges
+ */
+.badge {
+  position: relative;
+  top: -.2em;
+  left: .6em;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: .32em .6em .25em 1.2em;
+}
+
+.badge::before {
+  position: absolute;
+  content: '•';
+  font-size: 1.5em;
+  left: .25em;
+  top: -.05em;
+}
+
+[data-theme='light'] .badge {
+  color: var(--strapi-neutral-800);
+}
+[data-theme='dark'] .badge {
+  color: var(--aa-muted-color-alpha);
+}
+
+[data-theme='light'] .badge.badge--alpha {
+  background-color: var(--strapi-danger-100);
+}
+[data-theme='light'] .badge.badge--alpha::before {
+  color: var(--strapi-danger-600);
+}
+[data-theme='dark'] .badge.badge--alpha {
+  background-color: var(--strapi-danger-800);
+}
+[data-theme='dark'] .badge.badge--alpha::before {
+  color: var(--strapi-danger-100);
+}
+
+[data-theme='light'] .badge.badge--beta {
+  background-color: var(--strapi-alternative-100);
+}
+[data-theme='light'] .badge.badge--beta::before {
+  color: var(--strapi-alternative-600);
+}
+[data-theme='dark'] .badge.badge--beta {
+  background-color: var(--strapi-alternative-600);
+}
+[data-theme='dark'] .badge.badge--beta::before {
+  color: var(--strapi-alternative-100);
 }
