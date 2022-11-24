@@ -114,6 +114,12 @@ const config = {
             label: 'User Guide'
           },
           {
+            type: 'doc',
+            docId: 'cloud/getting-started/intro',
+            position: 'left',
+            label: 'Strapi Cloud'
+          },
+          {
             href: 'https://github.com/strapi/documentation',
             label: 'GitHub',
             position: 'right',
