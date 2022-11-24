@@ -94,13 +94,6 @@ const sidebars = {
             },
           ],
         },
-        {
-          type: 'category',
-          label: 'Deployment',
-          items: [
-            'dev-docs/deployment/strapi-cloud',
-          ]
-        }
       ]
     },
     {
