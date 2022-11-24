@@ -100,7 +100,6 @@ const sidebars = {
             id: 'dev-docs/deployment',
         },
           items: [
-            'dev-docs/deployment/strapi-cloud',
             {
               type: 'category',
               label: 'Other Hosting Guides',
