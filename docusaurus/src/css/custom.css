@@ -47,6 +47,8 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+@import './api-calls.css';
+
 .admonition__custom-title {
   text-transform: uppercase;
   font: var(--ifm-heading-font-weight) var(--ifm-h5-font-size) / var(--ifm-heading-line-height) var(--ifm-heading-font-family);
