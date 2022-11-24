@@ -70,4 +70,4 @@ To select the relevant relational field's entries:
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the remove button ![Minus icon](../assets/icons/minus.svg) in the selected entries list.
+To remove an entry, click on the cross button ![Cross icon](../assets/icons/cross.svg) in the selected entries list.
