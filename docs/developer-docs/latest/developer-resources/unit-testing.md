@@ -81,6 +81,7 @@ npm install better-sqlite3 --save-dev
   }
   //...
 ```
+4. Save and close your `package.json` file.
 
 ## Create a testing environment
 
@@ -116,7 +117,7 @@ module.exports = ({ env }) => ({
 
 ### Create a `strapi` instance
 
-The testing environment requires a `strapi` instance as an object, similar to creating an instance for the [process manager](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.md). `strapi.js`.
+The testing environment requires a `strapi` instance as an object, similar to creating an instance for the [process manager](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.md).
 
 1. Create a `tests` directory at the application root, which hosts all of the tests.
 2. Create a `helpers` directory inside `tests`, which hosts the `strapi` instance and other supporting functions.
@@ -372,6 +373,133 @@ The authenticated API endpoint test utilizes the `strapi.js` helper file created
 
 Testing authenticated API endpoints requires:
 
+
+### modify `strapi.js` instance
+
+1. Add `const _ = require("lodash");`
+2. Add the following code to the bottom of the `strapi.js` helper file:
+
+    ```js
+
+    /**
+   * Returns valid JWT token for authenticated
+   * @param {String | number} idOrEmail, either user id, or email
+   */
+   const jwt = (idOrEmail) =>
+    strapi.plugins["users-permissions"].services.jwt.issue({
+      [Number.isInteger(idOrEmail) ? "id" : "email"]: idOrEmail,
+    });
+
+   /**
+   * Grants database `permissions` table that role can access an endpoint/controllers
+   *
+   * @param {int} roleID, 1 Authenticated, 2 Public, etc
+   * @param {string} value, in form or dot string eg `"permissions.users-permissions.controllers.auth.changepassword"`
+   * @param {boolean} enabled, default true
+   * @param {string} policy, default ''
+   */
+   const grantPrivilege = async (
+     roleID = 1,
+     path,
+     enabled = true,
+     policy = ""
+    ) => {
+    const service = strapi.plugin("users-permissions").service("role");
+
+    const role = await service.findOne(roleID);
+
+    _.set(role.permissions, path, { enabled, policy });
+
+    return service.updateRole(roleID, role);
+    };
+
+   /** Updates database `permissions` that role can access an endpoint
+     * @see grantPrivilege
+    */
+
+   const grantPrivileges = async (roleID = 1, values = []) => {
+       await Promise.all(values.map((val) => grantPrivilege(roleID, val)));
+    };
+
+   /**
+     * Updates the core of strapi
+     * @param {*} pluginName
+     * @param {*} key
+     * @param {*} newValues
+    * @param {*} environment
+   */
+
+   const updatePluginStore = async (
+    pluginName,
+    key,
+    newValues,
+    environment = ""
+   ) => {
+    const pluginStore = strapi.store({
+      environment: environment,
+      type: "plugin",
+      name: pluginName,
+    });
+
+   const oldValues = await pluginStore.get({ key });
+    const newValue = Object.assign({}, oldValues, newValues);
+
+   return pluginStore.set({ key: key, value: newValue });
+   };
+
+   /**
+     * Get plugin settings from store
+     * @param {*} pluginName
+     * @param {*} key
+     * @param {*} environment
+    */
+   const getPluginStore = (pluginName, key, environment = "") => {
+    const pluginStore = strapi.store({
+      environment: environment,
+      type: "plugin",
+      name: pluginName,
+    });
+
+   return pluginStore.get({ key });
+   };
+
+   /**
+     * Check if response error contains error with given ID
+     * @param {string} errorId ID of given error
+     * @param {object} response Response object from strapi controller
+     * @example
+     *
+     * const response =  {
+       data: null,
+       error: {
+         status: 400,
+         name: 'ApplicationError',
+         message: 'Your account email is not confirmed',
+         details: {}
+       }
+     }
+        * responseHasError("ApplicationError", response) // true
+   */
+
+   const responseHasError = (errorId, response) => {
+   return response && response.error && response.error.name === errorId;
+   };
+
+   module.exports = {
+     setupStrapi,
+     stopStrapi,
+     jwt,
+     grantPrivilege,
+     grantPrivileges,
+     updatePluginStore,
+     getPluginStore,
+     responseHasError,
+   //sleep,
+   };
+
+   ```
+
+
 <!--
   Steps to do in the test application: 
     1. create an admin user with credentials
@@ -383,14 +511,74 @@ Testing authenticated API endpoints requires:
 - login the test admin user and return a `jwt` secret,
 - make an authenticated request for the user's data.
 
-### Create a `createUser` helper file
+### Create a `user` helper file
 
-A `createUser` helper file is used to create a mock user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `createUser` helper file:
+A `user` helper file is used to create a mock user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `user` helper file:
 
-1. Create `createUser.js` in the `./tests/helpers` directory.
-2. Add the following code to the `createUser.js` file:
+1. Create `user.js` in the `./tests/helpers` directory.
+2. Add the following code to the `user.js` file:
 
     ```js
+      /**
+      * Default data that factory use
+      */
+      const defaultData = {
+        password: "1234Abc",
+        provider: "local",
+        confirmed: true,
+      };
+
+      /**
+      * Returns random username object for user creation
+      * @param {object} options that overwrites default options
+      * @returns {object} object used with strapi.plugins["users-permissions"].services.user.add
+      */
+      const mockUserData = (options = {}) => {
+        const usernameSuffix = Math.round(Math.random() * 10000).toString();
+        return {
+          username: `tester${usernameSuffix}`,
+          email: `tester${usernameSuffix}@strapi.com`,
+          ...defaultData,
+          ...options,
+        };
+      };
+
+      /**
+      * Creates new user in strapi database
+      * @param data
+      * @returns {object} object of new created user, fetched from database
+      */
+      const createUser = async (data) => {
+        /** Gets the default user role */
+        const pluginStore = await strapi.store({
+          type: "plugin",
+          name: "users-permissions",
+        });
+
+        const settings = await pluginStore.get({
+          key: "advanced",
+        });
+
+        const defaultRole = await strapi
+          .query("plugin::users-permissions.role")
+          .findOne({ where: { type: settings.default_role } });
+
+        /** Creates a new user and push to database */
+        return strapi
+          .plugin("users-permissions")
+          .service("user")
+          .add({
+            ...mockUserData(),
+            ...data,
+            role: defaultRole ? defaultRole.id : null,
+          });
+      };
+
+      module.exports = {
+        mockUserData,
+        createUser,
+        defaultData,
+      };
 
 
     ```
@@ -400,14 +588,160 @@ A `createUser` helper file is used to create a mock user account in the test dat
 
 ### Create an `auth.test.js` test file
 
-The `auth.test.js` file contains the authenticated endpoint test conditions. 
+The `auth.test.js` file contains the authenticated endpoint test conditions.
 
+code:
+
+```js
+const { describe, beforeAll, afterAll, it, expect } = require("@jest/globals");
+const request = require("supertest");
+const {
+  updatePluginStore,
+  responseHasError,
+  setupStrapi,
+  stopStrapi,
+  //sleep,
+} = require("./helpers/strapi");
+const { createUser, defaultData, mockUserData } = require("./helpers/factory");
+//const nodemailerMock = require("nodemailer-mock");
+
+const fs = require("fs");
+
+/** this code is called once before any test is called */
+beforeAll(async () => {
+  await setupStrapi(); // singleton so it can be called many times
+});
+
+/** this code is called once before all the tested are finished */
+afterAll(async () => {
+  await stopStrapi();
+});
+
+describe("Default User methods", () => {
+  let user;
+
+  beforeAll(async () => {
+    user = await createUser();
+  });
+
+  it("should login user and return jwt token", async () => {
+    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+      id: user.id,
+    });
+
+    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+      .post("/api/auth/local")
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .send({
+        identifier: user.email,
+        password: defaultData.password,
+      })
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then(async (data) => {
+        expect(data.body.jwt).toBeDefined();
+        const verified = await strapi.plugins[
+          "users-permissions"
+        ].services.jwt.verify(data.body.jwt);
+
+        expect(data.body.jwt === jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
+      });
+  });
+
+  it("should return users data for authenticated user", async () => {
+    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+      id: user.id,
+    });
+
+    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+      .get("/api/users/me")
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .set("Authorization", "Bearer " + jwt)
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.id).toBe(user.id);
+        expect(data.body.username).toBe(user.username);
+        expect(data.body.email).toBe(user.email);
+      });
+  });
+
+  it("should allow register users ", async () => {
+    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+      .post("/api/auth/local/register")
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .send({
+        ...mockUserData(),
+      })
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.jwt).toBeDefined();
+        expect(data.body.user).toBeDefined();
+      });
+  });
+});
+
+describe("Confirmation User methods", () => {
+  let user;
+
+  beforeAll(async () => {
+    await updatePluginStore("users-permissions", "advanced", {
+      email_confirmation: true,
+    });
+
+    user = await createUser({
+      confirmed: false,
+    });
+  });
+
+  afterAll(async () => {
+    await updatePluginStore("users-permissions", "advanced", {
+      email_confirmation: false,
+    });
+  });
+
+  it("unconfirmed user should not login", async () => {
+    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+      .post("/api/auth/local")
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .send({
+        identifier: user.email,
+        password: defaultData.password,
+      })
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .then((data) => {
+        expect(responseHasError("ApplicationError", data.body)).toBe(true);
+      });
+  });
+});
+```
 
 ### Run an authenticated API endpoint test
 
 
+To run the authenticated test: 
 
+<code-group>
+<code-block title=YARN>
 
+```sh
+yarn test
+```
+</code-block>
+<code-block title=NPM>
 
+```sh
+npm test
+```
+</code-block>
+</code-group>
 
 
