@@ -119,6 +119,7 @@ const sidebars = {
           items: [
             'dev-docs/backend-customization/controllers',
             'dev-docs/backend-customization/middlewares',
+            'dev-docs/backend-customization/models',
           ]
         },
         'dev-docs/typescript'
