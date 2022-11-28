@@ -507,7 +507,7 @@ To disable the information box containing the tutorial videos, set the `config.t
 
 #### Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
 #### Theme extension
 
