@@ -8,15 +8,21 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 <!-- more details including the file structure of exp data on this page-->
 # Data Export-Import System <BetaBadge />
 
-Strapi provides a CLI-based tool that allows you to export data from a Strapi application. The data export tool is useful, for example, to create a backup of your project data. The following documentation details examples of how to use the `strapi export` command.
+Sometimes you need to move data out of or into a Strapi instance. The data export-import feature allows you to efficiently extract data from an existing instance and import that data into a separate instance. Strapi provides a CLI-based tool that allows you to export and import data. Common use cases include:
 
-::: strapi
+- creating a data backup,
+- transferring data between environments such as staging and production,
+- moving assets from one hosting solution to another, such as locally hosted to an S3 bucket.
+
+ The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
+
+:::strapi
 The `strapi export` CLI command and all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
 :::
 
 ## Export data using the CLI tool
 
-The `strapi export` command exports data as an encrypted and compressed `tar.gz` file.
+The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file.
 
 - encrypt outcome
 - filter content
@@ -28,24 +34,21 @@ The `strapi export` command exports data as an encrypted and compressed `tar.gz`
 
 ## Export data structure
 
-- configuration
-- entities
-- links
-- media
-- schemas
-- `metadata.json`
+The exported data is broken down into 6 categories:
+- configuration, which contains zzz,
+- entities, which contains zzz,
+- links, which contains zzz,
+- assets, which contains
+- schemas, which contains zzz,
+- `metadata.json`, which contains xsss.
 
-<!-- ## Import data using the CLI tool
+## Import data using the CLI tool
 
-details here.
+```sh
+yarn strapi import -f my-file-name --key my-encryption-key --conflictStrategy abort --schemaComparison strict
+
+```
 
 - decrypt outcome
 - decompress outcome,
 - other
- -->
-
-
-
-<!--## Transfer between environments **new page**
-
-## Activate or deactivate maintenance mode -->
