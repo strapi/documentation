@@ -131,6 +131,35 @@ strapi export --max-size 100 #allows a maximum file size of 100 MB.
 
 ```
 
+## strapi import <BetaBadge />
+
+Imports your project data. The imported data must originate from another Strapi application <!--validate this-->.
+
+
+| Option             | Type   | Description                                                                                                                           | default |
+|--------------------|--------|---------------------------------------------------------------------------------------------------------------------------------------|---------|
+| --conflictStrategy | string | Which strategy to use for ID conflicts (choices: restore, abort, keep, or replace). See the export-import documentation for details.  | restore |
+| --exclude          | string | Comma-separated list of data to exclude.                                                                                              |         |
+| --schemaComparison | string | exact, strict, subset, bypass.                                                                                                        | exact   |
+| --key              | string | provide the encryption key in the command instead of a subsequent prompt                                                              |         |
+| -f, --file         | string | path and filename for the data to be imported.                                                                                        |         |
+| -h, --help         |        | Display the `strapi export` help commands                                                                                             |         |
+
+**Examples**
+
+```sh
+
+#examples of strapi export:
+
+#import your data with the default parameters: 
+strapi import -f <your-filepath-and-filename>
+#import your data and set the conflict strategy:
+strapi import -f <your-filepath-and-filename> --conflictStrategy replace
+#import your data and set the schema comparision: 
+strapi import -f <your-filepath-and-filename> --schemaComparison strict 
+
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
@@ -139,7 +168,7 @@ Dumps configurations to a file or stdout to help you migrate to production.
 
 The dump format will be a JSON array.
 
-```
+```sh
 strapi configuration:dump
 
 Options:
