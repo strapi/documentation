@@ -3,12 +3,17 @@
   border-radius: 12px;
 }
 @media (min-width: 1536px) {
-  .api-call {
+  .api-call:not(.api-call--no-side-by-side) {
     display: flex;
     margin: 0 -12rem 2rem 0;
     align-items: stretch;
   }
 }
+
+// .api-call {
+// margin-bottom: 2rem;
+// }
+
 .request {
   background-color: var(--strapi-neutral-700);
   padding: 0 1rem 1rem;
@@ -70,6 +75,11 @@
 .request pre {
   padding: 1rem 0 0 1rem;
 }
+
+.request code {
+  font-size: .8rem
+}
+
 .request code .token.punctuation {
   color: #d3d3d3;
 }
@@ -93,6 +103,16 @@
   font-size: 100%;
   color: var(--strapi-neutral-200);
 }
+
+// @media (max-width: 1535px) {
+//  .response {
+//    margin-bottom: 2rem;
+//  }
+// }
+// .response + p {
+//  margin-top: 2em;
+// }
+
 .response .extra-class::before {
   color: var(--strapi-neutral-200);
 }
@@ -149,27 +169,31 @@
   margin-bottom: 0;
 }
 @media (min-width: 1536px) {
-  .request + .response {
+  .api-call:not(.api-call--no-side-by-side) .request + .response {
     margin-top: 0;
   }
-  .api-call > .request,
-  .api-call > .response {
+  .api-call:not(.api-call--no-side-by-side) > .request,
+  .api-call:not(.api-call--no-side-by-side) > .response {
     flex: 0 0 42%;
     max-width: 42%;
   }
-  .api-call .request {
+  .api-call:not(.api-call--no-side-by-side) .request {
     border-radius: 12px 0 0 12px;
   }
-  .api-call .request-title {
+  .api-call:not(.api-call--no-side-by-side) .request-title {
     border-radius: 12px 0 0 0;
   }
-  .api-call .response {
+  .api-call:not(.api-call--no-side-by-side) .response {
     border-radius: 0 12px 12px 0;
   }
-  .api-call .response-title {
+  .api-call:not(.api-call--no-side-by-side) .response-title {
     border-radius: 0 12px 0 0;
   }
-  .api-call .response-content {
+  .api-call:not(.api-call--no-side-by-side) .response-content {
     margin-top: 4rem;
   }
+}
+
+.api-call .request + .response {
+  margin-top: 0.5rem;
 }
