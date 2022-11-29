@@ -21,7 +21,7 @@ A new controller can be implemented:
   - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/dev-docs/api/plugins/server-api))
 
 <Tabs groupId="js-ts">
-<TabItem value="js" label="JAVASCRIPT">
+<TabItem value="js" label="JavaScript">
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
@@ -66,7 +66,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 </TabItem>
 
-<TabItem value="ts" label="TYPESCRIPT">
+<TabItem value="ts" label="TypeScript">
 
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
@@ -122,7 +122,7 @@ A specific `GET /hello` [route](/dev-docs/backend-customization/routes) is defin
 
 <Tabs groupId="js-ts">
 
-<TabItem value="js" label="JAVASCRIPT">
+<TabItem value="js" label="JavaScript">
 
 ```js "title="./src/api/hello/routes/hello.js"
 
@@ -148,7 +148,7 @@ module.exports = {
 
 </TabItem>
 
-<TabItem value="ts" label="TYPESCRIPT">
+<TabItem value="ts" label="TypeScript">
 
 ```js "title="./src/api/hello/routes/hello.ts"
 

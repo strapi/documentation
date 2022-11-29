@@ -27,7 +27,7 @@ A new application-level or API-level middleware can be implemented:
 Middlewares working with the REST API are functions like the following:
 
 <Tabs groupId="js-ts">
-<TabItem value="js" label="JAVASCRIPT">
+<TabItem value="js" label="JavaScript">
 
 ```js title="./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.js"
 
@@ -38,7 +38,7 @@ module.exports = (config, { strapi })=> {
 
 </TabItem>
 
-<TabItem value="ts" label="TYPESCRIPT">
+<TabItem value="ts" label="TypeScript">
 
 ```js title="./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.ts"
 
@@ -56,7 +56,7 @@ Once created, custom middlewares should be added to the [middlewares configurati
 <summary>Example of a custom timer middleware</summary>
 
 <Tabs groupId="js-ts">
-<TabItem value="js" label="JAVASCRIPT">
+<TabItem value="js" label="JavaScript">
 
 ```js title="path: /config/middlewares.js"
 module.exports = () => {
@@ -73,7 +73,7 @@ module.exports = () => {
 
 </TabItem>
 
-<TabItem value="ts" label="TYPESCRIPT">
+<TabItem value="ts" label="TypeScript">
 
 ```js title="/config/middlewares.ts"
 
