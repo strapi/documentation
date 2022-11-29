@@ -515,17 +515,6 @@ To enable authenticated route tests the `strapi.js` helper file needs to issue a
      };
      ```
 
-<!--
-  Steps to do in the test application: 
-    1. create an admin user with credentials
-    2. login the admin user and return JWT(?)
-    3. test that the user can get their info 
--->
-
-- create a test admin user,
-- login the test admin user and return a `jwt` secret,
-- make an authenticated request for the user's data.
-
 ### Create a `user` helper file
 
 A `user` helper file is used to create a mock user account in the test database. This code can be reused for other tests that also need user credentials to login or test other functionalities. To setup the `user` helper file:
@@ -737,7 +726,7 @@ describe("Confirmation User methods", () => {
 
 ### Run an authenticated API endpoint test
 
-The above test tries to:
+The above test is designed to:
 
 - login an authenticated user and return a `jwt`,
 - return the user's data,
@@ -760,5 +749,3 @@ npm test
 ```
 </code-block>
 </code-group>
-
-
