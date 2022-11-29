@@ -10,9 +10,9 @@
   }
 }
 
-// .api-call {
-// margin-bottom: 2rem;
-// }
+/* .api-call {
+  margin-bottom: 2rem;
+} */
 
 .request {
   background-color: var(--strapi-neutral-700);
@@ -76,7 +76,8 @@
   padding: 1rem 0 0 1rem;
 }
 
-.request code {
+.request code,
+.response code {
   font-size: .8rem
 }
 
@@ -104,14 +105,14 @@
   color: var(--strapi-neutral-200);
 }
 
-// @media (max-width: 1535px) {
-//  .response {
-//    margin-bottom: 2rem;
-//  }
-// }
-// .response + p {
-//  margin-top: 2em;
-// }
+@media (max-width: 1535px) {
+ .response {
+   margin-bottom: 2rem;
+ }
+}
+.response + p {
+ margin-top: 2em;
+}
 
 .response .extra-class::before {
   color: var(--strapi-neutral-200);
@@ -174,8 +175,8 @@
   }
   .api-call:not(.api-call--no-side-by-side) > .request,
   .api-call:not(.api-call--no-side-by-side) > .response {
-    flex: 0 0 42%;
-    max-width: 42%;
+    flex: 0 0 41%;
+    max-width: 41%;
   }
   .api-call:not(.api-call--no-side-by-side) .request {
     border-radius: 12px 0 0 12px;
