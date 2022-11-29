@@ -120,7 +120,6 @@ Each card displays the following information:
 
 From this page you can also trigger a new deployment and access the application using the corresponding buttons.
 
-<!-- TODO: remove alpha badge, is used for illustrating purposes -->
 ### Settings
 
 The **Settings** tab enables you to edit the following details for the project:
