@@ -10,9 +10,9 @@
   }
 }
 
-/* .api-call {
+.api-call {
   margin-bottom: 2rem;
-} */
+}
 
 .request {
   background-color: var(--strapi-neutral-700);
@@ -175,8 +175,8 @@
   }
   .api-call:not(.api-call--no-side-by-side) > .request,
   .api-call:not(.api-call--no-side-by-side) > .response {
-    flex: 0 0 41%;
-    max-width: 41%;
+    flex: 0 0 42%;
+    max-width: 42%;
   }
   .api-call:not(.api-call--no-side-by-side) .request {
     border-radius: 12px 0 0 12px;
