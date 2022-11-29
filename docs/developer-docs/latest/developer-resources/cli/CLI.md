@@ -98,7 +98,7 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
-## strapi export <BetaBadge />
+## strapi export <AlphaBadge />
 
 Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
@@ -113,8 +113,8 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
 | --compress       | boolean | Compress the output file using `gzip` compression.                                    | true    |
 | --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
-| --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
-| --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
+| --max-size       | integer | Split the final file when exceeding the specified size in MB.                 |         |
+| --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB.                           |         |
 | -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
 
 <!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
@@ -122,13 +122,11 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 **Examples**
 
 ```sh
-
 #examples of strapi export:
 
 strapi export myData #exports your data with the default parameters and the filename myData.
 strapi export --encrypt false #exports your data without encryption.
 strapi export --max-size 100 #allows a maximum file size of 100 MB. 
-
 ```
 
 ## strapi configuration:dump
