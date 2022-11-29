@@ -48,7 +48,7 @@ yarn add better-sqlite3 --dev
 ```sh
 npm install jest --save-dev
 npm install supertest --save-dev
-npm install better-sqlite3 --save-dev
+npm install better-sqlite3 --save-dev #not required if better-sqlite3 is in your dependencies
 ```
 
 </code-block>
@@ -62,7 +62,7 @@ npm install better-sqlite3 --save-dev
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles --watchAll"
   },
 ```
 
@@ -72,7 +72,7 @@ npm install better-sqlite3 --save-dev
 //path: ./package.json
 //...
   "jest": {
-    "testPathIgnorePatterns": [ //informs Jest to ignore these directories.
+    "testPathIgnorePatterns": [
       "/node_modules/",
       ".tmp",
       ".cache"
@@ -161,8 +161,8 @@ async function teardownStrapi() {
 module.exports = { setupStrapi, teardownStrapi };
 ```
 
-::: note
-The command to close the database connection is not working, which results in an open handle in Jest. The `--force-exit` flag temporarily solves this problem.
+:::note
+The command to close the database connection does not always work correctly, which results in an open handle in Jest. The `--watchAll` flag temporarily solves this problem.
 :::
 
 ## Test the `strapi` instance
@@ -275,11 +275,11 @@ Unit tests are designed to test individual units such as functions and methods. 
 
 ## Test public endpoints
 
-The goal of this test is to evaluate if an endpoint works properly. In this example both the route and controller logic have to work for the test to be successul. This example uses a custom route and controller, but the same structure works with APIs [generated using the Content-type Builder](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
+The goal of this test is to evaluate if an endpoint works properly. In this example both the route and controller logic have to work for the test to be successful. This example uses a custom route and controller, but the same structure works with APIs [generated using the Content-type Builder](/user-docs/latest/content-types-builder/creating-new-content-type.md#creating-a-new-content-type).
 
 ### Create a public route and controller
 
-Routes direct incoming requests to the server while controllers contain the business logic. For this example, the route authorizes `GET` for `/public` and calls the `hello` method in the `public` controller.
+[Routes](/developer-docs/latest/development/backend-customization/routes.md) direct incoming requests to the server while [controllers](/developer-docs/latest/development/backend-customization/controllers.md) contain the business logic. For this example, the route authorizes `GET` for `/public` and calls the `hello` method in the `public` controller.
 
 1. Add a directory `public` to `./src/api`.
 2. Add sub directories `routes` and `controllers` inside the new `./src/api/public` directory.
@@ -318,7 +318,7 @@ Routes direct incoming requests to the server while controllers contain the busi
 
     ```
 
-5. Save both `public.js` files.
+5. Save both of the `public.js` files.
 
 ### Create a public endpoint test
 
@@ -349,7 +349,7 @@ An endpoint test has 3 components:
     ```
 
     :::tip
-    The test logic can be added directly to the `app.test.js` file as well. If you write a lot of tests using separate files for the test logic can helpful.
+    The test logic can be added directly to the `app.test.js` file as well. If you write a lot of tests, using separate files for the test logic can helpful.
     :::
 
 3. Add the following code to `./tests/app.test.js`
@@ -361,22 +361,35 @@ An endpoint test has 3 components:
     ```
 
 4. Save your code changes.
-5. run `yarn test` or `npm test` to confirm the test is successful.
+5. Run `yarn test` or `npm test` to confirm the test is successful.
 
 ## Test an authenticated API endpoint
 
-::: prerequisite
+:::prerequisites
 
 The authenticated API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
 
 :::
 
-Testing authenticated API endpoints requires:
+In order to test API endpoints that require authentication you must create a mock user as part of the test setup. In the following example the [Users and Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is used to create a mock user. The mock user is stored in the testing database and deleted at the end of the test. Testing authenticated API endpoints requires:
 
+- modifying the `strapi.js` testing instance,
+- creating a `user.js` helper file to mock a user,
+- writing the authenticated route test.
+- running the test.
 
-### modify `strapi.js` instance
+### modify `strapi.js` testing instance
 
-1. Add `const _ = require("lodash");`
+To enable authenticated route tests the `strapi.js` helper file needs to issue a JWT and set the permissions for the mock user. Add the following code to your `strapi.js` helper file:
+
+1. Add `lodash` below `fs`:
+    
+    ```js
+    //const Strapi = require("@strapi/strapi");
+    //const fs = require("fs");
+    const _ = require("lodash");
+    ```
+
 2. Add the following code to the bottom of the `strapi.js` helper file:
 
     ```js
@@ -413,7 +426,7 @@ Testing authenticated API endpoints requires:
     return service.updateRole(roleID, role);
     };
 
-   /** Updates database `permissions` that role can access an endpoint
+   /** Updates database `permissions` so that role can access an endpoint
      * @see grantPrivilege
     */
 
@@ -485,20 +498,22 @@ Testing authenticated API endpoints requires:
    return response && response.error && response.error.name === errorId;
    };
 
-   module.exports = {
+   ```
+
+3. Add the following to `module.exports`:
+
+    ```js
+    module.exports{
      setupStrapi,
-     stopStrapi,
+     teardownStrapi,
      jwt,
      grantPrivilege,
      grantPrivileges,
      updatePluginStore,
      getPluginStore,
      responseHasError,
-   //sleep,
-   };
-
-   ```
-
+     };
+     ```
 
 <!--
   Steps to do in the test application: 
@@ -585,7 +600,6 @@ A `user` helper file is used to create a mock user account in the test database.
 
 3. Save the file.  
 
-
 ### Create an `auth.test.js` test file
 
 The `auth.test.js` file contains the authenticated endpoint test conditions.
@@ -600,19 +614,16 @@ const {
   responseHasError,
   setupStrapi,
   stopStrapi,
-  //sleep,
 } = require("./helpers/strapi");
-const { createUser, defaultData, mockUserData } = require("./helpers/factory");
-//const nodemailerMock = require("nodemailer-mock");
-
+const { createUser, defaultData, mockUserData } = require("./helpers/user");
 const fs = require("fs");
 
-/** this code is called once before any test is called */
+
+
 beforeAll(async () => {
-  await setupStrapi(); // singleton so it can be called many times
+  await setupStrapi();
 });
 
-/** this code is called once before all the tested are finished */
 afterAll(async () => {
   await stopStrapi();
 });
@@ -629,7 +640,7 @@ describe("Default User methods", () => {
       id: user.id,
     });
 
-    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+    await request(strapi.server.httpServer)
       .post("/api/auth/local")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -645,16 +656,16 @@ describe("Default User methods", () => {
           "users-permissions"
         ].services.jwt.verify(data.body.jwt);
 
-        expect(data.body.jwt === jwt || !!verified).toBe(true); // jwt does have a random seed, each issue can be different
+        expect(data.body.jwt === jwt || !!verified).toBe(true); 
       });
   });
 
-  it("should return users data for authenticated user", async () => {
+  it("should return user's data for authenticated user", async () => {
     const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
       id: user.id,
     });
 
-    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+    await request(strapi.server.httpServer)
       .get("/api/users/me")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -670,7 +681,7 @@ describe("Default User methods", () => {
   });
 
   it("should allow register users ", async () => {
-    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+    await request(strapi.server.httpServer)
       .post("/api/auth/local/register")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -707,7 +718,7 @@ describe("Confirmation User methods", () => {
   });
 
   it("unconfirmed user should not login", async () => {
-    await request(strapi.server.httpServer) // app server is and instance of Class: http.Server
+    await request(strapi.server.httpServer)
       .post("/api/auth/local")
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -726,8 +737,14 @@ describe("Confirmation User methods", () => {
 
 ### Run an authenticated API endpoint test
 
+The above test tries to:
 
-To run the authenticated test: 
+- login an authenticated user and return a `jwt`,
+- return the user's data,
+- allow the registration of users,
+- dissallow unauthenticated users to access the endpoint.
+
+Use the following command to run the authenticated test:
 
 <code-group>
 <code-block title=YARN>
