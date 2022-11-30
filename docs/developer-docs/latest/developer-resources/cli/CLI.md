@@ -113,7 +113,6 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | --no-encrypt     |         | Disables file encryption and disables the `key` option.                                                   |
 | --no-compress    |         | Disables file compression.                                                                                |
 | --key            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |
-| --max-size       | integer | Splits the final file when exceeding the specified size in MB.                                            |
 | --max-size-jsonl | integer | Splits the internal `jsonl` files when exceeding the specified size in MB.                                |
 | -f, --file       | file    | Specifies the export filename. Do not include a file extension.                                           |
 | -h, --help       |         | Displays help for the `strapi export` command.                                                            |
@@ -127,7 +126,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 strapi export -f myData #exports your data with the default options and the filename myData.
 strapi export --no-encrypt #exports your data without encryption.
-strapi export --max-size 100 #allows a maximum file size of 100 MB. 
+strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
 ```
 
 ## strapi configuration:dump
