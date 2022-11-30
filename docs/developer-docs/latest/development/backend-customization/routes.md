@@ -178,6 +178,10 @@ Routes files are loaded in alphabetical order. To load custom routes before core
 
 In the following example, the custom routes file name is prefixed with `01-` to make sure the route is reached before the core routes.
 
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./src/api/restaurant/routes/01-custom-restaurant.js
 
