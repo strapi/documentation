@@ -77,6 +77,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [ ] Back-end customization
       - [x] [Introduction](/dev-docs/backend-customization)
       - [x] [Routes](/dev-docs/backend-customization/routes)
+      - [x] [Policies](/dev-docs/backend-customization/policies)
       - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
       - [x] [Controllers](/dev-docs/backend-customization/controllers)
       - [ ] Requests & Responses (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#requests))
