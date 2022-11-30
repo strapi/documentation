@@ -7,6 +7,9 @@ import TabItem from '@theme/TabItem';
 import Request from '../components/Request';
 import Response from '../components/Response';
 import ApiCall from '../components/ApiCall';
+import AlphaBadge from '../components/AlphaBadge';
+import BetaBadge from '../components/BetaBadge';
+import GoldBadge from '../components/GoldBadge';
 
 export default {
   // Re-use the default mapping
@@ -23,4 +26,7 @@ export default {
   Request: Request,
   Response: Response,
   ApiCall: ApiCall,
+  AlphaBadge: AlphaBadge,
+  BetaBadge: BetaBadge,
+  GoldBadge: GoldBadge,
 };

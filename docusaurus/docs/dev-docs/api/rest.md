@@ -106,13 +106,13 @@ Returns entries matching the query filters (see [API parameters](/dev-docs/api/r
 
 <ApiCall>
 
-<Request title="Example request">
+<Request>
 
 `GET http://localhost:1337/api/restaurants`
 
 </Request>
 
-<Response title="Example response">
+<Response>
 
 ```json
 {

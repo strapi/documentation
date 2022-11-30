@@ -9,9 +9,11 @@
     align-items: stretch;
   }
 }
+
 .api-call {
   margin-bottom: 2rem;
 }
+
 .request {
   background-color: var(--strapi-neutral-700);
   padding: 0 1rem 1rem;
@@ -73,9 +75,12 @@
 .request pre {
   padding: 1rem 0 0 1rem;
 }
-.request code {
+
+.request code,
+.response code {
   font-size: .8rem
 }
+
 .request code .token.punctuation {
   color: #d3d3d3;
 }
@@ -94,20 +99,21 @@
 .response {
   background-color: var(--strapi-neutral-900);
   margin-top: 2rem;
-  /* margin-bottom: 2rem; */
   padding: 0 1rem 1rem;
   border-radius: 12px;
   font-size: 100%;
   color: var(--strapi-neutral-200);
 }
+
 @media (max-width: 1535px) {
-  .response {
-    margin-bottom: 2rem;
-  }
+ .response {
+   margin-bottom: 2rem;
+ }
 }
 .response + p {
-  margin-top: 2em;
+ margin-top: 2em;
 }
+
 .response .extra-class::before {
   color: var(--strapi-neutral-200);
 }
