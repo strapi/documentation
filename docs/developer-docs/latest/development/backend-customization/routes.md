@@ -206,7 +206,7 @@ module.exports = {
 <code-block title=TYPESCRIPT>
 
 ```js
-// path: ./src/api/restaurant/routes/custom-restaurant.ts
+// path: ./src/api/restaurant/routes/01-custom-restaurant.ts
 
 export default {
   routes: [
