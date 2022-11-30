@@ -7,13 +7,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.h
 
 # Unit and Route Testing
 
-Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes implementing:
+Testing code units and API routes in a Strapi application can be done with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest), with an SQLite database. This documentation describes how to:
 
-- a unit test for a function,
-- a public API endpoint test,
-- and an API endpoint test with authorization.
+- write a unit test for a function,
+- test a public API endpoint test,
+- test and an API endpoint test with authorization.
 
-Refer to the testing framework documentation for other use cases and for the full set of testing options and configurations.
+Refer to the Jest testing framework documentation for other use cases and for the full set of testing options and configurations.
 
 :::caution
 The tests described below are incompatible with Windows using the SQLite database due to how Windows locks the SQLite file.
@@ -21,11 +21,13 @@ The tests described below are incompatible with Windows using the SQLite databas
 
 ## Install and configure the test tools
 
+The following section briefly describes each of the required tools and the installation procedure.
+
 `Jest` contains a set of guidelines or rules used for creating and designing test cases - a combination of practices and tools that are designed to help testers test more efficiently.
 
-`Supertest` allows you to test the API routes as if they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
+`Supertest` provides high-level abstraction for testing HTTP requests and responses. It still allows you to test the API routes.
 
-`better-sqlite3` is used to create an on-disk database that is created and deleted between tests.
+`better-sqlite3` is used to create an on-disk database that is created before and deleted after the tests run.
 <!-- TODO rewrite this intro section-->
 
 ### Install for JavaScript applications
@@ -38,7 +40,7 @@ The tests described below are incompatible with Windows using the SQLite databas
 ```sh
 yarn add jest --dev
 yarn add supertest --dev 
-yarn add better-sqlite3 --dev 
+yarn add better-sqlite3 --dev #not required if better-sqlite3 is in your dependencies
   ```
 
   </code-block>
@@ -85,18 +87,18 @@ npm install better-sqlite3 --save-dev #not required if better-sqlite3 is in your
 
 ## Create a testing environment
 
-The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. To achieve this the following instructions add:
+The testing environment should test the application code without affecting the database, and should be able to run distinct units of the application to incrementally test the code functionality. To achieve this the following procedure adds:
 
-- a test database,
+- a test database configuration,
 - a `strapi` instance for testing,
-- and file directories to organize the testing environment.
+- file directories to organize the testing environment.
 
 ### Create a test environment database configuration file
 
 The test framework must have a clean and empty environment to perform valid tests and to not interfere with the development database. Once `jest` is running it uses the `test` [environment](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) by switching `NODE_ENV` to `test`.
 
 1. Create the subdirectories `env/test/` in the `./config/` directory.
-2. Create a new database configuration file `database.js` for the test env in `./config/env/test/`.
+2. Create a new database configuration file `database.js` for the test environment in `./config/env/test/`.
 3. Add the following code to `./config/env/test/database.js`:
 
 ```js
@@ -162,12 +164,12 @@ module.exports = { setupStrapi, teardownStrapi };
 ```
 
 :::note
-The command to close the database connection does not always work correctly, which results in an open handle in Jest. The `--watchAll` flag temporarily solves this problem.
+The command to close the database connection does not always work correctly, which results in an open handle warning in `Jest`. The `--watchAll` flag temporarily solves this problem.
 :::
 
 ## Test the `strapi` instance
 
-You need a main entry file for tests, one that will also test the `strapi` instance.
+You need a main entry file for tests, which can also be used to test the `strapi` instance.
 
 1. Create `app.test.js` in the `tests` directory.
 2. Add the following code to `app.test.js`:
@@ -191,7 +193,7 @@ it("strapi is defined", () => {
 });
 ```
 
-3. Run the unit test to confirm it is working correctly:
+3. Run the test to confirm it is working correctly:
 
 <code-group>
 <code-block title=YARN>
@@ -209,6 +211,7 @@ npm test
 </code-group>
 
 4. Confirm the test is working. The test output in the terminal window should be the following:
+<!--update this with the --watchAll flag-->
 
 ```bash
 yarn run v1.22.18
@@ -228,7 +231,7 @@ Ran all test suites.
 
 - Jest detects test files by looking for the filename `{your-file}.test.js`.
 
-- If you receive a timeout error for Jest, please add the following line right before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
+- If you receive a timeout error for Jest, please add the following line before the `beforeAll` method in the `app.test.js` file: `jest.setTimeout(15000)` and adjust the milliseconds value as necessary.
 :::
 
 ## Run a unit test
@@ -312,7 +315,7 @@ The goal of this test is to evaluate if an endpoint works properly. In this exam
     module.exports = {
       async hello(ctx, next) {
         // called by GET /public
-        ctx.body = 'Hello World!'; // A JSON can also be sent.
+        ctx.body = 'Hello World!';
       },
     };
 
@@ -349,7 +352,7 @@ An endpoint test has 3 components:
     ```
 
     :::tip
-    The test logic can be added directly to the `app.test.js` file as well. If you write a lot of tests, using separate files for the test logic can helpful.
+    You can add the test logic directly to the `app.test.js` file, however, if you write a lot of tests, using separate files for the test logic can be useful.
     :::
 
 3. Add the following code to `./tests/app.test.js`
@@ -366,9 +369,7 @@ An endpoint test has 3 components:
 ## Test an authenticated API endpoint
 
 :::prerequisites
-
 The authenticated API endpoint test utilizes the `strapi.js` helper file created in the [Create a `strapi` instance](#create-a-strapi-instance) documentation.
-
 :::
 
 In order to test API endpoints that require authentication you must create a mock user as part of the test setup. In the following example the [Users and Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is used to create a mock user. The mock user is stored in the testing database and deleted at the end of the test. Testing authenticated API endpoints requires:
@@ -378,7 +379,7 @@ In order to test API endpoints that require authentication you must create a moc
 - writing the authenticated route test.
 - running the test.
 
-### modify `strapi.js` testing instance
+### Modify `strapi.js` testing instance
 
 To enable authenticated route tests the `strapi.js` helper file needs to issue a JWT and set the permissions for the mock user. Add the following code to your `strapi.js` helper file:
 
