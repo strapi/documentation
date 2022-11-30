@@ -98,37 +98,6 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
-## strapi export <BetaBadge />
-
-Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
-
-```console
-strapi export
-```
-
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
-
-| Option           | Type    | Description                                                                                               |
-|------------------|---------|----------------------------------------------------------------------------|
-| --no-encrypt     |         | Disables file encryption and disables the `key` option.                                                   |
-| --no-compress    |         | Disables file compression.                                                                                |
-| --key            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |
-| --max-size-jsonl | integer | Splits the internal `jsonl` files when exceeding the specified size in MB.                                |
-| -f, --file       | file    | Specifies the export filename. Do not include a file extension.                                           |
-| -h, --help       |         | Displays help for the `strapi export` command.                                                            |
-
-<!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
-
-**Examples**
-
-```sh
-#examples of strapi export:
-
-strapi export -f myData #exports your data with the default options and the filename myData.
-strapi export --no-encrypt #exports your data without encryption.
-strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
-```
-
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
