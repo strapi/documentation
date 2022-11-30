@@ -230,9 +230,9 @@ Both [core routers](#configuring-core-routers) and [custom routers](#creating-cu
 - by pointing to a policy registered in `./src/policies`, with or without passing a custom configuration
 - or by declaring the policy implementation directly, as a function that takes `policyContext` to extend [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments (see [policies documentation](/dev-docs/backend-customization/routes))
 
-<Tabs>
+<Tabs groupId="core-vs-custom-router">
 
-<TabItem value="core-router-policy" label="Core router policy">
+<TabItem value="core-router" label="Core router policy">
 
 <Tabs  groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -294,7 +294,7 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
 
 </TabItem>
 
-<TabItem value="custom-router-policy" label="Custom router policy">
+<TabItem value="custom-router" label="Custom router policy">
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
