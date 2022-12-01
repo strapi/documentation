@@ -117,8 +117,14 @@ const sidebars = {
             id: 'dev-docs/backend-customization',
           },
           items: [
-            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/routes',
+            'dev-docs/backend-customization/policies',
             'dev-docs/backend-customization/middlewares',
+            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/requests-responses',
+            'dev-docs/backend-customization/services',
+            'dev-docs/backend-customization/models',
+            'dev-docs/backend-customization/webhooks',
           ]
         },
         'dev-docs/typescript'

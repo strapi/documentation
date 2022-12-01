@@ -74,15 +74,16 @@ The following list is a sitemap of all the current and upcoming content for the 
         - [ ] HAProxy (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html))
         - [ ] Nginx (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html))
   - [ ] 🔧 Development
-    - [ ] Back-end customization
+    - [x] Back-end customization
       - [x] [Introduction](/dev-docs/backend-customization)
-      - [ ] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/routes.html))
+      - [x] [Routes](/dev-docs/backend-customization/routes)
+      - [x] [Policies](/dev-docs/backend-customization/policies)
       - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
       - [x] [Controllers](/dev-docs/backend-customization/controllers)
-      - [ ] Requests & Responses (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#requests))
-      - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/services.html))
-      - [ ] Models (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html))
-      - [ ] Webhooks (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/webhooks.html))
+      - [x] [Requests & Responses](/dev-docs/backend-customization/requests-responses)
+      - [x] [Services](/dev-docs/backend-customization/services)
+      - [x] [Models](/dev-docs/backend-customization/models)
+      - [x] [Webhooks](/dev-docs/backend-customization/webhooks)
     - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
     - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
     - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
