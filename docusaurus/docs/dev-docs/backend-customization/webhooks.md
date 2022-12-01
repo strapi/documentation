@@ -74,7 +74,7 @@ You can configure these global headers by updating the file at `./config/server`
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="./config.server.js"
+```js title="./config/server.js"
 
 module.exports = {
   webhooks: {
