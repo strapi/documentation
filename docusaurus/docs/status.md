@@ -81,7 +81,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
       - [x] [Controllers](/dev-docs/backend-customization/controllers)
       - [ ] Requests & Responses (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#requests))
-      - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/services.html))
+      - [x] Services](/dev-docs/backend-customization/services)
       - [ ] Models (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html))
       - [ ] Webhooks (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/webhooks.html))
     - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
