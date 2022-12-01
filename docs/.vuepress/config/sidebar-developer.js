@@ -3,10 +3,10 @@ const developer = [
     title: '🚀 Getting Started',
     collapsable: false,
     children: [
-      ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
-      ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
-      ['/developer-docs/latest/getting-started/troubleshooting', 'Frequently Asked Questions'],
-      ['/developer-docs/latest/getting-started/usage-information', 'Usage Information'],
+      ['/developer-docs/latest/getting-started/introduction.html', 'Introduction'],
+      ['/developer-docs/latest/getting-started/quick-start.html', 'Quick Start Guide'],
+      ['/developer-docs/latest/getting-started/troubleshooting.html', 'Frequently Asked Questions'],
+      ['/developer-docs/latest/getting-started/usage-information.html', 'Usage Information'],
     ],
   },
   {
@@ -103,7 +103,7 @@ const developer = [
       },
       {
         title: 'Deployment',
-        path: '/developer-docs/latest/setup-deployment-guides/deployment',
+        path: '/developer-docs/latest/setup-deployment-guides/deployment.html',
         collapsable: true,
         initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
         children: [
@@ -179,7 +179,7 @@ const developer = [
       {
         title: 'Back-end customization',
         collapsable: true,
-        path: '/developer-docs/latest/development/backend-customization',
+        path: '/developer-docs/latest/development/backend-customization.html',
         children: [
           ['/developer-docs/latest/development/backend-customization/routes.html', 'Routes'],
           ['/developer-docs/latest/development/backend-customization/policies.html', 'Policies'],
@@ -251,7 +251,7 @@ const developer = [
       {
         title: 'Entity Service API',
         path:
-          '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+          '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html',
         collapsable: true,
         children: [
           [
