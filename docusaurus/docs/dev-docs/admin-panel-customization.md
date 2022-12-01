@@ -453,8 +453,7 @@ To replace the favicon, use the following procedure:
 3. Replace the existing **favicon.ico** file at the Strapi application root with a custom `favicon.ico` file.
 4. Update `./src/admin/app.js` with the following:
 
-    ```js
-    // path: src/admin/app.js
+    ```js title="./src/admin/app.js"
 
     import favicon from './extensions/favicon.png';
 
