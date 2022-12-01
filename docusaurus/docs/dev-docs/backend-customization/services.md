@@ -28,8 +28,7 @@ To manually create a service, export a factory function that returns the service
 
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./src/api/restaurant/services/restaurant.js
+```js title="./src/api/restaurant/services/restaurant.js"
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
@@ -69,8 +68,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./src/api/restaurant/services/restaurant.ts
+```js title="./src/api/restaurant/services/restaurant.ts"
 
 import { factories } from '@strapi/strapi'; 
 
@@ -123,8 +121,7 @@ The goal of a service is to store reusable functions. A `sendNewsletter` service
 
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./src/api/restaurant/services/restaurant.js
+```js title="./src/api/restaurant/services/restaurant.js"
 
 
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -159,8 +156,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./src/api/restaurant/services/restaurant.ts
+```js title="./src/api/restaurant/services/restaurant.ts"
 
 
 import { factories } from '@strapi/strapi'; 
@@ -201,8 +197,7 @@ The service is now available through the `strapi.service('api::restaurant.restau
 
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./src/api/restaurant/controllers/restaurant.js
+```js title="./src/api/restaurant/controllers/restaurant.js"
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
@@ -227,8 +222,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 <TabItem value="ts" label="TypeScript">
 
-```js
-// path: ./src/api/restaurant/controllers/restaurant.ts
+```js title="./src/api/restaurant/controllers/restaurant.ts"
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
