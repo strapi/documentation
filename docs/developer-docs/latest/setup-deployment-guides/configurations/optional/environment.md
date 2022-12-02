@@ -29,22 +29,6 @@ Strapi provides the following environment variables:
 
 In most use cases there will be different configurations between environments (e.g. database credentials).
 
-Instead of writing those credentials into configuration files, variables can be defined in a `.env` file at the root of the application:
-
-```sh
-# path: .env
-
-DATABASE_PASSWORD=acme
-```
-
-To customize the path of the `.env` file to load, set an environment variable called `ENV_PATH` before starting the application:
-
-```sh
-$ ENV_PATH=/absolute/path/to/.env npm run start
-```
-
-Variables defined in the `.env` file are accessible using `process.env.{variableName}` anywhere in configuration and application files.
-
 In configuration files, a `env()` utility allows defining defaults and [casting values](#casting-environment-variables):
 
 <code-group>
