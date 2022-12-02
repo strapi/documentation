@@ -105,29 +105,27 @@ Exports your project data. The default settings create a `.tar` file, compressed
 strapi export
 ```
 
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename directly after the `export` command. The following table provides all of the available options as command line flags:
+The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
-| Option           | Type    | Description                                                                                                                             | default |
-|------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
-| --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
-| --compress       | boolean | Compress the output file using `gzip` compression.                                    | true    |
-| --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
-| --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
-| --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
-| -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
+| Option           | Type    | Description                                                                                               |
+|------------------|---------|----------------------------------------------------------------------------|
+| --no-encrypt     |         | Disables file encryption and disables the `key` option.                                                   |
+| --no-compress    |         | Disables file compression.                                                                                |
+| --key            | string  | Passes the encryption key as part of the `export` command. The `--key` option can't be combined with `--no-encrypt`. |
+| --max-size-jsonl | integer | Splits the internal `jsonl` files when exceeding the specified size in MB (default 256MB).                                |
+| -f, --file       | file    | Specifies the export filename. Do not include a file extension.                                           |
+| -h, --help       |         | Displays help for the `strapi export` command.                                                            |
 
 <!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
 
 **Examples**
 
 ```sh
-
 #examples of strapi export:
 
-strapi export myData #exports your data with the default parameters and the filename myData.
-strapi export --encrypt false #exports your data without encryption.
-strapi export --max-size 100 #allows a maximum file size of 100 MB. 
-
+strapi export -f myData #exports your data with the default options and the filename myData.
+strapi export --no-encrypt #exports your data without encryption.
+strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
 ```
 
 ## strapi configuration:dump
@@ -247,7 +245,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins](/developer-docs/latest/development/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md).
 
 ```sh
 strapi generate
