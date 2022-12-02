@@ -12,8 +12,8 @@ By default Strapi provides a [provider](../development/providers.md) that upload
 
 The providers maintained by Strapi include:
 
-- [Amazon S3](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3)
-- [Cloudinary](https://www.npmjs.com/package/@strapi/provider-upload-cloudinary)
+- [Amazon S3](https://market.strapi.io/providers/@strapi-provider-upload-aws-s3)
+- [Cloudinary](https://market.strapi.io/providers/@strapi-provider-upload-cloudinary)
 - [Local](https://www.npmjs.com/package/@strapi/provider-upload-local)
 
 ## Configuration
