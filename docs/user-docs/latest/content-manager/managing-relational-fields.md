@@ -54,7 +54,7 @@ You can click on the name of the selected entry to be redirected to the edit vie
 
 To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](../assets/icons/clear.svg).
 
-## Managing multiple-choices relational fields
+## Managing multiple-choice relational fields
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
