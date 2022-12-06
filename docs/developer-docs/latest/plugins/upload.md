@@ -275,7 +275,7 @@ export default ({ env }) => ({
 | GET    | /api/upload/files     | Get a list of files |
 | GET    | /api/upload/files/:id | Get a specific file |
 | POST   | /api/upload           | Upload files        |
-| POST   | /api/upload?id=x      | Update file info    |
+| POST   | /api/upload?id=x      | Update fileInfo    |
 | DELETE | /api/upload/files/:id | Delete a file       |
 
 </div>
@@ -542,7 +542,7 @@ In our second example, you can upload and attach multiple pictures to the restau
 }
 ```
 
-### Update file info
+### Update fileInfo
 
 Update a file in your application.
 
