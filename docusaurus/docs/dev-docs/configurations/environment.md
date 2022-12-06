@@ -86,6 +86,10 @@ export default ({ env }) => ({
 
 </Tabs>
 
+:::note
+The syntax `property-name: env('VAR', 'default-value')` uses the value stored in the `.env` file. If there is no specified value in the `.env` file the default value is used.
+:::
+
 ### Casting environment variables
 
 The `env()` utility can be used to cast environment variables to different types:
