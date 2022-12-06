@@ -25,10 +25,6 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
 
 ## v3 to v4 migration guides
 
-::: callout 🚧 Migration guides
-This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
-:::
-
 Migrating from v3.6.x to v4.0.x revolves around 3 topics:
 
 - The [code migration guide](/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.md) helps migrating the built-in back-end and front-end code of the Strapi application to v4.

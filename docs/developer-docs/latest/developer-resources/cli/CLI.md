@@ -98,39 +98,6 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
-## strapi export <BetaBadge />
-
-Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
-
-```console
-strapi export
-```
-
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename directly after the `export` command. The following table provides all of the available options as command line flags:
-
-| Option           | Type    | Description                                                                                                                             | default |
-|------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------|---------|
-| --encrypt        | boolean | Encrypt the output file using `aes-128-ecb`. When set to `true`, the user will be prompted to enter an encryption key unless it is set using the `--key` option.                                                         | true    |
-| --compress       | boolean | Compress the output file using `gzip` compression.                                    | true    |
-| --key            | string  | Requires `--encrypt true`; is used to pass the encryption key as part of the export command: --key [string]. |                                                                                                          |         |
-| --max-size       | integer | Split the final file when exceeding the specified size in MB. Requires `--archive true.                 |         |
-| --max-size-jsonl | integer | Split the internal `jsonl` files when exceeding the specified size in MB. Requires `--archive true.                            |         |
-| -h, --help       |         | Display help for the `strapi export` command.                               |         |         |
-
-<!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
-
-**Examples**
-
-```sh
-
-#examples of strapi export:
-
-strapi export myData #exports your data with the default parameters and the filename myData.
-strapi export --encrypt false #exports your data without encryption.
-strapi export --max-size 100 #allows a maximum file size of 100 MB. 
-
-```
-
 ## strapi configuration:dump
 
 **Alias**: `config:dump`

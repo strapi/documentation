@@ -61,3 +61,34 @@ strapi.db.query('api::article.article').findMany({
   },
 });
 ```
+
+When dealing with polymorphic data structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
+
+```js
+strapi.db.query('api::article.article').findMany('api::article.article', {
+  populate: {
+    dynamicZone: {
+      on: {
+        'components.foo': {
+          select: ['title'],
+          where: { title: { $contains: 'strapi' } },
+        },
+        'components.bar': {
+          select: ['name'],
+        },
+      },
+    },
+
+    morphAuthor: {
+      on: {
+        'plugin::users-permissions.user': {
+          select: ['username'],
+        },
+        'api::author.author': {
+          select: ['name'],
+        },
+      },
+    },
+  },
+});
+```

@@ -3,7 +3,7 @@ const user = [
     collapsable: false,
     title: '',
     children: [
-      ['/user-docs/latest/getting-started/introduction', 'Welcome to the Strapi user guide!'],
+      ['/user-docs/latest/getting-started/introduction.html', 'Welcome to the Strapi user guide!'],
     ],
   },
   {
