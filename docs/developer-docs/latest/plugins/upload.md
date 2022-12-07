@@ -478,7 +478,7 @@ The corresponding code would be:
 Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files need to be prefixed with `files` (e.g. for a cover attribute: `files.cover`).
 
 ::: tip
-If you want to upload files for a component, you will have to specify the index of the item you want to add the file to: `files.my_component_name[the_index].attribute_name`
+If you want to upload files for a repeatable component, you will have to specify the zero-based index of the item you want to add the file to, using the following syntax: `files.my_component_name[the_index].attribute_name`. For instance, if you put 3 components and the file is for the second one, the index will be 1.
 :::
 
 :::caution
