@@ -93,6 +93,10 @@ Dynamic zones' components can also be reordered or deleted directly in the edit 
 - Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder components in your dynamic zone.
 - Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
 
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](../assets/icons/drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
+
 ::: note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
