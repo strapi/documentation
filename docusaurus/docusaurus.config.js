@@ -92,7 +92,7 @@ const config = {
       algolia: {
         appId: '9FTY6J9E4X',
         apiKey: 'cf49c82a1865df2618a3d89e18657051',
-        indexName: 'documentation',
+//         indexName: 'documentation', // to be replaced by the proper index name we'll use
       },
       navbar: {
         logo: {
