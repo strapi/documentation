@@ -50,8 +50,7 @@ In configuration files, a `env()` utility allows defining defaults and [casting 
 
 <TabItem value="javascript" label="JavaScript">
 
-```js
-// path: ./config/database.js
+```js title="./config/database.js"
 
 module.exports = ({ env }) => ({
   connections: {
@@ -68,8 +67,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```js
-// path: ./config/database.ts
+```js title="./config/database.ts"
 
 export default ({ env }) => ({
   connections: {
@@ -131,7 +129,6 @@ For instance, using the following configuration files will give you various opti
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
-
 
 ```js
 // path: ./config/server.js
