@@ -191,12 +191,12 @@ The following list is a sitemap of all the current and upcoming content for the 
 
   - [x] [Introduction](/user-docs/intro)
   - [ ] Content Manager 
-      - [ ] [Introduction to the Content Manager](/user-docs/content-manager/introduction-to-content-manager) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/introduction-to-content-manager.html#))
-      - [ ] [Configuring the views of a content-type](/user-docs/content-manager/configuring-view-of-content-type) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/configuring-view-of-content-type.html))
-      - [ ] [Writing content](/user-docs/content-manager/writing-content), (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html#))
-      - [ ] [Managing relational fields](/user-docs/content-manager/managing-relational-fields) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/managing-relational-fields.html))
-      - [ ] [Translating content](/user-docs/content-manager/translating-content), (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/translating-content.html))
-      - [ ] [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html))
+      - [ ] Introduction to the Content Manager (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/introduction-to-content-manager.html#))
+      - [ ] Configuring the views of a content-type (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/configuring-view-of-content-type.html))
+      - [ ] Writing content (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html#))
+      - [ ] Managing relational fields (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/managing-relational-fields.html))
+      - [ ] Translating content (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/translating-content.html))
+      - [ ] Saving, publishing and deleting content (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html))
   - [x] Content-type Builder
       - [x] [Introduction to the Content-type Builder](/user-docs/content-type-builder)
       - [x] [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)
