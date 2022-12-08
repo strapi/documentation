@@ -111,7 +111,7 @@ categories: [
 ]
 ```
 
-sending the following in the request body of a PUT or POST request will create a third relation of `id` `3` and position it before the relation with `id` `2`:
+sending the following in the request body of a PUT or POST request creates a third relation of `id` `3` and position it before the relation with `id` `2`:
 
 ```json
 categories: {
