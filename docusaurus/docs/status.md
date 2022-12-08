@@ -192,11 +192,11 @@ The following list is a sitemap of all the current and upcoming content for the 
   - [x] [Introduction](/user-docs/intro)
   - [x] Content Manager 
       - [x] [Introduction to the Content Manager](/user-docs/content-manager)
-      - [x] [Configuring the views of a content-type](/user-docs/content-manager/configuring-view-of-content-type))
-      - [x] [Writing content](/user-docs/content-manager/writing-content))
-      - [x] [Managing relational fields](/user-docs/content-manager/managing-relational-fields))
-      - [x] [Translating content](/user-docs/content-manager/translating-content))
-      - [x] [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content))
+      - [x] [Configuring the views of a content-type](/user-docs/content-manager/configuring-view-of-content-type)
+      - [x] [Writing content](/user-docs/content-manager/writing-content)
+      - [x] [Managing relational fields](/user-docs/content-manager/managing-relational-fields)
+      - [x] [Translating content](/user-docs/content-manager/translating-content)
+      - [x] [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content)
   - [x] Content-type Builder
       - [x] [Introduction to the Content-type Builder](/user-docs/content-type-builder)
       - [x] [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)
