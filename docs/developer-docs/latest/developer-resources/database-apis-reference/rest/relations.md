@@ -13,8 +13,6 @@ Relations can be added, updated, or removed through the Content API. The `connec
 - `connect` and `disconnect` perform partial updates
 - `set` performs a full update, effectively replacing all existing relations
 
-Using the longhand syntax with `connect` allows adding [positional arguments](#longhand-syntax) to define an order for relations.
-
 ```json
 /** 
  * Partial update (will add/remove the specified relations)
@@ -53,6 +51,8 @@ Using the longhand syntax with `connect` allows adding [positional arguments](#l
 }
 ```
 
+Using the longhand syntax with `connect` allows adding [positional arguments](#longhand-syntax) to define an order for relations.
+
 ## `connect`
 
 Using `connect` in the body of a request performs a partial update, adding specified relations.
@@ -85,18 +85,22 @@ The longhand syntax accepts an array of objects, each object containing the `id`
 
 | Parameter name and syntax | Description |
 |---------------------------|-------------|
-| `before: id`              | Positions the relation before the given `id` |
-| `after: id`               | Positions the relation after the given `id` |
+| `before: id`              | Positions the relation before the given `id`. |
+| `after: id`               | Positions the relation after the given `id`. |
 | `start`                   | Positions the relation at the start of the existing list of relations. |
 | `end`                     | Positions the relation at the end of the existing list of relations. |
 
 The `position` argument is optional and defaults to `position: { end: true }`.
 
 :::note Sequential order
-Since `connect` is an array, the order of operations is important and connect operations will be treated sequentially (see elaborated example below).
+Since `connect` is an array, the order of operations is important as they will be treated sequentially (see combined example below).
 :::
 
-**Basic example:**
+**Examples:**
+
+:::: tabs card
+
+::: tab Basic example
 
 Given the following record in the database:
 
@@ -117,7 +121,9 @@ categories: {
 }
 ```
 
-**Combined example:**
+:::
+
+::: tab Combined example
 
 Sending the following example in the request body of a PUT or POST request updates multiple relations:
 
@@ -148,6 +154,10 @@ categories: [
 ]
 ```
 
+:::
+
+::::
+
 ## `disconnect`
 
 Using `disconnect` in the body of a request performs a partial update, removing specified relations.
@@ -160,7 +170,7 @@ With the shorthand syntax, pass an array of ids of relations to be removed.
 
 **Example:**
 
-Passing the following example of a body request removes the categories with the id 4 from the content type's relations:
+Passing the following example of a body request removes the categories with `id` `4` from the content type's relations:
 
 ```json
 categories: {
@@ -196,7 +206,7 @@ With the shorthand syntax, pass an array of ids of relations to be set.
 
 **Example:**
 
-Passing the following example of a body request will override all existing relations previously defined for `categories` and replace them only with ids `2` and `4`:
+Passing the following example of a body request will override all existing relations previously defined for `categories` and replace them only with `id` `2` and `4`:
 
 ```json
 {
@@ -212,7 +222,7 @@ With the longhand syntax, pass an array of objects with the `id` property for ea
 
 **Example:**
 
-Passing the following example of a body request will override all existing relations previously defined for `categories` and replace them only with ids `2` and `4`:
+Passing the following example of a body request will override all existing relations previously defined for `categories` and replace them only with `id` `2` and `4`:
 
 ```json
 {
