@@ -5,10 +5,13 @@ sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-import.html
 ---
 
-<!-- more details including the file structure of exp data on this page-->
-# Data Export-Import System <BetaBadge />
+# Data Export-Import Transfer System <BetaBadge />
 
-Occasionally you need to move data out of or into a Strapi instance. The data export-import feature allows you to efficiently extract data from an existing instance and import that data into a separate instance. Strapi provides a CLI-based tool that allows you to export and import data. Common use cases include:
+:::callout
+The data export-import transfer system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
+:::
+
+Occasionally you need to move data out of or into a Strapi instance. The data export-import transfer system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. The transfer system works with providers Strapi provides a CLI-based tool that allows you to export and import data. Common use cases include:
 
 - creating a data backup,
 - transferring data between environments such as staging and production,
