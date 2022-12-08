@@ -208,7 +208,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] Managing individual assets (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/managing-assets.html))
       - [ ] Organizing assets with folders (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/organizing-assets-with-folders.html#))
   - [ ] Users, Roles & Permissions
-      - [ ] Introduction to users, roles & permissions](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html#))
+      - [ ] Introduction to users, roles & permissions (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html#))
       - [ ] Configuring administrator roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html))
       - [ ] Managing administrator accounts (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-administrators.html))
       - [ ] Configuring end-user roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html))
