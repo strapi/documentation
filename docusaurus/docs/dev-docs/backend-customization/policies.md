@@ -110,7 +110,7 @@ Policies are called different ways depending on their scope:
 - use `api::api-name.policy-name` for [API policies](#api-policies)
 - use `plugin::plugin-name.policy-name` for [plugin policies](#plugin-policies)
 
-::: tip
+:::tip
 To list all the available policies, run `yarn strapi policies:list`.
 :::
 
