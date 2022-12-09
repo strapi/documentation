@@ -270,7 +270,7 @@ await pluginStore.set({
 
 Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
 
-The following documentation covers how to install SQLite locally (for development purposes):
+The following documentation covers how to install SQLite locally:
 
 [SQLite installation guide](/dev-docs/configurations/sqlite)
 <!-- <DatabasesLinks>
