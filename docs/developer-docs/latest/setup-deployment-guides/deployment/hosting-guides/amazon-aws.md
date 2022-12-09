@@ -760,7 +760,7 @@ After=network.target
 Environment=PATH=/PASTE-PATH_HERE #path from echo $PATH (as above)
 Type=simple
 User=ubuntu #replace with your name, if changed from default ubuntu user
-ExecStart=/usr/bin/nodejs /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
+ExecStart=/usr/bin/node /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
 Restart=on-failure
 
 [Install]
