@@ -130,18 +130,12 @@ For instance, using the following configuration files will give you various opti
 
 <TabItem value="javascript" label="JavaScript">
 
-<Tabs>
-<TabItem value="development" label="Development">
-
 ```js title="./config/server.js"
 
 module.exports = {
   host: '127.0.0.1',
 };
 ```
-</TabItem>
-
-<TabItem value="production" label="Production">
 
 ```js title="./config/env/production/server.js"
 
@@ -151,25 +145,15 @@ module.exports = ({ env }) => ({
 ```
 
 </TabItem>
-</Tabs>
-
-</TabItem>
 
 <TabItem value="typescript" label="TypeScript">
 
-<Tabs>
-<TabItem value="development" label="Development">
-
-```js title="./config/server.ts"
+```ts title="./config/server.ts"
 
 export default ({ env }) => ({
   host: '127.0.0.1',
 });
 ```
-
-</TabItem>
-
-<TabItem value="production" label="Production">
 
 ```js title="./config/env/production/server.ts"
 
@@ -177,9 +161,6 @@ export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
 });
 ```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 
