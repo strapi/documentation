@@ -65,9 +65,21 @@ const sidebars = {
             type: 'doc',
             id: 'dev-docs/configurations',
           },
+          
           items: [
-            // 'dev-docs/configurations/database',
-             'dev-docs/configurations/server',
+            {type: 'category',
+            label: 'Required configurations',
+            items: [
+              'dev-docs/configurations/server',
+            ]
+
+            },
+          //   {type: 'category',
+          //   label: 'Optional configurations',
+          //   items: [
+          //   ]
+          // }, 
+            
             // 'dev-docs/configurations/admin-panel',
             // 'dev-docs/configurations/middlewares',
           ]
