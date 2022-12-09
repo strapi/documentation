@@ -1,11 +1,13 @@
 ---
-title: Server configuration
+title: Server
+description: Strapi offers a single entry point file for its server configuration.
 displayed_sidebar: devDocsSidebar
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html
 ---
 
 # Server configuration
 
-The `./config/server.js` is used to define server configuration for the Strapi application.
+The `./config/server.js` file is used to define the server configuration for a Strapi application.
 
 ::: caution
 Changes to the `server.js` file require rebuilding the admin panel. After saving the modified file run either `yarn build` or `npm run build` in the terminal to implement the changes.
@@ -34,7 +36,7 @@ The `./config/server.js` file can include the following parameters:
 
 ## Configurations
 
-The `./config/server.js` file should at least include a minimal configuration with the `host` and `port` parameters. Additional parameters can be included for a full configuration.
+The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
 
 :::note
 [Environmental configurations](/dev-docs/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
