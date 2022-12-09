@@ -45,7 +45,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [Docker](/dev-docs/installation/docker)
     - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
     - [ ] Required configurations
-        - [ ] Database configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html))
+        - [x] [Database configuration](/dev-docs/configurations/database)
         - [ ] Server configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html))
         - [ ] Admin panel (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html))
         - [ ] Middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html))
