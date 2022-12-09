@@ -26,7 +26,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
-::: caution
+:::caution
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
@@ -35,18 +35,18 @@ If you use your Strapi application with the Community Edition (see [Pricing and 
 
 :::
 
-## Creating a new role <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
+## Creating a new role <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
 
 To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
 
-::: tip
+:::tip
 In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/duplicate.svg) to create a new role by duplicating an existing one.
 :::
 
-## Deleting a role <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
+## Deleting a role <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
@@ -61,7 +61,7 @@ To delete a role:
 
 The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/edit.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
-::: caution
+:::caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
 :::
 
@@ -69,7 +69,7 @@ It isn't possible to edit the permissions of the Super Admin role. All configura
 
 The details area of an administrator role editing interface allow to define the name of the role, and to give it a description that should help other administrators understand what the role gives access to.
 
-::: tip
+:::tip
 In the top right corner, you can see a counter indicating how many administrators have been attributed the role.
 :::
 
@@ -97,7 +97,7 @@ To configure Collection or Single types permissions for a role:
 5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
-#### Plugins and Settings <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
+#### Plugins and Settings <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
 
@@ -142,14 +142,14 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
-### Setting custom conditions for permissions <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
+### Setting custom conditions for permissions <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
 For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
 
-::: note
+:::note
 Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md).
 :::
 
@@ -164,10 +164,10 @@ To set custom conditions:
    - Click on the arrow button ![Carret icon](/img/assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
-::: tip
+:::tip
 Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the **Settings** button.
 :::
 
-::: caution
+:::caution
 Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::

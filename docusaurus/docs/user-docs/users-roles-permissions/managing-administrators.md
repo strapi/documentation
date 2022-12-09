@@ -24,7 +24,7 @@ From this interface, it is possible to:
 
 For each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to activate the account or not.
 
-::: tip
+:::tip
 Sorting can be enabled for most fields displayed in the table. Click on a field name, in the header of the table, to sort on that field.
 :::
 
@@ -52,7 +52,7 @@ To create a new administrator account:
 5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![Duplicate icon](/img/assets/icons/duplicate.svg) to copy the URL.
 6. Click on the **Finish** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
-::: note
+:::note
 The administrator invitation URL is accessible from the administrator's account until it has been activated.
 :::
 
