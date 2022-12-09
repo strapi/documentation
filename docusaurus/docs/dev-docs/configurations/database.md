@@ -1,6 +1,8 @@
 ---
 title: Database configuration
 displayed_sidebar: devDocsSidebar
+description: Strapi offers a single entry point file to configure its databases.
+canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html
 ---
 
 # Database configuration
@@ -12,7 +14,7 @@ The `./config/database.js` file (or the `./config/database.ts` file for TypeScri
 :::
 
 :::strapi Supported databases
-The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
+The CLI installation guide details [supported database and versions](/dev-docs/installation/cli.md#preparing-the-installation).
 :::
 
 ## Configuration structure
@@ -53,8 +55,8 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
 
-::: caution
-When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see [Tarn.js's pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
+:::caution
+When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see the [Tarn.js pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
 :::
 
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
@@ -266,12 +268,13 @@ await pluginStore.set({
 
 ## Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
 
 The following documentation covers how to install SQLite locally (for development purposes):
 
-<DatabasesLinks>
-</DatabasesLinks>
+[SQLite installation guide](/dev-docs/configurations/sqlite)
+<!-- <DatabasesLinks>
+</DatabasesLinks> -->
 
 :::caution
 Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.

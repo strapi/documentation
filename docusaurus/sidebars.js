@@ -66,7 +66,7 @@ const sidebars = {
             id: 'dev-docs/configurations',
           },
           items: [
-            // 'dev-docs/configurations/database',
+             'dev-docs/configurations/database',
             // 'dev-docs/configurations/server',
             // 'dev-docs/configurations/admin-panel',
             // 'dev-docs/configurations/middlewares',
