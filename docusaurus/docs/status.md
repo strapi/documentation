@@ -55,7 +55,7 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] Cron jobs (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html))
       - [ ] API (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html))
       - [ ] Plugins (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html))
-      - [ ] [Environment](/dev-docs/setup-deployment-guides/configurations/optional/environment) (→ [docs.strapi.io](#))
+      - [x] [Environment](/dev-docs/configurations/environment) 
       - [ ] Public Assets (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html))
       - [ ] Single Sign On (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html))
       - [ ] Role-Based Access Control (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html#))
