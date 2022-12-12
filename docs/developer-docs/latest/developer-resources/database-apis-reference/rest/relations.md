@@ -162,13 +162,13 @@ The resulting database record will be the following:
 
 ```json
 categories: [
-  { id: 10, order: 1},
-  { id: 1, order: 2},
-  { id: 6, order: 3},
-  { id: 7, order: 4},
-  { id: 2, order: 5},
-  { id: 8, order: 6},
-  { id: 9, order: 7}
+  { id: 10, order: 1 },
+  { id: 1, order: 2 },
+  { id: 6, order: 3 },
+  { id: 7, order: 4 },
+  { id: 2, order: 5 },
+  { id: 8, order: 6 },
+  { id: 9, order: 7 }
 ]
 ```
 
