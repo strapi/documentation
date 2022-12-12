@@ -101,12 +101,12 @@ The longhand syntax accepts an array of objects, each object containing the `id`
 
 `position` accepts 4 different positional attributes:
 
-| Parameter name and syntax | Description |
-|---------------------------|-------------|
-| `before: id`              | Positions the relation before the given `id`. |
-| `after: id`               | Positions the relation after the given `id`. |
-| `start`                   | Positions the relation at the start of the existing list of relations. |
-| `end`                     | Positions the relation at the end of the existing list of relations. |
+| Parameter name and syntax | Description | Type |
+|---------------------------|-------------|------|
+| `before: id`              | Positions the relation before the given `id`. | `id` is an entry id |
+| `after: id`               | Positions the relation after the given `id`. | `id` is an entry id |
+| `start`                   | Positions the relation at the start of the existing list of relations. | Boolean |
+| `end`                     | Positions the relation at the end of the existing list of relations. | Boolean |
 
 The `position` argument is optional and defaults to `position: { end: true }`.
 
