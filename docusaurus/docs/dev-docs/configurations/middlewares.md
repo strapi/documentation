@@ -175,6 +175,10 @@ For a full list of available options for `koa-body`, check the [koa-body documen
 <details>
 <summary> Example: Custom configuration for the body middleware </summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -191,6 +195,31 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::body',
+    config: {
+      jsonLimit: '3mb',
+      formLimit: '10mb',
+      textLimit: '256kb',
+      encoding: 'gbk',
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -209,6 +238,10 @@ The `compression` middleware is based on [koa-compress](https://github.com/koajs
 <details> 
 <summary>Example: Custom configuration for the compression middleware</summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -222,6 +255,28 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::compression',
+    config: {
+      br: false
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -241,6 +296,10 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 <details>
 <summary> Example: Custom configuration for the cors middleware</summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -257,6 +316,33 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: ['example.com', 'subdomain.example.com', 'someotherwebsite.org'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+      headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+      keepHeaderOnError: true,
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
+
+
 
 </details>
 
@@ -278,6 +364,10 @@ The `favicon` middleware serves the favicon and is based on [koa-favicon](https:
 <details>
 <summary> Example: Custom configuration for the favicon middleware</summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -291,6 +381,28 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::favicon',
+    config: {
+      path: './public/uploads/custom-fav-abc123.ico'
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -310,6 +422,10 @@ The `whitelist` and `blacklist` options support wildcards (e.g. `whitelist: ['19
  <details>
  <summary> Example: Custom configuration for the ip middleware</summary>
 
+ <Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -325,6 +441,29 @@ module.exports = [
 ]
 ```
 
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::ip',
+    config: {
+      whitelist: ['192.168.0.*', '192.168.1.*', '123.123.123.123'],
+      blacklist: ['1.116.*.*', '103.54.*.*'],
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
+
 </details>
 
 ### `logger`
@@ -335,6 +474,10 @@ To define a custom configuration for the `logger` middleware, create a dedicated
 
 <details>
 <summary> Example: Custom configuration for the logger middleware</summary>
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/logger.js"
 
@@ -358,6 +501,36 @@ module.exports = [
 ];
 ```
 
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/logger.ts"
+
+'use strict';
+
+const {
+  winston,
+  formats: { prettyPrint, levelFilter },
+} = require('@strapi/logger');
+
+export default [
+  transports: [
+    new winston.transports.Console({
+      level: 'http',
+      format: winston.format.combine(
+        levelFilter('http'),
+        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+      ),
+    }),
+  ],
+];
+```
+
+</TabItem>
+
+</Tabs>
+
 </details>
 
 ### `poweredBy`
@@ -370,6 +543,10 @@ The `poweredBy` middleware adds a `X-Powered-By` parameter to the response heade
 
 <details>
 <summary> details Example: Custom configuration for the poweredBy middleware</summary>
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/middlewares.js"
 
@@ -384,6 +561,28 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::poweredBy',
+    config: {
+      poweredBy: 'Some Awesome Company <example.com>'
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -400,6 +599,10 @@ The `query` middleware is a query parser based on [qs](https://github.com/ljharb
 <details>
 <summary> Example: Custom configuration for the query middleware </summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -414,6 +617,29 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::query',
+    config: {
+      arrayLimit: 50,
+      depth: 10,
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -442,6 +668,10 @@ You can customize the path of the public folder by editing the [server configura
 <details>
 <summary>Example: Custom configuration for the public middleware</summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -456,6 +686,29 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::public',
+    config: {
+      defer: true,
+      index: env('INDEX_PATH', 'index-dev.html')
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
 
 </details>
 
@@ -487,6 +740,10 @@ The default directives include a `dl.airtable.com` value. This value is set for 
 
 <details>
 <summary> Example: Custom configuration for the security middleware for using the AWS-S3 provider</summary>
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/middlewares.js"
 
@@ -522,6 +779,49 @@ module.exports = [
 ]
 ```
 
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
+
+
 </details>
 
 ### `session`
@@ -544,6 +844,10 @@ The `session` middleware allows the use of cookie-based sessions, based on [koa-
 <details>
 <summary> Example: Custom configuration for the session middleware </summary>
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js title="./config/middlewares.js"
 
 module.exports = [
@@ -558,5 +862,30 @@ module.exports = [
   // ...
 ]
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::session',
+    config: {
+      rolling: true
+      renew: true
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
+
+
 
 </details>

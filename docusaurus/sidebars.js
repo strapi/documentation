@@ -70,8 +70,11 @@ const sidebars = {
             {type: 'category',
             label: 'Required configurations',
             items: [
+              'dev-docs/configurations/database',
               'dev-docs/configurations/server',
-            ]
+              'dev-docs/configurations/admin-panel',
+              'dev-docs/configurations/middlewares',
+            ],
 
             },
           //   {type: 'category',
@@ -80,8 +83,7 @@ const sidebars = {
           //   ]
           // }, 
             
-            // 'dev-docs/configurations/admin-panel',
-            // 'dev-docs/configurations/middlewares',
+            
           ]
         },
         {
