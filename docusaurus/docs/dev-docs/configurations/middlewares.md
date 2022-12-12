@@ -482,7 +482,7 @@ When using any 3rd party upload provider, generally it's required to set a custo
 :::
 
 :::note
-The default directives include a `dl.airtable.com` value. This value is set for the [in-app market](/docs/user-docs/plugins/using-the-marketplace.md) and is safe to keep.
+The default directives include a `dl.airtable.com` value. This value is set for the [in-app market](/docs/user-docs/plugins/installing-plugins-via-the-marketplace.md) and is safe to keep.
 :::
 
 <details>
