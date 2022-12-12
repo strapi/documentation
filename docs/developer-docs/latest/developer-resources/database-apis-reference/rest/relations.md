@@ -13,6 +13,8 @@ Relations can be added, updated, or removed through the Content API. The `connec
 - `connect` and `disconnect` perform partial updates
 - `set` performs a full update, effectively replacing all existing relations
 
+`connect` and `disconnect` can be passed together while `set` should be used alone.
+
 ```json
 /** 
  * Partial update (will add/remove the specified relations)
