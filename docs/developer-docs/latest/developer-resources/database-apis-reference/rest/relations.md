@@ -23,14 +23,25 @@ Relations can be added, updated, or removed through the Content API. The `connec
 // Using the shorthand syntax
 {
   data: {
-    categories: { connect: [2, 4], disconnect: [5] }
+    categories: { 
+      connect: [2, 4],
+      disconnect: [5]
+    }
   }
 }
 
 // Using the longhand syntax
 {
   data: {
-    categories: { connect: [{ id: 2 }, { id: 4 }], disconnect: [{ id: 5 }] }
+    categories: { 
+      connect: [
+        { id: 2 },
+        { id: 4 }
+      ], 
+      disconnect: [
+        { id: 5 }
+      ]
+    }
   }
 }
 
@@ -48,7 +59,12 @@ Relations can be added, updated, or removed through the Content API. The `connec
 // Using the longhand syntax
 {
   data: {
-    categories: { set: [{ id: 2 }, { id: 4 }] }
+    categories: {
+      set: [
+        { id: 2 },
+        { id: 4 }
+      ]
+    }
   }
 }
 ```
