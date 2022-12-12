@@ -149,16 +149,16 @@ Sending the following example in the request body of a PUT or POST request updat
 categories: {
   connect: [
     // By default positional info will be end: true
-    { id: 6, position: { after: 1} },    // It should be after relation with id 1
-    { id: 7, position: { before: 2 }},   // It should be before relation with id 2
-    { id: 8, position: { end: true }},   // It should be at the end
-    { id: 9 },                           // It should also be at the end
-    { id: 10, position: { start: true }} // It should be at the start
+    { id: 6, position: { after: 1} },    // It will be after relation with id 1
+    { id: 7, position: { before: 2 }},   // It will be before relation with id 2
+    { id: 8, position: { end: true }},   // It will be at the end
+    { id: 9 },                           // It will also be at the end
+    { id: 10, position: { start: true }} // It will be at the start
   ]
 }
 ```
 
-The resulting database record could be the following:
+The resulting database record will be the following:
 
 ```json
 categories: [
