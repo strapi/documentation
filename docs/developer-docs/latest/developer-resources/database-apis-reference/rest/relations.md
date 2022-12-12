@@ -120,7 +120,7 @@ Since `connect` is an array, the order of operations is important as they will b
 
 ::: tab Basic example
 
-Given the following record in the database:
+Consider the following record in the database:
 
 ```json
 categories: [
@@ -129,7 +129,7 @@ categories: [
 ]
 ```
 
-sending the following in the request body of a PUT or POST request creates a third relation of `id` `3` and position it before the relation with `id` `2`:
+Sending the following in the request body to update an entry creates a third relation of `id` `3` and position it before the relation with `id` `2`:
 
 ```json
 categories: {
