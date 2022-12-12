@@ -46,7 +46,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
     - [ ] Required configurations
         - [ ] Database configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html))
-        - [ ] Server configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html))
+        - [x] [Server configuration](/dev-docs/configurations/server)
         - [ ] Admin panel (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html))
         - [ ] Middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html))
     - [ ] Optional configurations
