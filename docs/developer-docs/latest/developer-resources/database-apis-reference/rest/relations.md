@@ -298,6 +298,15 @@ categories: {
 
 ::: tab Combined example
 
+Consider the following record in the database:
+
+```json
+categories: [
+  { id: 1, order: 1 }
+  { id: 2, order: 2 }
+]
+```
+
 Sending the following example in the request body of a PUT request updates multiple relations:
 
 ```json
