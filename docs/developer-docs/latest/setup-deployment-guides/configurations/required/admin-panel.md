@@ -38,6 +38,8 @@ The `./config/admin.js` file can include the following parameters:
 | `ratelimit.delayAfter`            | Number of requests allowed before delaying responses                                                                                                                                                     | integer       | `1`                                                                                                                                 |
 | `ratelimit.timeWait`              | Time to wait before responding to a request (in milliseconds)                                                                                                                                            | integer       | `3000`                                                                                                                              |
 | `ratelimit.prefixKey`             | Prefix for the rate limiting key                                                                                                                                                                         | string        | `${userEmail}:${ctx.request.path}:${ctx.request.ip}`                                                                                |
+| `ratelimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                                    | array(string) | `[]`                                                                                                                                |
+| `ratelimit.store`                | Rate limiting storage location (Memory, Sequelize,  or Redis) and for more information please see the [`koa2-ratelimit documentation`](https://www.npmjs.com/package/koa2-ratelimit)                                                                                                                                                                                     | object        | `MemoryStore`
 
 ## Configurations
 
@@ -136,7 +138,7 @@ module.exports = ({ env }) => ({
   },
   ratelimit: {
     interval: { hour: 1, min: 30 },
-    timeWait: { week: 2 },
+    timeWait: 3*1000,
     max: 10,
   },
 });
