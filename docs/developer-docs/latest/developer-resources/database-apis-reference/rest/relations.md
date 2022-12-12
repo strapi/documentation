@@ -15,12 +15,18 @@ Relations can be added, updated, or removed through the Content API. The `connec
 
 `connect` and `disconnect` can be passed together while `set` should be used alone.
 
-```json
-/** 
- * Partial update (will add/remove the specified relations)
- */
+Different syntaxes can be used and are detailed in the following recapitulative examples and in the following sections. Using the longhand syntax with `connect` allows adding [positional arguments](#longhand-syntax) to define an order for relations.
 
-// Using the shorthand syntax
+:::::: tabs card
+
+::::: tab Partial update with connect & disconnect
+:::: api-call
+
+::: request Example request using the shorthand syntax
+
+`PUT http://localhost:1337/api/restaurants/1`
+
+```json
 {
   data: {
     categories: { 
@@ -29,8 +35,32 @@ Relations can be added, updated, or removed through the Content API. The `connec
     }
   }
 }
+```
 
-// Using the longhand syntax
+:::
+
+::: response Example response
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {},
+    "meta": {}
+  },
+  "meta": {}
+}
+```
+
+::::
+
+:::: api-call
+
+::: request Example request using the longhand syntax
+
+`PUT http://localhost:1337/api/restaurants/1`
+
+```json
 {
   data: {
     categories: { 
@@ -44,16 +74,100 @@ Relations can be added, updated, or removed through the Content API. The `connec
     }
   }
 }
+```
 
-/**
+:::
 
-// Using the shorthand syntax
+::: response Example response
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {},
+    "meta": {}
+  },
+  "meta": {}
+}
+```
+
+::::
+
+:::::
+
+::::: tab Full update with set
+
+:::: api-call
+
+::: request Example request using the shortest possible syntax
+
+`PUT http://localhost:1337/api/restaurants/1`
+
+```json
 {
   data: {
-    categories: { set: [2, 4] }
+    categories: [2, 4]
   }
 }
+```
 
+:::
+
+::: response Example response
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {},
+    "meta": {}
+  },
+  "meta": {}
+}
+```
+
+::::
+
+:::: api-call
+
+::: request Example request using the shorthand syntax
+
+`PUT http://localhost:1337/api/restaurants/1`
+
+```json
+{
+  data: {
+    categories: {
+      set: [2, 4]
+    }
+  }
+}
+```
+
+:::
+
+::: response Example response
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {},
+    "meta": {}
+  },
+  "meta": {}
+}
+```
+
+::::
+
+:::: api-call
+
+::: request Example request using the longhand syntax
+
+`PUT http://localhost:1337/api/restaurants/1`
+
+```json
 {
   data: {
     categories: {
@@ -66,7 +180,24 @@ Relations can be added, updated, or removed through the Content API. The `connec
 }
 ```
 
-Using the longhand syntax with `connect` allows adding [positional arguments](#longhand-syntax) to define an order for relations.
+:::
+
+::: response Example response
+
+```json
+{
+  "data": {
+    "id": 1,
+    "attributes": {},
+    "meta": {}
+  },
+  "meta": {}
+}
+```
+
+::::
+:::::
+::::::
 
 ## `connect`
 
