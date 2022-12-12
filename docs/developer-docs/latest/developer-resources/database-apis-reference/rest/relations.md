@@ -298,7 +298,7 @@ categories: {
 
 ::: tab Combined example
 
-Sending the following example in the request body of a PUT or POST request updates multiple relations:
+Sending the following example in the request body of a PUT request updates multiple relations:
 
 ```json
 categories: {
