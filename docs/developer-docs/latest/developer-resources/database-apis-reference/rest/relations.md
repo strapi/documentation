@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # Managing relations through the REST API <BetaBadge />
 
-Relations between content-types can be managed through the [admin panel](/user-docs/latest/content-manager/managing-relational-fields.md#managing-multiple-choices-relational-fields) or through REST requests sent to the Content API.
+Relations between content-types can be managed through the [admin panel](/user-docs/latest/content-manager/managing-relational-fields.md#managing-multiple-choices-relational-fields) or through [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) requests sent to the Content API.
 
 Relations can be added, updated, or removed through the Content API. The `connect`, `disconnect`, and `set` attributes, passed in the body of POST or PUT requests, have different behaviors:
 
@@ -46,8 +46,6 @@ Relations can be added, updated, or removed through the Content API. The `connec
 }
 
 /**
- * Full update (will delete all current relations and set those ones instead)
- */
 
 // Using the shorthand syntax
 {
@@ -56,7 +54,6 @@ Relations can be added, updated, or removed through the Content API. The `connec
   }
 }
 
-// Using the longhand syntax
 {
   data: {
     categories: {
