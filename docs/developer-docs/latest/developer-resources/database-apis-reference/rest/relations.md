@@ -207,11 +207,30 @@ Different syntaxes can be used and are detailed in the following recapitulative 
 :::::
 ::::::
 
+::: note
+
+- The syntaxes described in this documentation are specially made for one-to-many, many-to-many and many-ways relationships.
+- For one-to-one, many-to-one and one-way, the syntaxes are also supported but:
+  - Only the last relation will be used.
+  - A simpler format can also be used:
+
+    ```json
+    {
+      data: {
+        category: 2
+      }
+    }
+    ```
+
+:::
+
+
 ## `connect`
 
 Using `connect` in the body of a request performs a partial update, adding specified relations.
 
 `connect` accepts either a shorthand or a longhand syntax.
+
 
 ### Shorthand syntax
 
