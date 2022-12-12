@@ -289,7 +289,7 @@ Sending the following in the request body to update an entry creates a third rel
 ```json
 categories: {
   connect: [
-    { id: 3, position: { before: 2 } }, // It should be placed before relation id=2
+    { id: 3, position: { before: 2 } }, // It will be placed before relation id=2
   ]
 }
 ```
