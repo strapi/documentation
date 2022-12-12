@@ -4,6 +4,14 @@ description: Use the REST API to manage the order of relations
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html
 ---
 
+<style lang="scss" scoped>
+@media (min-width: 1536px) {
+  .custom-block.api-call > .response {
+    flex: 0 0 32%;
+  }
+}
+</style>
+
 # Managing relations through the REST API <BetaBadge />
 
 Relations between content-types can be managed through the [admin panel](/user-docs/latest/content-manager/managing-relational-fields.md#managing-multiple-choices-relational-fields) or through [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) requests sent to the Content API.
