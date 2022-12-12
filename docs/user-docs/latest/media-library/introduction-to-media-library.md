@@ -18,7 +18,7 @@ From the Media Library, it is possible to:
 
 - upload a new asset (see [adding assets](/user-docs/latest/media-library/adding-assets.md)) or create a new folder (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)) (1),
 - sort the assets and folders or set filters (2) to find assets and folders more easily,
-- make a textual search (3) to find a specific asset or folder,
+- toggle between the list view ![List icon](../assets/icons/list_view.svg) and the grid view ![Grid icon](../assets/icons/grid_view.svg) to display assets, and make a textual search (3) to find a specific asset or folder,
 - and view, navigate through, and manage folders (4).
 
 ::: tip
