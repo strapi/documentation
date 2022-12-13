@@ -13,7 +13,7 @@ Single Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an EE license with a [Gold plan](https://strapi.io/pricing-self-hosted).
-- Make sure the SSO feature is [enabled in the admin panel](/user-docs/settings/managing-global-settings.md#configuring-single-sign-on).
+- Make sure the SSO feature is [enabled in the admin panel](/user-docs/settings/managing-global-settings#configuring-single-sign-on).
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
 :::
 
@@ -77,7 +77,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 :::
 
 :::note
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro.md#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares.md#security).
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security).
 :::
 
 ### The `createStrategy` Factory
@@ -737,7 +737,7 @@ export default ({ env }) => ({
 
 #### Okta
 
-Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/blob/main/README.md)
+Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/#readme)
 
 <Tabs groupId="yarn-npm">
 
@@ -853,7 +853,7 @@ export default ({ env }) => ({
 ### Admin panel URL
 
 If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/dev-docs/admin-panel-customization.md#access-url)).
+update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/dev-docs/admin-panel-customization#access-url)).
 
 ### Custom Logic
 
@@ -909,7 +909,7 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 
 ### Authentication Events
 
-The SSO feature adds a new [authentication event](/dev-docs/configurations/admin-panel.md#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](/dev-docs/configurations/admin-panel#available-options): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).

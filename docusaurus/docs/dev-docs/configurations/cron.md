@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 <!--TODO fix the link in the prereq-->
 :::prerequisites
-The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects)  [file](/dev-docs/configurations/server.md).
+The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects)  [file](/dev-docs/configurations/server).
 :::
 
 `cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
@@ -38,7 +38,7 @@ To define cron jobs and have them run at the required times:
 2. [Enable](#enabling-cron-jobs) the cron jobs in the server configuration file.
 
 :::tip
-Optionally, cron jobs can be directly created in the `cron.tasks` key of the [server configuration file](/dev-docs/configurations/server.md).
+Optionally, cron jobs can be directly created in the `cron.tasks` key of the [server configuration file](/dev-docs/configurations/server).
 :::
 
 ## Creating a cron job
@@ -141,7 +141,7 @@ myJob: {
 
 ## Enabling cron jobs
 
-To enable cron jobs, set `cron.enabled` to `true` in the [server configuration file](/dev-docs/configurations/server.md) and declare the jobs:
+To enable cron jobs, set `cron.enabled` to `true` in the [server configuration file](/dev-docs/configurations/server) and declare the jobs:
 
 <Tabs groupId="js-ts">
 

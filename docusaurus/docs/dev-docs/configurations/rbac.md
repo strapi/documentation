@@ -12,7 +12,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Role-Based Access Control  <GoldBadge/>
 
-Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles.md). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for any type of permission is also possible. This requires an Enterprise Edition with at minimum a Bronze license plan.
+Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for any type of permission is also possible. This requires an Enterprise Edition with at minimum a Bronze license plan.
 
 ## Declaring new conditions
 
@@ -20,11 +20,11 @@ Declare a single condition as an object, and multiple conditions as an array of 
 
 - `displayName` (string): the condition name as shown in the admin panel,
 - `name` (string): the condition name, kebab-cased,
-- `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles.md#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
+- `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
-Declare and register conditions in the global [`bootstrap` function](/dev-docs/configurations/functions.md#bootstrap) found in `./src/index.js` (see [Registering conditions](#registering-conditions)).
+Declare and register conditions in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `./src/index.js` (see [Registering conditions](#registering-conditions)).
 
 :::note
 The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
@@ -88,7 +88,7 @@ const condition = {
 
 ## Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/dev-docs/configurations/functions.md#bootstrap) found in `./src/index`. Register a single condition with the `conditionProvider.register()` method:
+To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `./src/index`. Register a single condition with the `conditionProvider.register()` method:
 
 <Tabs groupId="js-ts">
 

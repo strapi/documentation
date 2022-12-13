@@ -6,17 +6,17 @@ description: Using API tokens allows executing a request on Strapi's REST API en
 
 # API tokens
 
-Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in API token feature.
+Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions) or on the built-in API token feature.
 
-Using API tokens allows executing a request on [REST API](/dev-docs/api/rest.md) endpoints as an authenticated user.
+Using API tokens allows executing a request on [REST API](/dev-docs/api/rest) endpoints as an authenticated user.
 
 ## Creation
 
-New API tokens are generated from the [admin panel](/user-docs/settings/managing-global-settings.md#managing-api-tokens).
+New API tokens are generated from the [admin panel](/user-docs/settings/managing-global-settings#managing-api-tokens).
 
 ## Usage
 
-When performing a request to Strapi's [REST API](/dev-docs/api/rest.md), the API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
+When performing a request to Strapi's [REST API](/dev-docs/api/rest), the API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
 
 :::note
 Read-only API tokens can only access the `find` and `findOne` functions.
@@ -28,8 +28,8 @@ New API tokens are generated using a salt. This salt is automatically generated 
 
 The salt can be customized:
 
-- either by updating the string value for `apiToken.salt` in `./config/admin.js` (see [admin panel configuration documentation](/dev-docs/configurations/admin-panel.md))
-- or by creating an `API_TOKEN_SALT` [environment variable](/dev-docs/configurations/environment.md#strapi-s-environment-variables) in the `.env` file of the project
+- either by updating the string value for `apiToken.salt` in `./config/admin.js` (see [admin panel configuration documentation](/dev-docs/configurations/admin-panel))
+- or by creating an `API_TOKEN_SALT` [environment variable](/dev-docs/configurations/environment#strapi-s-environment-variables) in the `.env` file of the project
 
 :::caution
 Changing the salt invalidates all the existing API tokens.

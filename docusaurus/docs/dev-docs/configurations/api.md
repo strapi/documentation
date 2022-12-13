@@ -15,8 +15,8 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `responses.privateAttributes` | Set of globally defined attributes to be treated as private.                                                                                                                                                                                         | String array | `[]`    |
 | `rest`                        | REST API configuration                                                                                                                                                                                                                               | Object       | -       |
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
-| `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/dev-docs/api/rest/sort-pagination.md#pagination-by-offset))                                                                      | Integer      | `25`    |
-| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/dev-docs/api/rest/sort-pagination.md#pagination-by-offset)). | Integer      | `100`   |
+| `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination-by-offset))                                                                      | Integer      | `25`    |
+| `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
 
 **Example:**
 
