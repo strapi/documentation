@@ -15,8 +15,8 @@ Occasionally you need to move data out of or into a Strapi instance. The data ex
 
 - creating a data backup,
 - restoring data from a backup
-<!-- - transferring data between environments such as staging and production,
-- moving assets from one hosting solution to another, such as locally hosted to an S3 bucket. -->
+<!-- transferring data between environments such as staging and production,
+ moving assets from one hosting solution to another, such as locally hosted to an S3 bucket. -->
 
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
