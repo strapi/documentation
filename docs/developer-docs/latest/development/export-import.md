@@ -11,11 +11,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 The data export-import transfer system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
 :::
 
-Occasionally you need to move data out of or into a Strapi instance. The data export-import transfer system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. The transfer system works with providers Strapi provides a CLI-based tool that allows you to export and import data. Common use cases include:
+Occasionally you need to move data out of or into a Strapi instance. The data export-import transfer system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data using providers. Common use cases include:
 
 - creating a data backup,
-- transferring data between environments such as staging and production,
-- moving assets from one hosting solution to another, such as locally hosted to an S3 bucket.
+- restoring data from a backup
+<!-- - transferring data between environments such as staging and production,
+- moving assets from one hosting solution to another, such as locally hosted to an S3 bucket. -->
 
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
@@ -25,33 +26,124 @@ The `strapi export` CLI command and all of the available options are listed in t
 
 ## Export data using the CLI tool
 
-The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file.
+The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file. The default export command exports:
 
-- encrypt outcome
-- filter content
-- exclude files
-- compress outcome
-- other
+<!-- This should include a small description or possibly a table -->
+- the project configuration,
+- entities, 
+- links, 
+- assets,
+- schemas
+- `metadata.json` file.
 
-`yarn strapi export`
+### Data encryption
 
-## Export data structure
+The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `--key` option or enter an encryption key when prompted. The encryption key is a string with no miniumum character count.
 
-The exported data is broken down into 6 categories:
-- configuration, which contains zzz,
-- entities, which contains zzz,
-- links, which contains zzz,
-- assets, which contains
-- schemas, which contains zzz,
-- `metadata.json`, which contains xsss.
+To disable encryption, pass the `--no-encrypt` option with the `strapi export` command. 
+
+:::details Example: Export data without encryption
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi export --no-encrypt
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi export --no-encrypt
+```
+
+</code-block>
+</code-group>
+:::
+
+### Data compression
+
+The default `strapi export` command compresses your project data using `gzip` compression. 
+
+To disable compression, pass the `--no-compress` option with the `strapi export` command.
+
+:::details Example: Export data without compression
+
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi export --no-compress
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi export --no-compress
+```
+
+</code-block>
+</code-group>
+:::
+
+### Maximum file size
+
+The default maximum size of each internal backup `jsonl` file is 256MB. To customize the maximum `jsonl` file size, pass the `--max-size-jsonl` option with the `strapi export` command.
+
+:::details Example: Set the maximum `jsonl` file size to 100MB
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi export --max-size-jsonl 100
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi export --max-size-jsonl 100
+```
+
+</code-block>
+</code-group>
+
+:::
+
+<!-- ### Exclude files -->
 
 ## Import data using the CLI tool
 
-```sh
-yarn strapi import -f my-file-name --key my-encryption-key --conflictStrategy abort --schemaComparison strict
+To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The file name, extension and location are required.
 
+:::details Example: Minimum command to import data from a file in the Strapi project root
+
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi import -f export_20221213105643.tar.gz
 ```
 
-- decrypt outcome
-- decompress outcome,
-- other
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi import -f export_20221213105643.tar.gz
+```
+
+</code-block>
+</code-group>
+
+:::
+
+### Declare a conflict strategy
+
+
+### Declare a schema comparision strategy
+
