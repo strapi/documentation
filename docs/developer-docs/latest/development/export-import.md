@@ -144,6 +144,26 @@ npm strapi import -f export_20221213105643.tar.gz
 
 ### Declare a conflict strategy
 
+Currently, the default and only conflict strategy is `restore`, which deletes all of the data in your local Strapi instance and then loads the data from the imported file. You do not need to declare the `restore` value.
 
-### Declare a schema comparision strategy
+### Declare a version strategy
 
+The `--versionStrategy` option specifies how strictly the imported file Strapi version and the local instance Strapi version must match. The available values are:
+
+| value  | description                                                                                           |
+|--------|-------------------------------------------------------------------------------------------------------|
+| exact  | (Default) Strapi (and plugin) versions between source and destination must be exactly the same        |
+| major  | major version has to match                                                                            |
+| minor  | minor (and major) version has to match                                                                |
+| patch  | patch (and minor and major) version has to match (will still reject, for example 4.1.1 vs 4.1.1-beta) |
+| ignore | bypass version check                                                                                  |
+
+
+### Declare a schema strategy
+
+The `--schemaStrategy` option specifies how strictly the schemas must match between the source and destination. The available values are:
+
+| value  | description                                                                                           |
+|--------|-------------------------------------------------------------------------------------------------------|
+| exact  | (Default) Schemas (content-types) must exactly match between source and destination.                            |
+| strict | Allows differences between `private`, `required`, and `configurable` attributes. Schemas must exist and match in all other ways.                                                                            |
