@@ -131,7 +131,7 @@ categories: [
 ]
 ```
 
-Sending the following request updates a `restaurant` entry and creates a third relation of `id` `3` for the `categories` attribute and position it before the relation with `id` `2`:
+Sending the following request updates a `restaurant` entry and creates a third relation of `id` `3` for the `categories` attribute and positions it before the relation with `id` `2`:
 
 ::: request Example request to update the position of one relation
 
