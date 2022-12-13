@@ -33,10 +33,25 @@ public function boot()
 {
     Http::macro('strapi', function () {
         return Http::withHeaders([
-            'Authorization' => 'Bearer '.env('STRAPI_TOKEN'), #Token generated in the admin
-        ])->baseUrl(env('STRAPI_URL')); # Base url of your strapi app
+            'Authorization' => 'Bearer '. config('strapi.token'), #Token generated in the admin
+        ])->baseUrl(config('strapi.url')); # Base url of your strapi app
     });
 }
+```
+
+Create new config file for strapi in config/strapi.php
+
+```php
+  return [
+      // The url to your Strapi installation, e.g. https://strapi.yoursite.com/
+      'url' => env('STRAPI_URL'),
+
+      // How long to cache results for in seconds
+      'cacheTime' => env('STRAPI_CACHE_TIME', 3600),
+
+      // Token for authentication
+      'token' => env('STRAPI_TOKEN', null),
+  ];
 ```
 
 Once your macro has been configured, you may invoke it from anywhere in your application to create a pending request with the specified configuration:
