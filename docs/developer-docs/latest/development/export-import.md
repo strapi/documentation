@@ -192,7 +192,7 @@ npm strapi import -f --key my-password
 :::
 
 
-### Declare a conflict strategy
+<!-- ### Declare a conflict strategy
 
 Currently, the default and only conflict strategy is `restore`, which deletes all of the data in your local Strapi instance and then loads the data from the imported file. You do not need to declare the `restore` value.
 
@@ -239,4 +239,4 @@ npm strapi import -f export_20221213105643.tar.gz --versionStrategy patch --sche
 </code-block>
 </code-group>
 
-:::
+::: -->
