@@ -1,5 +1,6 @@
 ---
-title: Email - Strapi Developer Docs
+title: Email
+displayed_sidebar: devDocsSidebar
 description: Send email from your server or externals providers.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/email.html
 ---
@@ -10,24 +11,24 @@ The Email plugin enables applications to send emails from a server or an externa
 
 :::prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Providers](/developer-docs/latest/development/providers.md) documentation for detailed installation and configuration instructions.
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
 
 :::
 
 :::note
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/developer-docs/latest/development/providers.md) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/dev-docs/providers) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
 ## Sending emails with a controller or service
 
-The Email plugin has an `email` [service](/dev-docs/backend-customization/services.md#services) that contains 2 functions to send emails:
+The Email plugin has an `email` [service](/dev-docs/backend-customization/services#services) that contains 2 functions to send emails:
 
 * `send()` directly contains the email contents,
 * `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
 
 ### Using the `send()` function
 
-To trigger an email in response to a user action add the `send()` function to a [controller](/dev-docs/backend-customization/controllers.md) or [service](/dev-docs/backend-customization/services.md). The send function has the following properties:
+To trigger an email in response to a user action add the `send()` function to a [controller](/dev-docs/backend-customization/controllers) or [service](/dev-docs/backend-customization/services). The send function has the following properties:
 
 | Property  | Type     | Format        | Description                                           |
 |-----------|----------|---------------|-------------------------------------------------------|
@@ -40,10 +41,7 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `text`    | `string` | -             | Either `text` or `html` is required.                  |
 | `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
 
-```js
-
-// This code example can be used in a controller or a service
-// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
+```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
 
   await strapi.plugins['email'].services.email.send({
     to: 'valid email address',
@@ -63,13 +61,12 @@ The `sendTemplatedEmail()` function is used to compose emails from a template. T
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `emailOptions` <br><br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
-| `data`  <br><br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
+| `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
-```js
-// This code example can be used in a controller or a service
-// path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js 
+```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
+
 
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
@@ -93,11 +90,13 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ## Sending emails with a lifecycle hook
 
- To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/developer-docs/latest/development/backend-customization/models.md#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+ To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
-```js
+<Tabs groupId="js-ts">
 
-// path: ./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js"
 
 module.exports = {
     async afterCreate(event) {    // Connected to "Save" button in admin panel
@@ -121,3 +120,37 @@ module.exports = {
     }
 }
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js"
+
+export default {
+    async afterCreate(event) {    // Connected to "Save" button in admin panel
+        const { result } = event;
+
+        try{
+            await strapi.plugins['email'].services.email.send({
+              to: 'valid email address',
+              from: 'your verified email address', // e.g. single sender verification in SendGrid
+              cc: 'valid email address',
+              bcc: 'valid email address',
+              replyTo: 'valid email address',
+              subject: 'The Strapi Email plugin worked successfully',
+              text: '${fieldName}', // Replace with a valid field ID
+              html: 'Hello world!', 
+                
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    }
+}
+
+```
+
+</TabItem>
+
+</Tabs>
