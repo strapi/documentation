@@ -28,19 +28,42 @@ The `strapi export` CLI command and all of the available options are listed in t
 
 The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file. The default export command exports:
 
-<!-- This should include a small description or possibly a table -->
 - the project configuration,
-- entities, 
-- links, 
+- entities,
+- links,
 - assets,
-- schemas
+- schemas,
 - `metadata.json` file.
 
-### Data encryption
+### Name the export file
 
-The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `--key` option or enter an encryption key when prompted. The encryption key is a string with no miniumum character count.
+Exported data are contained in a `.tar` file that is automatically named using the format `export_time-date-stamp`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. The file name should not include an extension.
 
-To disable encryption, pass the `--no-encrypt` option with the `strapi export` command. 
+:::details Example: Export data with a custom filename.
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi export --file my-strapi-export
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi export  --file my-strapi-export
+```
+
+</code-block>
+</code-group>
+:::
+
+### Configure data encryption
+
+The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no miniumum character count.
+
+To disable encryption, pass the `--no-encrypt` option with the `strapi export` command.
 
 :::details Example: Export data without encryption
 <code-group>
@@ -62,7 +85,7 @@ npm strapi export --no-encrypt
 </code-group>
 :::
 
-### Data compression
+### Disable data compression
 
 The default `strapi export` command compresses your project data using `gzip` compression. 
 
@@ -89,7 +112,7 @@ npm strapi export --no-compress
 </code-group>
 :::
 
-### Maximum file size
+### Declare the maximum file size
 
 The default maximum size of each internal backup `jsonl` file is 256MB. To customize the maximum `jsonl` file size, pass the `--max-size-jsonl` option with the `strapi export` command.
 
@@ -142,6 +165,33 @@ npm strapi import -f export_20221213105643.tar.gz
 
 :::
 
+### Provide an encryption key
+
+If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `--key` option. If you do not pass the encryption key with the `strapi import` command you will be prompted for the encryption key before the import starts.
+
+:::details Example: Pass the encryption key with the `strapi import` command
+
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi import -f --key my-password
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi import -f --key my-password
+```
+
+</code-block>
+</code-group>
+
+:::
+
+
 ### Declare a conflict strategy
 
 Currently, the default and only conflict strategy is `restore`, which deletes all of the data in your local Strapi instance and then loads the data from the imported file. You do not need to declare the `restore` value.
@@ -152,12 +202,11 @@ The `--versionStrategy` option specifies how strictly the imported file Strapi v
 
 | value  | description                                                                                           |
 |--------|-------------------------------------------------------------------------------------------------------|
-| exact  | (Default) Strapi (and plugin) versions between source and destination must be exactly the same        |
-| major  | major version has to match                                                                            |
-| minor  | minor (and major) version has to match                                                                |
-| patch  | patch (and minor and major) version has to match (will still reject, for example 4.1.1 vs 4.1.1-beta) |
+| exact  | (Default) Strapi and plugin versions must match between source and destination                        |
+| major  | major version must match                                                                              |
+| minor  | minor and major version must match                                                                    |
+| patch  | patch, minor, and major version must match (for example, rejects 4.1.1 vs 4.1.1-beta)                 |
 | ignore | bypass version check                                                                                  |
-
 
 ### Declare a schema strategy
 
@@ -167,3 +216,27 @@ The `--schemaStrategy` option specifies how strictly the schemas must match betw
 |--------|-------------------------------------------------------------------------------------------------------|
 | exact  | (Default) Schemas (content-types) must exactly match between source and destination.                            |
 | strict | Allows differences between `private`, `required`, and `configurable` attributes. Schemas must exist and match in all other ways.                                                                            |
+
+:::details Example: Customized command to import data.
+
+The following code example imports the `export_20221213105643.tar.gz` file located in the instance root directory. It uses the `patch` version strategy and the `strict` schema strategy.
+
+<code-group>
+<code-block title="YARN">
+
+```console
+yarn strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```console
+npm strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
+```
+
+</code-block>
+</code-group>
+
+:::
