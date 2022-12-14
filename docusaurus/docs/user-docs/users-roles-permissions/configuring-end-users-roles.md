@@ -40,7 +40,7 @@ The end-user role attributed by default to all new end users can be defined in t
 On the top right side of the *Users & Permissions plugin > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for end users of your Strapi application.
 
 To create a new role, click on the **Add new role** button.
-Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-role-s-details)).
+Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-roles-details)).
 
 ## Deleting a role
 
