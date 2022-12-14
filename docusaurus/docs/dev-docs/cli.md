@@ -120,8 +120,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 **Examples**
 
-```sh
-#examples of strapi export:
+```bash title="Examples of strapi export:"
 
 strapi export -f myData #exports your data with the default options and the filename myData.
 strapi export --no-encrypt #exports your data without encryption.
@@ -136,8 +135,7 @@ Dumps configurations to a file or stdout to help you migrate to production.
 
 The dump format will be a JSON array.
 
-```
-strapi configuration:dump
+```bash title="strapi configuration:dump"
 
 Options:
   -f, --file <file>  Output file, default output is stdout
@@ -170,7 +168,7 @@ Restores a configuration dump into your application.
 
 The input format must be a JSON array.
 
-```
+```bash
 strapi configuration:restore
 
 Options:
@@ -247,7 +245,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md).
 
-```sh
+```bash
 strapi generate
 ```
 
@@ -268,7 +266,7 @@ strapi templates:generate <path>
 
 Generate [TypeScript](/dev-docs/typescript.md) typings for the project schemas.
 
-```sh
+```bash
 strapi ts:generate-types
 ```
 
@@ -285,7 +283,7 @@ strapi ts:generate-types
 
 Display a list of all the available [routes](/dev-docs/backend-customization/routes.md).
 
-```sh
+```bash
 strapi routes:list
 ```
 
@@ -293,7 +291,7 @@ strapi routes:list
 
 Display a list of all the registered [policies](/dev-docs/backend-customization/policies.md).
 
-```sh
+```bash
 strapi policies:list
 ```
 
@@ -301,7 +299,7 @@ strapi policies:list
 
 Display a list of all the registered [middlewares](/dev-docs/backend-customization/middlewares.md).
 
-```sh
+```bash
 strapi middlewares:list
 ```
 
@@ -309,7 +307,7 @@ strapi middlewares:list
 
 Display a list of all the existing [content-types](/dev-docs/backend-customization/models.md).
 
-```sh
+```bash
 strapi content-types:list
 ```
 
@@ -317,7 +315,7 @@ strapi content-types:list
 
 Display a list of all the available hooks.
 
-```sh
+```bash
 strapi hooks:list
 ```
 
@@ -329,7 +327,7 @@ Display a list of all the registered [controllers](/dev-docs/backend-customizati
 
 Display a list of all the registered [services](/dev-docs/backend-customization/services.md).
 
-```sh
+```bash
 strapi services:list
 ```
 
@@ -410,6 +408,6 @@ strapi version
 
 List CLI commands.
 
-```
+```bash
 strapi help
 ```
