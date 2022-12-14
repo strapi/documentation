@@ -20,29 +20,29 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 - Confirm there are no [migrations](/developer-docs/latest/update-migration-guides/migration-guides.md) between the current and ultimate Strapi versions.
 :::
 
-1. Upgrade all of the Strapi packages in the `package.json`.
+1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version:
 
-```jsx
-// path: package.json
+    ```jsx
+    // path: package.json
 
-{
-  // ...
-  "dependencies": {
-    "@strapi/strapi": "4.4.1",
-    "@strapi/plugin-users-permissions": "4.4.1",
-    "@strapi/plugin-i18n": "4.4.1",
-    "better-sqlite3": "7.4.6"
-    // ...
-  }
-}
+    {
+      // ...
+      "dependencies": {
+        "@strapi/strapi": "4.5.3", 
+        "@strapi/plugin-users-permissions": "4.5.3",
+        "@strapi/plugin-i18n": "4.5.3",
+        "better-sqlite3": "7.4.6"
+        // ...
+      }
+    }
 
-```
+    ```
 
 2. Save the edited `package.json` file.
 
 3. !!!include(developer-docs/latest/update-migration-guides/migration-guides/v4/snippets/Install-npm-yarn)!!!
 
-## Step 2: Rebuild the application 
+## Step 2: Rebuild the application
 
 Rebuild the administration panel:
 
