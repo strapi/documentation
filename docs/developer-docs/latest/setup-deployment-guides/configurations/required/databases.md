@@ -49,6 +49,10 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
 | `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+
+:::note
+Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
+:::
   
 #### Database pooling options
 
