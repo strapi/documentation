@@ -55,7 +55,6 @@ npm install @strapi/provider-email-sendgrid --save
 
 </Tabs>
 
-
 ## Configuring providers
 
 Newly installed providers are enabled and configured in the `./config/plugins.js` file. If this file does not exist you must create it.
@@ -67,10 +66,9 @@ Below are example configurations for the Upload and Email plugins.
 
 <Tabs>
 
-<TabItem title=Upload>
+<TabItem value="Upload" title="Upload">
 
-```js
-// path: ./config/plugins.js
+```js title="./config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -91,16 +89,15 @@ module.exports = ({ env }) => ({
 });
 ```
 
-::: note
+:::note
 Strapi has a default [`security` middleware](/dev-docs/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/dev-docs/configurations/middlewares#security) for more information.
 :::
 
 </TabItem>
 
-<TabItem title=Email>
+<TabItem value="Email" title="Email">
 
-```js
-// path: ./config/plugins.js
+```js title="./config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -121,7 +118,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Keep in mind that:
+:::note
 
 * When using a different provider per environment, specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js` (See [Environments](/dev-docs/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js` file is in the correct folder.
@@ -129,7 +126,8 @@ Keep in mind that:
 
 :::
 
-::::
+</TabItem>
+</Tabs>
 
 ### Configuration per environment
 
@@ -143,9 +141,8 @@ To implement your own custom provider you must [create a Node.js module](https:/
 
 The interface that must be exported depends on the plugin you are developing the provider for. Below are templates for the Upload and Email plugins:
 
-:::: tabs card
-
-::: tab Upload
+<Tabs>
+<TabItem value="Upload" title="Upload">
 
 ```js
 module.exports = {
@@ -168,8 +165,9 @@ module.exports = {
   },
 };
 ```
-:::
-::: tab Email
+</TabItem>
+
+<TabItem value="Email" title="Email">
 
 ```js
 module.exports = {
@@ -180,6 +178,8 @@ module.exports = {
   },
 };
 ```
+</TabItem>
+</Tabs>
 
 In the send function you will have access to:
 
