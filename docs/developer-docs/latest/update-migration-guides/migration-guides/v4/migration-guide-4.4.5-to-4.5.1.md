@@ -60,7 +60,7 @@ To remove the duplicated relationships easily, the following migration script fi
 To prepare the migration:
 
 1. Make a backup of the database in case something unexpected happens.
-2. Make sure you are migrating from a version greater than or equal to 4.4.5. If not please migrate to that version first, else this script will not work.
+2. Make sure you are migrating from a version greater than or equal to 4.4.5. If not, please migrate to the 4.4.5 version first, else this script will not work.
 3. In the `./database/migrations` folder, create a file named `2022.11.16T00.00.00.remove_duplicated_relationships.js`.
 4. Copy and paste the following code into the previously created file:
 
