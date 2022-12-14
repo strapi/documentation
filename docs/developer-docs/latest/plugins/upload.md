@@ -275,6 +275,7 @@ export default ({ env }) => ({
 | GET    | /api/upload/files     | Get a list of files |
 | GET    | /api/upload/files/:id | Get a specific file |
 | POST   | /api/upload           | Upload files        |
+| POST   | /api/upload?id=x      | Update fileInfo    |
 | DELETE | /api/upload/files/:id | Delete a file       |
 
 </div>
@@ -478,7 +479,7 @@ The corresponding code would be:
 Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files need to be prefixed with `files` (e.g. for a cover attribute: `files.cover`).
 
 ::: tip
-If you want to upload files for a component, you will have to specify the index of the item you want to add the file to: `files.my_component_name[the_index].attribute_name`
+If you want to upload files for a repeatable component, you will have to specify the zero-based index of the item you want to add the file to, using the following syntax: `files.my_component_name[the_index].attribute_name`. For instance, if you put 3 components and the file is for the second one, the index will be 1.
 :::
 
 :::caution
@@ -539,4 +540,32 @@ In our second example, you can upload and attach multiple pictures to the restau
   }
   // ...
 }
+```
+
+### Update fileInfo
+
+Update a file in your application.
+
+The following parameters are accepted:
+
+- `fileInfo`: The fileInfo to update.
+
+```js
+import { FormData } from 'formdata-node';
+import fetch from 'node-fetch';
+
+const fileId = 50;
+const newFileData = {
+  alternativeText: 'My new alternative text for this image!',
+};
+
+const form = new FormData();
+
+form.append('fileInfo', JSON.stringify(newFileData));
+
+const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
+  method: 'post',
+  body: form,
+});
+
 ```
