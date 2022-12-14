@@ -72,4 +72,4 @@ All selected entries are listed right below the drop-down list. Click on the nam
 
 To remove an entry, click on the cross button ![Cross icon](../assets/icons/cross.svg) in the selected entries list.
 
-Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](../assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](../assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it. This is a beta feature for now. <BetaBadge />.
