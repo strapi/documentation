@@ -130,7 +130,23 @@ const sidebars = {
         'dev-docs/typescript'
       ]
     },
+
+    {
+      type: 'category',
+      collapsed: false,
+      label: '🔌 Plugins',
+      items: [
+        
+            'dev-docs/plugins/email',
+            // 'dev-docs/plugins/upload',
+            // 'dev-docs/plugins/i18n',
+            // 'dev-docs/plugins/users-permissions',
+            // 'dev-docs/plugins/graphql',
+          ]
+    },
   ],
+
+
   userDocsSidebar: [
     'user-docs/intro',
     {
