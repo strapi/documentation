@@ -1,5 +1,5 @@
 ---
-title: Reordering relations
+title: Managing relations through the REST API
 description: Use the REST API to manage the order of relations
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html
 ---
