@@ -27,7 +27,7 @@ For example:
 
 <TabItem value="yarn" label="yarn">
 
-```bash 
+```bash
 #Install the AWS S3 provider for the Upload plugin
 
 yarn add @strapi/provider-upload-aws-s3
@@ -63,10 +63,13 @@ Each provider will have different configuration settings available. Review the r
 
 Below are example configurations for the Upload and Email plugins.
 
-
 <Tabs>
 
 <TabItem value="Upload" title="Upload">
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/plugins.js"
 
@@ -89,6 +92,35 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3', // For community providers pass the full package name (e.g. provider: 'strapi-provider-upload-google-cloud-storage')
+      providerOptions: {
+        accessKeyId: env('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env('AWS_ACCESS_SECRET'),
+        region: env('AWS_REGION'),
+        params: {
+          Bucket: env('AWS_BUCKET'),
+        },
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 :::note
 Strapi has a default [`security` middleware](/dev-docs/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/dev-docs/configurations/middlewares#security) for more information.
 :::
@@ -96,6 +128,10 @@ Strapi has a default [`security` middleware](/dev-docs/configurations/middleware
 </TabItem>
 
 <TabItem value="Email" title="Email">
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/plugins.js"
 
@@ -117,6 +153,35 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
 
 :::note
 
@@ -144,6 +209,10 @@ The interface that must be exported depends on the plugin you are developing the
 <Tabs>
 <TabItem value="Upload" title="Upload">
 
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
 ```js
 module.exports = {
   init(providerOptions) {
@@ -165,9 +234,44 @@ module.exports = {
   },
 };
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+export default {
+  init(providerOptions) {
+    // init your provider if necessary
+
+    return {
+      upload(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.buffer`
+      },
+      uploadStream(file) {
+        // upload the file in the provider
+        // file content is accessible by `file.stream`
+      },
+      delete(file) {
+        // delete the file in the provider
+      },
+    };
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
 </TabItem>
 
 <TabItem value="Email" title="Email">
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
 
 ```js
 module.exports = {
@@ -178,6 +282,25 @@ module.exports = {
   },
 };
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+export default {
+  init: (providerOptions = {}, settings = {}) => {
+    return {
+      send: async options => {},
+    };
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
 </TabItem>
 </Tabs>
 
@@ -186,10 +309,6 @@ In the send function you will have access to:
 * `providerOptions` that contains configurations written in `plugins.js`
 * `settings` that contains configurations written in `plugins.js`
 * `options` that contains options you send when you call the send function from the email plugin service
-
-:::
-
-::::
 
 You can review the [Strapi maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for example implementations.
 
