@@ -44,11 +44,11 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [CLI](/dev-docs/installation/cli)
       - [x] [Docker](/dev-docs/installation/docker)
     - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
-    - [ ] Required configurations
-        - [ ] Database configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html))
-        - [ ] Server configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html))
-        - [ ] Admin panel (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html))
-        - [ ] Middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html))
+    - [x] Required configurations
+        - [x] [Database configuration](/dev-docs/configurations/database)
+        - [x] [Server configuration](/dev-docs/configurations/server)
+        - [x] [Admin panel](/dev-docs/configurations/admin-panel)
+        - [x] [Middlewares](/dev-docs/configurations/middlewares)
     - [ ] Optional configurations
       - [x] [API tokens](/dev-docs/configurations/api-tokens)
       - [x] [Functions](/dev-docs/configurations/functions)

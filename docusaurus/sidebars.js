@@ -65,32 +65,34 @@ const sidebars = {
             type: 'doc',
             id: 'dev-docs/configurations',
           },
-          
           items: [
-            {type: 'category',
-            label: 'Required configurations',
-            items: [
-              'dev-docs/configurations/middlewares',
-            ]
-
+            {
+              type: 'category',
+              label: 'Required configurations',
+              items: [
+                'dev-docs/configurations/database',
+                'dev-docs/configurations/server',
+                'dev-docs/configurations/admin-panel',
+                'dev-docs/configurations/middlewares',
+              ]
             },
-            {type: 'category',
-            label: 'Optional configurations',
-            items: [
-              'dev-docs/configurations/api',
-              'dev-docs/configurations/api-tokens',
-              'dev-docs/configurations/cron',
-              'dev-docs/configurations/environment',
-              'dev-docs/configurations/functions',
-              'dev-docs/configurations/plugins',
-              'dev-docs/configurations/public-assets',
-              'dev-docs/configurations/rbac',
-              'dev-docs/configurations/sso',
-              'dev-docs/configurations/typescript',
-
-            ]
-          },
-          ]
+            {
+              type: 'category',
+              label: 'Optional configurations',
+              items: [
+                'dev-docs/configurations/api',
+                'dev-docs/configurations/api-tokens',
+                'dev-docs/configurations/cron',
+                'dev-docs/configurations/environment',
+                'dev-docs/configurations/functions',
+                'dev-docs/configurations/plugins',
+                'dev-docs/configurations/public-assets',
+                'dev-docs/configurations/rbac',
+                'dev-docs/configurations/sso',
+                'dev-docs/configurations/typescript',
+              ]
+            },
+          ],
         },
         {
           type: 'category',
