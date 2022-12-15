@@ -138,10 +138,12 @@ const sidebars = {
       items: [
         
             'dev-docs/plugins/email',
-            // 'dev-docs/plugins/upload',
-            // 'dev-docs/plugins/i18n',
-            // 'dev-docs/plugins/users-permissions',
-            // 'dev-docs/plugins/graphql',
+            'dev-docs/plugins/upload',
+            'dev-docs/plugins/i18n',
+            'dev-docs/plugins/users-permissions',
+            'dev-docs/plugins/graphql',
+            //'dev-docs/plugins/sentry',
+            //'dev-docs/plugins/documentation'
           ]
     },
   ],
