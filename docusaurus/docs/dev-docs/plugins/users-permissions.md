@@ -54,7 +54,7 @@ The `identifier` param can be an **email** or **username**.
 
 <Tabs>
 
-<TabItem value="axios" title="axios">
+<TabItem value="Axios" title="Axios">
 
 ```js
 import axios from 'axios';
