@@ -8,54 +8,57 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 
 # GraphQL
 
-By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/dev-docs/api/rest#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
-The [GraphQL API reference](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
+The [GraphQL API reference](/dev-docs/api/graphql) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
 :::
 
 ## Usage
 
 To get started with GraphQL in your application, please install the plugin first. To do that, open your terminal and run the following command:
 
-<code-group>
+<Tabs groupId="yarn-npm">
 
-<code-block title="NPM">
-```sh
-npm run strapi install graphql
-```
-</code-block>
+<TabItem value="yarn" label="yarn">
 
-<code-block title="YARN">
-```sh
+```bash
 yarn strapi install graphql
 ```
-</code-block>
 
-</code-group>
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi install graphql
+```
+
+</TabItem>
+
+</Tabs>
 
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
 :::note
-The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
+The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
 :::
 
 ## Configuration
 
-Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration)).
+Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
 
-::: caution
+:::caution
 The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
 :::
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-// path: ./config/plugins.js
+```js title="./config/plugins.js"
 
 module.exports = {
   //
@@ -74,12 +77,11 @@ module.exports = {
 };
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-// path: ./config/plugins.ts
+```ts title="./config/plugins.ts"
 
 export default {
   //
@@ -98,9 +100,9 @@ export default {
 };
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
 ## Shadow CRUD
 
@@ -108,10 +110,9 @@ To simplify and automate the build of the GraphQL schema, we introduced the Shad
 
 **Example:**
 
-If you've generated an API called `Document` using [the interactive `strapi generate` CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) or the administration panel, your model looks like this:
+If you've generated an API called `Document` using [the interactive `strapi generate` CLI](/dev-docs/cli#strapi-generate) or the administration panel, your model looks like this:
 
-```json
-// path: ./src/api/[api-name]/content-types/document/schema.json
+```json title="./src/api/[api-name]/content-types/document/schema.json"
 
 {
   "kind": "collectionType",
@@ -140,7 +141,8 @@ If you've generated an API called `Document` using [the interactive `strapi gene
 }
 ```
 
-::: details Generated GraphQL type and queries
+<details> 
+<summary>Generated GraphQL type and queries</summary>
 
 ```graphql
 # Document's Type definition
@@ -211,7 +213,7 @@ type Mutation {
 }
 ```
 
-:::
+</details>
 
 ## Customization
 
@@ -221,14 +223,14 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 * [using getters](#using-getters) to return information about allowed operations
 * registering and using an `extension` object to [extend the existing schema](#extending-the-schema) (e.g. extend types or define custom resolvers, policies and middlewares)
 
-::: details Example of GraphQL customizations
+<details> 
+<summary>Example of GraphQL customizations</summary>
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-// path: ./src/index.js
+```js title="./src/index.js"
 
 module.exports = {
   /**
@@ -290,12 +292,11 @@ module.exports = {
 };
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-// path: ./src/index.ts
+```ts title="./src/index.ts"
 
 export default {
   /**
@@ -357,15 +358,17 @@ export default {
 };
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
-:::
+
+
+</details>
 
 ### Disabling operations in the Shadow CRUD
 
-The `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
+The `extension` [service](/dev-docs/backend-customization/services) provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
 
 | Content-type function | Description                                    | Argument type    | Possible argument values |
 | --------------------  | ---------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -432,7 +435,7 @@ The following getters can be used to retrieve information about operations allow
 
 The schema generated by the Content API can be extended by registering an extension.
 
-This extension, defined either as an object or a function returning an object, will be used by the `use()` function exposed by the `extension` [service](/developer-docs/latest/development/backend-customization/services.md) provided with the GraphQL plugin.
+This extension, defined either as an object or a function returning an object, will be used by the `use()` function exposed by the `extension` [service](/dev-docs/backend-customization/services) provided with the GraphQL plugin.
 
 The object describing the extension accepts the following parameters:
 
@@ -444,18 +447,17 @@ The object describing the extension accepts the following parameters:
 | `resolvers`       | Object | Defines custom resolvers                                                                     |
 | `resolversConfig` | Object | Defines [configuration options for the resolvers](#custom-configuration-for-resolvers), such as [authorization](#authorization-configuration), [policies](#policies) and [middlewares](#middlewares) |
 
-::::tip
+:::tip
 The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/). To use them, register the extension as a function that takes `nexus` as a parameter:
 
-::: details Example:
+<details>
+<summary> Example: </summary>
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-
-// path: ./src/index.js
+```js title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -477,13 +479,11 @@ module.exports = {
 }
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-
-// path: ./src/index.ts
+```ts title="./src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -505,12 +505,12 @@ export default {
 }
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
+</details>
 :::
-::::
 
 #### Custom configuration for resolvers
 
@@ -524,32 +524,33 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ##### Authorization configuration
 
-By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md) or through the [Users & Permissions plugin](#usage-with-the-users-permissions-plugin). The Users & Permissions plugin offers a more granular control.
+By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/dev-docs/configurations/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
 
-::: details Authorization with the Users & Permissions plugin
+<details>
+<summary> Authorization with the Users & Permissions plugin</summary>
+
 With the Users & Permissions plugin, a GraphQL request is allowed if the appropriate permissions are given.
 
 For instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` permission for the 'Categories' content-type is given.
 
 To query a single category, which is done with the `Query.category` handler, the request is allowed if the the `findOne` permission is given.
 
-Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#editing-a-role).
-:::
+Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role).
+</details>
 
 To change how the authorization is configured, use the resolver configuration defined at `resolversConfig.[MyResolverName]`. The authorization can be configured:
 
 * either with `auth: false` to fully bypass the authorization system and allow all requests,
 * or with a `scope` attribute that accepts an array of strings to define the permissions required to authorize the request.
 
-::: details Examples of authorization configuration
+<details>
+<summary> Examples of authorization configuration</summary>
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-
-// path: ./src/index.js
+```js title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -582,13 +583,11 @@ module.exports = {
 
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-
-// path: ./src/index.ts
+```ts title="./src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -621,17 +620,16 @@ export default {
 
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
-
-:::
+</Tabs>
+</details>
 
 ##### Policies
 
-[Policies](/developer-docs/latest/development/backend-customization/policies.md) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
+[Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
 
-The `policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#policies)).
+The `policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/dev-docs/backend-customization/routes#policies)).
 
 Policies directly implemented in `resolversConfig` are functions that take a `context` object and the `strapi` instance as arguments.
 The `context` object gives access to:
@@ -639,15 +637,14 @@ The `context` object gives access to:
 * the `parent`, `args`, `context` and `info` arguments of the GraphQL resolver,
 * Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
 
-::: details Example of a custom GraphQL policy applied to a resolver
+<details>
+<summary> Example of a custom GraphQL policy applied to a resolver </summary>
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-
-// path: ./src/index.js
+```js title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -674,13 +671,11 @@ module.exports = {
 }
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-
-// path: ./src/index.ts
+```ts title="./src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -707,17 +702,17 @@ export default {
 }
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
-:::
+</details>
 
 #### Middlewares
 
-[Middlewares](/developer-docs/latest/development/backend-customization/middlewares.md) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key.
+[Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key.
 
-The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/developer-docs/latest/development/backend-customization/routes.md#middlewares)).
+The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/dev-docs/backend-customization/routes#middlewares)).
 
 Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's [`parent`, `args`, `context` and `info` objects](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) as arguments.
 
@@ -725,15 +720,14 @@ Middlewares directly implemented in `resolversConfig` can take the GraphQL resol
 Middlewares with GraphQL can even act on nested resolvers, which offer a more granular control than with REST.
 :::
 
-:::details Examples of custom GraphQL middlewares applied to a resolver
+<details>
+<summary> Examples of custom GraphQL middlewares applied to a resolver</summary>
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-
-// path: ./src/index.js
+```js title"./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -785,13 +779,11 @@ module.exports = {
 }
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-
-// path: ./src/index.ts
+```ts title"./src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -843,21 +835,22 @@ export default {
 }
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
-:::
+</details>
 
 ## Usage with the Users & Permissions plugin
 
-The [Users & Permissions plugin](/developer-docs/latest/plugins/users-permissions.md) is an optional plugin that allows protecting the API with a full authentication process.
+The [Users & Permissions plugin](/dev-docs/plugins/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
 
 ### Registration
 
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
 
-:::request Mutation
+
+<Request title="Mutation">
 
 ```graphql
 mutation {
@@ -871,7 +864,7 @@ mutation {
 }
 ```
 
-:::
+</Request>
 
 You should see a new user is created in the `Users` collection type in your Strapi admin panel.
 
@@ -879,7 +872,7 @@ You should see a new user is created in the `Users` collection type in your Stra
 
 To perform authorized requests, you must first get a JWT:
 
-:::request Mutation
+<Request title="Mutation">
 
 ```graphql
 mutation {
@@ -889,6 +882,6 @@ mutation {
 }
 ```
 
-:::
+</Request>
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
