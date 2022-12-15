@@ -1,6 +1,5 @@
 ---
 title: Providers
-displayed_sidebar: devDocsSidebar
 description: Install and use providers to extend the functionality of available plugins.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/providers.html
 ---
