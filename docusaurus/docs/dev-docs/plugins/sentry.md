@@ -22,21 +22,25 @@ Begin by first [installing](#installation) the Sentry plugin, and then [configur
 
 Install the Sentry plugin by adding the dependency to your Strapi application as follows:
 
-<code-group>
+<Tabs groupId="yarn-npm">
 
-<code-block title="NPM">
-```sh
-npm install @strapi/plugin-sentry
-```
-</code-block>
+<TabItem value="yarn" label="yarn">
 
-<code-block title="YARN">
-```sh
+```bash
 yarn add @strapi/plugin-sentry
 ```
-</code-block>
 
-</code-group>
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm install @strapi/plugin-sentry
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Configuration
 
@@ -50,8 +54,11 @@ Create or edit your `./config/plugins.js` file to configure the Sentry plugin. T
 
 An example configuration:
 
-```js
-// path: ./config/plugins.js
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -66,12 +73,38 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  sentry: {
+    enabled: true,
+    config: {
+      dsn: env('SENTRY_DSN'),
+      sendMetadata: true,
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Environment configuration
 
-Using the [`env` utility](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md#configuration-using-environment-variables), you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
+Using the [`env` utility](/dev-docs/configurations/environment#configuration-using-environment-variables), you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
 
-```js
-// path: ./config/plugins.js
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -81,6 +114,25 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  sentry: {
+    enabled: env('NODE_ENV') === 'production',
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Global Sentry service access
 
@@ -94,14 +146,15 @@ This service exposes the following methods:
 
 | Method | Description | Parameters |
 | ------ | ----------- | ---------- |
-| `sendError()` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul><br>See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
+| `sendError()` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul> See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
 | `getInstance()` | Used for direct access to the Sentry instance. | |
+
 
 Below are examples for each method.
 
-:::: tabs card
+<Tabs>
 
-::: tab sendError
+<TabItem title="sendError" value="sendError">
 
 ```js
 try {
@@ -125,9 +178,9 @@ try {
 }
 ```
 
-:::
+</TabItem>
 
-::: tab getInstance
+<TabItem title="getInstance" value="getInstance">
 
 ```js
 const sentryInstance = strapi
@@ -136,6 +189,5 @@ const sentryInstance = strapi
   .getInstance();
 ```
 
-:::
-
-::::
+</TabItem>
+</Tabs>
