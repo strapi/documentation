@@ -56,8 +56,8 @@ Importing data from an existing Strapi application and data backups for a Strapi
     ![Project Setup](/img/assets/cloud/setup.png)
 
 4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
-    * [**Environment variables**](/dev-docs/configurations/environment.md): Environment variables are used to configure your Strapi app.
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
+    * [**Environment variables**](/dev-docs/configurations/environment/): Environment variables are used to configure your Strapi app. You can add environment variables to your Strapi Cloud project by clicking **Add Environment Variable**. You can also add environment variables to your Strapi app by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud.
 
     ![Advanced Setup](/img/assets/cloud/advanced.png)
 
