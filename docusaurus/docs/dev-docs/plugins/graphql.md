@@ -1,6 +1,7 @@
 ---
 title: GraphQL
 displayed_sidebar: devDocsSidebar
+maxHeadingLevel: 5
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/graphql.html
 ---

@@ -1,6 +1,7 @@
 ---
 title: Users & Permissions
 displayed_sidebar: devDocsSidebar
+maxHeadingLevel: 4
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html
 ---
