@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 
 # Data Export-Import Transfer System <BetaBadge />
 
-:::callout
+:::callout 🚧 Feature under development
 The data export-import transfer system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
 :::
 
@@ -20,7 +20,7 @@ Occasionally you need to move data out of or into a Strapi instance. The data ex
 
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
-:::strapi
+:::strapi Using the Command Line Interface (CLI)
 The `strapi export` CLI command and all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
 :::
 
@@ -37,13 +37,14 @@ The `strapi export` command by default exports data as an encrypted and compress
 
 ### Name the export file
 
-Exported data are contained in a `.tar` file that is automatically named using the format `export_time-date-stamp`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. The file name should not include an extension.
+Exported data are contained in a `.tar` file that is automatically named using the format `export_time-date-stamp`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
 
-:::details Example: Export data with a custom filename.
+#### Example: Export data with a custom filename
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
 yarn strapi export --file my-strapi-export
 ```
 
@@ -51,25 +52,26 @@ yarn strapi export --file my-strapi-export
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi export  --file my-strapi-export
 ```
 
 </code-block>
 </code-group>
-:::
+
 
 ### Configure data encryption
 
-The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no miniumum character count.
+The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `-k` or `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no minimum character count.
 
 To disable encryption, pass the `--no-encrypt` option with the `strapi export` command.
 
-:::details Example: Export data without encryption
+#### Example: Export data without encryption
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
 yarn strapi export --no-encrypt
 ```
 
@@ -77,26 +79,45 @@ yarn strapi export --no-encrypt
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi export --no-encrypt
 ```
 
 </code-block>
 </code-group>
-:::
 
-### Disable data compression
-
-The default `strapi export` command compresses your project data using `gzip` compression. 
-
-To disable compression, pass the `--no-compress` option with the `strapi export` command.
-
-:::details Example: Export data without compression
-
+#### Example: Export data with the encryption `--key` option
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
+yarn strapi export --key my-encryption-key
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm strapi export --key my-encryption-key
+```
+
+</code-block>
+</code-group>
+
+### Disable data compression
+
+The default `strapi export` command compresses your project data using `gzip` compression.
+
+To disable compression, pass the `--no-compress` option with the `strapi export` command.
+
+#### Example: Export data without compression
+<br/>
+<code-group>
+<code-block title="YARN">
+
+```bash
 yarn strapi export --no-compress
 ```
 
@@ -104,23 +125,23 @@ yarn strapi export --no-compress
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi export --no-compress
 ```
 
 </code-block>
 </code-group>
-:::
 
 ### Declare the maximum file size
 
 The default maximum size of each internal backup `jsonl` file is 256MB. To customize the maximum `jsonl` file size, pass the `--max-size-jsonl` option with the `strapi export` command.
 
-:::details Example: Set the maximum `jsonl` file size to 100MB
+#### Example: Set the maximum `jsonl` file size to 100MB
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
 yarn strapi export --max-size-jsonl 100
 ```
 
@@ -128,27 +149,25 @@ yarn strapi export --max-size-jsonl 100
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi export --max-size-jsonl 100
 ```
 
 </code-block>
 </code-group>
 
-:::
-
 <!-- ### Exclude files -->
 
 ## Import data using the CLI tool
 
-To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The file name, extension and location are required.
-
-:::details Example: Minimum command to import data from a file in the Strapi project root
-
+To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required.
+ 
+#### Example: Minimum command to import data from a file in the Strapi project root
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
 yarn strapi import -f export_20221213105643.tar.gz
 ```
 
@@ -156,41 +175,36 @@ yarn strapi import -f export_20221213105643.tar.gz
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi import -f export_20221213105643.tar.gz
 ```
 
 </code-block>
 </code-group>
 
-:::
-
 ### Provide an encryption key
 
-If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `--key` option. If you do not pass the encryption key with the `strapi import` command you will be prompted for the encryption key before the import starts.
+If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `-k` or `--key` option. If you do not pass the encryption key with the `strapi import` command you will be prompted for the encryption key before the import starts.
 
-:::details Example: Pass the encryption key with the `strapi import` command
-
+#### Example: Pass the encryption key with the `strapi import` command
+<br/>
 <code-group>
 <code-block title="YARN">
 
-```console
-yarn strapi import -f --key my-password
+```bash
+yarn strapi import -f export_20221213105643.tar.gz --key my-encryption-key
 ```
 
 </code-block>
 
 <code-block title="NPM">
 
-```console
-npm strapi import -f --key my-password
+```bash
+npm strapi import -f export_20221213105643.tar.gz --key my-encryption-key
 ```
 
 </code-block>
 </code-group>
-
-:::
-
 
 <!-- ### Declare a conflict strategy
 
@@ -217,14 +231,14 @@ The `--schemaStrategy` option specifies how strictly the schemas must match betw
 | exact  | (Default) Schemas (content-types) must exactly match between source and destination.                            |
 | strict | Allows differences between `private`, `required`, and `configurable` attributes. Schemas must exist and match in all other ways.                                                                            |
 
-:::details Example: Customized command to import data.
+#### Example: Customized command to import data
 
 The following code example imports the `export_20221213105643.tar.gz` file located in the instance root directory. It uses the `patch` version strategy and the `strict` schema strategy.
 
 <code-group>
 <code-block title="YARN">
 
-```console
+```bash
 yarn strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
 ```
 
@@ -232,7 +246,7 @@ yarn strapi import -f export_20221213105643.tar.gz --versionStrategy patch --sch
 
 <code-block title="NPM">
 
-```console
+```bash
 npm strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
 ```
 
