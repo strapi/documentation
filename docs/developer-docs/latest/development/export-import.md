@@ -132,7 +132,7 @@ npm strapi export --no-compress
 </code-block>
 </code-group>
 
-### Declare the maximum file size
+<!-- ### Declare the maximum file size
 
 The default maximum size of each internal backup `jsonl` file is 256MB. To customize the maximum `jsonl` file size, pass the `--max-size-jsonl` option with the `strapi export` command.
 
@@ -154,7 +154,7 @@ npm strapi export --max-size-jsonl 100
 ```
 
 </code-block>
-</code-group>
+</code-group> -->
 
 <!-- ### Exclude files -->
 
