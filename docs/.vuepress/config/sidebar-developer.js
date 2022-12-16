@@ -3,10 +3,10 @@ const developer = [
     title: '🚀 Getting Started',
     collapsable: false,
     children: [
-      ['/developer-docs/latest/getting-started/introduction', 'Introduction'],
-      ['/developer-docs/latest/getting-started/quick-start', 'Quick Start Guide'],
-      ['/developer-docs/latest/getting-started/troubleshooting', 'Frequently Asked Questions'],
-      ['/developer-docs/latest/getting-started/usage-information', 'Usage Information'],
+      ['/developer-docs/latest/getting-started/introduction.html', 'Introduction'],
+      ['/developer-docs/latest/getting-started/quick-start.html', 'Quick Start Guide'],
+      ['/developer-docs/latest/getting-started/troubleshooting.html', 'Frequently Asked Questions'],
+      ['/developer-docs/latest/getting-started/usage-information.html', 'Usage Information'],
     ],
   },
   {
@@ -21,11 +21,11 @@ const developer = [
         collapsable: true,
         sidebarDepth: 1,
         children: [
-          ['/developer-docs/latest/setup-deployment-guides/installation/cli.md', 'CLI'],
-          ['/developer-docs/latest/setup-deployment-guides/installation/docker.md', 'Docker'],
+          ['/developer-docs/latest/setup-deployment-guides/installation/cli.html', 'CLI'],
+          ['/developer-docs/latest/setup-deployment-guides/installation/docker.html', 'Docker'],
         ],
       },
-      ['/developer-docs/latest/setup-deployment-guides/file-structure.md', 'Project structure'],
+      ['/developer-docs/latest/setup-deployment-guides/file-structure.html', 'Project structure'],
       {
         title: 'Configurations',
         path: '/developer-docs/latest/setup-deployment-guides/configurations.html',
@@ -36,19 +36,19 @@ const developer = [
             collapsable: true,
             children: [
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html',
                 'Database',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/required/server.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/required/server.html',
                 'Server',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html',
                 'Admin panel',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html',
                 'Middlewares',
               ],
             ],
@@ -58,43 +58,43 @@ const developer = [
             collapsable: true,
             children: [
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html',
                 'API tokens',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html',
                 'Functions',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html',
                 'Cron jobs',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html',
                 'API',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html',
                 'Plugins',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html',
                 'Environment',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html',
                 'Public Assets',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html',
                 'Single Sign On (SSO)',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html',
                 'Role-Based Access Control (RBAC)',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.md',
+                '/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.html',
                 'TypeScript',
             ],
           ],
@@ -103,13 +103,13 @@ const developer = [
       },
       {
         title: 'Deployment',
-        path: '/developer-docs/latest/setup-deployment-guides/deployment',
+        path: '/developer-docs/latest/setup-deployment-guides/deployment.html',
         collapsable: true,
         initialOpenGroupIndex: -1, // make sure that no subgroup is open by default — if set to 0, 'Hosting Provider Guides' is expanded
         children: [
           {
             title: "Strapi Cloud",
-            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.md',
+            path: '/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html',
             collapsable: true,
           },
           {
@@ -119,27 +119,27 @@ const developer = [
             collapsable: true,
             children: [
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html',
                 'Amazon AWS',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html',
                 'Azure',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html',
                 'DigitalOcean App Platform',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.html',
                 'DigitalOcean Droplets',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html',
                 'Google App Engine',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html',
                 'Heroku',
               ],
             ],
@@ -152,15 +152,15 @@ const developer = [
             collapsable: true,
             children: [
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html',
                 'Caddy',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html',
                 'HAProxy',
               ],
               [
-                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.md',
+                '/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html',
                 'Nginx',
               ],
             ],
@@ -179,33 +179,33 @@ const developer = [
       {
         title: 'Back-end customization',
         collapsable: true,
-        path: '/developer-docs/latest/development/backend-customization',
+        path: '/developer-docs/latest/development/backend-customization.html',
         children: [
-          ['/developer-docs/latest/development/backend-customization/routes.md', 'Routes'],
-          ['/developer-docs/latest/development/backend-customization/policies.md', 'Policies'],
+          ['/developer-docs/latest/development/backend-customization/routes.html', 'Routes'],
+          ['/developer-docs/latest/development/backend-customization/policies.html', 'Policies'],
           [
-            '/developer-docs/latest/development/backend-customization/middlewares.md',
+            '/developer-docs/latest/development/backend-customization/middlewares.html',
             'Middlewares',
           ],
           [
-            '/developer-docs/latest/development/backend-customization/controllers.md',
+            '/developer-docs/latest/development/backend-customization/controllers.html',
             'Controllers',
           ],
           [
-            '/developer-docs/latest/development/backend-customization/requests-responses.md',
+            '/developer-docs/latest/development/backend-customization/requests-responses.html',
             'Requests & Responses',
           ],
-          ['/developer-docs/latest/development/backend-customization/services.md', 'Services'],
-          ['/developer-docs/latest/development/backend-customization/models.md', 'Models'],
-          ['/developer-docs/latest/development/backend-customization/webhooks.md', 'Webhooks'],
+          ['/developer-docs/latest/development/backend-customization/services.html', 'Services'],
+          ['/developer-docs/latest/development/backend-customization/models.html', 'Models'],
+          ['/developer-docs/latest/development/backend-customization/webhooks.html', 'Webhooks'],
         ],
       },
       ['/developer-docs/latest/development/admin-customization', 'Admin panel customization'],
-      ['/developer-docs/latest/development/plugins-extension.md', 'Plugins extension'],
-      ['/developer-docs/latest/development/plugins-development.md', 'Plugins development'],
-      ['/developer-docs/latest/development/custom-fields.md', 'Custom fields'],
-      ['/developer-docs/latest/development/typescript.md', 'TypeScript'],
-      ['/developer-docs/latest/development/providers.md', 'Providers'],
+      ['/developer-docs/latest/development/plugins-extension.html', 'Plugins extension'],
+      ['/developer-docs/latest/development/plugins-development.html', 'Plugins development'],
+      ['/developer-docs/latest/development/custom-fields.html', 'Custom fields'],
+      ['/developer-docs/latest/development/typescript.html', 'TypeScript'],
+      ['/developer-docs/latest/development/providers.html', 'Providers'],
     ],
   },
   {
@@ -229,15 +229,15 @@ const developer = [
             initialOpenGroupIndex: -1,
             children: [
               [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md',
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html',
                 'Filtering, Locale, and Publication State'
               ],
               [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md',
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html',
                 'Population & Field Selection'
               ],
               [
-                '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md',
+                '/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html',
                 'Sort & Pagination'
               ],
             ]
@@ -245,33 +245,33 @@ const developer = [
         ],
       },
       [
-        '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md',
+        '/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html',
         'GraphQL API',
       ],
       {
         title: 'Entity Service API',
         path:
-          '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api',
+          '/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html',
         collapsable: true,
         children: [
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.html',
             'CRUD operations',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.html',
             'Filters',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.html',
             'Populate',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.html',
             'Ordering & pagination',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.html',
             'Components and dynamic zones',
           ],
         ],
@@ -284,23 +284,23 @@ const developer = [
         // sidebarDepth: 3,
         children: [
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.html',
             'Single Operations',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.html',
             'Bulk Operations',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html',
             'Filtering',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.html',
             'Populating',
           ],
           [
-            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md',
+            '/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.html',
             'Ordering & pagination',
           ],
         ],
@@ -310,19 +310,19 @@ const developer = [
         collapsable: true,
         children: [
           [
-            '/developer-docs/latest/developer-resources/plugin-api-reference/server.md',
+            '/developer-docs/latest/developer-resources/plugin-api-reference/server.html',
             'Server API for plugins',
           ],
           [
-            '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.md',
+            '/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html',
             'Admin Panel API for plugins',
           ],
         ],
       },
       ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
-      ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+      ['/developer-docs/latest/developer-resources/error-handling.html', 'Error handling'],
       ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
-      ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
+      ['/developer-docs/latest/developer-resources/database-migrations.html', 'Database migrations'],
       {
         title: 'Integrations',
         path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -410,7 +410,7 @@ const developer = [
     title: '♻️ Update & Migration',
     collapsable: false,
     children: [
-      ['/developer-docs/latest/update-migration-guides/update-version.md', 'Update'],
+      ['/developer-docs/latest/update-migration-guides/update-version.html', 'Update'],
       {
         title: 'Migration',
         path: '/developer-docs/latest/update-migration-guides/migration-guides.html',
@@ -464,10 +464,10 @@ const developer = [
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html',
                 collapsable: true,
                 children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md', 'SQL v3 to v4 migration'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.md', 'SQL relations cheatsheet'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.md', 'MongoDB v3 to SQL v3 migration'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.md', 'MongoDB vs. SQL cheatsheet'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.html', 'SQL v3 to v4 migration'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.html', 'SQL relations cheatsheet'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html', 'MongoDB v3 to SQL v3 migration'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.html', 'MongoDB vs. SQL cheatsheet'],
                 ],
               },
               {
@@ -475,10 +475,10 @@ const developer = [
                 path: '/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html',
                 collapsable: true,
                 children: [
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.md', 'Updating the folder structure'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.md', 'Migrating the back end'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.md', 'Migrating the front end'],
-                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.md', 'Enabling a plugin'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html', 'Updating the folder structure'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html', 'Migrating the back end'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html', 'Migrating the front end'],
+                  ['/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html', 'Enabling a plugin'],
                 ]
               },
             ]
