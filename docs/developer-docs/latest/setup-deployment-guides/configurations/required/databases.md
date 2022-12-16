@@ -76,7 +76,7 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
 | Parameter        | Description                                                     | Type      | Default |
 | ---------------- | --------------------------------------------------------------- | --------- | ------- |
