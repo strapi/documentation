@@ -152,12 +152,11 @@ Available options:
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-// path: ./config/plugins.js
+```js title="./config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -172,12 +171,11 @@ module.exports = ({ env }) => ({
 });
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-// path: ./config/plugins.ts
+```ts title="./config/plugins.ts"
 
 export default ({ env }) => ({
   // ...
@@ -192,9 +190,9 @@ export default ({ env }) => ({
 });
 ```
 
-</code-block>
+</TabItem>
 
-</code-group>
+</Tabs>
 
 :::warning
 Setting JWT expiry for more than 30 days is **not recommended** due to security concerns.
@@ -258,12 +256,11 @@ Before setting up a provider you must specify the absolute url of your backend i
 
 **example -** `config/server.js`
 
-<code-group>
+<Tabs groupId="js-ts">
 
-<code-block title="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
-```js
-//path: config/server.js
+```js title="config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -272,12 +269,11 @@ module.exports = ({ env }) => ({
 });
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
-```js
-//path: config/server.ts
+```ts title="config/server.ts"
 
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -286,9 +282,10 @@ export default ({ env }) => ({
 });
 ```
 
-</code-block>
 
-</code-group>
+</TabItem>
+
+</Tabs>
 
 :::tip
 Later you will give this url to your provider. <br/> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (ex: `url: env('', 'https://5299e8514242.ngrok.io'),`).
