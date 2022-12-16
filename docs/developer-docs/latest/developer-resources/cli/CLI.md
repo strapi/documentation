@@ -103,7 +103,7 @@ options: [--browser <name>]
 
 Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
-```console
+```bash
 strapi export
 ```
 
@@ -111,12 +111,12 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option           | Type    | Description                                                                                               |
 |------------------|---------|----------------------------------------------------------------------------|
-| --no-encrypt     |         | Disables file encryption and disables the `key` option.                                                   |
-| --no-compress    |         | Disables file compression.                                                                                |
-| --key            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |
-| --max-size-jsonl | integer | Splits the internal `jsonl` files when exceeding the specified size in MB (default 256MB).                                |
-| -f, --file       | file    | Specifies the export filename. Do not include a file extension.                                           |
-| -h, --help       |         | Displays help for the `strapi export` command.                                                            |
+| `--no-encrypt`     |         | Disables file encryption and disables the `key` option.                                                   |
+| `--no-compress`    |         | Disables file compression.                                                                                |
+| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |
+| `--max-size-jsonl` | integer | Splits the internal `jsonl` files when exceeding the specified size in MB (default 256MB).                                |
+| `-f`, `--file`       | file    | Specifies the export filename. Do not include a file extension.                                           |
+| `-h`, `--help`       |         | Displays help for the `strapi export` command.                                                            |
 
 <!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
 
@@ -124,6 +124,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 ```bash
 #examples of strapi export:
+
 strapi export -f myData #exports your data with the default options and the filename myData.
 strapi export --no-encrypt #exports your data without encryption.
 strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
@@ -135,15 +136,15 @@ Imports data into your project. The imported data must originate from another St
 
 | Option             | Type   | Description                                                               |
 |--------------------|--------|---------------------------------------------------------------------------|
-| -k, --key          | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| -f, --file         | string | Path and filename with extension for the data to be imported.             |
-| -h, --help         |        | Display the `strapi export` help commands.                                |
+| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
+| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
+| `-h`, `--help`         |        | Display the `strapi export` help commands.                                |
 
 **Examples**
 
 ```bash
 
-#examples of strapi export:
+#example of strapi import:
 
 #import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
