@@ -59,6 +59,18 @@ const plugins = [
     },
   ],
   [
+    'vuepress-plugin-robots',
+    {
+      host: "https://docs.strapi.io",
+    }
+  ],
+  [
+    'vuepress-plugin-sitemap',
+    {
+      hostname: "https://docs.strapi.io",
+    }
+  ],
+  [
     'vuepress-plugin-container',
     {
       type: 'callout',

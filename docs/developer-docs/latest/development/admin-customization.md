@@ -507,7 +507,7 @@ To disable the information box containing the tutorial videos, set the `config.t
 
 #### Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
 #### Theme extension
 
@@ -581,17 +581,14 @@ Make sure to rename the default `webpack.config.example.js` file into `webpack.c
 In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
 
 ```js
-module.exports = {
-  // WARNING: the admin panel now uses webpack 5 to bundle the application.
-  webpack: (config, webpack) => {
-    // Note: we provide webpack above so you should not `require` it
+module.exports = (config, webpack) => {
+   // Note: we provide webpack above so you should not `require` it
 
-    // Perform customizations to webpack config
-    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
 
-    // Important: return the modified config
-    return config;
-  },
+  // Important: return the modified config
+  return config;
 };
 ```
 
