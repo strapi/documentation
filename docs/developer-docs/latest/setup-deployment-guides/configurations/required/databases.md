@@ -6,10 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content. 
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
 :::warning
- Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
+Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
 :::
 
 :::strapi Supported databases
@@ -26,7 +26,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 ### `connection` configuration object
 
 | Parameter                                                | Description                                                                                           | Type      | Default |
-|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------- | ------- |
 | `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
 | `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
@@ -38,22 +38,22 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
-| Parameter  | Description                                                                                                                   | Type                  |
-|------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.                    | `String`                  |
-| `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
-| `port`     | Database port                                                                                                                 | `Integer`             |
-| `database` | Database name.                                                                                                                | `String`              |
-| `user`     | Username used to establish the connection                                                                                     | `String`              |
-| `password` | Password used to establish the connection                                                                                     | `String`              |
-| `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
-| `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
-| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+| Parameter          | Description                                                                                                                            | Type                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `connectionString` | Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. | `String`              |
+| `host`             | Database host name. Default value: `localhost`.                                                                                        | `String`              |
+| `port`             | Database port                                                                                                                          | `Integer`             |
+| `database`         | Database name.                                                                                                                         | `String`              |
+| `user`             | Username used to establish the connection                                                                                              | `String`              |
+| `password`         | Password used to establish the connection                                                                                              | `String`              |
+| `timezone`         | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php)          | `String`              |
+| `schema`           | Set the default database schema. **Used only for Postgres DB.**                                                                        | `String`              |
+| `ssl`              | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                                  | `Boolean` or `Object` |
 
 :::note
 Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
 :::
-  
+
 #### Database pooling options
 
 The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
@@ -63,7 +63,7 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 :::
 
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
-|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------|
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | ------- |
 | `min`                       | Minimum number of database connections to keepalive                                                                                                                                        | `Integer`  | `2`     |
 | `max`                       | Maximum number of database connections to keepalive                                                                                                                                        | `Integer`  | `10`    |
 | `acquireTimeoutMillis`      | Time in milliseconds before timing out a database connection attempt                                                                                                                       | `Integer`  | `60000` |
@@ -76,11 +76,12 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
-| Parameter        | Description                                      | Type      | Default |
-|------------------|--------------------------------------------------|-----------|---------|
-| `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
+| Parameter        | Description                                                     | Type      | Default |
+| ---------------- | --------------------------------------------------------------- | --------- | ------- |
+| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
+| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
