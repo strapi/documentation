@@ -1,17 +1,17 @@
 ---
-title: Data export-import transfer system - Strapi Developer Docs
+title: Data Management System - Strapi Developer Docs
 description: Import, export, and transfer data using the Strapi CLI
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-import.html
 ---
 
-# Data Export-Import Transfer System <BetaBadge />
+# Data Management System <BetaBadge />
 
 :::callout 🚧 Feature under development
-The data export-import transfer system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
+The data management system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
 :::
 
-Occasionally you need to move data out of or into a Strapi instance. The data export-import transfer system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data using providers. Common use cases include:
+Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data using providers. Common use cases include:
 
 - creating a data backup,
 - restoring data from a backup.
@@ -19,7 +19,7 @@ Occasionally you need to move data out of or into a Strapi instance. The data ex
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
 :::strapi Using the Command Line Interface (CLI)
-The `strapi export` CLI command and all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
+The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
 :::
 
 ## Export data using the CLI tool
@@ -190,4 +190,3 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 
 </code-block>
 </code-group>
-
