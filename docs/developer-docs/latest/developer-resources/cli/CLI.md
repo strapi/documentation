@@ -114,7 +114,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | `--no-encrypt`     |         | Disables file encryption and disables the `key` option.                                                   |
 | `--no-compress`    |         | Disables file compression.                                                                                |
 | `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |                                |
-| `-f`, `--file`       | file    | Specifies the export filename. Do not include a file extension.                                           |
+| `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
 | `-h`, `--help`       |         | Displays help for the `strapi export` command.                                                            |
 
 <!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
