@@ -124,7 +124,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 ```bash
 #examples of strapi export:
 
-strapi export -f myData #exports your data with the default options and the filename myData.
+strapi export -f myData #exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
 strapi export --no-encrypt #exports your data without encryption. 
 ```
 
