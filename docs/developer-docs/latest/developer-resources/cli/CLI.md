@@ -113,19 +113,17 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 |------------------|---------|----------------------------------------------------------------------------|
 | `--no-encrypt`     |         | Disables file encryption and disables the `key` option.                                                   |
 | `--no-compress`    |         | Disables file compression.                                                                                |
-| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br> The `--key` option can't be combined with `--no-encrypt`. |                                |
+| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
 | `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
 | `-h`, `--help`       |         | Displays help for the `strapi export` command.                                                            |
-
-<!--| --exclude        | string  | Comma-separated list of data to exclude (files [localMediaFiles, providerMediaFiles], content [entities, links], schema, configuration). |         |  example: strapi export --exclude XXXXXX #exports your data excluding XXXXX.-->
 
 **Examples**
 
 ```bash
-#examples of strapi export:
+# examples of strapi export:
 
-strapi export -f myData #exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
-strapi export --no-encrypt #exports your data without encryption. 
+strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
+strapi export --no-encrypt # exports your data without encryption. 
 ```
 
 ## strapi import <BetaBadge />
@@ -142,9 +140,9 @@ Imports data into your project. The imported data must originate from another St
 
 ```bash
 
-#example of strapi import:
+# example of strapi import:
 
-#import your data with the default parameters and pass an encryption key: 
+# import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
 
 ```
