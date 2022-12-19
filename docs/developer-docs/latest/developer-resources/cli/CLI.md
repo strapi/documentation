@@ -136,7 +136,7 @@ Imports data into your project. The imported data must originate from another St
 |--------------------|--------|---------------------------------------------------------------------------|
 | `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
 | `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |        | Display the `strapi export` help commands.                                |
+| `-h`, `--help`         |        | Display the `strapi import` help commands.                                |
 
 **Examples**
 
