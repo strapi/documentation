@@ -19,7 +19,7 @@ You'll be able to visualize all your end-points directly from the SWAGGER UI.
 
 ## Installation
 
-To install the plugind run following command in your terminal:
+To install the plugin run following command in your terminal:
 
 <Tabs groupId="yarn-npm">
 
