@@ -125,8 +125,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 #examples of strapi export:
 
 strapi export -f myData #exports your data with the default options and the filename myData.
-strapi export --no-encrypt #exports your data without encryption.
-strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
+strapi export --no-encrypt #exports your data without encryption. 
 ```
 
 ## strapi import <BetaBadge />
