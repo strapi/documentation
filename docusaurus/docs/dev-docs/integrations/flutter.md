@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Flutter](https://flutter.dev/) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Flutter](https://flutter.dev/) remains the same except that you do not fetch the same content.
 
 ## Create a Flutter application
 
@@ -47,7 +47,7 @@ dependencies:
 flutter pub get
 ```
 
-## GET Request your collection type
+## GET Request to your collection type
 
 Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
