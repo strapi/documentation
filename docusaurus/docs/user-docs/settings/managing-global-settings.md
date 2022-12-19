@@ -11,9 +11,9 @@ Global settings for plugins and features are managed from ![Settings icon](/img/
 The default Strapi logo, displayed in the main navigation of a Strapi application, can be modified through the *Settings > Overview* sub-section of the admin panel.
 
 :::note
-The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#logos)). However, the logo uploaded via the admin panel supersedes any logo set through the configuration files.
+The logo displayed in the admin panel can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/dev-docs/development/admin-customization/)). However, the logo uploaded via the admin panel supersedes any logo set through the configuration files.
 <br/>
-Note also that modifying the configuration files (see [Developer Documentation](/developer-docs/latest/development/admin-customization.md#configuration-options)) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
+Note also that modifying the configuration files (see [Developer Documentation](/dev-docs/development/admin-customization#configuration-options)) also allows changing the logo displayed in the login page of the application, which is not yet possible via the *Settings* section of the admin panel.
 :::
 
 ![Custom logo settings](/img/assets/settings/settings_custom-logo.png)
@@ -79,7 +79,7 @@ To add a new locale:
 
 ## Configuring the Media Library
 
-The [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+The [Media Library](/user-docs/media-library/introduction-to-media-library/) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
 
 ![Media Library settings](/img/assets/settings/settings_media-library.png)
 
@@ -99,11 +99,11 @@ To configure the Media Library settings:
 ## Managing API tokens
 
 :::prerequisites
-* Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#plugins-and-settings)).
+* Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
 * The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
 :::
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.md)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
+API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/dev-docs/configurations/api-tokens)). Administrators can manage API tokens through the *Global settings > API Tokens* sub-section of the settings interface.
 
 ![API tokens](/img/assets/settings/settings_api-token.png)
 
