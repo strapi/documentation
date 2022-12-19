@@ -14,9 +14,7 @@ The data export-import transfer system in under development. Not all use cases a
 Occasionally you need to move data out of or into a Strapi instance. The data export-import transfer system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data using providers. Common use cases include:
 
 - creating a data backup,
-- restoring data from a backup
-<!-- transferring data between environments such as staging and production,
- moving assets from one hosting solution to another, such as locally hosted to an S3 bucket. -->
+- restoring data from a backup.
 
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
@@ -62,7 +60,6 @@ npm strapi export  --file my-strapi-export
 
 </code-block>
 </code-group>
-
 
 ### Configure data encryption
 
@@ -142,32 +139,6 @@ npm strapi export --no-compress
 </code-block>
 </code-group>
 
-<!-- ### Declare the maximum file size
-
-The default maximum size of each internal backup `jsonl` file is 256MB. To customize the maximum `jsonl` file size, pass the `--max-size-jsonl` option with the `strapi export` command.
-
-#### Example: Set the maximum `jsonl` file size to 100MB
-<br/>
-<code-group>
-<code-block title="YARN">
-
-```bash
-yarn strapi export --max-size-jsonl 100
-```
-
-</code-block>
-
-<code-block title="NPM">
-
-```bash
-npm strapi export --max-size-jsonl 100
-```
-
-</code-block>
-</code-group> -->
-
-<!-- ### Exclude files -->
-
 ## Import data using the CLI tool
 
 :::warning
@@ -220,51 +191,3 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 </code-block>
 </code-group>
 
-<!-- ### Declare a conflict strategy
-
-Currently, the default and only conflict strategy is `restore`, which deletes all of the data in your local Strapi instance and then loads the data from the imported file. You do not need to declare the `restore` value.
-
-### Declare a version strategy
-
-The `--versionStrategy` option specifies how strictly the imported file Strapi version and the local instance Strapi version must match. The available values are:
-
-| value  | description                                                                                           |
-|--------|-------------------------------------------------------------------------------------------------------|
-| exact  | (Default) Strapi and plugin versions must match between source and destination                        |
-| major  | major version must match                                                                              |
-| minor  | minor and major version must match                                                                    |
-| patch  | patch, minor, and major version must match (for example, rejects 4.1.1 vs 4.1.1-beta)                 |
-| ignore | bypass version check                                                                                  |
-
-### Declare a schema strategy
-
-The `--schemaStrategy` option specifies how strictly the schemas must match between the source and destination. The available values are:
-
-| value  | description                                                                                           |
-|--------|-------------------------------------------------------------------------------------------------------|
-| exact  | (Default) Schemas (content-types) must exactly match between source and destination.                            |
-| strict | Allows differences between `private`, `required`, and `configurable` attributes. Schemas must exist and match in all other ways.                                                                            |
-
-#### Example: Customized command to import data
-
-The following code example imports the `export_20221213105643.tar.gz` file located in the instance root directory. It uses the `patch` version strategy and the `strict` schema strategy.
-
-<code-group>
-<code-block title="YARN">
-
-```bash
-yarn strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
-```
-
-</code-block>
-
-<code-block title="NPM">
-
-```bash
-npm strapi import -f export_20221213105643.tar.gz --versionStrategy patch --schemaStrategy strict
-```
-
-</code-block>
-</code-group>
-
-::: -->
