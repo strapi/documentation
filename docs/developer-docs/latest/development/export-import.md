@@ -29,15 +29,19 @@ The `strapi export` CLI command and all of the available options are listed in t
 The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file. The default export command exports:
 
 - the project configuration,
-- entities,
-- links,
-- assets,
+- entities: all of your content,
+- links: relations between your entities
+- assets: files stored in the uploads folder,
 - schemas,
 - `metadata.json` file.
 
+:::note
+Admin users and API tokens are not exported.
+:::
+
 ### Name the export file
 
-Exported data are contained in a `.tar` file that is automatically named using the format `export_time-date-stamp`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
+Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
 
 #### Example: Export data with a custom filename
 <br/>
@@ -62,11 +66,16 @@ npm strapi export  --file my-strapi-export
 
 ### Configure data encryption
 
-The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption. To use encryption you need to pass an encryption key using the `-k` or `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no minimum character count.
+The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption and adds the file extension `.enc`. To use encryption you need to pass an encryption key using the `-k` or `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no minimum character count.
+
+:::tip Encryption keys
+Strong encryption keys are encouraged to protect sensitive data in your project. [OpenSSL](https://www.openssl.org/) is a resource for generating encryption keys.
+:::
 
 To disable encryption, pass the `--no-encrypt` option with the `strapi export` command.
 
 #### Example: Export data without encryption
+
 <br/>
 <code-group>
 <code-block title="YARN">
@@ -87,6 +96,7 @@ npm strapi export --no-encrypt
 </code-group>
 
 #### Example: Export data with the encryption `--key` option
+
 <br/>
 <code-group>
 <code-block title="YARN">
@@ -108,7 +118,7 @@ npm strapi export --key my-encryption-key
 
 ### Disable data compression
 
-The default `strapi export` command compresses your project data using `gzip` compression.
+The default `strapi export` command compresses your project data using `gzip` compression and adds the `.gz` file extension.
 
 To disable compression, pass the `--no-compress` option with the `strapi export` command.
 
@@ -160,6 +170,10 @@ npm strapi export --max-size-jsonl 100
 
 ## Import data using the CLI tool
 
+:::warning
+`strapi import` will delete all of the existing data prior to importing the backup file. Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
+:::
+
 To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required.
  
 #### Example: Minimum command to import data from a file in the Strapi project root
@@ -168,7 +182,7 @@ To import data into a Strapi instance use the `strapi import` command in the pro
 <code-block title="YARN">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz
+yarn strapi import -f export_20221213105643.tar.gz.enc
 ```
 
 </code-block>
@@ -176,7 +190,7 @@ yarn strapi import -f export_20221213105643.tar.gz
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz
+npm strapi import -f export_20221213105643.tar.gz.enc
 ```
 
 </code-block>
@@ -192,7 +206,7 @@ If you are importing data from an encrypted file the encryption key can be passe
 <code-block title="YARN">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz --key my-encryption-key
+yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </code-block>
@@ -200,7 +214,7 @@ yarn strapi import -f export_20221213105643.tar.gz --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz --key my-encryption-key
+npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </code-block>
