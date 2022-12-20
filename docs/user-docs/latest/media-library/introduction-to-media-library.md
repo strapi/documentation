@@ -58,6 +58,6 @@ Just above the list of folders and assets, on the right side of the interface, t
 From there you can:
 
 - Use the **Entries per page** dropdown to define the number of assets displayed by default
-- Use the **Default sort order** dropdown the define the default order in which assets are displayed. This can be overriden when you [sort assets](#sorting-assets) in the Media Library.
+- Use the **Default sort order** dropdown to define the default order in which assets are displayed. This can be overriden when you [sort assets](#sorting-assets) in the Media Library.
 
 Both settings are used as the defaults in the Media Library and in the [Content Manager media upload modal](/user-docs/latest/content-manager/writing-content.md#filling-up-fields). The settings saved here are global across the entire Strapi project for all users.
