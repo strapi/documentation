@@ -1,5 +1,6 @@
 ---
 title: Organizing assets with folders
+displayed_sidebar: userDocsSidebar
 description: Instructions on how to use folders in the Media Library, including adding, editing, and deleting folders, and browsing their content.
 canonicalUrl: http://docs.strapi.io/user-docs/media-library/organizing-assets-with-folders.html
 ---
