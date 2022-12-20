@@ -12,8 +12,7 @@ This is a high-level guide for deploying a Strapi project on a virtual machine s
 
 - A Strapi project,
 - an account with the hosting platform,
-- a remote repository such as GitHub, GitLab or BitBucket,
-- 
+- a remote repository such as GitHub, GitLab or BitBucket. <!--not required?-->
 
 :::
 
@@ -35,7 +34,6 @@ test
 ::: tab DigitalOcean Droplet
 test
 :::
-
 
 
 ::::
@@ -317,13 +315,15 @@ module.exports = {
   ],
 };
 ```
+
 :::
 
 ::::
 
 You can also set your environment variables in a `.env` file in your project like so:
 
-```
+```bash
+
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=strapi_dev
