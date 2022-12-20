@@ -155,7 +155,7 @@ const sidebars = {
 
     {
       type: 'category',
-      label: '🔧 Developer Resources',
+      label: '💻 Developer Resources',
       collapsed: false,
       items: [
         'dev-docs/cli',
