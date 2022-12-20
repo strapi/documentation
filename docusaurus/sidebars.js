@@ -168,6 +168,7 @@ const sidebars = {
     },
     {
       type: 'category',
+      collapsed: false,
       label: 'Media Library',
       items: [
         {
