@@ -155,6 +155,15 @@ const sidebars = {
 
     {
       type: 'category',
+      label: '🔧 Developer Resources',
+      collapsed: false,
+      items: [
+        'dev-docs/cli',
+      ],
+    }, 
+
+    {
+      type: 'category',
       collapsed: false,
       label: '🔌 Plugins',
       link: {
