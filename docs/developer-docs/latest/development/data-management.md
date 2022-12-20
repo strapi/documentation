@@ -31,7 +31,7 @@ The `strapi export` command by default exports data as an encrypted and compress
 - links: relations between your entities,
 - assets: files stored in the uploads folder,
 - schemas,
-- `metadata.json` file.
+- the `metadata.json` file.
 
 :::caution
 Admin users and API tokens are not exported.
