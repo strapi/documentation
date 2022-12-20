@@ -27,7 +27,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 **Content conversion progress:**
 
 <details>
-<summary>Developer documentation ▮▮▯▯▯▯▯▯▯▯ ~20% complete</summary>
+<summary>Developer documentation ▮▮▯▯▯▯▯▯▯▯ ~25% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the Developer Docs:
 
@@ -182,43 +182,7 @@ The following list is a sitemap of all the current and upcoming content for the 
 </details>
 
 <details>
-<summary>User Guide ▮▮▮▮▮▯▯▯▯▯ ~50% complete</summary>
+<summary>User Guide ▮▮▮▮▮▮▮▮▮▮ 100% complete ✅</summary>
 
-The following list is a sitemap of all the current and upcoming content for the User Guide:
-
-- Pages that have been already updated have a ticked checkbox next to their name. Click on the page title to visit the page.
-- For pages that have not been updated yet, click on the "→ docs.strapi.io" link to visit the page on our current, complete website.
-
-  - [x] [Introduction](/user-docs/intro)
-  - [x] Content Manager 
-      - [x] [Introduction to the Content Manager](/user-docs/content-manager)
-      - [x] [Configuring the views of a content-type](/user-docs/content-manager/configuring-view-of-content-type)
-      - [x] [Writing content](/user-docs/content-manager/writing-content)
-      - [x] [Managing relational fields](/user-docs/content-manager/managing-relational-fields)
-      - [x] [Translating content](/user-docs/content-manager/translating-content)
-      - [x] [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content)
-  - [x] Content-type Builder
-      - [x] [Introduction to the Content-type Builder](/user-docs/content-type-builder)
-      - [x] [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)
-      - [x] [Managing content-types](/user-docs/content-type-builder/managing-content-types)
-      - [x] [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)
-  - [x] Media Library
-      - [x] [Introduction to the Media Library] (→ [docs.strapi.io](/user-docs/media-library/introduction-to-media-library))
-      - [x] [Adding assets](/user-docs/media-library/adding-assets))
-      - [x] [Managing individual assets](→ [docs.strapi.io](/user-docs/media-library/managing-assets))
-      - [x] [Organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders))
-  - [ ] Users, Roles & Permissions
-      - [ ] Introduction to users, roles & permissions (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html#))
-      - [ ] Configuring administrator roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html))
-      - [ ] Managing administrator accounts (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-administrators.html))
-      - [ ] Configuring end-user roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html))
-      - [ ] Managing end-user accounts) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-end-users.html))
-  - [ ] Plugins
-    - [ ] Introduction to plugins (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/introduction-to-plugins.html))
-    - [ ] Using the Marketplace (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html))
-    - [ ] List of Strapi plugins (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/strapi-plugins.html#))
-  - [ ] General settings
-    - [ ] Managing global settings (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/settings/managing-global-settings.html#))
-    - [ ] Configuring Users & Permissions plugin settings (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html#))
-
+All pages have been converted. Please visit the [User Guide introduction](/user-docs/intro) and browse from there.
 </details>
