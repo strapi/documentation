@@ -145,7 +145,7 @@ npm strapi export --no-compress
 `strapi import` will delete all of the existing data prior to importing the backup file. Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 :::
 
-To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required.
+To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you will be prompted for the encryption key before the import starts.
  
 #### Example: Minimum command to import data from a file in the Strapi project root
 <br/>
@@ -169,7 +169,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc
 
 ### Provide an encryption key
 
-If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `-k` or `--key` option. If you do not pass the encryption key with the `strapi import` command you will be prompted for the encryption key before the import starts.
+If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `-k` or `--key` option.
 
 #### Example: Pass the encryption key with the `strapi import` command
 <br/>
