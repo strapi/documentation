@@ -8,10 +8,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 # Data Management System <BetaBadge />
 
 :::callout 🚧 Feature under development
-The data management system in under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
+The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](feedback.strapi.io).
 :::
 
-Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data using providers. Common use cases include:
+Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data. Common use cases include:
 
 - creating a data backup,
 - restoring data from a backup.
