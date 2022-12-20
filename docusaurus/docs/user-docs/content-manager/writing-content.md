@@ -3,6 +3,7 @@ title: Writing Content
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
 sidebar_position: 3
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
+displayed_sidebar: userDocsSidebar
 ---
 
 # Writing content
@@ -96,16 +97,3 @@ Dynamic zones' components can also be reordered or deleted directly in the edit 
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
-
-<!--
-## Collaborating on content writing
-
-Contents created with Strapi may be edited by several administrators. Since these contents cannot be versioned, and to prevent any content loss, Strapi automatically informs users of concurrent edition situations.
-
-When arriving on the edit view of a content-type, if another user is already editing it, you will see the following window pop up on your screen.
-
-From there, you can choose between 2 options:
-
-- Activate the read-only mode, meaning that you access the edit view of the content-type and see its content, but you cannot do any action whatsoever, until the other user has finished and saved the current editing.
-- Take over the editing of the page, meaning that you can edit the content-type. However, the other user will see a notification pop up to inform them of your choice, and that their modifications cannot be saved.
--->
