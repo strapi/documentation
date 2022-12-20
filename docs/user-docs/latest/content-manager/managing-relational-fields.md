@@ -6,11 +6,9 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/managing-r
 
 # Managing relational fields
 
-Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields".
+Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields". 
 
-Relational fields are before all else regular fields, meaning that their content is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)).
-
-However, relational fields can point to one or several entries of the other content-type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
+The content of relational fields is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
 
 ::: details Example
 In my Strapi admin panel I have created 2 collection types:
@@ -23,14 +21,12 @@ I want to assign a category to each of my restaurants, therefore I have establis
 In the Content Manager, from the edit view of my Restaurant entries, I can manage the Category relational field, and choose which entry of Category is relevant for my restaurant.
 :::
 
-![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields.png)
+![Relations box in the edit view](../assets/content-manager/edit-view_relational-fields2.png)
 
-The relational fields of a content-type are managed from the Relations box, located in the right side of the edit view interface. It lists the names of the relational fields. Under each relational field name is displayed a drop-down list containing all available entry titles.
-
-The Relations box allows to choose which entries the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
+The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
 ::: tip
-Instead of choosing an entry by scrolling the list, you can click any drop-down list from the Relations box and type to search a specific entry.
+Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 :::
 
 ::: note
@@ -45,33 +41,39 @@ If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
-<img src="../assets/content-manager/RF_one-choice.png" alt="One-choice relational fields" width="30%">
+<img src="../assets/content-manager/RF_one-choice2.png" alt="One-choice relational fields" width="30%">
 
 To select the only relevant relational field's entry:
 
-1. In the Relations box of your content-type's edit view, click on the drop-down list of the relational field.
+1. In the content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 
 ::: tip
-Click on **Details** to be redirected to the edit view of the content-type the relational field originally belongs to. Make sure you save your page first, to avoid losing your last modifications.
+You can click on the name of the selected entry to be redirected to the edit view of the relational field's content type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
 To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](../assets/icons/clear.svg).
 
-## Managing multiple-choices relational fields
+## Managing multiple-choice relational fields
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
-<img src="../assets/content-manager/RF_multiple-choices.png" alt="Multiple choices relational fields" width="30%">
+<img src="../assets/content-manager/RF_multiple-choices2.png" alt="Multiple choices relational fields" width="30%">
 
 To select the relevant relational field's entries:
 
-1. In the Relations box of your content-type's edit view, click on the drop-down list of the relational field.
+1. In the content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 3. Repeat step 2 until all relevant entries have been chosen.
 
 ::: tip
-All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the content-type the relational field originally belongs to.
+All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the remove button ![Minus icon](../assets/icons/minus.svg) in the selected entries list.
+To remove an entry, click on the cross button ![Cross icon](../assets/icons/cross.svg) in the selected entries list.
+
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](../assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it. This is a beta feature for now. <BetaBadge />.
+
+:::tip Using the keyboard to reorder <BetaBadge />
+You can also use the keyboard to reorder relations: focus the relation using Tab, press Space on the drag & drop button Drag icon and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::

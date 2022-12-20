@@ -10,7 +10,7 @@ sidebarDepth: 0
 Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order. If there is no specific migration guide between your current version and the latest release follow the [Update Strapi guide](update-version.md).
 
 :::caution
- [Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
+[Plugins extension](/developer-docs/latest/plugins/users-permissions.md) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
 ## v4 migration guides
@@ -20,12 +20,10 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
 - [Migration guide from 4.1.8+ to 4.1.10](migration-guides/v4/migration-guide-4.1.8-to-4.1.10.md)
 - [Migration guide from 4.2.x to 4.3.x](migration-guides/v4/migration-guide-4.2.x-to-4.3.x.md)
 - [Migration guide from 4.3.6 to 4.3.8](migration-guides/v4/migration-guide-4.3.6-to-4.3.8.md)
+- [Migration guide from 4.4.3 to 4.4.5](migration-guides/v4/migration-guide-4.4.3-to-4.4.5.md)
+- [Migration guide from 4.4.5 to 4.5.1](migration-guides/v4/migration-guide-4.4.5-to-4.5.1.md)
 
 ## v3 to v4 migration guides
-
-::: callout 🚧  Migration guides
-This section is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
-:::
 
 Migrating from v3.6.x to v4.0.x revolves around 3 topics:
 

@@ -7,8 +7,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/guides/unit-testing.h
 
 # Unit testing
 
-!!!include(developer-docs/latest/guides/snippets/guide-not-updated.md)!!!
-
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
 ::: tip
