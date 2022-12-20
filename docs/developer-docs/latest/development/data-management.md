@@ -33,7 +33,7 @@ The `strapi export` command by default exports data as an encrypted and compress
 - schemas,
 - `metadata.json` file.
 
-:::note
+:::caution
 Admin users and API tokens are not exported.
 :::
 
