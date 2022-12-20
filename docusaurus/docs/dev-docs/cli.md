@@ -127,6 +127,27 @@ strapi export --no-encrypt #exports your data without encryption.
 strapi export --max-size-jsonl 100 #splits the jsonl files at 100 MB. 
 ```
 
+## strapi import <BetaBadge />
+
+Imports data into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+
+| Option             | Type   | Description                                                                   |
+|--------------------|--------|-------------------------------------------------------------------------------|
+| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
+| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
+| `-h`, `--help`         |        | Display the `strapi import` help commands.                                |
+
+**Examples**
+
+```bash
+
+# example of strapi import:
+
+# import your data with the default parameters and pass an encryption key: 
+strapi import -f <your-filepath-and-filename> --key my-key
+
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
