@@ -182,7 +182,7 @@ The following list is a sitemap of all the current and upcoming content for the 
 </details>
 
 <details>
-<summary>User Guide ▮▮▯▯▯▯▯▯▯▯ ~15% complete</summary>
+<summary>User Guide ▮▮▮▮▮▯▯▯▯▯ ~50% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the User Guide:
 
@@ -202,11 +202,11 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)
       - [x] [Managing content-types](/user-docs/content-type-builder/managing-content-types)
       - [x] [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)
-  - [ ] Media Library
-      - [ ] Introduction to the Media Library (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/introduction-to-media-library.html))
-      - [ ] Adding assets (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/adding-assets.html))
-      - [ ] Managing individual assets (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/managing-assets.html))
-      - [ ] Organizing assets with folders (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/organizing-assets-with-folders.html#))
+  - [x] Media Library
+      - [x] [Introduction to the Media Library] (→ [docs.strapi.io](/user-docs/media-library/introduction-to-media-library))
+      - [x] [Adding assets](/user-docs/media-library/adding-assets))
+      - [x] [Managing individual assets](→ [docs.strapi.io](/user-docs/media-library/managing-assets))
+      - [x] [Organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders))
   - [ ] Users, Roles & Permissions
       - [ ] Introduction to users, roles & permissions (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html#))
       - [ ] Configuring administrator roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html))
