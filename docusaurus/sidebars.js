@@ -152,7 +152,37 @@ const sidebars = {
         'dev-docs/typescript'
       ]
     },
+
+    {
+      type: 'category',
+      collapsed: false,
+      label: '🔌 Plugins',
+      link: {
+            /**
+            * Use the 2 lines below to make sure that
+            * "Installation" in the TOC is a clickable link
+            * pointing to a page (i.e., type: 'doc') whose link target
+            * is defined as the 'id' property.
+            */
+            type: 'doc',
+            id: 'dev-docs/plugins/plugins-intro',
+          },
+      items: [
+            'dev-docs/plugins/documentation',
+            'dev-docs/plugins/email',
+            'dev-docs/plugins/graphql',
+            'dev-docs/plugins/i18n',
+            'dev-docs/plugins/sentry',
+            'dev-docs/plugins/upload',
+            'dev-docs/plugins/users-permissions',
+            
+            
+            
+          ]
+    },
   ],
+
+
   userDocsSidebar: [
     'user-docs/intro',
     {

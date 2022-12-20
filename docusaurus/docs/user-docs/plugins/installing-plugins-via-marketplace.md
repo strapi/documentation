@@ -1,4 +1,6 @@
 ---
+title: Installing Plugins via the Marketplace
+displayed_sidebar: userDocsSidebar
 sidebar_position: 2
 ---
 
