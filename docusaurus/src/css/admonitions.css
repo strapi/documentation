@@ -1,0 +1,87 @@
+.admonition__custom-title {
+  text-transform: uppercase;
+  font: var(--ifm-heading-font-weight) var(--ifm-h5-font-size) / var(--ifm-heading-line-height) var(--ifm-heading-font-family);
+}
+.admonition--prerequisites .checkbox-icon {
+  position: relative;
+  top: -.15em; /* visual centering fix */
+  vertical-align: middle;
+}
+.admonition--prerequisites,
+.admonition--callout,
+.admonition--strapi {
+  margin-bottom: 1em;
+}
+
+.admonition--prerequisites *:last-child,
+.admonition--callout *:last-child,
+.admonition--strapi *:last-child {
+  margin-bottom: 0 !important
+}
+
+/**
+ * Custom admonitions - dark mode
+ */
+[data-theme='dark'] .admonition--callout,
+[data-theme='dark'] .admonition--prerequisites {
+  color: #E3E3E3;
+  background-color: var(--strapi-neutral-800);
+  border-left-color: var(--strapi-neutral-300);
+ }
+[data-theme='dark'] .admonition--callout a,
+[data-theme='dark'] .admonition--prerequisites a {
+  color: #E3E3E3;
+  text-decoration-color: var(--strapi-neutral-100);
+}
+[data-theme='dark'] .admonition--callout code,
+[data-theme='dark'] .admonition--prerequisites code {
+  background-color: #212134;
+}
+[data-theme='dark'] .admonition--prerequisites svg {
+  fill: #e3e3e3;
+}
+
+[data-theme='dark'] .admonition--strapi {
+  color: var(--strapi-primary-100);
+  background-color: #252264; /* not included in Figma palette */
+  border-left-color: var(--strapi-primary-600);
+}
+[data-theme='dark'] .admonition--strapi a {
+  color: var(--strapi-primary-100);
+  text-decoration-color: var(--strapi-primary-500);
+}
+[data-theme='dark'] .admonition--strapi code {
+  background-color: #181644; /* not included in the Figma palette */
+}
+
+/**
+ * Custom admonitions - light mode
+ */
+
+[data-theme='light'] .admonition--strapi {
+  color: #252264;
+  background-color: var(--strapi-primary-100);
+  border-left-color: var(--strapi-primary-600);
+}
+[data-theme='light'] .admonition--strapi a {
+  color: #252264;
+  text-decoration-color: var(--strapi-primary-600);
+}
+[data-theme='light'] .admonition--strapi code {
+  background-color: var(--strapi-primary-200);
+}
+[data-theme='light'] .admonition--callout,
+[data-theme='light'] .admonition--prerequisites {
+  color: var(--strapi-neutral-800);
+  background-color: var(--strapi-neutral-100); /* neutral--100 */
+  border-left-color: #666687; /* neutral--600 */
+}
+[data-theme='light'] .admonition--callout code,
+[data-theme='light'] .admonition--prerequisites code {
+  background-color: #dcdce4;
+}
+[data-theme='light'] .admonition--callout a,
+[data-theme='light'] .admonition--prerequisites a {
+  color: var(--strapi-neutral-800);
+  text-decoration-color: var(--strapi-neutral-800);
+}

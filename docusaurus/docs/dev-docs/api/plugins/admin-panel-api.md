@@ -619,32 +619,39 @@ import cellFormatter from './components/cellFormatter';
 
 export default {
   bootstrap(app) {
-	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
-			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
+    app.registerHook(
+      'Admin/CM/pages/ListView/inject-column-in-table',
+      ({ displayedHeaders, layout }) => {
+        const isFieldLocalized = get(
+          layout,
+          'contentType.pluginOptions.i18n.localized',
+          false
+        );
 
-			if (!isFieldLocalized) {
-			  return { displayedHeaders, layout };
-			}
+        if (!isFieldLocalized) {
+          return { displayedHeaders, layout };
+        }
 
-			return {
-        layout,
-        displayedHeaders: [
-          ...displayedHeaders,
-          {
-            key: '__locale_key__', // Needed for the table
-            fieldSchema: { type: 'string' }, // Schema of the attribute
-            metadatas: {
-              label: 'Content available in', // Label of the header,
-              sortable: true|false // Define if the column is sortable
-            }, // Metadatas for the label
-            // Name of the key in the data we will display
-            name: 'locales',
-            // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
-            cellFormatter,
-          },
-			  ]
-      };
-    });
+        return {
+          layout,
+          displayedHeaders: [
+            ...displayedHeaders,
+            {
+              key: '__locale_key__', // Needed for the table
+              fieldSchema: { type: 'string' }, // Schema of the attribute
+              metadatas: {
+                label: 'Content available in', // Label of the header,
+                sortable: true | false, // Define if the column is sortable
+              }, // Metadatas for the label
+              // Name of the key in the data we will display
+              name: 'locales',
+              // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+              cellFormatter,
+            },
+          ],
+        };
+      }
+    );
   },
 }
 ```

@@ -71,5 +71,5 @@ Strapi also offers the following optional configuration options for specific fea
 - [plugins](/dev-docs/configurations/plugins)
 - the [environment and its variables](/dev-docs/configurations/environment)
 - [public assets](/dev-docs/configurations/public-assets)
-- [Single Sign-On](/dev-docs/configurations/sso) <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
-- [Role-Based Access Control](/dev-docs/configurations/rbac) <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
+- [Single Sign-On](/dev-docs/configurations/sso) <GoldBadge />
+- [Role-Based Access Control](/dev-docs/configurations/rbac) <GoldBadge />

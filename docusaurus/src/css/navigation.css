@@ -1,0 +1,14 @@
+.theme-doc-sidebar-item-category-level-1 .menu__link.menu__link.menu__link--sublist {
+  font-weight: var(--aa-font-weight-bold);
+}
+
+.menu .theme-doc-sidebar-item-category-level-2 .menu__link.menu__link.menu__link--sublist,
+.menu .theme-doc-sidebar-item-link,
+.menu__link {
+  font-weight: var(--aa-font-weight-medium);
+}
+
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-2:last-child,
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2:last-child {
+  padding-bottom: 1.5em;
+}

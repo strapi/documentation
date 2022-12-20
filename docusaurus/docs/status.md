@@ -27,7 +27,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 **Content conversion progress:**
 
 <details>
-<summary>Developer documentation ▮▯▯▯▯▯▯▯▯▯ ~10% complete</summary>
+<summary>Developer documentation ▮▮▯▯▯▯▯▯▯▯ ~25% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the Developer Docs:
 
@@ -44,22 +44,22 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [CLI](/dev-docs/installation/cli)
       - [x] [Docker](/dev-docs/installation/docker)
     - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
-    - [ ] Required configurations
-        - [ ] Database configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html))
-        - [ ] Server configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/server.html))
-        - [ ] Admin panel (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html))
-        - [ ] Middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html))
+    - [x] Required configurations
+        - [x] [Database configuration](/dev-docs/configurations/database)
+        - [x] [Server configuration](/dev-docs/configurations/server)
+        - [x] [Admin panel](/dev-docs/configurations/admin-panel)
+        - [x] [Middlewares](/dev-docs/configurations/middlewares)
     - [ ] Optional configurations
-      - [ ] API tokens (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html))
-      - [ ] Functions (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html))
-      - [ ] Cron jobs (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html))
-      - [ ] API (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html))
-      - [ ] Plugins (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html))
-      - [ ] [Environment](/dev-docs/setup-deployment-guides/configurations/optional/environment) (→ [docs.strapi.io](#))
-      - [ ] Public Assets (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html))
-      - [ ] Single Sign On (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html))
-      - [ ] Role-Based Access Control (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html#))
-      - [ ] TypeScript (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.html))
+      - [x] [API tokens](/dev-docs/configurations/api-tokens)
+      - [x] [Functions](/dev-docs/configurations/functions)
+      - [x] [Cron jobs](/dev-docs/configurations/cron)
+      - [x] [API](/dev-docs/configurations/api)
+      - [x] [Plugins](/dev-docs/configurations/plugins)
+      - [x] [Environment](/dev-docs/configurations/environment)
+      - [x] [Public Assets](/dev-docs/configurations/public-assets)
+      - [x] [Single Sign On](/dev-docs/configurations/sso)
+      - [x] [Role-Based Access Control](/dev-docs/configurations/rbac)
+      - [x] [TypeScript](/dev-docs/configurations/typescript)
     - [ ] Deployment
       - [x] [Strapi Cloud](/dev-docs/deployment/strapi-cloud)
       - [ ] Hosting Provider Guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides))
@@ -74,15 +74,16 @@ The following list is a sitemap of all the current and upcoming content for the 
         - [ ] HAProxy (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html))
         - [ ] Nginx (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html))
   - [ ] 🔧 Development
-    - [ ] Back-end customization
+    - [x] Back-end customization
       - [x] [Introduction](/dev-docs/backend-customization)
-      - [ ] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/routes.html))
+      - [x] [Routes](/dev-docs/backend-customization/routes)
+      - [x] [Policies](/dev-docs/backend-customization/policies)
       - [x] [Middlewares](/dev-docs/backend-customization/middlewares)
       - [x] [Controllers](/dev-docs/backend-customization/controllers)
-      - [ ] Requests & Responses (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#requests))
-      - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/services.html))
-      - [ ] Models (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html))
-      - [ ] Webhooks (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/backend-customization/webhooks.html))
+      - [x] [Requests & Responses](/dev-docs/backend-customization/requests-responses)
+      - [x] [Services](/dev-docs/backend-customization/services)
+      - [x] [Models](/dev-docs/backend-customization/models)
+      - [x] [Webhooks](/dev-docs/backend-customization/webhooks)
     - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
     - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
     - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
@@ -136,14 +137,14 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] Go (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/go.html))
       - [ ] PHP (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html))
       - [ ] Laravel (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/laravel.html))
-  - [ ] 🧩 Strapi plugins (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/plugins-intro.html))
-    - [ ] GraphQL (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/graphql.html))
-    - [ ] Internationalization (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/i18n.html))
-    - [ ] Users & Permissions (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html))
-    - [ ] Email (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/email.html#))
-    - [ ] Upload (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/upload.html))
-    - [ ] Sentry (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/sentry.html))
-    - [ ] API Documentation (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/plugins/documentation.html))
+  - [x] 🧩 [Strapi plugins](/dev-docs/plugins/plugins-intro)
+    - [x] [GraphQL](/dev-docs/plugins/graphql)
+    - [x] [Internationalization](dev-docs/plugins/i18n)
+    - [x] [Users & Permissions](dev-docs/plugins/users-permissions)
+    - [x] [Email](dev-docs/plugins/email)
+    - [x] [Upload](dev-docs/plugins/upload)
+    - [x] [Sentry](dev-docs/plugins/sentry)
+    - [x] [API Documentation](dev-docs/plugins/documentation)
   - [ ] ♻️ Update & Migration
     - [ ] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
     - [ ] Migration
@@ -181,43 +182,7 @@ The following list is a sitemap of all the current and upcoming content for the 
 </details>
 
 <details>
-<summary>User Guide ▮▮▯▯▯▯▯▯▯▯ ~15% complete</summary>
+<summary>User Guide ▮▮▮▮▮▮▮▮▮▮ 100% complete ✅</summary>
 
-The following list is a sitemap of all the current and upcoming content for the User Guide:
-
-- Pages that have been already updated have a ticked checkbox next to their name. Click on the page title to visit the page.
-- For pages that have not been updated yet, click on the "→ docs.strapi.io" link to visit the page on our current, complete website.
-
-  - [x] [Introduction](/user-docs/intro)
-  - [ ] Content Manager 
-      - [ ] [Introduction to the Content Manager](/user-docs/content-manager/introduction-to-content-manager) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/introduction-to-content-manager.html#))
-      - [ ] [Configuring the views of a content-type](/user-docs/content-manager/configuring-view-of-content-type) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/configuring-view-of-content-type.html))
-      - [ ] [Writing content](/user-docs/content-manager/writing-content), (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html#))
-      - [ ] [Managing relational fields](/user-docs/content-manager/managing-relational-fields) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/managing-relational-fields.html))
-      - [ ] [Translating content](/user-docs/content-manager/translating-content), (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/translating-content.html))
-      - [ ] [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html))
-  - [x] Content-type Builder
-      - [x] [Introduction to the Content-type Builder](/user-docs/content-type-builder)
-      - [x] [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)
-      - [x] [Managing content-types](/user-docs/content-type-builder/managing-content-types)
-      - [x] [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)
-  - [ ] Media Library
-      - [ ] Introduction to the Media Library (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/introduction-to-media-library.html))
-      - [ ] Adding assets (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/adding-assets.html))
-      - [ ] Managing individual assets (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/managing-assets.html))
-      - [ ] Organizing assets with folders (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/media-library/organizing-assets-with-folders.html#))
-  - [ ] Users, Roles & Permissions
-      - [ ] Introduction to users, roles & permissions](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html#))
-      - [ ] Configuring administrator roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html))
-      - [ ] Managing administrator accounts (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-administrators.html))
-      - [ ] Configuring end-user roles (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html))
-      - [ ] Managing end-user accounts) (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/users-roles-permissions/managing-end-users.html))
-  - [ ] Plugins
-    - [ ] Introduction to plugins (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/introduction-to-plugins.html))
-    - [ ] Using the Marketplace (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html))
-    - [ ] List of Strapi plugins (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/plugins/strapi-plugins.html#))
-  - [ ] General settings
-    - [ ] Managing global settings (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/settings/managing-global-settings.html#))
-    - [ ] Configuring Users & Permissions plugin settings (→ [docs.strapi.io](https://docs.strapi.io/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html#))
-
+All pages have been converted. Please visit the [User Guide introduction](/user-docs/intro) and browse from there.
 </details>

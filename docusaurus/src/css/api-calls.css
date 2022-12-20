@@ -1,0 +1,200 @@
+.api-call {
+  padding: 0;
+  border-radius: 12px;
+}
+@media (min-width: 1536px) {
+  .api-call:not(.api-call--no-side-by-side) {
+    display: flex;
+    margin: 0 -12rem 2rem 0;
+    align-items: stretch;
+  }
+}
+
+.api-call {
+  margin-bottom: 2rem;
+}
+
+.request {
+  background-color: var(--strapi-neutral-700);
+  padding: 0 1rem 1rem;
+  border-radius: 12px;
+  font-size: 100%;
+  color: var(--strapi-neutral-100);
+}
+[data-theme='light'] .request {
+  background-color: var(--strapi-neutral-100);
+}
+[data-theme='light'] .request p code {
+  background-color: var(--strapi-primary-200);
+  color: var(--strapi-neutral-800);
+}
+.request-title {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: 0;
+  border-radius: 12px 12px 0 0;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  background-color: var(--strapi-neutral-600);
+  color: var(--strapi-neutral-100);
+  font-size: 90%;
+}
+.request-title+p {
+  padding-top: 1rem;
+}
+.request-content {
+  padding-top: 1rem
+}
+.request-content p,
+.request-content ul,
+.request-content ol {
+  color: #2c3e50;
+  color: rgba(241,251,255,0.8);
+}
+.request-content p {
+  padding-left: 1rem;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .request-content p code {
+    word-break: break-word;
+  }
+}
+.request-content ul,
+.request-content ol {
+  padding-left: 3rem;
+}
+.request [class^="language-"] {
+  font-size: 100%;
+}
+.request [class^="language-"]::before {
+  color: #eaeaef;
+}
+.request .line-number {
+  color: var(--strapi-neutral-500);
+}
+.request pre {
+  padding: 1rem 0 0 1rem;
+}
+
+.request code,
+.response code {
+  font-size: .8rem
+}
+
+.request code .token.punctuation {
+  color: #d3d3d3;
+}
+.request code .token.string,
+.request code .token.attr-name,
+.request code .token.function {
+  color: #b6ffb5;
+}
+.request code .token.number,
+.request code .token.keyword {
+  color: #fded9b;
+}
+.request code .token.comment {
+  color: #d9d9d9;
+}
+.response {
+  background-color: var(--strapi-neutral-900);
+  margin-top: 2rem;
+  padding: 0 1rem 1rem;
+  border-radius: 12px;
+  font-size: 100%;
+  color: var(--strapi-neutral-200);
+}
+
+@media (max-width: 1535px) {
+ .response {
+   margin-bottom: 2rem;
+ }
+}
+.response + p {
+ margin-top: 2em;
+}
+
+.response .extra-class::before {
+  color: var(--strapi-neutral-200);
+}
+.response-title {
+  background-color: var(--strapi-neutral-800);
+  color: var(--strapi-neutral-0);
+  border-radius: 12px 12px 0 0;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0;
+  font-weight: 700;
+  font-size: 90%;
+  margin-bottom: 0.5rem;
+}
+.response [class^="language-"] {
+  font-size: 100%;
+}
+[data-theme="light"] .response {
+  background-color: var(--strapi-primary-100);
+}
+[data-theme="light"] .response-title {
+  background-color: var(--strapi-neutral-800);
+}
+.response [class^="language-"]::before {
+  color: var(--strapi-neutral-200);
+}
+.response pre {
+  padding: 1rem 0 0 1rem;
+}
+.response code .token {
+  color: var(--strapi-neutral-200);
+}
+.response code .token.punctuation,
+.response code .token.operator,
+.response code .token.property {
+  color: var(--strapi-neutral-200);
+}
+.response code .token.string {
+  color: var(--strapi-success-500);
+}
+.response code .token.number {
+  color: var(--strapi-danger-500);
+}
+.response code .token.comment {
+  color: #8585b2;
+}
+.request.response .extra-class {
+  font-size: 90%;
+  border-radius: 6px 0 6px 0;
+}
+.request.response .extra-class pre {
+  word-break: break-word;
+  margin-bottom: 0;
+}
+@media (min-width: 1536px) {
+  .api-call:not(.api-call--no-side-by-side) .request + .response {
+    margin-top: 0;
+  }
+  .api-call:not(.api-call--no-side-by-side) > .request,
+  .api-call:not(.api-call--no-side-by-side) > .response {
+    flex: 0 0 42%;
+    max-width: 42%;
+  }
+  .api-call:not(.api-call--no-side-by-side) .request {
+    border-radius: 12px 0 0 12px;
+  }
+  .api-call:not(.api-call--no-side-by-side) .request-title {
+    border-radius: 12px 0 0 0;
+  }
+  .api-call:not(.api-call--no-side-by-side) .response {
+    border-radius: 0 12px 12px 0;
+  }
+  .api-call:not(.api-call--no-side-by-side) .response-title {
+    border-radius: 0 12px 0 0;
+  }
+  .api-call:not(.api-call--no-side-by-side) .response-content {
+    margin-top: 4rem;
+  }
+}
+
+.api-call .request + .response {
+  margin-top: 0.5rem;
+}

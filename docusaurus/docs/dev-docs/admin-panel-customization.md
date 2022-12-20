@@ -453,8 +453,7 @@ To replace the favicon, use the following procedure:
 3. Replace the existing **favicon.ico** file at the Strapi application root with a custom `favicon.ico` file.
 4. Update `./src/admin/app.js` with the following:
 
-    ```js
-    // path: src/admin/app.js
+    ```js title="./src/admin/app.js"
 
     import favicon from './extensions/favicon.png';
 
@@ -552,17 +551,14 @@ Make sure to rename the default `webpack.config.example.js` file into `webpack.c
 In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
 
 ```js
-module.exports = {
-  // WARNING: the admin panel now uses webpack 5 to bundle the application.
-  webpack: (config, webpack) => {
-    // Note: we provide webpack above so you should not `require` it
-
-    // Perform customizations to webpack config
-    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-
-    // Important: return the modified config
-    return config;
-  },
+module.exports = (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+  
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+  
+  // Important: return the modified config
+  return config;
 };
 ```
 
