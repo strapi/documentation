@@ -2,8 +2,8 @@
 title: Writing Content
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
 sidebar_position: 3
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
 displayed_sidebar: userDocsSidebar
+canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
 ---
 
 # Writing content
