@@ -111,11 +111,11 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option           | Type    | Description                                                                                               |
 |------------------|---------|----------------------------------------------------------------------------|
-| `--no-encrypt`     |         | Disables file encryption and disables the `key` option.                                                   |
-| `--no-compress`    |         | Disables file compression.                                                                                |
+| `--no-encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
+| `--no-compress`    |     -    | Disables file compression.                                                                                |
 | `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
 | `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
-| `-h`, `--help`       |         | Displays help for the `strapi export` command.                                                            |
+| `-h`, `--help`       |     -    | Displays help for the `strapi export` command.                                                            |
 
 **Examples**
 
@@ -134,7 +134,7 @@ strapi export --no-encrypt # exports your data without encryption.
 |--------------------|--------|---------------------------------------------------------------------------|
 | `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
 | `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |        | Display the `strapi import` help commands.                                |
+| `-h`, `--help`         |   -     | Display the `strapi import` help commands.                                |
 
 **Examples**
 
