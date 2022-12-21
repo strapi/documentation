@@ -275,7 +275,7 @@ Using `set` performs a full update, replacing all existing relations with the on
 | Syntax type | Syntax example                  |
 | ----------- | ------------------------------- |
 | shorthand   | `set: [2, 4]`                   |
-| longhand    | ```set: [ {id: 2}, {id: 4} ]``` |
+| longhand    | ```set: [{ id: 2 }, { id: 4 }]``` |
 
 As `set` replaces all existing relations, it should not be used in combination with other parameters. To perform a partial update, use [`connect`](#connect) and [`disconnect`](#disconnect).
 
