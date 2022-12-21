@@ -19,7 +19,7 @@ Syntax: `findOne(parameters) ⇒ Entry`
 | `select`   | String, or Array of strings                                                                                                                  | [Attributes](/developer-docs/latest/development/backend-customization/models.md#model-attributes) to return |
 | `where`    | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use                                                                                                                 |
 | `offset`   | Integer                                                                                                                                       | Number of entries to skip                                                                                                |
-| `orderBy`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
+| `sort`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
 | `populate` | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)      | Relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)
 
 ### Example
@@ -46,7 +46,7 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 | `where`    | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use                                                                                                                 |
 | `limit`     | Integer                       | Number of entries to return                 |
 | `offset`   | Integer                                                                                                                                       | Number of entries to skip                                                                                                |
-| `orderBy`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
+| `sort`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
 | `populate` | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)      | Relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)
 
 ### Example
@@ -74,7 +74,7 @@ Syntax: `findWithCount(parameters) => [Entry[], number]`
 | `where`    | [`WhereParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md)          | [Filters](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.md) to use                                                                                                                 |
 | `limit`     | Integer                       | Number of entries to return                 |
 | `offset`   | Integer                                                                                                                                       | Number of entries to skip                                                                                                |
-| `orderBy`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
+| `sort`  | [`OrderByParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) | [Order](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.md) definition |
 | `populate` | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)      | Relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.md)
 |
 
