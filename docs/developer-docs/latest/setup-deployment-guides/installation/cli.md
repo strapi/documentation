@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Installing from CLI
 
-Strapi CLI (Command Line Interface) installation scripts are the fastest and mosts recommended way to get Strapi running locally.
+Strapi CLI (Command Line Interface) installation scripts are the fastest and most recommended way to get Strapi running locally.
 
 ## Preparing the installation
 
