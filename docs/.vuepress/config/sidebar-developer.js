@@ -206,7 +206,6 @@ const developer = [
       ['/developer-docs/latest/development/custom-fields.html', 'Custom fields'],
       ['/developer-docs/latest/development/typescript.html', 'TypeScript'],
       ['/developer-docs/latest/development/providers.html', 'Providers'],
-      ['/developer-docs/latest/development/data-management.html', 'Data Management System'],
     ],
   },
   {
@@ -324,6 +323,7 @@ const developer = [
       ['/developer-docs/latest/developer-resources/error-handling.html', 'Error handling'],
       ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
       ['/developer-docs/latest/developer-resources/database-migrations.html', 'Database migrations'],
+      ['/developer-docs/latest/development/data-management.html', 'Data Management System'],
       {
         title: 'Integrations',
         path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
