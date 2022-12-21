@@ -323,7 +323,7 @@ const developer = [
       ['/developer-docs/latest/developer-resources/error-handling.html', 'Error handling'],
       ['/developer-docs/latest/developer-resources/unit-testing', 'Unit testing'],
       ['/developer-docs/latest/developer-resources/database-migrations.html', 'Database migrations'],
-      ['/developer-docs/latest/development/data-management.html', 'Data Management System'],
+      ['/developer-docs/latest/developer-resources/data-management.html', 'Data Management System'],
       {
         title: 'Integrations',
         path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
