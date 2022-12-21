@@ -214,7 +214,7 @@ Using `disconnect` in the body of a request performs a partial update, removing 
 | Syntax type | Syntax example |
 | ------------|----------------|
 | shorthand   | `disconnect: [2, 4]`
-| longhand    | ```disconnect: [ {id: 2}, {id: 4} ]``` |
+| longhand    | ```disconnect: [{ id: 2 }, { id: 4 }]``` |
 
 `disconnect` can be used in combination with [`connect`](#connect).
 
