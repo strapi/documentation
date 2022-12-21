@@ -19,7 +19,7 @@ Occasionally you need to move data out of or into a Strapi instance. The data ma
  The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
 :::strapi Using the Command Line Interface (CLI)
-The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI#strapi-export.md).
+The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-export).
 :::
 
 ## Export data using the CLI tool
