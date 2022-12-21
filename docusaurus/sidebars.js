@@ -159,6 +159,7 @@ const sidebars = {
       collapsed: false,
       items: [
         'dev-docs/cli',
+        'dev-docs/data-management',
       ],
     }, 
 
