@@ -22,7 +22,7 @@ Relations can be added, updated, or removed through the Content API by passing p
 |-----------------|------------------|----------------|
 | [`connect`](#connect)       | Adds relation(s).<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial
 | [`disconnect`](#disconnect)    | Removes relation(s).<br /><br />Can be used in combination with `connect`. | Partial
-| [`set`](#set)           | Sets relations, replacing all the existing ones.<br /><br />Must be used alone.  | Full
+| [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />It can not be used in combination with `connect` or `disconnect`.  | Full
 
 Using `connect` allows adding [positional arguments](#relations-reordering) to define an order for relations.
 
