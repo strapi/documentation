@@ -12,6 +12,19 @@ Strapi CLI (Command Line Interface) installation scripts are the fastest and mos
 
 !!!include(developer-docs/latest/developer-resources/cli/snippets/installation-prerequisites.md)!!!
 
+A supported database is also required for any Strapi project:
+
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
+
+::: caution
+Strapi `v4` does not support MongoDB.
+:::
+
 ## Creating a Strapi project
 
 Follow the steps below to create a new Strapi project, being sure to use the appropriate command for your installed package manager:
