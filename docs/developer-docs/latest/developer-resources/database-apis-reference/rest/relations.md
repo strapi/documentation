@@ -37,7 +37,7 @@ Using `connect` in the body of a request performs a partial update, adding speci
 | Syntax type | Syntax example |
 | ------------|----------------|
 | shorthand   | `connect: [2, 4]`
-| longhand    | ```connect: [ {id: 2}, {id: 4} ]``` |
+| longhand    | ```connect: [{ id: 2 }, { id: 4 }]``` |
 
 You can also use the longhand syntax to [reorder relations](#relations-reordering).
 
