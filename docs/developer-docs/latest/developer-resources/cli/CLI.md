@@ -101,7 +101,7 @@ options: [--browser <name>]
 
 ## strapi export <BetaBadge />
 
-Exports your project data. The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+[Exports your project data](/developer-docs/latest/developer-resources/data-management.md). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
 ```bash
 strapi export
@@ -128,7 +128,7 @@ strapi export --no-encrypt # exports your data without encryption.
 
 ## strapi import <BetaBadge />
 
-Imports data into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+[Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
 | Option             | Type   | Description                                                               |
 |--------------------|--------|---------------------------------------------------------------------------|
