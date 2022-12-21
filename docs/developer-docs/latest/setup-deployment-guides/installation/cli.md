@@ -23,22 +23,20 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     <code-block title="NPM">
     ```sh
     npx create-strapi-app@latest my-project
+    # 'npx' runs a command from an npm package
+    # 'create-strapi-app' is the Strapi package
+    # '@latest' indicates that the latest version of Strapi is used
+    # 'my-project' is the name of your Strapi project
     ```
-    Where:
-    * `npx` runs a command from an npm package
-    * `create-strapi-app` is the Strapi package
-    * `@latest` indicates that the latest version of Strapi is used
-    * `my-project` is the name of your Strapi project
     </code-block>
 
     <code-block title="YARN">
     ```sh
     yarn create strapi-app my-project
+    # 'yarn create' creates a new project
+    # 'strapi-app' is the Strapi package
+    # 'my-project' is the name of your Strapi project
     ```
-    Where:
-    * `yarn create` creates a new project
-    * `strapi-app` is the Strapi package
-    * `my-project` is the name of your Strapi project
     </code-block>
 
     </code-group>
