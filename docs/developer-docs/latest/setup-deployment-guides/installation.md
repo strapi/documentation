@@ -6,9 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Installation
 
-Strapi projects and applications can be installed either locally on a computer or on a remote server. The following installation guides will guide you step-by-step instructions on how to install and create a new Strapi project.
-
-## Local installations
+Strapi projects and applications can be installed either locally on a computer or on a remote server. The following installation guide provides step-by-step instructions on how to install and create a new Strapi project on your local machine.
 
 <div>
 	<InstallLink link="installation/cli.html">
@@ -25,12 +23,14 @@ Strapi projects and applications can be installed either locally on a computer o
         </g>
       </svg>
 		</template>
-		<template #title>CLI (recommended)</template>
+		<template #title>CLI</template>
 		<template #description>
 			Create a project on your local machine using the CLI.
 		</template>
 	</InstallLink>
 </div>
+
+If you already have an existing Strapi project on your local machine, the following guide provides step-by-step instructions on creating a custom Docker image for your project.
 
 <div>
 	<InstallLink link="installation/docker.html">

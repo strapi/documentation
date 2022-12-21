@@ -6,39 +6,15 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Installing from CLI
 
-Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
+Strapi CLI (Command Line Interface) installation scripts are the fastest and mosts recommended way to get Strapi running locally.
 
 ## Preparing the installation
 
 !!!include(developer-docs/latest/developer-resources/cli/snippets/installation-prerequisites.md)!!!
 
-A database is also required for any Strapi project. Strapi currently supports the following databases:
-
-| Database   | Minimum | Recommended |
-|------------|---------|-------------|
-| MySQL      | 5.7.8   | 8.0         |
-| MariaDB    | 10.3    | 10.6        |
-| PostgreSQL | 11.0    | 14.0        |
-| SQLite     | 3       | 3           |
-
-::: caution
-Strapi v4 does not support MongoDB.
-:::
-
 ## Creating a Strapi project
 
-::: strapi CLI installation options
-The following installation guide covers the most basic installation option using the CLI. There are however other options that can be used when creating a new Strapi project:
-
-- Using the `--quickstart` flag at the end of the command to directly create the project in quickstart mode.
-- Using the `--template` flag at the end of the command to create a project with pre-made Strapi configurations (see [Templates](templates.md)).
-- Using the `--typescript` flag (or the shorter version `--ts`) at the end of the command to create a project in [TypeScript](/developer-docs/latest/development/typescript.md).
-- Using the `--no-run` flag will prevent Strapi from automatically starting the server (useful in combination with `--quickstart`)
-
-For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md).
-
-Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
-:::
+Follow the steps below to create a new Strapi project, being sure to use the appropriate command for your installed package manager:
 
 1. In a terminal, run the following command:
 
@@ -48,12 +24,21 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
     ```sh
     npx create-strapi-app@latest my-project
     ```
+    Where:
+    * `npx` runs a command from an npm package
+    * `create-strapi-app` is the Strapi package
+    * `@latest` indicates that the latest version of Strapi is used
+    * `my-project` is the name of your Strapi project
     </code-block>
 
     <code-block title="YARN">
     ```sh
     yarn create strapi-app my-project
     ```
+    Where:
+    * `yarn create` creates a new project
+    * `strapi-app` is the Strapi package
+    * `my-project` is the name of your Strapi project
     </code-block>
 
     </code-group>
@@ -66,6 +51,19 @@ Strapi also offers a starters CLI to create a project with a pre-made frontend a
 3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
 
 4. (Custom installation type only) Name your project's database.
+
+### CLI installation options
+
+The above installation guide only covers the basic installation option using the CLI. There are other options that can be used when creating a new Strapi project, for example:
+
+- `--quickstart`: Directly create the project in quickstart mode.
+- `--template`: Create a project with pre-made Strapi configurations (see [Templates](templates.md)).
+- `--typescript`/`--ts`: Create a project in [TypeScript](/developer-docs/latest/development/typescript.md).
+- `--no-run`: Prevent Strapi from automatically starting the server (useful in combination with `--quickstart`).
+
+For more information on available flags, see our [CLI documentation](/developer-docs/latest/developer-resources/cli/CLI.md).
+
+Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
 
 ::: tip
 Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
