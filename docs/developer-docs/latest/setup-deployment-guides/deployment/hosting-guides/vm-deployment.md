@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Virtual Machine Deployment
 
-This is a high-level guide for deploying a Strapi project on a virtual machine such as a [DigitalOcean](https://www.digitalocean.com/) Droplet, AWS, or Azure. For detailed information, consult the NodeJS deployment documentation from the respective hosting platform.
+The following is a high-level guide to deploying a Strapi project on a virtual machine such as a [DigitalOcean](https://www.digitalocean.com/) Droplet, AWS, or Azure. It is not intended to cover all possible configurations. For detailed information, consult the NodeJS deployment documentation from the respective hosting platforms.
 
 :::prerequisites
 
@@ -117,6 +117,8 @@ test
 ::::
 
 ## Install a database
+
+The following example shows how to create a managed database on each of the platforms. It is also possible to host your own database directly on your virtual machine. 
 
 :::: tabs card
 
