@@ -126,7 +126,7 @@ The following example shows how to create a managed database on each of the plat
 
 1. Navigate to the AWS RDS Service: In the top menu, click on Services and do a search for rds, click on RDS, Managed Relational Database Service.
 
-#2. Select your region: In the top menu bar, select the region that is the same as the EC2 instance, e.g. EU (Paris) or US East (N. Virgina).
+2. Select your region: In the top menu bar, select the region that is the same as the EC2 instance, e.g. EU (Paris) or US East (N. Virgina).
 
 #3. Create the database: Click the orange Create database button. Follow these steps to complete installation of a PostgreSQL database:
 
