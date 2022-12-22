@@ -21,7 +21,7 @@ export default function InteractiveProjectStructure() {
       │     ├ <a href="/dev-docs/configurations/cronjobs.html">cron-tasks.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/databases.html#database-configuration">database.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/middlewares.html">middlewares.js</a><br/>
-      │     ├ <a href="/dev-docs//configurations/plugins.html">plugins.js</a><br/>
+      │     ├ <a href="/dev-docs/configurations/plugins.html">plugins.js</a><br/>
       │     └ <a href="/dev-docs/configurations/server.html#server-configuration">server.js</a><br/>
       ├──── database<br/>
       │     └──── migrations<br/>
@@ -31,48 +31,48 @@ export default function InteractiveProjectStructure() {
       ├──── src<br/>
       │     ├──── admin <span class="token comment"># admin customization files</span><br/>
       │           ├──── <a href="/dev-docs/admin-panel-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
-      │     │     ├ <a href="/dev-docs//admin-panel-customization.html#configuration-options">app.js</a>
-      │     │     └ <a href="/dev-docs//admin-panel-customization.html#webpack-configuration">webpack.config.js</a>
-      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span>
-      │     │     └──── (api-name)
-      │     │           ├──── <a href="/dev-docs/backend-customization/models.html">content-types</a>
+      │     │     ├ <a href="/dev-docs/admin-panel-customization.html#configuration-options">app.js</a><br/>
+      │     │     └ <a href="/dev-docs/admin-panel-customization.html#webpack-configuration">webpack.config.js</a><br/>
+      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
+      │     │     └──── (api-name)<br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/models.html">content-types</a><br/>
       │     │           │     └──── (content-type-name)
-      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#lifecycle-hooks">lifecycles.js</a>
-      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#model-schema">schema.json</a>
-      │     │           ├──── <a href="/dev-docs/backend-customization/controllers.html">controllers</a>
-      │     │           ├──── <a href="/dev-docs/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-      │     │           ├──── <a href="/dev-docs/backend-customization/policies.html">policies</a>
-      │     │           ├──── <a href="/dev-docs/backend-customization/routes.html">routes</a>
-      │     │           ├──── <a href="/dev-docs/backend-customization/services.html">services</a>
-      │     │           └ index.js
-      │     ├──── <a href="/dev-docs/backend-customization/models.html">components</a>
-      │     │     └──── (category-name)
-      │     │           ├ (componentA).json
-      │     │           └ (componentB).json
-      │     ├──── <a href="/developer-docs/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
-      │     │     └──── (plugin-to-be-extended)
-      │     │           ├──── content-types
-      │     │           │     └──── (content-type-name)
-      │     │           │           └ schema.json
-      │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-      │     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-      │     │     └──── (middleware-name).js
-      │     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
-      │     │     └──── (plugin-name)
-      │     │           ├──── admin
-      │     │           │     └──── src
-      │     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.js</a>
-      │     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
-      │     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#content-types">content-types</a>
-      │     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers">controllers</a>
-      │     │           │     └──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies">policies</a>
-      │     │           ├ package.json
-      │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
-      │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-      │     ├─── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-      │     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span>
-      ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html">.env</a>
-      └ package.json
+      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#lifecycle-hooks">lifecycles.js</a><br/>
+      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#model-schema">schema.json</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/controllers.html">controllers</a><br/>
+      │     │           ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/routes.html">routes</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/services.html">services</a><br/>
+      │     │           └ index.js<br/>
+      │     ├──── <a href="/dev-docs/backend-customization/models.html">components</a><br/>
+      │     │     └──── (category-name)<br/>
+      │     │           ├ (componentA).json<br/>
+      │     │           └ (componentB).json<br/>
+      │     ├──── <a href="/dev-docs/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span><br/>
+      │     │     └──── (plugin-to-be-extended)<br/>
+      │     │           ├──── content-types<br/>
+      │     │           │     └──── (content-type-name)<br/>
+      │     │           │           └ schema.json<br/>
+      │     │           └ <a href="/devr-docs/api/plugins/server-api.html">strapi-server.js</a><br/>
+      │     ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │     └──── (middleware-name).js<br/>
+      │     ├──── <a href="/dev-docs/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span><br/>
+      │     │     └──── (plugin-name)<br/>
+      │     │           ├──── admin<br/>
+      │     │           │     └──── src<br/>
+      │     │           │           └ <a href="/dev-docs/api/admin-panel-api.html">index.js</a><br/>
+      │     │           ├──── <a href="/dev-docs/latest/api/server-api.html">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/api/server-api.html#policies">policies</a><br/>
+      │     │           ├ package.json<br/>
+      │     │           ├ <a href="/dev-docs/api/admin-panel-api.html">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/server-api.html#">strapi-server.js</a><br/>
+      │     ├─── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
+      │     └ <a href="/dev-docs/configurations/functions.html">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
+      ├ <a href="/dev-docs/configurations/environment.html">.env</a><br/>
+      └ package.json<br/>
         </code>
       </pre>
 
@@ -82,76 +82,76 @@ export default function InteractiveProjectStructure() {
 
       <pre>
         <code>
-      . <span class="token comment"># root of the application</span>
+      . <span class="token comment"># root of the application</span><br/>
 
-      ├──── .cache <span class="token comment"># files used to build the admin panel</span>
-      ├──── .tmp
-      ├──── config <span class="token comment"># API configurations</span>
-      │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html">api.ts</a>
-      │     ├  <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html">admin.ts</a>
-      │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html">cron-tasks.ts</a>
-      │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html#database-configuration">database.ts</a>
-      │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html">middlewares.ts</a>
-      │     ├ <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html">plugins.ts</a>
-      │     └ <a href="/developer-docs/latest/setup-deployment-guides/configurations/required/server.html#server-configuration">server.ts</a>
-      ├──── database
-      │     └──── migrations
-      ├──── dist <span class="token comment"># build of the backend</span>
-      │     └──── build <span class="token comment"># build of the admin panel</span>
-      ├──── node_modules # <span class="token comment">npm packages used by the project</span>
-      ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span>
-      │     └──── uploads
-      ├──── src
-      │     ├──── admin <span class="token comment"># admin customization files</span>
-      │           ├──── <a href="/developer-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span>
-      │     │     ├ <a href="/developer-docs/latest/development/admin-customization.html#configuration-options">app.example.tsx</a>
-      │     │     └ <a href="/developer-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.ts</a>
-      |     |     └ tsconfig.json
-      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span>
-      │     │     └──── (api-name)
-      │     │          <a href="/developer-docs/latest/development/backend-customization/models.html">content-types</a>
-      │     │           │     └──── (content-type-name)
-      │     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#lifecycle-hooks">lifecycles.s</a>
-      │     │           │           └ <a href="/developer-docs/latest/development/backend-customization/models.html#model-schema">schema.json</a>
-      │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/controllers.html">controllers</a>
-      │     │           ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-      │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/policies.html">policies</a>
-      │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/routes.html">routes</a>
-      │     │           ├──── <a href="/developer-docs/latest/development/backend-customization/services.html">services</a>
-      │     │           └ index.ts
+      ├──── .cache <span class="token comment"># files used to build the admin panel</span><br/>
+      ├──── .tmp<br/>
+      ├──── config <span class="token comment"># API configurations</span><br/>
+      │     ├ <a href="/dev-docs/configurations/api.html">api.ts</a><br/>
+      │     ├  <a href="/dev-docs/configurations/admin-panel.html">admin.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/cronjobs.html">cron-tasks.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/databases.html#database-configuration">database.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/middlewares.html">middlewares.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/plugins.html">plugins.ts</a><br/>
+      │     └ <a href="/dev-docs/configurations/server.html#server-configuration">server.ts</a><br/>
+      ├──── database<br/>
+      │     └──── migrations<br/>
+      ├──── dist <span class="token comment"># build of the backend</span><br/>
+      │     └──── build <span class="token comment"># build of the admin panel</span><br/>
+      ├──── node_modules # <span class="token comment">npm packages used by the project</span><br/>
+      ├──── <a href="/dev-docs/configurations/public-assets.html">public</a> <span class="token comment"># files accessible to the outside world</span><br/>
+      │     └──── uploads<br/>
+      ├──── src<br/>
+      │     ├──── admin <span class="token comment"># admin customization files</span><br/>
+      │           ├──── <a href="/dev-docs/latest/development/admin-customization.html#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
+      │     │     ├ <a href="/dev-docs/latest/development/admin-customization.html#configuration-options">app.example.tsx</a><br/>
+      │     │     └ <a href="/dev-docs/latest/development/admin-customization.html#webpack-configuration">webpack.config.ts</a><br/>
+      |     |     └ tsconfig.json<br/>
+      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
+      │     │     └──── (api-name)<br/>
+      │     │          <a href="/dev-docs/backend-customization/models.html">content-types</a><br/>
+      │     │           │     └──── (content-type-name)<br/>
+      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#lifecycle-hooks">lifecycles.s</a><br/>
+      │     │           │           └ <a href="/dev-docs/backend-customization/models.html#model-schema">schema.json</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/controllers.html">controllers</a><br/>
+      │     │           ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/routes.html">routes</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/services.html">services</a><br/>
+      │     │           └ index.ts<br/>
       │     │
-      │     ├──── <a href="/developer-docs/latest/development/backend-customization/models.html">components</a>
-      │     │     └──── (category-name)
-      │     │           ├ (componentA).json
-      │     │           └ (componentB).json
-      │     ├──── <a href="/developer-docs/latest/development/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span>
-      │     │     └──── (plugin-to-be-extended)
-      │     │           ├──── content-types
-      │     │           │     └──── (content-type-name)
-      │     │           │           └ schema.json
-      │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-      │     ├──── <a href="/developer-docs/latest/setup-deployment-guides/configurations/optional/middlewares.html">middlewares</a>
-      │     │     └──── (middleware-name)
-      │     │           ├ defaults.json
-      │     │           └ index.ts
-      │     ├──── <a href="/developer-docs/latest/development/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span>
-      │     │     └──── (plugin-name)
-      │     │           ├──── admin
-      │     │           │     └──── src
-      │     │           │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">index.tsx</a>
-      │     │           │           └ pluginId.ts
-      │     │           ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">server</a>
-      │     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#content-types">content-types</a>
-      │     │           │     ├──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#controllers">controllers</a>
-      │     │           │     └──── <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html#policies">policies</a>
-      │     │           ├ package.json
-      │     │           ├ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html">strapi-admin.js</a>
-      │     │           └ <a href="/developer-docs/latest/developer-resources/plugin-api-reference/server.html">strapi-server.js</a>
-      │     ├─── policies
-      │     └ index.ts <span class="token comment"># include register(), bootstrap() and destroy() functions</span>
-      ├ .env
-      ├ tsconfig.json
-      └ package.json
+      │     ├──── <a href="/dev-docs/backend-customization/models.html">components</a><br/>
+      │     │     └──── (category-name)<br/>
+      │     │           ├ (componentA).json<br/>
+      │     │           └ (componentB).json<br/>
+      │     ├──── <a href="/dev-docs/plugins-extension.html">extensions</a> <span class="token comment"># files to extend installed plugins</span><br/>
+      │     │     └──── (plugin-to-be-extended)<br/>
+      │     │           ├──── content-types<br/>
+      │     │           │     └──── (content-type-name)<br/>
+      │     │           │           └ schema.json<br/>
+      │     │           └ <a href="/dev-docs/api/server-api.html">strapi-server.js</a><br/>
+      │     ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │     └──── (middleware-name)<br/>
+      │     │           ├ defaults.json<br/>
+      │     │           └ index.ts<br/>
+      │     ├──── <a href="/dev-docs/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span><br/>
+      │     │     └──── (plugin-name)<br/>
+      │     │           ├──── admin<br/>
+      │     │           │     └──── src<br/>
+      │     │           │           └ <a href="/dev-docs/api/admin-panel-api.html">index.tsx</a><br/>
+      │     │           │           └ pluginId.ts<br/>
+      │     │           ├──── <a href="/dev-docs/api/server-api.html">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/api/server-api.html#policies">policies</a><br/>
+      │     │           ├ package.json<br/>
+      │     │           ├ <a href="/dev-docs/api/admin-panel-api.html">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/server-api.html">strapi-server.js</a><br/>
+      │     ├─── policies<br/>
+      │     └ index.ts <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
+      ├ .env<br/>
+      ├ tsconfig.json<br/>
+      └ package.json<br/>
 
         </code>
       </pre>
