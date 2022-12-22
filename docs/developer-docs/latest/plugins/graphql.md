@@ -894,14 +894,14 @@ Then on each request, send along an `Authorization` header in the form of `{ "Au
 
 ### API tokens
 
-To use API tokens for authentication pass the token in the `Authorization` header using the format `bearer your-api-token`.
+To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
 :::note
-Using API tokens in the the GraphQL playground requires a slightly different syntax. In the `HTTP HEADERS` tab add the following code:
+Using API tokens in the the GraphQL playground requires adding the authorization header with your token in the `HTTP HEADERS` tab:
 
 ```http
 {
-"authorization" : "Bearer <TOKEN>"
+  "Authorization" : "Bearer <TOKEN>"
 }
 ```
 
