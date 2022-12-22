@@ -43,7 +43,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [Installation](/dev-docs/installation)
       - [x] [CLI](/dev-docs/installation/cli)
       - [x] [Docker](/dev-docs/installation/docker)
-    - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
+    - [x] [Project structure](/dev-docs/project-structure)
     - [x] Required configurations
         - [x] [Database configuration](/dev-docs/configurations/database)
         - [x] [Server configuration](/dev-docs/configurations/server)
