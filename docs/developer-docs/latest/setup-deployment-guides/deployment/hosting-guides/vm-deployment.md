@@ -21,8 +21,12 @@ The following is a high-level guide to deploying a Strapi project on a virtual m
 :::: tabs card
 
 ::: tab AWS
-- [Create an admin user (IAM)](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-set-up.html#create-an-admin)
-- [Create a regular user](https://console.aws.amazon.com/iam/home) by logging in as an IAM user
+
+The best practice for AWS is only use the `root` user for limited tasks. Amazon recommends creating an `admin` user that logs into the IAM console, and then a user for the deployment action such as `developer`. For the following guide, the `developer` role needs access to `EC2`, `RDS`, and `S3`. The user credentials include a `csv` file with an access key ID and secret access key. Consult the Amazon AWS documentation for the details in creating and enabling user accounts:
+
+- [Create an admin user (IAM)](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-set-up.html#create-an-admin).
+- [Create a the `developer` user](https://console.aws.amazon.com/iam/home) in the IAM console.
+- enable `AmazonEC2FullAccess`, `AmazonRDSFullAccess`, and `AmazonS3FullAccess`.
 - download and save the `.csv` file containing your `Access key ID` and `Secret access key`
 
 :::
@@ -47,10 +51,10 @@ test
 
 ::: tab AWS
 
-- As a regular user logged into the AWS management console find and select `EC2, Virtual Servers in the Cloud`.
-- Select a region
-- Click on **Launch Instance**
-- Select a server type and size. For example Ubantu 22.04 LTS (HVM), SSD Volume Type with `General purpose` and `t2.small` selected.
+1. As a regular user logged into the AWS management console find and select `EC2, Virtual Servers in the Cloud`.
+2. Select a region.
+3. Click on **Launch Instance**.
+4. Select a server type and size. For example Ubantu 22.04 LTS (HVM), SSD Volume Type with `General purpose` and `t2.small` selected.
 <!-- - Configure storage TODO -->
 - (Optional) Add tags
 <!-- - TODO Configure the security group  -->
@@ -118,20 +122,20 @@ test
 
 ## Install a database
 
-The following example shows how to create a managed database on each of the platforms. It is also possible to host your own database directly on your virtual machine. 
+The following example shows how to create a managed database on each of the platforms. It is also possible to host your own database directly on your virtual machine.
 
 :::: tabs card
 
 ::: tab AWS
 
-1. Navigate to the AWS RDS Service: In the top menu, click on Services and do a search for rds, click on RDS, Managed Relational Database Service.
+1. Navigate to the AWS RDS Service: In the top menu, click on Services and do a search for `rds`, click on RDS, Managed Relational Database Service.
 
-2. Select your region: In the top menu bar, select the region that is the same as the EC2 instance, e.g. EU (Paris) or US East (N. Virgina).
+2. Select the same region as the EC2 instance, e.g. EU (Paris) or US East (N. Virgina).
 
-#3. Create the database: Click the orange Create database button. Follow these steps to complete installation of a PostgreSQL database:
+#3. Create the database: Click the orange Create database button. Follow these steps to complete installation of a MariaDB database:
 
 <!--update pg version here and rewrite this section-->
-Engine Options: Click on PostgreSQL, version PostgreSQL 10.x-R1
+Engine Options: Click MariaDB version 10.6.10
 Templates: Click on Free Tier.
 Settings
 DB instance identifier Give a name to your database, e.g. strapi-database
