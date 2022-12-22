@@ -7,6 +7,7 @@ export default function InteractiveProjectStructure() {
     <div className="project-structure">
       <Tabs>
         <TabItem value="js" label="JavaScript">
+
         
       <pre>
         <code>
