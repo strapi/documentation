@@ -184,9 +184,10 @@ const strapi = require('@strapi/strapi');
 strapi(/* {...} */).start();
 ```
 
-:::note
+:::caution
 
 If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
+For more information, consult the [TypeScript documentation](/developer-docs/latest/development/typescript.md#use-the-strapi-factory).
 :::
 
 ### Advanced configurations
