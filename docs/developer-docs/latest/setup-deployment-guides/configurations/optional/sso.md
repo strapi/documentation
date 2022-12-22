@@ -4,6 +4,7 @@ description: Strapi's SSO allows you to configure additional sign-in and sign-up
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
+<!-- markdownlint-disable-file MD033 MD025 MD036 -->
 
 # Single Sign-On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
@@ -43,7 +44,6 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -62,8 +62,6 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-
-
 ## Setting up provider configuration
 
 A provider's configuration is a JavaScript object built with the following properties:
@@ -81,6 +79,93 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 
 ::: note
 By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/latest/getting-started/introduction.md#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security).
+:::
+
+::: details Example: Security exception for provider logos
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```jsx
+// path: ./config/middlewares.js
+
+module.exports = [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```jsx
+// path: ./config/middlewares.js
+
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ### The `createStrategy` Factory
@@ -269,8 +354,6 @@ yarn add passport-github2
 </code-group>
 
 ::: details Configuration example for Github:
-
-<br/>
 <code-group>
 <code-block title="JAVASCRIPT">
 
@@ -309,6 +392,7 @@ module.exports = ({ env }) => ({
 });
 
 ```
+
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -419,11 +503,9 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
-
 
 ```jsx
 // path: ./config/admin.ts
@@ -465,7 +547,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
 
 :::
 
@@ -537,7 +618,6 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -586,9 +666,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
-
-
 
 :::
 
@@ -726,6 +803,10 @@ yarn add passport-okta-oauth20
 
 </code-group>
 
+::: caution
+When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
+:::
+
 ::: details Configuration example for Okta:
 <br/>
 
@@ -811,7 +892,6 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-
 :::
 
 ## Performing advanced customization
@@ -851,7 +931,6 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -871,10 +950,8 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
-
 </code-block>
 </code-group>
-
 
 ### Authentication Events
 
@@ -908,8 +985,6 @@ module.exports = () => ({
 });
 ```
 
-
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -936,7 +1011,5 @@ export default () => ({
 });
 ```
 
-
 </code-block>
 </code-group>
-
