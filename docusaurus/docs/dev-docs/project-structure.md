@@ -7,7 +7,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 import InteractiveProjectStructure from '../../src/components/ProjectStructure.js'
 
-
 # Project structure
 
 :::note
@@ -30,5 +29,3 @@ my-project
 The default structure of a Strapi project created without the starter CLI depends on whether the project was created with vanilla JavaScript or with [TypeScript](/dev-docs/typescript), and looks like the following:
 
 <InteractiveProjectStructure />
-
-
