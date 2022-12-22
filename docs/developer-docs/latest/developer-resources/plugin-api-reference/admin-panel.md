@@ -49,6 +49,7 @@ Within the register function, a plugin can:
 * [create a new settings section](#createsettingsection)
 * define [injection zones](#injection-zones-api)
 * [add reducers](#reducers-api)
+* register the admin panel part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-in-the-admin-panel)
 
 #### registerPlugin()
 
@@ -180,6 +181,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
 | Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers-api)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
+| Register the admin panel part of a custom field | APIs for custom fields (see [custom fields documentation](/developer-docs/latest/development/custom-fields.md)) | `app.customFields.register()` | `register()` |
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
@@ -626,32 +628,39 @@ import cellFormatter from './components/cellFormatter';
 
 export default {
   bootstrap(app) {
-	  app.registerHook('Admin/CM/pages/ListView/inject-column-in-table', ({ displayedHeaders, layout }) => {
-			const isFieldLocalized = get(layout, 'contentType.pluginOptions.i18n.localized', false);
+    app.registerHook(
+      'Admin/CM/pages/ListView/inject-column-in-table',
+      ({ displayedHeaders, layout }) => {
+        const isFieldLocalized = get(
+          layout,
+          'contentType.pluginOptions.i18n.localized',
+          false
+        );
 
-			if (!isFieldLocalized) {
-			  return { displayedHeaders, layout };
-			}
+        if (!isFieldLocalized) {
+          return { displayedHeaders, layout };
+        }
 
-			return {
-        layout,
-        displayedHeaders: [
-          ...displayedHeaders,
-          {
-            key: '__locale_key__', // Needed for the table
-            fieldSchema: { type: 'string' }, // Schema of the attribute
-            metadatas: {
-              label: 'Content available in', // Label of the header,
-              sortable: true|false // Define if the column is sortable
-            }, // Metadatas for the label
-            // Name of the key in the data we will display
-            name: 'locales',
-            // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
-            cellFormatter,
-          },
-			  ]
-      };
-    });
+        return {
+          layout,
+          displayedHeaders: [
+            ...displayedHeaders,
+            {
+              key: '__locale_key__', // Needed for the table
+              fieldSchema: { type: 'string' }, // Schema of the attribute
+              metadatas: {
+                label: 'Content available in', // Label of the header,
+                sortable: true | false, // Define if the column is sortable
+              }, // Metadatas for the label
+              // Name of the key in the data we will display
+              name: 'locales',
+              // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+              cellFormatter,
+            },
+          ],
+        };
+      }
+    );
   },
 }
 ```

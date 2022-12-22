@@ -331,7 +331,7 @@ sudo apt install libpng-dev build-essential -y
 For Node.js it is recommended you use the [official source](https://github.com/nodesource/distributions/blob/master/README.md#debinstall), per the instructions we will use the following commands:
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt install nodejs -y
 ```
 
@@ -388,10 +388,12 @@ For Azure managed databases you can use the following:
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MySQL >= 5.7.8
-- MariaDB >= 10.2.7
-- PostgreSQL >= 10
-- SQLite >= 3
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
 
 In our example we will be using MariaDB 10.4 LTS using the MariaDB apt repo. Per the [documentation](https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release=bionic--ubuntu_bionic&mirror=digitalocean-sfo&version=10.4) we will use the following commands:
 
@@ -494,20 +496,19 @@ Using the following example we will remove any private information:
 // path: /srv/strapi/mystrapiapp/config/database.js
 
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: env('DB_NAME'),
-        host: env('DB_HOST'),
-        port: env('DB_PORT'),
-        username: env('DB_USER'),
-        password: env('DB_PASS'),
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      options: {},
     },
+    debug: false,
   },
 });
 ```
@@ -520,21 +521,20 @@ module.exports = ({ env }) => ({
 ```js
 // path: /srv/strapi/mystrapiapp/config/database.ts
 
-export default ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: env('DB_NAME'),
-        host: env('DB_HOST'),
-        port: env('DB_PORT'),
-        username: env('DB_USER'),
-        password: env('DB_PASS'),
+  export default ({ env }) => ({
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      options: {},
     },
+    debug: false,
   },
 });
 ```

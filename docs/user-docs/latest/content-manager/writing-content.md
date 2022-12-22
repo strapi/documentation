@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-co
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md).
 
-![Edit view to write content](../assets/content-manager/edit-view.png)
+![Edit view to write content](../assets/content-manager/edit-view2.png)
 
 ## Filling up fields
 
@@ -24,12 +24,17 @@ To write or edit content:
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br> 2. Choose a date using the calendar and/or a time among the list.                                                                                                                                                                                                                                                                 |
 | Boolean     | Click on **OFF** or **ON**.                                                                                                                                                                                                                                                                                                                                               |
+| Relation    | Choose an entry from the drop-down list. See [Managing relational fields](/user-docs/latest/content-manager/managing-relational-fields.md) for more information.                                                                                                                                                                                                          |
 | Email       | Write a complete and valid email address.                                                                                                                                                                                                                                                                                                                                 |
 | Password    | Write a password. <br><br> 💡 Click the eye icon, displayed on the right of the box, to show the password.                                                                                                                                                                                                                                                                |
-| Enumeration | 1. Click the drop-down list. <br> 2. Choose an item from the list.                                                                                                                                                                                                                                                                                                        |
+| Enumeration | 1. Click the drop-down list. <br> 2. Choose an entry from the list.                                                                                                                                                                                                                                                                                                       |
 | Media       | 1. Click the media area. <br> 2. Choose an asset from the [Media Library](/user-docs/latest/media-library/introduction-to-media-library.md) or from a [folder](/user-docs/latest/media-library/organizing-assets-with-folders.md) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br><br> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | JSON        | Write your content, in JSON format, in the code textbox.                                                                                                                                                                                                                                                                                                                  |
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows to automatically generate a UID based on the content-type name.                                                                                                                                                                                                |
+::: note
+Filling out a [custom field](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
+<!-- TODO: once we have a direct link for a filtered list of custom fields plugins on the Marketplace website, update the link above  -->
+:::
 
 ### Components
 
@@ -85,8 +90,12 @@ Dynamic zones are a combination of components, which themselves are composed of 
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the arrow buttons ![Up icon](../assets/icons/up2.svg) ![Down icon](../assets/icons/down2.svg) to reorder components in your dynamic zone.
+- Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder components in your dynamic zone.
 - Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
+
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](../assets/icons/drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
 
 ::: note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.

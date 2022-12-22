@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO) - Strapi Developer Docs
-description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Entreprise Edition with a Gold plan.
+description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
@@ -111,7 +111,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 - If `error` is not set to `null`, then the data sent is ignored, and the controller will throw an error.
 - If the SSO's auto-registration feature is disabled, then the `data` object only need to be composed of an `email` property.
-- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` oject.
+- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` object.
 
 ### Adding a provider
 
@@ -207,7 +207,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GoogleStrategy from "passport-google-oauth2";
+import {Strategy as GoogleStrategy } from "passport-google-oauth2";
 
 export default ({ env }) => ({
   auth: {
@@ -316,7 +316,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GithubStrategy from "passport-github2";
+import { Strategy as GithubStrategy } from "passport-github2";
 
 export default ({ env }) => ({
   auth: {
@@ -428,7 +428,8 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import DiscordStrategy from "passport-discord";
+import { Strategy as DiscordStrategy } from "passport-discord";
+
 
 export default ({ env }) => ({
   auth: {
@@ -544,7 +545,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import AzureAdOAuth2Strategy from "passport-azure-ad-oauth2";
+import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
 import jwt from "jsonwebtoken";
 
 export default ({ env }) => ({
@@ -664,7 +665,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import KeyCloakStrategy from "passport-keycloak-oauth2-oidc";
+import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
 
 export default ({ env }) => ({
   auth: {
@@ -774,7 +775,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20")
+import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
 
 export default ({ env }) => ({
   auth: {

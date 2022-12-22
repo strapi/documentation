@@ -1,5 +1,5 @@
 ---
-title: Saving & Publishishing content - Strapi User Guide
+title: Saving & Publishing content - Strapi User Guide
 description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
 canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html
 ---
@@ -16,7 +16,7 @@ The possibility to manage drafts for contents comes from the Draft & Publish fea
 
 Your contents can have 2 statuses: draft or published. You can see the current status indicated on the right of the interface, above the Information box.
 
-![Editing draft version](../assets/content-manager/editing_draft_version.png)
+![Editing draft version](../assets/content-manager/editing_draft_version2.png)
 
 By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button on the top right corner of the edit view, until they are ready to be published.
 
@@ -30,7 +30,11 @@ Before publishing a draft, make sure it doesn't have relations with other non-pu
 
 When a content is not a draft anymore, but has been published, it is indicated on the right of the interface, above the Information box.
 
-![Editing published version](../assets/content-manager/editing_published_version.png)
+![Editing published version](../assets/content-manager/editing_published_version2.png)
+
+::: tip
+To schedule publication, i.e. convert a draft to a published entry at a given date and time, you can follow [this technical guide](https://forum.strapi.io/t/schedule-publications/23184) which requires adding custom code to the Strapi application.
+:::
 
 ### Unpublishing content
 

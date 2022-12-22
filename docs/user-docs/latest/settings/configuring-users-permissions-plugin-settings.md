@@ -10,7 +10,7 @@ The Users & Permissions plugin is managed from the *Users & Permissions plugin* 
 
 ## Configuring providers
 
-The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a font-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
+The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
 
 ![Providers interface](../assets/settings/up_providers.png)
 

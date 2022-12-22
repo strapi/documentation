@@ -30,7 +30,6 @@ Global policy implementation example:
 <code-group>
 <code-block title="JAVASCRIPT">
 
-
 ```js
 // path: ./src/policies/is-authenticated.js
 
@@ -44,13 +43,11 @@ module.exports = (policyContext, config, { strapi }) => {
 };
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
 
-
-```js
+```ts
 // path: ./src/policies/is-authenticated.ts
 
 export default (policyContext, config, { strapi }) => {
@@ -66,8 +63,7 @@ export default (policyContext, config, { strapi }) => {
 </code-block>
 </code-group>
 
-
-`policyContext` is a wrapper arround the [controller](/developer-docs/latest/development/backend-customization/controllers.md) context. It adds some logic that can be useful to implement a policy for both REST and GraphQL.
+`policyContext` is a wrapper around the [controller](/developer-docs/latest/development/backend-customization/controllers.md) context. It adds some logic that can be useful to implement a policy for both REST and GraphQL.
 
 <br/>
 
@@ -94,7 +90,7 @@ module.exports = (policyContext, config, { strapi }) => {
 <code-block title="TYPESCRIPT">
 
 
-```js
+```ts
 // path: .src/api/[api-name]/policies/my-policy.ts
 
 export default (policyContext, config, { strapi }) => {
@@ -103,13 +99,11 @@ export default (policyContext, config, { strapi }) => {
     }
 
     return false; // If you return nothing, Strapi considers you didn't want to block the request and will let it pass
-  }
-};
+  };
 ```
 
 </code-block>
 </code-group>
-
 
 ## Usage
 
@@ -158,7 +152,7 @@ module.exports = {
 
 <code-block title="TYPESCRIPT">
 
-```js
+```ts
 // path: ./src/api/restaurant/routes/router.ts
 
 export default {
@@ -183,15 +177,12 @@ export default {
 </code-block>
 </code-group>
 
-
-
 ### Plugin policies
 
 [Plugins](/developer-docs/latest/plugins/plugins-intro.md) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
 
 <code-group>
 <code-block title="JAVASCRIPT">
-
 
 ```js
 // path: ./src/api/restaurant/routes/router.js
@@ -218,8 +209,7 @@ module.exports = {
 
 <code-block title="TYPESCRIPT">
 
-
-```js
+```ts
 // path: ./src/api/restaurant/routes/router.ts
 
 export default {
@@ -243,7 +233,6 @@ export default {
 </code-block>
 </code-group>
 
-
 ### API policies
 
 API policies are associated to the routes defined in the API where they have been declared.
@@ -252,8 +241,47 @@ API policies are associated to the routes defined in the API where they have bee
 <code-block title="JAVASCRIPT">
 
 ```js
-
 // path: ./src/api/restaurant/policies/is-admin.js.
+
+module.exports = async (policyContext, config, { strapi }) => {
+  if (policyContext.state.user.role.name === 'Administrator') {
+    // Go to next policy or will reach the controller's action.
+    return true;
+  }
+
+  return false;
+};
+
+
+// path: ./src/api/restaurant/routes/router.js
+
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/restaurants',
+      handler: 'Restaurant.find',
+      config: {
+        /**
+          The `is-admin` policy found at `./src/api/restaurant/policies/is-admin.js`
+          is executed before the `find` action in the `Restaurant.js` controller.
+         */
+        policies: ['is-admin']
+      }
+    }
+  ]
+}
+
+
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```ts
+
+// path: ./src/api/restaurant/policies/is-admin.ts.
 
 export default (policyContext, config, { strapi }) => {
   if (policyContext.state.user.role.name === 'Administrator') {
@@ -276,46 +304,7 @@ export default {
       config: {
         /**
           The `is-admin` policy found at `./src/api/restaurant/policies/is-admin.js`
-          is executed before the `find` action in the `Restaurant.js` controller.
-         */
-        policies: ['is-admin']
-      }
-    }
-  ]
-}
-
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-
-// path: ./src/api/restaurant/policies/is-admin.ts.
-
-module.exports = async (policyContext, config, { strapi }) => {
-  if (policyContext.state.user.role.name === 'Administrator') {
-    // Go to next policy or will reach the controller's action.
-    return true;
-  }
-
-  return false;
-};
-
-
-// path: ./src/api/restaurant/routes/router.ts
-
-module.exports = {
-  routes: [
-    {
-      method: 'GET',
-      path: '/restaurants',
-      handler: 'Restaurant.find',
-      config: {
-        /**
-          The `is-admin` policy found at `./src/api/restaurant/policies/is-admin.ts`
-          is executed before the `find` action in the `Restaurant.js` controller.
+          is executed before the `find` action in the `Restaurant.ts` controller.
          */
         policies: ['is-admin']
       }
@@ -327,8 +316,6 @@ module.exports = {
 
 </code-block>
 </code-group>
-
-
 
 To use a policy in another API, reference it with the following syntax: `api::[apiName].[policyName]`:
 
@@ -360,7 +347,7 @@ module.exports = {
 
 <code-block title="TYPESCRIPT">
 
-```js
+```ts
 // path: ./src/api/category/routes/router.ts
 
 export default {
@@ -383,5 +370,3 @@ export default {
 
 </code-block>
 </code-group>
-
-

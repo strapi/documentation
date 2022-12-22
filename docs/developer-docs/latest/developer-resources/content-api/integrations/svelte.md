@@ -157,7 +157,7 @@ onMount(async () => {
   <ul>
   {#each restaurants as restaurant}
     <li>
-  		{restaurant.name}
+  		{restaurant.attributes.name}
     </li>
   {/each}
   </ul>
@@ -199,7 +199,7 @@ onMount(async () => {
 		  },
 		}).then(checkStatus)
       .then(parseJSON);
-		restaurants = res
+		restaurants = res.data
 	} catch (e) {
 		error = e
 	}
@@ -212,7 +212,7 @@ onMount(async () => {
   <ul>
   {#each restaurants as restaurant}
     <li>
-  		{restaurant.name}
+  		{restaurant.attributes.name}
     </li>
   {/each}
   </ul>

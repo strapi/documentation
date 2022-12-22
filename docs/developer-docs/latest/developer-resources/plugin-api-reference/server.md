@@ -28,7 +28,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 
 ### register()
 
-This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
+This function is called to load the plugin, before the application is [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md), the server part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-on-the-server), or database migrations.
 
 **Type**: `Function`
 
@@ -163,13 +163,13 @@ module.exports = {
 // path: ./src/plugins/my-plugin/server/content-types/content-type-a.js
 
 module.exports = {
+  kind: 'collectionType',
+  collectionName: 'content-type',
   info: {
-    tableName: 'content-type',
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
     description: 'A regular content-type',
-    kind: 'collectionType',
   },
   options: {
     draftAndPublish: true,
@@ -381,7 +381,6 @@ module.exports = (policyContext, config, { strapi }) => {
     }
 
     return false;
-  },
 };
 ```
 

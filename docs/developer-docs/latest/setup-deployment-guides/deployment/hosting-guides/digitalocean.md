@@ -30,9 +30,9 @@ Choose these options:
 
 - Ubuntu 18.04 x64
 - STARTER `Standard`
-- Choose an appropriate pricing plan. For example, pricing: `$10/mo` _(Scroll to the left)_
+- Choose an appropriate pricing plan. For example, pricing: `$12/mo` _(Scroll to the left)_
   ::: tip
-  The \$5/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$10/mo** or larger instance is needed.
+  The \$6/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$12/mo** or larger instance is needed.
   :::
 - Choose a `datacenter` region nearest your audience, for example, `New York`.
 - **OPTIONAL:** Select additional options, for example, `[x] IPv6`.
@@ -180,22 +180,19 @@ In your code editor, you will need to edit a file called `database.js`. Replace 
 // path: ./config/database.js`
 
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
+  connection: {
+    client: 'postgres', 
+  connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', ''),
+        user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
       },
-      options: {
-        ssl: false,
-      },
-    },
+      debug: false,
   },
 });
 ```
@@ -204,31 +201,29 @@ module.exports = ({ env }) => ({
 
 <code-block title="TYPESCRIPT">
 
-```js
+```ts
+// path: ./config/database.ts`
+
 export default ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
+  connection: {
+    client: 'postgres', 
+  connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', ''),
+        user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
       },
-      options: {
-        ssl: false,
-      },
-    },
+      debug: false,
   },
 });
 ```
 
 </code-block>
 </code-group>
-
 
 
 You are now ready to push these changes to Github:

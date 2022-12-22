@@ -240,7 +240,7 @@ mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 ```
 
-- Create (or modify) a `~/.profile` file and add this line:
+- Create (or modify) a `~/.profile` file:
 
 ```bash
 sudo nano ~/.profile
@@ -436,6 +436,10 @@ git push
 
 You will next deploy your Strapi project to your EC2 instance by **cloning it from GitHub**.
 
+::: note
+Cloning a GitHub repository requires a personal access token. See the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for how to generate and use a personal access token.
+:::
+
 From your terminal and logged into your EC2 instance as the `ubuntu` user:
 
 ```bash
@@ -489,6 +493,10 @@ module.exports = {
       script: 'npm', // For this example we're using npm, could also be yarn
       args: 'start', // Script to start the Strapi server, `start` by default
       env: {
+        APP_KEYS: 'your app keys', // you can find it in your project .env file.
+        API_TOKEN_SALT: 'your api token salt',
+        ADMIN_JWT_SECRET: 'your admin jwt secret',
+        JWT_SECRET: 'your jwt secret',
         NODE_ENV: 'production',
         DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
         DATABASE_PORT: '5432',
@@ -752,7 +760,7 @@ After=network.target
 Environment=PATH=/PASTE-PATH_HERE #path from echo $PATH (as above)
 Type=simple
 User=ubuntu #replace with your name, if changed from default ubuntu user
-ExecStart=/usr/bin/nodejs /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
+ExecStart=/usr/bin/node /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
 Restart=on-failure
 
 [Install]

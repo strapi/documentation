@@ -308,6 +308,10 @@ heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= 
 heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
 ```
 
+:::tip
+On Windows, variables can be set manually by running the `heroku config:set VARIABLE=your-key-here` for each variable.
+:::
+
 The following `openssl` commands will generate random new secrets (Mac and Linux only):
 
 ```bash
@@ -344,7 +348,7 @@ yarn add pg
 
 ::::::
 
-### 8. Commit your changes
+### 7. Commit your changes
 
 `Path: ./my-project/`
 
@@ -353,7 +357,7 @@ git add .
 git commit -m "Update database config"
 ```
 
-### 9. Update Yarn lockfile
+### 8. Update Yarn lockfile
 
 `Path: ./my-project/`
 
@@ -361,7 +365,7 @@ git commit -m "Update database config"
 yarn install
 ```
 
-### 10. Commit your changes
+### 9. Commit your changes
 
 `Path: ./my-project/`
 
@@ -370,7 +374,7 @@ git add yarn.lock
 git commit -m "Updated Yarn lockfile"
 ```
 
-### 11. Deploy
+### 10. Deploy
 
 `Path: ./my-project/`
 
@@ -410,6 +414,10 @@ git commit -am "Changes to my-project noted"
 git push heroku HEAD:main
 heroku open
 ```
+
+::: tip
+If you see the following issue while running the `git push` command: `'heroku' does not appear to be a git repository`, run the following command: `heroku git:remote -a your-app-name`.
+:::
 
 ## File Uploads
 

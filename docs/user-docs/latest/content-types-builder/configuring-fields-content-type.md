@@ -13,15 +13,18 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-types-builder/conf
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/latest/content-manager/writing-content.md)).
 
-In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
+In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of custom fields, components, and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
 
 ::: note
-Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
+Depending on which content-type or component is being created or edited, not all fields — including components and dynamic zones — are always available.
 :::
 
+<!-- TODO update screenshot with final version -->
 <img src="../assets/content-types-builder/fields-selection.png" alt="Field selection" width="80%">
 
 ## Regular fields
+
+Regular fields are Strapi's default, built-in types of fields. Regular fields are listed in the _Default_ tab when selecting a field for a content-type.
 
 ### <img width="28" src="../assets/icons/ctb_text.svg"> Text
 
@@ -391,6 +394,17 @@ The UID field displays a field that sets a unique identifier, optionally based o
 :::
 
 ::::
+
+::: tip
+The UID field can be used to create a slug based on the Attached field.
+:::
+
+<!-- TODO: maybe add an icon to the title below, just like with all other sections, if we have generic "custom field" icon? -->
+## Custom fields
+
+Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
+
+Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 ## <img width="28" src="../assets/icons/ctb_component.svg"> Components
 

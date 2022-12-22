@@ -1,5 +1,5 @@
 const themeConfig = {
-  logo: '/assets/logo.svg',
+  logo: '/assets/logo.png',
   nav: [
     {
       text: 'Resource Center',
@@ -87,15 +87,15 @@ const themeConfig = {
             },
           ]
         },
-        {
-          text: 'Pre-release Documentation',
-          items: [
-            {
-              text: 'docs-next',
-              link: 'https://docs-next.strapi.io',
-            },
-          ]
-        },
+        // { // temporarily disabled while we move to Docusaurus
+        //   text: 'Pre-release Documentation',
+        //   items: [
+        //     {
+        //       text: 'docs-next',
+        //       link: 'https://docs-next.strapi.io',
+        //     },
+        //   ]
+        // },
       ],
     },
     {

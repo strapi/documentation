@@ -179,7 +179,7 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
 
     | Variable name       | Value            |
     |---------------------|------------------|
-    |`URL`                | `${APP_URL}`     |
+    | `APP_URL`           | `${APP_URL}`     |
     | `DATABASE_HOST`     | `${db.HOSTNAME}` |
     | `DATABASE_PORT`     | `${db.PORT}`     |
     | `DATABASE_NAME`     | `${db.DATABASE}` |
@@ -299,7 +299,7 @@ export default ({ env }) => ({
       user,
       password,
       ssl: {
-        rejectUnauthorized: false,
+        ca: env('DATABASE_CA'),
       },
     },
       debug: false,
@@ -329,6 +329,14 @@ After creating the managed database, navigate to the application page:
 2. Select *Previously Created DigitalOcean Database*.
 3. Use the picklist to select the previously created database.
 4. Click **Attach Database**.
+
+### Configure environment variables for production-ready managed database
+Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables, inserting your database name (e.g. `db-postgresql-nyc3-1234`) in place of `dbClusterName`:
+
+    | Variable name       | Value                          |
+    |---------------------|--------------------------------|
+    | `DATABASE_URL`      | `${dbClusterName.DATABASE_URL}`|
+    | `DATABASE_CA`       | `${dbClusterName.CA_CERT}`     |
 
 After attaching the database, DigitalOcean will attempt to auto-deploy the application. If the deployment is successful a link to the application will be provided at the top of the application page.
 
