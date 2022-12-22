@@ -156,10 +156,6 @@ We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your 
 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
 
-<code-group>
-
-<code-block title="JAVASCRIPT">
-
 ```js
 // path: `./server.js`
 
@@ -167,21 +163,10 @@ const strapi = require('@strapi/strapi');
 strapi(/* {...} */).start();
 ```
 
-</code-block>
+:::note
 
-<code-block title="TYPESCRIPT">
-
-```ts
-// path: `./server.js`
-
-const strapi = require('@strapi/strapi');
-const app = strapi({ distDir: '<path_to_your_out_dir>' });
-app.start();
-```
-
-</code-block>
-
-</code-group>
+If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
+:::
 
 ### Advanced configurations
 
