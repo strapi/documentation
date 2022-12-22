@@ -18,8 +18,8 @@ export default function InteractiveProjectStructure() {
       ├──── config <span class="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api.html">api.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/admin-panel.html">admin.js</a><br/>
-      │     ├ <a href="/dev-docs/configurations/cronjobs.html">cron-tasks.js</a><br/>
-      │     ├ <a href="/dev-docs/configurations/databases.html#database-configuration">database.js</a><br/>
+      │     ├ <a href="/dev-docs/configurations/cron.html">cron-tasks.js</a><br/>
+      │     ├ <a href="/dev-docs/configurations/database.html#database-configuration">database.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/middlewares.html">middlewares.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/plugins.html">plugins.js</a><br/>
       │     └ <a href="/dev-docs/configurations/server.html#server-configuration">server.js</a><br/>
@@ -40,7 +40,7 @@ export default function InteractiveProjectStructure() {
       │     │           │           └ <a href="/dev-docs/backend-customization/models.html#lifecycle-hooks">lifecycles.js</a><br/>
       │     │           │           └ <a href="/dev-docs/backend-customization/models.html#model-schema">schema.json</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/controllers.html">controllers</a><br/>
-      │     │           ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/middlewares.html">middlewares</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/routes.html">routes</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/services.html">services</a><br/>
@@ -54,21 +54,21 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
       │     │           │           └ schema.json<br/>
-      │     │           └ <a href="/devr-docs/api/plugins/server-api.html">strapi-server.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api.html">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
       │     │     └──── (middleware-name).js<br/>
       │     ├──── <a href="/dev-docs/plugins-development.html">plugins</a> <span class="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/api/admin-panel-api.html">index.js</a><br/>
-      │     │           ├──── <a href="/dev-docs/latest/api/server-api.html">server</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#content-types">content-types</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/server-api.html#controllers">controllers</a><br/>
-      │     │           │     └──── <a href="/dev-docs/api/server-api.html#policies">policies</a><br/>
+      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api.html">index.js</a><br/>
+      │     │           ├──── <a href="/dev-docs/api/plugins/server-api.html">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api.html#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api.html#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/api/plugins/server-api.html#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/api/admin-panel-api.html">strapi-admin.js</a><br/>
-      │     │           └ <a href="/dev-docs/api/server-api.html#">strapi-server.js</a><br/>
+      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api.html">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api.html#">strapi-server.js</a><br/>
       │     ├─── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
       │     └ <a href="/dev-docs/configurations/functions.html">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ <a href="/dev-docs/configurations/environment.html">.env</a><br/>
@@ -89,8 +89,8 @@ export default function InteractiveProjectStructure() {
       ├──── config <span class="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api.html">api.ts</a><br/>
       │     ├  <a href="/dev-docs/configurations/admin-panel.html">admin.ts</a><br/>
-      │     ├ <a href="/dev-docs/configurations/cronjobs.html">cron-tasks.ts</a><br/>
-      │     ├ <a href="/dev-docs/configurations/databases.html#database-configuration">database.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/cron.html">cron-tasks.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/database.html#database-configuration">database.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/middlewares.html">middlewares.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/plugins.html">plugins.ts</a><br/>
       │     └ <a href="/dev-docs/configurations/server.html#server-configuration">server.ts</a><br/>
@@ -114,7 +114,7 @@ export default function InteractiveProjectStructure() {
       │     │           │           └ <a href="/dev-docs/backend-customization/models.html#lifecycle-hooks">lifecycles.s</a><br/>
       │     │           │           └ <a href="/dev-docs/backend-customization/models.html#model-schema">schema.json</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/controllers.html">controllers</a><br/>
-      │     │           ├──── <a href="/dev-docs/configurations/middlewares.html">middlewares</a><br/>
+      │     │           ├──── <a href="/dev-docs/backend-customization/middlewares.html">middlewares</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/policies.html">policies</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/routes.html">routes</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/services.html">services</a><br/>
