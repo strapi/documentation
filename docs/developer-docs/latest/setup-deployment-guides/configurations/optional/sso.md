@@ -127,7 +127,7 @@ module.exports = [
 
 <code-block title="TYPESCRIPT">
 
-```jsx
+```ts
 // path: ./config/middlewares.ts
 
 export default [
