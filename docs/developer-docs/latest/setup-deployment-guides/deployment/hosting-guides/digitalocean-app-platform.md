@@ -16,7 +16,7 @@ Strapi maintains deployment guides to assist users in deploying projects. Since 
 
 Prior to starting the deployment process each user needs:
 
-- a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
+- a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$200 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join) and [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
 
