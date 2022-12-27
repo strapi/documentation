@@ -62,6 +62,63 @@ test
 - Click `Review and Launch`
 - Create a new key pair and save the `.pem` file. You will need this file later in the process.
 - Click the `Launch Instances` button.
+
+### Configure the security settings
+
+Configure the security settings as follows:
+  1. Assign a security group:** Check as `Create a new security group`.
+  2. Name the security group e.g. `strapi`.
+  3. Add the following security settings:
+
+| Type              | Protocol | Port range | Source            |
+|-------------------|----------|------------|-------------------|
+| `SSH`             | `TCP`    | `22`       | `0.0.0.0/0`       |
+| `SSH`             | `TCP`    | `22`       | `::/0`            |
+| `HTTP`            | `TCP`    | `80`       | `0.0.0.0/0, ::/0` |
+| `HTTPS`           | `TCP`    | `443`      | `0.0.0.0/0, ::/0` |
+| `Custom TCP Rule` | `TCP`    | `1337`     | `0.0.0.0/0`       |
+
+The `Custom TCP Rule` is the Strapi testing port.
+
+:::
+
+::: tab Azure
+
+:::
+
+::: tab DigitalOcean Droplet
+
+:::
+ 
+
+
+::::
+
+## Connect to your VM
+
+:::: tabs card
+
+::: tab AWS
+
+You need the `IPv4 Public OP` for your `EC2` instance and the `.pem` file downloaded earlier. 
+
+1. Move the `.pem` file to your `ssh` directory:
+
+    ```bash
+
+  mv ec2-strapi-key-pair.pem ~/.ssh/
+  chmod 400 ~/.ssh/ec2-strapi-key-pair.pem
+
+    ```
+
+2. login to your server:
+
+    ```bash
+    # Replace 1.2.3.4 with your IPv4 Public OP
+    ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@1.2.3.4
+    ```
+
+
 :::
 
 ::: tab Azure
@@ -75,6 +132,10 @@ test
 
 
 ::::
+
+
+
+
 
 ## Install and setup a NodeJS sever
 
