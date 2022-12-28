@@ -194,4 +194,12 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 
 ## Transfer data using the CLI tool
 
-The `strapi transfer` command allows you to transfer data using a `GET` request from your remote instance to your local instance.
+The `strapi transfer` command allows you to transfer data from your local instance to your remote instance. 
+
+
+#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance. 
+
+To transfer data to your remote instance run the following command in your local instance root directory:
+
+```bash
+yarn strapi tranfer --to <remote-instance-URL>
