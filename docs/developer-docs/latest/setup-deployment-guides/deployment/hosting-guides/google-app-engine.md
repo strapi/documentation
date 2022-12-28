@@ -304,3 +304,24 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
+
+### Troubleshooting
+The following are common issues during deployment:
+
+#### `unknown: Service 'containerregistry.googleapis.com' is not enabled for consumer`
+
+Solution:
+1. Type `containerregistry` in the search input of Google cloud panel.
+2. In search results select the item with an API icon.
+3. Disable and enable it again.
+4. Find and enable CloudBuild API.
+5. Deploy your project.
+
+#### `connect ECONNREFUSED /cloudsql/strapi-0000:europe-west1:strapi/.s.PGSQL.5432`
+
+Solution:
+1. Find the Cloud SQL Admin API.
+2. Enable the Cloud SQL Admin API.
+3. Deploy your project.
+
+

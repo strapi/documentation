@@ -102,8 +102,7 @@ The `info` key in the model's schema describes information used to display the m
 | `displayName`  | String | Default name to use in the admin panel                                                                                                      |
 | `singularName` | String | Singular form of the content-type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case. |
 | `pluralName`   | String | Plural form of the content-type name.<br>Used to generate the API routes and databases/tables collection.<br><br>Should be kebab-case.    |
-| `description`  | String | Description of the model                                                                                                                   |
-| `icon`<br><br>_Optional,_<br>_only for Components_       | String      | [FontAwesome](https://fontawesome.com/) (v5) icon name to use for the component's icon in the admin panel
+| `description`  | String | Description of the model
 
 ```json
 // ./src/api/[api-name]/content-types/restaurant/schema.json
