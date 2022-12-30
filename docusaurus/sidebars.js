@@ -149,7 +149,8 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/typescript'
+        'dev-docs/typescript',
+        'dev-docs/providers'
       ]
     },
 
