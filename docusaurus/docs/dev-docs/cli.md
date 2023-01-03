@@ -104,7 +104,7 @@ options: [--browser <name>]
 
 [Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
-```bash
+```sh
 strapi export
 ```
 
@@ -120,7 +120,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 **Examples**
 
-```bash title="Examples of strapi export:"
+```sh title="Examples of strapi export:"
 strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
 strapi export --no-encrypt # exports your data without encryption. 
 ```
@@ -129,7 +129,7 @@ strapi export --no-encrypt # exports your data without encryption.
 
 [Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
-```console
+```sh
 strapi import
 ```
 
@@ -141,7 +141,7 @@ strapi import
 
 **Examples**
 
-```bash title="Example of strapi import:"
+```sh title="Example of strapi import:"
 
 # import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
