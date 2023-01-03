@@ -8,6 +8,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 # Data Management System <BetaBadge />
 
 :::callout 🚧 Feature under development
+You can test beta features in a new application by using the following installation command in your terminal:
+
+``` bash
+npx create-strapi-app@beta <application name>
+```
+
 The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io).
 :::
 
