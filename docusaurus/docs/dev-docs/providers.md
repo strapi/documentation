@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/providers
 
 # Providers
 
-Certain [plugins](../../../user-docs/plugins/introduction-to-plugins) can be extended via the installation and configuration of additional [providers](../../../user-docs/plugins/introduction-to-plugins#providers).
+Certain [plugins](../../../user-docs/plugins) can be extended via the installation and configuration of additional [providers](../../../user-docs/plugins#providers).
 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
