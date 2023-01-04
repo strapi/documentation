@@ -104,7 +104,7 @@ options: [--browser <name>]
 
 [Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
-```sh
+```bash
 strapi export
 ```
 
@@ -120,16 +120,19 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 **Examples**
 
-```sh title="Examples of strapi export:"
-strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
-strapi export --no-encrypt # exports your data without encryption. 
+```bash title="Examples of strapi export:"
+# export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
+strapi export -f myData 
+
+# export your data without encryption.
+strapi export --no-encrypt  
 ```
 
 ## strapi import <BetaBadge />
 
 [Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
-```sh
+```bash
 strapi import
 ```
 
@@ -137,11 +140,11 @@ strapi import
 |--------------------|--------|-------------------------------------------------------------------------------|
 | `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
 | `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |        | Display the `strapi import` help commands.                                |
+| `-h`, `--help`         |    -    | Display the `strapi import` help commands.                               |
 
 **Examples**
 
-```sh title="Example of strapi import:"
+```bash title="Example of strapi import:"
 
 # import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
