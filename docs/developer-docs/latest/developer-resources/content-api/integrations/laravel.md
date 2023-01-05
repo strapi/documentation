@@ -6,20 +6,17 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with Laravel
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide follows the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) and assumes you have fully completed its "Hands-on" path and can consume the API by browsing this [url](http://localhost:1337/restaurants).
 
-Should you wish to use standalone PHP, you may also be interested in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
+Should you wish to use standalone PHP, see the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
 
 This guide assumes you already have [Laravel installed](https://laravel.com/docs/9.x/installation) and are familiar with the basics of the framework.
 
-
 ## Using the native Laravel Http Client
 
-Following the official Laravel documentation, you can easily make a Strapi Macro to integrated it to the Http client from Laravel : 
+Following the official [Laravel Macros documentation](https://laravel.com/docs/9.x/http-client#macros), you can make a Strapi Macro to integrate to the `http` client from Laravel: 
 
-https://laravel.com/docs/9.x/http-client#macros : 
-
-In App\Providers\AppServiceProvider (or your ServiceProvider) :
+In `App\Providers\AppServiceProvider` (or your `ServiceProvider`):
 
 ```php
 use Illuminate\Support\Facades\Http;
@@ -39,7 +36,7 @@ public function boot()
 }
 ```
 
-Create new config file for strapi in config/strapi.php
+Create new config file for strapi in `config/strapi.php`:
 
 ```php
   return [
@@ -97,7 +94,7 @@ $restaurants = $strapi->collection('restaurants');
 ```
 :::
 
-You may now iterate over the $restaurants array which will contain all your restaurants. More options are available as well: 
+You may now iterate over the `$restaurants` array, which will contain all your restaurants. More options are available as well: 
 
 ```php
 $restaurants = $strapi->collection('restaurants', $sortKey = 'id', $sortOrder = 'DESC', $limit = 20, $start = 0, $fullUrls = true);
@@ -131,9 +128,8 @@ $strapi = new Dbfx\LaravelStrapi();
 $entry = $strapi->entry('restaurants', $id = 5);
 ```
 
-
 ## Conclusion
 
-Here is how to request your collection types in Strapi using Laravel. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
+We've showed how to request your collection types in Strapi using Laravel. When you create a collection type or a single type you will have a number of REST API endpoints available to interact with.
 
-There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) or in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
+There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) and in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
