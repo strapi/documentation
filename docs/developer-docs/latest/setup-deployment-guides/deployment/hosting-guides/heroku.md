@@ -144,8 +144,17 @@ export default ({ env }) => ({
 
     </code-group>
 
-7. Verify that all of the new and modified files are saved locally.
-8. Commit the project to a local repository:
+7. Add `package.json` to the end of the `.gitignore` file at the root of your Strapi project:
+
+      ```sh
+      # path: ./.gitignore
+      package-lock.json
+      ```
+    :::note
+    It is usually recommended to version the `package.json` file, but it is known to cause issues on Heroku.
+    :::
+8. Verify that all of the new and modified files are saved locally.
+9. Commit the project to a local repository:
 
     ```sh
     git init
@@ -200,17 +209,6 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
     heroku login
     ```
 
-3. Add `package.json` to the end of the `.gitignore` file at the root of your Strapi project:
-
-      ```sh
-      # path: ./.gitignore
-      package-lock.json
-      ```
-
-:::note
-It is usually recommended to version the `package.json` file, but it is known to cause issues on Heroku.
-:::
-
 
 ### Create a Heroku project
 
@@ -236,35 +234,25 @@ Your local development environment is now set-up and configured to work with Her
 
 ### Create a Heroku Database
 
-The following procedure creates and connects a PostgreSQL database with your project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs. these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
-
-1. Install the [Heroku Postgres addon](https://elements.heroku.com/addons/heroku-postgresql).
+The following command creates and connects a PostgreSQL database with your project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
 
 ```bash
 #Path: ./my-project/
 heroku addons:create heroku-postgresql:<PLAN_NAME>
 ```
 
-2. Retrieve database `DATABASE_URL` string by running the following command in your terminal:
+You can retrieve the database credentials, which are stored as a string, with the config var name `DATABASE_URL` by running the following command in your terminal:
 
 ```bash
 # path: ./my-project/
 heroku config
 ```
 
-The command output has the form `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`.
-
-(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** / **DATABASE_NAME\***)
-
-<!-- not good here--> You also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
-
-```bash
-heroku config:set NODE_ENV=production
-```
+The command output has the form `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`. The string has the structure `postgres://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
 
 ### Populate the environment variables
 
-You need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This populates the variable with something like `https://your-app.herokuapp.com`.
+You need to set the environment variables in Heroku for the database, server url, and secrets. The following commands set each variable:
 
 ```bash
 heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
@@ -272,6 +260,7 @@ heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
 heroku config:set API_TOKEN_SALT=$(cat .env | grep API_TOKEN_SALT | cut -d= -f2)
 heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= -f2)
 heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
+heroku config:set NODE_ENV=production
 ```
 
 :::tip
@@ -287,24 +276,7 @@ heroku config:set ADMIN_JWT_SECRET=$(openssl rand -base64 32)
 heroku config:set JWT_SECRET=$(openssl rand -base64 32)
 ```
 
-8. Commit your changes:
-
-```bash
-# path: ./my-project/
-git add .
-git commit -m "Update config"
-```
-
-9. Update Yarn lockfile and commit the change:
-
-```bash
-# path: ./my-project/
-yarn install
-git add yarn.lock
-git commit -m "Updated Yarn lockfile"
-```
-
-### 10. Deploy
+### Deploy your application to Heroku
 
 In the project root directory run the `git push heroku HEAD:main` CLI command to push your project to the Heroku server:
 
@@ -320,7 +292,7 @@ The deployment may take a few minutes. At the end, logs will display the url of 
 heroku open
 ```
 
-If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new and empty.
+If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new and empty. Add `/admin` to the end of your website address to access the signup page.
 
 ## Project updates
 
@@ -347,21 +319,4 @@ If you see the following issue while running the `git push` command: `'heroku' d
 
 Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
 
-Due to Heroku's filesystem you will need to use an upload provider such as AWS S3 or Cloudinary. You can view the documentation for installing providers [here](/developer-docs/latest/development/providers.md) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
-
-## Gzip
-
-As of version `3.2.1`, Strapi uses [`koa-compress`](https://github.com/koajs/compress) v5, which enables [Brotli](https://en.wikipedia.org/wiki/Brotli) compression by default. At the time of writing, the default configuration for Brotli results in poor performance, causing very slow response times and potentially response timeouts. If you plan on enabling the [gzip middleware](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#internal-middlewares-configuration-reference), it is recommended that you disable Brotli or define better configuration params.
-
-To disable Brotli, provide the following configuration in `config/middleware.js`.
-
-```json
-gzip: {
-  enabled: true,
-  options: {
-    br: false
-  }
-},
-```
-
-For more on Brotli configuration for `koa-compress`, reference [this issue](https://github.com/koajs/compress/issues/121).
+Due to Heroku's filesystem you need to use an upload provider such as AWS S3 or Cloudinary. You can view the documentation for installing providers [here](/developer-docs/latest/development/providers.md) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
