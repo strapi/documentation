@@ -14,185 +14,20 @@ For security reasons, the Content-type Builder is disabled in production. Change
 
 ## Prepare the deployment
 
-Prior to starting the deployment process each user needs:
+Prior  to starting the deployment process each user needs:
 
-- a [free Heroku account](https://signup.heroku.com/),
+- a [Heroku account](https://signup.heroku.com/),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
 
-### Install the Heroku CLI tool
 
-Download and install the `Heroku CLI` tool for your operating system:
+## Setup a Strapi project for deployment
 
-:::: tabs card
+Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
 
-::: tab Ubuntu
-Run the following from your terminal:
-
-```bash
-sudo snap install --classic heroku
-```
-
-:::
-
-::: tab Mac
-[Download the installer](https://cli-assets.heroku.com/heroku.pkg)
-
-Also available via Homebrew:
-
-```bash
-brew tap heroku/brew && brew install heroku
-```
-
-:::
-
-::: tab Windows
-Download the appropriate installer for your Windows installation:
-
-- [64-bit installer](https://cli-assets.heroku.com/heroku-x64.exe)
-- [32-bit installer](https://cli-assets.heroku.com/heroku-x86.exe)
-  :::
-
-::::
-
-### Login to Heroku from your CLI
-
-To login to Heroku from your computer run the following command in your terminal:
-
-```bash
-heroku login
-```
-
-Follow the instructions and return to your command line.
-
-### Update `.gitignore`
-
-Add `package.json` to the end of the `.gitignore` file at the root of your Strapi project:
-
-`Path: ./my-project/.gitignore`
-
-```json
-package-lock.json
-```
-
-:::note
-It is usually recommended to version the `package.json` file, but it is known to cause issues on Heroku.
-:::
-
-### Initiate a Git repository and commit your project
-
-Initiate a Git repository and commit your project:
-
-```bash
-cd my-project
-git init
-git add .
-git commit -m "Initial Commit"
-```
-
-### Create a Heroku project
-
-Create a new Heroku project by running the following command in the root directory of your Strapi project:
-
-```bash
-# path: ./my-project/
-heroku create
-```
-
-You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL) for you.
-
-:::tip
-If you have a Heroku project app already created, you would use the following step to initialize your local project folder:
-
-`Path: ./my-project/`
-
-```bash
-heroku git:remote -a your-heroku-app-name
-```
-
-:::
-
-Your local development environment is now set-up and configured to work with Heroku. You have a new Strapi project and a new Heroku app ready to be configured to work with a database and with each other.
-
-### 7. Heroku Database set-up
-
-Below you will find the database options, when working with Heroku. Please choose the correct database (e.g. PostgreSQL) and follow those instructions.
-
-
-## Heroku Postgres
-
-Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
-
-1. Install the [Heroku Postgres addon](https://elements.heroku.com/addons/heroku-postgresql) for using Postgres.
-
-To make things even easier, Heroku provides a powerful addon system. In this section, you are going to use the Heroku Postgres addon, which provides a free "Hobby Dev" plan. If you plan to deploy your app in production, it is highly recommended switching to a paid plan.
-
-```bash
-#Path: ./my-project/
-heroku addons:create heroku-postgresql:hobby-dev
-```
-2. Install the `pg` node module:
-
-Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
-
-`Path: ./my-project/`
-
-<code-group>
-
-<code-block title="NPM">
-```sh
-npm install pg --save
-```
-</code-block>
-
-<code-block title="YARN">
-```sh
-yarn add pg
-```
-</code-block>
-
-</code-group>
-
-
-3. Retrieve database credentials:
-
-The add-on automatically exposes the database credentials into a single environment variable accessible by your app. To retrieve it, type:
-
-`Path: ./my-project/`
-
-```bash
-heroku config
-```
-
-This should print something like this: `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`.
-
-(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** / **DATABASE_NAME\***)
-
-4. Set Database variables automatically
-
-Strapi expects a variable for each database connection configuration (host, username, etc.). So, from the url above, Strapi will deconstruct that environment variable using [pg-connection-string](https://www.npmjs.com/package/pg-connection-string) package. Heroku will sometimes change the above url, so it's best to automate the deconstruction of it, as Heroku will automatically update the `DATABASE_URL` environment variable.
-
-Install the package:
-
-<code-group>
-
-<code-block title="NPM">
-```sh
-npm install pg-connection-string --save
-```
-</code-block>
-
-<code-block title="YARN">
-```sh
-yarn add pg-connection-string
-```
-</code-block>
-
-</code-group>
-
-5. Create your Heroku database config file for production
-
-Create new subfolders in `./config` like so: `/env/production`, then create a new `database.js` in it (see [environment documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md)). Your path should look like this: `./config/env/production/database.js`. When you run locally you should be using the `./config/database.js` which could be set to use SQLite, however it's recommended you use PostgreSQL locally also, for information on configuring your local database, please see the [database documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md).
+1. Add a production configuration environment by creating a sub-directory `./config/env/production`.
+2. Create `database.js` inside the `./config/env/production` directory.
+3. Add the following code snippet to the `database` configuration file:
 
 <code-group>
 <code-block title="JAVASCRIPT">
@@ -252,15 +87,8 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-You also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
-
-```bash
-heroku config:set NODE_ENV=production
-```
-
-6. Create your Strapi server config for production
-
-Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) folder. In this file you only need one key, the `url`, to notify Strapi what our public Heroku domain is. All other settings will automatically be pulled from the default `./config/server.js`.
+4. Create `server.js` inside the `./config/env/production` directory.
+5. Add the code snippet to the `server` configuration file:
 
 <code-group>
 
@@ -270,8 +98,12 @@ Create a new `server.js` in a new [env](/developer-docs/latest/setup-deployment-
 // Path: ./config/env/production/server.js
 
 module.exports = ({ env }) => ({
-  url: env('MY_HEROKU_URL'),
-});
+        proxy: true,
+        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        app: { 
+          keys: env.array('APP_KEYS')
+        },
+    });
 
 ```
 
@@ -283,13 +115,154 @@ module.exports = ({ env }) => ({
 ```ts
 // Path: ./config/env/production/server.js`
 export default ({ env }) => ({
-  url: env('MY_HEROKU_URL'),
-});
+        proxy: true,
+        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        app: { 
+          keys: env.array('APP_KEYS')
+        },
+    });
 ```
 
 </code-block>
 </code-group>
 
+6. Add PostgreSQL dependencies by installing [`pg` package](https://www.npmjs.com/package/pg) and [`pg-connection-string` package](https://www.npmjs.com/package/pg-connection-string):
+
+    <code-group>
+
+    <code-block title="NPM">
+    ```sh
+    npm install pg && npm install pg-connection-string
+    ```
+    </code-block>
+
+    <code-block title="YARN">
+    ```sh
+    yarn add pg && yarn add pg-connection-string
+    ```
+    </code-block>
+
+    </code-group>
+
+7. Verify that all of the new and modified files are saved locally.
+8. Commit the project to a local repository:
+
+    ```sh
+    git init
+    git add .
+    git commit -m "commit message"
+    ```
+
+
+## Create and configure a Heroku App
+
+Deploying to Heroku requires installing the CLI tool, creating an App, connecting the App to a database, and setting environment variables. At the end of the following steps a Strapi application should be successfully deployed.
+
+### Install and use the Heroku CLI
+
+1. Use the following OS-specific installation instructions to install the Heroku CLI tool:
+
+      :::: tabs card
+
+      ::: tab Ubuntu
+      Run the following from your terminal:
+
+      ```bash
+      sudo snap install --classic heroku
+      ```
+
+      :::
+
+      ::: tab Mac
+      [Download the installer](https://cli-assets.heroku.com/heroku.pkg)
+
+      Also available via Homebrew:
+
+      ```bash
+      brew tap heroku/brew && brew install heroku
+      ```
+
+      :::
+
+      ::: tab Windows
+      Download the appropriate installer for your Windows installation:
+
+      - [64-bit installer](https://cli-assets.heroku.com/heroku-x64.exe)
+      - [32-bit installer](https://cli-assets.heroku.com/heroku-x86.exe)
+        :::
+
+      ::::
+
+2. Login to Heroku from your CLI, following the command-line instructions:
+
+
+    ```bash
+    heroku login
+    ```
+
+3. Add `package.json` to the end of the `.gitignore` file at the root of your Strapi project:
+
+      ```sh
+      # path: ./.gitignore
+      package-lock.json
+      ```
+
+:::note
+It is usually recommended to version the `package.json` file, but it is known to cause issues on Heroku.
+:::
+
+
+### Create a Heroku project
+
+Create a new Heroku project by running the following command in the root directory of your Strapi project:
+
+```bash
+# path: ./my-project/
+heroku create
+```
+
+:::tip
+You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL) for you.
+:::
+
+If you have a Heroku project app already created, you can use the following command to initialize your local project folder:
+
+```bash
+# path: ./my-project/
+heroku git:remote -a your-heroku-app-name
+```
+
+Your local development environment is now set-up and configured to work with Heroku.
+
+### Create a Heroku Database
+
+The following procedure creates and connects a PostgreSQL database with your project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs. these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
+
+1. Install the [Heroku Postgres addon](https://elements.heroku.com/addons/heroku-postgresql).
+
+```bash
+#Path: ./my-project/
+heroku addons:create heroku-postgresql:<PLAN_NAME>
+```
+
+2. Retrieve database `DATABASE_URL` string by running the following command in your terminal:
+
+```bash
+# path: ./my-project/
+heroku config
+```
+
+The command output has the form `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999sb4baf@ec2-50-37-231-192.compute-2.amazonaws.com: 5432/d516fp1u21ph7b`.
+
+(This url is read like so: \*postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** / **DATABASE_NAME\***)
+
+<!-- not good here--> You also need to set the `NODE_ENV` variable on Heroku to `production` to ensure this new database configuration file is used.
+
+```bash
+heroku config:set NODE_ENV=production
+```
+
+### Populate the environment variables
 
 You need to set the environment variable in Heroku for the `MY_HEROKU_URL`. This populates the variable with something like `https://your-app.herokuapp.com`.
 
@@ -319,11 +292,10 @@ heroku config:set JWT_SECRET=$(openssl rand -base64 32)
 ```bash
 # path: ./my-project/
 git add .
-git commit -m "Update database config"
+git commit -m "Update config"
 ```
 
 9. Update Yarn lockfile and commit the change:
-`
 
 ```bash
 # path: ./my-project/
@@ -349,12 +321,6 @@ heroku open
 ```
 
 If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new and empty.
-
-You can now continue with the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md), if you have any questions on how to proceed.
-
-::: caution
-For security reasons, the Content-type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
-:::
 
 ## Project updates
 
