@@ -59,7 +59,7 @@ Keep the following requirements in mind when creating a template:
 * Templates must follow a specific file structure, containing the following at the repository's root:
     * [`template` directory](#template-directory)
     * [`package.json` file](https://docs.npmjs.com/creating-a-package-json-file)
-    * `[template.json` file](#template-json-file)
+    * [`template.json` file](#template-json-file)
 
 This structure can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
 
