@@ -6,10 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Templates
 
-A template is a pre-made Strapi configuration designed for a specific use case. It allows bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md), [components](/developer-docs/latest/development/backend-customization/models.html#components-2) and [dynamic zones](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones), and [plugins](/developer-docs/latest/plugins/plugins-intro.html).
+Templates are pre-made Strapi configurations designed for specific use cases. They allow bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/latest/content-types-builder/introduction-to-content-types-builder.md), [components](/developer-docs/latest/development/backend-customization/models.html#components-2) and [dynamic zones](/developer-docs/latest/development/backend-customization/models.html#dynamic-zones), and [plugins](/developer-docs/latest/plugins/plugins-intro.html).
 
-::: strapi Templates vs. starters
-- A **template** is a pre-made Strapi configuration. A template is not a configured application and cannot be run on its own since it lacks many files (e.g. database configurations, `package.json`, etc.). A template is only useful once applied on top of a default Strapi app via the CLI.
+::: strapi Templates vs. Starters
+- A template is only useful once applied on top of a default Strapi app via the CLI. It is not a configured application and cannot be run on its own since it lacks many files (e.g. database configurations, `package.json`, etc.).
 - A **[starter](https://strapi.io/starters)** is a pre-made frontend application that consumes a Strapi API.
 :::
 
@@ -48,48 +48,36 @@ The `--template` option can be used in combination with all other `create-strapi
 
 ## Creating a template
 
-To create a Strapi template, publish a package with the following requirements:
+Templates are generated from a customized Strapi app and published to the npm package registry. Before creating a template make sure you have a Strapi app that matches your use case and that you have read the [template requirements](#requirements).
 
-* A template's only concern should be to adapt Strapi to a use case. It should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
+### Requirements
 
-* A template should follow a specific [file structure](#file-structure), which can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
+Keep the following requirements in mind when creating a template:
 
-  <code-group>
+* Templates should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
 
-    <code-block title="YARN">
-      yarn strapi templates:generate <path>
-    </code-block>
+* Templates must follow a specific file structure, containing the following at the repository's root:
+    * [`template` directory](#template-directory)
+    * [`package.json` file](https://docs.npmjs.com/creating-a-package-json-file)
+    * `[template.json` file](#templatejson-file)
 
-    <code-block title="NPM">
-      npx strapi templates:generate <path>
-    </code-block>
+This structure can be created manually or automatically generated with the [`strapi templates:generate` command](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate):
 
-  </code-group>
+<code-group>
 
-### File structure
+  <code-block title="YARN">
+    yarn strapi templates:generate <path>
+  </code-block>
 
-The root of the template repository can include as many files as necessary but must include at least:
+  <code-block title="NPM">
+    npx strapi templates:generate <path>
+  </code-block>
 
-* a `template` folder, 
-* a `package.json` file,
-* and a `template.json` file.
+</code-group>
 
-The `template.json` is used to extend the Strapi application's default `package.json`. All properties overwriting the default `package.json` should be included in a root `package` property:
+The repository root can contain any other files or directories desired, but **must** include the `template` directory, `package.json` file, and `template.json` file at a minimum.
 
-```json
-// path: ./template.json
-
-{
-  "package": {
-    "dependencies": {
-      "strapi-plugin-graphql": "^4.0.0"
-    },
-    "scripts": {
-      "custom": "node ./scripts/custom.js"
-    }
-  }
-}
-```
+#### `template` directory
 
 The `template` directory is used to extend the file contents of a Strapi project and should only include the files that will overwrite the default Strapi app.
 
@@ -106,13 +94,32 @@ Only the following contents are allowed inside the `template` directory:
 If any unexpected file or directory is found, the installation will crash.
 :::
 
-### Step by step
+#### `template.json` file
 
-After reading the above rules, follow these steps to create your template:
+The `template.json` is used to extend the Strapi application's default `package.json`. All properties overwriting the default `package.json` should be included in a root `package` property:
 
-1. Create a standard Strapi app with `create-strapi-app`, using the `--quickstart` option.
+```json
+// path: ./template.json
+
+{
+  "package": {
+    "dependencies": {
+      "@strapi/plugin-graphql": "^4.0.0"
+    },
+    "scripts": {
+      "custom": "node ./scripts/custom.js"
+    }
+  }
+}
+```
+
+### Packaging and publishing
+
+With the above [requirements](#requirements) in mind, follow these steps to create and publish a template:
+
+1. [Create a standard Strapi app](../../getting-started/quick-start/) with `create-strapi-app`, using the `--quickstart` option.
 2. Customize your app to match the needs of your use case.
 3. Generate your template using the [CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-templates-generate) by running `strapi templates:generate <path>`
-4. Navigate to this path to see your generated template
-5. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. Otherwise, leave it as an empty object.
+4. Navigate to this path to see your generated template.
+5. If you have modified your app's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. If not, leave it as an empty object.
 6. Enter `npm publish` to make your template available on the npm package registry.
