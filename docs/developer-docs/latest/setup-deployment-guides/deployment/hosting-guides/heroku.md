@@ -12,8 +12,6 @@ The purpose of this guide is to allow users to deploy Strapi applications on Her
 For security reasons, the Content-type Builder is disabled in production. Changes to the content structure should be developed locally and then deployed to production.
 :::
 
-## Prepare the deployment
-
 Prior  to starting the deployment process each user needs:
 
 - a [Heroku account](https://signup.heroku.com/),
