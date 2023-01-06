@@ -1,7 +1,7 @@
 name: Documentation Bug Report
 description: Create a report to help us improve the Strapi documentation.
 title: "[Bug]: "
-labels: "type: bug, status: pending reproduction"
+labels: "type: bug"
 body:
   - type: input
     attributes:

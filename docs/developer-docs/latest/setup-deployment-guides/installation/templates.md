@@ -75,6 +75,7 @@ This structure can be created manually or automatically generated with the [`str
 
 </code-group>
 
+
 The repository root can contain any other files or directories desired, but **must** include the `template` directory, `package.json` file, and `template.json` file at a minimum.
 
 #### `template` directory

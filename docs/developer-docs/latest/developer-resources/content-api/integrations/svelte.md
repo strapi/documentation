@@ -48,9 +48,9 @@ No installation needed
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::::: tabs card
 
@@ -157,7 +157,7 @@ onMount(async () => {
   <ul>
   {#each restaurants as restaurant}
     <li>
-  		{restaurant.name}
+  		{restaurant.attributes.name}
     </li>
   {/each}
   </ul>
@@ -199,7 +199,7 @@ onMount(async () => {
 		  },
 		}).then(checkStatus)
       .then(parseJSON);
-		restaurants = res
+		restaurants = res.data
 	} catch (e) {
 		error = e
 	}
@@ -212,7 +212,7 @@ onMount(async () => {
   <ul>
   {#each restaurants as restaurant}
     <li>
-  		{restaurant.name}
+  		{restaurant.attributes.name}
     </li>
   {/each}
   </ul>
@@ -225,9 +225,9 @@ onMount(async () => {
 
 ## POST Request your collection type
 
-Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
+Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
-Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
+Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
 In this example a `japanese` category has been created which has the id: 3.
 
@@ -464,9 +464,9 @@ onMount(async () => {
 
 ## PUT Request your collection type
 
-Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
+Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
-Be sure that you activated the `put` permission for the `restaurant` Collection Type.
+Be sure that you activated the `put` permission for the `restaurant` collection type.
 
 ::::: tabs card
 
@@ -544,5 +544,5 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Svelte.
+Here is how to request your collection types in Strapi using Svelte.
 Learn more about Svelte with their [official tutorial](https://svelte.dev/tutorial/basics).

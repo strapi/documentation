@@ -5,7 +5,7 @@ description: Use a GraphQL endpoint in your Strapi project to fetch and mutate y
 
 # GraphQL
 
-By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) for each of your content types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 ## Usage
 
@@ -85,13 +85,15 @@ Please note the setting for GraphQL `tracing` as changed and has been moved to `
 module.exports = {
   //
   graphql: {
-    endpoint: '/graphql',
-    shadowCRUD: true,
-    playgroundAlways: false,
-    depthLimit: 7,
-    amountLimit: 100,
-    apolloServer: {
-      tracing: false,
+    config: {
+      endpoint: '/graphql',
+      shadowCRUD: true,
+      playgroundAlways: false,
+      depthLimit: 7,
+      amountLimit: 100,
+      apolloServer: {
+        tracing: false,
+      },
     },
   },
 };
@@ -809,7 +811,7 @@ There is no custom resolver in that case, so it will execute the default resolve
 
 ### Link a query or mutation to a controller action
 
-By default, the plugin will execute the actions located in the controllers that have been generated via the Content-Type Builder plugin or the CLI. For example, the query `restaurants` is going to execute the logic inside the `find` action in the `Restaurant.js` controller. It might happen that you want to execute another action or a custom logic for one of your queries.
+By default, the plugin will execute the actions located in the controllers that have been generated via the Content-type Builder plugin or the CLI. For example, the query `restaurants` is going to execute the logic inside the `find` action in the `Restaurant.js` controller. It might happen that you want to execute another action or a custom logic for one of your queries.
 
 ```js
 module.exports = {

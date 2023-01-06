@@ -7,69 +7,13 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 # REST API
 
-The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md#content-types) through API endpoints that Strapi automatically creates.
+The REST API allows accessing the [content-types](/developer-docs/latest/development/backend-customization/models.md) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) can be used when querying API endpoints to refine the results.
 
-[API parameters](#api-parameters) can be used to [filter](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering), [sort](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting), and [paginate](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) results and to [select fields](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) and relations to [populate](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population)). Additionally, specific parameters related to optional Strapi features can be used, like [publication state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state) and [locale](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale).
-
-## API Parameters
-
-Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`).
-
-The following parameters are available:
-
-| Operator           | Type          | Description                                           |
-| ------------------ | ------------- | ----------------------------------------------------- |
-| `sort`             | String/Array  | [Sorting the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#sorting) |
-| `filters`          | Object        | [Filter the response](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#filtering) |
-| `populate`         | String/Object | [Populate relations, components, or dynamic zones](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#population) |
-| `fields`           | Array         | [Select only specific fields to display](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md#field-selection) |
-| `pagination`       | Object        | [Page through entries](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination) |
-| `publicationState` | String        | [Select the draft & publish state](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
-| `locale`           | String/Array  | [Select one ore multiple locales](/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md#locale) |
-
-::::tip
-Strapi takes advantage of the ability of [`qs`](https://github.com/ljharb/qs) to parse nested objects to create more complex queries.
-Use `qs` directly to generate complex queries instead of creating them manually.
-
-:::details Example using qs
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  sort: ['title:asc'],
-  filters: {
-    title: {
-      $eq: 'hello',
-    },
-  },
-  populate: '*',
-  fields: ['title'],
-  pagination: {
-    pageSize: 10,
-    page: 1,
-  },
-  publicationState: 'live',
-  locale: ['en'],
-}, {
-  encodeValuesOnly: true, // prettify url
-});
-
-await request(`/api/books?${query}`);
-// GET /api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en
-```
-
-:::
-::::
-
-## API Endpoints
-
-Creating a content-type automatically creates some REST API endpoints available to interact with it.
-
-:::note
-[Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
+::: note
+The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md) to populate specific fields.
 :::
 
-### Endpoints
+## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:
 
@@ -99,7 +43,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::: tabs card
 
-::: tab Collection Type
+::: tab Collection type
 
 <div id="endpoint-table">
 
@@ -115,7 +59,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::
 
-::: tab Single Type
+::: tab Single type
 
 <div id="endpoint-table">
 
@@ -131,13 +75,13 @@ For each Content-Type, the following endpoints are automatically generated:
 
 ::::
 
-::::: details Examples
+::::: details Examples:
 
 :::: tabs card
 
-::: tab Collection Type
+::: tab Collection type
 
-`Restaurant` **Content Type**
+`Restaurant` **Content type**
 
 <div id="endpoint-table">
 
@@ -153,9 +97,9 @@ For each Content-Type, the following endpoints are automatically generated:
 
 :::
 
-::: tab Single Type
+::: tab Single type
 
-`Homepage` **Content Type**
+`Homepage` **Content type**
 
 <div id="endpoint-table">
 
@@ -171,9 +115,13 @@ For each Content-Type, the following endpoints are automatically generated:
 ::::
 :::::
 
-### Unified response format
+::: note
+[Components](/developer-docs/latest/development/backend-customization/models.md#components) don't have API endpoints.
+:::
 
-Whatever the query, the response is always an object with the following keys:
+## Requests
+
+Requests return a response as an object which usually includes the following keys:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
@@ -183,13 +131,16 @@ Whatever the query, the response is always an object with the following keys:
   - a list of entries, as an array of objects
   - a custom response
 
-- `meta`(object): information about pagination, publication state, available locales, etc.
+- `meta` (object): information about pagination, publication state, available locales, etc.
 
 - `error` (object, _optional_): information about any [error](/developer-docs/latest/developer-resources/error-handling.md) thrown by the request
 
+::: note
+Some plugins (including Users & Permissions and Upload) may not follow this response format.
+:::
 ### Get entries
 
-Returns entries matching the query filters (see [parameters](#api-parameters) documentation).
+Returns entries matching the query filters (see [API parameters](/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md) documentation).
 
 :::: api-call
 
@@ -236,7 +187,7 @@ Returns entries matching the query filters (see [parameters](#api-parameters) do
 
 ### Get an entry
 
-Returns an entry by id.
+Returns an entry by `id`.
 
 :::: api-call
 
@@ -273,7 +224,7 @@ Returns an entry by id.
 
 Creates an entry and returns its value.
 
-If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the Content API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/developer-docs/latest/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::: api-call
 
@@ -317,7 +268,8 @@ If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
-Fields that aren't sent in the query are not changed in the database. Send a `null` value if you want to clear them.
+
+Fields that aren't sent in the query are not changed in the database. Send a `null` value to clear fields.
 
 :::: api-call
 
@@ -350,17 +302,15 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 }
 ```
 
-:::
-
 ::::
 
 :::note
-If the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
+Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
 :::
 
 ### Delete an entry
 
-Deletes an entry by id and returns its value.
+Deletes an entry by `id` and returns its value.
 
 :::: api-call
 

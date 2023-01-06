@@ -1,0 +1,5 @@
+Run either `yarn` or `npm install` to install the upgraded version.
+
+::: tip
+If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
+:::

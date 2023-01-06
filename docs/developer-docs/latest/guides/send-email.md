@@ -18,9 +18,9 @@ What we want here is to add some custom logic and call the email service when a 
 
 To be able to do that, you have first to understand some concepts.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content-type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -28,11 +28,11 @@ And that is what we will do to add our custom code.
 
 ## Example
 
-To keep the code example easy to follow, we will just have a `Comment` content type and omit the `Author` and `Article` relations.
+To keep the code example easy to follow, we will just have a `Comment` content-type and omit the `Author` and `Article` relations.
 
-So lets create a `Comment` content type with just one **Text** field named `content`.
+So lets create a `Comment` content-type with just one **Text** field named `content`.
 
-When the content type is created, allow the create function for the Public role.
+When the content-type is created, allow the create function for the Public role.
 
 To check if bad words are in the comment we will use `bad-words` [node module](https://www.npmjs.com/package/bad-words). You will have to install it in your application.
 

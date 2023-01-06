@@ -13,19 +13,19 @@ This user guide contains the functional documentation related to all features av
 
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
 
-- **Development, Staging or Production Environment** <br> When you start working on your application, it is in a development environment, which is the status for the content structure and application configuration. After deploying your application, it is in production or staging environment. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-Type Builder. In this user guide the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
+- **Development, Staging or Production Environment** <br> When you start working on your application, it is in a development environment, which is the status for the content structure and application configuration. After deploying your application, it is in production or staging environment. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-type Builder. In this user guide the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
 
-- **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version. However, we always keep live both the documentation of the current Strapi version, and the documention of the previous one - the latter being officially and actively maintained for 6 months after the release of the newest Strapi version.
+- **Versions** <br> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version. However, we always keep live both the documentation of the current Strapi version, and the documentation of the previous one - the latter being officially and actively maintained for 6 months after the release of the newest Strapi version.
 
 - **License and Pricing Plans** <br> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or one of the 3 paid plans of the Enterprise Edition: Bronze, Silver, and Gold (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)). In this user guide if a feature is only available for the Enterprise Edition, a badge is displayed beside the section's title to indicate which plans allow access to that feature (e.g. <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted"/>).
 
-- **Roles and Permissions** <br> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end-users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
+- **Roles and Permissions** <br> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
 
 With all this in mind, you should be ready to start your Strapi experience!
 
 ## Accessing the admin panel
 
-The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end-users of your Strapi application.
+The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end users of your Strapi application.
 
 ::: caution
 In order to access the admin panel, your Strapi application must be launched, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
@@ -64,6 +64,7 @@ To modify your user information:
 | Email                 | Write your complete email address in the textbox.                                                       |
 | Username              | (optional) Write a username in the textbox.                                                             |
 | Interface language    | Among the drop-down list, choose a language for your Strapi application interface.                      |
+| Interface mode        | Among the drop-down list, choose a mode for your Strapi application interface: either "Light mode" or "Dark mode". Note that by default, the chosen mode for a Strapi application is based on the browser's mode. |
 
 4. Click on the **Save** button.
 

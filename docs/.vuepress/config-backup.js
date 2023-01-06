@@ -162,6 +162,10 @@ const sidebar = {
                   '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.md',
                   'Render',
                 ],
+                [
+                  '/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/microtica.md',
+                  'Microtica',
+                ],
               ],
               sidebarDepth: 2,
             },
@@ -347,6 +351,7 @@ const sidebar = {
         },
         ['/developer-docs/latest/developer-resources/cli/CLI', 'Command Line Interface'],
         ['/developer-docs/latest/developer-resources/error-handling.md', 'Error handling'],
+        ['/developer-docs/latest/developer-resources/database-migrations.md', 'Database migrations'],
         {
           title: 'Integrations',
           path: '/developer-docs/latest/developer-resources/content-api/integrations.html',
@@ -454,10 +459,10 @@ const sidebar = {
         ['/developer-docs/latest/guides/scheduled-publication', 'Scheduled publication'],
         // ['/developer-docs/latest/guides/secure-your-app', 'Secure your application'],
         // ['/developer-docs/latest/guides/send-email', 'Send email programmatically'],
-        // [
-        //   '/developer-docs/latest/guides/registering-a-field-in-admin',
-        //   'Registering a new field in the admin panel',
-        // ],
+        [
+          '/developer-docs/latest/guides/registering-a-field-in-admin',
+          'Registering a new field in the admin panel',
+        ],
         // ['/developer-docs/latest/guides/client', 'Setup a third party client'],
         ['/developer-docs/latest/guides/unit-testing', 'Unit testing'],
       ],
@@ -497,11 +502,11 @@ const sidebar = {
     },
     {
       collapsable: false,
-      title: 'Content-Type Builder',
+      title: 'Content-type Builder',
       children: [
         [
           '/user-docs/latest/content-types-builder/introduction-to-content-types-builder',
-          'Introduction to the Content-Type Builder',
+          'Introduction to the Content-type Builder',
         ],
         [
           '/user-docs/latest/content-types-builder/creating-new-content-type',
@@ -848,7 +853,7 @@ module.exports = {
                 link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
               },
               {
-                text: 'Content-Type Builder',
+                text: 'Content-type Builder',
                 link:
                   '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
               },

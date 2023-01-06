@@ -6,14 +6,208 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Azure
 
-!!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
+This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/) using Platform-as-a-Service (PaaS). If you're interested in using Infrastructure-as-a-Service (IaaS) refer to [IaaS deployment guide](#iaas-deployment-guide).
 
-This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/en-us/). Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/en-us/services/postgresql/). Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
+::: prerequisites
 
-### Azure Install Requirements
+* You should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md).
+* You have should read through the [configuration documentation](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration).
+* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+:::
 
-- You must have an [Azure account](https://azure.microsoft.com/en-us/free/) before doing these steps.
-- An SSH key to access the virtual machine
+## PaaS Deployment Guides
+
+There are 3 ways which you can deploy the Azure resources:
+
+* via the [Azure Portal](#creating-resources-via-the-azure-portal),
+* via the [Azure CLI](#creating-resources-via-the-azure-cli),
+* or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
+
+When Strapi is running in a PaaS hosting model, a custom storage provider will be required to avoid the transient disk of the PaaS model, [which is covered towards the end](#configure-strapi-for-azure-appservice).
+
+### Required Resources
+
+There are three resources in Azure that are required to run Strapi in a PaaS model, [AppService](https://azure.microsoft.com/services/app-service/?WT.mc_id=javascript-37811-aapowell) to host the Strapi web application, [Storage](https://azure.microsoft.com/product-categories/storage/?WT.mc_id=javascript-37811-aapowell) to store images/uploaded assets, and a database, Azure has managed MySQL and Postgres to choose from (for this tutorial, we'll use MySQL, but the steps are the same for Postgres).
+
+### Creating Resources via the Azure Portal
+
+In this section we'll use the Azure Portal to create the required resources to host Strapi.
+
+1. Navigate to the [Azure Portal](https://portal.azure.com/?WT.mc_id=javascript-37811-aapowell)
+
+2. Click **Create a resource** and search for _Resource group_ from the provided search box.
+
+3. Provide a name for your Resource Group, `my-strapi-app`, and select a region.
+
+4. Click **Review + create** then **Create**.
+
+5. Navigate to the Resource Group once it's created, click **Create resources**.
+   and search for _Web App_
+
+6. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the app:
+
+   - _Name_ - `my-strapi-app`
+   - _Publish_ - `Code`
+   - _Runtime stack_ - `Node 14 LTS`
+   - _Operating System_ - `Linux`
+   - _Region_ - Select an appropriate region
+
+7. Use the _App Service Plan_ to select the appropriate Sku and size for the level fo scale your app will need (refer to [the Azure docs](https://azure.microsoft.com/pricing/details/app-service/windows/?WT.mc_id=javascript-37811-aapowell) for more information on the various Sku and sizes).
+
+8. Click **Review + create** then **Create**.
+
+9. Navigate back to the Resource Group and click **Create** then search for _Storage account_ and click **Create**.
+
+10. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
+
+   - _Name_ - `my-strapi-app`
+   - _Region_ - Select an appropriate region
+   - _Performance_ - `Standard`
+   - _Redundancy_ - Select the appropriate level of redundancy for your files
+
+11. Click **Review + create** then **Create**
+
+12. Navigate back to the Resource Group and click **Create** then search for _Azure Database for MySQL_ and click **Create**.
+
+13. Select _Single server_ for the service type.
+
+14. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
+
+   - _Name_ - `my-strapi-db`
+   - _Data source_ - `None` (unless you're wanting to import from a backup)
+   - _Location_ - Select an appropriate region
+   - _Version_ - `5.7`
+   - _Compute + storage_ - Select an appropriate scale for your requirements (Basic is adequate for many Strapi workloads)
+
+15. Enter a username and password for the _Administrator account_, click **Review + create** then **Create**.
+
+#### Configuring the Resources
+
+Once all the resources are created, you will need to get the connection information for the MySQL and Storage account to the Web App, as well as configure the resources for use.
+
+##### Configure the Storage Account
+
+1. Navigate to the Storage Account resource, then **Data storage** - **Containers**.
+2. Create a new Container, provide a _Name_, `strapi-uploads`, and set _Public access level_ to `Blob`, then click **Create**.
+3. Navigate to **Security + networking** - **Access keys**, copy the _Storage account name_ and _key1_.
+4. Navigate to the **Web App** you created and go to **Settings** - **Configuration**.
+5. Create new application settings for the Storage account, storage account key and container name (these will become the environment variables available to Strapi) and click _Save_.
+
+##### Configure MySQL
+
+1. Navigate to the MySQL resource then **Settings** - **Connection security**.
+2. Set `Allow access to Azure services` to `Yes` and click **Save**.
+3. Navigate to **Overview** and copy _Server name_ and _Server admin login name_.
+4. Open the [Azure Cloud Shell](https://shell.azure.com?WT.mc_id=javascript-37811-aapowell) and log into the `mysql` CLI:
+
+   - `mysql --host <server> --user <username> -p`
+
+5. Create a database for Strapi to use `CREATE DATABASE strapi;` then close the Cloud Shell.
+   - (_Optional_) - Create a separate non-server admin user (see [Azure documentation](https://docs.microsoft.com/azure/mysql/howto-create-users?tabs=single-server&WT.mc_id=javascript-37811-aapowell) for guidance)
+6. Navigate to the **Web App** you created and go to **Settings** - **Configuration**.
+7. Create new application settings for the Database host, username and password (these will become the environment variables available to Strapi) and click _Save_.
+
+### Creating Resources via the Azure CLI
+
+In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/?WT.mc_id=javascript-37811-aapowell) to create the required resources. This will assume you have some familiarity with the Azure CLI and how to find the right values.
+
+1. Create a new Resource Group.
+
+   ```bash
+   rgName=my-strapi-app
+   location=westus
+   az group create --name $rgName --location $location
+   ```
+
+2. Create a new Linux App Service Plan (ensure you change the `number-of-workers` and `sku` to meet your scale requirements).
+
+   ```bash
+   appPlanName=strapi-app-service-plan
+   az appservice plan create --resource-group $rgName --name $appPlanName --is-linux --number-of-workers 4 --sku S1 --location $location
+   ```
+
+3. Create a Web App running Node.js 14.
+
+   ```bash
+   webAppName=my-strapi-app
+   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|10.14"
+   ```
+
+4. Create a Storage Account.
+
+   ```bash
+   saName=mystrapiapp
+   az storage account create --resource-group $rgName --name $saName --location $location
+
+   # Get the access key
+   saKey=$(az storage account keys list --account-name $saName --query "[?keyName=='key1'].value" --output tsv)
+
+   # Add a container to the storage account
+   container=strapi-uploads
+   az storage container create --name $container --public-access blob --account-key $saKey --account-name $saName
+   ```
+
+5. Create a MySQL database.
+
+   ```bash
+   serverName=my-strapi-db
+   dbName=strapi
+   username=strapi
+   password=...
+
+   # Create the server
+   az mysql server create --resource-group $rgName --name $serverName --location $location --admin-user $username --admin-password $password --version 5.7 --sku-name B_Gen5_1
+
+   # Create the database
+   az mysql db create --resource-group $rgName --name $dbName --server-name $serverName
+
+   # Allow Azure resources through the firewall
+   az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-range 0.0.0.0 --end-ip-range 0.0.0.0
+   ```
+
+6. Add configuration values to the Web App.
+
+   ```bash
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting STORAGE_ACCOUNT=$saName
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting STORAGE_ACCOUNT_KEY=$saKey
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting STORAGE_ACCOUNT_CONTAINER=$container
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting DATABASE_HOST=$serverName.mysql.database.azure.com
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting DATABASE_USERNAME=$username@$serverName
+   az webapp config appsettings set --resource-group $rgName --name $webAppName --setting DATABASE_PASSWORD=$password
+   ```
+
+### Deploy with an Azure Resource Manager template
+
+To deploy using an Azure Resource Manager template, use the button below, or upload [this template](https://gist.githubusercontent.com/aaronpowell/f216f119ffe5ed52945b46d0bb55569b/raw/2490a9295ea25c905096dbaae57da6ef8edb0e43/azuredeploy.json) as a custom deployment in Azure.
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgist.githubusercontent.com%2Faaronpowell%2Ff216f119ffe5ed52945b46d0bb55569b%2Fraw%2F2490a9295ea25c905096dbaae57da6ef8edb0e43%2Fazuredeploy.json)
+
+### Configure Strapi for Azure AppService
+
+Azure AppService can be deployed to using CI/CD pipelines or via FTPS, refer to the [Azure docs](https://docs.microsoft.com/azure/app-service/deploy-continuous-deployment?tabs=github&WT.mc_id=javascript-37811-aapowell) on how to do this for your preferred manner.
+
+As AppService is a PaaS hosting model, an upload provider will be required to save the uploaded assets to Azure Storage. Check out https://github.com/jakeFeldman/strapi-provider-upload-azure-storage for more details on using Azure Storage as an upload provider.
+
+::: note
+For local development, you can either use the local disk upload provider, or the Azure Storage upload provider against the [Storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=visual-studio&WT.mc_id=javascript-37811-aapowell).
+:::
+
+To start the Node.js application, AppService will run the `npm start` command. As there is no guarantee that the symlinks created by `npm install` were preserved (in the case of an upload from a CI/CD pipeline) it is recommended that the `npm start` command directly references the Strapi entry point:
+
+```json
+"scripts": {
+    "start": "node node_modules/@strapi/strapi/bin/strapi.js start"
+}
+```
+
+## IaaS Deployment Guide
+
+Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/services/postgresql/).
+
+::: prerequisites
+* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+* An SSH key to access the virtual machine
+:::
 
 ### Create a Virtual Machine
 
@@ -64,7 +258,7 @@ For the networking configuration you will want to leave the following as default
 - Accelerated networking
 - Load Balancing (off/no)
 
-However for the NIC network security group we will want to slect `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
+However for the NIC network security group we will want to select `Advanced` and `Create New`. You can name this whatever you like but for inbound rules we want to allow:
 
 - SSH (TCP/22) - Already on be default
 - HTTPS (Any/443)
@@ -137,7 +331,7 @@ sudo apt install libpng-dev build-essential -y
 For Node.js it is recommended you use the [official source](https://github.com/nodesource/distributions/blob/master/README.md#debinstall), per the instructions we will use the following commands:
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt install nodejs -y
 ```
 
@@ -194,10 +388,12 @@ For Azure managed databases you can use the following:
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-- MySQL >= 5.7.8
-- MariaDB >= 10.2.7
-- PostgreSQL >= 10
-- SQLite >= 3
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
 
 In our example we will be using MariaDB 10.4 LTS using the MariaDB apt repo. Per the [documentation](https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release=bionic--ubuntu_bionic&mirror=digitalocean-sfo&version=10.4) we will use the following commands:
 
@@ -293,25 +489,58 @@ nano /srv/strapi/mystrapiapp/config/database.js
 
 Using the following example we will remove any private information:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
+// path: /srv/strapi/mystrapiapp/config/database.js
+
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: env('DB_NAME'),
-        host: env('DB_HOST'),
-        port: env('DB_PORT'),
-        username: env('DB_USER'),
-        password: env('DB_PASS'),
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
       },
-      options: {},
     },
+    debug: false,
   },
 });
 ```
+
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: /srv/strapi/mystrapiapp/config/database.ts
+
+  export default ({ env }) => ({
+  connection: {
+    client: 'mysql',
+    connection: {
+      host: env('DB_HOST'),
+      port: env.int('DB_PORT'),
+      database: env('DB_NAME'),
+      user: env('DB_USER'),
+      password: env('DB_PASS'),
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+      },
+    },
+    debug: false,
+  },
+});
+```
+
+</code-block>
+</code-group>
 
 #### 3. Installing PM2 and running Strapi as a service
 
@@ -468,4 +697,4 @@ There are many different types of proxy services you could use, anything from lo
 
 #### 3. File upload providers
 
-There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/plugins/upload.md#create-providers) on searching for options as well as installing them.
+There are many options for storing files outside of your virtual machine, Strapi have built a few and the community is constantly building new ones. See the [following guide](/developer-docs/latest/development/providers.md) on searching for options as well as installing them.

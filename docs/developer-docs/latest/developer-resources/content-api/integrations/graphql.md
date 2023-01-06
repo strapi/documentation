@@ -315,6 +315,6 @@ export default {
 
 ## Conclusion
 
-This is how you request your Collection Types in Strapi using GraphQL.
+This is how you request your collection types in Strapi using GraphQL.
 
 Feel free to explore more about [GraphQL](/developer-docs/latest/plugins/graphql.md).

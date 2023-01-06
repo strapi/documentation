@@ -27,18 +27,41 @@ A new application-level or API-level middleware can be implemented:
 
 Middlewares working with the REST API are functions like the following:
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
 // path: ./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.js
+
 module.exports = (config, { strapi })=> {
   return (context, next) => {};
 };
 ```
 
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/middlewares/my-middleware.js or ./src/api/[api-name]/middlewares/my-middleware.ts
+
+export default (config, { strapi })=> {
+  return (context, next) => {};
+};
+```
+
+</code-block>
+</code-group>
+
 Once created, custom middlewares should be added to the [middlewares configuration file](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#loading-order) or Strapi won't load them.
 
 ::: details Example of a custom timer middleware
 
+<code-group>
+<code-block title=JAVASCRIPT>
+
 ```js
+// path: /config/middlewares.js
 module.exports = () => {
   return async (ctx, next) => {
     const start = Date.now();
@@ -50,6 +73,28 @@ module.exports = () => {
   };
 };
 ```
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: /config/middlewares.ts
+
+export default () => {
+  return async (ctx, next) => {
+    const start = Date.now();
+
+    await next();
+
+    const delta = Math.ceil(Date.now() - start);
+    ctx.set('X-Response-Time', delta + 'ms');
+  };
+};
+```
+
+</code-block>
+</code-group>
 
 :::
 

@@ -23,6 +23,9 @@ If the `url` key is changed in the `./config/admin.js` or `./config/server.js` f
 - Example API: `api.example.com/api`
 - Example uploaded files (local provider): `api.example.com/uploads`
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/server.js
 
@@ -32,6 +35,25 @@ module.exports = ({ env }) => ({
   url: 'https://api.example.com',
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://api.example.com',
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 ::::
 
@@ -46,6 +68,9 @@ module.exports = ({ env }) => ({
 - Example API: `example.com/test/api`
 - Example uploaded Files (local provider): `example.com/test/uploads`
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/server.js
 
@@ -55,6 +80,25 @@ module.exports = ({ env }) => ({
   url: 'https://example.com/test',
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://example.com/test',
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 ::::
 
@@ -69,6 +113,9 @@ module.exports = ({ env }) => ({
 - Example API: `example.com/api`
 - Example uploaded files (local provider): `example.com/uploads`
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/server.js
 
@@ -78,6 +125,26 @@ module.exports = ({ env }) => ({
   url: 'https://example.com',
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/server.ts
+
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  url: 'https://example.com',
+});
+```
+
+</code-block>
+</code-group>
+
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
 // path: ./config/admin.js
@@ -89,6 +156,26 @@ module.exports = ({ env }) => ({
   url: 'https://example.com/dashboard',
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/admin.ts
+
+export default ({ env }) => ({
+  auth: {
+    ...
+  }
+  url: 'https://example.com/dashboard',
+});
+```
+
+</code-block>
+</code-group>
+
+
 
 ::::
 

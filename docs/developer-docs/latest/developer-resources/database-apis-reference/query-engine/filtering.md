@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 The [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md) offers the ability to filter results found with its [findMany()](/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.md#findmany) method.
 
-Results are filtered with the `filters` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
+Results are filtered with the `where` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
 
 ## Logical operators
 
@@ -24,16 +24,13 @@ const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     $and: [
       {
-        rating: {
-          $gte: 12,
-        }
+        title: 'Hello World',
       },
       {
-        title: {
-          $contains: 'Hello',
-        },
+        createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
       },
     ],
+  },
   },
 });
 ```
@@ -44,7 +41,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: 'Hello World',
-    rating: 12,
+    createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
   },
 });
 ```
@@ -63,9 +60,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
         title: 'Hello World',
       },
       {
-        title: {
-          $contains: 'Hello',
-        },
+        createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
       },
     ],
   },
@@ -82,13 +77,22 @@ Negates the nested conditions.
 const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     $not: {
-      title: {
-        $contains: 'Hello'
-      },
+      title: 'Hello World',
     },
   },
 });
 ```
+
+:::note
+`$not` can be used:
+
+- as a logical operator (e.g. in `where: { $not: { // conditions… }}`)
+- or [as an attribute operator](#not-2) (e.g. in `where: { attribute-name: $not: { … } }`).
+:::
+
+:::tip
+`$and`, `$or` and `$not` operators are nestable inside of another `$and`, `$or` or `$not` operator.
+:::
 
 ## Attribute Operators
 
@@ -98,14 +102,17 @@ Using these operators may give different results depending on the database's imp
 
 ### `$not`
 
-Negates nested condition. The `not` operator can be used in an attribute condition too.
+Negates nested condition(s).
 
 **Example**
+
 ```js
 const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
-      $not: 'Hello World',
+      $not: {
+        $contains: 'Hello World',
+      },
     },
   },
 });
@@ -137,6 +144,22 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
+### `$eqi`
+
+Attribute equals input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $eqi: 'HELLO World',
+    },
+  },
+});
+```
+
 ### `$ne`
 
 Attribute does not equal input value.
@@ -144,7 +167,7 @@ Attribute does not equal input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $ne: 'ABCD',
@@ -160,7 +183,7 @@ Attribute is contained in the input list.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
@@ -169,27 +192,27 @@ const entries = strapi.db.query('api::article.article').findMany({
 });
 ```
 
-`$in` can be omitted when passing an array of values
+`$in` can be omitted when passing an array of values:
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
 });
 ```
 
-### `$nin`
+### `$notIn`
 
 Attribute is not contained in the input list.
 
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
-      $nin: ['Hello', 'Hola', 'Bonjour'],
+      $notIn: ['Hello', 'Hola', 'Bonjour'],
     },
   },
 });
@@ -202,7 +225,7 @@ Attribute is less than the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $lt: 10,
@@ -218,7 +241,7 @@ Attribute is less than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $lte: 10,
@@ -234,7 +257,7 @@ Attribute is greater than the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $gt: 5,
@@ -250,7 +273,7 @@ Attribute is greater than or equal to the input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $gte: 5,
@@ -259,6 +282,7 @@ const entries = strapi.db.query('api::article.article').findMany({
 });
 ```
 
+
 ### `$between`
 
 Attribute is between the 2 input values.
@@ -266,7 +290,7 @@ Attribute is between the 2 input values.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     rating: {
       $between: [1, 20],
@@ -278,15 +302,63 @@ const entries = strapi.db.query('api::article.article').findMany({
 
 ### `$contains`
 
-Attribute contains the input value.
+Attribute contains the input value (case-sensitive).
 
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
-      $contains: 'ABCD',
+      $contains: 'Hello',
+    },
+  },
+});
+```
+
+### `$notContains`
+
+Attribute does not contain the input value (case-sensitive).
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $notContains: 'Hello',
+    },
+  },
+});
+```
+
+### `$containsi`
+
+Attribute contains the input value. `$containsi` is not case-sensitive, while [$contains](#contains) is.
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $containsi: 'hello',
+    },
+  },
+});
+```
+
+### `$notContainsi`
+
+Attribute does not contain the input value. `$notContainsi` is not case-sensitive, while [$notContains](#notcontains) is.
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $notContainsi: 'hello',
     },
   },
 });
@@ -299,7 +371,7 @@ Attribute starts with input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $startsWith: 'ABCD',
@@ -315,7 +387,7 @@ Attribute ends with input value.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $endsWith: 'ABCD',
@@ -331,10 +403,10 @@ Attribute is `null`.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
-      $null: false,
+      $null: true,
     },
   },
 });
@@ -347,7 +419,7 @@ Attribute is not `null`.
 **Example**
 
 ```js
-const entries = strapi.db.query('api::article.article').findMany({
+const entries = await strapi.db.query('api::article.article').findMany({
   where: {
     title: {
       $notNull: true,

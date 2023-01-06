@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/translatin
 
 With the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) installed, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/managing-global-settings.md#configuring-internationalization-locales)).
 
-![Edit view of a localizable content-type](../assets/content-manager/content-manager_translate.png)
+![Edit view of a localizable content-type](../assets/content-manager/content-manager_translate2.png)
 
 In the Content Manager, when the Internationalization plugin is installed, some options are added to the edit view:
 
@@ -17,7 +17,7 @@ In the Content Manager, when the Internationalization plugin is installed, some 
   - ![World icon](../assets/icons/world.svg) indicates that the field can be translated,
   - ![Striked world icon](../assets/icons/world_striked.svg) indicates that the field cannot be translated: its content is the same for every locale (i.e. changing the value of a non-localizable field changes it for all other locales).
 
-The Internationalization plugin also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organised differently as well.
+The Internationalization plugin also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organized differently as well.
 
 ::: caution
 Content can only be managed one locale at the time. It is not possible to edit or publish content for several locales at the same time (e.g. Clicking on the **Publish** button will only publish the content for the locale you are currently working on).

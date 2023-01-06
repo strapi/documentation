@@ -16,7 +16,7 @@ In case you want to connect a React application with Strapi, we say that React i
 
 If your Strapi application contains restaurants and you want to list them in your React application, all you need to do is to make an HTTP request to Strapi which will take care to give you a response containing your restaurants.
 
-The [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) documentation will give you all the keys in hand to interact with your Strapi API.
+The [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) documentation will give you all the keys in hand to interact with your Strapi API.
 
 ## Get started
 

@@ -11,7 +11,7 @@ Services are a set of reusable functions. They are particularly useful to respec
 
 ## Implementation
 
-Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated services](#extending-core-services).
+Services can be [generated or added manually](#adding-a-new-service). Strapi provides a `createCoreService` factory function that automatically generates core services and allows building custom ones or [extend or replace the generated services](#extending-core-services).
 
 ### Adding a new service
 
@@ -24,12 +24,56 @@ A new service can be implemented:
 
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./src/api/restaurant/services/restaurant.js
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
+  // Method 1: Creating an entirely new custom service
+  async exampleService(...args) {
+    let response = { okay: true }
+
+    if (response.okay === false) {
+      return { response, error: true }
+    }
+
+    return response
+  },
+
+  // Method 2: Wrapping a core service (leaves core logic in place)
+  async find(...args) {  
+    // Calling the default core controller
+    const { results, pagination } = await super.find(...args);
+
+    // some custom logic
+    results.forEach(result => {
+      result.counter = 1;
+    });
+
+    return { results, pagination };
+  },
+
+  // Method 3: Replacing a core service
+  async findOne(entityId, params = {}) {
+    return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
+  }
+}));
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./src/api/restaurant/services/restaurant.ts
+
+import { factories } from '@strapi/strapi'; 
+
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom service
   async exampleService(...args) {
     let response = { okay: true }
@@ -61,16 +105,23 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 }));
 ```
 
+</code-block>
+</code-group>
+
 ::: strapi Entity Service API
 To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.md) documentation.
 :::
 
-:::: details Example of an email service
+:::: details Example of a custom email service (using Nodemailer)
 
-The goal of a service is to store reusable functions. An `email` service could be useful to send emails from different functions in our codebase:
+The goal of a service is to store reusable functions. A `sendNewsletter` service could be useful to send emails from different functions in our codebase that have a specific purpose:
+
+<code-group>
+<code-block title=JAVASCRIPT>
 
 ```js
-// path: ./src/api/email/services/email.js
+// path: ./src/api/restaurant/services/restaurant.js
+
 
 const { createCoreService } = require('@strapi/strapi').factories;
 const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
@@ -84,8 +135,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
-  send(from, to, subject, text) {
+module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+  sendNewsletter(from, to, subject, text) {
     // Setup e-mail data.
     const options = {
       from,
@@ -100,10 +151,51 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 }));
 ```
 
-The service is now available through the `strapi.service('api::email.email').send(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
+</code-block>
+<code-block title=TYPESCRIPT>
 
 ```js
-// path: ./src/api/user/controllers/user.js
+// path: ./src/api/restaurant/services/restaurant.ts
+
+
+import { factories } from '@strapi/strapi'; 
+const nodemailer = require('nodemailer'); // Requires nodemailer to be installed (npm install nodemailer)
+
+// Create reusable transporter object using SMTP transport.
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'user@gmail.com',
+    pass: 'password',
+  },
+});
+
+export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) => ({
+  sendNewsletter(from, to, subject, text) {
+    // Setup e-mail data. 
+    const options = {
+      from,
+      to,
+      subject,
+      text,
+    };
+
+    // Return a promise of the function that sends the email.
+    return transporter.sendMail(options);
+  },
+}));
+```
+
+</code-block>
+</code-group>
+
+The service is now available through the `strapi.service('api::restaurant.restaurant').sendNewsletter(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
+
+<code-group>
+<code-block title=JAVASCRIPT>
+
+```js
+// path: ./src/api/restaurant/controllers/restaurant.js
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // GET /hello
@@ -114,7 +206,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const user = await strapi.service('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::email.email').send('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -123,6 +215,35 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
   },
 }));
 ```
+
+</code-block>
+
+<code-block title=TYPESCRIPT>
+
+```js
+// path: ./src/api/restaurant/controllers/restaurant.ts
+
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+  // GET /hello
+  async signup(ctx) {
+    const { userData } = ctx.body;
+
+    // Store the new user in database.
+    const user = await strapi.service('plugin::users-permissions.user').add(userData);
+
+    // Send an email to validate his subscriptions.
+    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
+
+    // Send response to the server.
+    ctx.send({
+      ok: true,
+    });
+  },
+}));
+```
+
+</code-block>
+</code-group>
 
 ::::
 

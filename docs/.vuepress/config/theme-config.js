@@ -33,7 +33,7 @@ const themeConfig = {
             },
             {
               text: 'Developer Resources',
-              link: '/developer-docs/latest/developer-resources/content-api/content-api.html',
+              link: '/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html',
             },
           ],
         },
@@ -49,7 +49,7 @@ const themeConfig = {
               link: '/user-docs/latest/content-manager/introduction-to-content-manager.html',
             },
             {
-              text: 'Content-Type Builder',
+              text: 'Content-type Builder',
               link:
                 '/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html',
             },
@@ -57,6 +57,11 @@ const themeConfig = {
               text: 'Users, Roles, and Permissions',
               link:
                 '/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html',
+            },
+            {
+              text: 'Media Library',
+              link:
+                '/user-docs/latest/media-library/introduction-to-media-library.html',
             },
             {
               text: 'Plugins',
@@ -71,8 +76,27 @@ const themeConfig = {
       ],
     },
     {
-      text: 'v3 documentation',
-      link: 'https://docs-v3.strapi.io',
+      text: 'Other Docs',
+      items: [
+        {
+          text: 'Older Documentation',
+          items: [
+            {
+              text: 'v3 Documentation',
+              link: 'https://docs-v3.strapi.io',
+            },
+          ]
+        },
+        // { // temporarily disabled while we move to Docusaurus
+        //   text: 'Pre-release Documentation',
+        //   items: [
+        //     {
+        //       text: 'docs-next',
+        //       link: 'https://docs-next.strapi.io',
+        //     },
+        //   ]
+        // },
+      ],
     },
     {
       text: 'Ecosystem',

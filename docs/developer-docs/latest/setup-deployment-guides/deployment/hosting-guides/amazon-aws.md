@@ -77,7 +77,7 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 
 #### 3. Click on the orange `Launch Instance` button
 
-- `Select` **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type**
+- `Select` **Ubuntu Server 22.04 LTS (HVM), SSD Volume Type**
 - Ensure `General purpose` + `t2.small` is `checked`.
   ::: tip
   `t2.small` is the smallest instance type in which Strapi runs. `t2.nano` and `t2.micro` **DO NOT** work. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, **t2.small** or larger instance is needed.
@@ -179,7 +179,7 @@ You will set-up your EC2 server as a Node.js server. Including basic configurati
 You will need your **EC2** ip address:
 
 - In the `AWS Console`, navigate to the `AWS EC2`. In the top menu, click on `Services` and do a search for `ec2`, click on `Virtual Servers in the cloud`.
-- Click on `1 Running Instance` and note the `IPv4 Public OP` address. E.g. `34.182.83.134`.
+- Click on `1 Running Instance` and note the `IPv4 Public OP` address. E.g. `1.2.3.4`.
 
 #### 1. Setup the `.pem` file
 
@@ -196,37 +196,37 @@ chmod 400 ~/.ssh/ec2-strapi-key-pair.pem
 #### 2. Log in to your server as the default `ubuntu` user:
 
 ::: tip
-In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@12.123.123.11`.
+In the future, each time you log into your `EC2` server, you will need to add the path to the .pem file and add the IP address for your EC2 instance at the end, e.g. `ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@1.2.3.4`.
 :::
 
 ```bash
-ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@12.123.123.11
+ssh -i ~/.ssh/ec2-strapi-key-pair.pem ubuntu@1.2.3.4
 
-Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 4.15.0-1032-aws x86_64)
 
 ...
 
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-ubuntu@ip-12.123.123.11:~$
+ubuntu@ip-1.2.3.4:~$
 
 ```
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js v12.x.x`. The following steps will install Node.js onto your EC2 server.
+Strapi currently supports `Node.js v14.x.x`. The following steps will install Node.js onto your EC2 server.
 
 ```bash
 cd ~
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 ...
 sudo apt-get install nodejs
 ...
 node -v && npm -v
 ```
 
-The last command `node -v && npm -v` should output two versions numbers, eg. `v12.x.x, 6.x.x`.
+The last command `node -v && npm -v` should output two versions numbers, eg. `v14.x.x, 6.x.x`.
 
 #### 4. Create and change npm's default directory.
 
@@ -240,7 +240,7 @@ mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 ```
 
-- Create (or modify) a `~/.profile` file and add this line:
+- Create (or modify) a `~/.profile` file:
 
 ```bash
 sudo nano ~/.profile
@@ -307,9 +307,12 @@ npm install pg
 
 Copy/paste the following:
 
-`Path: ./my-project/config/database.js`:
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./my-project/config/database.js
+
 module.exports = ({ env }) => ({
   connection: {
     client: "postgres",
@@ -325,33 +328,101 @@ module.exports = ({ env }) => ({
 });
 ```
 
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./my-project/config/database.ts
+
+export default ({ env }) => ({
+  connection: {
+    client: "postgres",
+    connection: {
+      host: env("DATABASE_HOST", "127.0.0.1"),
+      port: env.int("DATABASE_PORT", 5432),
+      database: env("DATABASE_NAME", "strapi"),
+      user: env("DATABASE_USERNAME", ""),
+      password: env("DATABASE_PASSWORD", ""),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</code-block>
+</code-group>
+
+
+
 #### 3. Install the **Strapi AWS S3 Upload Provider**:
 
 Path: `./my-project/`.
 
 ```bash
-npm install strapi-provider-upload-aws-s3
+npm install @strapi/provider-upload-aws-s3
 ```
 
 To enable and configure the provider, create or edit the file at `./config/plugins.js`.
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = ({ env }) => ({
   upload: {
-    provider: 'aws-s3',
-    providerOptions: {
-      accessKeyId: env('AWS_ACCESS_KEY_ID'),
-      secretAccessKey: env('AWS_ACCESS_SECRET'),
-      region: env('AWS_REGION'),
-      params: {
-        Bucket: env('AWS_BUCKET_NAME'),
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        accessKeyId: env('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env('AWS_ACCESS_SECRET'),
+        region: env('AWS_REGION'),
+        params: {
+            Bucket: env('AWS_BUCKET_NAME'),
+        },
       },
+      // These parameters could solve issues with ACL public-read access — see [this issue](https://github.com/strapi/strapi/issues/5868) for details
+      actionOptions: {
+        upload: {
+          ACL: null
+        },
+        uploadStream: {
+          ACL: null
+        },
+      }
     },
-  },
+  }
 });
 ```
 
-Checkout the documentation about using an upload provider [here](/developer-docs/latest/plugins/upload.md#using-a-provider).
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default ({ env }) => ({
+  upload: {
+      config: {
+          provider: 'aws-s3',
+          providerOptions: {
+              accessKeyId: env('AWS_ACCESS_KEY_ID'),
+              secretAccessKey: env('AWS_ACCESS_SECRET'),
+              region: env('AWS_REGION'),
+              params: {
+                  Bucket: env('AWS_BUCKET_NAME'),
+              },
+          },
+      },
+  }
+});
+```
+
+</code-block>
+</code-group>
+
+
+
+Checkout the documentation about using an upload provider [here](/developer-docs/latest/development/providers.md).
 
 #### 4. Push your local changes to your project's GitHub repository.
 
@@ -364,6 +435,10 @@ git push
 #### 5. Deploy from GitHub
 
 You will next deploy your Strapi project to your EC2 instance by **cloning it from GitHub**.
+
+::: note
+Cloning a GitHub repository requires a personal access token. See the [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for how to generate and use a personal access token.
+:::
 
 From your terminal and logged into your EC2 instance as the `ubuntu` user:
 
@@ -406,8 +481,44 @@ sudo nano ecosystem.config.js
 
 - Next, replace the boilerplate content in the file, with the following:
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 module.exports = {
+  apps: [
+    {
+      name: 'your-app-name', // Your project name
+      cwd: '/home/ubuntu/my-project', // Path to your project
+      script: 'npm', // For this example we're using npm, could also be yarn
+      args: 'start', // Script to start the Strapi server, `start` by default
+      env: {
+        APP_KEYS: 'your app keys', // you can find it in your project .env file.
+        API_TOKEN_SALT: 'your api token salt',
+        ADMIN_JWT_SECRET: 'your admin jwt secret',
+        JWT_SECRET: 'your jwt secret',
+        NODE_ENV: 'production',
+        DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
+        DATABASE_PORT: '5432',
+        DATABASE_NAME: 'strapi', // DB name under 'Configuration' tab
+        DATABASE_USERNAME: 'postgres', // default username
+        DATABASE_PASSWORD: 'Password',
+        AWS_ACCESS_KEY_ID: 'aws-access-key-id',
+        AWS_ACCESS_SECRET: 'aws-access-secret', // Find it in Amazon S3 Dashboard
+        AWS_REGION: 'aws-region',
+        AWS_BUCKET_NAME: 'my-project-bucket-name',
+      },
+    },
+  ],
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default {
   apps: [
     {
       name: 'your-app-name',
@@ -430,6 +541,11 @@ module.exports = {
   ],
 };
 ```
+
+</code-block>
+</code-group>
+
+
 
 You can also set your environment variables in a `.env` file in your project like so:
 
@@ -454,7 +570,7 @@ cd ~
 pm2 start ecosystem.config.js
 ```
 
-Your Strapi project should now be available on `http://your-ip-address:1337/`.
+Your Strapi project should now be available on `http://your-ip-address:1337/`. Your IP address will be the one corresponding to your Ubuntu server.
 
 ::: tip
 Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
@@ -644,7 +760,7 @@ After=network.target
 Environment=PATH=/PASTE-PATH_HERE #path from echo $PATH (as above)
 Type=simple
 User=ubuntu #replace with your name, if changed from default ubuntu user
-ExecStart=/usr/bin/nodejs /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
+ExecStart=/usr/bin/node /home/ubuntu/NodeWebHooks/webhook.js #replace with your name, if changed from default ubuntu user
 Restart=on-failure
 
 [Install]
@@ -670,7 +786,7 @@ sudo systemctl status webhook
 
 - You can **add a domain name** or **use a subdomain name** for your Strapi project, you will need to [install NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) and [configure it](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/nodejs-platform-proxy.html).
   ::: tip
-  After setting up **NGINX**, for security purposes, you need to disable port access on `Port 1337`. You may do this easily from your **EC2 Dashboard**. In `Security Groups` (lefthand menu), click the checkbox of the group, eg. `strapi`, and below in the `inbound` tab, click `Edit`, and delete the rule for `Port Range` : `1337` by click the `x`.
+  After setting up **NGINX**, for security purposes, you need to disable port access on `Port 1337`. You may do this easily from your **EC2 Dashboard**. In `Security Groups` (left-hand menu), click the checkbox of the group, eg. `strapi`, and below in the `inbound` tab, click `Edit`, and delete the rule for `Port Range` : `1337` by click the `x`.
   :::
 - To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://certbot.eff.org/docs/using.html).
 

@@ -14,10 +14,6 @@ Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/d
 
 Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md). And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
-::: tip
-Strapi does have a [One-Click](/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.md) deployment option for DigitalOcean
-:::
-
 ### DigitalOcean Install Requirements
 
 - If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/).
@@ -34,9 +30,9 @@ Choose these options:
 
 - Ubuntu 18.04 x64
 - STARTER `Standard`
-- Choose an appropriate pricing plan. For example, pricing: `$10/mo` _(Scroll to the left)_
+- Choose an appropriate pricing plan. For example, pricing: `$12/mo` _(Scroll to the left)_
   ::: tip
-  The \$5/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$10/mo** or larger instance is needed.
+  The \$6/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$12/mo** or larger instance is needed.
   :::
 - Choose a `datacenter` region nearest your audience, for example, `New York`.
 - **OPTIONAL:** Select additional options, for example, `[x] IPv6`.
@@ -177,29 +173,58 @@ You will need the **database name**, **username** and **password** for later use
 
 In your code editor, you will need to edit a file called `database.js`. Replace the contents of the file with the following.
 
-`Path: ./config/database.js`
+<code-group>
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./config/database.js`
+
 module.exports = ({ env }) => ({
-  defaultConnection: 'default',
-  connections: {
-    default: {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
+  connection: {
+    client: 'postgres', 
+  connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
-        username: env('DATABASE_USERNAME', ''),
+        user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
       },
-      options: {
-        ssl: false,
-      },
-    },
+      debug: false,
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```ts
+// path: ./config/database.ts`
+
+export default ({ env }) => ({
+  connection: {
+    client: 'postgres', 
+  connection: {
+        host: env('DATABASE_HOST', '127.0.0.1'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', ''),
+        password: env('DATABASE_PASSWORD', ''),
+        ssl: {
+          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+       },
+      },
+      debug: false,
+  },
+});
+```
+
+</code-block>
+</code-group>
+
 
 You are now ready to push these changes to Github:
 

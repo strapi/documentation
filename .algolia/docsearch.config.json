@@ -1,7 +1,9 @@
 {
   "index_name": "documentation",
   "start_urls": [
-    "https://docs.strapi.io"
+    {
+      "url": "https://docs.strapi.io"
+    }
   ],
   "selectors": {
     "lvl0": {
@@ -24,7 +26,7 @@
       "type": "xpath",
       "global": true
     },
-    "text": ".content__default p",
+    "text": ".content__default p, .content__default p>code, .content__default ol, .content__default ol, .content__default ol code, .content__default ul>li, .content__default ul>li code, .content__default table>tbody code, .content__default table>tbody td, .content__default table > p, .content__default custom-block.tip p, .content__default custom-block.tip code",
     "lang": {
       "selector": "/html/@lang",
       "type": "xpath",
@@ -41,3 +43,4 @@
     ]
   }
 }
+

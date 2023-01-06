@@ -41,9 +41,9 @@ dart pub get
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -128,9 +128,9 @@ void main() {
 
 ## POST Request your collection type
 
-Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
+Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
-Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
+Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
 In this example a `japanese` category has been created which has the id: 3.
 
@@ -222,9 +222,9 @@ void main() {
 
 ## PUT Request your collection type
 
-Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
+Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
-Be sure that you activated the `put` permission for the `restaurant` Collection Type.
+Be sure that you activated the `put` permission for the `restaurant` collection type.
 
 :::: api-call
 ::: request Example PUT request
@@ -316,4 +316,4 @@ void main() {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Dart. When you create a Collection Type or a Single Type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints) available to interact with.
+Here is how to request your collection types in Strapi using Dart. When you create a collection type or a single type you will have a certain number of [REST API endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints) available to interact with.

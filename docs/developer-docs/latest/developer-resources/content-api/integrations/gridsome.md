@@ -28,7 +28,7 @@ Gridsome is a [Static Site Generator](https://www.staticgen.com/) and will fetch
 yarn add @gridsome/source-strapi
 ```
 
-- Add the `@gridsome/source-strapi` to the plugins section in the `gridsome-config.js` file:
+- Add the `@gridsome/source-strapi` to the plugins section in the `gridsome.config.js` file:
 
 ```js
 module.exports = {
@@ -48,9 +48,9 @@ module.exports = {
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -130,9 +130,9 @@ query {
 </page-query>
 ```
 
-Execute a `GET` request on the `category` Collection Type in order to fetch a specific category with all the associated restaurants.
+Execute a `GET` request on the `category` collection type in order to fetch a specific category with all the associated restaurants.
 
-Be sure that you activated the `findOne` permission for the `category` Collection Type.
+Be sure that you activated the `findOne` permission for the `category` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -274,6 +274,6 @@ Feel free to do the same for your restaurants!
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Gridsome.
+Here is how to request your collection types in Strapi using Gridsome.
 
 Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md)

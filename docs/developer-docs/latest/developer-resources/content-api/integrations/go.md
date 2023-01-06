@@ -27,9 +27,9 @@ We will use the "net/http" package along with other packages.
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -98,9 +98,9 @@ func getD() {
 ```
 ## POST Request your collection type
 
-Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
+Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
-Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
+Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
 :::: api-call
 ::: request Example POST request
@@ -170,7 +170,7 @@ func postD() {
   resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
   //Handle Error
   if error != nil {
-    log.Fatalf("An Error Occured %v", error)
+    log.Fatalf("An Error Occurred %v", error)
   }
   defer resp.Body.Close()
   //Read the response body
@@ -185,9 +185,9 @@ func postD() {
 
 ## PUT Request your collection type
 
-Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
+Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
-Be sure that you activated the `update` permission for the `restaurant` Collection Type.
+Be sure that you activated the `update` permission for the `restaurant` collection type.
 PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
 
 :::: api-call
@@ -195,7 +195,7 @@ PUT Request is sligtly different as we need to target the particular thing we wa
 
 ```go
 putRest, _ := json.Marshal(map[string]string {
-  "name": "Resturant Homes",    
+  "name": "Restaurant Homes",    
 })
 client := &http.Client{}
 url := "http://localhost:1337/api/restaurants/1"
@@ -209,7 +209,7 @@ req.Header.Set("Content-Type", "application/json")
 ```json
 {
   "id": 1,
-  "name": "Resturant Homes",
+  "name": "Restaurant Homes",
   "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
   "published_at": "2021-03-07T10:10:46.949Z",
   "created_at": "2021-03-07T10:08:53.929Z",
@@ -290,7 +290,7 @@ func postD() {
 }
 func putD() {
 	putRest, _ := json.Marshal(map[string]string{
-		"name": "Resturant Homes",
+		"name": "Restaurant Homes",
 	})
 	client := &http.Client{}
 	url := "http://localhost:1337/api/restaurants/1"
@@ -316,6 +316,6 @@ func putD() {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Go. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your collection types in Strapi using Go. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).

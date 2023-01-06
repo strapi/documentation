@@ -6,8 +6,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with Next.js
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
 This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Next.js](https://nextjs.org/) remains the same except that you will not fetch the same content.
@@ -56,21 +54,23 @@ No installation needed.
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 ::::: tabs card
 
 :::: tab axios
 ::: request Example GET request with axios
+
 ```js
 import axios from 'axios';
 
 axios.get('http://localhost:1337/api/restaurants').then(response => {
-  console.log(response);
+  console.log(response.data);
 });
 ```
+
 :::
 
 ::::
@@ -94,38 +94,30 @@ fetch('http://localhost:1337/api/restaurants', {
 :::::
 
 :::response Example response
+
 ```json
-[
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-    "created_by": {
+{
+  "data": [
+    {
       "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "updated_by": {
-      "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "created_at": "2020-07-31T11:37:16.964Z",
-    "updated_at": "2020-07-31T11:37:16.975Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-07-31T11:36:23.164Z",
-        "updated_at": "2020-07-31T11:36:23.172Z"
+      "attributes": {
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "createdAt": "2022-07-31T09:14:12.569Z",
+        "updatedAt": "2022-07-31T09:14:12.569Z",
+        "publishedAt": "2022-07-31T09:14:12.569Z"
       }
-    ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
   }
-]
+}
 ```
 
 ::::
@@ -147,8 +139,8 @@ const Home = ({ restaurants, error }) => {
   }
   return (
     <ul>
-      {restaurants.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.name}</li>
+      {restaurants.data.map(restaurant => (
+        <li key={restaurant.id}>{restaurant.attributes.name}</li>
       ))}
     </ul>
   );
@@ -180,8 +172,8 @@ const Home = ({ restaurants, error }) => {
   }
   return (
     <ul>
-      {restaurants.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.name}</li>
+      {restaurants.data.map(restaurant => (
+        <li key={restaurant.id}>{restaurant.attributes.name}</li>
       ))}
     </ul>
   );
@@ -227,9 +219,10 @@ export default Home;
 
 ## POST Request your collection type
 
-Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
+Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
-Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
+Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
+Add the `?populate=categories` query parameter to return categories with the response.
 
 In this example a `japanese` category has been created which has the id: 3.
 
@@ -242,10 +235,13 @@ In this example a `japanese` category has been created which has the id: 3.
 import axios from 'axios';
 
 axios
-  .post('http://localhost:1337/api/restaurants', {
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+  .post('http://localhost:1337/api/restaurants/?populate=categories', {
+    data: {
+      name: 'Dolemon Sushi',
+      description:
+        'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    },
   })
   .then(response => {
     console.log(response);
@@ -257,16 +253,20 @@ axios
 
 :::: tab fetch
 ::: request Example POST request with fetch
+
 ```js
-fetch('http://localhost:1337/api/restaurants', {
+fetch('http://localhost:1337/api/restaurants/?populate=categories', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: 'Dolemon Sushi',
+      description:
+        'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    },
   }),
 })
   .then(response => response.json())
@@ -278,29 +278,37 @@ fetch('http://localhost:1337/api/restaurants', {
 :::::
 
 :::response Example response
+
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T09:57:11.669Z",
-  "updated_at": "2020-08-04T09:57:11.669Z",
-  "categories": [
-    {
-      "id": 3,
-      "name": "Japanese",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-07-31T11:36:23.164Z",
-      "updated_at": "2020-07-31T11:36:23.172Z"
+  "data": {
+    "id": 2,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2022-07-31T09:14:12.569Z",
+      "updatedAt": "2022-07-31T09:14:12.569Z",
+      "publishedAt": "2022-07-31T09:14:12.566Z",
+      "categories": {
+        "data": [
+          {
+            "id": 3,
+            "attributes": {
+              "name": "Japanese",
+              "createdAt": "2022-07-31T10:49:03.933Z",
+              "updatedAt": "2022-07-31T10:49:04.893Z",
+              "publishedAt": "2022-07-31T10:49:04.890Z"
+            }
+          }
+        ]
+      }
     }
-  ]
+  },
+  "meta": {}
 }
 ```
-:::
 
+:::
 
 ### Example
 
@@ -333,7 +341,9 @@ const Home = ({ allCategories, errorCategories }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:1337/api/restaurants', modifiedData);
+      const response = await axios.post('http://localhost:1337/api/restaurants', {
+        data: modifiedData,
+      });
       console.log(response);
     } catch (error) {
       setErrorRestaurants(error);
@@ -354,7 +364,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
+        <label htmlFor={category.id}>{category.attributes.name}</label>
         <input
           type="checkbox"
           checked={isChecked}
@@ -393,7 +403,7 @@ const Home = ({ allCategories, errorCategories }) => {
           <br />
           <b>Select categories</b>
           <br />
-          {allCategories.map(renderCheckbox)}
+          {allCategories.data.map(renderCheckbox)}
         </div>
         <br />
         <button type="submit">Submit</button>
@@ -461,7 +471,7 @@ const Home = ({ allCategories, errorCategories }) => {
       const response = await fetch('http://localhost:1337/api/restaurants', {
         method: 'POST',
         headers,
-        body: JSON.stringify(modifiedData),
+        body: JSON.stringify({ data: modifiedData }),
       })
         .then(checkStatus)
         .then(parseJSON);
@@ -484,7 +494,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.name}</label>
+        <label htmlFor={category.id}>{category.attributes.name}</label>
         <input
           type="checkbox"
           checked={isChecked}
@@ -525,7 +535,7 @@ const Home = ({ allCategories, errorCategories }) => {
           <br />
           <b>Select categories</b>
           <br />
-          {allCategories.map(renderCheckbox)}
+          {allCategories.data.map(renderCheckbox)}
         </div>
         <br />
         <button type="submit">Submit</button>
@@ -556,9 +566,9 @@ export default Home;
 
 ## PUT Request your collection type
 
-Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
+Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
-Be sure that you activated the `put` permission for the `restaurant` Collection Type.
+Be sure that you activated the `put` permission for the `restaurant` collection type.
 
 ::::: tabs card
 
@@ -572,8 +582,10 @@ and the id of your category is `2`.
 import axios from 'axios';
 
 axios
-  .put('http://localhost:1337/api/restaurants/2', {
-    categories: [2],
+  .put('http://localhost:1337/api/restaurants/2/?populate=categories', {
+    data: {
+      categories: [2],
+    },
   })
   .then(response => {
     console.log(response);
@@ -585,14 +597,17 @@ axios
 
 :::: tab fetch
 ::: request Example PUT request with fetch
+
 ```js
-fetch('http://localhost:1337/api/restaurants/2', {
+fetch('http://localhost:1337/api/restaurants/2/?populate=categories', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    categories: [2],
+    data: {
+      categories: [2],
+    },
   }),
 })
   .then(response => response.json())
@@ -609,27 +624,34 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T10:21:30.219Z",
-  "updated_at": "2020-08-04T10:21:30.219Z",
-  "categories": [
-    {
-      "id": 2,
-      "name": "Brunch",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-08-04T10:24:26.901Z",
-      "updated_at": "2020-08-04T10:24:26.911Z"
+  "data": {
+    "id": 2,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2022-07-31T09:14:12.569Z",
+      "updatedAt": "2022-07-31T11:17:31.598Z",
+      "publishedAt": "2022-07-31T09:14:12.566Z",
+      "categories": {
+        "data": [
+          {
+            "id": 2,
+            "attributes": {
+              "name": "Brunch",
+              "createdAt": "2022-07-30T09:23:57.857Z",
+              "updatedAt": "2022-07-30T09:26:37.236Z",
+              "publishedAt": "2022-07-30T09:26:37.233Z"
+            }
+          }
+        ]
+      }
     }
-  ]
+  },
+  "meta": {}
 }
 ```
-:::
 
+:::
 
 ## Starter
 
@@ -638,6 +660,6 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using Next.js. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your collection types in Strapi using Next.js. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).

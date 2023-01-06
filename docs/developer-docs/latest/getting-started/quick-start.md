@@ -63,7 +63,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
     font-size: 110%;
     width: 50%;
     border-radius: 0 8px 8px 0 !important;
-    border: solid 1px #bbbbba !important;
+    border: solid 1px #C0C0CF !important;
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:first-child {
@@ -72,8 +72,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
   }
 
   .el-tabs--card > .el-tabs__header > .el-tabs__nav-wrap > .el-tabs__nav-scroll > .el-tabs__nav > .el-tabs__item:not(.is-active) {
-    background-color: #f8f8f8;
-    color: #787878;
+    background-color: #F6F6F9;
+    color: #8E8EA9;
   }
 
   .image--50 {
@@ -87,8 +87,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
 ::: prerequisites
-Make sure [Node.js and npm are properly installed](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation) on your machine. It is also possible to use Yarn instead of npm (see [install the Yarn package](https://yarnpkg.com/en/)).
+
+!!!include(developer-docs/latest/developer-resources/cli/snippets/installation-prerequisites.md)!!!
+
 :::
+
 
 👇 Let's get started! Using the big buttons below, please choose between:
 
@@ -123,15 +126,19 @@ yarn create strapi-app my-project --quickstart
 
 </code-group>
 
+:::note
+The quick start installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/developer-docs/latest/setup-deployment-guides/installation/cli.md)).
+:::
+
 ### Step 2: Register the first administrator user
 
 Once the installation is complete, your browser automatically opens a new tab.
 
-By completing the form, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+By completing the form, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![Admin panel screenshot: dashboard](../assets/quick-start-guide//qsg-handson-part1-01-admin_panel.png)
+![Admin panel screenshot: dashboard](../assets/quick-start-guide/qsg-handson-part1-01-admin_panel_2.png)
 
 ::: callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/latest/getting-started/introduction.md), or proceed to part B below.
@@ -149,15 +156,15 @@ The admin panel of Strapi runs at [http://localhost:1337/admin](http://localhost
 If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
-### Step 1: Create collection types with the Content-Type Builder
+### Step 1: Create collection types with the Content-type Builder
 
-The Content-Type Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
+The Content-type Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
 #### Create a "Restaurant" collection type
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -168,15 +175,15 @@ Your restaurants directory will eventually include many restaurants, so we need 
 9. Type `description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
-![GIF: Create Restaurant collection type in Content-Type Builder](../assets/quick-start-guide/qsg-handson-restaurant.gif)
+![GIF: Create Restaurant collection type in Content-type Builder](../assets/quick-start-guide/qsg-handson-restaurant_2.gif)
 
-Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](../assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
 
 #### Create a "Category" collection type
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to Plugins ![Content-Type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to Plugins ![Content-type Builder icon](../assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
@@ -189,7 +196,7 @@ It would help getting a bit more organized if our restaurants directory had some
 
 ![Admin Panel screenshot: relations](../assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
-9. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
+11. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
 ### Step 2: Use the collection types to create new entries
 
@@ -213,9 +220,9 @@ Let's go to ![Content Manager icon](../assets/quick-start-guide/icons/content.sv
 
 1. Click on **Add new entry**.
 2. Type `French Food` in the _Name_ field.
-4. Click **Save**.
-5. Go back to _Collection types - Category_, then click again on **Add new entry**.  
-6. Type `Brunch` in the _Name_ field, then click **Save**.
+3. Click **Save**.
+4. Go back to _Collection types - Category_, then click again on **Add new entry**.  
+5. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](../assets/quick-start-guide/qsg-handson-categories.gif)
 
@@ -344,7 +351,7 @@ During the installation, when terminal asks `Choose your installation type`: sel
 
 Once the installation is complete, your browser automatically opens a tab at ([http://localhost:1337/admin/auth/register-admin](http://localhost:1337/admin/auth/register-admin)). It's for Strapi's admin panel, the back end of your application.
 
-By completing the form in the admin panel tab, you create your own account. Once done, you become the first administator user of this Strapi application. Welcome aboard, commander!
+By completing the form in the admin panel tab, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
 
 Now, open [http://localhost:3000](http://localhost:3000) in another tab. This is the front end of your application, and you can already see the Next blog in action.
 

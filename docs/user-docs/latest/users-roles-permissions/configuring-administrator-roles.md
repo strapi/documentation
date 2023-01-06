@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/users-roles-permissions/co
 
 # Configuring administrator roles
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](../assets/icons/settings.svg) _Settings_ subnavigation.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](../assets/icons/settings.svg) *Settings* sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](managing-administrators.md)).
 
@@ -30,7 +30,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
 
 - You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
-- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content type are accessible, these fields are automatically fully accessible with all permissions.
+- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content-type are accessible, these fields are automatically fully accessible with all permissions.
 - Custom conditions defined for a specific permission are also only available for the Enterprise Edition.
 
 :::
@@ -86,15 +86,15 @@ The permissions area of an administrator role editing interface allows to config
 
 #### Collection and Single types
 
-The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
+The Collection types and Single types categories respectively list all available collection and single types for the Strapi application. For each content-type, the administrators can have the permission to perform the following actions: create, read, update, delete and publish.
 
 To configure Collection or Single types permissions for a role:
 
 1. Go to the Collection types or Single types category of the permissions table.
-2. Tick the box on the left of the name of the content type to give access to. By default, all actions can be performed for all fields of the content type.
+2. Tick the box on the left of the name of the content-type to give access to. By default, all actions can be performed for all fields of the content-type.
 3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
-4. (optional) Click the name of the content type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
-5. Repeat steps 2 to 4 for each content type available to which the role should give access.
+4. (optional) Click the name of the content-type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/latest/plugins/strapi-plugins.md#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
+5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
 #### Plugins and Settings <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
@@ -111,13 +111,13 @@ To configure plugins or settings permissions for a role:
 
 ::: tab Plugins
 
-By default, plugins permissions can be configured for the Content-Type Builder, the Upload (i.e. Media Library) plugin, the Content Manager, and Users Permissions (i.e. the Users & Permissions plugin allowing to manage end-users). Each plugin has its own specific set of permissions.
+By default, plugins permissions can be configured for the Content-type Builder, the Upload (i.e. Media Library) plugin, the Content Manager, and Users Permissions (i.e. the Users & Permissions plugin allowing to manage end users). Each plugin has its own specific set of permissions.
 
 | Plugin name          | Permissions |
 | -------------------- | ----------- |
 | Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |
-| Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-Type Builder plugin in read-only mode</li></ul></ul> |
-| Upload <br> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li><li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |    
+| Content-Type-Builder | <ul><li>General</li><ul><li>"Read" - gives access to the Content-type Builder plugin in read-only mode</li></ul></ul> |
+| Upload <br> *(Media Library)* | <ul><li>General</li><ul><li>"Access the Media Library" - gives access to the Media Library plugin</li></ul></ul> <ul><li>Assets</li><ul><li>"Create (upload)" - allows to upload media files</li><li>"Update (crop, details, replace) + delete" - allows to edit uploaded media files</li><li>"Download" - allows to download uploaded media files</li><li>"Copy link" - allows to copy the link of an uploaded media file</li></ul></ul> |
 | Users-Permissions | <ul><li>Roles</li><ul><li>"Create" - allows to create end-user roles</li><li>"Read" - allows to see created end-user roles</li><li>"Update" - allows to edit end-user roles</li><li>"Delete" - allows to delete end-user roles</li></ul></ul><ul><li>Providers</li><ul><li>"Read" - allows to see providers</li><li>"Edit" - allows to edit providers</li></ul></ul><ul><li>Email Templates</li><ul><li>"Read" - allows to access the email templates</li><li>"Edit" - allows to edit email templates</li></ul></ul><ul><li>Advanced settings</li><ul><li>"Read" - allows to access the advanced settings of the Users & Permissions plugin</li><li>"Edit" - allows to edit advanced settings</li></ul></ul> 👉 Path reminder to the Users & Permissions plugin: <br> *General > Settings > Users & Permissions plugin* |
 
 :::
@@ -128,10 +128,11 @@ Settings permissions can be configured for all settings accessible from *General
 
 | Setting name            | Permissions |
 | ----------------------- | ----------- |
+| API Tokens | <ul><li>General</li><ul><li>"Create (generate)" - allows the creation of API tokens</li><li>"Read" - allows you to see created API tokens (disabling this permission will disable access to the *Global Settings - API Tokens* settings)</li><li>"Update" - allows editing of API tokens</li><li>"Delete (revoke)" - allows deletion of API tokens</li> <li> "Regenerate" - allows regeneration of the API token</li></ul></ul> 👉 Path reminder to API Tokens settings: <br> *General > Settings > Global Settings - API Tokens* |
 | Media Library | <ul><li>General</li><ul><li>"Access the Media Library settings page" - gives access to Media Library settings</li></ul></ul> 👉 Path reminder to Media Library settings: <br> *General > Settings > Global Settings - Media Library* |
 | Internationalization | <ul><li>Locales</li><ul><li>"Create" - allows to create new locales</li><li>"Read" - allows to see available locales</li><li>"Update" - allows to edit available locales</li><li>"Delete" - allows to delete locales</li></ul></ul> 👉 Path reminder to the Internationalization settings: <br> *General > Settings > Global Settings - Internationalization* |
 | Single sign on | <ul><li>Options</li><ul><li>"Read" - allows to access the SSO settings</li><li>"Update" - allows to edit the SSO settings</li></ul></ul> 👉 Path reminder to the SSO settings: <br> *General > Settings > Global Settings - Single Sign-On* |
-| Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul><ul><li>Plugins</li><ul><li>"Install (only for dev env)" - allows to install new plugins when in a development environment</li><li>"Uninstall (only for dev env)" - allows to uninstall plugins when in a development environment</li></ul></ul> |    
+| Plugins and Marketplace | <ul><li>Marketplace</li><ul><li>"Access the Marketplace" - gives access to the Marketplace</li></ul></ul><ul><li>Plugins</li><ul><li>"Install (only for dev env)" - allows to install new plugins when in a development environment</li><li>"Uninstall (only for dev env)" - allows to uninstall plugins when in a development environment</li></ul></ul> |
 | Webhooks | <ul><li>General</li><ul><li>"Create" - allows to create webhooks</li><li>"Read" - allows to see created webhooks</li><li>"Update" - allows to edit webhooks</li><li>"Delete" - allows to delete webhooks</li></ul></ul> 👉 Path reminder to Webhook settings: <br> *General > Settings > Global Settings - Webhook* |
 | Users and Roles | <ul><li>Users</li><ul><li>"Create (invite)" - allows to create administrator accounts</li><li>"Read" - allows to see existing administrator accounts</li><li>"Update" - allows to edit administrator accounts</li><li>"Delete" - allows to delete administrator accounts</li></ul></ul><ul><li>Roles</li><ul><li>"Create" - allows to create administrator roles</li><li>"Read" - allows to see created administrator roles</li><li>"Update" - allows to edit administrator roles</li><li>"Delete" - allows to delete administrator roles</li></ul></ul> 👉 Path reminder to the RBAC feature: <br> *General > Settings > Administration Panel* |
 
@@ -157,7 +158,7 @@ Other custom conditions can be available if they have been created beforehand fo
 To set custom conditions:
 
 1. Click on the **Settings** button of the permission already granted for the role.
-2. In the *Define conditions* window, each available permission can be customised with a specific condition. Click on the drop-down list related to the permission you want to customise.
+2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
    - Click on the arrow button ![Carret icon](../assets/icons/carret.svg) to see the available additional conditions and tick only the chosen one(s).

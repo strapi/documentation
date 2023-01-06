@@ -15,7 +15,7 @@ Results are filtered with the `filters` parameter that accepts [logical operator
 
 ### `$and`
 
-All nested conditions must be true.
+All nested conditions must be `true`.
 
 **Example**
 
@@ -40,7 +40,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: 'Hello World',
-    rating: 12,
+    createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
   },
 });
 ```
@@ -59,9 +59,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
         title: 'Hello World',
       },
       {
-        title: {
-          $contains: 'Hello',
-        },
+        createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
       },
     ],
   },
@@ -89,12 +87,17 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
 - as a logical operator (e.g. in `filters: { $not: { // conditions… }}`)
 - or [as an attribute operator](#not-2) (e.g. in `filters: { attribute-name: $not: { … } }`).
-  :::
+:::
 
 :::tip
 `$and`, `$or` and `$not` operators are nestable inside of another `$and`, `$or` or `$not` operator.
 :::
+
 ## Attribute Operators
+
+:::caution
+Using these operators may give different results depending on the database's implementation, as the comparison is handled by the database and not by Strapi.
+:::
 
 ### `$not`
 
@@ -136,6 +139,22 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: 'Hello World',
+  },
+});
+```
+
+### `$eqi`
+
+Attribute equals input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  filters: {
+    title: {
+      $eqi: 'HELLO World',
+    },
   },
 });
 ```
@@ -320,7 +339,7 @@ Attribute contains the input value. `$containsi` is not case-sensitive, while [$
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: {
-      $contains: 'hello',
+      $containsi: 'hello',
     },
   },
 });
@@ -336,7 +355,7 @@ Attribute does not contain the input value. `$notContainsi` is not case-sensitiv
 const entries = await strapi.entityService.findMany('api::article.article', {
   filters: {
     title: {
-      $notContains: 'hello',
+      $notContainsi: 'hello',
     },
   },
 });
@@ -392,7 +411,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
 ### `$notNull`
 
-Attribute is not null.
+Attribute is not `null`.
 
 **Example**
 

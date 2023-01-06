@@ -14,9 +14,9 @@ In this guide we will see how you can customize your API's response.
 
 To be able to update the default data response you have first to understand how it works.
 
-When you create a content type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+When you create a content-type, it generates an API with the following list of [endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
 
-Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content type is created.
+Each of these endpoint triggers a controller action. Here is the list of [controller actions](/developer-docs/latest/development/backend-customization/controllers.md) that exist by default when a content-type is created.
 
 If you check the controller file of your generated API `./api/{content-type}/controller/{Content-Type}.js`, you will see an empty file. It is because all the default logic is managed by Strapi. But you can override these actions with your own code.
 
@@ -29,7 +29,7 @@ Let's consider you don't want to expose the chef's email for privacy reasons.
 
 To enforce this rule we will customize the action that fetches all restaurants and remove the email from the returned data.
 
-To follow the example you will have to create a content type `restaurant` and add the following field definition:
+To follow the example you will have to create a content-type `restaurant` and add the following field definition:
 
 - `string` attribute named `name`
 - `text` attribute named `description`

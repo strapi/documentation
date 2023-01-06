@@ -8,6 +8,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 Strapi provides an Entity Service API, built on top of the [Query Engine API](/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.md). The Entity Service is the layer that handles Strapi's complex data structures like [components](/developer-docs/latest/development/backend-customization/models.md#components) and [dynamic zones](/developer-docs/latest/development/backend-customization/models.md#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.
 
+::: strapi Entity Service API vs. Query Engine API
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/snippets/entity-query-knex-callout.md)!!!
+:::
+
 ## Basic usage
 
 The Entity Service is available through `strapi.entityService`:

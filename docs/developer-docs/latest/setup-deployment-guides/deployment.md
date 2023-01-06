@@ -6,54 +6,75 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Deployment
 
-Strapi gives you many possible deployment options for your project or application. Strapi can be deployed on traditional hosting servers or services such as 21YunBox, Render, Heroku, AWS, Azure and others. The following documentation covers how to develop locally with Strapi and deploy Strapi with various hosting options.
+Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider. 
+
+The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
+
+::: callout ☁️ Strapi Cloud
+Don't want to deploy Strapi by yourself? <a href="https://strp.cc/3rywrsu" target="_blank" id="deployment-section-cloud-link">Join the cloud waitlist</a> to soon get access to a platform to easily deploy and host your project.
+:::
+
+::: strapi Community Guides
+In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
+:::
+
+## General guidelines
+
+### Hardware and software requirements
+
+To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
+
+- Node LTS (v14 or v16) **Odd-number releases of Node are not supported (e.g. v13, v15).**
+- NPM v6 (or the version shipped with the LTS Node versions)
+- Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
+- Hardware specifications for your server (CPU, RAM, storage):
+
+| Hardware | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU      | 1 core  | 2+ cores    |
+| Memory   | 2GB     | 4GB+        |
+| Disk     | 8GB     | 32GB+       |
+
+- A supported database version:
 
 ::: strapi Database deployment
 Deploying databases along with Strapi is covered in the [databases guide](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md#databases-installation-guides).
 :::
 
-## General guidelines
+| Database   | Minimum | Recommended |
+|------------|---------|-------------|
+| MySQL      | 5.7.8   | 8.0         |
+| MariaDB    | 10.3    | 10.6        |
+| PostgreSQL | 11.0    | 14.0        |
+| SQLite     | 3       | 3           |
 
-::: prerequisites
-To provide the best possible environment for Strapi there are a few requirements, these apply in both a development (local) as well as a staging and production workflow.
+- A supported operating system:
 
-- Node LTS (v12 or V14) **Note that odd-number releases of Node will never be supported (e.g. v13, v15).**
-- NPM v6 or whatever ships with the LTS Node versions
-- Typical standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
-- At least 1 CPU core (Highly recommended at least 2)
-- At least 2 GB of RAM (Moderately recommended 4)
-- Minimum required storage space recommended by your OS or 32 GB of **free** space
-- A supported database version
-  - MySQL >= 5.7.8
-  - MariaDB >= 10.2.7
-  - PostgreSQL >= 10
-  - SQLite >= 3
-- A supported operating system
-  - Ubuntu >= 18.04 (LTS-Only)
-  - Debian >= 9.x
-  - CentOS/RHEL >= 8
-  - macOS Mojave or newer (ARM not supported)
-  - Windows 10
-  - Docker - [docker repo](https://github.com/strapi/strapi-docker)
-:::
+| Operating System | Minimum | Recommended |
+|------------------|---------|-------------|
+| Ubuntu (LTS)     | 20.04   | 22.04       |
+| Debian           | 10.x    | 11.x        |
+| CentOS/RHEL      | 8.x     | 9.x         |
+| macOS            | 10.15   | 11.0        |
+| Windows Desktop  | 10      | 11          |
+| Windows Server   | 2019    | 2022        |
+
 ### Application Configuration
 
 #### 1. Configure
 
-We always recommend you use environment variables to configure your application based on the environment. Here is an example:
-
-**Path —** `./config/server.js`.
+We recommend using environment variables to configure your application based on the environment, for example:
 
 ```js
+// Path: ./config/server.js
+
 module.exports = ({ env }) => ({
   host: env('APP_HOST', '0.0.0.0'),
   port: env.int('NODE_PORT', 1337),
 });
 ```
 
-Then you can create a `.env` file or directly use the deployment platform you use to set environment variables:
-
-**Path —** `.env`.
+Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
 
 ```
 APP_HOST=10.0.0.1
@@ -61,12 +82,12 @@ NODE_PORT=1338
 ```
 
 ::: tip
-To learn more about configuration details, you can read the [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md) documentation.
+To learn more about configuration details, see the [configurations](/developer-docs/latest/setup-deployment-guides/configurations.md) documentation.
 :::
 
 #### 2. Launch the server
 
-Before running your server in production you need to build your admin panel for production
+Before running your server in production you need to build your admin panel for production:
 
 :::: tabs card
 
@@ -108,7 +129,7 @@ npm run build:win
 
 ::::
 
-Run the server with the `production` settings.
+Run the server with the `production` settings:
 
 :::: tabs card
 
@@ -157,10 +178,17 @@ We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
 
 ```js
-const strapi = require('@strapi/strapi');
+// path: `./server.js`
 
+const strapi = require('@strapi/strapi');
 strapi(/* {...} */).start();
 ```
+
+:::caution
+
+If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
+For more information, consult the [TypeScript documentation](/developer-docs/latest/development/typescript.md#use-the-strapi-factory).
+:::
 
 ### Advanced configurations
 
@@ -168,39 +196,7 @@ If you want to host the administration on another server than the API, [please t
 
 ## Hosting Provider Guides
 
-Manual guides for deployment on various platforms, for One-click and docker please see the [installation](/developer-docs/latest/setup-deployment-guides/installation.md) guides.
-
-<div>
-    <InstallLink link="deployment/hosting-guides/21yunbox.html">
-    <template #icon>
-    <svg width="64px" height="55px" viewBox="0 0 64 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <title>Group</title>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="Artboard" transform="translate(0.000000, -5.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                <g id="Group" transform="translate(0.000000, 5.211429)">
-                    <rect id="Rectangle" x="45.8057143" y="0" width="7.86285714" height="53.4857143"></rect>
-                    <rect id="Rectangle" x="0" y="0" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="10.3314286" y="0" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="20.9371429" y="0" width="7.86285714" height="18.1942857"></rect>
-                    <rect id="Rectangle" x="0" y="22.1257143" width="28.8" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="0" y="33.92" width="7.86285714" height="19.5657143"></rect>
-                    <rect id="Rectangle" x="10.3314286" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="20.9371429" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="35.2" y="0" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="45.8057143" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="56.1371429" y="45.7142857" width="7.86285714" height="7.86285714"></rect>
-                    <rect id="Rectangle" x="35.2" y="45.6228571" width="7.86285714" height="7.86285714"></rect>
-                </g>
-            </g>
-        </g>
-    </svg>
-    </template>
-        <template #title>21YunBox</template>
-        <template #description>
-            Step by step guide for deploying on 21YunBox
-        </template>
-    </InstallLink>
-</div>
+Manual guides for deployment on the following platforms:
 
 <div>
 	<InstallLink link="deployment/hosting-guides/amazon-aws.html">
@@ -274,29 +270,6 @@ Manual guides for deployment on various platforms, for One-click and docker plea
 	</InstallLink>
 </div>
 
-<div>
-	<InstallLink link="deployment/hosting-guides/render.html">
-		<template #icon>
-			<svg viewBox="21.7 21.7 181 181" xmlns="http://www.w3.org/2000/svg"><g><polygon class="st0" points="145 31.7 143 31.7 143 33.7 143 52.2 143 54.2 145 54.2 163.6 54.2 165.6 54.2 165.6 52.2 165.6 33.7 165.6 31.7 163.6 31.7" fill="#fff"/><path class="st0" d="M 85.2 31.7 C 78 31.7 71 33.1 64.4 35.9 C 58 38.6 52.3 42.5 47.4 47.4 C 42.5 52.3 38.6 58 35.9 64.4 C 33.1 71 31.7 78 31.7 85.2 L 31.7 163.6 L 31.7 165.6 L 33.7 165.6 L 52.3 165.6 L 54.3 165.6 L 54.3 163.6 L 54.3 84.9 C 54.7 76.8 58.1 69.2 63.8 63.6 C 69.6 57.9 77.2 54.6 85.3 54.3 L 126.5 54.3 L 128.5 54.3 L 128.5 52.3 L 128.5 33.7 L 128.5 31.7 L 126.5 31.7 L 85.2 31.7 Z" fill="#fff"/><polygon class="st0" points="182.1 105.9 180.1 105.9 180.1 107.9 180.1 126.5 180.1 128.5 182.1 128.5 200.7 128.5 202.7 128.5 202.7 126.5 202.7 107.9 202.7 105.9 200.7 105.9" fill="#fff"/><polygon class="st0" points="182.1 68.8 180.1 68.8 180.1 70.8 180.1 89.4 180.1 91.4 182.1 91.4 200.7 91.4 202.7 91.4 202.7 89.4 202.7 70.8 202.7 68.8 200.7 68.8" fill="#fff"/><polygon class="st0" points="200.7 31.7 182.1 31.7 180.1 31.7 180.1 33.7 180.1 52.2 180.1 54.2 182.1 54.2 200.7 54.2 202.7 54.2 202.7 52.2 202.7 33.7 202.7 31.7" fill="#fff"/><polygon class="st0" points="182.1 143 180.1 143 180.1 145 180.1 163.6 180.1 165.6 182.1 165.6 200.7 165.6 202.7 165.6 202.7 163.6 202.7 145 202.7 143 200.7 143" fill="#fff"/><polygon class="st0" points="182.1 180.1 180.1 180.1 180.1 182.1 180.1 200.7 180.1 202.7 182.1 202.7 200.7 202.7 202.7 202.7 202.7 200.7 202.7 182.1 202.7 180.1 200.7 180.1" fill="#fff"/><polygon class="st0" points="145 180.1 143 180.1 143 182.1 143 200.7 143 202.7 145 202.7 163.6 202.7 165.6 202.7 165.6 200.7 165.6 182.1 165.6 180.1 163.6 180.1" fill="#fff"/><polygon class="st0" points="107.9 180.3 105.9 180.3 105.9 182.3 105.9 200.9 105.9 202.9 107.9 202.9 126.5 202.9 128.5 202.9 128.5 200.9 128.5 182.3 128.5 180.3 126.5 180.3" fill="#fff"/><polygon class="st0" points="70.8 180.1 68.8 180.1 68.8 182.1 68.8 200.7 68.8 202.7 70.8 202.7 89.4 202.7 91.4 202.7 91.4 200.7 91.4 182.1 91.4 180.1 89.4 180.1" fill="#fff"/><polygon class="st0" points="33.7 180.1 31.7 180.1 31.7 182.1 31.7 200.7 31.7 202.7 33.7 202.7 52.2 202.7 54.2 202.7 54.2 200.7 54.2 182.1 54.2 180.1 52.2 180.1" fill="#fff"/></g></svg>
-		</template>
-		<template #title>Render</template>
-		<template #description>
-			Three different options for deploying on Render
-		</template>
-	</InstallLink>
-</div>
-
-<div>
-	<InstallLink link="deployment/hosting-guides/qovery.html">
-    <template #icon>
-      <svg viewBox="0 0 276 325" width="276" height="325" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M203.48 124.771V272.797L275.927 230.983V80.2736L203.48 124.771Z" fill="#E7E7F9"/><path d="M141.541 0L0 77.367L77.5906 124.771L141.318 88.9944L203.48 124.771L275.927 80.2739L141.541 0Z" fill="white"/><path d="M0 77.3672L77.8142 124.771L77.1434 197.89L163.902 244.847L164.796 324.897L0 231.43V77.3672Z" fill="white"/><path d="M141.318 88.994L203.48 124.771C203.48 124.771 203.649 198.88 203.649 197.762C208.165 199.932 142.212 165.019 142.212 165.019L141.318 88.994Z" fill="white"/><path d="M77.1434 197.889L142.212 165.019L141.318 88.994L77.8142 124.771L77.1434 197.889Z" fill="#E7E7F9"/><path d="M163.902 244.846L77.1434 197.889L142.212 165.019L225.393 209.293L163.902 244.846Z" fill="white"/><path d="M164.796 324.897L224.275 284.872L225.393 209.294L163.902 244.847L164.796 324.897Z" fill="#E7E7F9"/><path d="M7.62292 82.0625C30.8777 96.3731 54.5589 110.473 77.8138 124.783C99.0561 112.932 120.082 100.847 141.325 88.996C162.12 100.847 182.705 112.92 203.5 124.771C224.742 111.355 246.226 98.852 267.363 85.5283L141.338 9.83838C96.8409 33.9876 52.3437 57.9132 7.62292 82.0625Z" fill="white"/></svg>
-    </template>
-		<template #title>Qovery</template>
-		<template #description>
-			Step by step guide for deploying on Qovery
-		</template>
-	</InstallLink>
-</div>
 
 ## Optional Software Guides
 
@@ -339,3 +312,15 @@ Additional guides for optional software additions that compliment or improve the
 	</InstallLink>
 </div>
 
+<div>
+	<InstallLink link="deployment/optional-software/process-manager.html">
+    <template #icon>
+    <!-- <img src="assets/deployment/caddy-monotone.svg"/> -->
+    PM2
+    </template>
+		<template #title> PM2 Process Manager</template>
+		<template #description>
+			Overview of using the PM2 process manager with Strapi.
+		</template>
+	</InstallLink>
+</div>

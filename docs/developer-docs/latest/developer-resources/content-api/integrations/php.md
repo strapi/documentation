@@ -23,9 +23,9 @@ We will use cURL, a built-in PHP extension that allows us to receive and send in
 
 ## GET Request your collection type
 
-Execute a `GET` request on the `restaurant` Collection Type in order to fetch all your restaurants.
+Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
-Be sure that you activated the `find` permission for the `restaurant` Collection Type.
+Be sure that you activated the `find` permission for the `restaurant` collection type.
 
 :::: api-call
 ::: request Example GET request
@@ -89,9 +89,9 @@ getRestaurants();
 
 ## POST Request your collection type
 
-Execute a `POST` request on the `restaurant` Collection Type in order to create a restaurant.
+Execute a `POST` request on the `restaurant` collection type in order to create a restaurant.
 
-Be sure that you activated the `create` permission for the `restaurant` Collection Type and the `find` permission for the `category` Collection type.
+Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
 :::: api-call
 ::: request Example POST request
@@ -192,10 +192,10 @@ postRestaurant();
 
 ## PUT Request your collection type
 
-Execute a `PUT` request on the `restaurant` Collection Type in order to update the category of a restaurant.
+Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
-Be sure that you activated the `update` permission for the `restaurant` Collection Type.
-PUT Request is sligtly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
+Be sure that you activated the `update` permission for the `restaurant` collection type.
+PUT Request is slightly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
 :::: api-call
 ::: request Example PUT request
@@ -440,6 +440,6 @@ postRestaurantWithAuth($jwt);
 
 ## Conclusion
 
-Here is how to request your Collection Types in Strapi using PHP. When you create a Collection Type or a Single Type you will have a certain number of REST API endpoints available to interact with.
+Here is how to request your collection types in Strapi using PHP. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
 
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#api-endpoints).
+We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).

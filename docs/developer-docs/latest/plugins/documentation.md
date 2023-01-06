@@ -6,6 +6,10 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/documentation
 
 # API Documentation
 
+::: caution
+The Documentation plugin documentation may not be fully updated for Strapi v4. The Strapi team is currently improving that plugin and documentation.
+:::
+
 Now that you have created your API it's really important to document its available end-points. The documentation plugin takes out most of your pain to generate your documentation. This plugin uses [SWAGGER UI](https://swagger.io/solutions/api-documentation/) to visualize your API's documentation.
 
 If installed, this plugin will scan all the routes available from your `./api` folder and will try to create the appropriate documentation, infer on the parameters needed to create data, the responses you will receive.

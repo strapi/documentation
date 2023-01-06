@@ -6,10 +6,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Role-Based Access Control <BronzeBadge link="https://strapi.io/pricing-self-hosted"/> <SilverBadge link="https://strapi.io/pricing-self-hosted"/> <GoldBadge link="https://strapi.io/pricing-self-hosted" withLinkIcon/>
 
-:::caution 🚧 This API is considered unstable for now.
-<br>
-:::
-
 Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for any type of permission is also possible. This requires an Enterprise Edition with at minimum a Bronze licence plan.
 
 ## Declaring new conditions
@@ -37,6 +33,7 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$or`
 - `$and`
 - `$eq`
+- `$eqi`
 - `$ne`
 - `$in`
 - `$nin`
@@ -85,9 +82,15 @@ const condition = {
 
 ## Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) found in `./src/index.js`. Register a single condition with the `conditionProvider.register()` method:
+To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#bootstrap) found in `./src/index`. Register a single condition with the `conditionProvider.register()` method:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
 
 ```js
+// path: ./src/index.js
+
 module.exports = async () => {
   await strapi.admin.services.permission.conditionProvider.register({
     displayName: 'Billing amount under 10K',
@@ -98,9 +101,35 @@ module.exports = async () => {
 };
 ```
 
-To register multiple conditions, defined as an array of [condition objects](#declaring-new-conditions), use `conditionProvider.registerMany()`:
+</code-block>
+
+<code-block title="TYPESCRIPT">
 
 ```js
+// path: ./src/index.ts
+
+export default async () => {
+  await strapi.admin.services.permission.conditionProvider.register({
+    displayName: 'Billing amount under 10K',
+    name: 'billing-amount-under-10k',
+    plugin: 'admin',
+    handler: { amount: { $lt: 10000 } },
+  });
+};
+```
+
+</code-block>
+</code-group>
+
+To register multiple conditions, defined as an array of [condition objects](#declaring-new-conditions), use `conditionProvider.registerMany()`:
+
+<code-group>
+
+<code-block title="JAVASCRIPT">
+
+```js
+// path: ./src/index.js
+
 const conditions = [
   {
     displayName: "Entity has same name as user",
@@ -125,3 +154,39 @@ module.exports = async () => {
   await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
 };
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./src/index.ts
+
+const conditions = [
+  {
+    displayName: "Entity has same name as user",
+    name: "same-name-as-user",
+    plugin: "name of a plugin if created in a plugin"
+    handler: (user) => {
+      return { name: user.name };
+    },
+  },
+  {
+    displayName: "Email address from strapi.io",
+    name: "email-strapi-dot-io",
+    async handler(user) {
+      return user.email.includes('@strapi.io');
+    },
+  }
+];
+
+export default async () => {
+  // do your boostrap
+
+  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+};
+```
+
+</code-block>
+
+</code-group>

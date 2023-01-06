@@ -11,7 +11,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 In this guide we are going to:
 
 - Create a new Strapi project
-- Configure PostgreSQL for the production enviroment
+- Configure PostgreSQL for the production environment
 - Deploy the app to Google App Engine
 - Add the [Google Cloud Storage file uploading plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage) by [@Lith](https://github.com/Lith)
 
@@ -37,7 +37,7 @@ When the setup completes, register an admin user using the form which opens in t
 
 The `sqlite` database is created at `.tmp/data.db`.
 
-Login, but don't add content types yet. Close the browser. Quit the running app.
+Login, but don't add content-types yet. Close the browser. Quit the running app.
 
 ### Initial commit
 
@@ -154,6 +154,7 @@ Create `.gcloudignore` in the project root.
 node_modules/
 #!include:.gitignore
 !.env
+yarn.lock  # If you're using Yarn
 ```
 
 In the case of Strapi, the admin UI will have to be re-built after every deploy,
@@ -161,6 +162,7 @@ and so we don't deploy local build artifacts, cache files and so on by including
 the `.gitignore` entries.
 
 ### Adding `.gitkeep` to database folder
+
 Google App Engine does not give `mkdir` permissions and the `database/migrations` folder is required for deployments. Make sure `git` keeps track of the `database/migrations` folder by adding a `.gitkeep` file to the folder. Use the following command:
 
 ```bash
@@ -177,6 +179,9 @@ yarn add pg
 
 Adding the production database configuration for connect to GCP SQL.
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
 // path: ./config/env/production/database.js
 
@@ -184,14 +189,39 @@ module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
-        host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
-        database: env('DATABASE_NAME'),
-        user: env('DATABASE_USER'),
-        password: env('DATABASE_PASSWORD'),
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a PostgreSQL database
+      // ⚠️ For a MySQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USER'),
+      password: env('DATABASE_PASSWORD'),
     },
   },
 });
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+// path: ./config/env/production/database.ts
+
+export default ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a PostgreSQL database
+      // ⚠️ For a MySQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USER'),
+      password: env('DATABASE_PASSWORD'),
+    },
+  },
+});
+```
+
+</code-block>
+</code-group>
 
 ### Auto-build after deploy
 
@@ -237,6 +267,10 @@ Deploy so that the server app includes the dependency from `package.json`.
 
 Follow the [documentation of the plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage/blob/master/README.md) for the full configuration.
 
+::: note
+If thumbnails fail to load in the Media Library, try setting `publicFiles: true` in the upload provider `config` object in the `plugins.js` configuration file.
+:::
+
 ### Post-setup configuration
 
 **CORS**
@@ -248,13 +282,49 @@ Read the documentation [here](/developer-docs/latest/setup-deployment-guides/con
 **Changing the admin url**
 
 ```
-config/env/production/server.js
+config/env/production/admin.js
 ```
 
+<code-group>
+<code-block title="JAVASCRIPT">
+
 ```js
-module.exports = {
-  admin: {
-    path: '/dashboard',
-  },
-};
+module.exports = ({ env }) => ({
+  url: '/dashboard',
+});
 ```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```js
+export default ({ env }) => ({
+  url: '/dashboard',
+});
+```
+
+</code-block>
+</code-group>
+
+### Troubleshooting
+
+The following are common issues during deployment:
+
+#### `unknown: Service 'containerregistry.googleapis.com' is not enabled for consumer`
+
+Solution:
+
+1. Type `containerregistry` in the search input of Google cloud panel.
+2. In search results select the item with an API icon.
+3. Disable and enable it again.
+4. Find and enable CloudBuild API.
+5. Deploy your project.
+
+#### `connect ECONNREFUSED /cloudsql/strapi-0000:europe-west1:strapi/.s.PGSQL.5432`
+
+Solution:
+
+1. Find the Cloud SQL Admin API.
+2. Enable the Cloud SQL Admin API.
+3. Deploy your project.
