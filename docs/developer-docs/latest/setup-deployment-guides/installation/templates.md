@@ -82,7 +82,7 @@ The `template.json` is used to extend the Strapi application's default `package.
 {
   "package": {
     "dependencies": {
-      "strapi-plugin-graphql": "^4.0.0"
+      "@strapi/plugin-graphql": "^4.0.0"
     },
     "scripts": {
       "custom": "node ./scripts/custom.js"
