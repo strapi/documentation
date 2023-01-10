@@ -150,9 +150,20 @@ const sidebars = {
           ]
         },
         'dev-docs/typescript',
-        'dev-docs/providers'
+        'dev-docs/providers',
+        'dev-docs/data-management',
       ]
     },
+
+    {
+      type: 'category',
+      label: '💻 Developer Resources',
+      collapsed: false,
+      items: [
+        'dev-docs/cli',
+        'dev-docs/data-management',
+      ],
+    }, 
 
     {
       type: 'category',
