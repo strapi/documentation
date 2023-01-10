@@ -49,7 +49,7 @@ The following list is a sitemap of all the current and upcoming content for the 
         - [x] [Server configuration](/dev-docs/configurations/server)
         - [x] [Admin panel](/dev-docs/configurations/admin-panel)
         - [x] [Middlewares](/dev-docs/configurations/middlewares)
-    - [ ] Optional configurations
+    - [x] Optional configurations
       - [x] [API tokens](/dev-docs/configurations/api-tokens)
       - [x] [Functions](/dev-docs/configurations/functions)
       - [x] [Cron jobs](/dev-docs/configurations/cron)
