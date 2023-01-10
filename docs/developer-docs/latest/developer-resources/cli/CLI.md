@@ -98,6 +98,55 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
+
+## strapi export <BetaBadge />
+
+[Exports your project data](/developer-docs/latest/developer-resources/data-management.md). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+
+```bash
+strapi export
+```
+
+The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
+
+| Option           | Type    | Description                                                                                               |
+|------------------|---------|----------------------------------------------------------------------------|
+| `--no-encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
+| `--no-compress`    |     -    | Disables file compression.                                                                                |
+| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
+| `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
+| `-h`, `--help`       |     -    | Displays help for the `strapi export` command.                                                            |
+
+**Examples**
+
+```bash
+# examples of strapi export:
+
+strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
+strapi export --no-encrypt # exports your data without encryption. 
+```
+
+## strapi import <BetaBadge />
+
+[Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+
+| Option             | Type   | Description                                                               |
+|--------------------|--------|---------------------------------------------------------------------------|
+| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
+| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
+| `-h`, `--help`         |   -     | Display the `strapi import` help commands.                                |
+
+**Examples**
+
+```bash
+
+# example of strapi import:
+
+# import your data with the default parameters and pass an encryption key: 
+strapi import -f <your-filepath-and-filename> --key my-key
+
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
@@ -106,7 +155,7 @@ Dumps configurations to a file or stdout to help you migrate to production.
 
 The dump format will be a JSON array.
 
-```
+```sh
 strapi configuration:dump
 
 Options:

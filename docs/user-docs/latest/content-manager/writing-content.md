@@ -81,8 +81,8 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-<img src="../assets/content-manager/edit-view_dynamic-zone1.png" alt="Writing content for a dynamic zone" width="80%">
-<img src="../assets/content-manager/edit-view_dynamic-zone3.png" alt="Writing content for a dynamic zone" width="80%">
+<img src="../assets/content-manager/edit-view_dynamic-zone-1.png" alt="Writing content for a dynamic zone" width="80%">
+<img src="../assets/content-manager/edit-view_dynamic-zone-2.png" alt="Writing content for a dynamic zone" width="80%">
 
 1. Click on the ![Add icon](../assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
@@ -90,8 +90,12 @@ Dynamic zones are a combination of components, which themselves are composed of 
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the arrow buttons ![Up icon](../assets/icons/up2.svg) ![Down icon](../assets/icons/down2.svg) to reorder components in your dynamic zone.
+- Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder components in your dynamic zone.
 - Use the delete button ![Delete icon](../assets/icons/delete.svg) to delete a component from your dynamic zone.
+
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](../assets/icons/drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
 
 ::: note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.

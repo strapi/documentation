@@ -21,5 +21,5 @@ Migrating a Strapi v3 project with a MongoDB database to Strapi v4 is a 2-step p
 2. migrate the SQL database from Strapi v3 to Strapi v4 (see [SQL migration](/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.md)).
 
 ::: callout 🚧  Migration scripts
-[Data migration scripts](https://github.com/strapi/migration-scripts) are currently in alpha/beta testing. Please feel free to share feedback in [the dedicated forum thread](https://forum.strapi.io/t/strapi-v4-migration-scripts-are-live-for-testing/18266).
+[Data migration scripts](https://github.com/strapi/migration-scripts) are currently under testing. Please feel free to share feedback in [the dedicated forum thread](https://forum.strapi.io/t/strapi-v4-migration-scripts-are-live-for-testing/18266).
 :::

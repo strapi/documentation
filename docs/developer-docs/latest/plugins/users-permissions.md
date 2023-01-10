@@ -1102,6 +1102,7 @@ You can update these templates under **Plugins** > **Roles & Permissions** > **E
   - `email`
 - `TOKEN` corresponds to the token generated to be able to reset the password.
 - `URL` is the link where the user will be redirected after clicking on it in the email.
+- `SERVER_URL` is the absolute server url (configured in server config).
 
 ### Email address confirmation
 
@@ -1110,6 +1111,7 @@ You can update these templates under **Plugins** > **Roles & Permissions** > **E
   - `email`
 - `CODE` corresponds to the CODE generated to be able confirm the user email.
 - `URL` is the Strapi backend URL that confirms the code (by default `/auth/email-confirmation`).
+- `SERVER_URL` is the absolute server url (configured in server config).
 
 ## Security configuration
 
