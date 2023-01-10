@@ -150,7 +150,8 @@ const sidebars = {
           ]
         },
         'dev-docs/typescript',
-        'dev-docs/data-management'
+        'dev-docs/providers',
+        'dev-docs/data-management',
       ]
     },
 
