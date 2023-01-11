@@ -122,6 +122,7 @@ const sidebars = {
             'dev-docs/api/rest/sort-pagination',
           ]
         },
+        'dev-docs/api/graphql',
         'dev-docs/api/plugins/admin-panel-api',
       ]
     },
