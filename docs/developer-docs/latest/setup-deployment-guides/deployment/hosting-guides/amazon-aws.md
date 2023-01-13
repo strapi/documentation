@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/snippets/deployment-guide-not-updated.md)!!!
 
-This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
+This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/) inside your [AWS VPC](https://aws.amazon.com/vpc/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
 Prior to starting this guide, you should have created a [Strapi project](/developer-docs/latest/getting-started/quick-start.md), to use for deploying on AWS. And have read through the [configuration](/developer-docs/latest/setup-deployment-guides/deployment.md#application-configuration) section.
 
@@ -39,6 +39,7 @@ Best practices for using **AWS Amazon** services state to not use your root acco
     - search for `ec2` and check `AmazonEC2FullAccess`
     - search for `RDS` and check `AmazonRDSFullAccess`
     - search for `s3` and check `AmazonS3FullAccess`
+    - search for `vpc` and check `AmazonVPCFullAccess`
     - Click `Create group`
   - Click to `Add user to group` and check the `Developers` group, to add the new user.
   - Click `Next: Tags`.
@@ -63,6 +64,35 @@ You may now proceed to the next steps.
 - [IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html).
 - [Instructions to reset Access key ID and Secret access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html).
 
+### Create your AWS VPC
+
+A VPC is an isolated portion of the AWS Cloud populated by AWS objects, such as Amazon EC2 instances. A VPC is logically isolated from other virtual networks in the AWS Cloud. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. You can specify an IP address range for the VPC, add subnets, associate security groups, and configure route tables.
+
+#### 1. From your **AWS Management Console** and as your **_regular_** user
+
+- `Find Services`, search for `VPC` and click on `EC2, Isolated Cloud Resources`
+
+#### 2. **Select Appropriate Region**
+
+In the top menu, near your IAM Account User name, select, from the dropdown, the most appropriate region to host your Strapi project. For example, `US East (N.Virginia)` or `Asia Pacific (Hong Kong)`. You will want to remember this region for configuring other services on AWS and serving these services from the same region.
+
+#### 3. Click on the orange `Create VPC` button
+
+- `Select` **VPC and More**
+- `Select` **Auto-generate nametags**. Add a suitable name, e.g. `strapi-vpc`.
+- `Leave` **IPv4 CIDR block** as **10.0.0.0/16** (unless you have a specific reason to change it).
+- `Leave` **Tenancy** as **Default**.
+- `Select` **2** for **Number of Availability Zones (AZs)**
+- `Select` **2** for **Number of Public Subnets**
+- `Select` **2** for **Number of Private Subnets**
+- `Select` **0** for **NAT gateways**.
+::: tip
+If you know that you will need to scale your project, you can increase the number of subnets and NAT gateways. For example, if you are expecting a large number of users, you may want to increase the number of private subnets and NAT gateways. For more information, see [VPC and Subnet Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#vpc-sizing-ipv4).
+:::
+- `Select` **S3 Gateway** for **VPC Endpoints**.
+- `Check` **Enable DNS hostnames** and **Enable DNS resolution**.
+- `Select` **Create VPC**.
+
 ### Launch an EC2 virtual machine
 
 Amazon calls a virtual private server, a **virtual server** or **Amazon EC2 instance**. To use this service you will `Launch Instance`. In this section, you will **establish IAM credentials**, **launch a new instance** and **set-up primary security rules**.
@@ -86,6 +116,9 @@ In the top menu, near your IAM Account User name, select, from the dropdown, the
 - In the **Step 4: Add Storage** verify the `General Purpose SSD (gp2)`, then click `Next: Add tags`.
 - In the **Step 5: Add Tags**, add tags to suit your project or leave blank, then click `Next: Configure Security Group`.
 - In the **Step 6: Configure Security Group**, configure the `security settings` as follows:
+    ::: tip
+    Make sure you are creating the instance in the correct VPC. You should choose a public subnet otherwise you will not be able to access the instance.
+    :::
   - **Assign a security group:** Check as `Create a new security group`
   - **Security group name:** Name it, e.g. `strapi`
   - **Description:** Write a short description, e.g. `strapi instance security settings`
@@ -138,7 +171,8 @@ Follow these steps to complete installation of a `PostgreSQL` database:
   - **Credential Settings**: This is your `psql` database _username_ and _password_.
     - **Master username:** Keep as `postgres`, or change (optional)
     - `Uncheck` _Auto generate a password_, and then type in a new secret password.
-- **Connectivity**, and **Additional connectivity configuration**: Set `Publicly accessible` to `Yes`.
+- **Connectivity**
+  - **Connect to an EC2 compute instance** Click on the `Instace` dropdown, and select the EC2 instance you created earlier.
 - **OPTIONAL:** Review any further options (**DB Instance size**, **Storage**, **Connectivity**), and modify to your project needs.
 - You need to give you Database a name. Under **Additional configuration**:
   - **Additional configuration**, and then **Initial database name:** Give your database a name, e.g. `strapi`.
@@ -291,7 +325,7 @@ These instructions assume that you have already created a **Strapi** project, an
 
 You will need to update the `database.json` file to configure Strapi to connect to the `RDS` database. And you will need to install an npm package called `pg` locally on your development server.
 ::: tip
-The `pg` package install is only necessary if you are using **PostgresSQL** as your database.
+The `pg` package install is only necessary if you are using **PostgresSQL** as your database. Make sure to uninstall the sqlite3 package if you changed your database to PostgresSQL. 
 :::
 
 #### 1. Install `pg` in your Strapi project.
@@ -447,7 +481,7 @@ cd ~
 git clone https://github.com/your-name/your-project-repo.git
 ```
 
-Next, navigate to the `my-project` folder, the root for Strapi. You will need to run `npm install` to install the packages for your project.
+Next, navigate to the `my-project` folder, the root for Strapi. You will need to run `npm install` to install the packages for your project. Make sure to uninstall the sqlite3 package if you changed your database to PostgresSQL.
 
 `Path: ./my-project/`
 
@@ -456,6 +490,7 @@ cd ./my-project/
 npm install
 NODE_ENV=production npm run build
 ```
+
 
 Next, you need to install **PM2 Runtime** and configure the `ecosystem.config.js` file
 
@@ -526,6 +561,10 @@ export default {
       script: 'npm',
       args: 'start',
       env: {
+        APP_KEYS: 'your app keys', // you can find it in your project .env file.
+        API_TOKEN_SALT: 'your api token salt',
+        ADMIN_JWT_SECRET: 'your admin jwt secret',
+        JWT_SECRET: 'your jwt secret',
         NODE_ENV: 'production',
         DATABASE_HOST: 'your-unique-url.rds.amazonaws.com', // database Endpoint under 'Connectivity & Security' tab
         DATABASE_PORT: '5432',
