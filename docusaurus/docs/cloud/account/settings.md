@@ -29,6 +29,8 @@ The **Preferences** tab enables you to edit the following details for your accou
 
 The **Billing** tab displays your billing information and enables you to update your payment method.
 
+![Account billing settings](/img/assets/cloud/account-billing.png)
+
 ## Invoices
 
 The **Invoices** tab displays a chronological list of all your invoices and allows you to download them.
