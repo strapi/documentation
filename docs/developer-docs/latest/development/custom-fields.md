@@ -145,7 +145,7 @@ export default {
 
 ### Components
 
-`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
+`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view. This React component acts as the input for the custom field in the content manager view. 
 
 ::: details Example: Registering an Input component
 
@@ -176,7 +176,7 @@ The `Input` React component receives several props. The [`ColorPickerInput` file
 
 ### Options
 
-`app.customFields.register()` can pass an additional `options` object with the following parameters:
+`app.customFields.register()` can pass an additional `options` object  with the following parameters:
 
 | Options parameter | Description                                                                     | Type                    |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
@@ -184,7 +184,7 @@ The `Input` React component receives several props. The [`ColorPickerInput` file
 | `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
 | `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
 
-Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
+`options` enable to the creation of settings when we set up or edit a custom field in the Content Types Builder. Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
 
 - a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
 - and a list of `items` as an array of objects.
@@ -282,7 +282,25 @@ export default {
 }
 ```
 
+
+
 :::
+`types` accepts the following inputs:
+
+```javascript
+[
+  'text',
+  'checkbox',
+  'checkbox-with-number-field',
+	'select',
+	'select-default-boolean',
+	'select-date',
+	'textarea-enum',
+  'boolean-radio-group',
+  'select-number',
+  'radio-group',
+]
+```
 
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 ::: tip
