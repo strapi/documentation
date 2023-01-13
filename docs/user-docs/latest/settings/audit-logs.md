@@ -10,7 +10,7 @@ The **Audit Logs** section provides a searchable and filterable display of all a
 
 They are accessible from the **Administrator Panel** section of the [**Settings**](./managing-global-settings.md) panel.
 
-<!--insert screenshot -->
+![Audit Logs panel](../assets/settings/settings_audit-logs.png)
 
 For each log item the following information is displayed:
 
@@ -47,4 +47,4 @@ Click the **Search** icon to search for a specific log. The search is performed 
 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
-<!--insert screenshot -->
+![Log details modal](../assets/settings/settings_log-details.png)
