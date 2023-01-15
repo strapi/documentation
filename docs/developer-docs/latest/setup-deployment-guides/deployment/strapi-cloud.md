@@ -23,7 +23,7 @@ Onboarding of users will be done in batches. You will be notified via email when
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* Strapi version `4.4.x` or higher
+* Strapi version `4.6.x` or higher
 * Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
@@ -34,11 +34,13 @@ Importing data from an existing Strapi application and data backups for a Strapi
 
 ## Getting started
 
-1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
+1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) home page. A welcome page is displayed, providing a link to the terms of service and prompting you to **Start free trial** to continue.
 
-    ![Strapi Cloud login page](../assets/deployment/cloud/login.png)
+    ![Strapi Cloud welcome page](../assets/deployment/cloud/welcome-screen.png)
 
 2. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
+
+    ![Strapi Cloud login page](../assets/deployment/cloud/login.png)
 
 3. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
 
@@ -66,12 +68,20 @@ Importing data from an existing Strapi application and data backups for a Strapi
     ![Project Setup](../assets/deployment/cloud/setup.png)
 
 4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
-    * [**Environment variables**](../configurations/optional/environment.md): Environment variables are used to configure your Strapi app.
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
-
+    * **Environment variables**: Use the **Add variable** button to add any custom [environment variables](../configurations/optional/environment.md) values to configure your Strapi app.
+    
     ![Advanced Setup](../assets/deployment/cloud/advanced.png)
 
-5. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
+5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
+
+    ::: tip
+    This is for verification purposes only. You will not be charged during the Beta release, or without notice.
+    :::
+
+    ![Payment and billing](../assets/deployment/cloud/billing-info.png)
+
+6. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
 
 ## Managing projects
 
@@ -122,12 +132,25 @@ From this page you can also trigger a new deployment and access the application 
 
 ### Settings
 
-The **Settings** tab enables you to edit the following details for the project:
+The **Settings** tab contains two sections: **General** and **Billing**.
+
+#### General
+
+The **General** section enables you to edit the following details for the project:
 
 * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
 * **Production branch**: The branch of the linked repository to use for production deployments.
-* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
+* **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
 * **Connected GitHub repository**: The Git repository linked to the project.
+* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
 * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
 
-![Project settings](../assets/deployment/cloud/settings.png)
+![Project settings](../assets/deployment/cloud/settings-general.png)
+
+#### Billing
+
+The **Billing** section displays the current subscription plan and included usage for the project.
+
+Use the **Manage subscription** button to change the subscription plan.
+
+![Project billing](../assets/deployment/cloud/settings-billing.png)
