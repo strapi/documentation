@@ -97,7 +97,7 @@ Here are the file that needs to be created in order to change the documentation 
   "x-strapi-config": {
     "path": "/documentation",
     "showGeneratedFiles": true,
-    "pluginsForWhichToGenerateDoc": [
+    "plugins": [
       "email",
       "upload",
       "users-permissions"
