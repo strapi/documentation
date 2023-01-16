@@ -6,13 +6,15 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Deploy to Heroku
 
-The purpose of this guide is to allow users to deploy Strapi applications on Heroku. This guide uses the Heroku CLI tool with a PostgreSQL database provided by Heroku. There are other options for how to deploy to Heroku available in the [Heroku documentation](link here).
+The purpose of this guide is to allow users to deploy Strapi applications on Heroku. This guide uses the Heroku CLI tool with a PostgreSQL database provided by Heroku. There are other options for how to deploy to Heroku available in the [Heroku documentation](https://devcenter.heroku.com/categories/data-management).
 
 ::: caution
-For security reasons, the Content-type Builder is disabled in production. Changes to the content structure should be developed locally and then deployed to production.
+
+- The Content-type Builder is disabled in production. See the documentation [FAQ for PaaS](/developer-docs/getting-started/troublshooting.md#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/developer-docs/getting-started/troublshooting.md#why-can-t-i-create-or-update-content-types-in-production-staging) for more information. Changes to the content structure should be developed locally and then deployed to production.
+
 :::
 
-Prior  to starting the deployment process each user needs:
+Prior to starting the deployment process each user needs:
 
 - a [Heroku account](https://signup.heroku.com/),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
@@ -97,7 +99,7 @@ export default ({ env }) => ({
 
 module.exports = ({ env }) => ({
         proxy: true,
-        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        url: env('APP_URL'), // Sets the public URL of your application.
         app: { 
           keys: env.array('APP_KEYS')
         },
@@ -109,12 +111,11 @@ module.exports = ({ env }) => ({
 
 <code-block title="TYPESCRIPT">
 
-
 ```ts
 // Path: ./config/env/production/server.js`
 export default ({ env }) => ({
         proxy: true,
-        url: env('APP_URL'), // replaces `host` and `port` properties in the development environment
+        url: env('APP_URL'), // Sets the public URL of your application.
         app: { 
           keys: env.array('APP_KEYS')
         },
@@ -142,14 +143,14 @@ export default ({ env }) => ({
 
     </code-group>
 
-7. Add `package.json` to the end of the `.gitignore` file at the root of your Strapi project:
+7. Add `package-lock.json` to the end of the `.gitignore` file at the root of your Strapi project:
 
       ```sh
       # path: ./.gitignore
       package-lock.json
       ```
     :::note
-    It is usually recommended to version the `package.json` file, but it is known to cause issues on Heroku.
+    It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
     :::
 8. Verify that all of the new and modified files are saved locally.
 9. Commit the project to a local repository:
@@ -250,29 +251,45 @@ The command output has the form `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16
 
 ### Populate the environment variables
 
-You need to set the environment variables in Heroku for the database, server url, and secrets. The following commands set each variable:
+You need to set the environment variables in Heroku for the node environment, database, server URL, and secrets. The following tabs detail how to either set new values for your secrets or transfer the values from your local `.env` file. Creating new values is the best practice.
 
-```bash
-heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
-heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
-heroku config:set API_TOKEN_SALT=$(cat .env | grep API_TOKEN_SALT | cut -d= -f2)
-heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= -f2)
-heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
-heroku config:set NODE_ENV=production
-```
+:::: tabs card
 
-:::tip
-On Windows, variables can be set manually by running the `heroku config:set VARIABLE=your-key-here` for each variable.
-:::
+::: tab Set new secrets
 
-The following `openssl` commands will generate random new secrets (Mac and Linux only):
+The following `openssl` commands will generate random new secrets (Mac and Linux only) and set the config values:
 
 ```bash
 heroku config:set APP_KEYS=$(openssl rand -base64 32)
 heroku config:set API_TOKEN_SALT=$(openssl rand -base64 32)
 heroku config:set ADMIN_JWT_SECRET=$(openssl rand -base64 32)
 heroku config:set JWT_SECRET=$(openssl rand -base64 32)
+heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
+heroku config:set NODE_ENV=production
 ```
+
+:::
+
+::: tab Transfer existing secrets
+
+The following commands transfer your local secrets in the `.env` file to the remote instance:
+
+```bash
+heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
+heroku config:set API_TOKEN_SALT=$(cat .env | grep API_TOKEN_SALT | cut -d= -f2)
+heroku config:set ADMIN_JWT_SECRET=$(cat .env | grep ADMIN_JWT_SECRET | cut -d= -f2)
+heroku config:set JWT_SECRET=$(cat .env | grep -w JWT_SECRET | cut -d= -f2)
+heroku config:set MY_HEROKU_URL=$(heroku info -s | grep web_url | cut -d= -f2)
+heroku config:set NODE_ENV=production
+```
+
+:::
+
+:::tip
+On Windows, variables can be set manually by running the `heroku config:set VARIABLE=your-key-here` for each variable.
+:::
+
+
 
 ### Deploy your application to Heroku
 
