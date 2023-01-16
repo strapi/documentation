@@ -7,7 +7,6 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with React
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
@@ -39,7 +38,7 @@ npx create-react-app react-app
 
 ## Use an HTTP client
 
-Many HTTP clients are available but in this documentation there are examples using [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+ Many HTTP clients are available but in this documentation there are examples using [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
 To install Axios:
 
@@ -73,7 +72,7 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 
 <Tabs>
 
-<TabItem title="axios">
+<TabItem label="axios" value="axios">
 
 <Request title="Example GET request with axios">
 
@@ -89,7 +88,7 @@ axios.get('http://localhost:1337/api/restaurants').then(response => {
 
 </TabItem>
 
-<TabItem title="fetch">
+<TabItem label="fetch" value="fetch">
 
 <Request title="Example GET request with fetch">
 
@@ -107,6 +106,7 @@ fetch('http://localhost:1337/api/restaurants', {
 </Request>
 
 </TabItem>
+</Tabs>
 
 <Response>
 
@@ -150,7 +150,7 @@ fetch('http://localhost:1337/api/restaurants', {
 
 <Tabs> 
 
-<TabItem title='axios'>
+<TabItem label="axios" value="axios">
 
 `./src/App.js`
 
@@ -188,7 +188,7 @@ export default App;
 
 </TabItem>
 
-<TabItem title='fetch'>
+<TabItem label="fetch" value="fetch">
 
 `./src/App.js`
 
@@ -254,7 +254,7 @@ In this example a `japanese` category has been created which has the id: 3.
 
 <Tabs>
 
-<TabItem title="axios">
+<TabItem label="axios" value="axios">
 
 <Request title= "Example POST request with axios">
 
@@ -276,7 +276,7 @@ axios
 
 </TabItem>
 
-<TabItem title="fetch">
+<TabItem label="fetch" value="fetch">
 
 <Request title="Example POST request with fetch">
 
@@ -331,7 +331,7 @@ fetch('http://localhost:1337/api/restaurants', {
 
 <Tabs>
 
-<TabItem title="axios">
+<TabItem label="axios" value="axios">
 
 `./src/App.js`
 
@@ -445,7 +445,7 @@ export default App;
 
 </TabItem>
 
-<TabItem title="fetch">
+<TabItem label="fetch" value="fetch">
 
 `./src/App.js`
 
@@ -586,7 +586,7 @@ Be sure that you activated the `put` permission for the `restaurant` collection 
 We consider that the id of your restaurant is `2`, and the id of your category is `2`.
 
 <Tabs>
-<TabItem title="axios">
+<TabItem label="axios" value="axios">
 
 <Request title="Example PUT request with axios">
 
@@ -605,7 +605,7 @@ axios
 </Request>
 </TabItem>
 
-<TabItem title="fetch">
+<TabItem label="fetch" value="fetch">
 
 <Request title="Example PUT request with fetch">
 
@@ -654,4 +654,3 @@ fetch('http://localhost:1337/api/restaurants/2', {
 ```
 
 </Response>
-
