@@ -206,9 +206,18 @@ The `strapi transfer` command allows you to transfer data from your local instan
 ### Specify the local and remote instances
 
 
-#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance. 
+#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance.
 
 To transfer data to your remote instance run the following command in your local instance root directory:
 
 ```bash
 yarn strapi tranfer --to <remote-instance-URL>
+```
+
+### Managing data transfer with environment variables
+
+`STRAPI_DISABLE_REMOTE_DATA_TRANSFER` set to true disables remote data transfer: 
+
+```bash
+STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
+```
