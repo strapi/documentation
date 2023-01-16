@@ -5,7 +5,7 @@ description: Build powerful applications using Strapi, the leading open-source h
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/angular.html
 ---
 
-# Getting Started with Angular
+ # Getting Started with Angular
 
 This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
@@ -47,7 +47,7 @@ No installation needed
 Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
-
+-->
 <Tabs>
 
 <TabItem value="axios" label="axios">
@@ -300,7 +300,7 @@ fetch('http://localhost:1337/api/restaurants', {
 ```
 
 </Response>
-
+ 
 ### Example
 
 <Tabs>
