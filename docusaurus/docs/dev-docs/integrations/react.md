@@ -63,7 +63,6 @@ npm install axios
 
 </Tabs>
 
-
 There is no installation required for `Fetch`.
 
 ## GET Request your collection type
@@ -85,6 +84,7 @@ axios.get('http://localhost:1337/api/restaurants').then(response => {
   console.log(response);
 });
 ```
+
 </Request>
 
 </TabItem>
@@ -103,6 +103,7 @@ fetch('http://localhost:1337/api/restaurants', {
   .then(response => response.json())
   .then(data => console.log(data));
 ```
+
 </Request>
 
 </TabItem>
@@ -147,9 +148,9 @@ fetch('http://localhost:1337/api/restaurants', {
 
 ### Example
 
-:::: tabs card
+<Tabs> 
 
-::: tab axios
+<TabItem title='axios'>
 
 `./src/App.js`
 
@@ -185,9 +186,9 @@ const App = () => {
 export default App;
 ```
 
-:::
+</TabItem>
 
-::: tab fetch
+<TabItem title='fetch'>
 
 `./src/App.js`
 
@@ -239,9 +240,9 @@ const App = () => {
 export default App;
 ```
 
-:::
+</TabItem>
 
-::::
+</Tabs>
 
 ## POST Request your collection type
 
@@ -251,11 +252,12 @@ Be sure that you activated the `create` permission for the `restaurant` collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-::::: tabs card
+<Tabs>
 
-:::: tab axios
+<TabItem title="axios">
 
-::: request Example POST request with axios
+<Request title= "Example POST request with axios">
+
 ```js
 import axios from 'axios';
 
@@ -269,13 +271,15 @@ axios
     console.log(response);
   });
 ```
-:::
 
-::::
+</Request>
 
-:::: tab fetch
+</TabItem>
 
-::: request Example POST request with fetch
+<TabItem title="fetch">
+
+<Request title="Example POST request with fetch">
+
 ```js
 fetch('http://localhost:1337/api/restaurants', {
   method: 'POST',
@@ -291,12 +295,14 @@ fetch('http://localhost:1337/api/restaurants', {
   .then(response => response.json())
   .then(data => console.log(data));
 ```
-:::
 
-::::
-:::::
+</Request>
 
-::: response Example response
+</TabItem>
+</Tabs>
+
+<Response title="Example response">
+
 ```json
 {
   "id": 2,
@@ -318,13 +324,14 @@ fetch('http://localhost:1337/api/restaurants', {
   ]
 }
 ```
-:::
+
+</Response>
 
 ### Example
 
-:::: tabs card
+<Tabs>
 
-::: tab axios
+<TabItem title="axios">
 
 `./src/App.js`
 
@@ -433,11 +440,12 @@ const App = () => {
 }
 
 export default App;
+
 ```
 
-:::
+</TabItem>
 
-::: tab fetch
+<TabItem title="fetch">
 
 `./src/App.js`
 
@@ -562,11 +570,12 @@ const App = () => {
 }
 
 export default App;
+
 ```
 
-:::
+</TabItem>
 
-::::
+</Tabs>
 
 ## PUT Request your collection type
 
@@ -574,13 +583,12 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 
-::::: tabs card
-
 We consider that the id of your restaurant is `2`, and the id of your category is `2`.
 
-:::: tab axios
+<Tabs>
+<TabItem title="axios">
 
-::: request Example PUT request with axios
+<Request title="Example PUT request with axios">
 
 ```js
 import axios from 'axios';
@@ -594,12 +602,13 @@ axios
   });
 ```
 
-:::
-::::
+</Request>
+</TabItem>
 
-:::: tab fetch
+<TabItem title="fetch">
 
-::: request Example PUT request with fetch
+<Request title="Example PUT request with fetch">
+
 ```js
 fetch('http://localhost:1337/api/restaurants/2', {
   method: 'PUT',
@@ -615,11 +624,13 @@ fetch('http://localhost:1337/api/restaurants/2', {
     console.log(data);
   });
 ```
-:::
-::::
-:::::
 
-:::response Example response
+</Request>
+</TabItem>
+</Tabs>
+
+<Response title="Example response">
+
 ```json
 {
   "id": 2,
@@ -641,15 +652,6 @@ fetch('http://localhost:1337/api/restaurants/2', {
   ]
 }
 ```
-:::
 
+</Response>
 
-## Starter
-
-- [React Blog starter](https://github.com/strapi/strapi-starter-react-blog)
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using React. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
-
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
