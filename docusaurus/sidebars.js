@@ -152,7 +152,6 @@ const sidebars = {
         },
         'dev-docs/typescript',
         'dev-docs/providers',
-        'dev-docs/data-management',
       ]
     },
 
@@ -163,6 +162,18 @@ const sidebars = {
       items: [
         'dev-docs/cli',
         'dev-docs/data-management',
+        {
+          type: 'category',
+          label: 'Integrations',
+          items: [
+            'dev-docs/integrations/react',
+            'dev-docs/integrations/angular',
+            'dev-docs/integrations/flutter',
+            'dev-docs/integrations/python',
+            'dev-docs/integrations/dart',
+            
+          ]
+        },
       ],
     }, 
 

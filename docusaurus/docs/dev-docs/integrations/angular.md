@@ -1,5 +1,5 @@
 ---
-title: Get started with Angular - Strapi Developer Docs
+title: Angular
 displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Angular.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/angular.html
@@ -7,12 +7,12 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
  # Getting Started with Angular
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
+ This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Angular](https://angular.io) remains the same except that you do not fetch the same content.
 
-## Create a Angular app
+<!-- ## Create a Angular app
 
 Create a basic Angular application using [angular CLI](https://angular.io/guide/setup-local).
 
@@ -47,7 +47,7 @@ No installation needed
 Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
--->
+
 <Tabs>
 
 <TabItem value="axios" label="axios">
@@ -302,7 +302,7 @@ fetch('http://localhost:1337/api/restaurants', {
 </Response>
  
 ### Example
-
+ 
 <Tabs>
 
 `./src/app.module.ts`
@@ -614,5 +614,4 @@ fetch('http://localhost:1337/api/restaurants/2', {
 }
 ```
 
-</Response>
-
+</Response> -->
