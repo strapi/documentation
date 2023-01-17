@@ -43,10 +43,11 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 <br />
 
-
 :::::: tabs card
 
 ::::: tab Shorthand syntax example
+
+Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
 
 ::: request Example request using the shorthand syntax
 
@@ -67,6 +68,8 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 :::::
 
 ::::: tab Longhand syntax example
+
+Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
 
 ::: request Example request using the longhand syntax
 
@@ -89,7 +92,6 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 :::::
 ::::::
-
 
 ### Relations reordering
 
@@ -133,7 +135,7 @@ categories: [
 ]
 ```
 
-Sending the following request updates a `restaurant` entry and creates a third relation of `id` `3` for the `categories` attribute and positions it before the relation with `id` `2`:
+Sending the following request updates the `restaurant` entity with `id` `1`, connecting a relation of entity with `id` `3` for the `categories` attribute and positioning it before the entity with `id` `2`:
 
 ::: request Example request to update the position of one relation
 
@@ -189,7 +191,7 @@ Sending the following example in the request body of a PUT request updates multi
 
 :::
 
-Omitting the `position` argument defaults (as in `id: 9` defaults to `position: { end: true }`. All other relations are positioned relative to another existing `id` (using `after` or `before`) or relative to the list of relations (using `start` or `end`). Operations are treated sequentially, in the order defined in the `connect` array, so the resulting database record will be the following:
+Omitting the `position` argument (as in `id: 9`) defaults to `position: { end: true }`. All other relations are positioned relative to another existing `id` (using `after` or `before`) or relative to the list of relations (using `start` or `end`). Operations are treated sequentially in the order defined in the `connect` array, so the resulting database record will be the following:
 
 ```json
 categories: [
@@ -226,6 +228,8 @@ Using `disconnect` in the body of a request performs a partial update, disconnec
 
 ::::: tab Shorthand syntax example
 
+Sending the following request updates the `restaurant` entity with `id` `1`, disconnecting the relations with entities with `id` `2` and `4`:
+
 ::: request Example request using the shorthand syntax
 
 `PUT http://localhost:1337/api/restaurants/1`
@@ -245,6 +249,8 @@ Using `disconnect` in the body of a request performs a partial update, disconnec
 :::::
 
 ::::: tab Longhand syntax example
+
+Sending the following request updates the `restaurant` entity with `id` `1`, disconnecting the relations with entities with `id` `2` and `4`:
 
 ::: request Example request using the longhand syntax
 
@@ -293,6 +299,8 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 
 ::::: tab Shorthand syntax example
 
+Sending the following request updates the `restaurant` entity with `id` `1`, replacing all previously existing relations and using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
+
 ::: request Example request using the shorthand syntax with set
 
 `PUT http://localhost:1337/api/restaurants/1`
@@ -312,6 +320,8 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 :::::
 
 ::::: tab Longhand syntax example
+
+Sending the following request updates the `restaurant` entity with `id` `1`, replacing all previously existing relations and using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
 
 ::: request Example request using the longhand syntax with set
 
