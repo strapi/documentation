@@ -86,7 +86,9 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 | `populate` | Relations, components and dynamic zones to [populate](/dev-docs/api/entity-service/populate) | [`PopulateParameter`](/dev-docs/api/entity-service/populate) |
 | `data`     | Input data  | `Object` |
 
+<!--
 <ManagingRelations components={props.components} />
+-->
 
 ### Example
 
@@ -108,7 +110,9 @@ Updates one entry and returns it.
 
 Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 
+<!--
 <ManagingRelations components={props.components} />
+-->
 
 ### Parameters
 
