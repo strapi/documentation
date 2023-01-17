@@ -3,6 +3,7 @@ title: CRUD operations
 description: Use Strapi's Entity Service API to perform CRUD (create, read, update, delete) operations on your content.
 displayed_sidebar: devDocsSidebar
 ---
+import ManagingRelations from '/docs/snippets/managing-relations.md'
 
 # CRUD operations
 
@@ -85,6 +86,8 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 | `populate` | Relations, components and dynamic zones to [populate](/dev-docs/api/entity-service/populate) | [`PopulateParameter`](/dev-docs/api/entity-service/populate) |
 | `data`     | Input data  | `Object` |
 
+<ManagingRelations components={props.components} />
+
 ### Example
 
 ```js
@@ -104,6 +107,8 @@ Updates one entry and returns it.
 :::
 
 Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
+
+<ManagingRelations components={props.components} />
 
 ### Parameters
 
