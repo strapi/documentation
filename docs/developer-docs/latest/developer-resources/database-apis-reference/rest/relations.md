@@ -30,7 +30,7 @@ Relations can be connected, disconnected or set through the Content API by passi
 
 Using `connect` in the body of a request performs a partial update, adding specified relations.
 
-`connect` accepts either a shorthand or a longhand syntax.
+`connect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
 
 | Syntax type | Syntax example |
 | ------------|----------------|
@@ -207,7 +207,7 @@ categories: [
 
 Using `disconnect` in the body of a request performs a partial update, removing specified relations.
 
-`disconnect` accepts either a shorthand or a longhand syntax.
+`disconnect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
 
 | Syntax type | Syntax example |
 | ------------|----------------|
@@ -268,7 +268,7 @@ Using `disconnect` in the body of a request performs a partial update, removing 
 
 Using `set` performs a full update, replacing all existing relations with the ones specified, in the order specified.
 
-`set` accepts a shorthand or a longhand syntax.
+`set` accepts a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
 
 | Syntax type | Syntax example                  |
 | ----------- | ------------------------------- |
