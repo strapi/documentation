@@ -81,7 +81,7 @@ To start PM2 and your application from a terminal you should start PM2 and pass 
 <code-block title=YARN>
 
 ```sh
-pm2 start yarn --name app --start
+pm2 start yarn --name app -- start
 
 ```
 
