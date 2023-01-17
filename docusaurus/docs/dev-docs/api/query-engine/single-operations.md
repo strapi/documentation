@@ -113,8 +113,9 @@ const entry = await strapi.db.query('api::blog.article').create({
   },
 });
 ```
-
+<!--
 <ManagingRelations components={props.components} />
+-->
 
 ## update()
 
@@ -141,8 +142,9 @@ const entry = await strapi.db.query('api::blog.article').update({
   },
 });
 ```
-
+<!--
 <ManagingRelations components={props.components} />
+-->
 
 ## delete()
 
