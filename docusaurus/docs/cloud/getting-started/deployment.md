@@ -38,7 +38,7 @@ Importing data from an existing Strapi application and data backups for a Strapi
 
 The first time logging into Strapi Cloud, a welcome page is displayed providing a link to the terms of service and prompting you to **Start free trial** to continue.
 
-![Strapi Cloud welcome page](img/assets/cloud/welcome-screen.png)
+![Strapi Cloud welcome page](/img/assets/cloud/welcome-screen.png)
 
 1. From the **Projects** page, click the **Create Project** button. You are prompted to **Connect with GitHub**.
 
