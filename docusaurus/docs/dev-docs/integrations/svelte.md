@@ -1,14 +1,13 @@
 ---
 title: Get started with Svelte - Strapi Developer Docs
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Svelte.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/svelte.html
 ---
 
 # Getting Started with Svelte
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Svelte](https://svelte.dev) remains the same except that you will not fetch the same content.
 
@@ -28,23 +27,24 @@ npx degit sveltejs/template svelte-app
 
 Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
-:::: tabs card
+<Tabs groupId="axios-fetch">
 
-::: tab axios
-
-```bash
-yarn add axios
-```
-
-:::
-
-::: tab fetch
+<TabItem value="axios" label="axios">
 
 No installation needed
 
-:::
+</TabItem>
 
-::::
+<TabItem value="fetch" label="fetch">
+
+```bash
+No installation needed
+
+```
+
+</TabItem>
+
+</Tabs>
 
 ## GET Request your collection type
 
@@ -52,11 +52,11 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-:::::: tabs card
+<Tabs groupId="axios-fetch">
 
-::::: tab axios
+<TabItem value="axios" label="axios">
 
-:::request Example GET request with axios
+<Request title="Example GET request with axios">
 
 ```js
 import axios from 'axios';
@@ -65,13 +65,13 @@ axios.get('http://localhost:1337/api/restaurants').then(response => {
   console.log(response);
 });
 ```
-:::
 
-:::::
+</Request>
+</TabItem>
 
-::::: tab fetch
+<TabItem value="fetch" label="fetch">
 
-::: request Example GET request with fetch
+<Request title="Example GET request with fetch">
 
 ```js
 fetch('http://localhost:1337/api/restaurants', {
@@ -84,10 +84,12 @@ fetch('http://localhost:1337/api/restaurants', {
   .then(data => console.log(data));
 ```
 
-:::
-:::::
+</Request>
+</TabItem>
 
-::: response Example response
+</Tabs>
+
+<Response title="Example response">
 
 ```json
 [
@@ -122,13 +124,14 @@ fetch('http://localhost:1337/api/restaurants', {
   }
 ]
 ```
-:::
+
+</Response>
 
 ### Example
 
-:::: tabs card
+<Tabs groupId="axios-fetch">
 
-::: tab axios
+<TabItem value="axios" label="axios">
 
 `./src/App.svelte`
 
@@ -143,7 +146,7 @@ let error = null
 onMount(async () => {
 	try {
 		const res = await axios.get('http://localhost:1337/api/restaurants');
-		restaurants = res.data
+		restaurants = res.data.data
 	} catch (e) {
 		error = e
 	}
@@ -164,9 +167,9 @@ onMount(async () => {
 {/if}
 ```
 
-:::
+</TabItem>
 
-::: tab fetch
+<TabItem value="fetch" label="fetch">
 
 `./src/App.svelte`
 
@@ -199,7 +202,7 @@ onMount(async () => {
 		  },
 		}).then(checkStatus)
       .then(parseJSON);
-		restaurants = res.data
+		restaurants = res.data.data
 	} catch (e) {
 		error = e
 	}
@@ -219,9 +222,10 @@ onMount(async () => {
 {/if}
 ```
 
-:::
+</TabItem>
 
-::::
+</Tabs>
+
 
 ## POST Request your collection type
 
@@ -231,11 +235,11 @@ Be sure that you activated the `create` permission for the `restaurant` collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-:::::: tabs card
+<Tabs groupId="axios-fetch">
 
-::::: tab axios
+<TabItem value="axios" label="axios">
 
-::: request Example POST request with axios
+<Request title="Example POST request with axios">
 
 ```js
 import axios from 'axios';
@@ -251,12 +255,12 @@ axios
   });
 ```
 
-:::
-:::::
+</Request>
+</TabItem>
 
-::::: tab fetch
+<TabItem value="fetch" label="fetch">
 
-::: request Example POST request with fetch
+<Request title="Example POST request with fetch">
 
 ```js
 fetch('http://localhost:1337/api/restaurants', {
@@ -274,11 +278,12 @@ fetch('http://localhost:1337/api/restaurants', {
   .then(data => console.log(data));
 ```
 
-:::
-:::::
-::::::
+</Request>
+</TabItem>
 
-::: response Example response
+</Tabs>
+
+<Response title="Example response">
 
 ```json
 {
@@ -302,13 +307,13 @@ fetch('http://localhost:1337/api/restaurants', {
 }
 ```
 
-:::
+</Response>
 
 ### Example
 
-:::: tabs card
+<Tabs groupId="axios-fetch">
 
-::: tab axios
+<TabItem value="axios" label="axios">
 
 `./src/App.svelte`
 
@@ -371,9 +376,9 @@ onMount(async () => {
 
 ```
 
-:::
+</TabItem>
 
-::: tab fetch
+<TabItem value="fetch" label="fetch">
 
 `./src/App.svelte`
 
@@ -458,9 +463,9 @@ onMount(async () => {
 {/if}
 ```
 
-:::
+</TabItem>
 
-::::
+</Tabs>
 
 ## PUT Request your collection type
 
@@ -468,14 +473,15 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 
-::::: tabs card
 
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
 
-:::: tab axios
+<Tabs groupId="axios-fetch">
 
-::: request Example PUT request with axios
+<TabItem value="axios" label="axios">
+
+<Request title="Example PUT request with axios">
 
 ```js
 import axios from 'axios';
@@ -489,12 +495,12 @@ axios
   });
 ```
 
-:::
-::::
+</Request>
+</TabItem>
 
-:::: tab fetch
+<TabItem value="fetch" label="fetch">
 
-::: request Example PUT request with fetch
+<Request title="Example PUT request with fetch">
 
 ```js
 fetch('http://localhost:1337/api/restaurants/2', {
@@ -512,11 +518,12 @@ fetch('http://localhost:1337/api/restaurants/2', {
   });
 ```
 
-:::
-::::
-:::::
+</Request>
+</TabItem>
 
-::: response Example response
+</Tabs>
+
+<Response title="Example response">
 
 ```json
 {
@@ -540,9 +547,5 @@ fetch('http://localhost:1337/api/restaurants/2', {
 }
 ```
 
-:::
+</Response>
 
-## Conclusion
-
-Here is how to request your collection types in Strapi using Svelte.
-Learn more about Svelte with their [official tutorial](https://svelte.dev/tutorial/basics).
