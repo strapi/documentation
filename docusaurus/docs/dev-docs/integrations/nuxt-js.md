@@ -1,14 +1,15 @@
 ---
-title: Get started with Nuxt 3 - Strapi Developer Docs
+title: Nuxt
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms, and Nuxt 3.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html
 ---
 
 # Getting Started with Nuxt 3
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Nuxt 3](https://v3.nuxtjs.org/) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Nuxt 3](https://v3.nuxtjs.org/) remains the same except that you do not fetch the same content.
 
 ## Create a Nuxt 3 app
 
@@ -22,9 +23,9 @@ npx nuxi init nuxt-app
 
 For this example we are using the awesome [@nuxt/strapi](https://strapi.nuxtjs.org/) module and Nuxt helper function [$fetch](https://v3.nuxtjs.org/api/utils/dollarfetch/) (based on `ohmyfetch`). You may choose any of this variants.
 
-:::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-::: tab @nuxtjs/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
 
 ```bash
 yarn add --dev @nuxtjs/strapi
@@ -39,16 +40,15 @@ strapi: {
 },
 ```
 
-:::
+</TabItem>
 
-::: tab $fetch
+<TabItem value="fetch" label="fetch">
 
 No installation needed.
 
-:::
+</TabItem>
 
-::::
-
+</Tabs>
 
 ## GET Request - get list of entities or one entity
 
@@ -56,9 +56,9 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch yo
 
 Be sure that you activated the `find` and `findOne` permission for the `restaurant` collection type.
 
-::::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-:::: tab @nuxtjs/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
 
 `@nuxtjs/strapi` exposes composables that are auto-imported by Nuxt 3. Note that `delete` function must be renamed because it's reserved word in JavaScript.
 
@@ -69,7 +69,7 @@ const { find, findOne, create, update, delete: remove } = useStrapi()
 </script>
 ```
 
-::: request Example GET request with @nuxtjs/strapi
+<Request title="Example GET request with @nuxtjs/strapi">
 
 ```js
 // Get all restaurants
@@ -78,13 +78,14 @@ const response = await find<Restaurant>('restaurants')
 // Get one restaurant by id
 const response = await findOne<Restaurant>("restaurants", restaurantId)
 ```
-:::
 
-::::
+</Request>
+</TabItem>
 
-:::: tab $fetch
+<TabItem value="fetch" label="fetch">
 
-::: request Example GET request with $fetch
+<Request title="Example GET request with $fetch">
+
 ```js
 // Get all restaurants
 const response = $fetch("http://localhost:1337/api/restaurants")
@@ -93,11 +94,13 @@ const response = $fetch("http://localhost:1337/api/restaurants")
 const response = await $fetch(`http://localhost:1337/api/restaurants/${restaurantId}`)
 ```
 
-:::
-::::
-:::::
+</Request>
+</TabItem>
 
-:::response Example response
+</Tabs>
+
+<Response title="Example response">
+
 ```json
 // List of the restaurants
 {
@@ -144,8 +147,8 @@ const response = await $fetch(`http://localhost:1337/api/restaurants/${restauran
 }
 
 ```
-:::
 
+</Response>
 
 ## POST Request - create new entity
 
@@ -153,10 +156,11 @@ Execute a `POST` request on the `restaurant` collection type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` collection type.
 
-::::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-:::: tab @nuxtjs/strapi
-::: request Example POST request with @nuxtjs/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
+
+<Request title="Example POST request with @nuxtjs/strapi">
 
 ```js
 await create<Restaurant>("restaurants", { 
@@ -164,11 +168,14 @@ await create<Restaurant>("restaurants", {
     description: restaurantDescription })
 ```
 
-:::
-::::
+</Request>
 
-:::: tab $fetch
-::: request Example POST request with $fetch
+</TabItem>
+
+<TabItem value="fetch" label="fetch">
+
+<Request title="Example POST request with $fetch">
+
 ```js
 await $fetch("http://localhost:1337/api/restaurants", {
     method: "POST",
@@ -181,10 +188,10 @@ await $fetch("http://localhost:1337/api/restaurants", {
   })
 ```
 
-:::
-::::
-:::::
+</Request>
+</TabItem>
 
+</Tabs>
 
 ## PUT Request - update existing entity
 
@@ -192,10 +199,11 @@ Execute a `PUT` request on the `restaurant` collection type in order to update y
 
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 
-::::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-:::: tab @nuxtjs/strapi
-::: request Example PUT request with @nuxtjs/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
+
+<Request title="Example PUT request with @nuxtjs/strapi">
 
 ```js
 await update<Restaurant>("restaurants", restaurantId, { 
@@ -203,11 +211,13 @@ await update<Restaurant>("restaurants", restaurantId, {
     description: restaurantDescription })
 ```
 
-:::
-::::
+</Request>
+</TabItem>
 
-:::: tab $fetch
-::: request Example PUT request with $fetch
+<TabItem value="fetch" label="fetch">
+
+<Request title="Example PUT request with $fetch">
+
 ```js
 await $fetch(`http://localhost:1337/api/restaurants/${restaurantId}`, {
     method: "PUT",
@@ -220,9 +230,10 @@ await $fetch(`http://localhost:1337/api/restaurants/${restaurantId}`, {
   })
 ```
 
-:::
-::::
-:::::
+</Request>
+</TabItem>
+
+</Tabs>
 
 
 ## DELETE Request - delete existing entity
@@ -231,38 +242,41 @@ Execute a `DELETE` request on the `restaurant` collection type in order to delet
 
 Be sure that you activated the `delete` permission for the `restaurant` collection type.
 
-::::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-:::: tab @nuxtjs/strapi
-::: request Example DELETE request with @nuxtjs/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
+
+<Request title="Example DELETE request with @nuxtjs/strapi">
 
 ```js
 await remove<Restaurant>("restaurants", restaurantId);
 ```
 
-:::
-::::
+</Request>
+</TabItem>
 
-:::: tab $fetch
-::: request Example DELETE request with $fetch
+<TabItem value="fetch" label="fetch">
+
+<Request title="Example DELETE request with $fetch">
+
 ```js
 await $fetch(`http://localhost:1337/api/restaurants/${restaurantId}`, {
     method: 'DELETE'
   })
 ```
 
-:::
-::::
-:::::
+</Request>
+</TabItem>
 
+</Tabs>
 
 ### Example
 
 Consider an example of a simple CRUD Nuxt application that implements the functions described above.
 
-:::: tabs card
+<Tabs groupid="@nuxtjs/strapi-fetch">
 
-::: tab @nuxt/strapi
+<TabItem value="@nuxtjs/strapi" label="@nuxtjs/strapi">
 
 `./pages/index.vue`
 
@@ -348,9 +362,9 @@ const updateRestaurant = async () => {
 </script>
 ```
 
-:::
+</TabItem>
 
-::: tab $fetch
+<TabItem value="fetch" label="fetch">
 
 `./pages/index.vue`
 
@@ -444,17 +458,6 @@ const updateRestaurant = async () => {
 </script>
 ```
 
-:::
+</TabItem>
 
-::::
-
-
-## Starter app
-
-Source code used in this article can be found in [this](https://github.com/alxnkt/nuxt3-strapi4/tree/main) repo. It's tiny CRUD app that demonstrates basic features of interacting between Nuxt frontend and Strapi backend.
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using Nuxt.js. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
-
-We used the GET, POST, PUT and DELETE methods here. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html#endpoints).
+</Tabs>
