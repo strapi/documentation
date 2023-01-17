@@ -24,11 +24,7 @@ Relations can be connected, disconnected or set through the Content API by passi
 |-----------------|------------------|----------------|
 | [`connect`](#connect)       | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial
 | [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial
-| [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />It can not be used in combination with `connect` or `disconnect`.  | Full
-
-Using `connect` allows adding [positional arguments](#relations-reordering) to define an order for relations.
-
-<br/>
+| [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full
 
 ## `connect`
 
