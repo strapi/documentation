@@ -12,7 +12,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Angular](https://angular.io) remains the same except that you do not fetch the same content.
 
-<!-- ## Create a Angular app
+## Create a Angular app
 
 Create a basic Angular application using [angular CLI](https://angular.io/guide/setup-local).
 
@@ -206,6 +206,7 @@ export class AppComponent implements OnInit {
 ```
 
 </TabItem>
+</Tabs>
 
 `./src/app/app.component.html`
 
@@ -218,8 +219,6 @@ export class AppComponent implements OnInit {
   <li *ngFor="let restaurant of restaurants">{{ restaurant['name'] }}</li>
 </ul>
 ```
-
-</Tabs>
 
 ## POST Request your collection type
 
@@ -303,7 +302,7 @@ fetch('http://localhost:1337/api/restaurants', {
  
 ### Example
  
-<Tabs>
+
 
 `./src/app.module.ts`
 
@@ -322,7 +321,7 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 ```
-
+<Tabs>
 <TabItem value="axios" label="axios">
 
 `./src/app/app.component.ts`
@@ -500,7 +499,7 @@ export class AppComponent implements OnInit {
 ```
 
 </TabItem>
-
+</Tabs>
 `./src/app/app.component.html`
 
 ```html
@@ -536,19 +535,15 @@ export class AppComponent implements OnInit {
 </form>
 ```
 
-</Tabs>
-
 ### PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 
-<Tabs>
-
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
-
+<Tabs>
 <TabItem value="axios" label="axios">
 <Request title="Example PUT request with axios">
 
@@ -614,4 +609,4 @@ fetch('http://localhost:1337/api/restaurants/2', {
 }
 ```
 
-</Response> -->
+</Response>
