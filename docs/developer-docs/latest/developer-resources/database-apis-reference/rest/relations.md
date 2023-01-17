@@ -116,6 +116,10 @@ The `position` argument is optional and defaults to `position: { end: true }`.
 Since `connect` is an array, the order of operations is important as they will be treated sequentially (see combined example below).
 :::
 
+:::caution
+The same relation should not be connected more than once, otherwise it would return a Validation error by the API.
+:::
+
 ::::: tabs card
 
 :::: tab Basic example
