@@ -124,8 +124,8 @@ Consider the following record in the database:
 
 ```json
 categories: [
-  { id: 1, order: 1 }
-  { id: 2, order: 2 }
+  { id: 1 }
+  { id: 2 }
 ]
 ```
 
@@ -156,8 +156,8 @@ Consider the following record in the database:
 
 ```json
 categories: [
-  { id: 1, order: 1 }
-  { id: 2, order: 2 }
+  { id: 1 }
+  { id: 2 }
 ]
 ```
 
@@ -189,13 +189,13 @@ Omitting the `position` argument defaults (as in `id: 9` defaults to `position: 
 
 ```json
 categories: [
-  { id: 10, order: 1 },
-  { id: 1, order: 2 },
-  { id: 6, order: 3 },
-  { id: 7, order: 4 },
-  { id: 2, order: 5 },
-  { id: 8, order: 6 },
-  { id: 9, order: 7 }
+  { id: 10 },
+  { id: 1 },
+  { id: 6 },
+  { id: 7 },
+  { id: 2 },
+  { id: 8 },
+  { id: 9 }
 ]
 ```
 
