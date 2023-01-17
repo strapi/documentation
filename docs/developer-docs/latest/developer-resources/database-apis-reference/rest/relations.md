@@ -28,7 +28,7 @@ Relations can be connected, disconnected or set through the Content API by passi
 
 ## `connect`
 
-Using `connect` in the body of a request performs a partial update, adding specified relations.
+Using `connect` in the body of a request performs a partial update, connecting the specified relations.
 
 `connect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
 
@@ -95,7 +95,7 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 Positional arguments can be passed to the longhand syntax of `connect` to define the order of relations.
 
-The longhand syntax accepts an array of objects, each object containing the `id` of the entry to be connected and an optional `position` object to define where to add the relation.
+The longhand syntax accepts an array of objects, each object containing the `id` of the entry to be connected and an optional `position` object to define where to connect the relation.
 
 ::: note Different syntaxes for different relations
 The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#requests)).
@@ -205,7 +205,7 @@ categories: [
 
 ## `disconnect`
 
-Using `disconnect` in the body of a request performs a partial update, removing specified relations.
+Using `disconnect` in the body of a request performs a partial update, disconnecting the specified relations.
 
 `disconnect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
 
