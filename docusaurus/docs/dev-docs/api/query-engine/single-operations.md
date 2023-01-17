@@ -3,6 +3,7 @@ title: Single Operations
 description: Use Strapi's Query Engine API to perform operations on single entries.
 displayed_sidebar: devDocsSidebar
 ---
+import ManagingRelations from '/docs/snippets/managing-relations.md'
 
 # Single Operations
 
@@ -113,6 +114,8 @@ const entry = await strapi.db.query('api::blog.article').create({
 });
 ```
 
+<ManagingRelations components={props.components} />
+
 ## update()
 
 Updates one entry and returns it.
@@ -138,6 +141,8 @@ const entry = await strapi.db.query('api::blog.article').update({
   },
 });
 ```
+
+<ManagingRelations components={props.components} />
 
 ## delete()
 
