@@ -67,7 +67,7 @@ The first time logging into Strapi Cloud, a welcome page is displayed providing 
 
 5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
 
-    ::: tip
+    :::tip
     This is for verification purposes only. You will not be charged during the Beta release, or without notice.
     :::
 
