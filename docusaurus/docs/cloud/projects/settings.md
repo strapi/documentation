@@ -28,4 +28,4 @@ The **Billing** section displays the current subscription plan and included usag
 
 Use the **Manage subscription** button to change the subscription plan.
 
-![Project billing](../assets/deployment/cloud/settings_billing.png)
+![Project billing](/img/assets/cloud/settings_billing.png)
