@@ -34,19 +34,19 @@ Importing data from an existing Strapi application and data backups for a Strapi
 
 ## Getting started
 
-1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) home page. A welcome page is displayed, providing a link to the terms of service and prompting you to **Start free trial** to continue.
-
-    ![Strapi Cloud welcome page](../assets/deployment/cloud/welcome-screen.png)
-
-2. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
+1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) home page. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
 
     ![Strapi Cloud login page](../assets/deployment/cloud/login.png)
 
-3. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
+2. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
 
     ![Strapi Cloud Projects page](../assets/deployment/cloud/projects_empty.png)
 
 ### Create a project
+
+The first time logging into Strapi Cloud, a welcome page is displayed providing a link to the terms of service and prompting you to **Start free trial** to continue.
+
+![Strapi Cloud welcome page](../assets/deployment/cloud/welcome-screen.png)
 
 1. From the **Projects** page, click the **Create Project** button. You are prompted to **Connect with GitHub**.
 
@@ -132,7 +132,7 @@ From this page you can also trigger a new deployment and access the application 
 
 ### Settings
 
-The **Settings** tab contains two sections: **General** and **Billing**.
+The **Settings** tab contains three sections: **General**, **Variables**, and **Billing**.
 
 #### General
 
@@ -147,6 +147,12 @@ The **General** section enables you to edit the following details for the projec
 
 ![Project settings](../assets/deployment/cloud/settings-general.png)
 
+#### Variables
+
+The **Variables** section displays the list of environment variables configured for the project, and enables you to add new variables.
+
+![Project variables](../assets/deployment/cloud/settings-general.png)
+
 #### Billing
 
 The **Billing** section displays the current subscription plan and included usage for the project.
@@ -154,3 +160,32 @@ The **Billing** section displays the current subscription plan and included usag
 Use the **Manage subscription** button to change the subscription plan.
 
 ![Project billing](../assets/deployment/cloud/settings-billing.png)
+
+## Profile settings
+
+The **Profile** settings page is accessed from your account icon in the top-left corner and enables you to manage your account details and preferences. There are three sections available: 
+
+## General
+
+The **General** tab enables you to edit the following details for your account:
+
+* **Name**: The name associated with your account.
+<!--
+* **Email**: The email address associated with your account.
+* **Delete account**: This will ***permanently and irreversibly*** delete your account and all its associated data.
+-->
+
+## Preferences
+
+The **Preferences** tab enables you to edit the following details for your account:
+<!--
+* **Notifications**: Enable or disable email notifications for project activity.
+    * **Frequency**: Choose the frequency of email notifications.
+-->
+* **Appearance**: Choose between the **Light** and **Dark** themes.
+
+## Billing
+
+The **Billing** tab displays your billing information and enables you to update your payment method.
+
+![Account billing settings](../assets/deployment/cloud/account-billing.png)
