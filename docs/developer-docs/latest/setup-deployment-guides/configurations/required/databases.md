@@ -289,7 +289,7 @@ Installation guides for other databases (MySQL, MariaDB) are being reworked. [Co
 :::
 
 :::note
-When connecting Strapi to a postgres database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user that's created specifically for the Strapi application will not and result in a 500 error when trying to load the admin console.
+When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
 
 To create a new postgres user with the SCHEMA permission, use the following steps.
 
