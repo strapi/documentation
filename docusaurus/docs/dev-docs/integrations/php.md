@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with PHP
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
@@ -27,16 +27,18 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example GET request">
 
 ```php
 curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 ```
 
-Running the PHP file on the browser  will give you this response:
+
 
 </Request>
+<br/>
+Running the PHP file on the browser  will give you this response:
 
 <Response title="Example response">
 
@@ -96,7 +98,7 @@ Execute a `POST` request on the `restaurant` collection type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example POST request">
 
 ```php
@@ -117,10 +119,11 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_POST, true);
 ```
 
-Running the PHP file on the browser  will give you this response:
+
 
 </Request>
-
+<br/>
+Running the PHP file on the browser  will give you this response:
 <Response title="Example response">
 
 ```json
@@ -202,7 +205,7 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` collection type.
 PUT Request is slightly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example PUT request">
 
 ```php
@@ -218,10 +221,12 @@ curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 ```
 
 </Request>
+<br/>
+Running the PHP file on the browser  will give you this response:
 
 <Response title="Example response">
 
-Running the PHP file on the browser  will give you this response:
+
 
 ```json
 [{
@@ -389,7 +394,7 @@ print_r($strapi_res);
 
 ```
 
-Running an authenticated POST request with JWT
+Running an authenticated POST request with JWT:
 
 <Response title="Example response">
 

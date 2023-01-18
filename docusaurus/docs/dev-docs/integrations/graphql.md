@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with GraphQL
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [GraphQL](https://graphql.org/) remains the same except that you will not fetch the same content.
 
@@ -39,7 +39,7 @@ npm run strapi install graphql
 
 Use the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example query">
 
 ```graphql
@@ -170,7 +170,7 @@ export default {
 
 ## Fetch your Category collection type
 
-<ApiCall> 
+<ApiCall noSidebySide> 
 <Request title="Example request">
 
 ```graphql

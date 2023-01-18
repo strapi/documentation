@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Getting Started with Gridsome
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Gridsome](https://gridsome.org/) remains the same except that you do not fetch the same content.
 
@@ -51,7 +51,7 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example GET request">
 
 ```graphql
@@ -136,7 +136,7 @@ Execute a `GET` request on the `category` collection type in order to fetch a sp
 
 Be sure that you activated the `findOne` permission for the `category` collection type.
 
-<ApiCall>
+<ApiCall noSidebySide>
 <Request title="Example GET request">
 
 ```graphql
