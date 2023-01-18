@@ -165,7 +165,7 @@ Use the **Manage subscription** button to change the subscription plan.
 
 The **Profile** settings page is accessed from your account icon in the top-left corner and enables you to manage your account details and preferences. There are three sections available: 
 
-## General
+### General
 
 The **General** tab enables you to edit the following details for your account:
 
@@ -175,7 +175,7 @@ The **General** tab enables you to edit the following details for your account:
 * **Delete account**: This will ***permanently and irreversibly*** delete your account and all its associated data.
 -->
 
-## Preferences
+### Preferences
 
 The **Preferences** tab enables you to edit the following details for your account:
 <!--
@@ -184,7 +184,7 @@ The **Preferences** tab enables you to edit the following details for your accou
 -->
 * **Appearance**: Choose between the **Light** and **Dark** themes.
 
-## Billing
+### Billing
 
 The **Billing** tab displays your billing information and enables you to update your payment method.
 
