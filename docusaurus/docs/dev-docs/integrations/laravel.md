@@ -1,14 +1,15 @@
 ---
-title: Get started with Laravel - Strapi Developer Docs
+title: Laravel
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Laravel.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/laravel.html
 ---
 
 # Getting Started with Laravel
 
-This integration guide follows the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) and assumes you have fully completed its "Hands-on" path and can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-Should you wish to use standalone PHP, see the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
+Should you wish to use standalone PHP, see the [PHP integration guide](/dev-docs/integrations/php.md).
 
 This guide assumes you already have [Laravel installed](https://laravel.com/docs/9.x/installation) and are familiar with the basics of the framework.
 
@@ -59,21 +60,20 @@ $response = Http::strapi()->get('api/pages');
 
 ## Install the Laravel-Strapi Laravel Package
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
 
 ```bash
 composer require dbfx/laravel-strapi
 ```
 
-This will install [Laravel-Strapi](https://github.com/dbfx/laravel-strapi), a Laravel specific package for interacting with Strapi.
+This installs [Laravel-Strapi](https://github.com/dbfx/laravel-strapi), a Laravel specific package for interacting with Strapi.
 
-You will need to publish a config file:
+You need to publish a config file:
 
 ```bash
 php artisan vendor:publish --provider="Dbfx\LaravelStrapi\LaravelStrapiServiceProvider" --tag="strapi-config"
 ```
 
-You will also need to define your `STRAPI_URL` and `STRAPI_CACHE_TIME` in the `.env` file:
+You also need to define your `STRAPI_URL` and `STRAPI_CACHE_TIME` in the `.env` file:
 
 ``` json
 STRAPI_URL=http://localhost:1337
@@ -86,13 +86,14 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-::: request Example GET request
+<Request title="Example GET request">
 
 ```php
 $strapi = new Dbfx\LaravelStrapi();
 $restaurants = $strapi->collection('restaurants');
 ```
-:::
+
+</Request>
 
 You may now iterate over the `$restaurants` array, which will contain all your restaurants. More options are available as well: 
 
@@ -127,9 +128,3 @@ $entries = $strapi->entriesByField('restaurants', 'slug', 'test-restaurant-name'
 $strapi = new Dbfx\LaravelStrapi();
 $entry = $strapi->entry('restaurants', $id = 5);
 ```
-
-## Conclusion
-
-We've showed how to request your collection types in Strapi using Laravel. When you create a collection type or a single type you will have a number of REST API endpoints available to interact with.
-
-There is more documentation available in the [README](https://github.com/dbfx/laravel-strapi) and in the [PHP integration guide](/developer-docs/latest/developer-resources/content-api/integrations/php.md).
