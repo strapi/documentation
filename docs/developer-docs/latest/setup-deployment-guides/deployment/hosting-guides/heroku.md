@@ -231,7 +231,7 @@ heroku git:remote -a your-heroku-app-name
 
 Your local development environment is now set-up and configured to work with Heroku.
 
-### Create a Heroku Database
+### Create a Heroku database
 
 The following command creates and connects a PostgreSQL database with your project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
 
