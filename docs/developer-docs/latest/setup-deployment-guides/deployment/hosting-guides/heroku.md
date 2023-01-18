@@ -12,6 +12,8 @@ The purpose of this guide is to allow users to deploy Strapi applications on Her
 
 - The Content-type Builder is disabled in production. See the documentation [FAQ for PaaS](/developer-docs/getting-started/troublshooting.md#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/developer-docs/getting-started/troublshooting.md#why-can-t-i-create-or-update-content-types-in-production-staging) for more information. Changes to the content structure should be developed locally and then deployed to production.
 
+- Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues) or [submit a pull request](https://github.com/strapi/documentation/pulls) to improve the documentation.
+
 :::
 
 Prior to starting the deployment process each user needs:
@@ -19,7 +21,6 @@ Prior to starting the deployment process each user needs:
 - a [Heroku account](https://signup.heroku.com/),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
-
 
 ## Setup a Strapi project for deployment
 
@@ -99,7 +100,7 @@ export default ({ env }) => ({
 
 module.exports = ({ env }) => ({
         proxy: true,
-        url: env('APP_URL'), // Sets the public URL of your application.
+        url: env('APP_URL'), // Sets the public URL of the application.
         app: { 
           keys: env.array('APP_KEYS')
         },
@@ -115,7 +116,7 @@ module.exports = ({ env }) => ({
 // Path: ./config/env/production/server.js`
 export default ({ env }) => ({
         proxy: true,
-        url: env('APP_URL'), // Sets the public URL of your application.
+        url: env('APP_URL'), // Sets the public URL of the application.
         app: { 
           keys: env.array('APP_KEYS')
         },
@@ -143,12 +144,13 @@ export default ({ env }) => ({
 
     </code-group>
 
-7. Add `package-lock.json` to the end of the `.gitignore` file at the root of your Strapi project:
+7. Add `package-lock.json` to the end of the `.gitignore` file at the root of the Strapi project:
 
       ```sh
       # path: ./.gitignore
       package-lock.json
       ```
+
     :::note
     It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
     :::
@@ -161,7 +163,6 @@ export default ({ env }) => ({
     git commit -m "commit message"
     ```
 
-
 ## Create and configure a Heroku App
 
 Deploying to Heroku requires installing the CLI tool, creating an App, connecting the App to a database, and setting environment variables. At the end of the following steps a Strapi application should be successfully deployed.
@@ -173,7 +174,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
       :::: tabs card
 
       ::: tab Ubuntu
-      Run the following from your terminal:
+      Run the following from a terminal:
 
       ```bash
       sudo snap install --classic heroku
@@ -193,7 +194,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
       :::
 
       ::: tab Windows
-      Download the appropriate installer for your Windows installation:
+      Download the appropriate installer for a Windows installation:
 
       - [64-bit installer](https://cli-assets.heroku.com/heroku-x64.exe)
       - [32-bit installer](https://cli-assets.heroku.com/heroku-x86.exe)
@@ -201,7 +202,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
 
       ::::
 
-2. Login to Heroku from your CLI, following the command-line instructions:
+2. Login to Heroku from the CLI, following the command-line instructions:
 
 
     ```bash
@@ -211,7 +212,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
 
 ### Create a Heroku project
 
-Create a new Heroku project by running the following command in the root directory of your Strapi project:
+Create a new Heroku project by running the following command in the root directory of the Strapi project:
 
 ```bash
 # path: ./my-project/
@@ -219,28 +220,28 @@ heroku create
 ```
 
 :::tip
-You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL) for you.
+The command `heroku create custom-project-name`, creates the `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL).
 :::
 
-If you have a Heroku project app already created, you can use the following command to initialize your local project folder:
+To initialize a local project folder with an existing Heroku project use the following command:
 
 ```bash
 # path: ./my-project/
 heroku git:remote -a your-heroku-app-name
 ```
 
-Your local development environment is now set-up and configured to work with Heroku.
+The local development environment is now set-up and configured to work with Heroku.
 
 ### Create a Heroku database
 
-The following command creates and connects a PostgreSQL database with your project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
+The following command creates and connects a PostgreSQL database with the Heroku project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
 
 ```bash
 #Path: ./my-project/
 heroku addons:create heroku-postgresql:<PLAN_NAME>
 ```
 
-You can retrieve the database credentials, which are stored as a string, with the config variable name `DATABASE_URL` by running the following command in your terminal:
+The database credentials are stored as a `string` with the config variable name `DATABASE_URL`. The database credentials can be retrieved using the following command in the terminal:
 
 ```bash
 # path: ./my-project/
@@ -251,7 +252,16 @@ The command output has the form `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16
 
 ### Populate the environment variables
 
-You need to set the environment variables in Heroku for the node environment, database, server URL, and secrets. The following tabs detail how to either set new values for your secrets or transfer the values from your local `.env` file. Creating new values is the best practice.
+Strapi requires the following environment variables to be set for the remote instance:
+
+- `NODE_ENV`,
+- `MY_HEROKU_URL`,
+- `JWT_SECRET`,
+- `ADMIN_JWT_SECRET`,
+- `API_TOKEN_SALT`,
+- `APP_KEYS`.
+
+The following tabs detail how to either set new values for the secrets or transfer the values from the local `.env` file. Creating new values is the best practice.
 
 :::: tabs card
 
@@ -272,7 +282,7 @@ heroku config:set NODE_ENV=production
 
 ::: tab Transfer existing secrets
 
-The following commands transfer your local secrets in the `.env` file to the remote instance:
+The following commands transfer the local secrets in the `.env` file to the remote instance:
 
 ```bash
 heroku config:set APP_KEYS=$(cat .env | grep APP_KEYS | cut -d= -f2-)
@@ -291,31 +301,29 @@ On Windows, variables can be set manually by running the `heroku config:set VARI
 
 
 
-### Deploy your application to Heroku
+### Deploy an application to Heroku
 
-In the project root directory run the `git push heroku HEAD:main` CLI command to push your project to the Heroku server:
+In the project root directory run the `git push heroku HEAD:main` CLI command to push the project to the Heroku server:
 
 ```bash
 # path: ./my-project/`
 git push heroku HEAD:main
 ```
 
-The deployment may take a few minutes. At the end, logs will display the url of your project (e.g. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
+The deployment may take a few minutes. At the end, logs will display the url of the project (e.g. `https://mighty-taiga-80884.herokuapp.com`). The project can also be opened from the command line:
 
 ```bash
 # path: ./my-project/`
 heroku open
 ```
 
-If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new and empty. Add `/admin` to the end of your website address to access the signup page.
+The Strapi Welcome page indicates that the project is correctly set-up, configured and deployed on Heroku. Next, set up an `admin user` as the production database is brand-new and empty. Add `/admin` to the end of the website address to access the signup page.
 
 ## Project updates
 
-When Strapi is deployed to Heroku, Heroku sets the environment variable to `NODE_ENV=production`. In `production mode` Strapi disables the content-type builder (for security reasons). Additionally, if you wanted to change the default production mode in Heroku, it wouldn't work as the file system is temporary. Strapi writes files to the server when you update the content-types and these updates would disappear when Heroku restarts the server.
+Modifications that require writing to model creation or other json files, such as creating or changing content-types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/developer-docs/getting-started/troublshooting.md#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/developer-docs/getting-started/troublshooting.md#why-can-t-i-create-or-update-content-types-in-production-staging) for more information.
 
-Therefore, modifications that require writing to model creation or other json files, e.g. creating or changing content-types, require that you make those changes on your dev environment and then push the changes to Heroku.
-
-As you continue developing your application with Strapi, you may want to use [version control](https://devcenter.heroku.com/articles/github-integration), or you can continue to use `git push heroku HEAD:main` to commit and push changes to Heroku directly.
+Further development can benefit from [version control](https://devcenter.heroku.com/articles/github-integration), or continue  using `git push heroku HEAD:main` to commit and push changes to Heroku directly.
 
 `Path: ./my-project/`
 
@@ -327,11 +335,11 @@ heroku open
 ```
 
 ::: tip
-If you see the following issue while running the `git push` command: `'heroku' does not appear to be a git repository`, run the following command: `heroku git:remote -a your-app-name`.
+If you encounter the error `'heroku' does not appear to be a git repository` when running `git push`, run the following command: `heroku git:remote -a your-app-name`.
 :::
 
 ## File Uploads
 
-Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time you redeploy or during their regular restart which can happen every few hours or every day).
+Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time the application is redeployed or during the regular restart which can happen every few hours or every day).
 
-Due to Heroku's filesystem you need to use an upload provider such as AWS S3 or Cloudinary, which are described in the  [installing providers documentation](/developer-docs/latest/development/providers.md) and you can see a list of providers from both Strapi and the community on [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
+Due to Heroku's filesystem, an upload provider such as AWS S3 or Cloudinary is required. Additional details are available in the [installing providers documentation](/developer-docs/latest/development/providers.md). The [Strapi Market](market.strapi.io/providers) contains providers from both Strapi and the community. Additional community providers are available from [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
