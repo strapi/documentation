@@ -1,14 +1,15 @@
 ---
-title: Get started with Ruby - Strapi Developer Docs
+title: Ruby
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Ruby.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/ruby.html
 ---
 
 # Getting Started with Ruby
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Ruby](https://www.ruby-lang.org/en/) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Ruby](https://www.ruby-lang.org/en/) remains the same except that you do not fetch the same content.
 
 ## Create a Ruby file
 
@@ -43,16 +44,16 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-:::: api-call
-::: request Example GET request
+<ApiCall>
+<Request title= "Example GET request">
 
 ```ruby
 HTTParty.get('http://localhost:1337/api/restaurants/')
 ```
 
-:::
+</Request>
 
-::: response Example response
+<Response title= "Example response">
 
 ```json
 {
@@ -79,8 +80,8 @@ HTTParty.get('http://localhost:1337/api/restaurants/')
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -109,8 +110,8 @@ Add the `?populate=categories` query parameter to return the categories with the
 
 In this example a `japanese` category has been created which has the id: 3.
 
-:::: api-call
-::: request Example POST request
+<ApiCall>
+<Request title= "Example POST request">
 
 ```ruby
 HTTParty.post(
@@ -131,9 +132,9 @@ HTTParty.post(
 )
 ```
 
-:::
+</Request>
 
-::: response Example response
+<Response title= "Example response">
 
 ```json
 {
@@ -164,8 +165,8 @@ HTTParty.post(
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -215,8 +216,8 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 Add the `?populate=categories` query parameter to return the categories with the response.
 
-:::: api-call
-::: request Example PUT request
+<ApiCall>
+<Request title= "Example PUT request">
 
 ```ruby
 HTTParty.put(
@@ -235,9 +236,9 @@ HTTParty.put(
 )
 ```
 
-:::
+</Request>
 
-::: response Example response
+<Response title= "Example response">
 
 ```json
 {
@@ -268,8 +269,8 @@ HTTParty.put(
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -316,7 +317,3 @@ end
 restaurant = Restaurant.new
 puts restaurant.update(16, { categories: [2] })
 ```
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using Ruby. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
