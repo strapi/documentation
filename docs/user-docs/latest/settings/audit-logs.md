@@ -15,10 +15,6 @@ They are accessible from the **Administrator Panel** section of the [**Settings*
 For each log item the following information is displayed:
 
 * **Action**: The type of action performed by the user. For example `create` or `update`.
-<!--
-* **Response Status**: The HTTP status code returned by the server for that action.
-* **Path**: The path of the request.
--->
 * **Date**: The date and time of the action.
 * **User**: The user who performed the action.
 * **Details**: Displays a modal with more details about the action. For example the User IP address, the request body, or the response body.
