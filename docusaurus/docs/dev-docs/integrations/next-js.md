@@ -1,5 +1,6 @@
 ---
 title: Next.js
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Next.js.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/next-js.html
 ---
@@ -289,7 +290,6 @@ fetch('http://localhost:1337/api/restaurants/?populate=categories', {
 </TabItem>
 
 </Tabs>
-
 
 <Response title="Example response">
 
