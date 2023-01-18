@@ -1,16 +1,15 @@
 ---
-title: Get started with Jekyll - Strapi Developer Docs
+title: Jekyll
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Jekyll.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html
 ---
 
 # Getting Started with Jekyll
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
-
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Jekyll](https://jekyllrb.com) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Jekyll](https://jekyllrb.com) remains the same except that you do not fetch the same content.
 
 ## Create a Jekyll app
 
@@ -164,10 +163,3 @@ strapi:
 After building your application, you'll be able to see a `category` folder in your `_site` folder.
 
 You can find your restaurant categories by browsing `http://localhost:4000/category/<name-of-category>`.
-
-Feel free to do the same for your restaurants!
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using Jekyll.
-Learn more about Jekyll with their [official documentation](https://jekyllrb.com/docs/).
