@@ -1,16 +1,15 @@
 ---
-title: Get started with Gatsby - Strapi Developer Docs
+title: Gatsby
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless CMS and Gatsby.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html
 ---
 
 # Getting Started with Gatsby
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
-
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Gatsby](https://www.gatsbyjs.org/) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Gatsby](https://www.gatsbyjs.org/) remains the same except that you do not fetch the same content.
 
 ## Create a Gatsby app
 
@@ -50,8 +49,9 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-:::: api-call
-:::request Example GET request
+<ApiCall>
+
+<Request title="Example GET request">
 
 ```graphql
 query {
@@ -71,9 +71,9 @@ query {
 }
 ```
 
-:::
+</Request>
 
-:::response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -101,8 +101,8 @@ query {
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -151,8 +151,8 @@ Execute a `GET` request on the `category` collection type in order to fetch a sp
 
 Be sure that you activated the `findOne` permission for the `category` collection type.
 
-:::: api-call
-::: request Example GET request
+<ApiCall>
+<Request title="Example GET request">
 
 ```graphql
 query {
@@ -171,9 +171,9 @@ query {
 }
 ```
 
-:::
+</Request>
 
-::: response Example response
+<Response title="Example response">
 
 ```json
 {
@@ -199,8 +199,8 @@ query {
 }
 ```
 
-:::
-::::
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -328,16 +328,3 @@ export default Category;
 ```
 
 You can find your restaurant categories by browsing `http://localhost:8000/category/<name-of-category>`.
-
-Feel free to do the same for your restaurants!
-
-## Starters
-
-- [Gatsby blog starter](https://github.com/strapi/strapi-starter-gatsby-blog)
-- [Gatsby corporate starter](https://github.com/strapi/strapi-starter-gatsby-corporate)
-- [Gatsby catalog starter](https://github.com/strapi/strapi-starter-gatsby-catalog)
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using Gatsby.
-Learn more about [GraphQL](/developer-docs/latest/plugins/graphql.md).
