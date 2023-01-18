@@ -300,7 +300,7 @@ $ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
 # Connect to the database as the PostgreSQL admin
 $ \c my_strapi_db_name admin_user
 
-# Grant schema privileges  to the user
+# Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
 :::
