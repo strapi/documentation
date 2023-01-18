@@ -44,7 +44,7 @@ Currently, custom fields cannot add new data types to Strapi and must use existi
 
 ::: details Example: Registering an example "color" custom field on the server:
 
-In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/developer-docs/latest/plugins-development.md)):
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/developer-docs/latest/development/plugins-development.md)):
 
 ```js
 // path: ./src/plugins/color-picker/server/register.js
