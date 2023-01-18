@@ -122,6 +122,21 @@ const sidebars = {
             'dev-docs/api/rest/sort-pagination',
           ]
         },
+        {
+          type: 'category',
+          label: 'Query Engine API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/query-engine',
+          },
+          items: [
+            'dev-docs/api/query-engine/single-operations',
+            'dev-docs/api/query-engine/bulk-operations',
+            'dev-docs/api/query-engine/filtering',
+            'dev-docs/api/query-engine/populating',
+            'dev-docs/api/query-engine/order-pagination',
+          ]
+        },
         'dev-docs/api/graphql',
         'dev-docs/api/plugins/admin-panel-api',
       ]
