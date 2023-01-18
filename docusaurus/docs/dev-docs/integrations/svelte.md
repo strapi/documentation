@@ -1,5 +1,5 @@
 ---
-title: Get started with Svelte - Strapi Developer Docs
+title: Svelte
 displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Svelte.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/svelte.html
