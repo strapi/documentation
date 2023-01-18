@@ -1,14 +1,13 @@
 ---
-title: Get started with GraphQL - Strapi Developer Docs
+title: GraphQL
+displayed_sidebar: devDocsSidebar
 description: Use the GraphQL plugin in your Strapi project to fetch and mutate your content.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/graphql.html
 ---
 
 # Getting Started with GraphQL
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [GraphQL](https://graphql.org/) remains the same except that you will not fetch the same content.
 
@@ -16,35 +15,33 @@ If you haven't gone through the Quick Start Guide, the way you request a Strapi 
 
 Install the GraphQL plugin in your Strapi project.
 
-<code-group>
+<Tabs groupId="yarn-npm">
 
-<code-block title="NPM">
-```sh
-npm run strapi install graphql
-```
-</code-block>
+<TabItem value="yarn" label="yarn">
 
-<code-block title="YARN">
-```sh
+```bash
 yarn strapi install graphql
 ```
-</code-block>
 
+</TabItem>
 
-<code-block title="STRAPI CLI">
-```sh
-strapi install graphql
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi install graphql
 ```
-</code-block>
 
-</code-group>
+</TabItem>
+
+</Tabs>
 
 ## Fetch your Restaurant collection type
 
-Play with the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
+Use the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
 
-::::api-call
-:::request Example query
+<ApiCall>
+<Request title="Example query">
+
 ```graphql
 query Restaurants {
   restaurants {
@@ -57,9 +54,11 @@ query Restaurants {
   }
 }
 ```
-:::
 
-:::response Example response
+</Request>
+
+<Response title="Example response">
+
 ```json
 {
   "data": {
@@ -78,18 +77,19 @@ query Restaurants {
   }
 }
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ### Examples
 
-These examples do not guide you to configure your client with Apollo for your [GraphQL endpoint](http://localhost:1337/graphql). Please follow the associated documentation for each client: ([React](https://www.apollographql.com/docs/react/get-started/) and [Vue.js](https://apollo.vuejs.org/guide/installation.html#_1-apollo-client) here)
+These examples do not include configuring your client with Apollo for your [GraphQL endpoint](http://localhost:1337/graphql). Please follow the associated documentation for [React](https://www.apollographql.com/docs/react/get-started/) or [Vue.js](https://apollo.vuejs.org/guide/installation.html#_1-apollo-client).
 
-:::: tabs card
+<Tabs groupId="react-vue">
 
-::: tab React
+<TabItem value="React" label="React">
 
-Using [React](/developer-docs/latest/developer-resources/content-api/integrations/react.md) and [Apollo](https://www.apollographql.com/)
+Using [React](/dev-docs/integrations/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -121,11 +121,11 @@ function Restaurants() {
 }
 ```
 
-:::
+</TabItem>
 
-::: tab Vue.js
+<TabItem title="Vue.js">
 
-Using [Vue.js](/developer-docs/latest/developer-resources/content-api/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](/dev-docs/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -164,14 +164,14 @@ export default {
 </script>
 ```
 
-:::
+</TabItem>
 
-::::
+</Tabs>
 
 ## Fetch your Category collection type
 
-:::: api-call
-::: request Example request
+<ApiCall> 
+<Request title="Example request">
 
 ```graphql
 query Category {
@@ -186,9 +186,10 @@ query Category {
   }
 }
 ```
-:::
 
-:::response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 {
@@ -207,16 +208,17 @@ query Category {
   }
 }
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ## Examples
 
-:::: tabs card
+<Tabs groupId="react-vue">
 
-::: tab React
+<TabItem value="React" label="React">
 
-Using [React](/developer-docs/latest/developer-resources/content-api/integrations/react.md) and [Apollo](https://www.apollographql.com/)
+Using [React](/dev-docs/integrations/react.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 import { gql, useQuery } from '@apollo/client';
@@ -255,11 +257,11 @@ function Category({ id }) {
 }
 ```
 
-:::
+</TabItem>
 
-::: tab Vue.js
+<TabItem value="Vue.js" label="Vue.js">
 
-Using [Vue.js](/developer-docs/latest/developer-resources/content-api/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
+Using [Vue.js](/dev-docs/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
 ```js
 <template>
@@ -309,12 +311,6 @@ export default {
 </script>
 ```
 
-:::
+</TabItem>
 
-::::
-
-## Conclusion
-
-This is how you request your collection types in Strapi using GraphQL.
-
-Feel free to explore more about [GraphQL](/developer-docs/latest/plugins/graphql.md).
+</Tabs>
