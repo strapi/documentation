@@ -1,17 +1,15 @@
 ---
-title: Get started with Go - Strapi Developer Docs
+title: Go
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Go.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/go.html
 ---
 
 # Getting Started with GO
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
-
-If you haven't gone through the Quick Start guide, the way you request a Strapi API with [GO](https://golang.org/) remains the same except that you will not fetch the same content.
-
+If you haven't gone through the Quick Start guide, the way you request a Strapi API with [GO](https://golang.org/) remains the same except that you do not fetch the same content.
 
 ## Create a Go file
 
@@ -31,15 +29,16 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-:::: api-call
-::: request Example GET request
+<ApiCall>
+<Request title="Example GET request">
 
 ```go
 response, error := http.Get("http://localhost:1337/api/restaurants")
 ```
-:::
 
-::: response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 [{
@@ -66,8 +65,9 @@ response, error := http.Get("http://localhost:1337/api/restaurants")
   ]
 }]
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -102,8 +102,8 @@ Execute a `POST` request on the `restaurant` collection type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
-:::: api-call
-::: request Example POST request
+<ApiCall>
+<Request title="Example POST request">
 
 ```go
 postRest, _ := json.Marshal(map[string]string{
@@ -113,9 +113,10 @@ postRest, _ := json.Marshal(map[string]string{
 responseBody := bytes.NewBuffer(postRest)
 resp, error := http.Post("http://localhost:1337/api/restaurants", "application/json", responseBody)
 ```
-:::
 
-::: response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 {
@@ -127,8 +128,9 @@ resp, error := http.Post("http://localhost:1337/api/restaurants", "application/j
   "categories": []
 }
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -180,8 +182,7 @@ func postD() {
   }
   fmt.Println(string(body))
 }
-```	  
-
+```
 
 ## PUT Request your collection type
 
@@ -190,8 +191,8 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` collection type.
 PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
 
-:::: api-call
-::: request Example PUT request
+<ApiCall>
+<Request title="Example PUT request">
 
 ```go
 putRest, _ := json.Marshal(map[string]string {
@@ -202,9 +203,10 @@ url := "http://localhost:1337/api/restaurants/1"
 req, error := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(putRest))
 req.Header.Set("Content-Type", "application/json")
 ```
-:::
 
-::: response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 {
@@ -231,8 +233,9 @@ req.Header.Set("Content-Type", "application/json")
   ]
 }
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 
 ### Example
@@ -313,9 +316,3 @@ func putD() {
 }
 
 ```
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using Go. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
-
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
