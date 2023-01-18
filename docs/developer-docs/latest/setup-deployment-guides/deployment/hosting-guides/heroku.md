@@ -240,7 +240,7 @@ The following command creates and connects a PostgreSQL database with your proje
 heroku addons:create heroku-postgresql:<PLAN_NAME>
 ```
 
-You can retrieve the database credentials, which are stored as a string, with the config var name `DATABASE_URL` by running the following command in your terminal:
+You can retrieve the database credentials, which are stored as a string, with the config variable name `DATABASE_URL` by running the following command in your terminal:
 
 ```bash
 # path: ./my-project/
