@@ -123,7 +123,7 @@ function Restaurants() {
 
 </TabItem>
 
-<TabItem title="Vue.js">
+<TabItem value="Vue.js" label="Vue.js">
 
 Using [Vue.js](/dev-docs/integrations/vue-js.md) and [Apollo](https://www.apollographql.com/)
 
