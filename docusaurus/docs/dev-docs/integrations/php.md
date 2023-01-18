@@ -1,14 +1,13 @@
 ---
-title: Get started with PHP - Strapi Developer Docs
+title: PHP
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html
 ---
 
 # Getting Started with PHP
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
-
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [PHP](https://php.net/) remains the same except that you will not fetch the same content.
 
@@ -19,6 +18,7 @@ Be sure to have [PHP installed](https://www.php.net/manual/en/install.php) on yo
 ```bash
 touch strapi.php
 ```
+
 We will use cURL, a built-in PHP extension that allows us to receive and send information via the URL syntax.
 
 ## GET Request your collection type
@@ -27,8 +27,8 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-:::: api-call
-::: request Example GET request
+<ApiCall>
+<Request title="Example GET request">
 
 ```php
 curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
@@ -36,8 +36,9 @@ curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 
 Running the PHP file on the browser  will give you this response:
 
-:::
-::: response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 [{
@@ -64,8 +65,10 @@ Running the PHP file on the browser  will give you this response:
   ]
 }]
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
+
 ### Example
 
 ```php
@@ -93,8 +96,8 @@ Execute a `POST` request on the `restaurant` collection type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
-:::: api-call
-::: request Example POST request
+<ApiCall>
+<Request title="Example POST request">
 
 ```php
 $restaurants = array(
@@ -116,8 +119,9 @@ curl_setopt($curl, CURLOPT_POST, true);
 
 Running the PHP file on the browser  will give you this response:
 
-:::
-::: response Example response
+</Request>
+
+<Response title="Example response">
 
 ```json
 [{
@@ -137,8 +141,9 @@ Running the PHP file on the browser  will give you this response:
       ]
 }]
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -197,8 +202,8 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` collection type.
 PUT Request is slightly different as we need to target the particular entry we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Femoni Kitchen".
 
-:::: api-call
-::: request Example PUT request
+<ApiCall>
+<Request title="Example PUT request">
 
 ```php
 $restaurants = array(
@@ -211,8 +216,10 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 
 ```
-:::
-::: response Example response
+
+</Request>
+
+<Response title="Example response">
 
 Running the PHP file on the browser  will give you this response:
 
@@ -234,8 +241,9 @@ Running the PHP file on the browser  will give you this response:
   ]
 }]
 ```
-:::
-::::
+
+</Response>
+</ApiCall>
 
 ### Example
 
@@ -308,7 +316,7 @@ putRestaurant();
 
 Running an authentication request (getting JWT):
 
-::: response
+<Response>
 
 ```json
 
@@ -336,9 +344,11 @@ Running an authentication request (getting JWT):
     }
 }]
 ```
-:::
+
+</Response>
 
 ### Example
+
 ```php
 <?php
 $strapi_auth = [
@@ -381,7 +391,8 @@ print_r($strapi_res);
 
 Running an authenticated POST request with JWT
 
-::: response Example response
+<Response title="Example response">
+
 ```json
 [{
     "id": 2,
@@ -400,9 +411,11 @@ Running an authenticated POST request with JWT
       ]
 }]
 ```
-:::
+
+</Response>
 
 ### Example
+
 ```php
 <?php
 $jwt = $strapi_res->jwt;
@@ -437,9 +450,3 @@ function postRestaurantWithAuth($jwt){
 
 postRestaurantWithAuth($jwt);
 ```
-
-## Conclusion
-
-Here is how to request your collection types in Strapi using PHP. When you create a collection type or a single type you will have a certain number of REST API endpoints available to interact with.
-
-We just used the GET, POST and PUT methods here but you can [get one entry](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#get-an-entry), and [delete](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#delete-an-entry) an entry too. Learn more about [API Endpoints](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#endpoints).
