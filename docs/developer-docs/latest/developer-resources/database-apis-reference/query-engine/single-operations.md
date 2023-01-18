@@ -113,6 +113,8 @@ const entry = await strapi.db.query('api::blog.article').create({
 });
 ```
 
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/snippets/managing-relations.md)!!!
+
 ## update()
 
 Updates one entry and returns it.
@@ -138,6 +140,8 @@ const entry = await strapi.db.query('api::blog.article').update({
   },
 });
 ```
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/snippets/managing-relations.md)!!!
 
 ## delete()
 

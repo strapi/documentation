@@ -85,6 +85,8 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 | `populate` | Relations, components and dynamic zones to [populate](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) | [`PopulateParameter`<Fa-Link color="grey"/>](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.md) |
 | `data`     | Input data                                                                                                                                             | `Object`                                                                                                                                      |
 
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/snippets/managing-relations.md)!!!
+
 ### Example
 
 ```js
@@ -104,6 +106,8 @@ Updates one entry and returns it.
 :::
 
 Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
+
+!!!include(developer-docs/latest/developer-resources/database-apis-reference/snippets/managing-relations.md)!!!
 
 ### Parameters
 
