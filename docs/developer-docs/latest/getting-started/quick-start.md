@@ -84,6 +84,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick
   }
 </style>
 
+<!-- TODO: update once Next.js starter is fixed -->
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered.
 
 ::: prerequisites
