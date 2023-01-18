@@ -150,7 +150,7 @@ Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
 
 ### 1. Install the [Heroku Postgres addon](https://elements.heroku.com/addons/heroku-postgresql) for using Postgres.
 
-To make things even easier, Heroku provides a powerful addon system. In this section, you are going to use the Heroku Postgres addon, which provides a free "Hobby Dev" plan. If you plan to deploy your app in production, it is highly recommended switching to a paid plan.
+To make things even easier, Heroku provides a powerful addon system. In this section, you are going to use the Heroku Postgres addon. The most basic plan is "Mini", which costs $5/mo. If you plan to deploy your app in production, check the row limit and storage capacity as you may want to upgrade to a higher plan.
 
 `Path: ./my-project/`
 
