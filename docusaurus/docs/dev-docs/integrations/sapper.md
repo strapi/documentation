@@ -1,16 +1,15 @@
 ---
-title: Get started with Sapper - Strapi Developer Docs
+title: Sapper
+displayed_sidebar: devDocsSidebar
 description: Build powerful applications using Strapi, the leading open-source headless cms and Sapper.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/sapper.html
 ---
 
 # Getting Started with Sapper
 
-!!!include(developer-docs/latest/developer-resources/content-api/snippets/integration-guide-not-updated.md)!!!
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL http://localhost:1337/api/restaurants.
 
-This integration guide is following the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md). We assume that you have fully completed its "Hands-on" path, and therefore can consume the API by browsing this [url](http://localhost:1337/api/restaurants).
-
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Sapper](https://sapper.svelte.dev) remains the same except that you will not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Sapper](https://sapper.svelte.dev) remains the same except that you do not fetch the same content.
 
 ## Create a Sapper app
 
