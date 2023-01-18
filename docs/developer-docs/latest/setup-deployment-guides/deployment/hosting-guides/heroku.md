@@ -88,7 +88,7 @@ export default ({ env }) => ({
 </code-group>
 
 4. Create `server.js` inside the `./config/env/production` directory.
-5. Add the code snippet to the `server` configuration file:
+5. Add the following code snippet to the `server` configuration file:
 
 <code-group>
 
