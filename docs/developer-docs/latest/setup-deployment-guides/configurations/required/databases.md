@@ -294,7 +294,7 @@ When connecting Strapi to a PostgreSQL database, the database user requires SCHE
 To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
 
 ```shell
-# Create a new db user with a secure password
+# Create a new database user with a secure password
 $ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
 
 # Connect to the database as the postgres admin
