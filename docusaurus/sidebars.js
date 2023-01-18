@@ -138,6 +138,21 @@ const sidebars = {
           ]
         },
         'dev-docs/api/graphql',
+        {
+          type: 'category',
+          label: 'Entity Service API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/entity-service',
+          },
+          items: [
+            'dev-docs/api/entity-service/crud',
+            'dev-docs/api/entity-service/filter',
+            'dev-docs/api/entity-service/populate',
+            'dev-docs/api/entity-service/order-pagination',
+            'dev-docs/api/entity-service/components-dynamic-zones',
+          ]
+        },
         'dev-docs/api/plugins/admin-panel-api',
       ]
     },
