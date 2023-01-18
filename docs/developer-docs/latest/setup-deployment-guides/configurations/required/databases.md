@@ -297,7 +297,7 @@ To create a new PostgreSQL user with the SCHEMA permission, use the following st
 # Create a new database user with a secure password
 $ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
 
-# Connect to the database as the postgres admin
+# Connect to the database as the PostgreSQL admin
 $ \c my_strapi_db_name admin_user
 
 # Grant schema privileges  to the user
