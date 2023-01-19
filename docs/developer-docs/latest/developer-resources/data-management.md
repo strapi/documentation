@@ -140,18 +140,19 @@ npm strapi export --no-compress
 </code-block>
 </code-group>
 
-### Export only selected items
+### Export only selected types of data
 
-### Exclude items from export
+The default `strapi export` command exports your content (entities and links), files (assets), project configuration and schemas. The `--only` option allows you to export the listed items only by passing a comma-separated string. The available values are `content`, `files` and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
 
-#### Example: Export data excluding assets
+
+#### Example: Export only entities and links
 <br/>
 
 <code-group>
 <code-block title="YARN">
 
 ```bash
-yarn strapi export --exclude files
+yarn strapi export --only content
 ```
 
 </code-block>
@@ -159,13 +160,15 @@ yarn strapi export --exclude files
 <code-block title="NPM">
 
 ```bash
-npm strapi export --exclude files
+npm strapi export --only content
 ```
 
 </code-block>
 </code-group>
 
-The default `strapi export` command exports your content (data and link), files (assets), project configuration and schemas. The `--exclude` option allows you to exclude content, files and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
+### Exclude items from export
+
+The default `strapi export` command exports your content (entities and links), files (assets), project configuration and schemas. The `--exclude` option allows you to exclude content, files and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 The `--exclude` option overrides the `--only` option. For example, if you included `--only files, content --exclude content` in your `strapi export` command only the `files` would be exported.
 
@@ -191,20 +194,18 @@ npm strapi export --exclude files
 </code-group>
 
 
-
-
-
-
-
 ## Import data using the CLI tool
 
 :::warning
 `strapi import` will delete all of the existing data prior to importing the backup file. Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 :::
 
+### Specify the import file
+
 To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you will be prompted for the encryption key before the import starts.
  
 #### Example: Minimum command to import data from a file in the Strapi project root
+
 <br/>
 <code-group>
 <code-block title="YARN">
@@ -243,6 +244,76 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 
 ```bash
 npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
+```
+
+</code-block>
+</code-group>
+
+### Bypass all command line prompts
+
+
+#### Example of the `--force` option
+
+<br/>
+<code-group>
+<code-block title="YARN">
+
+```bash
+
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+
+```
+
+</code-block>
+</code-group>
+
+### Exclude data types during import
+
+#### Example: exclude assets from an import
+
+<br/>
+<code-group>
+<code-block title="YARN">
+
+```bash
+
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+
+```
+
+</code-block>
+</code-group>
+
+### Include only specified data types during import
+
+#### Example: import only the project configuration
+
+<br/>
+<code-group>
+<code-block title="YARN">
+
+```bash
+
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+
 ```
 
 </code-block>
