@@ -128,7 +128,7 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 strapi export -f myData 
 # exports your data without encryption:
 strapi export --no-encrypt
-#export your data and configuration but not media files:
+# export your data and configuration but not media files:
 strapi export --exclude files 
 ```
 
