@@ -99,7 +99,7 @@ options: [--browser <name>]
 ```
 
 
-## strapi export <BetaBadge />
+## strapi export
 
 [Exports your project data](/developer-docs/latest/developer-resources/data-management.md). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
@@ -124,11 +124,15 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 ```bash
 # examples of strapi export:
 
-strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
-strapi export --no-encrypt # exports your data without encryption. 
+# export your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc):
+strapi export -f myData 
+# exports your data without encryption:
+strapi export --no-encrypt
+#export your data and configuration but not media files:
+strapi export --exclude files 
 ```
 
-## strapi import <BetaBadge />
+## strapi import
 
 [Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
@@ -150,6 +154,9 @@ strapi export --no-encrypt # exports your data without encryption.
 
 # import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
+
+# import only your configuration: 
+strapi import --only config
 
 ```
 
