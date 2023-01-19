@@ -47,6 +47,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 | MariaDB    | 10.3    | 10.6        |
 | PostgreSQL | 11.0    | 14.0        |
 | SQLite     | 3       | 3           |
+| CockroachDB (Experimental)     | 22.2.2       | 22.2.2           |
 
 - A supported operating system:
 

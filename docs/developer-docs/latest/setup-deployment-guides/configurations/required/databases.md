@@ -227,6 +227,40 @@ export default ({ env }) => ({
 
 ::::
 
+:::: tab CockroachDB
+:::warning
+Cockroach DB is only supported experimentally and should not be used in production.
+:::
+
+```js
+// path: ./config/database.js
+
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'cockroachdb',
+    connection: {
+      host: env('DATABASE_HOST', '127.0.0.1'),
+      port: env.int('DATABASE_PORT', 26257),
+      database: env('DATABASE_NAME', 'strapi'),
+      user: env('DATABASE_USERNAME', 'strapi'),
+      password: env('DATABASE_PASSWORD', 'strapi'),
+      schema: env('DATABASE_SCHEMA', 'public'), // Not required
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+      },
+    },
+    debug: false,
+  },
+});
+```
+
+:::caution
+Cockroach DB currently has a couple of limitations. If you alter the type of a column you will need to do a manual migration in order to do this successfully.
+
+Cockroach DB also will store all integers as 64 bit integers which may inflate the size of you database.
+
+::::
+
 :::::
 
 ## Configuration in database
