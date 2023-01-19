@@ -136,15 +136,15 @@ strapi export --exclude files
 
 [Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
-| Option             | Type   | Description                                                               |
-|--------------------|--------|---------------------------------------------------------------------------|
+| Option             | Type   | Description                                                                   |
+|--------------------|--------|-------------------------------------------------------------------------------|
 | `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
 | `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-f`, `--force`| - |  Automatically answers "yes" to all prompts, including potentially destructive requests|
+| `--force`| - |  Automatically answers "yes" to all prompts, including potentially destructive requests      |
 | `--exclude` | string | Exclude data using comma-separated data types. `--exclude` types override `--only` types. The available types are: `content`, `files`, and `config`.|
-| `--only`| string | Include only these data. The available types are: `content`, `files`, and `config`.|
+| `--only`| string | Include only these data. The available types are: `content`, `files`, and `config`.      |
 
-| `-h`, `--help`         |   -     | Display the `strapi import` help commands.                                |
+| `-h`, `--help`         |   -     | Display the `strapi import` help commands.                               |
 
 **Examples**
 
@@ -155,7 +155,10 @@ strapi export --exclude files
 # import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
 
-# import only your configuration: 
+# import your data forcing "yes" for all subsequent prompts:
+strapi import --force
+
+# import only your configuration (schemas are always included): 
 strapi import --only config
 
 ```
