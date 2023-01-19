@@ -32,6 +32,7 @@ The `./config/server.js` file can include the following parameters:
 | `cron.tasks`                        | Declare [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to be run at specific dates.                                                                                                                                                                                                                                        | object            |                     |
 | `dirs`                              | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object            |                     |
 | `dirs.public`                       | Customize the path of the public folder.                                                                                                                                                                                                                                                                                                                                    | string            | `./public`          |
+| `webhooks.populateRelations`        | For compatibility reasons is set to true, and it will be removed in the next major release. We recommend to set it to false if you don't need it.                                                                                                                                                                                                                           | boolean           | `true`              |
 
 ## Configurations
 
@@ -130,6 +131,7 @@ export default ({ env }) => ({
   },
 });
 ```
+
 </code-block>
 </code-group>
 
