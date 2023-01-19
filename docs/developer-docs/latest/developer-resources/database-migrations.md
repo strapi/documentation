@@ -27,7 +27,7 @@ Migration files should export the function `up()`, which is used when upgrading 
 The `up()` function runs in a database transaction which means if a query fails during the migration, the whole migration is cancelled, and no changes are applied to the database. If another transaction is created within the migration function, it will act as a nested transaction.
 
 ::: note
-There is no CLI to manually execute the database migrations.
+Database migrations can be initiated using the CLI command `strapi generate migration`. 
 :::
 
 ## Creating a migration file
