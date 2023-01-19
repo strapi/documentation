@@ -5,16 +5,10 @@ sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-import.html
 ---
 
-# Data Management System <BetaBadge />
+# Data Management System
 
 :::callout 🚧 Feature under development
-The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io).
-
-You can test this beta feature in a new application by using the following installation command in your terminal:
-
-``` bash
-npx create-strapi-app@beta <application-name>
-```
+The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io). The feature is available in v4.6.0 and later versions.
 
 :::
 
@@ -31,7 +25,7 @@ The `strapi export` and `strapi import` CLI commands with all of the available o
 
 ## Export data using the CLI tool
 
-The `strapi export` command by default exports data as an encrypted and compressed `tar.gz` file. The default export command exports:
+The `strapi export` command, by default, exports data as an encrypted and compressed `tar.gz.enc` file. The default export command exports:
 
 - the project configuration,
 - entities: all of your content,
@@ -145,6 +139,62 @@ npm strapi export --no-compress
 
 </code-block>
 </code-group>
+
+### Export only selected items
+
+### Exclude items from export
+
+#### Example: Export data excluding assets
+<br/>
+
+<code-group>
+<code-block title="YARN">
+
+```bash
+yarn strapi export --exclude files
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm strapi export --exclude files
+```
+
+</code-block>
+</code-group>
+
+The default `strapi export` command exports your content (data and link), files (assets), project configuration and schemas. The `--exclude` option allows you to exclude content, files and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
+
+The `--exclude` option overrides the `--only` option. For example, if you included `--only files, content --exclude content` in your `strapi export` command only the `files` would be exported.
+
+#### Example: Export data excluding assets
+<br/>
+
+<code-group>
+<code-block title="YARN">
+
+```bash
+yarn strapi export --exclude files
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm strapi export --exclude files
+```
+
+</code-block>
+</code-group>
+
+
+
+
+
+
 
 ## Import data using the CLI tool
 
