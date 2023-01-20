@@ -77,3 +77,5 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 :::tip Using the keyboard to reorder <BetaBadge />
 You can also use the keyboard to reorder relations: focus the relation using Tab, press Space on the drag & drop button Drag icon and use the arrow keys to then re-order, pressing Space again to drop the item.
 :::
+
+<FeedbackPlaceholder />
