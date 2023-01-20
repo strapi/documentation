@@ -116,10 +116,9 @@ const user = [
     collapsable: false,
     title: 'General settings',
     children: [
-      ['/user-docs/latest/settings/managing-global-settings.html', 'Managing global settings'],
-      [
-        '/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html',
-        'Configuring Users & Permissions plugin settings.html',
+      ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
+      ['/user-docs/latest/settings/audit-logs', 'Viewing Audit Logs'],
+      ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html', 'Configuring Users & Permissions plugin settings',
       ],
     ],
   },

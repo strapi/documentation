@@ -242,6 +242,7 @@ const developer = [
               ],
             ]
           },
+          ['/developer-docs/latest/developer-resources/database-apis-reference/rest/relations.html', 'Relations']
         ],
       },
       [

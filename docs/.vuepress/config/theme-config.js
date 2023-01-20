@@ -79,23 +79,13 @@ const themeConfig = {
       text: 'Other Docs',
       items: [
         {
-          text: 'Older Documentation',
-          items: [
-            {
-              text: 'v3 Documentation',
-              link: 'https://docs-v3.strapi.io',
-            },
-          ]
+          text: 'v3 documentation',
+          link: 'https://docs-v3.strapi.io',
         },
-        // { // temporarily disabled while we move to Docusaurus
-        //   text: 'Pre-release Documentation',
-        //   items: [
-        //     {
-        //       text: 'docs-next',
-        //       link: 'https://docs-next.strapi.io',
-        //     },
-        //   ]
-        // },
+        {
+          text: 'New beta documentation',
+          link: 'https://docs-next.strapi.io',
+        },
       ],
     },
     {
@@ -113,8 +103,8 @@ const themeConfig = {
               link: 'https://strapi.io/blog',
             },
             {
-              text: 'StrapiConf 2021',
-              link: 'https://www.strapi.io/strapi-conf-2021',
+              text: 'StrapiConf 2022',
+              link: 'https://www.youtube.com/playlist?list=PL7Q0DQYATmvgTWQH91NhIdY2BFdDYntPP',
             },
           ],
         },
@@ -140,19 +130,15 @@ const themeConfig = {
           items: [
             {
               text: 'Tutorials',
-              link: 'https://strapi.io/tutorials',
-            },
-            {
-              text: 'Academy',
-              link: 'https://academy.strapi.io/',
+              link: 'https://strapi.io/blog/categories/tutorials?type=v4',
             },
           ],
         },
       ],
     },
     {
-      text: "We're hiring!",
-      link: 'https://strapi.io/careers#open-positions',
+      text: "Strapi Cloud waitlist",
+      link: 'https://strp.cc/3GIEKKZ',
     },
   ],
   repo: 'strapi/documentation',
