@@ -165,6 +165,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Integrations',
+          link: {
+            type:'doc',
+            id: 'dev-docs/integrations',
+          },
+
+          
           items: [
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
