@@ -14,9 +14,9 @@ Database migrations are experimental. This feature is still a work in progress a
 
 ## Understanding database migration files
 
-Migrations are run using JavaScript migration files stored in `./database/migrations`.
+Migrations can be run using JavaScript migration files stored in `./database/migrations` or using the CLI command `strapi generate migration`.
 
-Strapi automatically detects migration files and run them once at the next startup in alphabetical order. Every new file is executed once. Migrations are run before the database tables are synced with the content-types schemas.
+For migration files, Strapi automatically detects and runs them once at the next startup in alphabetical order. Every new file is executed once. Migrations are run before the database tables are synced with the content-types schemas.
 
 ::: warning
 Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
