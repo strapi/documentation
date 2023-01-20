@@ -142,7 +142,7 @@ npm strapi export --no-compress
 
 ### Export only selected types of data
 
-The default `strapi export` command exports your content (entities and links), files (assets), project configuration and schemas. The `--only` option allows you to export the listed items only by passing a comma-separated string. The available values are `content`, `files` and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
+The default `strapi export` command exports your content (entities and links), files (assets), project configuration and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files` and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
 
 
 #### Example: Export only entities and links
@@ -192,7 +192,6 @@ npm strapi export --exclude files
 
 </code-block>
 </code-group>
-
 
 ## Import data using the CLI tool
 
@@ -251,6 +250,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 
 ### Bypass all command line prompts
 
+When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use you must also pass the `--key` option if the file is encrypted.
 
 #### Example of the `--force` option
 
@@ -259,7 +259,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="YARN">
 
 ```bash
-
+yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </code-block>
@@ -267,13 +267,17 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-
+npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </code-block>
 </code-group>
 
 ### Exclude data types during import
+
+The default `strapi import` command imports your content (entities and links), files (assets), project configuration and schemas. The `--exclude` option allows you to exclude content, files and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
+
+The `--exclude` option overrides the `--only` option. For example, if you included `--only files, content --exclude content` in your `strapi import` command only the `files` would be imported.
 
 #### Example: exclude assets from an import
 
@@ -282,7 +286,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="YARN">
 
 ```bash
-
+yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </code-block>
@@ -290,13 +294,15 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-
+npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </code-block>
 </code-group>
 
 ### Include only specified data types during import
+
+The default `strapi import` command imports your content (entities and links), files (assets), project configuration and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files` and `config`. Schemas are always imported, as schema matching is used for `strapi import`.
 
 #### Example: import only the project configuration
 
@@ -305,7 +311,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="YARN">
 
 ```bash
-
+yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 ```
 
 </code-block>
@@ -313,7 +319,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-
+npm strapi import -f export_20221213105643.tar.gz.enc --only config
 ```
 
 </code-block>
