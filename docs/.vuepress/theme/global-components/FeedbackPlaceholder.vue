@@ -1,3 +1,3 @@
 <template>
- <span id="feedback-placeholder"></span>
+ <div id="feedback-placeholder"></div>
 </template>
