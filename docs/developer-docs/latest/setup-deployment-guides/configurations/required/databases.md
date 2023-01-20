@@ -255,7 +255,8 @@ module.exports = ({ env }) => ({
 ```
 
 :::caution
-Cockroach DB currently has a couple of limitations. If you alter the type of a column you will need to do a manual migration in order to do this successfully.
+Cockroach DB currently has the following limitations:
+- If you alter the type of a column you will need to do a manual migration in order to do this successfully.
 
 - Cockroach DB stores all integers as 64-bit integers which may inflate the size of your database.
 
