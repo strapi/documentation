@@ -198,7 +198,11 @@ npm strapi export --exclude files, content
 ## Import data using the CLI tool
 
 :::warning
-`strapi import` will delete all existing data before importing the backup file. Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
+
+- `strapi import` will delete all existing data before importing the backup file.
+- The source and target schemas must match to successfully use `strapi import`.
+- Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
+
 :::
 
 ### Specify the import file
