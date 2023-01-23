@@ -170,9 +170,6 @@ npm strapi export --only content
 
 The default `strapi export` command exports your content (entities and links), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
-:::note 
-The `--exclude` option overrides the `--only` option. For example, if you included `--only files, content --exclude content` in your `strapi export` command only the `files` would be exported.
-:::
 
 #### Example: Export data excluding assets, entities, and links
 <br/>
@@ -195,12 +192,16 @@ npm strapi export --exclude files,content
 </code-block>
 </code-group>
 
+:::note
+The `--exclude` option and `--only` option cannot be used together.
+:::
+
 ## Import data using the CLI tool
 
 :::warning
 
-- `strapi import` will delete all existing data before importing the backup file.
-- The source and target schemas must match to successfully use `strapi import`.
+- `strapi import` will delete all existing data, including the database and uploads directory, before importing the backup file.
+- The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
 - Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 
 :::
@@ -283,8 +284,8 @@ npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryptio
 
 The default `strapi import` command imports your content (entities and links), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
-:::note
-The `--exclude` option overrides the `--only` option. For example, if you included `--only files, content --exclude content` in your `strapi import` command only the `files` would be imported.
+::: warning
+Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
 :::
 
 #### Example: exclude assets from an import
@@ -332,3 +333,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --only config
 
 </code-block>
 </code-group>
+
+:::note
+The `--exclude` option and `--only` option cannot be used together.
+:::
