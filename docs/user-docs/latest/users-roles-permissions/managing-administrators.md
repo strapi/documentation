@@ -45,8 +45,8 @@ To create a new administrator account:
 
 3. Fill in the Login settings about the new administrator:
 
-| User's roles      | (mandatory) Choose from the drop-down list the role to attribute to the new administrator.              |
-| Connect with SSO  | (optional - Enterprise Edition only) Click **ON** or **OFF** to connect the new administrator account with SSO. |
+| User's roles | (mandatory) Choose from the drop-down list the role to attribute to the new administrator. |
+| Connect with SSO | (optional - Enterprise Edition only) Click **ON** or **OFF** to connect the new administrator account with SSO. |
 
 4. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
 5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![Duplicate icon](../assets/icons/duplicate.svg) to copy the URL.
