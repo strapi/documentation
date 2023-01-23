@@ -181,7 +181,7 @@ The `--exclude` option overrides the `--only` option. For example, if you includ
 <code-block title="YARN">
 
 ```bash
-yarn strapi export --exclude files, content
+yarn strapi export --exclude files,content
 ```
 
 </code-block>
