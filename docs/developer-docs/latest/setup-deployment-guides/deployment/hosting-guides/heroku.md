@@ -265,7 +265,7 @@ The following tabs detail how to either set new values for the secrets or transf
 
 :::: tabs card
 
-::: tab Set new secrets
+::: tab Set new secrets Mac adn Linux
 
 The following `openssl` commands will generate random new secrets (Mac and Linux only) and set the config values:
 
@@ -296,7 +296,7 @@ heroku config:set NODE_ENV=production
 :::
 
 :::tip
-On Windows, variables can be set manually by running the `heroku config:set VARIABLE=your-key-here` for each variable.
+On Windows, secrets can be generated manually by running `node -p "require('crypto').randomBytes(48).toString('base64');"` and subsequently set on Heroku using the command `heroku config:set SECRET_NAME=your-key-here` for each variable.
 :::
 
 
