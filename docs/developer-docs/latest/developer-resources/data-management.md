@@ -142,10 +142,10 @@ npm strapi export --no-compress
 
 ### Export only selected types of data
 
-The default `strapi export` command exports your content (entities and links), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
+The default `strapi export` command exports your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
 
 
-#### Example: Export only entities and links
+#### Example: Export only entities and relations
 <br/>
 
 <code-group>
@@ -168,10 +168,10 @@ npm strapi export --only content
 
 ### Exclude items from export
 
-The default `strapi export` command exports your content (entities and links), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
+The default `strapi export` command exports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 
-#### Example: Export data excluding assets, entities, and links
+#### Example: Export data excluding assets, entities, and relations
 <br/>
 
 <code-group>
@@ -202,7 +202,7 @@ The `--exclude` option and `--only` option cannot be used together.
 
 - `strapi import` will delete all existing data, including the database and uploads directory, before importing the backup file.
 - The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
-- Restored data does not include the `users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
+- Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 
 :::
 
@@ -282,7 +282,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryptio
 
 ### Exclude data types during import
 
-The default `strapi import` command imports your content (entities and links), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
+The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 ::: warning
 Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
@@ -311,7 +311,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
 
 ### Include only specified data types during import
 
-The default `strapi import` command imports your content (entities and links), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always imported, as schema matching is used for `strapi import`.
+The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always imported, as schema matching is used for `strapi import`.
 
 #### Example: import only the project configuration
 
