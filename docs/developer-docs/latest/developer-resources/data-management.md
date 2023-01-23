@@ -189,7 +189,7 @@ yarn strapi export --exclude files,content
 <code-block title="NPM">
 
 ```bash
-npm strapi export --exclude files, content
+npm strapi export --exclude files,content
 ```
 
 </code-block>
