@@ -45,6 +45,8 @@ To create a new administrator account:
 
 3. Fill in the Login settings about the new administrator:
 
+| Setting  | Instructions |
+| ----------------- | ------------------------ |
 | User's roles | (mandatory) Choose from the drop-down list the role to attribute to the new administrator. |
 | Connect with SSO | (optional - Enterprise Edition only) Click **ON** or **OFF** to connect the new administrator account with SSO. |
 
