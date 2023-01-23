@@ -37,11 +37,11 @@ To create a new administrator account:
 1. Click on the **Create new user** button.
 2. In the *Create new user* window, fill in the Details information about the new administrator:
 
-| User information  | Instructions                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------- |
-| First name        | (mandatory) Write the administrator's first name in the textbox.                                        |
-| Last name         | (mandatory) Write the administrator's last name in the textbox.                                         |
-| Email             | (mandatory) Write the administrator's complete email address in the textbox.                            |
+| User information  | Instructions |
+| ----------------- | ------------------------ |
+| First name | (mandatory) Write the administrator's first name in the textbox. |
+| Last name | (mandatory) Write the administrator's last name in the textbox. |
+| Email  | (mandatory) Write the administrator's complete email address in the textbox. |
 
 3. Fill in the Login settings about the new administrator:
 

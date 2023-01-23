@@ -8,9 +8,23 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/audit-logs.html
 
 The **Audit Logs** section provides a <!--searchable and filterable--> display of all activities performed by users of the Strapi application.
 
-They are accessible from the **Administrator Panel** section of the [**Settings**](./managing-global-settings.md) panel.
+Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administrator Panel** section of the [**Settings**](./managing-global-settings.md) panel.
 
 ![Audit Logs panel](../assets/settings/settings_audit-logs.png)
+
+## Events logged
+
+The following events are logged:
+
+| Event | Actions |
+| --- | --- |
+| Content Type | Create, update, delete |
+| Entry (draft/publish) | Create, update, delete, publish, unpublish |
+| Media | Create, update, delete |
+| Login / Logout | Success, fail |
+| Role / Permission | Create, update, delete |
+| User | Create, update, delete |
+
 
 For each log item the following information is displayed:
 
