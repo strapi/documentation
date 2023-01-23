@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/audit-logs.html
 
 The **Audit Logs** section provides a <!--searchable and filterable--> display of all activities performed by users of the Strapi application.
 
-Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administrator Panel** section of the [**Settings**](./managing-global-settings.md) panel.
+Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the [**Settings**](./managing-global-settings.md) panel.
 
 ![Audit Logs panel](../assets/settings/settings_audit-logs.png)
 
