@@ -16,7 +16,7 @@ The purpose of this guide is to allow users to deploy Strapi applications on Her
 
 :::
 
-Prior to starting the deployment process each user needs:
+Prior to starting the deployment process, each user needs:
 
 - a [Heroku account](https://signup.heroku.com/),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
@@ -24,7 +24,7 @@ Prior to starting the deployment process each user needs:
 
 ## Setup a Strapi project for deployment
 
-Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to setup a production environment in a Strapi application.
+Strapi uses [environment configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md) to maintain multiple environments inside a single application. This section describes how to set up a production environment in a Strapi application.
 
 1. Add a production configuration environment by creating a sub-directory `./config/env/production`.
 2. Create `database.js` inside the `./config/env/production` directory.
@@ -165,7 +165,7 @@ export default ({ env }) => ({
 
 ## Create and configure a Heroku App
 
-Deploying to Heroku requires installing the CLI tool, creating an App, connecting the App to a database, and setting environment variables. At the end of the following steps a Strapi application should be successfully deployed.
+Deploying to Heroku requires installing the CLI tool, creating an App, connecting the App to a database, and setting environment variables. At the end of the following steps, a Strapi application should be successfully deployed.
 
 ### Install and use the Heroku CLI
 
@@ -204,7 +204,6 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
 
 2. Login to Heroku from the CLI, following the command-line instructions:
 
-
     ```bash
     heroku login
     ```
@@ -230,7 +229,7 @@ To initialize a local project folder with an existing Heroku project use the fol
 heroku git:remote -a your-heroku-app-name
 ```
 
-The local development environment is now set-up and configured to work with Heroku.
+The local development environment is now set up and configured to work with Heroku.
 
 ### Create a Heroku database
 
@@ -265,7 +264,7 @@ The following tabs detail how to either set new values for the secrets or transf
 
 :::: tabs card
 
-::: tab Set new secrets Mac adn Linux
+::: tab Set new secrets Mac and Linux
 
 The following `openssl` commands will generate random new secrets (Mac and Linux only) and set the config values:
 
@@ -299,8 +298,6 @@ heroku config:set NODE_ENV=production
 On Windows, secrets can be generated manually by running `node -p "require('crypto').randomBytes(48).toString('base64');"` and subsequently set on Heroku using the command `heroku config:set SECRET_NAME=your-key-here` for each variable.
 :::
 
-
-
 ### Deploy an application to Heroku
 
 In the project root directory run the `git push heroku HEAD:main` CLI command to push the project to the Heroku server:
@@ -310,18 +307,18 @@ In the project root directory run the `git push heroku HEAD:main` CLI command to
 git push heroku HEAD:main
 ```
 
-The deployment may take a few minutes. At the end, logs will display the url of the project (e.g. `https://mighty-taiga-80884.herokuapp.com`). The project can also be opened from the command line:
+The deployment may take a few minutes. At the end, logs will display the URL of the project (e.g. `https://mighty-taiga-80884.herokuapp.com`). The project can also be opened from the command line:
 
 ```bash
 # path: ./my-project/`
 heroku open
 ```
 
-The Strapi Welcome page indicates that the project is correctly set-up, configured and deployed on Heroku. Next, set up an `admin user` as the production database is brand-new and empty. Add `/admin` to the end of the website address to access the signup page.
+The Strapi Welcome page indicates that the project is correctly set up, configured, and deployed on Heroku. Next, set up an `admin user` as the production database is brand-new and empty. Add `/admin` to the end of the website address to access the signup page.
 
 ## Project updates
 
-Modifications that require writing to model creation or other json files, such as creating or changing content-types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/developer-docs/getting-started/troublshooting.md#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/developer-docs/getting-started/troublshooting.md#why-can-t-i-create-or-update-content-types-in-production-staging) for more information.
+Modifications that require writing to model creation or other JSON files, such as creating or changing content types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/developer-docs/getting-started/troublshooting.md#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/developer-docs/getting-started/troublshooting.md#why-can-t-i-create-or-update-content-types-in-production-staging) for more information.
 
 Further development can benefit from [version control](https://devcenter.heroku.com/articles/github-integration), or continue  using `git push heroku HEAD:main` to commit and push changes to Heroku directly.
 
