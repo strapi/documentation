@@ -18,12 +18,12 @@ The following events are logged:
 
 | Event | Actions |
 | --- | --- |
-| Content Type | Create, update, delete |
-| Entry (draft/publish) | Create, update, delete, publish, unpublish |
-| Media | Create, update, delete |
-| Login / Logout | Success, fail |
-| Role / Permission | Create, update, delete |
-| User | Create, update, delete |
+| Content Type | `create`, `update`, `delete` |
+| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Media | `create`, `update`, `delete` |
+| Login / Logout | `success`, `fail` |
+| Role / Permission | `create`, `update`, `delete` |
+| User | `create`, `update`, `delete` |
 
 
 For each log item the following information is displayed:
