@@ -157,7 +157,7 @@ strapi import -f <your-filepath-and-filename> --key my-key
 # import your data forcing "yes" for all subsequent prompts:
 strapi import -f <your-filepath-and-filename> --force
 
-# import only your configuration (schemas are always included): 
+# import only your configuration: 
 strapi import -f <your-filepath-and-filename> --only config
 
 ```
