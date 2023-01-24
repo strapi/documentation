@@ -60,3 +60,5 @@ Click the **Search** icon to search for a specific log. The search is performed 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
 ![Log details modal](../assets/settings/settings_log-details.png)
+
+<FeedbackPlaceholder />
