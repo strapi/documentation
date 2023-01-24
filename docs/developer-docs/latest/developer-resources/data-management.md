@@ -145,7 +145,7 @@ npm strapi export --no-compress
 The default `strapi export` command exports your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
 
 :::note
-Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and render as broken links.
+Media such as images consist of the file (asset) and the entity in the database. If you use the `--only` flag to export `content`, the asset database records are still included, and could render as broken links.
 :::
 
 #### Example: Export only entities and relations
@@ -174,7 +174,7 @@ npm strapi export --only content
 The default `strapi export` command exports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 :::note
-Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and render as broken links.
+Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and could render as broken links.
 :::
 
 #### Example: Export data excluding assets, entities, and relations
@@ -295,7 +295,7 @@ Any types excluded from the import will be deleted in your target instance. For 
 :::
 
 :::note
-Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and render as broken links.
+Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and could render as broken links.
 :::
 
 #### Example: exclude assets from an import
@@ -324,7 +324,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
 The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string. The available values are `content`, `files`, and `config`. Schemas are always imported, as schema matching is used for `strapi import`.
 
 :::note
-Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and render as broken links.
+Media such as images consist of the file (asset) and the entity in the database. If you use the `--only` flag to import `content` the asset database records are still included, and could render as broken links.
 :::
 
 #### Example: import only the project configuration
