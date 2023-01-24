@@ -1,6 +1,7 @@
 ---
 title: Admin panel customization
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
+toc_max_heading_level: 4
 canonicalUrl: https://docs.strapi.io/developer-docs/development/admin-customization.html
 ---
 
@@ -439,9 +440,8 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 
 :::note
-The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/settings/managing-global-settings)). However, the logo displayed in the login page can only be customized via the configuration files for now.
-<br/>
-Note also that the main navigation logo uploaded via the admin panel supersedes any logo set through the configuration files.
+Both logos can also be customized directly via the admin panel (see [User Guide](/user-docs/settings/managing-global-settings.md)).
+Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
 #### Favicon
