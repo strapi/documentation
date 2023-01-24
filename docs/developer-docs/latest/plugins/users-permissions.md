@@ -603,7 +603,7 @@ Don't forget to update the server url in the backend config file `config/server.
 
 #### Using ngrok
 
-Discord accepts the `localhost` urls. <br>
+VK accepts the `localhost` urls. <br>
 The use of `ngrok` is not needed.
 
 #### VK configuration
