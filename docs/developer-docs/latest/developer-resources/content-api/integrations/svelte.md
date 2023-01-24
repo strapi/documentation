@@ -143,7 +143,7 @@ let error = null
 onMount(async () => {
 	try {
 		const res = await axios.get('http://localhost:1337/api/restaurants');
-		restaurants = res.data
+		restaurants = res.data.data
 	} catch (e) {
 		error = e
 	}
@@ -199,7 +199,7 @@ onMount(async () => {
 		  },
 		}).then(checkStatus)
       .then(parseJSON);
-		restaurants = res.data
+		restaurants = res.data.data
 	} catch (e) {
 		error = e
 	}
