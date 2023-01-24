@@ -219,7 +219,7 @@ heroku create
 ```
 
 :::tip
-The command `heroku create custom-project-name`, creates the `custom-project-name.heroku.com` URL. Otherwise, Heroku will automatically generate a random project name (and URL).
+The command `heroku create custom-project-name`, creates the `custom-project-name.heroku.com` URL. Otherwise, Heroku automatically generates a random project name (and URL).
 :::
 
 To initialize a local project folder with an existing Heroku project use the following command:
@@ -266,7 +266,7 @@ The following tabs detail how to either set new values for the secrets or transf
 
 ::: tab Set new secrets Mac and Linux
 
-The following `openssl` commands will generate random new secrets (Mac and Linux only) and set the config values:
+The following `openssl` commands generate random new secrets (Mac and Linux only) and set the config values:
 
 ```bash
 heroku config:set APP_KEYS=$(openssl rand -base64 32)
@@ -337,6 +337,6 @@ If you encounter the error `'heroku' does not appear to be a git repository` whe
 
 ## File Uploads
 
-Like with project updates on Heroku, the file system doesn't support local uploading of files as they will be wiped when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time the application is redeployed or during the regular restart which can happen every few hours or every day).
+Like with project updates on Heroku, the file system doesn't support local uploading of files as they are deleted when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time the application is redeployed or during the regular restart which can happen every few hours or every day).
 
 Due to Heroku's filesystem, an upload provider such as AWS S3 or Cloudinary is required. Additional details are available in the [installing providers documentation](/developer-docs/latest/development/providers.md). The [Strapi Market](market.strapi.io/providers) contains providers from both Strapi and the community. Additional community providers are available from [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
