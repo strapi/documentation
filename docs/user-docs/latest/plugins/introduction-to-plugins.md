@@ -39,4 +39,4 @@ Currently, the only plugins designed to work with providers are the:
 
 Some plugins can add _custom fields_ to Strapi. Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components.
 
-Once added to Strapi (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) and used in the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
+Once added to Strapi through plugins (see [Marketplace](/user-docs/latest/plugins/installing-plugins-via-marketplace.md)), custom fields can be added to content-types in the [Content-type Builder](/user-docs/latest/content-types-builder/configuring-fields-content-type.md#custom-fields) and used in the [Content Manager](/user-docs/latest/content-manager/writing-content.md).
