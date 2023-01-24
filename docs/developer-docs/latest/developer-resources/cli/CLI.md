@@ -99,7 +99,7 @@ options: [--browser <name>]
 ```
 
 
-## strapi export <BetaBadge />
+## strapi export
 
 [Exports your project data](/developer-docs/latest/developer-resources/data-management.md). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
@@ -111,30 +111,39 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option           | Type    | Description                                                                                               |
 |------------------|---------|----------------------------------------------------------------------------|
-| `--no-encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
-| `--no-compress`    |     -    | Disables file compression.                                                                                |
-| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
-| `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
-| `-h`, `--help`       |     -    | Displays help for the `strapi export` command.                                                            |
+| `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
+| `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
+| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
+| `-f`, <br/>`--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
+| `--exclude` | string | Exclude data using comma-separated data types. `--exclude` types override `--only` types. The available types are: `content`, `files`, and `config`.|
+| `--only`| string | Include only these data. The available types are: `content`, `files`, and `config`.|
+| `-h`, <br/>`--help`       |     -    | Displays help for the `strapi export` command.                                                            |
 
 **Examples**
 
 ```bash
 # examples of strapi export:
 
-strapi export -f myData # exports your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc)
-strapi export --no-encrypt # exports your data without encryption. 
+# export your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc):
+strapi export -f myData 
+# exports your data without encryption:
+strapi export --no-encrypt
+# export your data and configuration but not media files:
+strapi export --exclude files 
 ```
 
-## strapi import <BetaBadge />
+## strapi import
 
 [Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
-| Option             | Type   | Description                                                               |
-|--------------------|--------|---------------------------------------------------------------------------|
-| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |   -     | Display the `strapi import` help commands.                                |
+| Option              |   Type   | Description                                                                                                                                                |
+|---------------------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-k`, <br/> `--key` | `string` | Provide the encryption key in the command instead of a subsequent prompt.                                                                                  |
+| `-f`, <br/>`--file` | `string` | Path and filename with extension for the data to be imported.                                                                                              |
+| `--force`           |     -    | Automatically answers "yes" to all prompts, including potentially destructive requests.                                                                 |
+| `‑‑exclude`        | `string` | Exclude data using comma-separated data types. <br/> `--exclude` types override `--only` types.<br/>  The available types are: `content`, `files`, and `config`. |
+| `--only`            | `string` | Include only these data. The available types are: `content`, `files`, and `config`.                                                                        |
+| `-h`, <br/>`--help` |     -    | Display the `strapi import` help commands.                                                                                                                 |                                                                                                 |
 
 **Examples**
 
@@ -144,6 +153,12 @@ strapi export --no-encrypt # exports your data without encryption.
 
 # import your data with the default parameters and pass an encryption key: 
 strapi import -f <your-filepath-and-filename> --key my-key
+
+# import your data forcing "yes" for all subsequent prompts:
+strapi import -f <your-filepath-and-filename> --force
+
+# import only your configuration: 
+strapi import -f <your-filepath-and-filename> --only config
 
 ```
 
