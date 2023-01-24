@@ -348,8 +348,4 @@ npm strapi import -f export_20221213105643.tar.gz.enc --only config
 </code-block>
 </code-group>
 
-:::note
-The `--exclude` option and `--only` option cannot be used together.
-:::
-
 <FeedbackPlaceholder />
