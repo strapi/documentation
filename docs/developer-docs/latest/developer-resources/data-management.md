@@ -25,7 +25,7 @@ The `strapi export` and `strapi import` CLI commands with all of the available o
 
 ## Export data using the CLI tool
 
-The `strapi export` command, by default, exports data as an encrypted and compressed `tar.gz.enc` file. The default export command exports:
+The `strapi export` command, by default, exports data as an encrypted and compressed `.tar.gz.enc` file. The default export command exports:
 
 - the project configuration,
 - entities: all of your content,
