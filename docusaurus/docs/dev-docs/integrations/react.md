@@ -1,7 +1,7 @@
 ---
 title: React 
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless CMS and React.
+description: Integrate Strapi with React.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/react.html
 ---
 

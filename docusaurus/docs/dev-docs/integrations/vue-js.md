@@ -1,7 +1,7 @@
 ---
 title: Vue.js
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and Vue.js.
+description: Integrate Strapi with Vue.js.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html
 ---
 

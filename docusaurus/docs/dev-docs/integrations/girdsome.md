@@ -1,7 +1,7 @@
 ---
 title: Gridsome
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and Gridsome.
+description: Integrate Strapi with Gridsome.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html
 ---
 

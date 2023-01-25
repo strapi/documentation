@@ -1,7 +1,7 @@
 ---
 title: GraphQL
 displayed_sidebar: devDocsSidebar
-description: Use the GraphQL plugin in your Strapi project to fetch and mutate your content.
+description: Integrate Strapi with GraphQL.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/graphql.html
 ---
 

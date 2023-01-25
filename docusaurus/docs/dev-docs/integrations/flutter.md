@@ -1,7 +1,7 @@
 ---
 title: Flutter
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and Flutter.
+description: Integrate Strapi with Flutter.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/flutter.html
 ---
 

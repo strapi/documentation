@@ -1,7 +1,7 @@
 ---
 title: Sapper
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and Sapper.
+description: Integrate Strapi with Sapper.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/sapper.html
 ---
 

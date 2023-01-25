@@ -1,7 +1,7 @@
 ---
 title: PHP
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and PHP.
+description: Integrate Strapi with PHP.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html
 ---
 
@@ -34,11 +34,9 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 curl_setopt($curl, CURLOPT_URL, 'http://localhost:1337/api/restaurants');
 ```
 
-
-
 </Request>
 <br/>
-Running the PHP file on the browser  will give you this response:
+Running the PHP file on the browser gives this response:
 
 <Response title="Example response">
 
