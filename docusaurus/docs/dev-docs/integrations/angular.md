@@ -536,7 +536,7 @@ export class AppComponent implements OnInit {
 </form>
 ```
 
-### PUT Request your collection type
+## PUT Request your collection type
 
 Execute a `PUT` request on the `restaurant` collection type in order to update the category of a restaurant.
 
