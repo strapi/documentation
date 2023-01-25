@@ -256,7 +256,7 @@ module.exports = ({ env }) => ({
 
 :::caution
 Cockroach DB currently has the following limitation:
-- If you alter the type of a column you will need to do a manual migration in order to do this successfully.
+- If you alter the column type, you must migrate manually.
 
 ::::
 
