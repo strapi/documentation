@@ -127,7 +127,7 @@ Global policies can be associated to any route in a project.
 <code-block title="JAVASCRIPT">
 
 ```js
-// path: ./src/api/restaurant/routes/router.js
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -153,7 +153,7 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```ts
-// path: ./src/api/restaurant/routes/router.ts
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
 
 export default {
   routes: [
@@ -185,7 +185,7 @@ export default {
 <code-block title="JAVASCRIPT">
 
 ```js
-// path: ./src/api/restaurant/routes/router.js
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -210,7 +210,7 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```ts
-// path: ./src/api/restaurant/routes/router.ts
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
 
 export default {
   routes: [
@@ -253,7 +253,7 @@ module.exports = async (policyContext, config, { strapi }) => {
 };
 
 
-// path: ./src/api/restaurant/routes/router.js
+// path: ./src/api/restaurant/routes/custom-restaurant.js
 
 module.exports = {
   routes: [
@@ -293,7 +293,7 @@ export default (policyContext, config, { strapi }) => {
 };
 
 
-// path: ./src/api/restaurant/routes/router.ts
+// path: ./src/api/restaurant/routes/custom-restaurant.ts
 
 export default {
   routes: [
@@ -323,7 +323,7 @@ To use a policy in another API, reference it with the following syntax: `api::[a
 <code-block title="JAVASCRIPT">
 
 ```js
-// path: ./src/api/category/routes/router.js
+// path: ./src/api/category/routes/custom-category.js
 
 module.exports = {
   routes: [
@@ -348,7 +348,7 @@ module.exports = {
 <code-block title="TYPESCRIPT">
 
 ```ts
-// path: ./src/api/category/routes/router.ts
+// path: ./src/api/category/routes/custom-category.ts
 
 export default {
   routes: [

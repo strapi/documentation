@@ -111,7 +111,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 ::::api-call
 :::request Example request
 
-`GET /api/articles?populate=%2A`
+`GET /api/articles?populate=*`
 
 :::
 

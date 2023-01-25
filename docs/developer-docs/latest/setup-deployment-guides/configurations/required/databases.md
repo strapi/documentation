@@ -76,11 +76,12 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
-| Parameter        | Description                                      | Type      | Default |
-|------------------|--------------------------------------------------|-----------|---------|
-| `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
+| Parameter        | Description                                                     | Type      | Default |
+| ---------------- | --------------------------------------------------------------- | --------- | ------- |
+| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
+| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
@@ -285,4 +286,21 @@ The following documentation covers how to install SQLite locally (for developmen
 
 :::caution
 Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
+:::
+
+:::note
+When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
+
+To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
+
+```shell
+# Create a new database user with a secure password
+$ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
+
+# Connect to the database as the PostgreSQL admin
+$ \c my_strapi_db_name admin_user
+
+# Grant schema privileges to the user
+$ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
+```
 :::

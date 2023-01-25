@@ -394,7 +394,7 @@ module.exports = {
           policies: ['admin::isAuthenticatedAdmin']
         }
       }
-    });
+    }));
   }
 }
 ```
@@ -427,7 +427,7 @@ module.exports = {
           ]
         }
       }
-    });
+    }));
   }
 }
 ```

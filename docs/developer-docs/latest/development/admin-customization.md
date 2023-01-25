@@ -222,7 +222,7 @@ export default {
    // Disable video tutorials
     tutorials: false,
    // Disable notifications about new Strapi releases
-    notifications: { release: false },
+    notifications: { releases: false },
   },
 
   bootstrap() {},
@@ -281,7 +281,7 @@ export default {
    // Disable video tutorials
     tutorials: false,
    // Disable notifications about new Strapi releases
-    notifications: { release: false },
+    notifications: { releases: false },
   },
 
   bootstrap() {},
@@ -462,9 +462,9 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 
 ::: note
-The logo displayed in the main navigation of the admin panel can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)). However, the logo displayed in the login page can only be customized via the configuration files for now.
+Both logos can also be customized directly via the admin panel (see [User Guide](/user-docs/latest/settings/managing-global-settings.md)).
 <br>
-Note also that the main navigation logo uploaded via the admin panel supersedes any logo set through the configuration files.
+Note also that logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
 
 #### Favicon
