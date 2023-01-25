@@ -182,7 +182,6 @@ const sidebars = {
         },
         'dev-docs/typescript',
         'dev-docs/providers',
-        'dev-docs/data-management',
       ]
     },
 
@@ -193,6 +192,39 @@ const sidebars = {
       items: [
         'dev-docs/cli',
         'dev-docs/data-management',
+        {
+          type: 'category',
+          label: 'Integrations',
+          link: {
+            type:'doc',
+            id: 'dev-docs/integrations',
+          },
+
+          
+          items: [
+            'dev-docs/integrations/11ty',
+            'dev-docs/integrations/angular',
+            'dev-docs/integrations/dart',
+            'dev-docs/integrations/flutter',
+            'dev-docs/integrations/gatsby',
+            'dev-docs/integrations/girdsome',
+            'dev-docs/integrations/go',
+            'dev-docs/integrations/graphql',
+            'dev-docs/integrations/jekyll',
+            'dev-docs/integrations/laravel',
+            'dev-docs/integrations/next-js',
+            'dev-docs/integrations/nuxt-js',
+            'dev-docs/integrations/php',
+            'dev-docs/integrations/python',
+            'dev-docs/integrations/react',
+            'dev-docs/integrations/ruby',
+            'dev-docs/integrations/sapper',
+            'dev-docs/integrations/svelte',
+            'dev-docs/integrations/vue-js',
+
+            
+          ]
+        },
       ],
     }, 
 
