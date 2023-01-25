@@ -1,7 +1,7 @@
 ---
 title: Angular
 displayed_sidebar: devDocsSidebar
-description: Build powerful applications using Strapi, the leading open-source headless cms and Angular.
+description: Query content from Strapi with Angular.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/angular.html
 ---
 
