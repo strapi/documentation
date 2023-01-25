@@ -47,7 +47,7 @@ Each card displays the following information:
 
 * **Commit SHA**
 * **Commit message**
-* **Deployment status**: Whether the project is 
+* **Deployment status**: Whether the project is:
     * **Deploying**
     * **Done**
     * **Cancelled**
@@ -56,13 +56,15 @@ Each card displays the following information:
 * **Last deployment time**: When the deployment was triggered and the duration.
 * **Production branch**
 * **Options** menu (`...`): The available options vary depending on the deployment status.
-    * For **Done** status: No further options.
+    * For **Done** status, you can:
+        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
     * For **Deploying** status, you can:
+        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
         * **Cancel deploy**
     * For **Build failed** status, you can:
-        * **Download error logs**
+        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
     * For **Deploy failed** status, you can:
-        * **Download error logs**
+        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
 
 From this page you can also trigger a new deployment, cancel a pending deployment, and click on any deployment to view additional details.
 
