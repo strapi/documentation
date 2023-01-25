@@ -51,7 +51,7 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example GET request">
 
 ```graphql
@@ -136,7 +136,7 @@ Execute a `GET` request on the `category` collection type in order to fetch a sp
 
 Be sure that you activated the `findOne` permission for the `category` collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example GET request">
 
 ```graphql

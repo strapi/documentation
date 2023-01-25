@@ -29,7 +29,7 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example GET request">
 
 ```go
@@ -102,7 +102,7 @@ Execute a `POST` request on the `restaurant` collection type in order to create 
 
 Be sure that you activated the `create` permission for the `restaurant` collection type and the `find` permission for the `category` Collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example POST request">
 
 ```go
@@ -191,7 +191,7 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 Be sure that you activated the `update` permission for the `restaurant` collection type.
 PUT Request is sligtly different as we need to target the particular thing we want update. We do this by first making a request to http://localhost:1337/api/restaurants/1 and then update what we want to update. In this example, we are going to update  "Biscotte Restaurant" to "Restaurant Home".
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example PUT request">
 
 ```go

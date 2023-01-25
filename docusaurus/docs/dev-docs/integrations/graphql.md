@@ -39,7 +39,7 @@ npm run strapi install graphql
 
 Use the [GraphQL Playground](http://localhost:1337/graphql) to fetch your content.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example query">
 
 ```graphql
@@ -170,7 +170,7 @@ export default {
 
 ## Fetch your Category collection type
 
-<ApiCall noSidebySide> 
+<ApiCall noSideBySide> 
 <Request title="Example request">
 
 ```graphql

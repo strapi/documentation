@@ -44,7 +44,7 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example GET request">
 
 ```dart
@@ -135,7 +135,7 @@ Be sure that you activated the `create` permission for the `restaurant` collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example POST request">
 
 ```dart
@@ -229,7 +229,7 @@ Execute a `PUT` request on the `restaurant` collection type in order to update t
 
 Be sure that you activated the `put` permission for the `restaurant` collection type.
 
-<ApiCall noSidebySide>
+<ApiCall noSideBySide>
 <Request title="Example PUT request">
 
 ```dart
