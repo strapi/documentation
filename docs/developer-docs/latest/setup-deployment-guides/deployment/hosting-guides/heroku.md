@@ -233,7 +233,7 @@ The local development environment is now set up and configured to work with Hero
 
 ### Create a Heroku database
 
-The following command creates and connects a PostgreSQL database with the Heroku project. Consult the[ Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
+The following command creates and connects a PostgreSQL database with the Heroku project. Consult the [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql) for database plan names and costs.
 
 ```bash
 #Path: ./my-project/
