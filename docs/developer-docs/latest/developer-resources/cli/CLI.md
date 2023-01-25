@@ -109,15 +109,15 @@ strapi export
 
 The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
-| Option           | Type    | Description                                                                                               |
-|------------------|---------|----------------------------------------------------------------------------|
+| Option           | Type    | Description                                                                                                  |
+|------------------|:-------:|--------------------------------------------------------------------------------------------------------------|
 | `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
 | `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
-| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
-| `-f`, <br/>`--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
-| `--exclude` | string | Exclude data using comma-separated data types. `--exclude` types override `--only` types. The available types are: `content`, `files`, and `config`.|
-| `--only`| string | Include only these data. The available types are: `content`, `files`, and `config`.|
-| `-h`, <br/>`--help`       |     -    | Displays help for the `strapi export` command.                                                            |
+| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
+| `-f`, <br/>`--file`| string   | Specifies the export filename. Do not include a file extension.                                           |
+| `--exclude`        | string   | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |
+| `--only`           | string   | Include only these data. The available types are: `content`, `files`, and `config`.                       |
+| `-h`, <br/>`--help`|     -    | Displays help for the `strapi export` command.                                                            |
 
 **Examples**
 
@@ -141,7 +141,7 @@ strapi export --exclude files
 | `-k`, <br/> `--key` | `string` | Provide the encryption key in the command instead of a subsequent prompt.                                                                                  |
 | `-f`, <br/>`--file` | `string` | Path and filename with extension for the data to be imported.                                                                                              |
 | `--force`           |     -    | Automatically answers "yes" to all prompts, including potentially destructive requests.                                                                 |
-| `‑‑exclude`        | `string` | Exclude data using comma-separated data types. <br/> `--exclude` types override `--only` types.<br/>  The available types are: `content`, `files`, and `config`. |
+| `‑‑exclude`        | `string` | Exclude data using comma-separated data types. <br/> The available types are: `content`, `files`, and `config`. |
 | `--only`            | `string` | Include only these data. The available types are: `content`, `files`, and `config`.                                                                        |
 | `-h`, <br/>`--help` |     -    | Display the `strapi import` help commands.                                                                                                                 |                                                                                                 |
 
