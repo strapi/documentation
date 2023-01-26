@@ -23,3 +23,9 @@ Describe the issue you are solving.
 ### Related issue(s)/PR(s)
 
 Let us know if this is related to any issue/pull request
+
+### How should it be handled?
+
+Select one of the following options: <br/>
+* [ ] I proposed the technical changes but the Strapi team should handle any writing improvements independently.<br/>
+* [ ] I want to be included in the editorial process for the PR.
