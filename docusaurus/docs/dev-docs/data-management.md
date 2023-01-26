@@ -275,6 +275,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 </TabItem>
 
 </Tabs>
+
 ### Bypass all command line prompts
 
 When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
@@ -313,25 +314,28 @@ Media such as images consist of the file (asset) and the entity in the database.
 :::
 
 #### Example: exclude assets from an import
-<!--work from here-->
+
 <br/>
-<code-group>
-<code-block title="YARN">
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="NPM">
+<TabItem value="npm" label="npm">
 
 ```bash
 npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+
+</Tabs>
 
 ### Include only specified data types during import
 
@@ -344,22 +348,22 @@ Media such as images consist of the file (asset) and the entity in the database.
 #### Example: import only the project configuration
 
 <br/>
-<code-group>
-<code-block title="YARN">
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="NPM">
+<TabItem value="npm" label="npm">
 
 ```bash
 npm strapi import -f export_20221213105643.tar.gz.enc --only config
 ```
 
-</code-block>
-</code-group>
+</TabItem>
 
-<FeedbackPlaceholder />
+</Tabs>
