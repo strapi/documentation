@@ -162,6 +162,20 @@ strapi import -f <your-filepath-and-filename> --only config
 
 ```
 
+## strapi transfer
+
+Strapi `transfer` directly transfers data between two Strapi instances.
+
+| Option               |   Type   | Description                                                                                                     |
+|----------------------|:--------:|-----------------------------------------------------------------------------------------------------------------|
+| `--from` <sourceURL> | `string` | Provide the encryption key in the command instead of a subsequent prompt.                                       |
+| `--to` <sourceURL>   | `string` | Path and filename with extension for the data to be imported.                                                   |
+| `--force`            |     -    | Automatically answers "yes" to all prompts, including potentially destructive requests.                         |
+| `--exclude`          | `string` | Exclude data using comma-separated data types.<br/>  The available types are: `content`, `files`, and `config`. |
+| `--only`             | `string` | Include only these data. The available types are: `content`, `files`, and `config`.                             |
+| `-h`, <br/>`--help`  |     -    | Display the `strapi import` help commands.                                                                      |
+
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`

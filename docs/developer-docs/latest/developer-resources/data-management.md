@@ -10,6 +10,8 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/export-im
 :::callout 🚧 Feature under development
 The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io). The feature is available in v4.6.0 and later versions.
 
+The `strapi transfer` command is available in beta release only. See [Transfer data using the CLI tool](#transfer-data-using-the-cli-tool) for beta version installation instructions.
+
 :::
 
 Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Additionally, the data management system allows you to transfer data between a local Strapi instance and a remote Strapi instance. Strapi provides CLI-based commands that allow you to export, import, and transfer data. Common use cases include:
@@ -20,8 +22,8 @@ Occasionally you need to move data out of or into a Strapi instance. The data ma
 
  The following documentation details examples of how to use the `strapi export`, `strapi import`, and `strapi transfer` commands.
 
-:::strapi Using the Command Line Interface (CLI)
-The `strapi export`, `strapi import`, and `strapi tranfer` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-export).
+:::strapi Command Line Interface (CLI) shortcut
+If you want to skip the details and examples the `strapi export`, `strapi import`, and `strapi tranfer` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-export).
 :::
 
 ## Export data using the CLI tool
@@ -351,14 +353,14 @@ npm strapi import -f export_20221213105643.tar.gz.enc --only config
 
 <FeedbackPlaceholder />
 
-## Transfer data using the CLI tool
+## Transfer data using the CLI tool <BetaBadge />
 
 The `strapi transfer` command allows you to transfer data from your local instance to your remote instance.
 
 ### Specify the local and remote instances
 
 
-#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance.
+#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance
 
 To transfer data to your remote instance run the following command in your local instance root directory:
 
