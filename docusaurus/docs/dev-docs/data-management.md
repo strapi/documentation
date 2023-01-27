@@ -17,7 +17,7 @@ Occasionally you need to move data out of or into a Strapi instance. The data ma
 - creating a data backup,
 - restoring data from a backup.
 
- The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
+The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
 
 :::strapi Using the Command Line Interface (CLI)
 The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/dev-docs/cli#strapi-export).
@@ -58,7 +58,7 @@ yarn strapi export --file my-strapi-export
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export  --file my-strapi-export
+npm run strapi export -- --file my-strapi-export
 ```
 
 </TabItem>
@@ -70,7 +70,28 @@ npm strapi export  --file my-strapi-export
 The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption and adds the file extension `.enc`. To use encryption you need to pass an encryption key using the `-k` or `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no minimum character count.
 
 :::tip Encryption keys
-Strong encryption keys are encouraged to protect sensitive data in your project. [OpenSSL](https://www.openssl.org/) is a resource for generating encryption keys.
+Strong encryption keys are encouraged to protect sensitive data in your project. [OpenSSL](https://www.openssl.org/) is a resource for generating encryption keys. The following example commands generate encryption keys in a terminal:
+
+<Tabs>
+
+<TabItem value="mac" label="Mac/Linux">
+
+```bash
+openssl rand -base64 48
+```
+
+</TabItem>
+
+<TabItem value="windows" label="Windows">
+
+```bash
+node -p "require('crypto').randomBytes(48).toString('base64');"
+```
+
+</TabItem>
+
+</Tabs>
+
 :::
 
 To disable encryption, pass the `--no-encrypt` option with the `strapi export` command.
@@ -92,7 +113,7 @@ yarn strapi export --no-encrypt
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export --no-encrypt
+npm run strapi export -- --no-encrypt
 ```
 
 </TabItem>
@@ -115,7 +136,7 @@ yarn strapi export --key my-encryption-key
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export --key my-encryption-key
+npm run strapi export -- --key my-encryption-key
 ```
 
 </TabItem>
@@ -144,7 +165,7 @@ yarn strapi export --no-compress
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export --no-compress
+npm run strapi export -- --no-compress
 ```
 
 </TabItem>
@@ -175,7 +196,7 @@ yarn strapi export --only content
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export --only content
+npm run strapi export -- --only content
 ```
 
 </TabItem>
@@ -206,7 +227,7 @@ yarn strapi export --exclude files,content
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi export --exclude files,content
+npm run strapi export -- --exclude files,content
 ```
 
 </TabItem>
@@ -242,7 +263,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc
+npm run strapi import -- -f export_20221213105643.tar.gz.enc
 ```
 
 </TabItem>
@@ -269,7 +290,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </TabItem>
@@ -283,29 +304,32 @@ When using the `strapi import` command, you are required to confirm that the imp
 #### Example of the `--force` option
 
 <br/>
-<code-group>
-<code-block title="YARN">
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
-</code-block>
+</TabItem>
 
-<code-block title="NPM">
+<TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+
+</Tabs>
 
 ### Exclude data types during import
 
 The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
-::: warning
+:::warning
 Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
 :::
 
@@ -330,7 +354,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
+npm strapi import -- -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </TabItem>
@@ -361,7 +385,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --only config
+npm strapi import -- -f export_20221213105643.tar.gz.enc --only config
 ```
 
 </TabItem>
