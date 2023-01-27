@@ -22,11 +22,12 @@ The Caddyfile is a convenient Caddy configuration format for humans. It is most 
 
 In the below examples you will need to replace your domain, and should you wish to use SSL you will need to tweak these Caddy file configs to suit your needs, SSL is not covered in this guide and you should review the Caddy documentation.
 
-Below are 3 example Caddy configurations:
+Below are 2 example Caddy configurations:
 
 - Subdomain-based such as `api.example.com`
 - Subfolder-based with both the API and Admin on the same subfolder (e.g. `example.com/test/api` and `example.com/test/admin`)
-- Subfolder-based with split API and admin panel (e.g. `example.com/api` and `example.com/dashboard`)
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/subfolder-split-warning.md)!!!
 
 ::::: tabs card
 
@@ -81,37 +82,6 @@ http://example.com {
     uri strip_prefix /test
     reverse_proxy 127.0.0.1:1337
   }
-}
-```
-
-::::
-
-:::: tab Subfolder split
-
-#### Subfolder split
-
-This configuration is using 2 subfolders dedicated to Strapi. It will bind to port 80 HTTP and hosts the front end files on `/var/www` like a normal web server, but proxies all Strapi API requests on the `example.com/api` subpath and all admin requests on the `example.com/dashboard` subpath.
-
-Alternatively, for the admin panel, you can replace the proxy instead with serving the admin `build` folder directly from Caddy, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
-
-:::caution
-This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
-:::
-
----
-
-- Example domain: `example.com`
-- Example admin: `example.com/dashboard`
-- Example API: `example.com/api`
-- Example uploaded Files (local provider): `example.com/uploads`
-
-**Path —** `/etc/caddy/Caddyfile`
-
-```sh
-# path: /etc/caddy/Caddyfile
-
-http://example.com {
-  reverse_proxy 127.0.0.1:1337
 }
 ```
 

@@ -15,4 +15,3 @@ This sample configuration expects that the admin panel is accessible on `/admin`
   </head>
 </html>
 ```
- 

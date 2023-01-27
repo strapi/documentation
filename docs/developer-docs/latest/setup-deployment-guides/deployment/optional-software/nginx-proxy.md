@@ -35,11 +35,12 @@ Virtual host files are what store the configuration for a specific app, service,
 
 In the below examples you will need to replace your domain and likewise your paths to SSL certificates will need to be changed based on where you place them or, if you are using Let's Encrypt, where your script places them. Please also note that while the path below shows `sites-available` you will need to symlink the file to `sites-enabled` in order for Nginx to enable the config.
 
-Below are 3 example Nginx configurations:
+Below are 2 example Nginx configurations:
 
 - subdomain based such as `api.example.com`
 - subfolder based with both the API and Admin on the same subfolder such as `example.com/test/api` and `example.com/test/admin`
-- subfolder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/subfolder-split-warning.md)!!!
 
 ::::: tabs card
 
@@ -142,70 +143,6 @@ server {
     # Strapi API and Admin
     location /test/ {
         rewrite ^/test/?(.*)$ /$1 break;
-        proxy_pass http://strapi;
-        proxy_http_version 1.1;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header Host $http_host;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_pass_request_headers on;
-    }
-}
-```
-
-::::
-
-:::: tab Subfolder split
-
-#### Subfolder split
-
-This configuration is using 2 subfolders dedicated to Strapi. It will redirect normal HTTP traffic over to SSL and hosts the front end files on `/var/www/html` like a normal web server, but proxies all strapi API requests on the `example.com/api` sub-path and all admin requests on the `example.com/dashboard` subpath.
-
-Alternatively for the admin, you can replace the proxy instead with serving the admin `build` folder directly from Nginx, such centralizing the admin but load balancing the backend APIs. The example for this is not shown, but it would likely be something you would build into your CI/CD platform.
-
-:::note
-This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
-:::
-
----
-
-- Example domain: `example.com`
-- Example admin: `example.com/dashboard`
-- Example API: `example.com/api`
-- Example uploaded files (local provider): `example.com/uploads`
-
-```sh
-# path: /etc/nginx/sites-available/strapi.conf
-
-server {
-    # Listen HTTP
-    listen 80;
-    server_name example.com;
-
-    # Redirect HTTP to HTTPS
-    return 301 https://$host$request_uri;
-}
-
-server {
-    # Listen HTTPS
-    listen 443 ssl;
-    server_name example.com;
-
-    # SSL config
-    ssl_certificate /path/to/your/certificate/file;
-    ssl_certificate_key /path/to/your/certificate/key;
-
-    # Static Root
-    location / {
-        root /var/www/html;
-    }
-
-    # Proxy Config
-    location / {
         proxy_pass http://strapi;
         proxy_http_version 1.1;
         proxy_set_header X-Forwarded-Host $host;

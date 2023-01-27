@@ -53,8 +53,6 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-
-
 ::::
 
 :::: tab Subfolder unified
@@ -97,85 +95,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
-
-
-::::
-
-:::: tab Subfolder split
-
-#### Subfolder split Strapi configuration
-
----
-
-- Example domain: `example.com`
-- Example admin: `example.com/dashboard`
-- Example API: `example.com/api`
-- Example uploaded files (local provider): `example.com/uploads`
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-// path: ./config/server.js
-
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com',
-});
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-// path: ./config/server.ts
-
-export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'https://example.com',
-});
-```
-
-</code-block>
-</code-group>
-
-<code-group>
-<code-block title="JAVASCRIPT">
-
-```js
-// path: ./config/admin.js
-
-module.exports = ({ env }) => ({
-  auth: {
-    ...
-  }
-  url: 'https://example.com/dashboard',
-});
-```
-
-</code-block>
-
-<code-block title="TYPESCRIPT">
-
-```js
-// path: ./config/admin.ts
-
-export default ({ env }) => ({
-  auth: {
-    ...
-  }
-  url: 'https://example.com/dashboard',
-});
-```
-
-</code-block>
-</code-group>
-
-
 
 ::::
 

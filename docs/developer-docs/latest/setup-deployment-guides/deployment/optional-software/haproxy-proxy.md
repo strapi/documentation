@@ -18,11 +18,12 @@ The below examples are acting as an "SSL termination" proxy, meaning that HAProx
 
 The following examples are either proxying all requests directly to Strapi or are splitting requests between Strapi and some other backend web server such as Nginx, Apache, or others.
 
-Below are 3 example HAProxy configurations:
+Below are 2 example HAProxy configurations:
 
 - Sub-domain based such as `api.example.com`
 - subfolder based with both the API and Admin on the same subfolder such as `example.com/test/api` and `example.com/test/admin`
-- subfolder based with split API and Admin such as `example.com/api` and `example.com/dashboard`
+
+!!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/subfolder-split-warning.md)!!!
 
 :::caution HAProxy SSL Support
 If you are not familiar with HAProxy and using SSL certificates on the bind directive, you should combine your SSL cert, key, and any CA files into a single `.pem` package and use it's path in the bind directive. For more information see [HAProxy's bind documentation](https://www.haproxy.com/documentation/hapee/latest/onepage/#5.1). Most Let's Encrypt clients do not generate a file like this so you may need custom "after issue" scripts to do this for you.
@@ -169,75 +170,6 @@ backend strapi-backend
         http-request set-path "%[path,regsub(^/test/?,/)]"
         server local 127.0.0.1:1337
 
-```
-
-::::
-
-:::: tab Subfolder split
-
-#### Subfolder split
-
-This config is using a subfolder dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the front end to `localhost:8080`, but proxies all Strapi API requests on the `example.com/api` subpath to the locally running Strapi application and all admin requests on the `example.com/dashboard` subpath.
-
-:::note
-This example configuration is not focused on the front end hosting and should be adjusted to your front-end software requirements.
-:::
-
----
-
-- Example domain: `example.com`
-- Example admin panel: `example.com/dashboard`
-- Example API: `example.com/api`
-- Example uploaded Files (local provider): `example.com/uploads`
-
-```sh
-# path: /etc/haproxy/haproxy.cfg
-
-global
-        log /dev/log    local0
-        log /dev/log    local1 notice
-        chroot /var/lib/haproxy
-        stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-        stats timeout 30s
-        user haproxy
-        group haproxy
-        daemon
-
-        # Default SSL material locations
-        ca-base /etc/ssl/certs
-        crt-base /etc/ssl/private
-
-        # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA3$
-        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
-        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
-
-defaults
-        log     global
-        mode    http
-        option  httplog
-        option  dontlognull
-        timeout connect 5000
-        timeout client  50000
-        timeout server  50000
-        errorfile 400 /etc/haproxy/errors/400.http
-        errorfile 403 /etc/haproxy/errors/403.http
-        errorfile 408 /etc/haproxy/errors/408.http
-        errorfile 500 /etc/haproxy/errors/500.http
-        errorfile 502 /etc/haproxy/errors/502.http
-        errorfile 503 /etc/haproxy/errors/503.http
-        errorfile 504 /etc/haproxy/errors/504.http
-
-# Everything above this line is HAProxy defaults
-
-frontend example.com
-        bind *:80
-        bind *:443 ssl crt /path/to/your/cert+key+ca.pem
-        http-request redirect scheme https unless { ssl_fc }
-        default_backend strapi-backend
-
-backend strapi-backend
-        server local 127.0.0.1:1337
 ```
 
 ::::
