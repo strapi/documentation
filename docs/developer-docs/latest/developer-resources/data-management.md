@@ -56,7 +56,7 @@ yarn strapi export --file my-strapi-export
 <code-block title="NPM">
 
 ```bash
-npm strapi export  --file my-strapi-export
+npm run strapi export  --file my-strapi-export
 ```
 
 </code-block>
@@ -87,7 +87,7 @@ yarn strapi export --no-encrypt
 <code-block title="NPM">
 
 ```bash
-npm strapi export --no-encrypt
+npm run strapi export --no-encrypt
 ```
 
 </code-block>
@@ -108,7 +108,7 @@ yarn strapi export --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-npm strapi export --key my-encryption-key
+npm run strapi export --key my-encryption-key
 ```
 
 </code-block>
@@ -134,7 +134,7 @@ yarn strapi export --no-compress
 <code-block title="NPM">
 
 ```bash
-npm strapi export --no-compress
+npm run strapi export --no-compress
 ```
 
 </code-block>
@@ -163,7 +163,7 @@ yarn strapi export --only content
 <code-block title="NPM">
 
 ```bash
-npm strapi export --only content
+npm run strapi export --only content
 ```
 
 </code-block>
@@ -192,7 +192,7 @@ yarn strapi export --exclude files,content
 <code-block title="NPM">
 
 ```bash
-npm strapi export --exclude files,content
+npm run strapi export --exclude files,content
 ```
 
 </code-block>
@@ -231,7 +231,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc
+npm run strapi import -f export_20221213105643.tar.gz.enc
 ```
 
 </code-block>
@@ -255,7 +255,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
+npm run strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </code-block>
@@ -280,7 +280,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encrypti
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
+npm run strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </code-block>
@@ -313,7 +313,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
+npm run strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </code-block>
@@ -342,7 +342,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --only config
+npm run strapi import -f export_20221213105643.tar.gz.enc --only config
 ```
 
 </code-block>
