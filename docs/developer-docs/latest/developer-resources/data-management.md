@@ -56,7 +56,7 @@ yarn strapi export --file my-strapi-export
 <code-block title="NPM">
 
 ```bash
-npm run strapi export  --file my-strapi-export
+npm run strapi export  -- --file my-strapi-export
 ```
 
 </code-block>
@@ -305,7 +305,7 @@ Media such as images consist of the file (asset) and the entity in the database.
 <code-block title="YARN">
 
 ```bash
-yarn strapi import -- -f export_20221213105643.tar.gz.enc --exclude files
+yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </code-block>
