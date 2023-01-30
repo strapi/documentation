@@ -257,6 +257,7 @@ module.exports = ({ env }) => ({
 :::caution
 Cockroach DB currently has the following limitation:
 - If you alter the column type, you must migrate manually.
+- Strapi uses the serial4 column type with Cockroach to mimic postgres which may cause performance issues
 
 ::::
 
