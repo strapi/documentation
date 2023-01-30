@@ -117,10 +117,6 @@ Once defined, the configuration can be accessed:
 
 ## Cron
 
-:::caution
-Cron needs to be [enabled](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md#enabling-cron-jobs) in your main Strapi instance. Otherwise, the cron jobs will not be executed.
-:::
-
 The `cron` object allows you to add cron jobs to the Strapi instance.
 
 ```js
