@@ -20,7 +20,7 @@ Strapi:
 
 - Automatically detects migration files,
 - runs each new migration file 1 time in alphabetical order at the next startup,
-- runs migrations before the database tables are synced with the content-types schemas.
+- runs migrations before the database tables are synchronized with the content-types schemas.
 
 ::: warning
 Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
