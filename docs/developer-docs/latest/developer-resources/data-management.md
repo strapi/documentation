@@ -23,6 +23,10 @@ Occasionally you need to move data out of or into a Strapi instance. The data ma
 The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-export).
 :::
 
+:::caution
+Interactive CLI commands do not currently work with the `npm` package manager. For `strapi export` and `strapi import` this means the encryption key prompt is not visible in the CLI. A fix is anticipated by early March 2023. In the meantime consider using the `yarn` package manager.
+:::
+
 ## Export data using the CLI tool
 
 The `strapi export` command, by default, exports data as an encrypted and compressed `.tar.gz.enc` file. The default export command exports:
