@@ -36,26 +36,26 @@ There is no CLI to manually execute the database migrations.
 
 ## Create a migration file
 
-To create a migration file:
+Use the following procedure to create a migration file:
 
 1. In the project root directory, run the command:
 
-  <code-group>
-  <code-block title="YARN">
+    <code-group>
+    <code-block title="YARN">
 
-  ```bash
-  yarn strapi generate migration
-  ```
+    ```bash
+    yarn strapi generate migration
+    ```
 
-  </code-block>
-  <code-block title="NPM">
+    </code-block>
+    <code-block title="NPM">
 
-  ```bash
-  npm run strapi generate migration
-  ```
+    ```bash
+    npm run strapi generate migration
+    ```
 
-  </code-block>
-  </code-group>
+    </code-block>
+    </code-group>
 
 2. Open the migration template in your code editor: `path: ./database/migrations/{file-name}`. The file name has a alphanumeric date-time value followed by the name declared in the `strapi generate migration` command.
 
