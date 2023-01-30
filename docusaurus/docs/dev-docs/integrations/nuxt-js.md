@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
-If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Nuxt 3](https://v3.nuxtjs.org/) remains the same except that you do not fetch the same content.
+If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Nuxt 3](https://nuxtjs.org/) remains the same except that you do not fetch the same content.
 
 ## Create a Nuxt 3 app
 
@@ -21,7 +21,7 @@ npx nuxi init nuxt-app
 
 ## Use an HTTP client
 
-For this example we are using the awesome [@nuxt/strapi](https://strapi.nuxtjs.org/) module and Nuxt helper function [$fetch](https://v3.nuxtjs.org/api/utils/dollarfetch/) (based on `ohmyfetch`). You may choose any of this variants.
+For this example we are using the awesome [@nuxt/strapi](https://strapi.nuxtjs.org/) module and Nuxt helper function [$fetch](https://nuxtjs.org/api/utils/dollarfetch/) (based on `ohmyfetch`). You may choose any of this variants.
 
 <Tabs groupid="@nuxtjs/strapi-fetch">
 
@@ -62,14 +62,14 @@ Be sure that you activated the `find` and `findOne` permission for the `restaura
 
 `@nuxtjs/strapi` exposes composables that are auto-imported by Nuxt 3. Note that `delete` function must be renamed because it's reserved word in JavaScript.
 
+<Request title="Example GET request with @nuxtjs/strapi">
+
 ```js
 <script setup lang="ts">
 import type { Restaurant } from '~/types'
 const { find, findOne, create, update, delete: remove } = useStrapi()
 </script>
 ```
-
-<Request title="Example GET request with @nuxtjs/strapi">
 
 ```js
 // Get all restaurants
@@ -280,29 +280,29 @@ Consider an example of a simple CRUD Nuxt application that implements the functi
 
 `./pages/index.vue`
 
-```js
+```html
 <template>
   <div>
-    <ul v-if="!pending">
-      <li v-for="restaurant in restaurants.data" :key="restaurant.id">
+    <ul>
+      <li v-for="restaurant in restaurants?.data" :key="restaurant.id">
         {{ restaurant.attributes.name }}
         <button @click="$router.push(`${$route.path}/restaurant/${restaurant.id}`)">Edit</button>
         <button @click="deleteRestaurant(restaurant.id)">Delete</button>
       </li>
     </ul>
-    <div v-else>Loading...</div>
+    
     <nuxt-link :to="`${$route.path}/restaurant/create`">Create</nuxt-link>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Restaurant } from "~/types"
-const { find, delete: remove } = useStrapi()
-const { data: restaurants, pending, refresh, error } = await useAsyncData(
+import type { Restaurant } from '~/types'
+const { find, delete: remove } = useStrapi() // delete is keyword in JS, must not be used
+const { data: restaurants, refresh } = await useAsyncData(
   'restaurants',
   () => find<Restaurant>('restaurants')
 )
-onMounted(() => refresh())
+
 const deleteRestaurant = async (restaurantId: number) => {
   await remove<Restaurant>("restaurants", restaurantId);
   refresh()
@@ -312,36 +312,36 @@ const deleteRestaurant = async (restaurantId: number) => {
 
 `./pages/restaurant/create.vue`
 
-```js
+```html
 <template>
   <div>
-    <div><input type="text" v-model="restaurant.name" /></div>
-    <div><textarea v-model="restaurant.description"></textarea></div>
+    <div><input type="text" v-model="name" /></div>
+    <div><textarea v-model="description"></textarea></div>
     <button @click="createRestaurant();$router.go(-1)">Create</button>
     <button @click="$router.go(-1)">Cancel</button>
-    {{ restaurant }}
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Restaurant } from "~/types"
 const { create } = useStrapi()
-const restaurant = ref({ name: "", description: "" })
+const name = ref("")
+const description = ref("")
 const createRestaurant = async () => {
   await create<Restaurant>("restaurants", { 
-    name: restaurant.value.name, 
-    description: restaurant.value.description })
-}
+    name: name.value,
+    description: description.value
+  })
 </script>
 ```
 
 `./pages/restaurant/[id].vue`
 
-```js
+```html
 <template>
   <div>
-    <div><input type="text" v-model="restaurant.name" /></div>
-    <div><textarea v-model="restaurant.description"></textarea></div>
+    <div><input type="text" v-model="name" /></div>
+    <div><textarea v-model="description"></textarea></div>
     <button @click="updateRestaurant();$router.go(-1)">Update</button>
     <button @click="$router.go(-1)">Cancel</button>
     {{ restaurant }}
@@ -350,14 +350,17 @@ const createRestaurant = async () => {
 
 <script setup lang="ts">
 import type { Restaurant } from '~/types'
-const route = useRoute()
 const { findOne, update } = useStrapi()
-const response = await findOne<Restaurant>("restaurants", route.params.id)
-const restaurant : Restaurant = ref(response.data.attributes)
+const route = useRoute()
+const restaurantId: number = +route.params.id // cast to number
+const response = await findOne<Restaurant>("restaurants", restaurantId)
+const name = ref(response.data.attributes.name)
+const description = ref(response.data.attributes.description)
 const updateRestaurant = async () => {
-  await update<Restaurant>("restaurants", route.params.id, { 
-    name: restaurant.value.name, 
-    description: restaurant.value.description })
+  await update<Restaurant>("restaurants", restaurantId, { 
+    name: name.value,
+    description: description.value
+  })
 }
 </script>
 ```
@@ -368,10 +371,10 @@ const updateRestaurant = async () => {
 
 `./pages/index.vue`
 
-```js
+```html
 <template>
   <div>
-    <ul v-if="!pending">
+    <ul>
       <li v-for="restaurant in restaurants.data" :key="restaurant.id">
         {{ restaurant.attributes.name }}
         <button @click="$router.push(`${$route.path}/restaurant/${restaurant.id}`)">Edit</button>
@@ -384,11 +387,11 @@ const updateRestaurant = async () => {
 </template>
 
 <script setup>
-const { data: restaurants, pending, refresh } = await useAsyncData(
+const { data: restaurants, refresh } = await useAsyncData(
   'restaurants', 
   () => $fetch("http://localhost:1337/api/restaurants")
 )
-onMounted(() => refresh())
+
 const deleteRestaurant = async (restaurantId) => {
   await $fetch(`http://localhost:1337/api/restaurants/${restaurantId}`, {
     method: 'DELETE'
@@ -400,7 +403,7 @@ const deleteRestaurant = async (restaurantId) => {
 
 `./pages/restaurant/create.vue`
 
-```js
+```html
 <template>
   <div>
     <div><input type="text" v-model="restaurant.name" /></div>
@@ -429,7 +432,7 @@ const createRestaurant = async () => {
 
 `./pages/restaurant/[id].vue`
 
-```js
+```html
 <template>
   <div>
     <div><input type="text" v-model="restaurant.name" /></div>
