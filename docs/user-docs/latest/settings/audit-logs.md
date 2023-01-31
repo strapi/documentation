@@ -4,13 +4,27 @@ description: Reviewing the audit logs in Strapi
 canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/audit-logs.html
 ---
 
-# Audit Logs <BetaBadge /> <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
+# Audit Logs <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 The **Audit Logs** section provides a <!--searchable and filterable--> display of all activities performed by users of the Strapi application.
 
-They are accessible from the **Administrator Panel** section of the [**Settings**](./managing-global-settings.md) panel.
+Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the [**Settings**](./managing-global-settings.md) panel.
 
 ![Audit Logs panel](../assets/settings/settings_audit-logs.png)
+
+## Events logged
+
+The following events are logged:
+
+| Event | Actions |
+| --- | --- |
+| Content Type | `create`, `update`, `delete` |
+| Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
+| Media | `create`, `update`, `delete` |
+| Login / Logout | `success`, `fail` |
+| Role / Permission | `create`, `update`, `delete` |
+| User | `create`, `update`, `delete` |
+
 
 For each log item the following information is displayed:
 
@@ -46,3 +60,5 @@ Click the **Search** icon to search for a specific log. The search is performed 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
 ![Log details modal](../assets/settings/settings_log-details.png)
+
+<FeedbackPlaceholder />
