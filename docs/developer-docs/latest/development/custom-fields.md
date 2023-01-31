@@ -176,7 +176,8 @@ The `Input` React component receives several props. The [`ColorPickerInput` file
 
 ### Options
 
-`app.customFields.register()` can pass an additional `options` object  with the following parameters:
+Custom fields can have their own settings in the Content-type builder. In
+`app.customFields.register()` we can pass an additional `options` object  with the following parameters enable their use.
 
 | Options parameter | Description                                                                     | Type                    |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
@@ -184,7 +185,31 @@ The `Input` React component receives several props. The [`ColorPickerInput` file
 | `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
 | `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
 
-`options` enable to the creation of settings when we set up or edit a custom field in the Content Types Builder. Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
+
+By default, Strapi has options available for it's [field model](/developer-docs/latest/backend-customization/models.md#validations) you can use them in your custom field by copying the object value from [this file](https://github.com/strapi/strapi/blob/e033275bd0915049fa4fa823f00c17ad53a8fc44/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js#L1) and respecting the structure below. 
+
+```javascript
+{
+	// The option name
+  name: 'required', 
+	// The input type for this option
+  type: 'checkbox',
+	// The default value for this option
+	defaultValue: true,
+	// The translation object for this option's label
+  intlLabel: {
+    id: getTrad('form.attribute.settings.default'),
+    defaultMessage: 'Default value',
+  },
+	// The translation object for this option's description
+	intlDescription: {
+    id: getTrad('form.attribute.settings.default.description'),
+    defaultMessage: 'Default value description',
+	}
+}
+```
+
+Should you not want to use the defaults, `options` enables the creation of Custom settings when we set up or edit a custom field in the Content-types Builder. Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
 
 - a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
 - and a list of `items` as an array of objects.
@@ -197,6 +222,47 @@ Each object in the `items` array can contain the following parameters:
 | `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
 | `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
+
+::: details "type" accepts the following inputs:
+
+```javascript
+[
+  'text',
+  'checkbox',
+  'checkbox-with-number-field',
+	'select',
+	'select-default-boolean',
+	'select-date',
+	'textarea-enum',
+  'boolean-radio-group',
+  'select-number',
+  'radio-group',
+]
+```
+::: 
+
+You can also set a `defaultValue` for options , below I use the select-number component and provide a `defaultValue` of `3`.
+
+```javascript
+{
+	// The option name
+  name: 'options.grade', 
+	// The input type for this option
+  type: 'number',
+	// The default value for this option
+	defaultValue: 3,
+	// The translation object for this option's label
+  intlLabel: {
+    id: getTrad('form.attribute.settings.default'),
+    defaultMessage: 'Default value',
+  },
+	// The translation object for this option's description
+	intlDescription: {
+    id: getTrad('form.attribute.settings.default.description'),
+    defaultMessage: 'Default value description',
+	}
+}
+```
 
 ::: details Example: Declaring options for an example "color" custom field:
 
@@ -283,24 +349,6 @@ export default {
 ```
 
 
-
-:::
-`types` accepts the following inputs:
-
-```javascript
-[
-  'text',
-  'checkbox',
-  'checkbox-with-number-field',
-	'select',
-	'select-default-boolean',
-	'select-date',
-	'textarea-enum',
-  'boolean-radio-group',
-  'select-number',
-  'radio-group',
-]
-```
 
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 ::: tip
