@@ -23,6 +23,10 @@ Occasionally you need to move data out of or into a Strapi instance. The data ma
 The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-export).
 :::
 
+:::caution
+Interactive CLI commands do not currently work with the `npm` package manager. For `strapi export` and `strapi import` this means the encryption key prompt is not visible in the CLI. A fix is anticipated by early March 2023. In the meantime consider using the `yarn` package manager.
+:::
+
 ## Export data using the CLI tool
 
 The `strapi export` command, by default, exports data as an encrypted and compressed `.tar.gz.enc` file. The default export command exports:
@@ -56,7 +60,7 @@ yarn strapi export --file my-strapi-export
 <code-block title="NPM">
 
 ```bash
-npm strapi export  --file my-strapi-export
+npm run strapi export  -- --file my-strapi-export
 ```
 
 </code-block>
@@ -87,7 +91,7 @@ yarn strapi export --no-encrypt
 <code-block title="NPM">
 
 ```bash
-npm strapi export --no-encrypt
+npm run strapi export -- --no-encrypt
 ```
 
 </code-block>
@@ -108,7 +112,7 @@ yarn strapi export --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-npm strapi export --key my-encryption-key
+npm run strapi export -- --key my-encryption-key
 ```
 
 </code-block>
@@ -134,7 +138,7 @@ yarn strapi export --no-compress
 <code-block title="NPM">
 
 ```bash
-npm strapi export --no-compress
+npm run strapi export -- --no-compress
 ```
 
 </code-block>
@@ -163,7 +167,7 @@ yarn strapi export --only content
 <code-block title="NPM">
 
 ```bash
-npm strapi export --only content
+npm run strapi export -- --only content
 ```
 
 </code-block>
@@ -192,7 +196,7 @@ yarn strapi export --exclude files,content
 <code-block title="NPM">
 
 ```bash
-npm strapi export --exclude files,content
+npm run strapi export -- --exclude files,content
 ```
 
 </code-block>
@@ -231,7 +235,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc
+npm run strapi import -- -f export_20221213105643.tar.gz.enc
 ```
 
 </code-block>
@@ -255,7 +259,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </code-block>
@@ -280,7 +284,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encrypti
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </code-block>
@@ -313,7 +317,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --exclude files
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </code-block>
@@ -342,7 +346,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 <code-block title="NPM">
 
 ```bash
-npm strapi import -f export_20221213105643.tar.gz.enc --only config
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --only config
 ```
 
 </code-block>
