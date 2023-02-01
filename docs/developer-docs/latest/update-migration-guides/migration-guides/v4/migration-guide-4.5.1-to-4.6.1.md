@@ -62,7 +62,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-With this, you will no longer receive populated relations in webhooks, and **response times on the Content Manager will be faster**.
+With this, you will no longer receive populated relations in webhooks, and **response times on the Content Manager will be shorter**.
 
 You can see more of the available configuration options in the [server configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 
