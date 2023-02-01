@@ -20,7 +20,8 @@ Strapi provides a [command line interface (CLI)](/developer-docs/latest/develope
 2. Run `yarn strapi generate` or `npm run strapi generate` in a terminal window to start the interactive CLI.
 4. Choose "plugin" from the list, press Enter, and give the plugin a name in kebab-case (e.g. `my-plugin`)
 5. Choose either `JavaScript` or `TypeScript` for the plugin language.
-6. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
+6. Create a plugins configuration file if one does not already exist: `./config/plugins.js` or `./config/plugins.ts` for TypeScript projects.
+7. Enable the plugin by adding it to the [plugins configurations](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) file:
 
 <code-group>
 
@@ -56,6 +57,7 @@ Strapi provides a [command line interface (CLI)](/developer-docs/latest/develope
 
 
 ```
+
 </code-block>
 
 </code-group>

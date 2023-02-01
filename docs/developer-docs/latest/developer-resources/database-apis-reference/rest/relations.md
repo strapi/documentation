@@ -12,7 +12,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 }
 </style>
 
-# Managing relations through the REST API <BetaBadge />
+# Managing relations through the REST API
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
@@ -344,3 +344,5 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 
 :::::
 ::::::
+
+<FeedbackPlaceholder />
