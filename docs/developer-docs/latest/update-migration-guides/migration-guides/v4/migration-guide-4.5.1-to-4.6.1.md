@@ -1,12 +1,12 @@
 ---
-title: Migrate from 4.5.1 to 4.6.1 - Strapi Developer Docs
-description: Learn how you can migrate your Strapi application from 4.5.1 to 4.6.1.
+title: Migrate from 4.5.1+ to 4.6.1 - Strapi Developer Docs
+description: Learn how you can migrate your Strapi application from 4.5.1+ to 4.6.1.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.5.1-to-4.6.1.html
 ---
 
-# v4.5.1 to v4.6.1 migration guide
+# v4.5.1+ to v4.6.1 migration guide
 
-The Strapi v4.5.1 to v4.6.1 migration guide upgrades v4.5.1 to v4.6.1. We introduced a configuration for webhooks to receive populated relations. The migration guide consists of:
+The Strapi v4.5.1+ to v4.6.1 migration guide upgrades v4.5.1+ to v4.6.1. We introduced a configuration for webhooks to receive populated relations. The migration guide consists of:
 
 - Upgrading the application dependencies
 - Changing the webhooks configuration (optional)
@@ -44,7 +44,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 ## Changing the webhooks configuration (optional)
 
-By default, and for backward compatibility reasons, webhooks will receive the entity with its relations populated again. We do recommend to disable this behavior if you were not using it, as it may cause performance issues when having many relations. If you need populated relations in your webhook, we recommend doing a separate query in your webhook listenner to fetch the entity only with the necessary data.
+By default, and for backward compatibility reasons, webhooks will receive the entity with its relations populated again. We do recommend to disable this behavior if you were not using it, as it may cause performance issues when having many relations. If you need populated relations in your webhook, we recommend doing a separate query in your webhook listener to fetch the entity only with the necessary data.
 
 If you want to change this behavior, you can do so by editing the `./config/server.js` file (or `./config/server.ts` if you are using TypeScript) and add the following configuration:
 
@@ -56,7 +56,7 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   url: 'http://localhost:1337',
   webhooks: {
-    // <--- Add this to not receive populated relations in webhooks
+    // Add this to not receive populated relations in webhooks
     populateRelations: false,
   },
 });
