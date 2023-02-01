@@ -230,13 +230,13 @@ Each object in the `items` array can contain the following parameters:
   'text',
   'checkbox',
   'checkbox-with-number-field',
-	'select',
-	'select-default-boolean',
-	'select-date',
-	'textarea-enum',
   'boolean-radio-group',
   'select-number',
   'radio-group',
+  'select',
+  'select-default-boolean',
+  'select-date',
+  'textarea-enum',	
 ]
 ```
 ::: 
