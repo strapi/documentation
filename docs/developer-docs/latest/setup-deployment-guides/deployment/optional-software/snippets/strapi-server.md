@@ -1,6 +1,6 @@
 ### Strapi server
 
-In order to take full advantage of a proxied Strapi application, Strapi should be configured so it's aware of the upstream proxy. Like with the below configurations there are 3 matching examples. Additional information can be found in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) documentations.
+In order to take full advantage of a proxied Strapi application, Strapi should be configured so it's aware of the upstream proxy. Like with the following configurations there are 3 matching examples. Additional information can be found in the [server configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md) and [admin configuration](/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.md) documentations.
 
 :::note
 These examples use the default API Prefix of `/api`. This can be changed without the need to directly modify the Nginx configuration (see the [API prefix](/developer-docs/latest/setup-deployment-guides/configurations/optional/api.md) documentation).

@@ -6,11 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Nginx Proxying
 
-As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. Below you will find some sample configurations for Nginx, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
+As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. In the following examples you will find some sample configurations for Nginx, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
 
 ## Configuration
 
-The below configuration is based on Nginx virtual hosts, this means that you create configurations for each domain to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
+The following configuration is based on Nginx virtual hosts, this means that you create configurations for each domain to allow serving multiple domains on the same port such as 80 (HTTP) or 443 (HTTPS). It also uses a central upstream file to store an alias to allow for easier management, load balancing, and failover in the case of clustering multiple Strapi deployments.
 
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
 
@@ -33,9 +33,9 @@ upstream strapi {
 
 Virtual host files are what store the configuration for a specific app, service, or proxied service. For usage with Strapi this virtual host file is handling HTTPS connections and proxying them to Strapi running locally on the server. This configuration also redirects all HTTP requests to HTTPs using a 301 redirect.
 
-In the below examples you will need to replace your domain and likewise your paths to SSL certificates will need to be changed based on where you place them or, if you are using Let's Encrypt, where your script places them. Please also note that while the path below shows `sites-available` you will need to symlink the file to `sites-enabled` in order for Nginx to enable the config.
+In the following examples you will need to replace your domain and likewise your paths to SSL certificates will need to be changed based on where you place them or, if you are using Let's Encrypt, where your script places them. Please also note that while the path in the following example shows `sites-available` you will need to symlink the file to `sites-enabled` in order for Nginx to enable the config.
 
-Below are 2 example Nginx configurations:
+The following are 2 example Nginx configurations:
 
 - subdomain based such as `api.example.com`
 - subfolder based with both the API and Admin on the same subfolder such as `example.com/test/api` and `example.com/test/admin`

@@ -6,11 +6,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # HAProxy Proxying
 
-As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. Below you will find some sample configurations for HAProxy, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
+As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. In the following examples you will find some sample configurations for HAProxy, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
 
 ## Configuration
 
-The below examples are acting as an "SSL termination" proxy, meaning that HAProxy is only accepting the requests on SSL and proxying to other backend services such as Strapi or other web servers. HAProxy cannot serve static content and as such it is usually used to handle multi-server deployments in a failover or load-balance situation. The examples provided below are based around everything existing on the same server, but could easily be tweaked for multi-server deployments.
+In the following examples are acting as an "SSL termination" proxy, meaning that HAProxy is only accepting the requests on SSL and proxying to other backend services such as Strapi or other web servers. HAProxy cannot serve static content and as such it is usually used to handle multi-server deployments in a failover or load-balance situation. The following examples are based around everything existing on the same server, but could easily be tweaked for multi-server deployments.
 
 !!!include(developer-docs/latest/setup-deployment-guides/deployment/optional-software/snippets/strapi-server.md)!!!
 
@@ -18,7 +18,7 @@ The below examples are acting as an "SSL termination" proxy, meaning that HAProx
 
 The following examples are either proxying all requests directly to Strapi or are splitting requests between Strapi and some other backend web server such as Nginx, Apache, or others.
 
-Below are 2 example HAProxy configurations:
+The following are 2 example HAProxy configurations:
 
 - Sub-domain based such as `api.example.com`
 - subfolder based with both the API and Admin on the same subfolder such as `example.com/test/api` and `example.com/test/admin`
@@ -103,7 +103,7 @@ backend strapi-backend
 This configuration is using a subfolder dedicated to Strapi only. It will redirect normal HTTP traffic over to SSL and proxies the front end to `localhost:8080`, but proxies all Strapi requests on the `example.com/test` sub-path to the locally running Strapi application.
 
 :::caution
-HAProxy cannot serve static content, the below example is proxying front-end traffic to some other web server running on the localhost port 8080.
+HAProxy cannot serve static content, the following example is proxying front-end traffic to some other web server running on the localhost port 8080.
 :::
 
 ---
