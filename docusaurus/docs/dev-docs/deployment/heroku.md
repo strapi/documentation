@@ -155,22 +155,22 @@ npm install pg && npm install pg-connection-string
    
 7. Add `package-lock.json` to the end of the `.gitignore` file at the root of the Strapi project:
 
-      ```sh
-      # path: ./.gitignore
-      package-lock.json
-      ```
+  ```sh
+  # path: ./.gitignore
+  package-lock.json
+  ```
 
-    :::note
-    It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
-    :::
+  :::note
+  It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
+  :::
 8. Verify that all of the new and modified files are saved locally.
 9. Commit the project to a local repository:
 
-    ```sh
-    git init
-    git add .
-    git commit -m "commit message"
-    ```
+  ```sh
+  git init
+  git add .
+  git commit -m "commit message"
+  ```
 
 ## Create and configure a Heroku App
 
@@ -215,9 +215,9 @@ Download the appropriate installer for a Windows installation:
 
 2. Login to Heroku from the CLI, following the command-line instructions:
 
-    ```bash
-    heroku login
-    ```
+  ```bash
+  heroku login
+  ```
 
 ### Create a Heroku project
 
@@ -327,7 +327,7 @@ heroku open
 
 The Strapi Welcome page indicates that the project is correctly set up, configured, and deployed on Heroku. Next, set up an `admin user` as the production database is brand-new and empty. Add `/admin` to the end of the website address to access the signup page.
 
-## Project updates
+## Update your project
 
 Modifications that require writing to model creation or other JSON files, such as creating or changing content types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/dev-docs/faq#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/dev-docs/faq#why-can-t-i-create-or-update-content-types-in-production-staging) for more information.
 
@@ -346,7 +346,7 @@ heroku open
 If you encounter the error `'heroku' does not appear to be a git repository` when running `git push`, run the following command: `heroku git:remote -a your-app-name`.
 :::
 
-## File Uploads
+## Upload Files
 
 Like with project updates on Heroku, the file system doesn't support local uploading of files as they are deleted when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time the application is redeployed or during the regular restart which can happen every few hours or every day).
 

@@ -4,6 +4,7 @@ displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html
 ---
+import DatabaseRequire from '/docs/snippets/database-require.md'
 
 # Azure
 
@@ -389,12 +390,8 @@ For Azure managed databases you can use the following:
 
 Likewise you can use any of the following installed locally on the virtual machine:
 
-| Database   | Minimum | Recommended |
-|------------|---------|-------------|
-| MySQL      | 5.7.8   | 8.0         |
-| MariaDB    | 10.3    | 10.6        |
-| PostgreSQL | 11.0    | 14.0        |
-| SQLite     | 3       | 3           |
+<DatabaseRequire components={props.components} />
+
 
 In our example we will be using MariaDB 10.4 LTS using the MariaDB apt repo. Per the [documentation](https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release=bionic--ubuntu_bionic&mirror=digitalocean-sfo&version=10.4) we will use the following commands:
 

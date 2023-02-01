@@ -357,10 +357,10 @@ After creating the managed database, navigate to the application page:
 
 Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables, inserting your database name (e.g. `db-postgresql-nyc3-1234`) in place of `dbClusterName`:
 
-    | Variable name       | Value                          |
-    |---------------------|--------------------------------|
-    | `DATABASE_URL`      | `${dbClusterName.DATABASE_URL}`|
-    | `DATABASE_CA`       | `${dbClusterName.CA_CERT}`     |
+  | Variable name       | Value                          |
+  |---------------------|--------------------------------|
+  | `DATABASE_URL`      | `${dbClusterName.DATABASE_URL}`|
+  | `DATABASE_CA`       | `${dbClusterName.CA_CERT}`     |
 
 After attaching the database, DigitalOcean will attempt to auto-deploy the application. If the deployment is successful a link to the application will be provided at the top of the application page.
 
