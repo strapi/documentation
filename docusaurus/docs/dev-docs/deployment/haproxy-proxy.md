@@ -11,7 +11,7 @@ import SubfolderSplitWarning from './snippets-proxy/subfolder-split-warning.md'
 
 # HAProxy Proxying
 
-As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. Below you will find some sample configurations for HAProxy, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
+As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. The following documentation provides some sample configurations for HAProxy, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
 
 ## Configuration
 
