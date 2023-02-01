@@ -21,14 +21,14 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | [config](#configuration) object                                                                                                                                                                                |
+| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
 
 ### register()
 
-This function is called to load the plugin, even before the application is actually [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md) or database migrations.
+This function is called to load the plugin, before the application is [bootstrapped](#bootstrap), in order to register [permissions](/developer-docs/latest/plugins/users-permissions.md), the server part of [custom fields](/developer-docs/latest/development/custom-fields.md#registering-a-custom-field-on-the-server), or database migrations.
 
 **Type**: `Function`
 
@@ -115,6 +115,25 @@ Once defined, the configuration can be accessed:
 * with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
 * or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
 
+## Cron
+
+The `cron` object allows you to add cron jobs to the Strapi instance.
+
+```js
+// path: ./src/plugins/my-plugin/strapi-server.js
+
+module.exports = () => ({
+  bootstrap({ strapi }) {
+        strapi.cron.add({
+          // runs every second
+        '* * * * * *': ({ strapi }) => {
+          console.log("hello from plugin")
+        },
+    })
+  },
+});
+```
+
 ## Backend customization
 
 ### Content-types
@@ -163,13 +182,13 @@ module.exports = {
 // path: ./src/plugins/my-plugin/server/content-types/content-type-a.js
 
 module.exports = {
+  kind: 'collectionType',
+  collectionName: 'content-type',
   info: {
-    tableName: 'content-type',
     singularName: 'content-type-a', // kebab-case mandatory
     pluralName: 'content-type-as', // kebab-case mandatory
     displayName: 'Content Type A',
     description: 'A regular content-type',
-    kind: 'collectionType',
   },
   options: {
     draftAndPublish: true,
@@ -381,7 +400,6 @@ module.exports = (policyContext, config, { strapi }) => {
     }
 
     return false;
-  },
 };
 ```
 

@@ -18,7 +18,7 @@ Strapi provides the following environment variables:
 | `STRAPI_HIDE_STARTUP_MESSAGE`                              | Don't show the startup message in the terminal                                                                                                                                                                                                                                                             | `Boolean` | `false`         |
 | `STRAPI_TELEMETRY_DISABLED`                                | Don't send telemetry usage data to Strapi                                                                                                                                                                                                                                                                  | `Boolean` | `false`         |
 | `STRAPI_LICENSE`                                           | The license key to activate the Enterprise Edition                                                                                                                                                                                                                                                         | `String`  | `undefined`     |
-| `NODE_ENV`                                                 | Type of environment where the application is running.<br/><br/>`production` enables specific behaviors (see  [Node.js documentation](https://nodejs.dev/learn/nodejs-the-difference-between-development-and-production) for details)                                                                               | `String`  | `'development'` |
+| `NODE_ENV`                                                 | Type of environment where the application is running.<br/><br/>`production` enables specific behaviors (see  [Node.js documentation](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production) for details)                                                                               | `String`  | `'development'` |
 | `BROWSER`                                                  | Open the admin panel in the browser after startup                                                                                                                                                                                                                                                          | `Boolean` | `true`          |
 | `ENV_PATH`                                                 | Path to the file that contains your environment variables                                                                                                                                                                                                                                                  | `String`  | `'./.env'`      |
 | `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_ | Initialization locale for the application, if the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/developer-docs/latest/plugins/i18n.md#configuration-of-the-default-locale))      | `String`  | `'en'`          |
@@ -89,7 +89,7 @@ export default ({ env }) => ({
 
 ### Casting environment variables
 
-The `env()` utility can be used to cast environment varibles to different types:
+The `env()` utility can be used to cast environment variables to different types:
 
 ```js
 // Returns the env if defined without casting it

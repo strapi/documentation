@@ -1,0 +1,239 @@
+body
+// TODO: system fonts
+  font-family: system-ui
+
+.install-link
+  // text-decoration: none
+  background-color: #4945FF
+  border-radius: 6px
+  padding: 20px
+  color: $primary100
+  justify-content: space-between
+
+  .text
+    flex-grow: 1
+
+  .title
+    color: $neutral0
+
+  .description
+    color: $primary100
+
+  .arrow
+    width: 24px
+    height: 24px
+
+  &:hover
+    .title
+      color: $neutral0
+      text-decoration: underline
+    .description
+      color: $neutral0
+      // text-decoration: none
+    .arrow
+      // TODO:
+
+#algolia-autocomplete-listbox-0
+#algolia-autocomplete-listbox-1
+#algolia-autocomplete-listbox-2
+  left: 24px !important
+
+.search-box
+  display: inline-block
+  width: 20rem
+  margin: 0 !important
+  padding: 22px 0 20px 0 !important
+  text-align: center
+
+  >span
+    display: inline-block
+    width: 100%
+
+  .search-query
+    display: none
+
+  #algolia-search-input
+    display: inline-block
+    width: calc(20rem - 90px) !important
+    height: 40px !important;
+    padding: 0 0 0 40px !important;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 13px !important;
+    color: $neutral600 !important
+    border-radius: 6px !important
+    border: 1px solid $neutral200 !important
+    background: #fff url(/assets/SearchIcon.png) 12px 12px no-repeat !important;
+    background-size: 16px 16px !important;
+
+    &::-webkit-input-placeholder
+       color $neutral600 !important
+    &:-moz-placeholder  /* Firefox 18- */
+       color $neutral600 !important
+    &::-moz-placeholder  /* Firefox 19+ */
+       color $neutral600 !important
+    &:-ms-input-placeholder
+       color $neutral600 !important
+
+.theme-container
+  display: flex
+  flex-direction: column
+  height: 100%
+
+.algolia-autocomplete
+  &.algolia-autocomplete-left
+    &.ds-dropdown-menu
+      left: 24px !important
+
+.al
+.algolia-search-wrapper
+  .algolia-autocomplete
+    .ds-dropdown-menu [class^=ds-dataset-]
+      padding: 0
+      border: 1px solid $neutral150
+      .ds-suggestions
+        margin-top: 0
+    .ds-dropdown-menu
+      overflow: initial
+      margin: 10px 0 0
+      box-shadow 0 1px 3px 1px rgba(0,0,0,.15)
+      &:before
+        background $neutral100
+        border: 1px solid $neutral150
+        box-shadow 0 1px 3px 1px $neutral150
+      .ds-suggestion.ds-cursor
+        .algolia-docsearch-suggestion:not(.suggestion-layout-simple)
+          .algolia-docsearch-suggestion--content
+            background-color: $primary100
+    .algolia-docsearch-suggestion
+      padding: 0
+      .algolia-docsearch-suggestion--wrapper
+        padding: 0 0 0 16px
+      .algolia-docsearch-suggestion--category-header
+        margin: 0
+        padding: 10px 16px 10px
+        color: $neutral900 !important
+        border-bottom: 1px solid $neutral150 !important
+        background: $neutral100
+      .algolia-docsearch-suggestion--subcategory-column
+        color: $neutral600 !important
+        &:before
+          background $neutral150
+      .algolia-docsearch-suggestion--title
+        padding-right: 16px
+        color $neutral900 !important
+        line-height 22px !important
+      .algolia-docsearch-suggestion--text
+        padding-right: 16px
+        color $neutral400 !important
+    .algolia-docsearch-footer
+      display: none !important
+  font-family system-ui
+  color $neutral800
+
+a
+  color $primary600
+  font-weight 600
+.theme-default-content:not(.custom)
+  a.header-anchor
+    text-decoration none
+.dropdown-title
+  font-weight 600 !important
+
+h1, h2, h3, h4, h5, h6
+  color: $neutral900
+
+h2
+  border-bottom-color $neutral150
+
+.theme-default-content:not(.custom)
+  max-width 840px
+
+.theme-default-content code
+  background-color $primary100
+  color $primary600
+  border-radius 4px
+
+.sidebar-links a:hover
+.sidebar-heading.router-link-active
+.nav-link.router-link-active
+.sidebar-heading.clickable.active
+  color: $primary600 !important
+.sidebar-heading.clickable.active
+  border-left-color $primary600 !important
+.dropdown-wrapper .nav-dropdown .dropdown-item a.router-link-active::after
+  border-left-color $primary600 !important
+
+// Give the bottom of TOC more room to breathe
+.sidebar-box > .sidebar-links >li:last-child
+  margin-bottom: 30px
+.sidebar .sidebar-box
+  padding-bottom: 10px
+
+.nav-links a
+.nav-links a.router-link-active
+  font-weight 600
+  color: $neutral700
+
+.nav-links a:hover
+.nav-links a.active
+.sidebar-link.active
+  color: $primary600 !important
+  // TODO: override NavLinks.vue to avoid !important
+
+/**
+ * Tables
+ */
+table > tbody > tr:nth-child(2n) // disable alternating row colors
+  background-color: white
+table > tr, th, td
+  border-color $neutral200
+
+/**
+ * Code blocks
+ */
+[class^="language-"]
+  background-color $neutral900 !important
+[class^="language-"]::after
+  background-color $neutral900 !important
+  border-right-color: $neutral900 !important
+
+.line-number
+  color $neutral600
+
+code
+  .token
+    &.comment
+      color $neutral400
+
+/**
+ * Update code group styles
+ */
+.theme-code-group__nav
+  background-color $neutral900 !important
+  // TODO: override CodeGroup.vue to avoid !important
+
+.theme-code-group
+.el-tabs__content
+  .theme-code-group__li
+    .theme-code-group__nav-tab.theme-code-group__nav-tab-active
+      border-bottom-color $primary500 !important
+
+/**
+ * Update "tabs card" styles
+ */
+.el-tabs__header
+  .el-tabs__item.is-active
+  .el-tabs__item:not(.is-disabled):hover
+    color $primary600
+  .el-tabs__active-bar
+    background-color $primary600 !important
+
+/**
+ * Placeholder element to insert Hotjar feedback widget
+ */
+#feedback-placeholder {
+  background-color transparent
+  width 100%
+  min-height 1em
+  height 100%
+}

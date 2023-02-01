@@ -107,10 +107,10 @@ To simplify and automate the build of the GraphQL schema, we introduced the Shad
 
 **Example:**
 
-If you've generated an API called `Restaurant` using [the interactive `strapi generate` CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) or the administration panel, your model looks like this:
+If you've generated an API called `Document` using [the interactive `strapi generate` CLI](/developer-docs/latest/developer-resources/cli/CLI.md#strapi-generate) or the administration panel, your model looks like this:
 
 ```json
-// path: ./src/api/[api-name]/content-types/restaurant/schema.json
+// path: ./src/api/[api-name]/content-types/document/schema.json
 
 {
   "kind": "collectionType",
@@ -891,3 +891,19 @@ mutation {
 :::
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
+
+## API tokens
+
+To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
+
+:::note
+Using API tokens in the the GraphQL playground requires adding the authorization header with your token in the `HTTP HEADERS` tab:
+
+```http
+{
+  "Authorization" : "Bearer <TOKEN>"
+}
+```
+
+Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
+:::

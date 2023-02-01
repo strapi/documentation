@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/documentation
 # API Documentation
 
 ::: caution
-The Documentation plugin documentation may not be fully updated for Strapi v4. The Strapi team is currently improving that plugin and documentation, which should be completed by the end of September 2022.
+The Documentation plugin documentation may not be fully updated for Strapi v4. The Strapi team is currently improving that plugin and documentation.
 :::
 
 Now that you have created your API it's really important to document its available end-points. The documentation plugin takes out most of your pain to generate your documentation. This plugin uses [SWAGGER UI](https://swagger.io/solutions/api-documentation/) to visualize your API's documentation.
@@ -97,7 +97,8 @@ Here are the file that needs to be created in order to change the documentation 
   "x-strapi-config": {
     "path": "/documentation",
     "showGeneratedFiles": true,
-    "pluginsForWhichToGenerateDoc": [
+    "generateDefaultResponse": true,
+    "plugins": [
       "email",
       "upload",
       "users-permissions"

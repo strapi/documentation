@@ -16,7 +16,7 @@ Strapi maintains deployment guides to assist users in deploying projects. Since 
 
 Prior to starting the deployment process each user needs:
 
-- a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$100 in credits.](https://try.digitalocean.com/strapi/)),
+- a DigitalOcean account ([The Strapi referral link for DigitalOcean provides \$200 in credits.](https://try.digitalocean.com/strapi/)),
 - a [GitHub account](https://github.com/join) and [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
 
@@ -299,7 +299,7 @@ export default ({ env }) => ({
       user,
       password,
       ssl: {
-        rejectUnauthorized: false,
+        ca: env('DATABASE_CA'),
       },
     },
       debug: false,
@@ -329,6 +329,14 @@ After creating the managed database, navigate to the application page:
 2. Select *Previously Created DigitalOcean Database*.
 3. Use the picklist to select the previously created database.
 4. Click **Attach Database**.
+
+### Configure environment variables for production-ready managed database
+Remove the previously added 'DATABASE_*' global variables added for connecting to the dev database, then set the following environment variables, inserting your database name (e.g. `db-postgresql-nyc3-1234`) in place of `dbClusterName`:
+
+    | Variable name       | Value                          |
+    |---------------------|--------------------------------|
+    | `DATABASE_URL`      | `${dbClusterName.DATABASE_URL}`|
+    | `DATABASE_CA`       | `${dbClusterName.CA_CERT}`     |
 
 After attaching the database, DigitalOcean will attempt to auto-deploy the application. If the deployment is successful a link to the application will be provided at the top of the application page.
 

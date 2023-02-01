@@ -11,6 +11,7 @@ The [Entity Service API](/developer-docs/latest/developer-resources/database-api
 ## Basic populating
 
 To populate all the root level relations, use `populate: '*'`:
+
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
   populate: '*',
@@ -63,6 +64,39 @@ const entries = await strapi.entityService.findMany('api::article.article', {
       sort: ['someAttributeName'],
       populate: {
         componentRelationA: true,
+      },
+    },
+  },
+});
+```
+
+## Populate Fragments
+
+When dealing with polymorphic data structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
+
+```js
+const entries = await strapi.entityService.findMany('api::article.article', {
+  populate: {
+    dynamicZone: {
+      on: {
+        'components.foo': {
+          fields: ['title'],
+          filters: { title: { $contains: 'strapi' } },
+        },
+        'components.bar': {
+          fields: ['name'],
+        },
+      },
+    },
+
+    morphAuthor: {
+      on: {
+        'plugin::users-permissions.user': {
+          fields: ['username'],
+        },
+        'api::author.author': {
+          fields: ['name'],
+        },
       },
     },
   },

@@ -189,7 +189,8 @@ module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
-      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a PostgreSQL database
+      // ⚠️ For a MySQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
       database: env('DATABASE_NAME'),
       user: env('DATABASE_USER'),
       password: env('DATABASE_PASSWORD'),
@@ -209,7 +210,8 @@ export default ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
-      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`,
+      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a PostgreSQL database
+      // ⚠️ For a MySQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
       database: env('DATABASE_NAME'),
       user: env('DATABASE_USER'),
       password: env('DATABASE_PASSWORD'),
@@ -265,6 +267,10 @@ Deploy so that the server app includes the dependency from `package.json`.
 
 Follow the [documentation of the plugin](https://github.com/Lith/strapi-provider-upload-google-cloud-storage/blob/master/README.md) for the full configuration.
 
+::: note
+If thumbnails fail to load in the Media Library, try setting `publicFiles: true` in the upload provider `config` object in the `plugins.js` configuration file.
+:::
+
 ### Post-setup configuration
 
 **CORS**
@@ -300,3 +306,25 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
+
+### Troubleshooting
+
+The following are common issues during deployment:
+
+#### `unknown: Service 'containerregistry.googleapis.com' is not enabled for consumer`
+
+Solution:
+
+1. Type `containerregistry` in the search input of Google cloud panel.
+2. In search results select the item with an API icon.
+3. Disable and enable it again.
+4. Find and enable CloudBuild API.
+5. Deploy your project.
+
+#### `connect ECONNREFUSED /cloudsql/strapi-0000:europe-west1:strapi/.s.PGSQL.5432`
+
+Solution:
+
+1. Find the Cloud SQL Admin API.
+2. Enable the Cloud SQL Admin API.
+3. Deploy your project.

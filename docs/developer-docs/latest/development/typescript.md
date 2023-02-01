@@ -74,7 +74,6 @@ To use `ts:generate-types`run the following code in a terminal at the project ro
 
 ```sh
 npm run strapi ts:generate-types --verbose #optional flag
-
 ```
 
 </code-block>
@@ -83,7 +82,6 @@ npm run strapi ts:generate-types --verbose #optional flag
 
 ```sh
 yarn strapi ts:generate-types --verbose #optional flag
-
 ```
 
 </code-block>
@@ -121,11 +119,9 @@ app.start();
 The `strapi.compile()` function should be mostly used for developing tools that need to start a Strapi instance and detect whether the project includes TypeScript code. `strapi.compile()` automatically detects the project language. If the project code contains any TypeScript code, `strapi.compile()` compiles the code and returns a context with specific values for the directories that Strapi requires:
 
 ```js
-
 const strapi = require('@strapi/strapi');
 
 strapi.compile().then(appContext => strapi(appContext).start());
-
 ```
 
 ## Add TypeScript support to an existing Strapi project
@@ -229,4 +225,4 @@ yarn develop
 </code-block>
 </code-group>
 
-After completing the preceding procedure a `dist` directory will be added at the project route and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.
+After completing the preceding procedure a `dist` directory will be added at the project root and the project has access to the same TypeScript features as a new TypeScript-supported Strapi project.

@@ -1,9 +1,10 @@
 ---
 title: Single Sign-On (SSO) - Strapi Developer Docs
-description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Entreprise Edition with a Gold plan.
+description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 sidebarDepth: 3
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
+<!-- markdownlint-disable-file MD033 MD025 MD036 -->
 
 # Single Sign-On <GoldBadge link="https://strapi.io/pricing-self-hosted/" withLinkIcon />
 
@@ -43,7 +44,6 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -62,8 +62,6 @@ export default ({ env }) => ({
 </code-block>
 </code-group>
 
-
-
 ## Setting up provider configuration
 
 A provider's configuration is a JavaScript object built with the following properties:
@@ -81,6 +79,93 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 
 ::: note
 By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/latest/getting-started/introduction.md#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.md#security).
+:::
+
+::: details Example: Security exception for provider logos
+<br/>
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```jsx
+// path: ./config/middlewares.js
+
+module.exports = [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```ts
+// path: ./config/middlewares.ts
+
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+
+```
+
+</code-block>
+</code-group>
+
 :::
 
 ### The `createStrategy` Factory
@@ -111,7 +196,7 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 - If `error` is not set to `null`, then the data sent is ignored, and the controller will throw an error.
 - If the SSO's auto-registration feature is disabled, then the `data` object only need to be composed of an `email` property.
-- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` oject.
+- If the SSO's auto-registration feature is enabled, then you will need to define (in addition to the `email`) either a `username` property or both `firstname` and `lastname` within the `data` object.
 
 ### Adding a provider
 
@@ -207,7 +292,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GoogleStrategy from "passport-google-oauth2";
+import {Strategy as GoogleStrategy } from "passport-google-oauth2";
 
 export default ({ env }) => ({
   auth: {
@@ -269,8 +354,6 @@ yarn add passport-github2
 </code-group>
 
 ::: details Configuration example for Github:
-
-<br/>
 <code-group>
 <code-block title="JAVASCRIPT">
 
@@ -309,6 +392,7 @@ module.exports = ({ env }) => ({
 });
 
 ```
+
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -316,7 +400,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import GithubStrategy from "passport-github2";
+import { Strategy as GithubStrategy } from "passport-github2";
 
 export default ({ env }) => ({
   auth: {
@@ -419,16 +503,15 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
 
-
 ```jsx
 // path: ./config/admin.ts
 
-import DiscordStrategy from "passport-discord";
+import { Strategy as DiscordStrategy } from "passport-discord";
+
 
 export default ({ env }) => ({
   auth: {
@@ -464,7 +547,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
 
 :::
 
@@ -536,7 +618,6 @@ module.exports = ({ env }) => ({
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -544,7 +625,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import AzureAdOAuth2Strategy from "passport-azure-ad-oauth2";
+import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
 import jwt from "jsonwebtoken";
 
 export default ({ env }) => ({
@@ -585,9 +666,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
-
-
 
 :::
 
@@ -664,7 +742,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import KeyCloakStrategy from "passport-keycloak-oauth2-oidc";
+import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
 
 export default ({ env }) => ({
   auth: {
@@ -725,6 +803,10 @@ yarn add passport-okta-oauth20
 
 </code-group>
 
+::: caution
+When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
+:::
+
 ::: details Configuration example for Okta:
 <br/>
 
@@ -774,7 +856,7 @@ module.exports = ({ env }) => ({
 ```jsx
 // path: ./config/admin.ts
 
-import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20")
+import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
 
 export default ({ env }) => ({
   auth: {
@@ -809,7 +891,6 @@ export default ({ env }) => ({
 
 </code-block>
 </code-group>
-
 
 :::
 
@@ -850,7 +931,6 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -870,10 +950,8 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 });
 ```
 
-
 </code-block>
 </code-group>
-
 
 ### Authentication Events
 
@@ -907,8 +985,6 @@ module.exports = () => ({
 });
 ```
 
-
-
 </code-block>
 
 <code-block title="TYPESCRIPT">
@@ -935,7 +1011,5 @@ export default () => ({
 });
 ```
 
-
 </code-block>
 </code-group>
-

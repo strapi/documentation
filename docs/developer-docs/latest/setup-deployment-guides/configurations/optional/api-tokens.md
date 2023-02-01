@@ -7,7 +7,7 @@ description: Using API tokens allows executing a request on Strapi's REST API en
 
 Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.md) or on the built-in API token feature.
 
-Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) endpoints as an authenticated user.
+Using API tokens allows executing a request on [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) or [GraphQL API](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md) endpoints as an authenticated user.
 
 ## Creation
 
@@ -16,6 +16,11 @@ New API tokens are generated from the [admin panel](/user-docs/latest/settings/m
 ## Usage
 
 When performing a request to Strapi's [REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md), the API token should be added to the request's `Authorization` header with the following syntax: `bearer your-api-token`.
+
+::: note
+
+Read-only API tokens can only access the `find` and `findOne` functions.
+:::
 
 ## Configuration
 

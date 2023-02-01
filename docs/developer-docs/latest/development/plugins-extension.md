@@ -33,12 +33,9 @@ Plugins can be extended in 2 ways:
 - [extending the plugin's content-types](#extending-a-plugin-s-content-types)
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
-::: note
-Currently it's not possible to extend the admin panel part of a plugin. Consider using [patch-package](https://www.npmjs.com/package/patch-package) if admin panel customizations are required.
-:::
-
 :::warning
-New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required.
+* New versions of Strapi are released with [migration guides](/developer-docs/latest/update-migration-guides/migration-guides.md), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required. 
+* Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future major versions of Strapi.
 :::
 
 ## Extending a plugin's content-types
@@ -48,7 +45,7 @@ A plugin's Content-Types can be extended in 2 ways: using the programmatic inter
 The final schema of the content-types depends on the following loading order:
 
 1. the content-types of the original plugin,
-2. the content-types overriden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
+2. the content-types overridden by the declarations in the [schema](/developer-docs/latest/development/backend-customization/models.md#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
 3. the content-types declarations in the [`content-types` key exported from `strapi-server.js`](/developer-docs/latest/developer-resources/plugin-api-reference/server.md#content-types)
 4. the content-types declarations in the [`register()` function](/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.md#register) of the Strapi application
 

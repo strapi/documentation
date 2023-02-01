@@ -6,10 +6,19 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/c
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers. 
+
+:::caution
+Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. A fix for the `npm` package manager is anticipated by March 2023. In the meantime, consider using the `yarn` package manager.
+:::
 
 ::: note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
+
+To pass options with `npm` use the syntax: `npm run strapi <command> -- --<option>`
+
+To pass options with `yarn` use the syntax: `yarn run strapi <command> --<option>`
+
 :::
 
 ## strapi new
@@ -98,6 +107,70 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
+
+## strapi export
+
+[Exports your project data](/developer-docs/latest/developer-resources/data-management.md). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+
+```bash
+strapi export
+```
+
+The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
+
+| Option           | Type    | Description                                                                                                  |
+|------------------|:-------:|--------------------------------------------------------------------------------------------------------------|
+| `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
+| `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
+| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
+| `-f`, <br/>`--file`| string   | Specifies the export filename. Do not include a file extension.                                           |
+| `--exclude`        | string   | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |
+| `--only`           | string   | Include only these data. The available types are: `content`, `files`, and `config`.                       |
+| `-h`, <br/>`--help`|     -    | Displays help for the `strapi export` command.                                                            |
+
+**Examples**
+
+```bash
+# examples of strapi export:
+
+# export your data with the default options and the filename myData (which will result in a file named myData.tar.gz.enc):
+strapi export -f myData 
+# exports your data without encryption:
+strapi export --no-encrypt
+# export your data and configuration but not media files:
+strapi export --exclude files 
+```
+
+## strapi import
+
+[Imports data](/developer-docs/latest/developer-resources/data-management.md) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+
+| Option              |   Type   | Description                                                                                                                                                |
+|---------------------|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-k`, <br/> `--key` | `string` | Provide the encryption key in the command instead of a subsequent prompt.                                                                                  |
+| `-f`, <br/>`--file` | `string` | Path and filename with extension for the data to be imported.                                                                                              |
+| `--force`           |     -    | Automatically answers "yes" to all prompts, including potentially destructive requests.                                                                 |
+| `‑‑exclude`        | `string` | Exclude data using comma-separated data types. <br/> The available types are: `content`, `files`, and `config`. |
+| `--only`            | `string` | Include only these data. The available types are: `content`, `files`, and `config`.                                                                        |
+| `-h`, <br/>`--help` |     -    | Display the `strapi import` help commands.                                                                                                                 |                                                                                                 |
+
+**Examples**
+
+```bash
+
+# example of strapi import:
+
+# import your data with the default parameters and pass an encryption key: 
+strapi import -f <your-filepath-and-filename> --key my-key
+
+# import your data forcing "yes" for all subsequent prompts:
+strapi import -f <your-filepath-and-filename> --force
+
+# import only your configuration: 
+strapi import -f <your-filepath-and-filename> --only config
+
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
@@ -106,7 +179,7 @@ Dumps configurations to a file or stdout to help you migrate to production.
 
 The dump format will be a JSON array.
 
-```
+```sh
 strapi configuration:dump
 
 Options:
@@ -247,7 +320,7 @@ strapi ts:generate-types
 * **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
   Generate typings specifying the output directory in which the file will be created.
 * **strapi ts:generate-types --file &#60;filename&#62;** or **strapi ts:generate-types -f &#60;filename&#62;**<br/>
-  Generate typings specifiying the name of the file to contain the types declarations.
+  Generate typings specifying the name of the file to contain the types declarations.
 
 ## strapi routes:list
 
@@ -339,7 +412,10 @@ options [--delete-files]
   Example: `strapi uninstall graphql --delete-files` will remove the plugin `strapi-plugin-graphql` and all the files in `./extensions/graphql`
 
 :::caution
-Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
+
+- In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
+- Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
+
 :::
 
 ## strapi telemetry:disable

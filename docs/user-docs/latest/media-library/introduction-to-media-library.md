@@ -18,7 +18,7 @@ From the Media Library, it is possible to:
 
 - upload a new asset (see [adding assets](/user-docs/latest/media-library/adding-assets.md)) or create a new folder (see [organizing assets with folders](/user-docs/latest/media-library/organizing-assets-with-folders.md)) (1),
 - sort the assets and folders or set filters (2) to find assets and folders more easily,
-- make a textual search (3) to find a specific asset or folder,
+- toggle between the list view ![List icon](../assets/icons/list_view.svg) and the grid view ![Grid icon](../assets/icons/grid_view.svg) to display assets, access settings ![Settings icon](../assets/icons/settings.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](../assets/icons/search.svg) (3) to find a specific asset or folder,
 - and view, navigate through, and manage folders (4).
 
 ::: tip
@@ -47,4 +47,17 @@ When active, filters are displayed next to the **Filters** button. They can be r
 
 ![Sort](../assets/media-library/media-library_sort.png)
 
-Just above the list of folders and assets, on the left side of the interface, a **Sort by** button is diplayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the button and select an option in the list to automatically display the sorted assets.
+Just above the list of folders and assets, on the left side of the interface, a **Sort by** button is displayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the button and select an option in the list to automatically display the sorted assets.
+
+## Configuring the view
+
+Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](../assets/icons/settings.svg) to configure the default view for the Media library.
+
+![Configure the view](../assets/media-library/media-library_configure-the-view.png)
+
+From there you can:
+
+- Use the **Entries per page** dropdown to define the number of assets displayed by default
+- Use the **Default sort order** dropdown the define the default order in which assets are displayed. This can be overriden when you [sort assets](#sorting-assets) in the Media Library.
+
+Both settings are used as the defaults in the Media Library and in the [Content Manager media upload modal](/user-docs/latest/content-manager/writing-content.md#filling-up-fields). The settings saved here are global across the entire Strapi project for all users.

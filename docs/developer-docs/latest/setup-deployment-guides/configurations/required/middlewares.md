@@ -177,7 +177,7 @@ For a full list of available options for `koa-body`, check the [koa-body documen
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::body',
@@ -189,7 +189,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -211,7 +211,7 @@ The `compression` middleware is based on [koa-compress](https://github.com/koajs
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::compression',
@@ -220,7 +220,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -243,7 +243,7 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::cors',
@@ -255,7 +255,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -280,7 +280,7 @@ The `favicon` middleware serves the favicon and is based on [koa-favicon](https:
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::favicon',
@@ -289,7 +289,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -312,7 +312,7 @@ The `whitelist` and `blacklist` options support wildcards (e.g. `whitelist: ['19
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::ip',
@@ -322,7 +322,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -373,7 +373,7 @@ The `poweredBy` middleware adds a `X-Powered-By` parameter to the response heade
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::poweredBy',
@@ -382,7 +382,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -402,7 +402,7 @@ The `query` middleware is a query parser based on [qs](https://github.com/ljharb
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::query',
@@ -412,7 +412,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -444,7 +444,7 @@ You can customize the path of the public folder by editing the [server configura
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::public',
@@ -454,7 +454,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -467,9 +467,9 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 |-----------------------------|-----------------------------------------------------------------------------------------------|-----------------------|---------------|
 | `crossOriginEmbedderPolicy` | Set the `Cross-Origin-Embedder-Policy` header to `require-corp`                               | `Boolean`             | `false`       |
 | `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                   | `Boolean`             | `false`       |
-| `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
+| `crossOriginResourcePolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
 | `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                         | `Boolean`             | `false`       |
-| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Boolean`             | `false`       |
+| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Object`             | `-`       |
 | `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0` | `Boolean`             | `false`       |
 | `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | -             |
 | `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |
@@ -490,7 +490,7 @@ The default directives include a `dl.airtable.com` value. This value is set for 
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::security',
@@ -519,7 +519,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::
@@ -546,7 +546,7 @@ The `session` middleware allows the use of cookie-based sessions, based on [koa-
 ```js
 // path: ./config/middlewares.js
 
-module.exports = {
+module.exports = [
   // ...
   {
     name: 'strapi::session',
@@ -556,7 +556,7 @@ module.exports = {
     },
   },
   // ...
-}
+]
 ```
 
 :::

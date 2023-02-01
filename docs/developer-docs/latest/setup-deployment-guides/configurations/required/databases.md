@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content. 
 
 :::warning
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
@@ -40,6 +40,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.                    | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
@@ -48,6 +49,10 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
 | `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+
+:::note
+Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
+:::
   
 #### Database pooling options
 
@@ -71,11 +76,12 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 ### `settings` configuration object
 
-The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameter:
+The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
-| Parameter        | Description                                      | Type      | Default |
-|------------------|--------------------------------------------------|-----------|---------|
-| `forceMigration` | Enable or disable the forced database migration. | `Boolean` | `true`  |
+| Parameter        | Description                                                     | Type      | Default |
+| ---------------- | --------------------------------------------------------------- | --------- | ------- |
+| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
+| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
@@ -280,4 +286,21 @@ The following documentation covers how to install SQLite locally (for developmen
 
 :::caution
 Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
+:::
+
+:::note
+When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
+
+To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
+
+```shell
+# Create a new database user with a secure password
+$ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
+
+# Connect to the database as the PostgreSQL admin
+$ \c my_strapi_db_name admin_user
+
+# Grant schema privileges to the user
+$ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
+```
 :::

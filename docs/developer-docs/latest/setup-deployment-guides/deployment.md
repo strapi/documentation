@@ -10,6 +10,10 @@ Strapi provides many deployment options for your project or application. Your St
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
+::: callout ☁️ Strapi Cloud
+Don't want to deploy Strapi by yourself? <a href="https://strp.cc/3rywrsu" target="_blank" id="deployment-section-cloud-link">Join the cloud waitlist</a> to soon get access to a platform to easily deploy and host your project.
+:::
+
 ::: strapi Community Guides
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
 :::
@@ -52,7 +56,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/devel
 | Debian           | 10.x    | 11.x        |
 | CentOS/RHEL      | 8.x     | 9.x         |
 | macOS            | 10.15   | 11.0        |
-| Windows Desktop  | 10      | 12          |
+| Windows Desktop  | 10      | 11          |
 | Windows Server   | 2019    | 2022        |
 
 ### Application Configuration
@@ -174,10 +178,17 @@ We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
 
 ```js
-const strapi = require('@strapi/strapi');
+// path: `./server.js`
 
+const strapi = require('@strapi/strapi');
 strapi(/* {...} */).start();
 ```
+
+:::caution
+
+If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
+For more information, consult the [TypeScript documentation](/developer-docs/latest/development/typescript.md#use-the-strapi-factory).
+:::
 
 ### Advanced configurations
 
@@ -301,3 +312,15 @@ Additional guides for optional software additions that compliment or improve the
 	</InstallLink>
 </div>
 
+<div>
+	<InstallLink link="deployment/optional-software/process-manager.html">
+    <template #icon>
+    <!-- <img src="assets/deployment/caddy-monotone.svg"/> -->
+    PM2
+    </template>
+		<template #title> PM2 Process Manager</template>
+		<template #description>
+			Overview of using the PM2 process manager with Strapi.
+		</template>
+	</InstallLink>
+</div>
