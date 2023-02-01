@@ -192,6 +192,7 @@ const sidebars = {
       items: [
         'dev-docs/cli',
         'dev-docs/data-management',
+        'dev-docs/error-handling',
         {
           type: 'category',
           label: 'Integrations',
