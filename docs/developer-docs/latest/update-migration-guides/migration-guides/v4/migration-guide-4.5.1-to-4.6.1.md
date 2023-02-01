@@ -46,7 +46,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 By default, and for backwards compatibility reasons, webhooks will receive the populated relations. We do recommend to disable this behavior if you don't need it.
 
-If you want to change this behavior, you can do so by editing the `./config/server.js` file (or `/config/server.ts` if you are using TypeScript) and add the following configuration:
+If you want to change this behavior, you can do so by editing the `./config/server.js` file (or `./config/server.ts` if you are using TypeScript) and add the following configuration:
 
 ```jsx
 'use strict';
