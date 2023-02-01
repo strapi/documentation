@@ -64,7 +64,7 @@ Errors thrown by the GraphQL API are included in the [response](/dev-docs/api/gr
 
 ### Controllers and middlewares
 
-The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/dev-docs/backend-customization/controllers) or [middleware](/dev-docs/backend-customization/) respond with the correct status and body.
+The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/dev-docs/backend-customization/controllers) or [middleware](/dev-docs/backend-customization/middlewares) respond with the correct status and body.
 
 This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
@@ -139,11 +139,12 @@ Once you are working at a deeper layer than the controllers or middlewares there
 
 These error classes are imported through the `@strapi/utils` package and can be called from several different layers. The following examples use the service layer but error classes are not just limited to services and model lifecycles. When throwing errors in the model lifecycle layer, it's recommended to use the `ApplicationError` class so that proper error messages are shown in the admin panel.
 
-::: note
+:::note
 See the [default error classes](#default-error-classes) section for more information on the error classes provided by Strapi.
 :::
 
-<details title="Example: Throwing an error in a service"> 
+<details>
+<summary>Example: Throwing an error in a service</summary>
 This example shows wrapping a [core service](/dev-docs/backend-customization/services#extending-core-services) and doing a custom validation on the `create` method:
 
 <Tabs groupId="js-ts">
@@ -207,7 +208,8 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 
 </details>
 
-<details title= "Example: Throwing an error in a model lifecycle">
+<details>
+<summary>Example: Throwing an error in a model lifecycle</summary>
 
 This example shows building a [custom model lifecycle](/dev-docs/backend-customization/models#lifecycle-hooks) and being able to throw an error that stops the request and will return proper error messages to the admin panel. Generally you should only throw an error in `beforeX` lifecycles, not `afterX` lifecycles.
 
@@ -269,7 +271,8 @@ The `PolicyError` class is available from `@strapi/utils` package and accepts 2 
 - the first parameter of the function is the error `message`
 - (optional) the second parameter is the object that will be set as `details` in the response received; a best practice is to set a `policy` key with the name of the policy that threw the error.
 
-<details title="Example: Throwing a PolicyError in a custom policy">
+<details>
+<summary>Example: Throwing a PolicyError in a custom policy</summary>
 
 This example shows building a [custom policy](/dev-docs/backend-customization/policies) that will throw a custom error message and stop the request.
 
@@ -451,4 +454,3 @@ throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 </TabItem>
 
 </Tabs>
-
