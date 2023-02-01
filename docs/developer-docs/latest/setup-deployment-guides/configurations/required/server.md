@@ -32,6 +32,7 @@ The `./config/server.js` file can include the following parameters:
 | `cron.tasks`                        | Declare [CRON jobs](/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.md) to be run at specific dates.                                                                                                                                                                                                                                        | object            |                     |
 | `dirs`                              | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object            |                     |
 | `dirs.public`                       | Customize the path of the public folder.                                                                                                                                                                                                                                                                                                                                    | string            | `./public`          |
+| `webhooks.populateRelations`        | For backward compatibility reasons, the default value is `true`, but the recommended value is `false` to avoid performance issues when having many relations. If you need populated relations in your webhook, we recommend doing a separate query in your webhook listener to fetch the entity only with the necessary data.                                               | boolean           | `true`              |
 
 ## Configurations
 
@@ -130,6 +131,7 @@ export default ({ env }) => ({
   },
 });
 ```
+
 </code-block>
 </code-group>
 
