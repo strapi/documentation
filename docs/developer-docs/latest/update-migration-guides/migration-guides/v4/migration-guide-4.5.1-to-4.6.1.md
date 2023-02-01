@@ -44,7 +44,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 ## Changing the webhooks configuration (optional)
 
-By default, and for backwards compatibility reasons, webhooks will receive the populated relations. We do recommend to disable this behavior if you don't need it.
+By default, and for backward compatibility reasons, webhooks will receive the entity with its relations populated again. We do recommend to disable this behavior if you were not using it, as it may cause performance issues when having many relations. If you need populated relations in your webhook, we recommend doing a separate query in your webhook listenner to fetch the entity only with the necessary data.
 
 If you want to change this behavior, you can do so by editing the `./config/server.js` file (or `./config/server.ts` if you are using TypeScript) and add the following configuration:
 
