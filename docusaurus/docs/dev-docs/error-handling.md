@@ -9,10 +9,11 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/e
 
 Strapi is natively handling errors with a standard format.
 
-There are 2 use cases for error handling:
+There are 3 use cases for error handling:
 
 - As a developer querying content through the [REST](/dev-docs/api/rest) or [GraphQL](/dev-docs/api/graphql) APIs, you might [receive errors](#receiving-errors) in response to the requests.
 - As a developer customizing the backend of your Strapi application, you could use controllers and services to [throw errors](#throwing-errors).
+- As a developer customizing the backend you can rollback database entries from actions that result in an error using database transactions.
 
 ## Receiving errors
 
@@ -204,7 +205,6 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 </TabItem>
 
 </Tabs>
-
 
 </details>
 
@@ -454,3 +454,29 @@ throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 </TabItem>
 
 </Tabs>
+
+## Rollback with database transactions
+
+Queries using the [Entity Service API](/dev-docs/api/entity-service) and [Query Engine API](/dev-docs/api/query-engine) have access to database transactions in v4.7.0 and later versions of Strapi. Database transactions allow you to rollback incomplete actions due to an error. For example, if a controller contains multiple database queries with interspersed business logic an error thrown at any of the steps wrapped in a database transaction will return the database to its state prior to the controller starting.
+
+In the callback param you have access to the transaction instance (from knex) if needed, and a rollback and commit function if needed as well"
+
+### Wrapping queries with database transactions
+
+Everything that is inside a the transaction can be:
+
+- sent through the callback,
+- is automatically rolled back if there is a failure and throws an error, 
+- otherwise commits the transaction.
+
+```js
+
+strapi.db.transaction(async ({trx,rollback,commit}) => {
+
+await  strapi.entityService.create();
+await  strapi.entityService.create();
+
+});
+
+The transaction is managed by passing an object with three functions as a parameter to strapi.db.transaction: `trx`, `rollback`, and `commit`. `trx` is a transaction object that is used to perform database operations, `rollback` is a function that can be used to undo any changes made during the transaction if something goes wrong, and `commit` is a function that can be used to persist the changes made during the transaction.
+
