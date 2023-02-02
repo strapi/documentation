@@ -230,6 +230,7 @@ const sidebars = {
         'dev-docs/cli',
         'dev-docs/data-management',
         'dev-docs/error-handling',
+        'dev-docs/testing',
         {
           type: 'category',
           label: 'Integrations',
