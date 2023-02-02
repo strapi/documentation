@@ -113,8 +113,8 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [ ] Plugin APIs
       - [ ] Server API for plugins (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/plugin-api-reference/server.html))
       - [x] [Admin Panel API for plugins](/dev-docs/api/plugins/admin-panel-api)
-    - [ ] CLI (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html))
-    - [ ] Error handling (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/error-handling.html))
+    - [x] CLI (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html))
+    - [x] Error handling (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/error-handling.html))
     - [ ] Unit testing (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/unit-testing.html))
     - [ ] Database migrations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/database-migrations.html))
     - [x] Integration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations.html))
