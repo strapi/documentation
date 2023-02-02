@@ -1,10 +1,4 @@
 {
-  "functions": {
-    "api/redirect.js": {
-      "memory": 1024,
-      "maxDuration": 30
-    }
-  },
   "redirects": [
     {
       "source": "/developer-docs/latest/development/admin-customization",
