@@ -29,6 +29,7 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock'],
 
+
   presets: [
     [
       'classic',
@@ -87,6 +88,11 @@ const config = {
         sidebar: {
           hideable: true
         },
+      },
+      algolia: {
+        appId: '392RJ63O14',
+        apiKey: '8cf63dc4a24ff4087407f9f5bd188aae',
+        indexName: 'strapiDocsNextstrapiDocsNext',
       },
       navbar: {
         logo: {
@@ -178,12 +184,6 @@ const config = {
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
      * related to the Docusaurus canary build or not.
      */
-    [
-      require.resolve("@cmfcmf/docusaurus-search-local"),
-      {
-        indexBlog: false,
-      }
-    ],
   ],
 };
 

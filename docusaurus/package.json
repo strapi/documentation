@@ -14,7 +14,6 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@cmfcmf/docusaurus-search-local": "^0.11.0",
     "@docusaurus/core": "0.0.0-5304",
     "@docusaurus/preset-classic": "0.0.0-5304",
     "@docusaurus/theme-live-codeblock": "0.0.0-5304",
