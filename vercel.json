@@ -1,8 +1,8 @@
 {
   "redirects": [
-    { 
+    {
       "source": "/developer-docs/latest/development/admin-customization",
-      "destination": "/dev-docs/admin-panel-customization", 
+      "destination": "dev-docs/admin-panel-customization",
       "permanent": false
     }
   ]
