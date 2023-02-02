@@ -129,7 +129,6 @@ const sidebars = {
             },
               items: [
                 'dev-docs/deployment/caddy-proxy',
-                'dev-docs/deployment/azure',
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
                 'dev-docs/deployment/process-manager',
