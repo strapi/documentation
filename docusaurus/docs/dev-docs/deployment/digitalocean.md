@@ -63,7 +63,6 @@ Follow the official [DigitalOcean docs for initial server set-up using Ubuntu 18
 
 #### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-5-%E2%80%94-enabling-external-access-for-your-regular-user) **with SSH key authentication**.
 
-Next, install `Node.js`:
 
 #### 6. You will install `Node.js`.
 
