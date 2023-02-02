@@ -1,6 +1,6 @@
 {
   "functions": {
-    "functions/redirect.js": {
+    "api/redirect.js": {
       "memory": 1024,
       "maxDuration": 30
     }
