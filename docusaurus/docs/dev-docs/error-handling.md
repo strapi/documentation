@@ -478,5 +478,5 @@ await  strapi.entityService.create();
 
 });
 
-The transaction is managed by passing an object with three functions as a parameter to strapi.db.transaction: `trx`, `rollback`, and `commit`. `trx` is a transaction object that is used to perform database operations, `rollback` is a function that can be used to undo any changes made during the transaction if something goes wrong, and `commit` is a function that can be used to persist the changes made during the transaction.
+The transaction is managed by passing an object with three functions as a parameter to `strapi.db.transaction`: `trx`, `rollback`, and `commit`. `trx` is a transaction object that is used to perform database operations, `rollback` is a function that can be used to undo any changes made during the transaction if something goes wrong, and `commit` is a function that can be used to persist the changes made during the transaction.
 
