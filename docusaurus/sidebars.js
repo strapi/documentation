@@ -293,8 +293,17 @@ const sidebars = {
             
           ]
     },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Update and Migration',
+      items: [
+            'dev-docs/update-version'  
+          ]
+    },
   ],
 
+ 
 
   userDocsSidebar: [
     'user-docs/intro',
