@@ -146,7 +146,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [Sentry](dev-docs/plugins/sentry)
     - [x] [API Documentation](dev-docs/plugins/documentation)
   - [ ] ♻️ Update & Migration
-    - [ ] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
+    - [x] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
     - [ ] Migration
       - [ ] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
       - [ ] v3 to v4 migration guides (→ [docs.strapi.io](#))
