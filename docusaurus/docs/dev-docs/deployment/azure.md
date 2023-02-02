@@ -188,7 +188,7 @@ To deploy using an Azure Resource Manager template, use the button below, or upl
 
 Azure AppService can be deployed to using CI/CD pipelines or via FTPS, refer to the [Azure docs](https://docs.microsoft.com/azure/app-service/deploy-continuous-deployment?tabs=github&WT.mc_id=javascript-37811-aapowell) on how to do this for your preferred manner.
 
-As AppService is a PaaS hosting model, an upload provider will be required to save the uploaded assets to Azure Storage. Check out https://github.com/jakeFeldman/strapi-provider-upload-azure-storage for more details on using Azure Storage as an upload provider.
+As AppService is a PaaS hosting model, an upload provider will be required to save the uploaded assets to Azure Storage. Check out [this community provider](https://github.com/jakeFeldman/strapi-provider-upload-azure-storage) for more details on using Azure Storage as an upload provider.
 
 :::note
 For local development, you can either use the local disk upload provider, or the Azure Storage upload provider against the [Storage emulator](https://docs.microsoft.com/azure/storage/common/storage-use-azurite?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=visual-studio&WT.mc_id=javascript-37811-aapowell).
