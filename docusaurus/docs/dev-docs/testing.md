@@ -9,7 +9,7 @@ In this guide we will see how you can run basic unit tests for a Strapi applicat
 
 :::tip
 In this example we will use [Jest](https://jestjs.io/) Testing Framework with a focus on simplicity and
-[Supertest](https://github.com/visionmedia/supertest) Super-agent driven library for testing node.js HTTP servers using a fluent API
+[Supertest](https://github.com/visionmedia/supertest) Super-agent driven library for testing node.js HTTP servers using a fluent API.
 :::
 
 :::caution
@@ -20,7 +20,7 @@ Please note that this guide will not work if you are on Windows using the SQLite
 
 `Jest` contains a set of guidelines or rules used for creating and designing test cases - a combination of practices and tools that are designed to help testers test more efficiently.
 
-`Supertest` allows you to test all the `api` routes as they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server)
+`Supertest` allows you to test all the `api` routes as they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server).
 
 `sqlite3` is used to create an on-disk database that is created and deleted between tests.
 
