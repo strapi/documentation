@@ -188,6 +188,7 @@ const config = {
       '@docusaurus/plugin-client-redirects',
       {
         fromExtensions: ['html', 'htm'], // /myPage.html -> /myPage
+        toExtensions: [],
         redirects: [
           // /docs/oldDoc -> /docs/newDoc
           {
