@@ -83,8 +83,7 @@ Create a new config for test env `./config/env/test/database.js` and add the fol
 This file will be temporary, each time test is finished, we will remove that file that every time tests are run on the clean database.
 The whole file will look like this:
 
-```js
-// path: ./config/env/test/database.js
+```js title="./config/env/test/database.js"
 
 module.exports = ({ env }) => ({
   connection: {
@@ -105,8 +104,7 @@ basically we want to get instance of strapi app as object, similar like creating
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 
-```js
-//path: ./tests/helpers/strapi.js
+```js title="./tests/helpers/strapi.js"
 const Strapi = require("@strapi/strapi");
 const fs = require("fs");
 
@@ -147,8 +145,7 @@ module.exports = { setupStrapi, cleanupStrapi };
 
 We need a main entry file for our tests, one that will also test our helper file.
 
-```js
-// path: ./tests/app.test.js
+```js title="path: ./tests/app.test.js"
 const fs = require('fs');
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
@@ -198,8 +195,7 @@ We'll test if our endpoint works properly and route `/hello` does return `Hello 
 
 Let's create a separate test file where `supertest` will be used to check if endpoint works as expected.
 
-```js
-// path: ./tests/hello/index.js
+```js title="./tests/hello/index.js"
 
 const request = require('supertest');
 
@@ -251,8 +247,7 @@ In this scenario we'll test authentication login endpoint with two tests
 2. Test `/users/me` that should return users data based on `Authorization` header
 
 
-```js
-// path: ./tests/user/index.js
+```js title="path: ./tests/user/index.js"
 const request = require('supertest');
 
 // user mock data
