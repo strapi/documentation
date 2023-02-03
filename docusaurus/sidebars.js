@@ -300,7 +300,9 @@ const sidebars = {
       collapsed: false,
       label: 'Update and Migration',
       items: [
-            'dev-docs/update-version'  
+            'dev-docs/update-version',
+            'dev-docs/migration-guides'
+
           ]
     },
   ],
