@@ -188,12 +188,11 @@ const config = {
       '@docusaurus/plugin-client-redirects',
       {
         fromExtensions: ['html', 'htm'], // /myPage.html -> /myPage
-        toExtensions: [],
         redirects: [
           // /docs/oldDoc -> /docs/newDoc
           {
             to: '/dev-docs/admin-panel-customization',
-            from: '/developer-docs/latest/development/admin-customization',
+            from: ['/developer-docs/latest/development/admin-customization', '/developer-docs/latest/development/admin-customization.html'],
           },
           // Redirect from multiple old paths to the new path
           // {
