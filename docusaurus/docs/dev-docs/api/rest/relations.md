@@ -8,7 +8,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/d
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
-Relations between content-types can be managed through the [admin panel](/user-docs/latest/content-manager/managing-relational-fields.md#managing-multiple-choices-relational-fields) or through [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md) requests sent to the Content API.
+Relations between content-types can be managed through the [admin panel](/user-docs/content-manager/managing-relational-fields#managing-multiple-choices-relational-fields) or through [REST](/dev-docs/api/rest) requests sent to the Content API.
 
 Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
 
