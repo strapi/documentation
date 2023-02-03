@@ -10,7 +10,7 @@ import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
 # Upgrade Strapi version
 
-Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/dev-docs/update-migration-guides/migration-guides) are provided whenever a new Strapi version includes breaking changes.
+Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/dev-docs/migration-guides) are provided whenever a new Strapi version includes breaking changes.
 
 :::caution
  [Plugins extension](/dev-docs/plugins/users-permissions) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
@@ -21,7 +21,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 :::prerequisites
 
 - Stop the server before starting the upgrade.
-- Confirm there are no [migrations](/dev-docs/update-migration-guides/migration-guides) between the current and ultimate Strapi versions.
+- Confirm there are no [migrations](/dev-docs/migration-guides) between the current and ultimate Strapi versions.
 :::
 
 1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version:
