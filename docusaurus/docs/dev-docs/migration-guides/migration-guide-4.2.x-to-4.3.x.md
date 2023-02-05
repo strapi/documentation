@@ -57,7 +57,7 @@ To change the script:
 1. In the `./config/database.ts` file, Identify the default SQLite database configuration.
 2. Copy and paste the following line to the replace the `filename` key of the SQLite configuration:
 
-```ts
+```ts title="path: ./config/database.ts"
 filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
 ```
 
