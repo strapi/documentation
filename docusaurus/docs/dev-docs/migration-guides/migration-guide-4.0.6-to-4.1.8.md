@@ -18,6 +18,7 @@ The Strapi v4.0.6+ to v4.1.8 migration guide upgrades versions of v4.0.6 and abo
 - Fixing the breaking changes
 - Setting secrets for non-development environments
 - Reinitializing the application
+
 <PluginsCaution components={props.components} />
 
 ## Upgrading the application dependencies to 4.1.8
@@ -45,8 +46,7 @@ Stop the server before starting the upgrade.
 
 2. Save the edited `package.json` file.
 
-3. Run the install command:
-<InstallCommand components={props.components} />
+3. <InstallCommand components={props.components} />
 
 
 ## Fixing the breaking changes

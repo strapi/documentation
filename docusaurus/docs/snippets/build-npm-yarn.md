@@ -1,5 +1,5 @@
 
-## Rebuild the application
+## Rebuilding the application
 
 Run the following command in your project root directory:
 
