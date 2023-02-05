@@ -31,8 +31,7 @@ Stop the server before starting the upgrade.
 
 1. Upgrade all of the Strapi packages in `package.json` to `4.3.8`:
 
-```json
-// path: package.json
+```json title="path: ./package.json"
 
 {
   // ...
@@ -47,8 +46,7 @@ Stop the server before starting the upgrade.
 
 2. Change the `sqlite3` package to `better-sqlite3` version `7.4.6` in `package.json`:
 
-```json{9}
-// path: package.json
+```json title="path: ./package.json"
 
 {
   // ...

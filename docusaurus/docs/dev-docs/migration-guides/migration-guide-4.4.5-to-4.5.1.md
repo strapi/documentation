@@ -1,6 +1,6 @@
-
 ---
 title: Migrate from 4.4.5 to 4.5.1 - Strapi Developer Docs
+displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.4.5 to 4.5.1.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.4.5-to-4.5.1.html
 ---
@@ -31,8 +31,7 @@ Stop the server before starting the upgrade.
 
 1. Upgrade all of the Strapi packages in `package.json` to `4.5.1`:
 
-   ```json
-   // path: package.json
+   ```json title="path: package.json"
 
    {
      // ...
@@ -136,8 +135,6 @@ async function down() {}
 module.exports = { up, down };
 ```
 5. Save the file. 
-
-6. Restart Strapi:
 
 <BuildCommand components={props.components} />
 <DevelopCommand components={props.components} />
