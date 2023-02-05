@@ -17,9 +17,10 @@ The Strapi v4.2.x to v4.3.x migration guide upgrades versions of v4.2.x and abov
 - Upgrading the application dependencies
 - Updating the database configuration script
 - Reinitializing the application
+
 <PluginsCaution components={props.components} />
 
-## Upgrading the application dependencies to 4.3.x (x is the latest minor version of v4.3)
+## Upgrading the application dependencies to 4.3.x
 
 :::prerequisites
 Stop the server before starting the upgrade. At the time of writing this, the latest version of Strapi is v4.3.3.
@@ -43,8 +44,7 @@ Stop the server before starting the upgrade. At the time of writing this, the la
 
 2. Save the edited `package.json` file.
 
-3. Run the install command:
-<InstallCommand components={props.components} />
+3. <InstallCommand components={props.components} />
 
 ## Updating the database configuration script
 

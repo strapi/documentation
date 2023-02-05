@@ -27,8 +27,7 @@ Stop the server before starting the upgrade.
 
 1. Upgrade all of the Strapi packages in `package.json` to `4.4.5`:
 
-    ```json
-    // path: package.json
+    ```json title="path: ./package.json"
 
     {
       // ...

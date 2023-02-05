@@ -4,7 +4,7 @@ displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.3.6 to 4.3.8.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.6-to-4.3.8.html
 ---
-import PluginsCaution from '/docs/snippets/migrate-plugins-extension-caution.md'
+
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
@@ -63,8 +63,7 @@ Stop the server before starting the upgrade.
 
 3. Save the edited `package.json` file.
 
-4. Run the install command:
-<InstallCommand components={props.components} />
+4. <InstallCommand components={props.components} />
 
 <BuildCommand components={props.components} />
 <DevelopCommand components={props.components} />

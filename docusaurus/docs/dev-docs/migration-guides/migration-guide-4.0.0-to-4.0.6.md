@@ -41,8 +41,7 @@ Upgrade all of the Strapi packages in the `package.json` to `4.0.6`:
 
 2. Save the edited `package.json` file.
 
-3. Run the install command:
-<InstallCommand components={props.components} />
+3. <InstallCommand components={props.components} />
 
 
 ## Fixing the breaking changes
@@ -79,8 +78,7 @@ module.exports = [
 <details>
 <summary> Example of the updated file</summary>
 
-```jsx
-// path: ./config/server.js
+```jsx title="path: ./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),

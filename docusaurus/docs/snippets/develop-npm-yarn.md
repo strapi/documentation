@@ -1,4 +1,4 @@
-## Restart the application
+## Restarting the application
 
 Run the following command in your project root directory:
 

@@ -15,6 +15,7 @@ The Strapi v4.1.8+ to v4.1.10 migration guide upgrades versions of v4.1.8 and ab
 - Upgrading the application dependencies
 - Installing database migration script (optional)
 - Reinitializing the application
+
 <PluginsCaution components={props.components} />
 
 ## Upgrading the application dependencies to 4.1.10
@@ -41,8 +42,7 @@ Stop the server before starting the upgrade.
 
 2. Save the edited `package.json` file.
 
-3. Run the install command:
-<InstallCommand components={props.components} />
+3. <InstallCommand components={props.components} />
 
 
 ## Installing database migration script (optional)
