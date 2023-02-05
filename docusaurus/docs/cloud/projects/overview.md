@@ -15,8 +15,12 @@ The **Projects** page displays a list of all your Strapi Cloud projects. From he
 Each project card displays the following information:
 
 * **Project name**
-* **Status**: Displays a **Disconnected** warning if the project repository is not connected to Strapi Cloud.
+* **Status**: Displays a **Disconnected** warning if the project repository is not connected to Strapi Cloud, of a **Suspended** warning if the project is suspended.
 * **Last deployment date**: Timestamp of the last deployment.
+* **Options** menu: Open the menu to select from the available options:
+    * **Visit App**: Go to the application.
+    * **Go to Deploys**: Go to the [**Deploys**](#deploys) page.
+    * **Go to Settings**: Go to the [**Settings**](./settings/) page.
 
 ## Project details
 
