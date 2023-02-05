@@ -8,15 +8,17 @@ sidebar_position: 1
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi Cloud account and applications.
 
-## What is Strapi Cloud?
+## What is Strapi Cloud
 
-Strapi Cloud is a managed hosting platform for Strapi applications. It is a fully managed hosting platform that allows you to deploy your Strapi applications in a matter of minutes.
+Strapi Cloud is a managed content platform built on top of Strapi, the leading open-source headless CMS. It is a fully managed hosting platform that allows you to deploy your Strapi applications in a matter of minutes.
+
+Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
 
 ## Strapi Community
 
-Strapi is a community-oriented project with an emphasis on transparency. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the [roadmap](https://feedback.strapi.io) is open: as all insights are very important and will help steer the project in the right direction, any community member is most welcome to share ideas and opinions there.
+Strapi Cloud is built on top of open-source Strapi, a community-oriented project with an emphasis on transparency, and Strapi Cloud users can benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole. 
 
-Community members also take great part in providing the whole community a plethora of resources about Strapi. You can find [tutorials](https://strapi.io/tutorials/) on the Strapi website, where you can also create your own. Also, as an open-source project, the technical documentation of Strapi is open to contributions (see [Open-source & Contribution](#open-source-contribution)).
+The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the [roadmap](https://feedback.strapi.io) is open: as all insights are very important and will help steer the project in the right direction, any community member is most welcome to share ideas and opinions there.
 
 :::strapi Want to join the community?
 You can join [GitHub](https://github.com/strapi/strapi), the [Forum](https://forum.strapi.io/), and the [Discord](https://discord.strapi.io) to share your ideas and opinions with other community members and members of the Strapi team. If you're looking for news and updates about Strapi, [Twitter](https://twitter.com/strapijs) and the [blog](https://strapi.io/blog) are pretty good places to start!
