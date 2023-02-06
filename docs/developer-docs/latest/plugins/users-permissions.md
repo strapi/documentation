@@ -805,7 +805,7 @@ Don't forget to update the server url in the backend config file `config/server.
 - Go to the [Patreon developer portal](https://www.patreon.com/portal)
 - Click on [Clients & API Keys](https://www.patreon.com/portal/registration/register-clients)
 - Click on "Create Client"
-- Enter the details of your organisation and website.
+- Enter the details of your organization and website.
 - There is a drop-down for "App Category" but no explanation of what the different categories mean.
 "Community" seems to work fine. 
 - You can choose either version 1 or version 2 of the API - neither are actively developed.
