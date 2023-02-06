@@ -181,6 +181,7 @@ Sending the following example in the request body of a PUT request updates multi
 
 </Request>
 
+<br/>
 Omitting the `position` argument (as in `id: 9`) defaults to `position: { end: true }`. All other relations are positioned relative to another existing `id` (using `after` or `before`) or relative to the list of relations (using `start` or `end`). Operations are treated sequentially in the order defined in the `connect` array, so the resulting database record will be the following:
 
 ```json
