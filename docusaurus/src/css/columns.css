@@ -1,0 +1,19 @@
+.column-title {
+  font-weight: bold;
+}
+
+@media (min-width: 1200px) {
+  .columns {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .columns > .column-left,
+  .columns > .column-right {
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+}
