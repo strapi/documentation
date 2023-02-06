@@ -168,8 +168,8 @@ The table displays each Transfer token's name, description, date of creation, an
 
 To create a new Transfer token:
 
-1. Click on the **Create new API Token** button.
-2. In the API token edition interface, configure the new API token:
+1. Click on the **Create new Transfer Token** button.
+2. In the Transer token edition interface, configure the new Transfer token:
 
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
@@ -177,7 +177,7 @@ To create a new Transfer token:
     | Description    | (optional) Write a description for the Transfer token.                        |
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
     
-3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
+3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
     ![Custom Transfer Token](../assets/settings/settings_api-token-custom.png) <!--add image-->
 
