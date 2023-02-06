@@ -63,7 +63,7 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 ### Controllers and middlewares
 
-The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [middleware](/developer-docs/latest/development/backend-customization/) respond with the correct status and body.
+The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [middleware](/developer-docs/latest/development/backend-customization.md) respond with the correct status and body.
 
 This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
@@ -367,7 +367,7 @@ throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 
 ::: tab Pagination
 
-The `PaginationError` class is a specific error class that is typically used when parsing the pagination information from [REST](/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination), [GraphQL](/developer-resources/database-apis-reference/graphql-api.md#pagination), or the [Entity Service](/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination). It accepts the following parameters:
+The `PaginationError` class is a specific error class that is typically used when parsing the pagination information from [REST](/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md#pagination), [GraphQL](/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.md#pagination), or the [Entity Service](/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.md#pagination). It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
