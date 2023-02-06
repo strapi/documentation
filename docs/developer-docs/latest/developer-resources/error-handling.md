@@ -63,7 +63,7 @@ Errors thrown by the GraphQL API are included in the [response](/developer-docs/
 
 ### Controllers and middlewares
 
-The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [middleware](/developer-docs/latest/development/backend-customization.md) respond with the correct status and body.
+The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/developer-docs/latest/development/backend-customization/controllers.md) or [middleware](/developer-docs/latest/development/backend-customization/middlewares.md) respond with the correct status and body.
 
 This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
