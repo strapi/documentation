@@ -1,5 +1,6 @@
 ---
-title: Code migration guide for Strapi v4 -  Strapi Developer Docs
+title: v4 code migration
+
 description: Migrate the back-end and front-end code of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html
 ---
@@ -30,7 +31,7 @@ The following topics are covered by this guide, and you can either click on a sp
 :::note
 The following topics are not extensively covered in this code migration guide, but Strapi v4 also introduces:
 
-- a new [file structure](/dev-docs/file-structure) for the project, which can be migrated with the help of [Strapi codemods](https://github.com/strapi/codemods/),
+- a new [file structure](/dev-docs/project-structure) for the project, which can be migrated with the help of [Strapi codemods](https://github.com/strapi/codemods/),
 - fully rewritten [REST](/dev-docs/api/rest) and [GraphQL](/dev-docs/api/graphql) APIs, with the REST API not [populating](/dev-docs/api/rest/populate-select) by default any relations, components, dynamic zones, and medias,
 - the new [Entity Service](/dev-docs/api/entity-service) and [Query Engine](/dev-docs/api/query-engine) APIs,
 - and the [Strapi Design System](https://design-system.strapi.io/) which is used to build the new user interface of Strapi v4.
