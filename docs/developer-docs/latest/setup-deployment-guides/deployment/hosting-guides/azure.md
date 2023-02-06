@@ -130,7 +130,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
 
    ```bash
    webAppName=my-strapi-app
-   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|10.14"
+   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|14-lts"
    ```
 
 4. Create a Storage Account.
@@ -162,7 +162,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az mysql db create --resource-group $rgName --name $dbName --server-name $serverName
 
    # Allow Azure resources through the firewall
-   az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-range 0.0.0.0 --end-ip-range 0.0.0.0
+   az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
    ```
 
 6. Add configuration values to the Web App.
