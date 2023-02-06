@@ -7,7 +7,7 @@ displayed_sidebar: devDocsSidebar
 
 Strapi comes with [plugins](/dev-docs/plugins/plugins-intro) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
 
-Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/dev-docs/file-structure)). Some plugins automatically create files there, ready to be modified.
+Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/dev-docs/project-structure)). Some plugins automatically create files there, ready to be modified.
 
 <details> 
 <summary>Example of extensions folder structure</summary>
@@ -78,8 +78,7 @@ To extend a plugin's server interface using the `./src/extensions` folder:
 <details>
 <summary>Example of backend extension</summary>
 
-```js
-// path: ./src/extensions/some-plugin-to-extend/strapi-server.js
+```js title="./src/extensions/some-plugin-to-extend/strapi-server.js"
 
 module.exports = (plugin) => {
   plugin.controllers.controllerA.find = (ctx) => {};
@@ -104,8 +103,7 @@ To extend a plugin's interface within `./src/index.js`, use the `bootstrap()` an
 <details>
 <summary>Example of extending a plugin's content-type within ./src/index.js</summary>
 
-```js
-// path: ./src/index.js
+```js title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {

@@ -25,8 +25,7 @@ Strapi provides a [command line interface (CLI)](/dev-docs/cli) for creating plu
 <Tabs>
 <TabItem value="js" label="JavaScript">
 
-```js
-// path: ./config/plugins.js
+```js title="./config/plugins.js"
 
     module.exports = {
       // ...
@@ -41,8 +40,7 @@ Strapi provides a [command line interface (CLI)](/dev-docs/cli) for creating plu
 
 <TabItem value="ts" label="TypeScript">
 
-```js
- // path: ./config/plugins.ts
+```js title=./config/plugins.ts
 
     export default {
       // ...
