@@ -135,7 +135,7 @@ export default [
 
 </code-group>
 
-In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the `providerOptions` of the [plugin configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) in `./config/plugins.js`:
+In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the [plugin configuration](/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.md) in `./config/plugins.js`:
 
 <code-group>
 
@@ -148,9 +148,7 @@ module.exports = {
   // ...
   upload: {
     config: {
-      providerOptions: {
-        sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
-      }
+      sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
     }
   }
 };
