@@ -146,6 +146,54 @@ To regenerate an API token:
 3. Click on the **Regenerate** button to confirm in the dialog.
 4. Copy the new API token displayed at the top of the interface.
 
+## Managing transfer tokens
+
+:::prerequisites
+* Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/latest/users-roles-permissions/configuring-administrator-roles.md#plugins-and-settings)).
+* The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.
+:::
+
+Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/developer-docs/latest/developer-resources/data-management.md#transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
+
+![Transfer tokens](../assets/settings/settings_api-token.png) <!--add image-->
+
+The *Transfer Tokens* settings sub-section displays a table listing all of the created Transfer tokens.
+
+The table displays each Transfer token's name, description, date of creation, and date of last use. From the table, administrators can also:
+
+- Click on the edit button <!-- icon --> to edit an Transfer token's name, description, type, duration or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the delete button <!-- icon --> to delete a Transfer token.
+
+### Creating a new transfer token
+
+To create a new Transfer token:
+
+1. Click on the **Create new API Token** button.
+2. In the API token edition interface, configure the new API token:
+
+    | Setting name   | Instructions                                                             |
+    | -------------- | ------------------------------------------------------------------------ |
+    | Name           | Write the name of the Transfer token.                                         |
+    | Description    | (optional) Write a description for the Transfer token.                        |
+    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
+    
+3. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
+
+    ![Custom Transfer Token](../assets/settings/settings_api-token-custom.png) <!--add image-->
+
+:::caution
+For security reasons, Transfer tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created Transfer token will be hidden and will not be displayed again.
+:::
+
+### Regenerating a Transfer token
+
+To regenerate an Transfer token:
+
+1. Click on the Transfer token's edit button.
+2. Click on the **Regenerate** button.
+3. Click on the **Regenerate** button to confirm in the dialog.
+4. Copy the new Transfer token displayed at the top of the interface.
+
 ## Configuring other plugins
 
 Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
