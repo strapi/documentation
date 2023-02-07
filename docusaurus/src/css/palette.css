@@ -8,6 +8,8 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
+  --ifm-link-decoration: none;
+  --ifm-alert-border-color: transparent;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --strapi-neutral-900: #212134;
   --strapi-neutral-800: #32324D;
@@ -28,6 +30,7 @@
   --strapi-danger-600: #D02B20;
   --strapi-danger-500: #EE5E52;
   --strapi-danger-100: #FCECEA;
+  --strapi-warning-700: #BE5D01;
   --strapi-warning-500: #F29D41;
   --strapi-alternative-600: #9736E8;
   --strapi-alternative-500: #AC73E6;

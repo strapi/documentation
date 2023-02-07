@@ -1,5 +1,7 @@
+.admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module {
+  text-transform: none !important;
+}
 .admonition__custom-title {
-  text-transform: uppercase;
   font: var(--ifm-heading-font-weight) var(--ifm-h5-font-size) / var(--ifm-heading-line-height) var(--ifm-heading-font-family);
 }
 .admonition--prerequisites .checkbox-icon {
@@ -17,6 +19,16 @@
 .admonition--callout *:last-child,
 .admonition--strapi *:last-child {
   margin-bottom: 0 !important
+}
+
+.theme-admonition {
+  border-radius: 0;
+  border-left-width: 4px;
+}
+
+.alert a {
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0;
 }
 
 /**
@@ -59,13 +71,13 @@
  */
 
 [data-theme='light'] .admonition--strapi {
-  color: #252264;
+  color: var(--strapi-neutral-800);
   background-color: var(--strapi-primary-100);
   border-left-color: var(--strapi-primary-600);
 }
-[data-theme='light'] .admonition--strapi a {
-  color: #252264;
-  text-decoration-color: var(--strapi-primary-600);
+[data-theme='light'] .admonition--strapi a,
+[data-theme='light'] .admonition--strapi .admonition__custom-title {
+  color: var(--strapi-primary-600);
 }
 [data-theme='light'] .admonition--strapi code {
   background-color: var(--strapi-primary-200);
