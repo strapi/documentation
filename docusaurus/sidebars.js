@@ -192,6 +192,7 @@ const sidebars = {
           ]
         },
         'dev-docs/api/plugins/admin-panel-api',
+        'dev-docs/api/plugins/server-api',
       ]
     },
     {
@@ -302,12 +303,22 @@ const sidebars = {
       collapsed: false,
       label: 'Update and Migration',
       items: [
-            'dev-docs/update-version'  
+        'dev-docs/update-version',
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'v3 to v4 migration guides',
+          items: [
+            // 'dev-docs/migration/v3-to-v4/code-migration',
+            'dev-docs/migration/v3-to-v4/plugin-migration',
+            // 'dev-docs/migration/v3-to-v4/data-migration',
           ]
+        }
+      ],
     },
   ],
 
- 
+
 
   userDocsSidebar: [
     'user-docs/intro',
