@@ -355,8 +355,8 @@ npm strapi import -f export_20221213105643.tar.gz.enc --only config
 
 ## Transfer data using the CLI tool <BetaBadge />
 
-:::strapi
-`strapi transfer` is only available in the current beta version. To install the beta version run the following command in your terminal:
+:::strapi Install the beta version
+`strapi transfer` is only available in the current beta version. To create a new project using the beta version, run the following command in your terminal:
 
 ```bash
 npx create-strapi-app@beta
@@ -364,34 +364,82 @@ npx create-strapi-app@beta
 
 :::
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The command allows you to transfer data between:
+The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The CLI command consists of the following arguments:
+
+| Option     | Description                                                                                                                        | Required |
+|------------|--------------------------------------------------------------| :------: |
+| `--to`       | URL of the destination Strapi instance.                    | required |
+| `‑‑to‑token` | Transfer token from the Strapi destination instance.       | required |
+| `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |-         |
+| `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                   |-         |
+| `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                   |-         |
+
+ The command allows you to transfer data between:
 
 - a local Strapi instance and a remote Strapi instance,
 - a remote Strapi instance and another remote Strapi instance.
 
-The `strapi transfer` command is requires a `URL` for the destination instance and a [transfer token](userguide-link) issued by the destination instance. The options `--force`, `--exclude`, and --`only` are available to customize the transfer process. 
+:::tip
+Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including view, create, read, regenerate and delete. See the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens) for details on how to create and manage Transfer tokens.
+:::
+
+### Generate a transfer token
+
+The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens).
 
 
+### Setup and run the data transfer
 
-### Specify the local and remote instances
+To initiate a data transfer:
 
+1. Start the Strapi server for the destination instance.
+2. In a new terminal window, navigate to the root directory of the source instance.
+3. Run the following minimal command to initiate the transfer:
 
-#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance
-
-To transfer data to your remote instance run the following command in your local instance root directory:
+<br/>
+<code-group>
+<code-block title="YARN">
 
 ```bash
-yarn strapi tranfer --to <remote-instance-URL>
+yarn strapi transfer --to {destination URL} --to-token {Transfer token}
 ```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm strapi yarn strapi transfer -- --to {destination URL} --to-token {Transfer token}
+```
+
+</code-block>
+</code-group>
+
+### Include only specified data types during transfer
+
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
+
+### Exclude data types during transfer
+
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
+
+::: warning
+Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
+:::
+
+:::note
+Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and could render as broken links.
+:::
+
+<!--#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance-->
 
 ### Managing data transfer with environment variables
 
-`STRAPI_DISABLE_REMOTE_DATA_TRANSFER` set to true disables remote data transfer: 
+`STRAPI_DISABLE_REMOTE_DATA_TRANSFER` set to true disables remote data transfer:
 
 ```bash
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
-
 
 
 
