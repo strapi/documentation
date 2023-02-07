@@ -368,7 +368,7 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
-| `--to`       | URL of the destination Strapi instance.                    | required |
+| `--to`       | URL of the destination Strapi instance. The endpoint is `/admin`                                                                      | required |
 | `‑‑to‑token` | Transfer token from the Strapi destination instance.       | required |
 | `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |-         |
 | `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                   |-         |
@@ -421,7 +421,7 @@ The default `strapi transfer` command transfers your content (entities and relat
 
 ### Exclude data types during transfer
 
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
 
 ::: warning
 Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
@@ -431,16 +431,33 @@ Any types excluded from the transfer will be deleted in your target instance. Fo
 Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and could render as broken links.
 :::
 
+:::: tabs group
+::: tab EXCLUDE
+
+```bash
+strapi transfer --to https://
+```
+
+:::
+::: tab ONLY
+
+```bash
+
+```
+
+:::
+::::
+
 <!--#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance-->
 
 ### Managing data transfer with environment variables
 
-`STRAPI_DISABLE_REMOTE_DATA_TRANSFER` set to true disables remote data transfer:
+The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the RBAC permissions in the Admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` or `develop` scripts. See the following example:
 
 ```bash
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
-
+Additional details on using environment variables in Strapi is available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
 
 
 <FeedbackPlaceholder />
