@@ -169,7 +169,7 @@ The table displays each Transfer token's name, description, date of creation, an
 To create a new Transfer token:
 
 1. Click on the **Create new Transfer Token** button.
-2. In the Transer token edition interface, configure the new Transfer token:
+2. In the Transfer token edition interface, configure the new Transfer token:
 
     | Setting name   | Instructions                                                                  |
     | -------------- | ----------------------------------------------------------------------------- |
