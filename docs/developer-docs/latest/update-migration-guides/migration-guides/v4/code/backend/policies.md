@@ -121,7 +121,7 @@ In Strapi v4, depending on whether the policy is applied to REST or GraphQL (use
 
 - Both REST and GraphQL contexts have access to the `is`, `type`, and `state`.
 - The REST context have access to the destructed Koa context.
-- The GraphQL context has access to `parent`, `args`, `context` (which is the GraphQL Context), `info` & `http` (which contains the Koa context) (see [GraphQL customization](http://localhost:8080/developer-docs/latest/plugins/graphql.html#custom-configuration-for-resolvers) documentation).
+- The GraphQL context has access to `parent`, `args`, `context` (which is the GraphQL Context), `info` & `http` (which contains the Koa context) (see [GraphQL customization](/developer-docs/latest/plugins/graphql.md#custom-configuration-for-resolvers) documentation).
 
 You can use `policyContext.type`, which value is either `koa` for REST or `graphql` for the GraphQL plugin, to determine the type of context the policy uses.
 :::
