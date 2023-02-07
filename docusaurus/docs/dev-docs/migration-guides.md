@@ -1,5 +1,5 @@
 ---
-title: Installation
+title: Migration guides
 description: Learn how to migrate your Strapi application to the most recent version.
 ---
 
