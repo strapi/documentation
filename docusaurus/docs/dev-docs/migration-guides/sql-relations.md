@@ -71,8 +71,6 @@ Entity relationship diagrams also use the following abbreviations:
 <ColumnLeft>
 
 ```json title="category/category.settings.json"
-
-```json
 "article": {
   "model": "article",
   "via": "category"
@@ -344,6 +342,7 @@ Entity relationship diagrams also use the following abbreviations:
 <Columns>
 <ColumnLeft title="Strapi v3">
 ```json title="article/article.settings.json"
+
 "categories": {
   "collection": "category"
 }
