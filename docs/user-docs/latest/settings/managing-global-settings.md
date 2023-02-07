@@ -155,7 +155,7 @@ To regenerate an API token:
 
 Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/developer-docs/latest/developer-resources/data-management.md#transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
 
-![Transfer tokens](../assets/settings/settings_api-token.png) <!--add image-->
+![Transfer tokens](../assets/settings/settings_transfer-token.png)
 
 The *Transfer Tokens* settings sub-section displays a table listing all of the created Transfer tokens.
 
@@ -171,15 +171,15 @@ To create a new Transfer token:
 1. Click on the **Create new Transfer Token** button.
 2. In the Transer token edition interface, configure the new Transfer token:
 
-    | Setting name   | Instructions                                                             |
-    | -------------- | ------------------------------------------------------------------------ |
+    | Setting name   | Instructions                                                                  |
+    | -------------- | ----------------------------------------------------------------------------- |
     | Name           | Write the name of the Transfer token.                                         |
     | Description    | (optional) Write a description for the Transfer token.                        |
-    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
+    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
     
 3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
-    ![Custom Transfer Token](../assets/settings/settings_api-token-custom.png) <!--add image-->
+    ![Custom Transfer Token](../assets/settings/settings_create-transfer-token.png)
 
 :::caution
 For security reasons, Transfer tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created Transfer token will be hidden and will not be displayed again.
@@ -196,4 +196,4 @@ To regenerate an Transfer token:
 
 ## Configuring other plugins
 
-Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
+Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, following the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
