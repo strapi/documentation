@@ -1,0 +1,7 @@
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--strapi-neutral-800);
+  background: none;
+  font-weight: 700;
+}
+
+/* TODO for v2: style clickable items */
