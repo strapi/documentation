@@ -356,7 +356,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --only config
 ## Transfer data using the CLI tool <BetaBadge />
 
 :::strapi
-`strapi transfer` is only available in the current beta version. To install the beta version run the following command in your terminal: 
+`strapi transfer` is only available in the current beta version. To install the beta version run the following command in your terminal:
 
 ```bash
 npx create-strapi-app@beta
@@ -366,10 +366,10 @@ npx create-strapi-app@beta
 
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The command allows you to transfer data between:
 
-- a local Strapi instance and a remote Strapi instance, 
+- a local Strapi instance and a remote Strapi instance,
 - a remote Strapi instance and another remote Strapi instance.
 
-The `strapi transfer` command is authorized by a [transfer token](userguide-link)
+The `strapi transfer` command is requires a `URL` for the destination instance and a [transfer token](userguide-link) issued by the destination instance. The options `--force`, `--exclude`, and --`only` are available to customize the transfer process. 
 
 
 
