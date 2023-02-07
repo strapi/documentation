@@ -67,9 +67,17 @@ The `strapi_permission` table used in Strapi `v3` is named `admin_permissions` i
 
 - The table structure is different in Strapi `v3` and Strapi `v4`:
 
-| Strapi v3 | Strapi v4 |
-| --------- | --------- |
-| ![Strapi v3 permissions](/img/assets/v3-strapi_permission.png) | ![Strapi v4 permissions](/img/assets/v4-admin_permissions.png) | ![Strapi v4 permissions](/img/assets/v4-admin_permissions.png) |
+<Columns>
+
+<ColumnLeft title="Strapi v3">
+<img src="/img/assets/data-migration/v3-strapi_permission.png" alt="Strapi v3 permissions"/>
+</ColumnLeft>
+
+<ColumnRight title="Strapi v4">
+<img src="/img/assets/data-migration/assets/v4-admin_permissions.png" alt="Strapi v4 permissions"/>
+</ColumnRight>
+
+</Columns>
 
 - The role relation in Strapi `v4` is handled in a join table named `admin_permissions_role_links`.
 - New indexes have been created for the `created_by_id` and `updated_by_id` columns of Strapi v3, with the following names:
@@ -216,9 +224,17 @@ Strapi `v4` introduces breaking changes that impact the table names, column name
 
 The tables and database structure used by the [Users & Permissions plugin](/dev-docs/plugins/users-permissions) are different in Strapi `v3` and Strapi `v4`:
 
-| Strapi v3 | Strapi v4 |
-| --------- | --------- |
-| ![](/img/assets/v3-up.png) | ![](/img/assets/v4-up.png) |
+<Columns>
+
+<ColumnLeft title="Strapi v3">
+<img src="/img/assets/data-migration/v3-up.png" alt="v3"/>
+</ColumnLeft>
+
+<ColumnRight title="Strapi v4">
+<img src="/img/assets/data-migration/v4-up.png" alt="v4"/>
+</ColumnRight>
+
+</Columns>
 
 #### Enabled permissions
 
@@ -254,7 +270,16 @@ In Strapi v4, the data structure of the [Upload plugin](/dev-docs/plugins/upload
 
 In Strapi v4, localization tables used by the [Internationalization (i18n)](/dev-docs/plugins/i18n) plugin follow the [circular many-to-many relationships migration](/dev-docs/migration-guides/sql-relations#circular-relations) and are renamed from `entities__localizations` to `entities_localizations_links`.
 
-| Strapi v3 | Strapi v4 |
-| --------- | --------- |
-| ![Entity relationship diagram for i18n localizations in v3](/img/assets/v3-i18n-localizations.png) | ![Entity relationship diagram for i18n localizations in v4](/img/assets/v4-i18n-localizations.png) |
+<Columns>
+
+<ColumnLeft title="Strapi v3">
+<img src="/img/assets/data-migration/v3-i18n-localizations.png" alt="Entity relationship diagram for i18n localizations in v3"/>
+</ColumnLeft>
+
+<ColumnRight title="Strapi v4">
+<img src="/img/assets/data-migration/v4-i18n-localizations.png" alt="Entity relationship diagram for i18n localizations in v4"/>
+</ColumnRight>
+
+</Columns>
+
 
