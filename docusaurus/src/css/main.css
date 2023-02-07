@@ -1,0 +1,20 @@
+h1 {
+  color: var(--strapi-neutral-900);
+  font-weight: 600;
+  font-size: 35px;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+
+.theme-doc-markdown.markdown {
+  color: var(--strapi-neutral-800);
+  font-weight: 400;
+}
+
+.theme-doc-markdown.markdown a {
+  font-weight: 600;
+}

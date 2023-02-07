@@ -5,6 +5,7 @@
  */
 
 @import './palette.css';
+@import './main.css';
 @import './badges.css';
 @import './admonitions.css';
 @import './navigation.css';
