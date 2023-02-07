@@ -41,7 +41,7 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 `connect` can be used in combination with [`disconnect`](#disconnect).
 
-:::warning
+:::caution
 
 `connect` can not be used for media attributes.
 
