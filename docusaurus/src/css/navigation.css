@@ -1,3 +1,6 @@
+/**
+ * Top navbar
+ */
 .navbar__logo {
   width: 229px;
   height: 25px;
@@ -14,6 +17,10 @@
   color: var(--strapi-neutral-800);
   font-weight: 700;
 }
+
+/**
+ * Left sidebar
+ */
 
 .theme-doc-sidebar-item-category-level-1 .menu__link.menu__link.menu__link--sublist {
   font-weight: 700;
@@ -86,3 +93,26 @@
 
 
 /* TODO for v2: update line-height/vertical spacings */
+
+/**
+ * Right sidebar
+ */
+.table-of-contents__link {
+  color: var(--strapi-neutral-700);
+  font-size: 12px;
+}
+
+.table-of-contents__link--active {
+  color: var(--strapi-primary-600);
+  font-weight: 700;
+}
+
+.table-of-contents__link--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  background-color: var(--strapi-primary-600);
+  transform: translateY(-2px);
+  width: 3px;
+  height: 23px;
+}
