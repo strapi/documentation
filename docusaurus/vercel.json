@@ -3,6 +3,14 @@
     {
       "source": "/developer-docs/latest/development/admin-customization",
       "destination": "/dev-docs/admin-panel-customization"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment.html",
+      "destination": "/dev-docs/deployment"
+    },
+    {
+      "source": "/developer-docs/latest/development/error-handling",
+      "destination": "/dev-docs/error-handling"
     }
   ]
 }
