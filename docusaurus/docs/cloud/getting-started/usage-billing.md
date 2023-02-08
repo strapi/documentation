@@ -10,11 +10,10 @@ This page contains general information related to the usage and billing of your 
 
 The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
 
-| Feature | Free | Pro | Team |
+| Feature | Free Trial | Pro | Team |
 | --- | --- | --- | --- |
 | **CMS Seats** | 10 | 10 | 20 |
 | **Database Entries** | 100,000 | 100,000 | 1,000,000 |
-| **Database Storage** | 1GB | 1GB | 20GB |
 | **Assets Storage** | 100GB | 150GB | 500GB |
 | **Assets Bandwidth** | 5GB | 500GB | 1,000GB |
 | **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
@@ -22,9 +21,8 @@ The usage-based pricing for Strapi Cloud is based on the following criteria and 
 
 Where:
 
-- **CMS Seats** are the number of users that can access the Strapi Admin Panel.
+- **CMS Seats** are the maximum number of users that can access the Strapi Admin Panel.
 - **Database Entries** are the number of entries in your database.
-- **Database Storage** is the amount of storage used by your database.
 - **Assets Storage** is the amount of storage used by your assets.
 - **Assets Bandwidth** is the amount of bandwidth used by your assets. 
 - **API Requests** are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
@@ -37,13 +35,13 @@ Billing is based on the usage of your Strapi Cloud account and applications. You
 
 If you exceed the limits of your plan, you will be charged for the overage. For example, if you exceed the limit of 100,000 database entries on the Pro plan, you will be charged for the excess DB entries over 100,000 at the end of the current billing period.
 
-Overages are billed according to the following rates:
+Overages are charged according to the following rates:
 
-| Feature | Pro | Team |
-| :--- | ---: | ---: |
-| **API Requests** | TODO  | $1.50 / 25k requests |
-| **Asset Bandwidth** | TODO | $25.00 / 100GB |
-| **Asset Storage** | TODO | $2.00/GB per month |
+| Feature | Rate |
+| :--- | ---: |
+| **API Requests** | $1.50 / 25k requests |
+| **Asset Bandwidth** | $25.00 / 100GB |
+| **Asset Storage** | $2.00/GB per month |
 
 ### Project suspension
 
