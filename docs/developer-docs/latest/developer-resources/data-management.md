@@ -264,7 +264,7 @@ npm strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 </code-block>
 </code-group>
 
-### Bypass all command line prompts
+### Bypass all `import` command line prompts
 
 When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
 
@@ -380,7 +380,7 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 - a remote Strapi instance and another remote Strapi instance.
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including view, create, read, regenerate and delete. See the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens) for details on how to create and manage Transfer tokens.
 :::
 
 ### Generate a transfer token
@@ -396,12 +396,39 @@ To initiate a data transfer:
 2. In a new terminal window, navigate to the root directory of the source instance.
 3. Run the following minimal command to initiate the transfer:
 
+    <code-group>
+    <code-block title="YARN">
+
+    ```bash
+    yarn strapi transfer --to <destination URL> --to-token <Transfer token>
+    ```
+
+    </code-block>
+
+    <code-block title="NPM">
+
+    ```bash
+    npm strapi yarn strapi transfer -- --to <destination URL> --to-token <Transfer token>
+    ```
+
+    </code-block>
+    </code-group>
+
+4. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
+5. If you answer **Yes** in step 4, the transfer operation initiates and, when completed, prints a summary of the transferred types in the CLI.
+
+### Bypass all `transfer` command line prompts
+
+When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
+
+#### Example of the `--force` option with `transfer`
+
 <br/>
 <code-group>
 <code-block title="YARN">
 
 ```bash
-yarn strapi transfer --to {destination URL} --to-token {Transfer token}
+yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --force 
 ```
 
 </code-block>
@@ -409,7 +436,7 @@ yarn strapi transfer --to {destination URL} --to-token {Transfer token}
 <code-block title="NPM">
 
 ```bash
-npm strapi yarn strapi transfer -- --to {destination URL} --to-token {Transfer token}
+npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token> --force 
 ```
 
 </code-block>
@@ -423,32 +450,57 @@ The default `strapi transfer` command transfers your content (entities and relat
 
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
 
-::: warning
-Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
-:::
-
-:::note
-Media such as images consist of the file (asset) and the entity in the database. If you use the `--exclude` flag to remove assets, the database records are still included, and could render as broken links.
-:::
+#### Examples: exclude files from transfer and only transfer files
 
 :::: tabs group
 ::: tab EXCLUDE
 
+<code-group>
+<code-block title="YARN">
+
 ```bash
-strapi transfer --to https://
+yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --exclude files
 ```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token>> --exclude files
+```
+
+</code-block>
+</code-group>
 
 :::
 ::: tab ONLY
 
-```bash
+<code-group>
+<code-block title="YARN">
 
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --only files
 ```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token> --only files
+```
+
+</code-block>
+</code-group>
+
 
 :::
 ::::
 
-<!--#### Example: transfer data from a local Strapi instance to a Strapi Cloud instance-->
+::: warning
+Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
+:::
 
 ### Managing data transfer with environment variables
 
@@ -457,6 +509,7 @@ The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to d
 ```bash
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
+
 Additional details on using environment variables in Strapi is available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
 
 
