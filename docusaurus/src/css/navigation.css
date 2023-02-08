@@ -100,9 +100,11 @@
 .table-of-contents__link {
   color: var(--strapi-neutral-700);
   font-size: 12px;
+  line-height: 16px;
 }
 
-.table-of-contents__link--active {
+.table-of-contents__link--active,
+.table-of-contents__link:hover {
   color: var(--strapi-primary-600);
   font-weight: 700;
 }
@@ -116,3 +118,5 @@
   width: 3px;
   height: 23px;
 }
+
+/* TODO for v2: update line-height/vertical spacings */
