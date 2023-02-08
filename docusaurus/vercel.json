@@ -11,6 +11,10 @@
     {
       "source": "/developer-docs/latest/development/error-handling",
       "destination": "/dev-docs/error-handling"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation.html",
+      "destination": "/dev-docs/installation"
     }
   ]
 }
