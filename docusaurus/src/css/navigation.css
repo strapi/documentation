@@ -1,3 +1,20 @@
+.navbar__logo {
+  width: 229px;
+  height: 25px;
+}
+
+.navbar__link {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--strapi-neutral-700);
+  font-weight: 500;
+}
+
+.navbar__link--active {
+  color: var(--strapi-neutral-800);
+  font-weight: 700;
+}
+
 .theme-doc-sidebar-item-category-level-1 .menu__link.menu__link.menu__link--sublist {
   font-weight: 700;
 }
