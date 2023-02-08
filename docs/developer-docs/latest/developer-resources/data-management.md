@@ -363,12 +363,12 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --only config
 `strapi transfer` is only available in the current beta version. To create a new project using the beta version, run the following command in your terminal:
 
 ```bash
-npx create-strapi-app@beta
+npx create-strapi-app@beta <project-name>
 ```
 
 :::
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The CLI command consists of the following arguments:
+The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The CLI command consists of the following arguments:
 
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
@@ -423,7 +423,7 @@ To initiate a data transfer:
 
 ### Bypass all `transfer` command line prompts
 
-When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi transfer` programmatically.
 
 #### Example of the `--force` option with `transfer`
 
@@ -450,35 +450,8 @@ npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfe
 
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
 
-### Exclude data types during transfer
-
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
-
-#### Examples: exclude files from transfer and only transfer files
-
-:::: tabs group
-::: tab EXCLUDE
-
-<code-group>
-<code-block title="YARN">
-
-```bash
-yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --exclude files
-```
-
-</code-block>
-
-<code-block title="NPM">
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token>> --exclude files
-```
-
-</code-block>
-</code-group>
-
-:::
-::: tab ONLY
+#### Example: only transfer files
+<br/>
 
 <code-group>
 <code-block title="YARN">
@@ -498,9 +471,29 @@ npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfe
 </code-block>
 </code-group>
 
+### Exclude data types during transfer
 
-:::
-::::
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
+
+#### Example: exclude files from transfer
+<br/>
+<code-group>
+<code-block title="YARN">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --exclude files
+```
+
+</code-block>
+
+<code-block title="NPM">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token>> --exclude files
+```
+
+</code-block>
+</code-group>
 
 ::: warning
 Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
@@ -514,7 +507,99 @@ The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to d
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
 
-Additional details on using environment variables in Strapi is available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
+Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
 
+### Test the transfer command locally
+
+The `transfer` command is not intended for transferring data between two local instances. The [`export`](#export-data-using-the-cli-tool) and [`import`](#import-data-using-the-cli-tool) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
+
+#### Create and clone a new Strapi project
+
+1. Create a new Strapi project using the `beta` installation command:
+
+    ```bash
+    npx create-strapi-app@beta <project-name> --quickstart
+    ```
+
+2. Create at least 1 content type in the project. See the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) if you need instructions on creating your first content type.
+
+    :::caution
+    Do not add any data to your project at this step.
+    :::
+
+3. Commit the project to a git repository:
+
+    ```bash
+    git init
+    git add .
+    git commit -m "first commit"
+    ```
+
+4. Clone the project repository:
+
+    ```bash
+    cd .. # move to the parent directory
+    git clone <path to created git repository>.git/ <new-instance-name>
+    ```
+
+#### Add data to the first Strap instance
+
+1. Return to the first Strapi instance and add data to the content type.
+2. Stop the server on the first instance.
+
+#### Create a transfer token
+
+1. Navigate to the second Strapi instance and run the `build` and `develop` commands in the root directory:
+
+    <code-group>
+    <code-block title="YARN">
+
+    ```bash
+    yarn build && yarn develop
+    ```
+
+    </code-block>
+
+    <code-block title="NPM">
+
+    ```bash
+    npm run build && npm run develop
+    ```
+
+    </code-block>
+    </code-group>
+
+2. Register an admin user.
+3. [Create and copy a Transfer token](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens).
+4. Leave the server running.
+
+#### Transfer your data
+
+1. Return the the first Strapi instance.
+2. In the terminal run the `strapi transfer` command:
+
+    <code-group>
+    <code-block title="YARN">
+
+    ```bash
+    yarn strapi transfer --to http://localhost:1337/admin --to-token <my-transfer-token> 
+    ```
+
+    </code-block>
+
+    <code-block title="NPM">
+
+    ```bash
+    npm run strapi transfer -- --to http://localhost:1337/admin --to-token <my-transfer-token>>
+    ```
+
+    </code-block>
+    </code-group>
+
+3. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
+
+:::tip
+In some cases you might receive a connection refused error targeting `localhost`. Try changing the address to [http://127.0.0.1:1337/admin](http://127.0.0.1:1337/admin).
+:::
 
 <FeedbackPlaceholder />
