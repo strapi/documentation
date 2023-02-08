@@ -1,5 +1,5 @@
 ---
-title: v4 plugin migration - Enabling a plugin - Strapi Developer Docs
+title: Enabling a plugin
 description: Enable a Strapi plugin while migrating from v3.6.x to v4.0.x with step-by-step instructions
 displayed_sidebar: devDocsSidebar
 canonicalUrl: http://docs.strapi.io/dev-docs/migration/v3-to-v4/plugin/enable-plugin.html

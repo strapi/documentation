@@ -310,7 +310,21 @@ const sidebars = {
           label: 'v3 to v4 migration guides',
           items: [
             // 'dev-docs/migration/v3-to-v4/code-migration',
-            'dev-docs/migration/v3-to-v4/plugin-migration',
+            {
+              type: 'category',
+              collapsed: false,
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v3-to-v4/plugin-migration'
+              },
+              label: 'Plugin migration',
+              items: [
+                'dev-docs/migration/v3-to-v4/plugin/update-folder-structure',
+                'dev-docs/migration/v3-to-v4/plugin/migrate-back-end',
+                'dev-docs/migration/v3-to-v4/plugin/migrate-front-end',
+                'dev-docs/migration/v3-to-v4/plugin/enable-plugin',
+              ]
+            },
             // 'dev-docs/migration/v3-to-v4/data-migration',
           ]
         }

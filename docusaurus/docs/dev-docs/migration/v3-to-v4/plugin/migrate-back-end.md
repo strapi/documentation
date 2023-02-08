@@ -1,5 +1,5 @@
 ---
-title: v4 Plugin Migration - Migrating the back end - Strapi Developer Docs
+title: Migrating the back end
 description: Migrate the backend of a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 displayed_sidebar: devDocsSidebar
 canonicalUrl: http://docs.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-back-end.html
