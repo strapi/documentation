@@ -16,9 +16,9 @@ The `strapi transfer` command is available in beta release only. See [Transfer d
 
 Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Additionally, the data management system allows you to transfer data between a local Strapi instance and a remote Strapi instance. Strapi provides CLI-based commands that allow you to export, import, and transfer data. Common use cases include:
 
-- creating a data backup,
-- restoring data from a backup,
-- transfer data from a local to remote instance.
+- [creating a data backup](#export-data-using-the-cli-tool),
+- [restoring data from a backup](#import-data-using-the-cli-tool),
+- [transfer data from a local to remote instance](#transfer-data-using-the-cli-tool).
 
  The following documentation details examples of how to use the `strapi export`, `strapi import`, and `strapi transfer` commands.
 
@@ -272,7 +272,7 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption
 
 When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
 
-#### Example of the `--force` option
+#### Example: bypass command line prompts with `--force`
 
 <br/>
 <code-group>
@@ -368,7 +368,13 @@ npx create-strapi-app@beta <project-name>
 
 :::
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The CLI command consists of the following arguments:
+The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas.
+
+:::caution
+Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
+:::
+
+The CLI command consists of the following arguments:
 
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
@@ -384,12 +390,12 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 - a remote Strapi instance and another remote Strapi instance.
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](user-docs/latest/settings/managing-global-settings.md##creating-a-transfer-token) for details on how to create and manage Transfer tokens.
 :::
 
 ### Generate a transfer token
 
-The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens).
+The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](user-docs/latest/settings/managing-global-settings.md#creating-a-transfer-token).
 
 
 ### Setup and run the data transfer
@@ -425,7 +431,7 @@ To initiate a data transfer:
 
 When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi transfer` programmatically.
 
-#### Example of the `--force` option with `transfer`
+#### Example: bypass the `transfer` command line prompts with `--force`
 
 <br/>
 <code-group>
