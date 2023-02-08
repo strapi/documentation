@@ -1,1 +1,0 @@
-This guide is part of the [v4 code migration guide](/dev-docs/migration-guides/code-migration.md) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
