@@ -378,7 +378,7 @@ The CLI command consists of the following arguments:
 
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
-| `--to`       | URL of the destination Strapi instance. The endpoint is `/admin`                                                                      | required |
+| `--to`       | URL of the destination Strapi instance. The endpoint is `/admin`.                                                                      | required |
 | `‑‑to‑token` | Transfer token from the Strapi destination instance.       | required |
 | `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |-         |
 | `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                   |-         |
