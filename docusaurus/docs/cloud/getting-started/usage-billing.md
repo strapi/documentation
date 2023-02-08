@@ -39,7 +39,11 @@ If you exceed the limits of your plan, you will be charged for the overage. For 
 
 Overages are billed according to the following rates:
 
-TODO: Add overage rates
+| Feature | Pro | Team |
+| :--- | ---: | ---: |
+| **API Requests** | TODO  | $1.50 / 25k requests |
+| **Asset Bandwidth** | TODO | $25.00 / 100GB |
+| **Asset Storage** | TODO | $2.00/GB per month |
 
 ### Project suspension
 
