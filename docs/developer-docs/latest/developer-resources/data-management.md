@@ -390,12 +390,12 @@ The CLI command consists of the following arguments:
 - a remote Strapi instance and another remote Strapi instance.
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](user-docs/latest/settings/managing-global-settings.md##creating-a-transfer-token) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/latest/settings/managing-global-settings.md#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
 :::
 
 ### Generate a transfer token
 
-The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](user-docs/latest/settings/managing-global-settings.md#creating-a-transfer-token).
+The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/latest/settings/managing-global-settings.md#creating-a-new-transfer-token).
 
 
 ### Setup and run the data transfer
