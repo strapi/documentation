@@ -306,13 +306,13 @@ const sidebars = {
         'dev-docs/update-version',
         {
           type: 'category',
-          collapsed: false,
+          collapsed: true,
           label: 'v3 to v4 migration guides',
           items: [
             // 'dev-docs/migration/v3-to-v4/code-migration',
             {
               type: 'category',
-              collapsed: false,
+              collapsed: true,
               link: {
                 type: 'doc',
                 id: 'dev-docs/migration/v3-to-v4/plugin-migration'
