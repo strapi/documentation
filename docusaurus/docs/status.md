@@ -27,7 +27,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 **Content conversion progress:**
 
 <details>
-<summary>Developer documentation ▮▮▮▮▯▯▯▯▯▯ ~40% complete</summary>
+<summary>Developer documentation ▮▮▮▮▮▮▮▯▯▯ ~75% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the Developer Docs:
 
@@ -173,11 +173,11 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [ ] SQL relations cheatsheet (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.html))
       - [ ] MongoDB v3 to SQL v3 migration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html))
       - [ ] MongoDB vs. SQL cheatsheet (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.html))
-    - [ ] Plugin migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html))
-      - [ ] Updating the folder structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html))
-      - [ ] Migrating the back end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html))
-      - [ ] Migrating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html))
-      - [ ] Enabling a plugin (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html))
+    - [x] Plugin migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html))
+      - [x] Updating the folder structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html))
+      - [x] Migrating the back end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html))
+      - [x] Migrating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html))
+      - [x] Enabling a plugin (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html))
 
 </details>
 
