@@ -36,12 +36,13 @@ The **Billing** tab displays your billing information and enables you to update 
 Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
 
 1. Click the **Manage subscriptions** button. A login modal will appear.
-    ![Manage subscriptions login](/img/assets/cloud/manage-login.png)
+    <img src="/img/assets/cloud/manage-login.png" alt="Manage subscriptions login" width="400px" />
+    
 
 2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
 
 3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** page will appear.
-    ![Manage subscriptions](/img/assets/cloud/manage-subscriptions.png)
+    <img src="/img/assets/cloud/manage-subscriptions.png" alt="Manage subscriptions" width="400px" />
 
 4. From here you can view and edit your:
     * Active Subscription
@@ -54,24 +55,25 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
 
 Click on the active subscription tile to view the details of your subscription:
 
-![Active subscription](/img/assets/cloud/subscription-details.png)
+<img src="/img/assets/cloud/subscription-details.png" alt="Active subscription" width="400px" />
 
 Here you can view your current subscription plan, and any additional add-ons, as well as the monthly billed amount.
 
 You can also:
-    * Edit your **Project Name**
-    * Update your **Shipping Details**, the mailing/billing address associated with your subscription
-    * [Edit your subscription](#edit-subscription)
-    * **Cancel Subscription**
+
+* Edit your **Project Name**
+* Update your **Shipping Details**, the mailing/billing address associated with your subscription
+* [Edit your subscription](#edit-subscription)
+* **Cancel Subscription**
 
 ##### Edit subscription
 
 Click the **Edit Subscription** button to change your subscription plan or add-ons:
-    ![Edit subscription](/img/assets/cloud/edit-subscription.png)
+<img src="/img/assets/cloud/edit-subscription.png" alt="Edit subscription" width="400px" />
 
 Use the **Change** button to select a different subscription plan: either **Pro** or **Team**. 
 
 Use the **Add Addons** buttons to add additional seats to your plan:
-    ![Add seats](/img/assets/cloud/add-addons.png)
+<img src="/img/assets/cloud/add-addons.png" alt="Adding seats" width="400px" />
 
 Click **Update Subscription** to save your changes.
