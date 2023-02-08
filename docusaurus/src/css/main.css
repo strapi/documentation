@@ -1,5 +1,4 @@
 h1 {
-  color: var(--strapi-neutral-900);
   font-weight: 600;
   font-size: 35px;
 }
@@ -10,11 +9,18 @@ h2 {
 }
 
 
-.theme-doc-markdown.markdown {
-  color: var(--strapi-neutral-800);
+[data-theme='light'] .theme-doc-markdown.markdown {
   font-weight: 400;
 }
 
 .theme-doc-markdown.markdown a {
   font-weight: 600;
+}
+
+[data-theme='light'] .theme-doc-markdown.markdown {
+  color: var(--strapi-neutral-800);
+}
+
+[data-theme='light'] h1 {
+  color: var(--strapi-neutral-900);
 }
