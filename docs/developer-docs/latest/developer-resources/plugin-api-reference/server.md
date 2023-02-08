@@ -21,7 +21,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | [config](#configuration) object                                                                                                                                                                                |
+| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -114,6 +114,25 @@ Once defined, the configuration can be accessed:
 
 * with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
 * or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+
+## Cron
+
+The `cron` object allows you to add cron jobs to the Strapi instance.
+
+```js
+// path: ./src/plugins/my-plugin/strapi-server.js
+
+module.exports = () => ({
+  bootstrap({ strapi }) {
+        strapi.cron.add({
+          // runs every second
+        '* * * * * *': ({ strapi }) => {
+          console.log("hello from plugin")
+        },
+    })
+  },
+});
+```
 
 ## Backend customization
 

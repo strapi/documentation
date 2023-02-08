@@ -96,7 +96,7 @@ module.exports = ({ env }) => ({
 ### Strapi instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
-basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](process-manager.md).
+basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.md).
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 
