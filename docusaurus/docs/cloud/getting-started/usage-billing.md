@@ -39,6 +39,7 @@ Overages are charged according to the following rates:
 
 | Feature | Rate |
 | :--- | ---: |
+| **CMS Seats** | $15.00 / seat per month |
 | **API Requests** | $1.50 / 25k requests |
 | **Asset Bandwidth** | $25.00 / 100GB |
 | **Asset Storage** | $2.00/GB per month |

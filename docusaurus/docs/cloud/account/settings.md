@@ -31,6 +31,47 @@ The **Billing** tab displays your billing information and enables you to update 
 
 ![Account billing settings](/img/assets/cloud/account-billing.png)
 
-## Invoices
+### Managing subscriptions
 
-The **Invoices** tab displays a chronological list of all your invoices and allows you to download them.
+Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
+
+1. Click the **Manage subscriptions** button. A login modal will appear.
+    ![Manage subscriptions login](/img/assets/cloud/manage-login.png)
+
+2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
+
+3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** page will appear.
+    ![Manage subscriptions](/img/assets/cloud/manage-subscriptions.png)
+
+4. From here you can view and edit your:
+    * Active Subscription
+    * Account Information
+    * Billing & Shipping Addresses
+    * Payment Methods
+    * Billing History
+
+#### Active subscription
+
+Click on the active subscription tile to view the details of your subscription:
+
+![Active subscription](/img/assets/cloud/subscription-details.png)
+
+Here you can view your current subscription plan, and any additional add-ons, as well as the monthly billed amount.
+
+You can also:
+    * Edit your **Project Name**
+    * Update your **Shipping Details**, the mailing/billing address associated with your subscription
+    * [Edit your subscription](#edit-subscription)
+    * **Cancel Subscription**
+
+##### Edit subscription
+
+Click the **Edit Subscription** button to change your subscription plan or add-ons:
+    ![Edit subscription](/img/assets/cloud/edit-subscription.png)
+
+Use the **Change** button to select a different subscription plan: either **Pro** or **Team**. 
+
+Use the **Add Addons** buttons to add additional seats to your plan:
+    ![Add seats](/img/assets/cloud/add-addons.png)
+
+Click **Update Subscription** to save your changes.
