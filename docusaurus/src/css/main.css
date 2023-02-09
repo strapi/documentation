@@ -17,12 +17,34 @@ h2 {
   font-weight: 600;
 }
 
+.theme-doc-markdown.markdown a {
+  color: var(--strapi-primary-600);
+}
+[data-theme='dark'] .theme-doc-markdown.markdown a {
+  color: var(--strapi-dark-primary-600);
+  text-decoration: none;
+}
+
 [data-theme='light'] .theme-doc-markdown.markdown {
   color: var(--strapi-neutral-800);
 }
+[data-theme='dark'] .theme-doc-markdown.markdown {
+  color: var(--strapi-dark-neutral-800);
+}
 
-[data-theme='light'] h1 {
+[data-theme='light'] h1,
+[data-theme='light'] h2,
+[data-theme='light'] h3,
+[data-theme='light'] h4,
+[data-theme='light'] h5 {
   color: var(--strapi-neutral-900);
+}
+[data-theme='dark'] h1,
+[data-theme='dark'] h2,
+[data-theme='dark'] h3,
+[data-theme='dark'] h4,
+[data-theme='dark'] h5 {
+  color: var(--strapi-dark-neutral-900);
 }
 
 [data-theme='dark'] .main-wrapper,

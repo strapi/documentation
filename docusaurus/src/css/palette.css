@@ -46,6 +46,7 @@
   --strapi-alternative-100: #F6ECFC;
   --strapi-secondary-700: #006096;
   --strapi-secondary-600: #0C75AF;
+  --strapi-secondary-500: #66B7F1;
   --strapi-secondary-200: #B8E1FF;
   --strapi-secondary-100: #EAF5FF;
 }
@@ -62,8 +63,13 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
   --ifm-navbar-background-color: #212134;
   --strapi-dark-primary-600: #7B79FF;
+  --strapi-dark-warning-700: #FAE7B9;
+  --strapi-dark-warning-600: #F29D41;
+  --strapi-dark-warning-200: #4A4A6A;
+  --strapi-dark-neutral-900: #FFFFFF; /* both 800 and 900 identical in Figma */
   --strapi-dark-neutral-800: #FFFFFF;
   --strapi-dark-neutral-700: #EAEAEF;
+  --strapi-dark-neutral-600: #666687;
   --strapi-dark-neutral-150: #32324D;
   --strapi-dark-neutral-100: #181826;
   --strapi-dark-neutral-0: #212134;
