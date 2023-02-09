@@ -24,3 +24,13 @@ h2 {
 [data-theme='light'] h1 {
   color: var(--strapi-neutral-900);
 }
+
+[data-theme='dark'] .main-wrapper,
+[data-theme='dark'] .navbar,
+[data-theme='dark'] .collapseSidebarButton_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-CollapseButton-styles-module {
+  background-color: var(--strapi-dark-neutral-0);
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom: solid 1px var(--strapi-dark-neutral-150);
+}
