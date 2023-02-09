@@ -3,7 +3,7 @@ title: Migrating the front end
 description: Migrate the front end of a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 displayed_sidebar: devDocsSidebar
 canonicalUrl: http://docs.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-front-end.html
-next: ./enable-plugin.md
+pagination_next: ./enable-plugin.md
 ---
 
 import PluginMigrationIntro from '/docs/snippets/plugin-migration-intro.md'
