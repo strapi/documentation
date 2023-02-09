@@ -459,14 +459,14 @@ throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 
 Queries using the [Entity Service API](/dev-docs/api/entity-service) and [Query Engine API](/dev-docs/api/query-engine) have access to database transactions in v4.7.0 and later versions of Strapi. Database transactions allow you to rollback incomplete actions due to an error. For example, if a controller contains multiple database queries with interspersed business logic an error thrown at any of the steps wrapped in a database transaction will return the database to its state prior to the controller starting.
 
-In the callback param you have access to the transaction instance (from knex) if needed, and a rollback and commit function if needed as well"
+In the callback param you have access to the transaction instance (from knex) if needed, and a rollback and commit function if needed as well.
 
 ### Wrapping queries with database transactions
 
 Everything that is inside a the transaction can be:
 
 - sent through the callback,
-- is automatically rolled back if there is a failure and throws an error, 
+- automatically rolled back if there is a failure and an error is thown,
 - otherwise commits the transaction.
 
 ```js
