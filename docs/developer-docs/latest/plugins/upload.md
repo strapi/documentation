@@ -345,20 +345,50 @@ const response = await fetch('http://localhost:1337/api/upload', {
 You have to send FormData in your request body.
 :::
 
+## Upload NodeJS Buffer
+
+The following parameters are accepted:
+
+| Parameter                    | Description                                          |
+| ---------------------------- | ---------------------------------------------------- |
+| `file`                       | A NodeJS file buffer                                 |
+| `fileName`                   | The filename without the extension                   |
+| `ext`                        | The file extension (e.g `png` or `jpeg`)             |
+| `mime`                       | The file mime type (e.g `image/png` or `image/jpeg`) |
+| `alternativeText` (optional) | Alt text for the image                               |
+| `caption` (optional)         | Caption for the image                                |
+| `folder` (optional)          | ID of the folder                                     |
+
+```js
+const file = fs.readFileSync('./test.png');
+strapi
+  .plugin('upload')
+  .service('upload')
+  .uploadBuffer({
+    file,
+    fileName: 'test',
+    mime: 'image/png',
+    ext: 'png',
+    alternativeText: 'test',
+    caption: 'test',
+    folder: 1,
+  });
+```
+
 ### Upload entry files
 
 Upload one or more files that will be linked to a specific entry.
 
 The following parameters are accepted:
 
-| Parameter | Description |
-| --------- | ----------- |
-|`files`    | The file(s) to upload. The value(s) can be a Buffer or Stream. |
-|`path` (optional) | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
-| `refId` | The ID of the entry which the file(s) will be linked to. |
-| `ref` | The unique ID (uid) of the model which the file(s) will be linked to (see more below). |
-| `source` (optional) | The name of the plugin where the model is located. |
-| `field` | The field of the entry which the file(s) will be precisely linked to. |
+| Parameter           | Description                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| `files`             | The file(s) to upload. The value(s) can be a Buffer or Stream.                                      |
+| `path` (optional)   | The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). |
+| `refId`             | The ID of the entry which the file(s) will be linked to.                                            |
+| `ref`               | The unique ID (uid) of the model which the file(s) will be linked to (see more below).              |
+| `source` (optional) | The name of the plugin where the model is located.                                                  |
+| `field`             | The field of the entry which the file(s) will be precisely linked to.                               |
 
 For example, given the `Restaurant` model attributes:
 
