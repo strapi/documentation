@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/audit-logs.html
 
 # Audit Logs <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
-The **Audit Logs** section provides a <!--searchable and filterable--> display of all activities performed by users of the Strapi application.
+The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the [**Settings**](./managing-global-settings.md) panel.
 
@@ -33,18 +33,19 @@ For each log item the following information is displayed:
 * **User**: The user who performed the action.
 * **Details**: Displays a modal with more details about the action. For example the User IP address, the request body, or the response body.
 
-<!--
+
 ## Filtering logs
 
 The **Audit Logs** page displays all logs by default, in reverse chronological order. You can filter the logs by:
 
 * **Action**: Select the type of action to filter by. For example `create` or `update`.
 * **User**: Select the user to filter by.
-* **Date**: Select a date (range) to filter by.
-* **Time**: Select a time (range) to filter by.
-* **+Add Filter**: Create a custom filter by selecting a field and a value.
+* **Date**: Select a date (range) and time to filter by.
+
+![Audit Logs filters](../assets/settings/settings_audit-logs-filters.png)
 
 
+<!--
 ### Creating a custom filter
 
 WiP
@@ -60,5 +61,7 @@ Click the **Search** icon to search for a specific log. The search is performed 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
 ![Log details modal](../assets/settings/settings_log-details.png)
+
+The **Payload** details are displayed in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
 <FeedbackPlaceholder />
