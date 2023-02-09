@@ -70,6 +70,7 @@
   --strapi-dark-neutral-800: #FFFFFF;
   --strapi-dark-neutral-700: #EAEAEF;
   --strapi-dark-neutral-600: #666687;
+  --strapi-dark-neutral-400: #A5A5BA; /* incorrecly named in Figma */
   --strapi-dark-neutral-150: #32324D;
   --strapi-dark-neutral-100: #181826;
   --strapi-dark-neutral-0: #212134;
