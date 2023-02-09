@@ -18,6 +18,7 @@
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link,
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__item {
   color: var(--strapi-dark-neutral-800);
+  font-weight: 700;
 }
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link {
   background-color: transparent !important;
