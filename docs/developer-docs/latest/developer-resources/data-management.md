@@ -214,7 +214,7 @@ The `--exclude` option and `--only` option cannot be used together.
 :::warning
 
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.
-- The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
+- The source and destination schemas must match to successfully use `strapi import`, meaning all content types must be identical.
 - Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 
 :::
@@ -298,7 +298,7 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --force --key my-en
 The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 ::: warning
-Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
+Any types excluded from the import will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
 
 :::note
@@ -355,8 +355,6 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --only config
 </code-block>
 </code-group>
 
-
-
 ## Transfer data using the CLI tool <BetaBadge />
 
 :::strapi Install the beta version
@@ -371,7 +369,10 @@ npx create-strapi-app@beta <project-name>
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas.
 
 :::caution
-Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
+
+- If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
+- Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
+
 :::
 
 The CLI command consists of the following arguments:
@@ -502,7 +503,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfe
 </code-group>
 
 ::: warning
-Any types excluded from the transfer will be deleted in your target instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
+Any types excluded from the transfer will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
 
 ### Managing data transfer with environment variables
@@ -555,13 +556,13 @@ The `transfer` command is not intended for transferring data between two local i
 
 #### Create a transfer token
 
-1. Navigate to the second Strapi instance and run the `build` and `develop` commands in the root directory:
+1. Navigate to the second Strapi instance and run the `build` and `start` commands in the root directory:
 
     <code-group>
     <code-block title="YARN">
 
     ```bash
-    yarn build && yarn develop
+    yarn build && yarn start
     ```
 
     </code-block>
@@ -569,7 +570,7 @@ The `transfer` command is not intended for transferring data between two local i
     <code-block title="NPM">
 
     ```bash
-    npm run build && npm run develop
+    npm run build && npm run start
     ```
 
     </code-block>

@@ -175,6 +175,10 @@ strapi import -f <your-filepath-and-filename> --only config
 
 [Transfers data](/developer-docs/latest/developer-resources/data-management.md#transfer-data-using-the-cli-tool) between two Strapi instances. This command is primarily intended for use between a local instance and a remote instance or two remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/user-docs/latest/settings/managing-global-settings.md#creating-a-new-transfer-token) for detailed documentation on creating Transfer tokens.
 
+:::caution
+The destination Strapi instance should be running with the `start` command and not the `develop` command.
+:::
+
 | Option                       | description                                                                                                                         | required          |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
 | `--to` {destinationURL}      | URL of the destination Strapi instance. Include the `/admin` endpoint.                                                                                            |      required     |
