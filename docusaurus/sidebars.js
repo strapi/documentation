@@ -294,6 +294,55 @@ const sidebars = {
             
           ]
     },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Update and Migration',
+      items: [
+        'dev-docs/update-version',
+        {
+          type: 'category',
+          collapsed: true,
+          label: 'v3 to v4 migration guides',
+          items: [
+            {
+              type: 'category',
+              collapsed: true,
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v3-to-v4/code-migration'
+              },
+              label: 'Code migration',
+              items: [
+                {
+                  type: 'category',
+                  collapsed: true,
+                  link: {
+                    type: 'doc',
+                    id: 'dev-docs/migration/v3-to-v4/code/backend'
+                  },
+                  label: 'Backend migration',
+                  items: [
+                          'dev-docs/migration/v3-to-v4/code/configuration',
+                          'dev-docs/migration/v3-to-v4/code/content-type-schema',
+                          'dev-docs/migration/v3-to-v4/code/controllers',
+                          'dev-docs/migration/v3-to-v4/code/dependencies',
+                          'dev-docs/migration/v3-to-v4/code/global-middlewares',
+                          ''
+                  ]
+
+                },
+                
+              ]
+            },
+            // 'dev-docs/migration/v3-to-v4/plugin-migration',
+            // 'dev-docs/migration/v3-to-v4/data-migration',
+            
+          ]
+        }
+      ],
+    },
+
   ],
 
 
