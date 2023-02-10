@@ -35,3 +35,10 @@ details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-st
   border-color: transparent transparent transparent var(--strapi-dark-neutral-800);
 }
 /* TODO: update triangle shape and padding */
+
+[data-theme='dark'] details * {
+  border-color: var(--strapi-neutral-150);
+}
+[data-theme='light'] details * {
+  border-color: var(--strapi-dark-neutral-150);
+}
