@@ -85,8 +85,8 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [Models](/dev-docs/backend-customization/models)
       - [x] [Webhooks](/dev-docs/backend-customization/webhooks)
     - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
-    - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
-    - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
+    - [x] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
+    - [x] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
     - [ ] Custom fields (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/custom-fields.html#))
     - [x] [TypeScript](/dev-docs/typescript)
     - [x] [Providers](/dev/docs/providers)
@@ -146,7 +146,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [Sentry](dev-docs/plugins/sentry)
     - [x] [API Documentation](dev-docs/plugins/documentation)
   - [ ] ♻️ Update & Migration
-    - [ ] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
+    - [x] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
     - [ ] Migration
       - [ ] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
       - [ ] v3 to v4 migration guides (→ [docs.strapi.io](#))

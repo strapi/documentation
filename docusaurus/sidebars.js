@@ -117,7 +117,7 @@ const sidebars = {
                 'dev-docs/deployment/digitalocean',
                 // 'dev-docs/deployment/google-app-platform',
                 'dev-docs/deployment/heroku',
-              
+
               ],
             },
             {
@@ -132,7 +132,7 @@ const sidebars = {
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
                 'dev-docs/deployment/process-manager',
-              
+
               ],
             },
 
@@ -157,6 +157,7 @@ const sidebars = {
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/filters-locale-publication',
             'dev-docs/api/rest/sort-pagination',
+            'dev-docs/api/rest/relations',
           ]
         },
         {
@@ -217,6 +218,8 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
+        'dev-docs/plugins-extension',
+        'dev-docs/plugins-development',
         'dev-docs/typescript',
         'dev-docs/providers',
       ]
@@ -239,7 +242,7 @@ const sidebars = {
             id: 'dev-docs/integrations',
           },
 
-          
+
           items: [
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
@@ -261,11 +264,11 @@ const sidebars = {
             'dev-docs/integrations/svelte',
             'dev-docs/integrations/vue-js',
 
-            
+
           ]
         },
       ],
-    }, 
+    },
 
     {
       type: 'category',
@@ -289,9 +292,17 @@ const sidebars = {
             'dev-docs/plugins/sentry',
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
-            
-            
-            
+
+
+
+          ]
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Update and Migration',
+      items: [
+            'dev-docs/update-version'  
           ]
     },
     {
@@ -366,6 +377,7 @@ const sidebars = {
 
   ],
 
+ 
 
   userDocsSidebar: [
     'user-docs/intro',
