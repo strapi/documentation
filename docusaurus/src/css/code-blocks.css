@@ -1,6 +1,7 @@
 [data-theme='light'] .codeBlockContainer_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Container-styles-module,
 [data-theme='light'] .prism-code,
-[data-theme='light'] .prism-code code {
+[data-theme='light'] .prism-code code,
+[data-theme='light'] .theme-code-block {
   background-color: var(--strapi-neutral-900) !important;
   color: var(--strapi-neutral-300);
 }
