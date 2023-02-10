@@ -3,31 +3,34 @@
  */
 
 /* TODO: find a better way to target elements 😅  */
+details,
 details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   border: none;
   border-radius: 6px;
 }
 
+details,
 details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module div.collapsibleContent_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   margin-top: .5rem;
   border-top: none;
 }
 
-details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module div.collapsibleContent_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
-}
-
+[data-theme='light'] details,
 [data-theme='light'] details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   background-color: var(--strapi-neutral-150);
   color: var(--strapi-neutral-800);
 }
+[data-theme='dark'] details,
 [data-theme='dark'] details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   background-color: var(--strapi-dark-neutral-150);
   color: var(--strapi-dark-neutral-800);
 }
 
+[data-theme='light'] details,
 [data-theme='light'] details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module summary::before {
   border-color: transparent transparent transparent var(--strapi-neutral-800);
 }
+[data-theme='dark'] details,
 [data-theme='dark'] details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module summary::before {
   border-color: transparent transparent transparent var(--strapi-dark-neutral-800);
 }
