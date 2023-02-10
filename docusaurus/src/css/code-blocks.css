@@ -1,0 +1,46 @@
+[data-theme='light'] .codeBlockContainer_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Container-styles-module,
+[data-theme='light'] .prism-code,
+[data-theme='light'] .prism-code code {
+  background-color: var(--strapi-neutral-900) !important;
+  color: var(--strapi-neutral-300);
+}
+.codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module {
+  border-bottom: none !important;
+}
+[data-theme='dark'] .codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module {
+  color: var(--strapi-neutral-200) !important;
+}
+[data-theme='light'] .prism-code code .token-line,
+[data-theme='light'] .prism-code code .token.plain,
+[data-theme='light'] .prism-code code .token.operator,
+[data-theme='light'] .prism-code code .token.property-access {
+  color: var(--strapi-neutral-100) !important;
+}
+[data-theme='light'] .prism-code code .token.keyword {
+  color: var(--strapi-code-purple) !important;
+  font-style: italic;
+}
+[data-theme='light'] .prism-code code .token.punctuation {
+  color: var(--strapi-primary-200) !important;
+}
+[data-theme='light'] .prism-code code .token.function {
+  color: var(--strapi-code-fluo-green) !important;
+}
+[data-theme='light'] .prism-code code .token.string {
+  color: var(--strapi-code-rose) !important;
+}
+[data-theme='light'] .prism-code code .token.comment {
+  color: var(--strapi-code-dark-blue) !important;
+  font-style: italic;
+}
+[data-theme='light'] .prism-code code .property {
+  color: var(--strapi-success-200) !important;
+}
+[data-theme='light'] .prism-code .buttonGroup_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module button {
+  background: tomato !important;
+}
+[data-theme='light'] .buttonGroup_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module button {
+  /* border: solid 4px tomato; */
+  background: #282A36;
+  color: #F8F8F2;
+}
