@@ -1,3 +1,28 @@
+/**
+ * Quick & easy theme improvements
+ */
+
+ @media (min-width: 800px) {
+  main article {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+}
+
+@media (min-width: 1500px) {
+  main article {
+    padding-left: 6em;
+    padding-right: 4em;
+  }
+}
+
+[data-theme="light"] main article {
+  color: rgb(44, 62, 80);
+}
+
+/**
+ * Headings and "global" elements
+ */
 h1 {
   font-weight: 600;
   font-size: 35px;
