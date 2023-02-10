@@ -5,7 +5,7 @@
 /* TODO: find a better way to target elements 😅  */
 details,
 details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
-  border: none;
+  border: none !important;
   border-radius: 6px;
 }
 
