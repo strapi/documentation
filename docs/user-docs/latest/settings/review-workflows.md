@@ -11,7 +11,7 @@ The Review Workflows feature allows you to create and manage any desired review 
 ## Configuring Review workflows
 
 ::: note
-The Review workflows settings are only available to users with a role granted the **Review workflows** permission. See [Users, Roles, & Permissions](../users-roles-permissions/introduction-to-users-roles-permissions.md) for more information.
+The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permission. See [Users, Roles, & Permissions](../users-roles-permissions/introduction-to-users-roles-permissions.md) for more information.
 :::
 
 Review workflow settings are available in the **Settings** section of the admin panel. To access the settings, click on the **Settings** icon in the left-hand menu, then click on the **Review Workflows** link in the **Global Settings** section.
