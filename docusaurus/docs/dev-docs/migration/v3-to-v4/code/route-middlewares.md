@@ -1,5 +1,6 @@
 ---
 title: Route middlewares 
+displayed_sidebar: devDocsSidebar
 description: Migrate route middlewares of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html
 ---

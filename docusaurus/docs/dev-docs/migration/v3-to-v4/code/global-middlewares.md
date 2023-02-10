@@ -1,5 +1,6 @@
 ---
 title: Global middlewares
+displayed_sidebar: devDocsSidebar
 description: Migrate your global middlewares from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html
 ---
