@@ -57,7 +57,8 @@
 [data-theme='light'] .theme-admonition-tip a {
   color: var(--strapi-success-600);
 }
-[data-theme='light'] .theme-admonition-tip .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module {
+[data-theme='light'] .theme-admonition-tip .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
+[data-theme='light'] .theme-admonition-tip > div:first-child {
   /* title color */
   color: var(--strapi-success-700);
 }
