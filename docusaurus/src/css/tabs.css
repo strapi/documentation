@@ -14,9 +14,9 @@
   margin-top: 0 !important;
 }
 
-[data-theme='light'].tabs__item--active {
+[data-theme='light'] .tabs__item--active {
   border-bottom-color: var(--strapi-primary-600) !important;
 }
-[data-theme='dark'].tabs__item--active {
+[data-theme='dark'] .tabs__item--active {
   border-bottom-color: var(--strapi-dark-primary-600) !important;
 }
