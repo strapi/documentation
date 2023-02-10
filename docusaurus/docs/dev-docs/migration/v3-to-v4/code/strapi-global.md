@@ -1,5 +1,5 @@
 ---
-title: Code migration - Strapi global variable - Strapi Developer Docs
+title: Strapi global variable
 description: Migrate calls to the strapi global variable from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html
 ---

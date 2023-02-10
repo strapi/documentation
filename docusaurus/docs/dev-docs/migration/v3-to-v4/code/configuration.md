@@ -1,5 +1,5 @@
 ---
-title: Code migration - Configuration
+title: Configuration
 description: Migrate your configuration from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration/v3-to-v4/v4/code/backend/configuration.html
 pagination_next: dev-docs/migration/v3-to-v4/code/dependencies

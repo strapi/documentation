@@ -1,5 +1,5 @@
 ---
-title: v4 code migration - Services
+title: Services
 displayed_sidebar: devDocsSidebar
 description: Migrate services of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html

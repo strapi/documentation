@@ -299,7 +299,7 @@ const sidebars = {
       collapsed: false,
       label: 'Update and Migration',
       items: [
-        'dev-docs/update-version',
+        // 'dev-docs/update-version',
         {
           type: 'category',
           collapsed: true,
@@ -328,11 +328,32 @@ const sidebars = {
                           'dev-docs/migration/v3-to-v4/code/controllers',
                           'dev-docs/migration/v3-to-v4/code/dependencies',
                           'dev-docs/migration/v3-to-v4/code/global-middlewares',
-                          ''
+                          'dev-docs/migration/v3-to-v4/code/graphql',
+                          'dev-docs/migration/v3-to-v4/code/policies',
+                          'dev-docs/migration/v3-to-v4/code/route-middlewares',
+                          'dev-docs/migration/v3-to-v4/code/routes',
+                          'dev-docs/migration/v3-to-v4/code/services',
+                          
                   ]
 
                 },
-                
+                {
+                  type: 'category',
+                  collapsed: true,
+                  link: {
+                    type: 'doc',
+                    id: 'dev-docs/migration/v3-to-v4/code/frontend'
+                  },
+                  label: 'Frontend migration',
+                  items: [
+                          'dev-docs/migration/v3-to-v4/code/strapi-global',
+                          'dev-docs/migration/v3-to-v4/code/theming',
+                          'dev-docs/migration/v3-to-v4/code/translations',
+                          'dev-docs/migration/v3-to-v4/code/webpack',
+                          'dev-docs/migration/v3-to-v4/code/wysiwyg',
+                  ]
+
+                },
               ]
             },
             // 'dev-docs/migration/v3-to-v4/plugin-migration',

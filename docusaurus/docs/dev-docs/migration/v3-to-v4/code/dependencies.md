@@ -1,5 +1,5 @@
 ---
-title: Code migration - Dependencies - Strapi Developer Docs
+title: Dependencies
 description: Migrate your dependencies from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html
 next: ./routes.md

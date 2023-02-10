@@ -1,5 +1,5 @@
 ---
-title: v4 code migration - Controllers - Strapi Developer Docs
+title: Controllers
 description: Migrate controllers of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html
 next: ./services

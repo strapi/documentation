@@ -1,5 +1,5 @@
 ---
-title: v4 code migration - Policies - Strapi Developer Docs
+title: Policies
 description: Migrate policies from Strapi v3.6.x to Strapi v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html
 ---
