@@ -1,0 +1,48 @@
+{
+  "redirects": [
+    {
+      "source": "/developer-docs/latest/development/admin-customization.html",
+      "destination": "/dev-docs/admin-panel-customization"
+    },
+    {
+      "source": "/developer-docs/latest/development/backend-customization",
+      "destination": "/dev-docs/backend-customization"
+    },
+    {
+      "source": "/developer-docs/latest/development/backend-customization/*",
+      "destination": "/dev-docs/backend-customization/*"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/cli/CLI",
+      "destination": "/dev-docs/cli"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations.html",
+      "destination": "/dev-docs/configurations"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations/*",
+      "destination": "/dev-docs/configurations/*"
+    },
+    {
+      "source": "/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html",
+      "destination": "/user-docs/content-type-builder"
+    },
+    {
+      "source": "/user-docs/latest/content-types-builder/*",
+      "destination": "/user-docs/content-type-builder/*"
+    },
+    {
+      "source": "/developer-docs/latest/development/custom-fields",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/*",
+      "destination": "/dev-docs/deployment/*"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/*",
+      "destination": "/dev-docs/deployment/*"
+    }
+  ]
+}

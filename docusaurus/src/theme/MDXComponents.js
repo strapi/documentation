@@ -10,6 +10,9 @@ import ApiCall from '../components/ApiCall';
 import AlphaBadge from '../components/AlphaBadge';
 import BetaBadge from '../components/BetaBadge';
 import GoldBadge from '../components/GoldBadge';
+import Columns from '../components/Columns';
+import ColumnLeft from '../components/ColumnLeft';
+import ColumnRight from '../components/ColumnRight';
 
 export default {
   // Re-use the default mapping
@@ -29,4 +32,7 @@ export default {
   AlphaBadge: AlphaBadge,
   BetaBadge: BetaBadge,
   GoldBadge: GoldBadge,
+  Columns: Columns,
+  ColumnLeft: ColumnLeft,
+  ColumnRight: ColumnRight,
 };

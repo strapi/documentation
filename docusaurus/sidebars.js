@@ -101,8 +101,45 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/deployment',
+        },
           items: [
             'dev-docs/deployment/strapi-cloud',
+            {
+              type: 'category',
+              label: 'Other Hosting Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/deployment/hosting-guides',
+            },
+              items: [
+                'dev-docs/deployment/amazon-aws',
+                'dev-docs/deployment/azure',
+                'dev-docs/deployment/digitalocean-app-platform',
+                'dev-docs/deployment/digitalocean',
+                // 'dev-docs/deployment/google-app-platform',
+                'dev-docs/deployment/heroku',
+
+              ],
+            },
+            {
+              type: 'category',
+              label: 'Optional Software Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/deployment/optional-software-guides',
+            },
+              items: [
+                'dev-docs/deployment/caddy-proxy',
+                'dev-docs/deployment/haproxy-proxy',
+                'dev-docs/deployment/nginx-proxy',
+                'dev-docs/deployment/process-manager',
+
+              ],
+            },
+
           ]
         }
       ]
@@ -124,6 +161,38 @@ const sidebars = {
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/filters-locale-publication',
             'dev-docs/api/rest/sort-pagination',
+            'dev-docs/api/rest/relations',
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Query Engine API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/query-engine',
+          },
+          items: [
+            'dev-docs/api/query-engine/single-operations',
+            'dev-docs/api/query-engine/bulk-operations',
+            'dev-docs/api/query-engine/filtering',
+            'dev-docs/api/query-engine/populating',
+            'dev-docs/api/query-engine/order-pagination',
+          ]
+        },
+        'dev-docs/api/graphql',
+        {
+          type: 'category',
+          label: 'Entity Service API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/entity-service',
+          },
+          items: [
+            'dev-docs/api/entity-service/crud',
+            'dev-docs/api/entity-service/filter',
+            'dev-docs/api/entity-service/populate',
+            'dev-docs/api/entity-service/order-pagination',
+            'dev-docs/api/entity-service/components-dynamic-zones',
           ]
         },
         'dev-docs/api/plugins/admin-panel-api',
@@ -154,8 +223,56 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/typescript'
+        'dev-docs/plugins-extension',
+        'dev-docs/plugins-development',
+        'dev-docs/typescript',
+        'dev-docs/providers',
       ]
+    },
+
+    {
+      type: 'category',
+      label: '💻 Developer Resources',
+      collapsed: false,
+      items: [
+        'dev-docs/cli',
+        'dev-docs/data-management',
+        'dev-docs/error-handling',
+        'dev-docs/testing',
+        {
+          type: 'category',
+          label: 'Integrations',
+          link: {
+            type:'doc',
+            id: 'dev-docs/integrations',
+          },
+
+
+          items: [
+            'dev-docs/integrations/11ty',
+            'dev-docs/integrations/angular',
+            'dev-docs/integrations/dart',
+            'dev-docs/integrations/flutter',
+            'dev-docs/integrations/gatsby',
+            'dev-docs/integrations/girdsome',
+            'dev-docs/integrations/go',
+            'dev-docs/integrations/graphql',
+            'dev-docs/integrations/jekyll',
+            'dev-docs/integrations/laravel',
+            'dev-docs/integrations/next-js',
+            'dev-docs/integrations/nuxt-js',
+            'dev-docs/integrations/php',
+            'dev-docs/integrations/python',
+            'dev-docs/integrations/react',
+            'dev-docs/integrations/ruby',
+            'dev-docs/integrations/sapper',
+            'dev-docs/integrations/svelte',
+            'dev-docs/integrations/vue-js',
+
+
+          ]
+        },
+      ],
     },
 
     {
@@ -180,13 +297,22 @@ const sidebars = {
             'dev-docs/plugins/sentry',
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
-            
-            
-            
+
+
+
+          ]
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Update and Migration',
+      items: [
+            'dev-docs/update-version'  
           ]
     },
   ],
 
+ 
 
   userDocsSidebar: [
     'user-docs/intro',
