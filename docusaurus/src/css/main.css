@@ -114,7 +114,7 @@ table code {
   color: var(--strapi-dark-neutral-100); */
 }
 
-[data-theme='dark'] img {
+[data-theme='dark'] .container img[width='16'] {
   /* 'Temporary' fix while we figure a way to display white icons in dark mode 😅  */
   background-color: white;
   border-radius: 2px;
