@@ -113,3 +113,10 @@ table code {
   /* background-color: var(--strapi-dark-neutral-600);
   color: var(--strapi-dark-neutral-100); */
 }
+
+[data-theme='dark'] img {
+  /* 'Temporary' fix while we figure a way to display white icons in dark mode 😅  */
+  background-color: white;
+  border-radius: 2px;
+  padding: 1px;
+}
