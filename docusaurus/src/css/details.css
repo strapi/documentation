@@ -12,7 +12,7 @@ details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-st
 details,
 details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module div.collapsibleContent_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   margin-top: .5rem;
-  border-top: none;
+  border: none;
 }
 
 [data-theme='light'] details,
