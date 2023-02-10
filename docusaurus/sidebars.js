@@ -192,6 +192,7 @@ const sidebars = {
           ]
         },
         'dev-docs/api/plugins/admin-panel-api',
+        'dev-docs/api/plugins/server-api',
       ]
     },
     {
