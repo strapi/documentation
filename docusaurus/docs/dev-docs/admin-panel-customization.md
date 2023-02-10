@@ -214,7 +214,7 @@ export default {
    // Disable video tutorials
     tutorials: false,
    // Disable notifications about new Strapi releases
-    notifications: { release: false },
+    notifications: { releases: false },
   },
 
   bootstrap() {},
@@ -272,7 +272,7 @@ export default {
    // Disable video tutorials
     tutorials: false,
    // Disable notifications about new Strapi releases
-    notifications: { release: false },
+    notifications: { releases: false },
   },
 
   bootstrap() {},
