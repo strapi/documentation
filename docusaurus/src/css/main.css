@@ -8,7 +8,6 @@ h2 {
   font-size: 24px;
 }
 
-
 [data-theme='light'] .theme-doc-markdown.markdown {
   font-weight: 400;
 }
@@ -55,4 +54,8 @@ h2 {
 
 [data-theme='dark'] .navbar {
   border-bottom: solid 1px var(--strapi-dark-neutral-150);
+}
+
+footer.footer.footer--dark {
+  background-color: #4A4A6A;
 }
