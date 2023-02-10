@@ -1,3 +1,7 @@
+/**
+ * Stylize the "details" blocks used for togglable elements
+ */
+
 /* TODO: find a better way to target elements 😅  */
 details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   border: none;
