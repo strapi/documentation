@@ -84,3 +84,8 @@ h2 {
 footer.footer.footer--dark {
   background-color: #4A4A6A;
 }
+footer.footer.footer--dark a:hover {
+  text-decoration: none;
+  color: var(--strapi-neutral-0);
+  font-weight: 700;
+}
