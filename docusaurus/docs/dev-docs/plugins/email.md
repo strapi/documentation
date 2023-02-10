@@ -11,7 +11,7 @@ The Email plugin enables applications to send emails from a server or an externa
 
 :::prerequisites
 
-The Email plugin requires a provider and a provider configuration in the `plugins.js` file. See the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
+The Email plugin requires a provider and a provider configuration in the `plugins.js` file or `plugins.ts` file. See the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
 
 :::
 
