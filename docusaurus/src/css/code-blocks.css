@@ -39,7 +39,10 @@
 [data-theme='light'] .prism-code .buttonGroup_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module button {
   background: tomato !important;
 }
-[data-theme='light'] .buttonGroup_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module button {
+[data-theme='light'] .buttonGroup_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module button,
+[data-theme='light'] language-sh button,
+[data-theme='light'] language-json button,
+[data-theme='light'] language-js button {
   /* border: solid 4px tomato; */
   background: #282A36;
   color: #F8F8F2;
