@@ -1,21 +1,21 @@
 ---
 title: Frontend code migration
-description: Migrate the front end of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
+description: Migrate the frontend of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html
 next: ./frontend/wysiwyg.md
 ---
 
-# v4 code migration: Front end overview
+# v4 Code migration: Frontend overview
 
-This front-end code migration overview is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration).
+This frontend code migration overview is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration).
 
-The front end code of Strapi runs the admin panel, which can be customized. The main difference between Strapi v3 and v4 admin panel customization is that v3 supports file replacement where v4 does not and instead uses several newly introduced APIs (see [admin panel customization](/dev-docs/admin-customization) documentation).
+The frontend code of Strapi runs the admin panel, which can be customized. The main difference between Strapi v3 and v4 admin panel customization is that v3 supports file replacement where v4 does not and instead uses several newly introduced APIs (see [admin panel customization](/dev-docs/admin-customization) documentation).
 
 :::prerequisites
-Make sure to entirely [migrate the back end](/dev-docs/migration/v3-to-v4/code/backend) before migrating the front end.
+Make sure to entirely [migrate the backend](/dev-docs/migration/v3-to-v4/code/backend) before migrating the frontend.
 :::
 
-Migrating the front end of a Strapi application to Strapi v4 depends on whether your project added customizations to the admin panel or not.
+Migrating the frontend of a Strapi application to Strapi v4 depends on whether your project added customizations to the admin panel or not.
 
 ## Migrating the admin panel without customizations
 

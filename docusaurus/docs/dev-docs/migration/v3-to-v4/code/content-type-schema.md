@@ -1,15 +1,15 @@
 ---
-title: Content-Type Schema
+title: Content-Type schema
 description: Migrate your content-types from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/code/backend/content-type-schema.html
 sidebarDepth: 3
 ---
 
-# v4 code migration: Updating content-type schemas <!-- omit in toc -->
+# v4 code migration: Updating content-type schemas
 
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
-Models in Strapi v4 have been completely overhauled: model files are located in `/content-types/` folders, various keys and settings have been removed, and the relation syntax has completely changed.
+Models in Strapi v4 have been completely overhauled: model files are located in <NOBR>`/content-types/` folders, various keys and settings have been removed, and the relation syntax has completely changed.</NOBR>
 
 Migrating to Strapi v4 requires:
 
@@ -25,7 +25,7 @@ Strapi v3 declares models in `<model-name>.settings.json` files found in a `mode
 In Strapi v4, [content-types](/dev-docs/backend-customization/models#content-types) are declared in `schema.json` files found in `./src/api/<apiName>/content-types/<contentTypeName>` folder. The `schema.json` files introduce some new properties (see [schema documentation](/dev-docs/backend-customization/models#model-schema)).
 :::
 
-::: note
+:::note
 Content-types can be created automatically with the [interactive CLI command `strapi generate`](/dev-docs/cli#strapi-generate).
 :::
 
@@ -44,7 +44,7 @@ To convert Strapi v3 models to v4 content-types:
     mv src/api/<apiName>/models/ src/api/<apiName>/content-types/
     ```
 
-::: tip
+:::tip
 [Strapi codemods](https://github.com/strapi/codemods/) can be used to convert v3 models to v4 content-types.
 :::
 
@@ -247,6 +247,6 @@ To convert Strapi v3 model lifecycle hooks to v4 lifecycle hooks:
   </details>
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs//migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/backend/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/backend/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/backend/routes), [controllers](/dev-docs/migration/v3-to-v4/code/backend/controllers), and [services](/dev-docs/migration/v3-to-v4/code/backend/services).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/routes), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), and [services](/dev-docs/migration/v3-to-v4/code/services).
 :::
 

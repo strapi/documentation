@@ -10,7 +10,7 @@ next: ./controllers.md
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration.md) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
 
-::: strapi v3/v4 comparison
+:::strapi v3/v4 comparison
 In both Strapi v3 and v4, creating content-types automatically generates core API routes.
 
 In Strapi v3, routes are defined in JSON files that export an object with a `routes` property. `routes` is an array of objects, each object being a route with its own parameters.
@@ -136,5 +136,5 @@ module.exports = {
 </details>
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs/migration/v3-to-v4/code-migration/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code-migration/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code-migration/dependencies), [services](/dev-docs/migration/v3-to-v4/code-migration/services), [controllers](/dev-docs/migration/v3-to-v4/code-migration/controllers), and [content-type schemas](/dev-docs/migration/v3-to-v4/code-migration/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [services](/dev-docs/migration/v3-to-v4/code/services), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

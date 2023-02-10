@@ -159,5 +159,5 @@ If the `package.json` file of a Strapi v3 application has the `“strapi-plugin-
 </details>
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [routes](/dev-docs/migration/v3-to-v4/code/routes), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [routes](/dev-docs/migration/v3-to-v4/code/routes), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

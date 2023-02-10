@@ -103,11 +103,11 @@ module.exports = ({ env }) => ({
 
 ## Server configuration
 
-The [server configuration](/dev-docs/configurations/required/server) in Strapi v4 is similar to Strapi v3, with the following exceptions:
+The [server configuration](/dev-docs/configurations/server) in Strapi v4 is similar to Strapi v3, with the following exceptions:
 
 - All admin panel-related settings (i.e. `admin.*` keys) are in the [`admin.js` file](#admin-panel-configuration).
 - CRON tasks (configured with `cron.*` keys) can be directly referenced in the `./config/server.js` or imported from any other custom files (see [`cron-tasks.js` file](#cron-tasks)).
-- `app.keys` is a new configuration option for the refactored [session middleware](/dev-docs/configurations/required/middlewares#session) and is used to create secure session keys.
+- `app.keys` is a new configuration option for the refactored [session middleware](/dev-docs/configurations/middlewares#session) and is used to create secure session keys.
 
 <details>
 <summary> Example of a Strapi v3 server configuration:</summary>
@@ -215,7 +215,7 @@ module.exports = {
 <details>
 <summary> Example of Strapi v4 middlewares configuration:</summary>
 
-**Important**: Various middlewares in this list are required. During configuration, replace the string with the object format (see [middlewares configuration](/dev-docs/configurations/required/middlewares#optional-configuration)).
+**Important**: Various middlewares in this list are required. During configuration, replace the string with the object format (see [middlewares configuration](/dev-docs/configurations/middlewares#optional-configuration)).
 
 ```jsx title="path: ./config/middlewares.js"
 
@@ -241,7 +241,7 @@ module.exports = [
 </details>
 
 :::note
-In Strapi v4, security middlewares from Strapi v3 have been removed and replaced with [koa-helmet](https://www.npmjs.com/package/koa-helmet), which is a Koa.js wrapper for [helmet](https://github.com/helmetjs/helmet). This package replaces all security middlewares except for `cors` (see [internal middlewares configuration reference](/dev-docs/configurations/required/middlewares#internal-middlewares-configuration-reference)).
+In Strapi v4, security middlewares from Strapi v3 have been removed and replaced with [koa-helmet](https://www.npmjs.com/package/koa-helmet), which is a Koa.js wrapper for [helmet](https://github.com/helmetjs/helmet). This package replaces all security middlewares except for `cors` (see [internal middlewares configuration reference](/dev-docs/configurations/middlewares#internal-middlewares-configuration-reference)).
 :::
 
 ## CRON tasks
@@ -385,5 +385,5 @@ For custom error messages, please refer to the [error handling](/dev-docs/error-
 
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [dependencies](/dev-docs/migration/v3-to-v4/code/backend/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/backend/routes), [controllers](/dev-docs/migration/v3-to-v4/code/backend/controllers), [services](/dev-docs/migration/v3-to-v4/code/backend/services), and [content-type schema](/dev-docs/migration/v3-to-v4/code/backend/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/routes), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schema](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

@@ -1,23 +1,23 @@
 ---
 title: Backend code migration
 displayed_sidebar: devDocsSidebar
-description: Migrate the back end of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
+description: Migrate the backend of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl:  http://docs.strapi.io/dev-docs/migration-guides//code/backend.html
 pagination_next: dev-docs/migration/v3-to-v4/code/dependencies
 ---
 
-# v4 code migration: Back end overview
+# v4 code migration: Backend overview
 
-This back end code migration overview is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration).
+This backend code migration overview is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration).
 
-Most of the back end of Strapi has been entirely rewritten in Strapi v4:
+Most of the backend of Strapi has been entirely rewritten in Strapi v4:
 
 - The core features of a Strapi v4 server (routes, policies, controllers, and services) use factory functions. The new files can be created with the [interactive `strapi generate` CLI](/dev-docs/CLI#strapi-generate).
-- There is a clear distinction in Strapi v4 between [policies](/dev-docs/development/backend-customization/policies) and [middlewares](/dev-docs/development/backend-customization/middlewares), which leads to the introduction of [route middlewares](/dev-docs/development/backend-customization/routes#middlewares).
+- There is a clear distinction in Strapi v4 between [policies](/dev-docs/backend-customization/policies) and [middlewares](/dev-docs/backend-customization/middlewares), which leads to the introduction of [route middlewares](/dev-docs/backend-customization/routes#middlewares).
 
 The [project structure](/dev-docs/project-structure) is different in Strapi v3 and Strapi v4. The project structure can be migrated with [Strapi codemods](https://github.com/strapi/codemods) and is not covered in details in this guide.
 
-Migrating the back end of a Strapi application to v4 requires updating all of these core features:
+Migrating the backend of a Strapi application to v4 requires updating all of these core features:
 
 - [configurations](/dev-docs/migration/v3-to-v4/code/configuration)
 - [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies)
@@ -34,7 +34,7 @@ Optionally, depending on your usage of these features in Strapi v3, you might al
 - [GraphQL](/dev-docs/migration/v3-to-v4/code/graphql)
 
 :::note
-The dedicated short guides listed in this back end code migration guide are not exhaustive resources for the v4 back end customization features, which are described in the [back end customization](/dev-docs/development/backend-customization) documentation.
+The dedicated short guides listed in this backend code migration guide are not exhaustive resources for the v4 backend customization features, which are described in the [backend customization](/dev-docs/backend-customization) documentation.
 :::
 
-Once the back end of Strapi has been migrated to v4, you can proceed to migrating the [front end](/dev-docs/migration/v3-to-v4/code/frontend).
+Once the backend of Strapi has been migrated to v4, you can proceed to migrating the [frontend](/dev-docs/migration/v3-to-v4/code/frontend).

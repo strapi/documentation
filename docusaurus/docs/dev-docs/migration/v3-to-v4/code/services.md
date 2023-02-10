@@ -22,7 +22,7 @@ Migrating a [service](/dev-docs/backend-customization/services) to Strapi v4 con
 
 Due to the differences between services implementation in Strapi v3 and v4, it's recommended to create a new service file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
-::: note
+:::note
 The service file can be created automatically with the [interactive CLI command `strapi generate`](/dev-docs/cli#strapi-generate).
 :::
 
@@ -88,5 +88,5 @@ More examples can be found in the [services implementation documentation](/dev-d
 :::
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs/migration/v3-to-v4/code-migration/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code-migration/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code-migration/dependencies), [routes](/dev-docs/migration/v3-to-v4/code-migration/routes), [controllers](/dev-docs/migration/v3-to-v4/code-migration/controllers), and [content-type schemas](/dev-docs/migration/v3-to-v4/code-migration/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/routes), [controllers](/dev-docs/migration/v3-to-v4/code/controllers), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

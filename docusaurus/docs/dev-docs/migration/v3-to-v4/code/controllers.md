@@ -3,6 +3,7 @@ title: Controllers
 description: Migrate controllers of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html
 next: ./services
+_tags: sanitize, sanitizeOutput, sanitizeInput
 ---
 
 # v4 code migration: Updating controllers
@@ -17,11 +18,11 @@ In Strapi v3, controllers export an object containing actions that are merged wi
 In Strapi v4, controllers export the result of a call to the [`createCoreController` factory function](/dev-docs/backend-customization/controllers#implementation), with or without further customization.
 :::
 
-Migrating [controllers](dev-docs/backend-customization/controllers) to Strapi v4 consists in making sure that each controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
+Migrating [controllers](/dev-docs/backend-customization/controllers) to Strapi v4 consists in making sure that each controller is located in the proper folder and uses the `createCoreController` factory function introduced in v4.
 
 Due to the differences between controllers implementation in Strapi v3 and v4, it's recommended to create a new controller file, then optionally bring existing v3 customizations into the new file and adapt them when necessary.
 
-::: note
+:::note
 The controller file can be created automatically with the [interactive CLI command `strapi generate`](/dev-docs/cli#strapi-generate).
 :::
 
@@ -91,5 +92,5 @@ More examples can be found in the [controllers implementation documentation](/de
 :::
 
 :::strapi Next steps
-[Migrating the back end code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/backend/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/backend/routes), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/backend/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/backend/routes), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

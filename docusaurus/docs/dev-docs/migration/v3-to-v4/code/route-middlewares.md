@@ -1,5 +1,5 @@
 ---
-title: Route Middlewares 
+title: Route middlewares 
 description: Migrate route middlewares of a Strapi application from v3.6.x to v4.0.x
 canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html
 ---
@@ -8,7 +8,7 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration.md) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
-::: strapi v3/v4 comparison
+:::strapi v3/v4 comparison
 In Strapi v3, policies are also used as route middlewares to make changes to the request or response payload or to wrap a controller with extra logic.
 
 In Strapi v4, there is a clear distinction between [policies](/dev-docs/backend-customization/policies#implementation), which are used for authorization and validation, and [middlewares](/dev-docs/backend-customization/middlewares), which are used for extra logic, wrapping, and customization.

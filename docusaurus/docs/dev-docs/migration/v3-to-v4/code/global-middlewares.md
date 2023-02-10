@@ -1,5 +1,5 @@
 ---
-title: Global Middlewares
+title: Global middlewares
 description: Migrate your global middlewares from Strapi v3.6.x to v4.0.x with step-by-step instructions
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html
 ---
@@ -9,7 +9,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guid
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration.md) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
 
-::: strapi v3/v4 comparison
+:::strapi v3/v4 comparison
 Strapi v4 only introduces small modifications to the structure of a global middleware, allowing for additional configuration parameters to be passed without the need to manually pull in the configuration via the Strapi API.
 
 The configuration of middlewares has changed (see [configuration migration](/dev-docs/migration/v3-to-v4/code/configuration#middlewares-configuration)).
