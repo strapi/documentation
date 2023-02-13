@@ -318,7 +318,7 @@ Entity relationship diagrams also use the following abbreviations:
     "type": "relation",
     "relation": "manyToMany",
     "target": "api::article.article",
-    "mappedBy": "categories",
+    "mappedBy": "categories"
   }
 }
 ```
