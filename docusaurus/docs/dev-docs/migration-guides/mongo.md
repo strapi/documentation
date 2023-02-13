@@ -50,130 +50,119 @@ To prepare the migration locally:
 
     b. Update the configuration in  `./config/database.js`:
 
-    <Columns>
-    <ColumnLeft title="Before, with a MongoDB database:">
+<Columns>
+<ColumnLeft title="Before, with a MongoDB database:">
 
-    ```jsx
-    // before
-    {
-      connector: 'mongoose',
-      settings: {
-        database: 'strapi',
-        username: 'strapi',
-        password: 'strapi',
-        port: 27017,
-        host: 'localhost',
-      },
-      options: {},
-    }
-    
-    ```
-    </ColumnLeft>
+```jsx
+// before
+{
+  connector: 'mongoose',
+  settings: {
+    database: 'strapi',
+    username: 'strapi',
+    password: 'strapi',
+    port: 27017,
+    host: 'localhost',
+  },
+  options: {},
+}
 
-    <ColumnRight title="After, with a SQL database:">
+```
 
-    <Tabs>
+</ColumnLeft>
 
-    <TabItem title="SQLite">
+<ColumnRight title="After, with a SQL database:">
 
-    ```js
-    // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'sqlite',
-        filename: '.tmp/data.db',
-      },
-      options: {
-        useNullAsDefault: true,
-      },
-    }
-    ```
+<Tabs>
 
-    </TabItem>
+<TabItem title="SQLite">
 
-    <TabItem title="PostgreSQL">
-    ```js
-    // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
-        database: 'strapi',
-        username: 'strapi',
-        password: 'strapi',
-        port: 5432,
-        host: 'localhost',
-      },
-      options: {},
-    }
-    ```
+```js
+// after
+{
+  connector: 'bookshelf',
+  settings: {
+    client: 'sqlite',
+    filename: '.tmp/data.db',
+  },
+  options: {
+    useNullAsDefault: true,
+  },
+}
+```
 
-    </TabItem>
+</TabItem>
 
-    <TabItem title="MySQL">
+<TabItem title="PostgreSQL">
+  
+![](/assets/img/data-migration/mongo-relations-postgres-after.png)
 
-    ```js
-    // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: 'strapi',
-        username: 'strapi',
-        password: 'strapi',
-        port: 3306,
-        host: 'localhost',
-      },
-      options: {},
-    }
-    ```
+</TabItem>
 
-    </TabItem>
-    </Tabs>
+<TabItem title="MySQL">
 
+```js
+// after
+{
+  connector: 'bookshelf',
+  settings: {
+    client: 'mysql',
+    database: 'strapi',
+    username: 'strapi',
+    password: 'strapi',
+    port: 3306,
+    host: 'localhost',
+  },
+  options: {},
+}
+```
+
+</TabItem>
+</Tabs>
+</ColumnRight>
+</Columns>
 
 4. Start the application locally to generate the SQL schema and default values in the database.
 5. Shut down the application.
 6. Truncate every table and reset primary keys to only keep the structure, using the following queries, depending on the database type:
 
-    <Tabs>
-    <TabItem title="SQLite">
+<Tabs>
+<TabItem title="SQLite">
 
-    ```sql
-    // truncate
-    DELETE FROM tableA;
-    DELETE FROM tableB;
+```sql
+// truncate
+DELETE FROM tableA;
+DELETE FROM tableB;
 
-    // reset sequences
-    DELETE FROM sqlite_sequence 
-    WHERE name IN ('table_a', 'table_b', '...');
-    ```
+// reset sequences
+DELETE FROM sqlite_sequence 
+WHERE name IN ('table_a', 'table_b', '...');
+```
 
-    </TabItem>
+</TabItem>
 
-    <TabItem title="PostgreSQL">
+<TabItem title="PostgreSQL">
 
-    ```sql
-    TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
-    ```
+```sql
+TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
+```
 
-    </TabItem>
+</TabItem>
 
-    <TabItem title="MySQL">
+<TabItem title="MySQL">
 
-    ```sql
-    // truncate
-    SET FOREIGN_KEY_CHECKS = 0;
+```sql
+// truncate
+SET FOREIGN_KEY_CHECKS = 0;
 
-    TRUNCATE tableA;
-    TRUNCATE tableB;
+TRUNCATE tableA;
+TRUNCATE tableB;
 
-    SET FOREIGN_KEY_CHECKS = 1;
-    ```
+SET FOREIGN_KEY_CHECKS = 1;
+```
 
-    </TabItem>
-    </Tabs>
+</TabItem>
+</Tabs>
 
 ## Migrate the data locally
 
@@ -197,8 +186,6 @@ To migrate the local data to the production database:
 2. Import the dump into the production database.
 
 3. Deploy the application with the updated connector (see [prepare the migration locally](#prepare-the-migration-locally) for configuration details).
-
-<br/>
 
 :::strapi Next steps
 If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration-guides/sql).

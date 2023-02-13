@@ -475,14 +475,8 @@ In Strapi v3, only one morph table is created for every entity. Whenever a polym
 
 <Columns>
 <ColumnLeft title="Strapi v4">
-    
-```js title="article/schema.json"
-"related": {
-  "type": "relation",
-  "relation": "morphToMany", // or morphToOne
-  "configurable": false
-}
-```
+
+![](/img/assets/data-migration/sql-relations-schema-morphToMany.png)
 
 </ColumnLeft>
 
