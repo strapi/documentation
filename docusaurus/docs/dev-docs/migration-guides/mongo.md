@@ -75,7 +75,7 @@ To prepare the migration locally:
 
 <Tabs>
 
-<TabItem title="SQLite">
+<TabItem value="sqlite" title="SQLite">
 
 ```js
 // after
@@ -93,13 +93,13 @@ To prepare the migration locally:
 
 </TabItem>
 
-<TabItem title="PostgreSQL">
+<TabItem value="postgresql" title="PostgreSQL">
   
 ![](/assets/img/data-migration/mongo-relations-postgres-after.png)
 
 </TabItem>
 
-<TabItem title="MySQL">
+<TabItem value="mysql" title="MySQL">
 
 ```js
 // after
@@ -127,7 +127,7 @@ To prepare the migration locally:
 6. Truncate every table and reset primary keys to only keep the structure, using the following queries, depending on the database type:
 
 <Tabs>
-<TabItem title="SQLite">
+<TabItem value="sqlite" title="SQLite">
 
 ```sql
 // truncate
@@ -141,7 +141,7 @@ WHERE name IN ('table_a', 'table_b', '...');
 
 </TabItem>
 
-<TabItem title="PostgreSQL">
+<TabItem value="postgresql" title="PostgreSQL">
 
 ```sql
 TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
@@ -149,7 +149,7 @@ TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
 
 </TabItem>
 
-<TabItem title="MySQL">
+<TabItem value="mysql" title="MySQL">
 
 ```sql
 // truncate
