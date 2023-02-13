@@ -590,7 +590,7 @@ The `transfer` command is not intended for transferring data between two local i
     <code-block title="YARN">
 
     ```bash
-    yarn strapi transfer --to http://localhost:1337/admin --to-token <my-transfer-token> 
+    yarn strapi transfer --to http://localhost:1337/admin
     ```
 
     </code-block>
