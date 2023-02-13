@@ -85,7 +85,7 @@ In Strapi, relations between models are defined in the `attributes` section of t
 The following section explains how each type of relation is declared in the model attributes and gives an example of how the model attributes are reflected in the MongoDB and SQL databases:
 
 <Tabs>
-<TabItem title="oneWay">
+<TabItem value="oneway" title="oneWay">
 
 In MongoDB, the id of a `oneWay` relation is in the document and is named after the property in the `model.settings.json` file.
 
@@ -147,7 +147,7 @@ In SQL databases, the `oneWay` relation is a column in the row and is named afte
 
 </TabItem>
 
-<TabItem title="oneToOne">
+<TabItem value="onetone" title="oneToOne">
 
 In MongoDB, the id of a `oneToOne` relation is in the 2 documents at the same time, and uses the names defined in the `model.settings.json` file.
 
@@ -215,7 +215,7 @@ In SQL databases, the id of a `oneToOne` relation is also in the 2 tables at the
 
 </TabItem>
 
-<TabItem title="oneToMany">
+<TabItem value="onetomany" title="oneToMany">
 
 A `oneToMany` relation is stored on the opposite side of the relation in both MongoDB and SQL databases.
 
@@ -279,7 +279,7 @@ A `oneToMany` relation is stored on the opposite side of the relation in both Mo
 
 </TabItem>
 
-<TabItem title="manyToMany">
+<TabItem value="manytomany" title="manyToMany">
 
 A `manyToOne` relation is the inverse of a `oneToMany` relation.
 
@@ -345,7 +345,7 @@ In both MongoDB and SQL databases, the relation is stored in the main model.
 
 </TabItem>
 
-<TabItem title="manyToMany">
+<TabItem value="manytomany" title="manyToMany">
 
 In MongoDB, the ids of a `manyToMany` relation are stored in an array in the side where the `dominant` property is `true`.
 
@@ -420,7 +420,7 @@ In SQL databases, a `manyToMany` relation is stored in a join table whose name f
 
 </TabItem>
 
-<TabItem title="manyWay">
+<TabItem value="manyway" title="manyWay">
 
 A `manyWay` relation is a simplified version of a `manyToMany` relation.
 
