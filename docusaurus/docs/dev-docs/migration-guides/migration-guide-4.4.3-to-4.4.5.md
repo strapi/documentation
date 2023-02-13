@@ -1,5 +1,5 @@
 ---
-title: Migrate from 4.4.3 to 4.4.5 - Strapi Developer Docs
+title: Migrate from 4.4.3 to 4.4.5
 displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.4.3 to 4.4.5.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.4.3-to-4.4.5.html

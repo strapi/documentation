@@ -228,6 +228,10 @@ If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is instal
 
 </ApiCall>
 
+:::note
+While creating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+:::
+
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
@@ -269,8 +273,9 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 
 </ApiCall>
 
-:::note
-Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n.md#updating-an-entry).
+:::note NOTES
+* Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
+* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest/relations.md) for more details).
 :::
 
 ### Delete an entry
