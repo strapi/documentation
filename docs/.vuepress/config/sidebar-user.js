@@ -24,6 +24,7 @@ const user = [
         'Managing relational fields',
       ],
       ['/user-docs/latest/content-manager/translating-content.html', 'Translating content'],
+      ['/user-docs/latest/content-manager/reviewing-content.html', 'Reviewing content'],
       [
         '/user-docs/latest/content-manager/saving-and-publishing-content.html',
         'Saving, publishing and deleting content',
@@ -118,6 +119,7 @@ const user = [
     children: [
       ['/user-docs/latest/settings/managing-global-settings', 'Managing global settings'],
       ['/user-docs/latest/settings/audit-logs', 'Viewing Audit Logs'],
+      ['/user-docs/latest/settings/review-workflows', 'Managing Review Workflows'],
       ['/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html', 'Configuring Users & Permissions plugin settings',
       ],
     ],
