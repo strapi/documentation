@@ -21,7 +21,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 :::prerequisites
 
 - Stop the server before starting the upgrade.
-- Confirm there are no [migrations](/dev-docs/update-migration-guides/migration-guides) between the current and ultimate Strapi versions.
+- Confirm there are no [migrations](/dev-docs/migration-guides) between the current and ultimate Strapi versions.
 :::
 
 1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version:

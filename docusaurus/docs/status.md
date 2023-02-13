@@ -146,8 +146,8 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [API Documentation](dev-docs/plugins/documentation)
   - [ ] ♻️ Update & Migration
     - [x] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
-    - [ ] Migration
-      - [ ] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
+    - [x] Migration
+      - [x] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
       - [ ] v3 to v4 migration guides (→ [docs.strapi.io](#))
         - [ ] Code migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html))
           - [ ] Updating the back end (→ [docs.strapi.io](#))

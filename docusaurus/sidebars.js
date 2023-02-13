@@ -304,6 +304,7 @@ const sidebars = {
       label: 'Update and Migration',
       items: [
         'dev-docs/update-version',
+        'dev-docs/migration-guides',
         {
           type: 'category',
           collapsed: true,
