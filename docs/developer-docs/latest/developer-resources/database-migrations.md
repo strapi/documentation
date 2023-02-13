@@ -19,7 +19,7 @@ Migrations are run using JavaScript migration files stored in `./database/migrat
 Strapi:
 
 - Automatically detects migration files,
-- runs each new migration file 1 time in alphabetical order at the next startup,
+- runs each new migration file 1 time in alphanumerical order at the next startup,
 - runs migrations before the database tables are synchronized with the content-types schemas.
 
 ::: warning
@@ -57,9 +57,10 @@ Use the following procedure to create a migration file:
     </code-block>
     </code-group>
 
-2. Open the migration template in your code editor: `path: ./database/migrations/{file-name}`. The file name has a alphanumeric date-time value followed by the name declared in the `strapi generate migration` command.
+2. Type a filename when prompted. The output filename is a concatenation of a date-time string and your filename with the format: `YYYY.MM.DDTHH.MM.SS.name-of-my-migration.js`
+3. Open the migration template in your code editor: `path: ./database/migrations/{file-name}`.
 
-3. Fill in the template by adding actual migration code inside the `up()` function.
+4. Fill in the template by adding actual migration code inside the `up()` function.
 `up()` receives a [Knex instance](https://knexjs.org/), already in a transaction state, that can be used to run the database queries.
 
 ::: details Example of migration file
