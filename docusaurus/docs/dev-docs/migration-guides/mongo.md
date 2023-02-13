@@ -68,112 +68,135 @@ To prepare the migration locally:
     }
     
     ```
+
     </ColumnLeft>
 
     <ColumnRight title="After, with a SQL database:">
 
     <Tabs>
 
-    <TabItem title="SQLite">
+    <TabItem value="sqlite" title="SQLite">
 
     ```js
     // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'sqlite',
-        filename: '.tmp/data.db',
+    module.exports = ({ env }) => ({
+      defaultConnection: 'default',
+      connections: {
+        default: {
+          connector: 'bookshelf',
+          settings: {
+            client: 'sqlite',
+            filename: env('DATABASE_FILENAME', '.tmp/data.db'),
+          },
+          options: {
+            useNullAsDefault: true,
+          },
+        },
       },
-      options: {
-        useNullAsDefault: true,
-      },
-    }
+    });
     ```
 
     </TabItem>
 
-    <TabItem title="PostgreSQL">
+    <TabItem value="postgresql" title="PostgreSQL">
+
     ```js
     // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'postgres',
-        database: 'strapi',
-        username: 'strapi',
-        password: 'strapi',
-        port: 5432,
-        host: 'localhost',
+    module.exports = ({ env }) => ({
+      defaultConnection: 'default',
+      connections: {
+        default: {
+          connector: 'bookshelf',
+          settings: {
+            client: 'postgres',
+            database: 'strapi',
+            username: 'strapi',
+            password: 'strapi',
+            port: 5432,
+            host: 'localhost',
+          },
+          options: {},
+        },
       },
-      options: {},
-    }
+    });
     ```
 
     </TabItem>
 
-    <TabItem title="MySQL">
+    <TabItem value="mysql" title="MySQL">
 
     ```js
     // after
-    {
-      connector: 'bookshelf',
-      settings: {
-        client: 'mysql',
-        database: 'strapi',
-        username: 'strapi',
-        password: 'strapi',
-        port: 3306,
-        host: 'localhost',
+    module.exports = ({ env }) => ({
+      defaultConnection: 'default',
+      connections: {
+        default: {
+          connector: 'bookshelf',
+          settings: {
+            client: 'mysql',
+            database: 'strapi',
+            username: 'strapi',
+            password: 'strapi',
+            port: 3306,
+            host: 'localhost',
+          },
+          options: {},
+        },
       },
-      options: {},
-    }
+    });
     ```
 
     </TabItem>
+
     </Tabs>
 
+    </ColumnRight>
+
+    </Columns>
 
 4. Start the application locally to generate the SQL schema and default values in the database.
 5. Shut down the application.
 6. Truncate every table and reset primary keys to only keep the structure, using the following queries, depending on the database type:
 
-    <Tabs>
-    <TabItem title="SQLite">
+  <Tabs>
 
-    ```sql
-    // truncate
-    DELETE FROM tableA;
-    DELETE FROM tableB;
+  <TabItem value="sqlite" title="SQLite">
 
-    // reset sequences
-    DELETE FROM sqlite_sequence 
-    WHERE name IN ('table_a', 'table_b', '...');
-    ```
+  ```sql
+  // truncate
+  DELETE FROM tableA;
+  DELETE FROM tableB;
 
-    </TabItem>
+  // reset sequences
+  DELETE FROM sqlite_sequence 
+  WHERE name IN ('table_a', 'table_b', '...');
+  ```
 
-    <TabItem title="PostgreSQL">
+  </TabItem>
 
-    ```sql
-    TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
-    ```
+  <TabItem value="postgresql" title="PostgreSQL">
 
-    </TabItem>
+  ```sql
+  TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
+  ```
 
-    <TabItem title="MySQL">
+  </TabItem>
 
-    ```sql
-    // truncate
-    SET FOREIGN_KEY_CHECKS = 0;
+  <TabItem value="mysql" title="MySQL">
 
-    TRUNCATE tableA;
-    TRUNCATE tableB;
+  ```sql
+  // truncate
+  SET FOREIGN_KEY_CHECKS = 0;
 
-    SET FOREIGN_KEY_CHECKS = 1;
-    ```
+  TRUNCATE tableA;
+  TRUNCATE tableB;
 
-    </TabItem>
-    </Tabs>
+  SET FOREIGN_KEY_CHECKS = 1;
+  ```
+
+  </TabItem>
+
+  </Tabs>
 
 ## Migrate the data locally
 
