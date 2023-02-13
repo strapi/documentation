@@ -279,7 +279,7 @@ A `oneToMany` relation is stored on the opposite side of the relation in both Mo
 
 </TabItem>
 
-<TabItem value="manytomany" title="manyToMany">
+<TabItem value="manytomany1" title="manyToMany">
 
 A `manyToOne` relation is the inverse of a `oneToMany` relation.
 
@@ -345,7 +345,7 @@ In both MongoDB and SQL databases, the relation is stored in the main model.
 
 </TabItem>
 
-<TabItem value="manytomany" title="manyToMany">
+<TabItem value="manytomany2" title="manyToMany">
 
 In MongoDB, the ids of a `manyToMany` relation are stored in an array in the side where the `dominant` property is `true`.
 
