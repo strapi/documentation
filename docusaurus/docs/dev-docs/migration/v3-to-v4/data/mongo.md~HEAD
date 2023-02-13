@@ -50,6 +50,79 @@ To prepare the migration locally:
 
     b. Update the configuration in  `./config/database.js`:
 
+<<<<<<< HEAD:docusaurus/docs/dev-docs/migration/v3-to-v4/data/mongo.md
+<Columns>
+<ColumnLeft title="Before, with a MongoDB database:">
+
+```jsx
+// before
+{
+  connector: 'mongoose',
+  settings: {
+    database: 'strapi',
+    username: 'strapi',
+    password: 'strapi',
+    port: 27017,
+    host: 'localhost',
+  },
+  options: {},
+}
+
+```
+
+</ColumnLeft>
+
+<ColumnRight title="After, with a SQL database:">
+
+<Tabs>
+
+<TabItem value="sqlite" title="SQLite">
+
+```js
+// after
+{
+  connector: 'bookshelf',
+  settings: {
+    client: 'sqlite',
+    filename: '.tmp/data.db',
+  },
+  options: {
+    useNullAsDefault: true,
+  },
+}
+```
+
+</TabItem>
+
+<TabItem value="postgresql" title="PostgreSQL">
+  
+![postgres-after screenshot](/img/assets/data-migration/mongo-relations-postgres-after.png)
+
+</TabItem>
+
+<TabItem value="mysql" title="MySQL">
+
+```js
+// after
+{
+  connector: 'bookshelf',
+  settings: {
+    client: 'mysql',
+    database: 'strapi',
+    username: 'strapi',
+    password: 'strapi',
+    port: 3306,
+    host: 'localhost',
+  },
+  options: {},
+}
+```
+
+</TabItem>
+</Tabs>
+</ColumnRight>
+</Columns>
+=======
     <Columns>
     <ColumnLeft title="Before, with a MongoDB database:">
 
@@ -153,11 +226,51 @@ To prepare the migration locally:
     </ColumnRight>
 
     </Columns>
+>>>>>>> 210a8e95 (testing fixes):docusaurus/docs/dev-docs/migration-guides/mongo.md
 
 4. Start the application locally to generate the SQL schema and default values in the database.
 5. Shut down the application.
 6. Truncate every table and reset primary keys to only keep the structure, using the following queries, depending on the database type:
 
+<<<<<<< HEAD:docusaurus/docs/dev-docs/migration/v3-to-v4/data/mongo.md
+<Tabs>
+<TabItem value="sqlite" title="SQLite">
+
+```sql
+// truncate
+DELETE FROM tableA;
+DELETE FROM tableB;
+
+// reset sequences
+DELETE FROM sqlite_sequence 
+WHERE name IN ('table_a', 'table_b', '...');
+```
+
+</TabItem>
+
+<TabItem value="postgresql" title="PostgreSQL">
+
+```sql
+TRUNCATE tableA, tableB, tableC RESTART IDENTITY CASCADE;
+```
+
+</TabItem>
+
+<TabItem value="mysql" title="MySQL">
+
+```sql
+// truncate
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE tableA;
+TRUNCATE tableB;
+
+SET FOREIGN_KEY_CHECKS = 1;
+```
+
+</TabItem>
+</Tabs>
+=======
   <Tabs>
 
   <TabItem value="sqlite" title="SQLite">
@@ -197,6 +310,7 @@ To prepare the migration locally:
   </TabItem>
 
   </Tabs>
+>>>>>>> 210a8e95 (testing fixes):docusaurus/docs/dev-docs/migration-guides/mongo.md
 
 ## Migrate the data locally
 
@@ -222,5 +336,9 @@ To migrate the local data to the production database:
 3. Deploy the application with the updated connector (see [prepare the migration locally](#prepare-the-migration-locally) for configuration details).
 
 :::strapi Next steps
+<<<<<<< HEAD:docusaurus/docs/dev-docs/migration/v3-to-v4/data/mongo.md
+If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration/v3-to-v4/data/sql).
+=======
 If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration-guides/sql).
+>>>>>>> 210a8e95 (testing fixes):docusaurus/docs/dev-docs/migration-guides/mongo.md
 :::
