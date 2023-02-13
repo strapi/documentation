@@ -380,10 +380,10 @@ The CLI command consists of the following arguments:
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
 | `--to`       | URL of the destination Strapi instance. The endpoint is `/admin`.                                                                      | required |
-| `‑‑to‑token` | Transfer token from the Strapi destination instance.       | required |
-| `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |-         |
-| `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                   |-         |
-| `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                   |-         |
+| `‑‑to‑token` | Transfer token from the Strapi destination instance.        |-         |
+| `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                           |-         |
+| `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                    |-         |
+| `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                    |-         |
 
  The command allows you to transfer data between:
 
@@ -411,7 +411,7 @@ To initiate a data transfer:
     <code-block title="YARN">
 
     ```bash
-    yarn strapi transfer --to <destination URL> --to-token <Transfer token>
+    yarn strapi transfer --to <destination URL>
     ```
 
     </code-block>
@@ -419,18 +419,19 @@ To initiate a data transfer:
     <code-block title="NPM">
 
     ```bash
-    npm strapi yarn strapi transfer -- --to <destination URL> --to-token <Transfer token>
+    npm strapi yarn strapi transfer -- --to <destination URL>
     ```
 
     </code-block>
     </code-group>
 
-4. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
-5. If you answer **Yes** in step 4, the transfer operation initiates and, when completed, prints a summary of the transferred types in the CLI.
+4. Add the Transfer token when prompted to do so.
+5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
+6. If you answer **Yes** in step 4, the transfer operation initiates and, when completed, prints a summary of the transferred types in the CLI.
 
 ### Bypass all `transfer` command line prompts
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi transfer` programmatically.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi transfer` programmatically. You must pass the `to-token` option with the Transfer token if you use the --force option.
 
 #### Example: bypass the `transfer` command line prompts with `--force`
 
@@ -464,7 +465,7 @@ The default `strapi transfer` command transfers your content (entities and relat
 <code-block title="YARN">
 
 ```bash
-yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --only files
+yarn strapi transfer --to https://example.com/admin --only files
 ```
 
 </code-block>
@@ -472,7 +473,7 @@ yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-toke
 <code-block title="NPM">
 
 ```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token> --only files
+npm run strapi transfer -- --to https://example.com/admin --only files
 ```
 
 </code-block>
@@ -488,7 +489,7 @@ The default `strapi transfer` command transfers your content (entities and relat
 <code-block title="YARN">
 
 ```bash
-yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-token> --exclude files
+yarn strapi transfer --to https://example.com/admin --exclude files
 ```
 
 </code-block>
@@ -496,7 +497,7 @@ yarn strapi transfer --to https://example.com/admin --to-token <my-transfer-toke
 <code-block title="NPM">
 
 ```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfer-token>> --exclude files
+npm run strapi transfer -- --to https://example.com/admin --exclude files
 ```
 
 </code-block>
@@ -589,7 +590,7 @@ The `transfer` command is not intended for transferring data between two local i
     <code-block title="YARN">
 
     ```bash
-    yarn strapi transfer --to http://localhost:1337/admin --to-token <my-transfer-token> 
+    yarn strapi transfer --to http://localhost:1337/admin
     ```
 
     </code-block>
@@ -597,13 +598,14 @@ The `transfer` command is not intended for transferring data between two local i
     <code-block title="NPM">
 
     ```bash
-    npm run strapi transfer -- --to http://localhost:1337/admin --to-token <my-transfer-token>>
+    npm run strapi transfer -- --to http://localhost:1337/admin
     ```
 
     </code-block>
     </code-group>
 
-3. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
+3. When prompted, apply the Transfer token.
+4. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
 
 :::tip
 In some cases you might receive a connection refused error targeting `localhost`. Try changing the address to [http://127.0.0.1:1337/admin](http://127.0.0.1:1337/admin).
