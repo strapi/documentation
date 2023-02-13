@@ -331,7 +331,6 @@ const sidebars = {
       ],
     },
   ],
-  ],
 
  
 
