@@ -9,10 +9,6 @@
       "destination": "/dev-docs/backend-customization"
     },
     {
-      "source": "/developer-docs/latest/development/backend-customization/(.*)",
-      "destination": "/dev-docs/backend-customization/*"
-    },
-    {
       "source": "/developer-docs/latest/developer-resources/cli/CLI",
       "destination": "/dev-docs/cli"
     },
