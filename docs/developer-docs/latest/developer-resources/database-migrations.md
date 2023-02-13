@@ -57,7 +57,7 @@ Use the following procedure to create a migration file:
     </code-block>
     </code-group>
 
-2. Type a filename when prompted. The output filename is a concatenation of a date-time string and your filename with the format: `YYYY.MM.DDTHH.MM.SS.name-of-my-migration.js`
+2. Type a migration name when prompted. The output filename is a concatenation of a date-time string and your filename with the format: `YYYY.MM.DDTHH.MM.SS.name-of-my-migration.js`
 3. Open the migration template in your code editor: `path: ./database/migrations/{file-name}`.
 
 4. Fill in the template by adding actual migration code inside the `up()` function.
