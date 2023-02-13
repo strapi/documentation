@@ -10,7 +10,7 @@ sidebarDepth: 3
 
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
-Models in Strapi v4 have been completely overhauled: model files are located in <NOBR>`/content-types/` folders, various keys and settings have been removed, and the relation syntax has completely changed.</NOBR>
+Models in Strapi v4 have been completely overhauled: model files are located in `/content-types/` folders, various keys and settings have been removed, and the relation syntax has completely changed.
 
 Migrating to Strapi v4 requires:
 
