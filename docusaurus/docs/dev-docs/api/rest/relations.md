@@ -90,7 +90,7 @@ Positional arguments can be passed to the longhand syntax of `connect` to define
 The longhand syntax accepts an array of objects, each object containing the `id` of the entry to be connected and an optional `position` object to define where to connect the relation.
 
 :::note Different syntaxes for different relations
-The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#requests)).
+The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/dev-docs/api/rest-api.md#requests)).
 :::
 
 To define the `position` for a relation, pass one of the following 4 different positional attributes:
