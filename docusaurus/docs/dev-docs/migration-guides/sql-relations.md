@@ -24,11 +24,11 @@ This documentation is built around an example using 2 different database entitie
 Entity relationship diagrams use the following color code:
 
 * for tables and relations:
-  * Strapi v3 items are in <span style="color: rgb(191,56,5)">orange</span>
-  * Strapi v4 items are in <span style="color: rgb(170,0,243)">purple</span>
-* for table names (e.g. <span style="color: rgb(13, 89, 223)">articles</span>_<span style="color: rgb(17,124,7)">category</span>_links):
-  * entity names (singular or plural) are in <span style="color: rgb(13,89,223)">blue</span>
-  * attribute names from a schema are in <span style="color: rgb(17,124,7)">green</span>
+  * Strapi v3 items are in orange
+  * Strapi v4 items are in purple
+* for table names (e.g. articles_category_links):
+  * entity names (singular or plural) are in blue
+  * attribute names from a schema are in green
   * all the other parts of a table name are in black
 
 Entity relationship diagrams also use the following abbreviations:
