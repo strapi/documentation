@@ -476,7 +476,7 @@ In Strapi v3, only one morph table is created for every entity. Whenever a polym
 <Columns>
 <ColumnLeft title="Strapi v4">
 
-![](/img/assets/data-migration/sql-relations-schema-morphToMany.png)
+![morphToMany screenshot](/img/assets/data-migration/sql-relations-schema-morphToMany.png)
 
 </ColumnLeft>
 
