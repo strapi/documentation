@@ -1,10 +1,8 @@
 ---
-title: SQL v3 to v4 migration - Relations - Strapi Developer Docs
+title: SQL v3 to v4 migration - Relations
 description: Learn how model schemas and entity relationship diagrams differ between Strapi v3 and v4
 displayed_sidebar: devDocsSidebar
 ---
-
-<!-- TODO: update SEO -->
 
 # Data migration: SQL relations in Strapi v3 and v4
 
@@ -44,19 +42,21 @@ Entity relationship diagrams also use the following abbreviations:
 **Model schemas (attributes only)**:
 
 <Columns>
+
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
-"category": {
-  "model": "category",
-  "via": "article"
-}
+```js title="article/article.settings.json"
+  "category": {
+    "model": "category",
+    "via": "article"
+  }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
+```js title="article/schema.json"
   "category": {
     "type": "relation",
     "relation": "oneToOne",
@@ -64,31 +64,37 @@ Entity relationship diagrams also use the following abbreviations:
     "inversedBy": "article"
   }
 ```
+
 </ColumnRight>
 </Columns>
-
 <Columns>
+
 <ColumnLeft>
 
-```json title="category/category.settings.json"
-"article": {
-  "model": "article",
-  "via": "category"
+```js title="category/category.settings.json"
+{
+  "article": {
+    "model": "article",
+    "via": "category"
+  }
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/schema.json"
-
+```js title="category/schema.json"
+{
   "article": {
     "type": "relation",
     "relation": "oneToOne",
     "target": "api::article.article",
     "mappedBy": "category"
+  }
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -96,11 +102,15 @@ Entity relationship diagrams also use the following abbreviations:
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-one-to-one.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-one-to-one.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -111,60 +121,77 @@ Entity relationship diagrams also use the following abbreviations:
 <Columns>
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
-"categories": {
-  "collection": "category",
-  "via": "article"
+```js title="article/article.settings.json"
+{
+  "categories": {
+    "collection": "category",
+    "via": "article"
+  }
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
-"categories": {
-  "type": "relation",
-  "relation": "oneToMany",
-  "target": "api::category.category",
-  "mappedBy": "article"
+```js title="article/schema.json"
+{
+  "categories": {
+    "type": "relation",
+    "relation": "oneToMany",
+    "target": "api::category.category",
+    "mappedBy": "article"
+  }
 }
 ```
+
 </ColumnRight>
 </Columns>
 
 <Columns>
 <ColumnLeft>
 
-```json title="category/category.settings.json"
-"article": {
-  "model": "article",
-  "via": "categories"
+```js title="category/category.settings.json"
+{
+  "article": {
+    "model": "article",
+    "via": "categories"
+  }
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/schema.json"
-"article": {
-  "type": "relation",
-  "relation": "manyToOne",
-  "target": "api::article.article",
-  "inversedBy": "categories"
+```js title="category/schema.json"
+{
+  "article": {
+    "type": "relation",
+    "relation": "manyToOne",
+    "target": "api::article.article",
+    "inversedBy": "categories"
+  }
 }
 ```
+
 </ColumnRight>
 </Columns>
 
 **Database structures:**
 
 <Columns>
+
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-one-to-many.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-one-to-many.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -175,17 +202,18 @@ Entity relationship diagrams also use the following abbreviations:
 <Columns>
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
+```js title="article/article.settings.json"
 "category": {
   "model": "category",
   "via": "articles"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
+```js title="article/schema.json"
 "category": {
   "type": "relation",
   "relation": "manyToOne",
@@ -193,23 +221,25 @@ Entity relationship diagrams also use the following abbreviations:
   "inversedBy": "articles"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
 <Columns>
 <ColumnLeft>
 
-```json title="category/category.settings.json"
+```js title="category/category.settings.json"
 "articles": {
   "collection": "article",
   "via": "category"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/schema.json"
+```js title="category/schema.json"
   "articles": {
     "type": "relation",
     "relation": "oneToMany",
@@ -217,6 +247,7 @@ Entity relationship diagrams also use the following abbreviations:
     "mappedBy": "category"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -224,11 +255,15 @@ Entity relationship diagrams also use the following abbreviations:
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-many-to-one.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-many-to-one.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -239,18 +274,19 @@ Entity relationship diagrams also use the following abbreviations:
 <Columns>
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
+```js title="article/article.settings.json"
 "categories": {
   "collection": "category",
   "via": "articles",
   "dominant": true
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
+```js title="article/schema.json"
 "categories": {
   "type": "relation",
   "relation": "manyToMany",
@@ -258,30 +294,35 @@ Entity relationship diagrams also use the following abbreviations:
   "inversedBy": "articles"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
 <Columns>
 <ColumnLeft>
 
-```json title="category/category.settings.json"
+```js title="category/category.settings.json"
 "articles": {
   "collection": "article",
   "via": "categories"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/schema.json"
-"articles": {
-  "type": "relation",
-  "relation": "manyToMany",
-  "target": "api::article.article",
-  "mappedBy": "categories"
+```js title="category/schema.json"
+{
+  "articles": {
+    "type": "relation",
+    "relation": "manyToMany",
+    "target": "api::article.article",
+    "mappedBy": "categories",
+  }
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -289,11 +330,15 @@ Entity relationship diagrams also use the following abbreviations:
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-many-to-many.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-many-to-many.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -304,22 +349,24 @@ Entity relationship diagrams also use the following abbreviations:
 <Columns>
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
+```js title="article/article.settings.json"
 "category": {
   "model": "category"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
+```js title="article/schema.json"
 "category": {
   "type": "relation",
   "relation": "oneToOne",
   "target": "api::category.category"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -327,11 +374,15 @@ Entity relationship diagrams also use the following abbreviations:
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-one-way.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-one-way.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -340,24 +391,28 @@ Entity relationship diagrams also use the following abbreviations:
 **Model schemas (attributes only)**:
 
 <Columns>
+
 <ColumnLeft title="Strapi v3">
-```json title="article/article.settings.json"
+
+```js title="article/article.settings.json"
 
 "categories": {
   "collection": "category"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json title="article/schema.json"
+```js title="article/schema.json"
 "categories": {
   "type": "relation",
   "relation": "oneToMany",
   "target": "api::category.category"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -365,11 +420,15 @@ Entity relationship diagrams also use the following abbreviations:
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-many-way.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-many-way.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -390,23 +449,25 @@ Polymorphic relations should always have `“configurable”: false` defined in 
 <Columns>
 <ColumnLeft title="Strapi v3">
 
-```json title="article/article.settings.json"
+```js title="article/article.settings.json"
 "related": {
   "collection": "*",
   "filter": "field",
   "configurable": false
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/category.settings.json"
+```js title="category/category.settings.json"
 "articles": {
   "collection": "article",
   "via": "related"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -415,18 +476,19 @@ In Strapi v3, only one morph table is created for every entity. Whenever a polym
 <Columns>
 <ColumnLeft title="Strapi v4">
     
-```json title="article/schema.json"
+```js title="article/schema.json"
 "related": {
   "type": "relation",
   "relation": "morphToMany", // or morphToOne
   "configurable": false
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight>
 
-```json title="category/schema.json"
+```js title="category/schema.json"
 "article": {
   "type": "relation",
   "relation": "morphMany", // or morphOne
@@ -434,6 +496,7 @@ In Strapi v3, only one morph table is created for every entity. Whenever a polym
   "morphBy": "related"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -443,11 +506,15 @@ In Strapi v4, a morph table is created for every entity/morph relation defined i
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-morph-many.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-morph-many.png" />
+
 </ColumnRight>
 </Columns>
 
@@ -468,24 +535,27 @@ The schema definition for components is the same in Strapi v3 and in Strapi v4, 
 **Model schemas (attributes only):**
 
 <Columns>
+
 <ColumnLeft title="Strapi v3">
 
-```json
+```js
 "component-name": {
   "type": "component",
   "component": "default.comp"
 }
 ```
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
 
-```json
+```js
 "component-name": {
   "type": "component",
   "component": "default.comp"
 }
 ```
+
 </ColumnRight>
 </Columns>
 
@@ -493,10 +563,14 @@ The schema definition for components is the same in Strapi v3 and in Strapi v4, 
 
 <Columns>
 <ColumnLeft title="Strapi v3">
+
 <img src="/img/assets/data-migration/v3-components.png" />
+
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
+
 <img src="/img/assets/data-migration/v4-components.png" />
+
 </ColumnRight>
 </Columns>
