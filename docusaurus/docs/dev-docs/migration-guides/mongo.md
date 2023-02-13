@@ -95,7 +95,7 @@ To prepare the migration locally:
 
 <TabItem value="postgresql" title="PostgreSQL">
   
-![](/assets/img/data-migration/mongo-relations-postgres-after.png)
+![postgres-after screenshot](/img/assets/data-migration/mongo-relations-postgres-after.png)
 
 </TabItem>
 
