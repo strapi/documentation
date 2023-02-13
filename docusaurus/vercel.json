@@ -23,6 +23,10 @@
     {
       "source": "/developer-docs/latest/development/custom-fields",
       "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/development/backend-customization/(.*)",
+      "destination": "/dev-docs/backend-customization"
     }
   ]
 }
