@@ -18,6 +18,7 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/import.html
 To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts.
 
 ### Example: Minimum command to import data from a file in the Strapi project root
+
 <br/>
 
 <Tabs groupId="yarn-npm">
@@ -45,6 +46,7 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc
 If you are importing data from an encrypted file the encryption key can be passed with the `strapi import` command by using the `-k` or `--key` option.
 
 ### Example: Pass the encryption key with the `strapi import` command
+
 <br/>
 
 <Tabs groupId="yarn-npm">
@@ -142,6 +144,7 @@ Media such as images consist of the file (asset) and the entity in the database.
 ### Example: import only the project configuration
 
 <br/>
+
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
