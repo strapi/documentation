@@ -229,6 +229,11 @@ module.exports = {
       delete(file) {
         // delete the file in the provider
       },
+      checkFileSize(file, { sizeLimit }) {
+        // implement your own file size limit logic
+        // there is a default logic in place if this
+        // method is not implemented
+      },
     };
   },
 };

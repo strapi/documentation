@@ -114,7 +114,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 <ApiCall noSideBySide>
 <Request title="Example request">
 
-`GET /api/articles?populate=%2A`
+`GET /api/articles?populate=*`
 
 </Request>
 
