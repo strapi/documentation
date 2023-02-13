@@ -16,7 +16,7 @@ The Review workflows settings are only available to users with the Super Admin r
 
 Review workflow settings are available in the **Settings** section of the admin panel. To access the settings, click on the **Settings** icon in the left-hand menu, then click on the **Review Workflows** link in the **Global Settings** section.
 
-![Review Workflows Settings](../assets/settings/review-workflows/review-workflows.png)
+![Review Workflows Settings](../assets/review-workflows/review-workflows.png)
 
 There are four stages in the default review workflow available in Strapi: **To do**, **In progress**, **Ready to review**, and **Reviewed**. You can add, edit, or delete stages as needed. 
 
