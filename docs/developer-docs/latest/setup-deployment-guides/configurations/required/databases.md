@@ -473,7 +473,7 @@ export default = ({ env }) => {
 </code-block>
 </code-group>
 
-The corresponding `.env` file `# Database` section by the database type:
+The following are examples of the corresponding `.env` file `# Database` section for each of the possible databases:
 
 <code-group>
 <code-block title="MySQL">
@@ -520,13 +520,14 @@ DATABASE_FILENAME=.tmp/data.db
 </code-block>
 </code-group>
 
-::: strapi
-If you started your project before v4.6.2 you can convert your `database.js|database.ts` configuration file following this procedure:
+:::strapi
+If you started your project with a version prior to v4.6.2 you can convert your `database.js|database.ts` configuration file following this procedure:
 
 1. Update your application to v4.6.2 or a later version. See the [Updates and Migrations](/developer-docs/latest/update-migration-guides/migration-guides/migration-guides.md) section for any breaking changes that require specific fixes.
 2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
 3. Add the environment variables from the preceding code example to your `.env` file.
-4. Save the changes and restart your application.
+4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
+5. Save the changes and restart your application.
 :::
 
 ### Using database URLs
@@ -534,17 +535,17 @@ If you started your project before v4.6.2 you can convert your `database.js|data
 Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi v4.6.2 and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
 
 - overrides the other `connection.connection` properties such as `host` and `port`,
-- can be disabled by setting the property to a empty string: `''`,
-- <!--something else here?-->
+- can be disabled by setting the property to a empty string: `''`.
 
 ### Manage databases by environment
 
-Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as SQLite. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, and usually either MySQL, MariaDB, or PostgreSQL. Database environment variables allow you to switch the attached database. The following are two example scenarios:
+Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as `SQLite`. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, usually either `MySQL`, `MariaDB`, or `PostgreSQL`. Database environment variables allow you to switch the attached database. To switch the database connection set a minimum of the `DATABASE_CLIENT` and `DATABASE_URL` for `MySQL`, `MariaDB`, and `PostgreSQL`. Set a minimum of `DATABASE_CLIENT` and `DATABASE_FILENAME` for `SQLite`.
 
-#### Use a local SQLite development database and a hosted production MySQL database
+For deployed versions of your application the database environment variables should be stored wherever your other secrets are stored. The following table gives examples of where the database environment variables should be stored:
 
-blah blah
 
-#### Switch between a local development PostgreSQL and a hosted production PostgreSQL database
-
-blah blah
+| Hosting option                                        | environment variable storage    |
+|-------------------------------------------------------|---------------------------------|
+| Virtual private server/virtual machine (e.g. AWS EC2) | `ecosystem.config.js` or `.env` |
+| DigitalOcean App Platform                             | `Environment Variables` table   |
+| Heroku                                                | `Config vars`                   |
