@@ -15,7 +15,10 @@ The **Projects** page displays a list of all your Strapi Cloud projects. From he
 Each project card displays the following information:
 
 * **Project name**
-* **Status**: Displays a **Disconnected** warning if the project repository is not connected to Strapi Cloud, of a **Suspended** warning if the project is suspended.
+* **Status**: Displays the current status of the project. One of the following:
+    * **Disconnected** if the project repository is not connected to Strapi Cloud.
+    * **Suspended** if the project has been suspended. Contact Strapi support to reactivate the project.
+    * **Incompatible version** if the project is using a Strapi version that is not compatible with Strapi Cloud.
 * **Last deployment date**: Timestamp of the last deployment.
 * **Options** menu: Open the menu to select from the available options:
     * **Visit App**: Go to the application.
@@ -26,7 +29,9 @@ Each project card displays the following information:
 
 From the **Projects** page, click on any project card to access that project's details page.
 
-The project details page displays the following tabs: **Overview**, **Deploys**, **Activity**, and [**Settings**](./settings/).
+The project details page displays the following tabs: **Deploys** and [**Settings**](./settings/).
+
+<!-- WiP
 
 ### Overview
 
@@ -40,6 +45,8 @@ From this tab you can:
 * **Visit App**: Click the **Visit App** button to access the application
 * Quickly view project [**Usage**](./setting#usage)
 * Quickly view project [**Deploys**](#deploys)
+
+-->
 
 ### Deploys
 
@@ -59,39 +66,31 @@ Each card displays the following information:
     * **Deploy failed**
 * **Last deployment time**: When the deployment was triggered and the duration.
 * **Production branch**
-* **Options** menu (`...`): The available options vary depending on the deployment status.
-    * For **Done** status, you can:
-        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
-    * For **Deploying** status, you can:
-        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
-        * **Cancel deploy**
-    * For **Build failed** status, you can:
-        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
-    * For **Deploy failed** status, you can:
-        * **See details**: Go to the [**Deployment details**](#deployment-details) page.
+* **Options** menu (`...`): Use to access the [**Deployment details**](#deployment-details) page. For in-progress deployments, you can also cancel the deployment.
 
 From this page you can also trigger a new deployment, cancel a pending deployment, and click on any deployment to view additional details.
 
 #### Deployment details
 
-From the **Deploys** tab, click on any deployment card to view additional details.
+From the **Deploys** tab, view the deployment history for this project. Use the **Options** menu (`...`) to access the **Deployment details** page for any deployment.
 
 ![Deployment details](/img/assets/cloud/deploy_logs.png)
 
 The deployment details page displays the following information:
 
 * **Status**: Whether the project is **Building**, **Deploying**, **Done**, **Cancelled**, **Build failed**, or **Deploy failed**.
-* **Triggered**: When the deployment was triggered and the duration.
+* **Triggered**: When the deployment was triggered.
 * **Deployed In**: The time it took to deploy the project.
 * **Commit**: The commit used for this deployment. Click the commit SHA to view the commit on GitHub.
 * **Branch**: The branch used for this deployment.
 * **Logs**: The Build, Deploy, and Runtime logs of the deployment. Click the **copy logs** button to copy the log contents.
 
+<!-- WiP
 ### Activity
 
 The **Activity** tab provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
-<!--insert screenshot -->
+--insert screenshot
 
 For each log item the following information is displayed:
 
@@ -115,13 +114,13 @@ All logs are displayed by default, in reverse chronological order. You can filte
 <!--
 ### Creating a custom filter
 WiP
--->
+
 
 #### Searching logs
 
 Click the **Search** icon to search for a specific log. The search is performed on all log fields.
 
-<!--insert screenshot -->
+<!--insert screenshot 
 
 #### Log details
 
