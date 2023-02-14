@@ -111,7 +111,7 @@ All logs are displayed by default, in reverse chronological order. You can filte
 * **Time**: Select a time (range) to filter by.
 * **+Add Filter**: Create a custom filter by selecting a field and a value.
 
-<!--
+
 ### Creating a custom filter
 WiP
 
@@ -120,10 +120,10 @@ WiP
 
 Click the **Search** icon to search for a specific log. The search is performed on all log fields.
 
-<!--insert screenshot 
+
 
 #### Log details
 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
-<!--insert screenshot -->
+-->
