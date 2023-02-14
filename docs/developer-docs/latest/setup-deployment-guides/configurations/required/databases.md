@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 
 # Database configuration
 
-The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content. 
+The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
 :::warning
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
@@ -14,6 +14,11 @@ The `./config/database.js` file (or the `./config/database.ts` file for TypeScri
 
 :::strapi Supported databases
 The CLI installation guide details [supported database and versions](/developer-docs/latest/setup-deployment-guides/installation/cli.md#preparing-the-installation).
+:::
+
+:::note
+Strapi v4.6.2 introduced a new format for the database configuration file that allows all of the database configuration properties to be set using environment variables. Only new projects created after the v4.6.2 release will include the new configuration, however, earlier projects can utilize the new configuration by manually modifying the `./config/database.js` or `./config/database.ts` and updating the `.env` file. See [environment variables in database configurations](#environment-variables-in-database-configurations)
+
 :::
 
 ## Configuration structure
@@ -40,7 +45,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`.                    | `String`                  |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. Available in v4.6.2+                    | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
@@ -48,7 +53,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
-| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.  `ssl` accepts the properties: `key`, `cert`, `ca`, `capath`, `cipher`, and `rejectUnauthorized`.                                       | `Boolean` or `Object` |
 
 :::note
 Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
@@ -303,4 +308,243 @@ $ \c my_strapi_db_name admin_user
 # Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
+
 :::
+
+## Environment variables in database configurations
+
+Strapi version v4.6.2 and higher comes with the database configuration options included in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you chose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated config file:
+
+<code-group>
+<code-block title="JAVASCRIPT">
+
+```js
+const path = require('path');
+
+module.exports = ({ env }) => {
+  const client = env('DATABASE_CLIENT', 'sqlite');
+
+  const connections = {
+    mysql: {
+      connection: {
+        connectionString: env('DATABASE_URL'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 3306),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool(
+            'DATABASE_SSL_REJECT_UNAUTHORIZED',
+            true
+          ),
+        },
+      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    postgres: {
+      connection: {
+        connectionString: env('DATABASE_URL'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 3306),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool(
+            'DATABASE_SSL_REJECT_UNAUTHORIZED',
+            true
+          ),
+        },
+        schema: env('DATABASE_SCHEMA', 'public'),
+      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    sqlite: {
+      connection: {
+        filename: path.join(
+          __dirname,
+          '..',
+          env('DATABASE_FILENAME', 'data.db')
+        ),
+      },
+      useNullAsDefault: true,
+    },
+  };
+
+  return {
+    connection: {
+      client,
+      ...connections[client],
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+    },
+  };
+};
+```
+
+</code-block>
+
+<code-block title="TYPESCRIPT">
+
+```ts
+import path from 'path';
+
+export default = ({ env }) => {
+  const client = env('DATABASE_CLIENT', 'sqlite');
+
+  const connections = {
+    mysql: {
+      connection: {
+        connectionString: env('DATABASE_URL'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 3306),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool(
+            'DATABASE_SSL_REJECT_UNAUTHORIZED',
+            true
+          ),
+        },
+      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    postgres: {
+      connection: {
+        connectionString: env('DATABASE_URL'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 3306),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool(
+            'DATABASE_SSL_REJECT_UNAUTHORIZED',
+            true
+          ),
+        },
+        schema: env('DATABASE_SCHEMA', 'public'),
+      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    sqlite: {
+      connection: {
+        filename: path.join(
+          __dirname,
+          '..',
+          env('DATABASE_FILENAME', 'data.db')
+        ),
+      },
+      useNullAsDefault: true,
+    },
+  };
+
+  return {
+    connection: {
+      client,
+      ...connections[client],
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+    },
+  };
+};
+```
+
+</code-block>
+</code-group>
+
+The corresponding `.env` file `# Database` section by the database type:
+
+<code-group>
+<code-block title="MySQL">
+
+```bash
+
+# Database
+DATABASE_CLIENT=mysql
+DATABASE_HOST=127.0.0.1
+DATABASE_PORT=3306
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strap1
+DATABASE_SSL=false
+```
+
+</code-block>
+
+<code-block title="PostgreSQL">
+
+```bash
+
+# Database
+DATABASE_CLIENT=postgres
+DATABASE_HOST=127.0.0.1
+DATABASE_PORT=5432
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
+DATABASE_SSL=false
+```
+
+</code-block>
+
+<code-block title="SQLite">
+
+```bash
+
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
+```
+
+</code-block>
+</code-group>
+
+::: strapi
+If you started your project before v4.6.2 you can convert your `database.js|database.ts` configuration file following this procedure:
+
+1. Update your application to v4.6.2 or a later version. See the [Updates and Migrations](/developer-docs/latest/update-migration-guides/migration-guides/migration-guides.md) section for any breaking changes that require specific fixes.
+2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
+3. Add the environment variables from the preceding code example to your `.env` file.
+4. Save the changes and restart your application.
+:::
+
+### Using database URLs
+
+Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi v4.6.2 and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
+
+- overrides the other `connection.connection` properties such as `host` and `port`,
+- can be disabled by setting the property to a empty string: `''`,
+- <!--something else here?-->
+
+### Manage databases by environment
+
+Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as SQLite. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, and usually either MySQL, MariaDB, or PostgreSQL. Database environment variables allow you to switch the attached database. The following are two example scenarios:
+
+#### Use a local SQLite development database and a hosted production MySQL database
+
+blah blah
+
+#### Switch between a local development PostgreSQL and a hosted production PostgreSQL database
+
+blah blah
