@@ -20,7 +20,8 @@ This documentation is built around an example using 2 different database entitie
 - the definition of attributes in the [model schema](/dev-docs/backend-customization/models#model-schema) for each entity's model
 - and the entity relationship diagrams.
 
-:::details Legend for entity relationship diagrams
+<details>
+<summary>Legend for entity relationship diagrams</summary>
 Entity relationship diagrams use the following color code:
 
 * for tables and relations:
@@ -35,7 +36,7 @@ Entity relationship diagrams also use the following abbreviations:
 - PK for primary key
 - FK for foreign key
 
-:::
+</details>
 
 ## One-to-one relations (1-1)
 

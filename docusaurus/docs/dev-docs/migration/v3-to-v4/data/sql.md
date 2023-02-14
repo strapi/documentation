@@ -11,7 +11,7 @@ The database layer of Strapi has been fully rewritten in Strapi `v4`. This docum
 Changes can be [global](#global-changes) (impacting any table) or more limited in scope, impacting only [specific tables](#changes-impacting-strapi-built-in-tables) or some [Strapi plugins](#changes-impacting-strapi-plugins).
 
 :::strapi Relations in Strapi v3 vs. v4
-The [v3 vs. v4 SQL relations cheatsheet](/dev-docs/migration-guides/sql-relations) is designed to help you understand the differences in model schemas and entity relationship diagrams between Strapi `v3` and Strapi `v4`.
+The [v3 vs. v4 SQL relations cheatsheet](/dev-docs/migration/v3-to-v4/data/sql-relations) is designed to help you understand the differences in model schemas and entity relationship diagrams between Strapi `v3` and Strapi `v4`.
 :::
 
 :::warning 🚧  Migration scripts
@@ -74,7 +74,7 @@ The `strapi_permission` table used in Strapi `v3` is named `admin_permissions` i
 </ColumnLeft>
 
 <ColumnRight title="Strapi v4">
-<img src="/img/assets/data-migration/assets/v4-admin_permissions.png" alt="Strapi v4 permissions"/>
+<img src="/img/assets/data-migration/v4-admin_permissions.png" alt="Strapi v4 permissions"/>
 </ColumnRight>
 
 </Columns>
@@ -112,7 +112,9 @@ In addition to all the content-types that have been renamed (see [table names ch
 
 The following tables list the mapping of all permissions between Strapi v3 and Strapi v4:
 
-:::details Permission mapping for an example "restaurant" API:
+<details>
+<summary>Permission mapping for an example "restaurant" API:</summary>
+
 | Strapi v3 type | Strapi v3 controller | Strapi v3 action   | Strapi v4 action                              |
 | -------------- | -------------------- | ------------------ | --------------------------------------------- |
 | application    | restaurant           | count              | _(deleted)_                                   |
@@ -122,9 +124,11 @@ The following tables list the mapping of all permissions between Strapi v3 and S
 | application    | restaurant           | findone            | api::restaurant.restaurant.findOne            |
 | application    | restaurant           | update             | api::restaurant.restaurant.update             |
 | application    | restaurant           | createlocalization | api::restaurant.restaurant.createLocalization |
-:::
+</details>
 
-:::details Permission mapping for the Users & Permission plugin:
+<details>
+<summary>Permission mapping for the Users & Permission plugin:</summary>
+
 | Strapi v3 type    | Strapi v3 controller | Strapi v3 action       | Strapi v4 action                                     |
 | ----------------- | -------------------- | ---------------------- | ---------------------------------------------------- |
 | users-permissions | auth                 | callback               | plugin::users-permissions.auth.callback              |
@@ -159,9 +163,11 @@ The following tables list the mapping of all permissions between Strapi v3 and S
 | users-permissions | userspermissions     | updateadvancedsettings | _(deleted)_                                          |
 | users-permissions | userspermissions     | updateemailtemplate    | _(deleted)_                                          |
 | users-permissions | userspermissions     | updateproviders        | _(deleted)_                                          |
-:::
+</details>
 
-:::details Permission mapping for the i18n plugin:
+<details>
+<summary>Permission mapping for the i18n plugin:</summary>
+
 | Strapi v3 type | Strapi v3 controller | Strapi v3 action          | Strapi v4 action                 |
 | -------------- | -------------------- | ------------------------- | -------------------------------- |
 | i18n           | content-types        | getnonlocalizedattributes | _(deleted)_                      |
@@ -170,9 +176,11 @@ The following tables list the mapping of all permissions between Strapi v3 and S
 | i18n           | locales              | deletelocale              | _(deleted)_                      |
 | i18n           | locales              | listlocales               | plugin::i18n.locales.listLocales |
 | i18n           | locales              | updatelocale              | _(deleted)_                      |
-:::
+</details>
 
-:::details Permission mapping for the Content-Type Builder:
+<details>
+<summary>Permission mapping for the Content-Type Builder:</summary>
+
 | Strapi v3 type       | Strapi v3 controller | Strapi v3 action  | Strapi v4 action                                           |
 | -------------------- | -------------------- | ----------------- | ---------------------------------------------------------- |
 | content-type-builder | builder              | getreservednames  | _(deleted)_                                                |
@@ -189,9 +197,11 @@ The following tables list the mapping of all permissions between Strapi v3 and S
 | content-type-builder | contenttypes         | getcontenttype    | plugin::content-type-builder.content-types.getContentType  |
 | content-type-builder | contenttypes         | getcontenttypes   | plugin::content-type-builder.content-types.getContentTypes |
 | content-type-builder | contenttypes         | updatecontenttype | _(deleted)_                                                |
-:::
+</details>
 
-:::details Permission mapping for the Upload plugin:
+<details>
+<summary>Permission mapping for the Upload plugin:</summary>
+
 | Strapi v3 type | Strapi v3 controller | Strapi v3 action | Strapi v4 action                   |
 | -------------- | -------------------- | ---------------- | ---------------------------------- |
 | upload         | upload               | count            | plugin::upload.content-api.count   |
@@ -202,19 +212,22 @@ The following tables list the mapping of all permissions between Strapi v3 and S
 | upload         | upload               | search           | _(deleted)_                        |
 | upload         | upload               | updatesettings   | _(deleted)_                        |
 | upload         | upload               | upload           | plugin::upload.content-api.upload  |
-:::
+</details>
 
-:::details Permission mapping for the Email plugin:
+<details>
+<summary>Permission mapping for the Email plugin:</summary>
+
 | Strapi v3 type | Strapi v3 controller | Strapi v3 action | Strapi v4 action         |
 | -------------- | -------------------- | ---------------- | ------------------------ |
 | email          | email                | getsettings      | _(deleted)_              |
 | email          | email                | send             | plugin::email.email.send |
 | email          | email                | test             | _(deleted)_              |
-:::
+</details>
 
-:::details Permission mapping for the Content Manager and the Documentation plugin:
+<details>
+<summary> Permission mapping for the Content Manager and the Documentation plugin:</summary>
 All permissions were deleted.
-:::
+</details>
 
 ## Changes impacting Strapi plugins
 
@@ -224,17 +237,11 @@ Strapi `v4` introduces breaking changes that impact the table names, column name
 
 The tables and database structure used by the [Users & Permissions plugin](/dev-docs/plugins/users-permissions) are different in Strapi `v3` and Strapi `v4`:
 
-<Columns>
-
-<ColumnLeft title="Strapi v3">
+**Strapi v3:**
 <img src="/img/assets/data-migration/v3-up.png" alt="v3"/>
-</ColumnLeft>
 
-<ColumnRight title="Strapi v4">
+**Strapi v4:**
 <img src="/img/assets/data-migration/v4-up.png" alt="v4"/>
-</ColumnRight>
-
-</Columns>
 
 #### Enabled permissions
 
@@ -281,5 +288,3 @@ In Strapi v4, localization tables used by the [Internationalization (i18n)](/dev
 </ColumnRight>
 
 </Columns>
-
-

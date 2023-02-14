@@ -6,7 +6,7 @@ displayed_sidebar: devDocsSidebar
 
 # MongoDB vs. SQL implementation differences in Strapi v3
 
-This documentation explains the key structural differences to take into account when migrating data from MongoDB to SQL in the context of a Strapi v3 project. It should be used as a reference when migrating data locally (see [MongoDB to SQL migration in Strapi v3](/dev-docs/migration-guides/mongo)).
+This documentation explains the key structural differences to take into account when migrating data from MongoDB to SQL in the context of a Strapi v3 project. It should be used as a reference when migrating data locally (see [MongoDB to SQL migration in Strapi v3](/dev-docs/migration/v3-to-v4/data/mongo)).
 
 ## Model settings
 
@@ -36,9 +36,6 @@ An example `attribute_a` defined in `model.settings.json` would be stored like t
   }
 }
 ```
-
-:::: columns
-::: column-left MongoDB:
 
 <Columns>
 <ColumnLeft title="MongoDB">
@@ -76,7 +73,6 @@ If no `timestamps` option is set, the defaults should be migrated, using lower s
 ## Relations
 
 :::note
-<!-- ? Not sure what this exactly means 🤔 What should people do if they had custom column names? -->
 Custom column names for relations can't be used in both MongoDB and SQL databases. No specific migrations are needed for this case and custom column names can be considered as if they were not used.
 :::
 
@@ -85,7 +81,7 @@ In Strapi, relations between models are defined in the `attributes` section of t
 The following section explains how each type of relation is declared in the model attributes and gives an example of how the model attributes are reflected in the MongoDB and SQL databases:
 
 <Tabs>
-<TabItem value="oneway" title="oneWay">
+<TabItem value="one-way" title="oneWay">
 
 In MongoDB, the id of a `oneWay` relation is in the document and is named after the property in the `model.settings.json` file.
 
@@ -147,7 +143,7 @@ In SQL databases, the `oneWay` relation is a column in the row and is named afte
 
 </TabItem>
 
-<TabItem value="onetone" title="oneToOne">
+<TabItem value="one-to-one" title="oneToOne">
 
 In MongoDB, the id of a `oneToOne` relation is in the 2 documents at the same time, and uses the names defined in the `model.settings.json` file.
 
@@ -215,7 +211,7 @@ In SQL databases, the id of a `oneToOne` relation is also in the 2 tables at the
 
 </TabItem>
 
-<TabItem value="onetomany" title="oneToMany">
+<TabItem value="one-to-many" title="oneToMany">
 
 A `oneToMany` relation is stored on the opposite side of the relation in both MongoDB and SQL databases.
 
@@ -279,7 +275,7 @@ A `oneToMany` relation is stored on the opposite side of the relation in both Mo
 
 </TabItem>
 
-<TabItem value="manytomany1" title="manyToMany">
+<TabItem value="many-to-one" title="manyToOne">
 
 A `manyToOne` relation is the inverse of a `oneToMany` relation.
 
@@ -345,7 +341,7 @@ In both MongoDB and SQL databases, the relation is stored in the main model.
 
 </TabItem>
 
-<TabItem value="manytomany2" title="manyToMany">
+<TabItem value="many-to-many" title="manyToMany">
 
 In MongoDB, the ids of a `manyToMany` relation are stored in an array in the side where the `dominant` property is `true`.
 
@@ -420,7 +416,7 @@ In SQL databases, a `manyToMany` relation is stored in a join table whose name f
 
 </TabItem>
 
-<TabItem value="manyway" title="manyWay">
+<TabItem value="many-way" title="manyWay">
 
 A `manyWay` relation is a simplified version of a `manyToMany` relation.
 

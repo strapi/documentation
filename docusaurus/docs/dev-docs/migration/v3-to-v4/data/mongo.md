@@ -168,14 +168,14 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 To migrate the data locally:
 
-- either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/dev-docs/migration-guides/mongo-sql-cheatsheet)), using the following advice:
+- either build your own script based on the differences between MongoDB and SQL implementations (see [cheatsheet](/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet)), using the following advice:
 
   - On the 1st pass:
     - Create all the entries without relations/components links.
     - Create a mapping from MongoDB ids to SQL ids.
   - and on the 2nd pass, create the relations/components links based on the MongoDB to SQL ids mapping.
 
-- or use a migration tool, like [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/dev-docs/migration-guides/mongo-sql-cheatsheet)).
+- or use a migration tool, like [the Studio3T tutorial](https://studio3t.com/knowledge-base/articles/mongodb-to-sql-migration/#mappings), taking into account the differences between MongoDB and SQL implementations (see [cheatsheet](/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet)).
 
 ## Migrate the local data to production
 
@@ -188,5 +188,5 @@ To migrate the local data to the production database:
 3. Deploy the application with the updated connector (see [prepare the migration locally](#prepare-the-migration-locally) for configuration details).
 
 :::strapi Next steps
-If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration-guides/sql).
+If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration/v3-to-v4/data/sql).
 :::
