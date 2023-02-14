@@ -274,7 +274,7 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 </ApiCall>
 
 :::note NOTES
-* Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
+* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
 * While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
 
