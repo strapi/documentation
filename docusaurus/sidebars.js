@@ -53,6 +53,10 @@ const sidebars = {
           ]
         },
         {
+          type: 'doc',
+          id: 'dev-docs/project-structure', 
+        },
+        {
           type: 'category',
           label: 'Configuration',
           link: {
@@ -189,6 +193,7 @@ const sidebars = {
         'dev-docs/api/plugins/server-api',
       ]
     },
+  
     {
       type: 'category',
       label: '🔧 Development',
