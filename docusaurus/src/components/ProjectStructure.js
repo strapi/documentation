@@ -8,7 +8,7 @@ export default function InteractiveProjectStructure() {
       <Tabs>
         <TabItem value="js" label="JavaScript">
 
-        
+
       <pre>
         <code>
       . <span class="token comment"># root of the application</span><br/>
@@ -37,7 +37,7 @@ export default function InteractiveProjectStructure() {
       │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
       │     │     └──── (api-name)<br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/models">content-types</a><br/>
-      │     │           │     └──── (content-type-name)
+      │     │           │     └──── (content-type-name)<br/>
       │     │           │           └ <a href="/dev-docs/backend-customization/models#lifecycle-hooks">lifecycles.js</a><br/>
       │     │           │           └ <a href="/dev-docs/backend-customization/models#model-schema">schema.json</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/controllers">controllers</a><br/>
@@ -104,15 +104,15 @@ export default function InteractiveProjectStructure() {
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span class="token comment"># admin customization files</span><br/>
-      │           ├──── <a href="/dev-docs/latest/development/admin-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
-      │     │     ├ <a href="/dev-docs/latest/development/admin-customization#configuration-options">app.example.tsx</a><br/>
-      │     │     └ <a href="/dev-docs/latest/development/admin-customization#webpack-configuration">webpack.config.ts</a><br/>
+      │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
+      │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.example.tsx</a><br/>
+      │     │     └ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.ts</a><br/>
       |     |     └ tsconfig.json<br/>
       │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
       │     │     └──── (api-name)<br/>
       │     │          <a href="/dev-docs/backend-customization/models">content-types</a><br/>
       │     │           │     └──── (content-type-name)<br/>
-      │     │           │           └ <a href="/dev-docs/backend-customization/models#lifecycle-hooks">lifecycles.s</a><br/>
+      │     │           │           └ <a href="/dev-docs/backend-customization/models#lifecycle-hooks">lifecycles.ts</a><br/>
       │     │           │           └ <a href="/dev-docs/backend-customization/models#model-schema">schema.json</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/controllers">controllers</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/middlewares">middlewares</a><br/>
@@ -121,7 +121,7 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── <a href="/dev-docs/backend-customization/services">services</a><br/>
       │     │           └ index.ts<br/>
       │     │
-      │     ├──── <a href="/dev-docs/backend-customization/models">components</a><br/>
+      │    ├──── <a href="/dev-docs/backend-customization/models">components</a><br/>
       │     │     └──── (category-name)<br/>
       │     │           ├ (componentA).json<br/>
       │     │           └ (componentB).json<br/>
@@ -162,4 +162,4 @@ export default function InteractiveProjectStructure() {
    </div>
   );
 }
- 
+
