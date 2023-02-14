@@ -11,16 +11,24 @@ The **Project Settings** page enables you to manage the configuration and settin
 
 ## General
 
-The **General** tab enables you to edit the following details for the project:
+The **General** tab enables you to check and update the following details for the project:
 
-* **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
-* **Production branch**: The branch of the linked repository to use for production deployments.
-* **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
-* **Connected GitHub repository**: The Git repository linked to the project.
-* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
+* **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. Cannot be edited after creation.
+* **Production branch**: The branch of the linked repository to use for production deployments. Cannot be edited after creation.
+* **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. Cannot be edited after creation.
+* **Connected GitHub repository**: The Git repository linked to the project. Cannot be edited after creation.
 * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
+* **Debug info**: Displays the internal project name for your application. This is useful for support purposes.
 
 ![Project settings](/img/assets/cloud/settings.png)
+
+## Variables
+
+[Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi app, such as the database connection.
+
+You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
+
+![Project variables](/img/assets/cloud/settings_variables.png)
 
 ## Billing
 

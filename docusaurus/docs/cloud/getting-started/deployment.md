@@ -13,7 +13,7 @@ This is a step-by-step guide for deploying your Strapi application on Strapi Clo
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* Strapi version `4.6.x` or higher
+* Strapi version `4.7.x` or higher
 * Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
@@ -74,3 +74,7 @@ The first time logging into Strapi Cloud, a welcome page is displayed providing 
     ![Payment and billing](/img/assets/cloud/billing-info.png)
 
 6. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
+
+:::warning
+Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
+:::
