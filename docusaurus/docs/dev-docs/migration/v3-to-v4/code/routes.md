@@ -51,7 +51,7 @@ To create a v4 core router file:
 <details>
 <summary> Example of a Strapi v4 core router without customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/routes/<router-name>.js"
+  ```jsx title="./src/api/<content-type-name>/routes/<router-name>.js"
 
   const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -63,7 +63,7 @@ To create a v4 core router file:
 <details> 
 <summary>Example of a Strapi v4 core router with customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/routes/<router-name>.js"
+  ```jsx title="./src/api/<content-type-name>/routes/<router-name>.js"
 
   const { createCoreRouter } = require('@strapi/strapi').factories;
 
@@ -94,7 +94,7 @@ To migrate a custom router to Strapi v4:
 1. Create a `api/<api-name>/routes/<custom-router-name>.js` file inside the `./src` folder (see [project structure](/dev-docs/project-structure.md)).
 2. Make sure this `./src/api/<api-name>/routes/<custom-router-name>.js` file exports an object:
 
-    ```js title="path: ./src/api/<api-name>/routes/<router-name>.js"
+    ```js title="./src/api/<api-name>/routes/<router-name>.js"
 
     module.exports = {
 
@@ -107,7 +107,7 @@ To migrate a custom router to Strapi v4:
 <details>
 <summary> Example of a Strapi v4 custom router:</summary>
 
-```js title="path: ./src/api/restaurant/routes/custom-restaurant.js"
+```js title="./src/api/restaurant/routes/custom-restaurant.js"
 
 module.exports = {
   routes: [

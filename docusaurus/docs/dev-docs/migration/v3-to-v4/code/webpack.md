@@ -29,7 +29,7 @@ To update the [webpack](https://webpack.js.org/) configuration to Strapi v4:
 <details> 
 <summary>Example of a webpack configuration file in Strapi v4:</summary>
 
-```js title="path: ./src/admin/webpack.config.js"
+```js title="./src/admin/webpack.config.js"
 
 'use strict';
 

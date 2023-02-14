@@ -52,7 +52,7 @@ To convert Strapi v3 models to v4 content-types:
 3. Move/rename each model's `<modelName>.settings.json` file to `./src/api/<apiName>/content-types/<contentTypeName>/schema.json` files.
 4. In each `<contentTypeName>/schema.json` file, update [the `info` object](/dev-docs/backend-customization/models#model-information), which now requires declaring the 3 new `singularName`, `pluralName` and `displayName` keys and respecting some case-formatting conventions:
 
-    ```json title="path: ./src/api/<apiName>/content-types/<contentTypeName>/schema.json"
+    ```json title="./src/api/<apiName>/content-types/<contentTypeName>/schema.json"
 
     // ...
     "info": {
@@ -87,7 +87,7 @@ To update content-type relations, update the `./src/api/<apiName>/content-types/
 <details>
 <summary> Example of all possible relations between an article and an author content-types:</summary>
 
-  ```json title="path: ./src/api/article/content-types/article/schema.json"
+  ```json title="./src/api/article/content-types/article/schema.json"
   
   // Attributes for the Article content-type
 
@@ -133,7 +133,7 @@ To update content-type relations, update the `./src/api/<apiName>/content-types/
   }
   ```
 
-  ```json title="path: ./src/api/author/content-types/author/schema.json"
+  ```json title="./src/api/author/content-types/author/schema.json"
 
   // Attributes for the Author content-type
 

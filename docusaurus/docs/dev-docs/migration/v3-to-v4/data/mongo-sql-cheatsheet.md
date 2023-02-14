@@ -1,5 +1,5 @@
 ---
-title: MongoDB vs. SQL cheatsheet for Strapi v3 - Strapi Developer Docs
+title: MongoDB vs. SQL cheatsheet
 description: Learn how MongoDB and SQL implementations differ in Strapi v3
 displayed_sidebar: devDocsSidebar
 ---

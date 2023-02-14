@@ -24,7 +24,7 @@ To customize the theme in Strapi v4:
 <details>
 <summary> Example of theme customization in Strapi v4:</summary>
 
-```js title="path: ./src/admin/app.js"
+```js title="./src/admin/app.js"
 
 export default {
   config: {

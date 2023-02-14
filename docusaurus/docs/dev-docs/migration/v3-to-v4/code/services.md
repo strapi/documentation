@@ -47,7 +47,7 @@ To create a Strapi v4 service:
 <details>
 <summary> Example of a v4 service without customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/services/<service-name>.js"
+  ```jsx title="./src/api/<content-type-name>/services/<service-name>.js"
 
   const { createCoreService } = require('@strapi/strapi').factories;
 
@@ -59,7 +59,7 @@ To create a Strapi v4 service:
 <details>
 <summary> Example of a v4 service with customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/services/<service-name>.js"
+  ```jsx title="./src/api/<content-type-name>/services/<service-name>.js"
 
   const { createCoreService } = require('@strapi/strapi').factories;
 
@@ -82,7 +82,7 @@ To create a Strapi v4 service:
 :::tip Customization tips
 
 - The original service’s CRUD methods can be called using `super` (e.g. `super.find()`).
-- The `this.getFetchParams()` utility function can be used to wrap parameters with some default parameters (e.g. a default value for [the `publicationState`](/dev-docs/api/rest/filtering-locale-publication#publication-state)). `this.getFetchParams()` has the following signature: `(params: Object) => Object`.
+- The `this.getFetchParams()` utility function can be used to wrap parameters with some default parameters (e.g. a default value for [the `publicationState`](/dev-docs/api/rest/filters-locale-publication#publication-state)). `this.getFetchParams()` has the following signature: `(params: Object) => Object`.
 
 More examples can be found in the [services implementation documentation](/dev-docs/backend-customization/services#implementation).
 :::

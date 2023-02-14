@@ -56,7 +56,7 @@ module.exports = {
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -110,7 +110,7 @@ module.exports = {
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -187,7 +187,7 @@ module.exports = {
 
 The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -283,7 +283,7 @@ Strapi v3 offers 2 ways of replacing the behavior of a query or mutation resolve
 
 In Strapi v4, the recommended way to replace or customize a resolver is to use [the `resolvers` field](/dev-docs/plugins/graphql#extending-the-schema) of the new GraphQL extension service:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -333,7 +333,7 @@ module.exports = {
 
 Strapi v4 uses programmatic APIs to [disable queries, mutation, actions or fields](/dev-docs/plugins/graphql#disabling-operations-in-the-shadow-crud). The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -372,7 +372,7 @@ module.exports = {
 
 In Strapi v4, policies applied to a resolver are explicitly defined in a `resolversConfig` object (see [GraphQL policies documentation](/dev-docs/plugins/graphql#policies)) and applied through the GraphQL extension service. The Strapi v3 code example above should be replaced by the following code in Strapi v4:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -399,7 +399,7 @@ In Strapi v3, middlewares applied to a resolver are inherited from middlewares a
 
 In Strapi v4, middlewares applied to a resolver are explicitly [defined in a `resolversConfig` object](/dev-docs/plugins/graphql#middlewares) and applied through the GraphQL extension service:
 
-```jsx title="path: ./src/index.js"
+```jsx title="./src/index.js"
 
 module.exports = {
   register({ strapi }) {

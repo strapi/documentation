@@ -1,5 +1,5 @@
 ---
-title: Update
+title: Upgrade Strapi version
 displayed_sidebar: devDocsSidebar
 description: The following documentation covers how to upgrade your application to the latest version of Strapi.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html

@@ -37,19 +37,19 @@ MongoDB databases are no longer supported in Strapi v4. You need to migrate to [
 <!-- TODO: add link to MongoDB migration instructions here -->
 :::
 
-Due to the complete rewrite of the database and query layers in Strapi v4, the entire structure of the `database.js` file has changed (see [database configuration](/dev-docs/configurations/databases#configuration-structure) documentation). Multi-database support has been dropped, so there is no more `defaultConnection` key. Instead, in Strapi v4, the 2 main database configuration objects are:
+Due to the complete rewrite of the database and query layers in Strapi v4, the entire structure of the `database.js` file has changed (see [database configuration](/dev-docs/configurations/database#configuration-structure) documentation). Multi-database support has been dropped, so there is no more `defaultConnection` key. Instead, in Strapi v4, the 2 main database configuration objects are:
 
 - `connection`, passed to the database connection manager package (i.e. [Knex.js](https://github.com/knex/knex)),
 - and `settings` for Strapi-specific settings.
 
 :::note
-Strapi v4 does not abstract Knex.js key names so some key names are different in Strapi v3 and v4 (e.g. `username` in Strapi v3 is now `user` in Strapi v4) (see [database configuration](/dev-docs/configurations/databases) documentation).
+Strapi v4 does not abstract Knex.js key names so some key names are different in Strapi v3 and v4 (e.g. `username` in Strapi v3 is now `user` in Strapi v4) (see [database configuration](/dev-docs/configurations/database) documentation).
 :::
 
 <details>
 <summary> Example of a Strapi v3 database configuration for PostgreSQL:</summary>
 
-```js title="path: ./config/database.js"
+```js title="./config/database.js"
 
 module.exports = ({ env }) => ({
   defaultConnection: 'default',
@@ -79,7 +79,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of a Strapi v4 database configuration for PostgreSQL:</summary>
 
-```jsx title="path: ./config/database.js"
+```jsx title="./config/database.js"
 
 module.exports = ({ env }) => ({
   connection: {
@@ -113,7 +113,7 @@ The [server configuration](/dev-docs/configurations/server) in Strapi v4 is simi
 <details>
 <summary> Example of a Strapi v3 server configuration:</summary>
 
-```jsx title="path: ./config/server.js"
+```jsx title="./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -129,7 +129,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of a Strapi v4 server configuration:</summary>
 
-```jsx title="path: ./config/server.js"
+```jsx title="./config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -158,7 +158,7 @@ The admin panel configuration documentation lists all the other [available optio
 <details>
 <summary> Example of a Strapi v3 server.js admin configuration section:</summary>
 
-```jsx title="path: ./config/server.js"
+```jsx title="./config/server.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -175,7 +175,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of a Strapi v4 admin.js configuration file:</summary>
 
-```jsx title="path: ./config/admin.js"
+```jsx title="./config/admin.js"
 
 module.exports = ({ env }) => ({
   apiToken: {
@@ -198,7 +198,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of Strapi v3 middlewares configuration:</summary>
 
-```jsx title="path: ./config/middleware.js"
+```jsx title="./config/middleware.js"
 
 module.exports = {
   //...
@@ -218,7 +218,7 @@ module.exports = {
 
 **Important**: Various middlewares in this list are required. During configuration, replace the string with the object format (see [middlewares configuration](/dev-docs/configurations/middlewares#optional-configuration)).
 
-```jsx title="path: ./config/middlewares.js"
+```jsx title="./config/middlewares.js"
 
 module.exports = [
   'strapi::errors',
@@ -249,7 +249,7 @@ In Strapi v4, security middlewares from Strapi v3 have been removed and replaced
 
 In Strapi v3, CRON tasks could be defined in a `./config/functions/cron.js` file.
 
-In Strapi v4, the `config/functions` folder [does not exist anymore](#custom-functions-folder), and [CRON tasks](/dev-docs/configurations/cronjobs) can be defined:
+In Strapi v4, the `config/functions` folder [does not exist anymore](#custom-functions-folder), and [CRON tasks](/dev-docs/configurations/cron) can be defined:
 
 - in a separate file (e.g. `./config/cron-tasks.js`)
 - or in the `server.js` file:
@@ -269,7 +269,7 @@ The API configuration is optional.
 <details>
 <summary> Example of a Strapi v3 API configuration:</summary>
 
-```jsx title="path: ./config/api.js"
+```jsx title="./config/api.js"
 
 module.exports = ({ env }) => ({
   responses: {
@@ -287,7 +287,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of a Strapi v4 API configuration:</summary>
 
-```js title="path: ./config/api.js"
+```js title="./config/api.js"
 
 module.exports = ({ env }) => ({
   responses: {
@@ -336,7 +336,7 @@ module.exports = ({ env }) => ({
 <details>
 <summary> Example of a Strapi v4 plugins configuration:</summary>
 
-```jsx title="path: ./config/plugins.js"
+```jsx title="./config/plugins.js"
 
 module.exports = ({ env }) => ({
   sentry: {

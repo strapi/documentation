@@ -23,7 +23,7 @@ The following examples show a comparison of a Strapi v3 `package.json` and a Str
 <details>
 <summary> Example of a Strapi v3 package.json file:</summary>
 
-```json title="path: package.json"
+```json title="package.json"
 
 {
   "name": "strapi-v3-project",
@@ -70,7 +70,7 @@ The following examples show a comparison of a Strapi v3 `package.json` and a Str
 <details>
 <summary> Example of a Strapi v4 package.json file:</summary>
 
-```json title="path: package.json"
+```json title="package.json"
 
 {
   "name": "strapi-v4-project",

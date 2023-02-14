@@ -9,7 +9,6 @@ canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guid
 
 This guide is part of the [v4 code migration guide](/dev-docs/migration/v3-to-v4/code-migration.md) designed to help you migrate the code of a Strapi application from v3.6.x to v4.0.x
 
-
 :::strapi v3/v4 comparison
 In Strapi v3,  a `window.strapi` global variable is used to display notifications, freeze user interactions when requests are pending, and get the backend URL.
 
@@ -34,7 +33,7 @@ The following examples should help you get started using the `useNotification` h
 <details>
 <summary> Example of using the useNotification hook in Strapi v4:</summary>
 
-```js title="path: ./src/plugins/<my-plugin>/admin/*.js"
+```js title="./src/plugins/<my-plugin>/admin/*.js"
 
 import { useNotification } from '@strapi/helper-plugin';
 import { Button, Main } from '@strapi/design-system';
@@ -77,7 +76,7 @@ const HomePage = () => {
 <details> 
 <summary>Example of using the lockApp and unlockApp methods in Strapi v4:</summary>
 
-```js title="path: ./src/plugins/<my-plugin>/admin/*.js"
+```js title="./src/plugins/<my-plugin>/admin/*.js"
 
 import { useOverlayBlocker } from '@strapi/helper-plugin';
 
@@ -93,7 +92,7 @@ const { lockApp, unlockApp } = useOverlayBlocker();
 <details>
 <summary> Example of logging the backend URL value in Strapi v4:</summary>
 
-```js title="path: ./src/plugins/<my-plugin>/*.js"
+```js title="./src/plugins/<my-plugin>/*.js"
 
 const myHelper = () => {
   console.log(strapi.backendURL); // http://localhost:1337

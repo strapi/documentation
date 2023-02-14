@@ -26,7 +26,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 **Content conversion progress:**
 
 <details>
-<summary>Developer documentation ▮▮▮▮▮▮▮▯▯▯ ~75% complete</summary>
+<summary>Developer documentation ▮▮▮▮▮▮▮▮▮▯ >95% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the Developer Docs:
 

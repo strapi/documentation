@@ -1,5 +1,5 @@
 ---
-title: SQL v3 to v4 migration - Relations
+title: SQL relations cheatsheet
 description: Learn how model schemas and entity relationship diagrams differ between Strapi v3 and v4
 displayed_sidebar: devDocsSidebar
 ---

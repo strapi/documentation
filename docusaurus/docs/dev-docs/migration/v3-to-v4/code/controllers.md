@@ -48,7 +48,7 @@ To create a v4 controller:
 <details>
 <summary> Example of a v4 controller without customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/controllers/<controller-name>.js"
+  ```jsx title="./src/api/<content-type-name>/controllers/<controller-name>.js"
 
   const { createCoreController } = require('@strapi/strapi').factories;
 
@@ -60,7 +60,7 @@ To create a v4 controller:
 <details>
 <summary> Example of a v4 controller with customization:</summary>
 
-  ```jsx title="path: ./src/api/<content-type-name>/controllers/<controller-name>.js"
+  ```jsx title="./src/api/<content-type-name>/controllers/<controller-name>.js"
 
   const { createCoreController } = require('@strapi/strapi').factories;
 
@@ -93,5 +93,5 @@ More examples can be found in the [controllers implementation documentation](/de
 :::
 
 :::strapi Next steps
-[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/backend/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/backend/routes), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
+[Migrating the backend code](/dev-docs/migration/v3-to-v4/code/backend) of Strapi to v4 also requires to at least migrate the core features of the Strapi server, such as the [configuration](/dev-docs/migration/v3-to-v4/code/configuration), [dependencies](/dev-docs/migration/v3-to-v4/code/dependencies), [routes](/dev-docs/migration/v3-to-v4/code/routes), [services](/dev-docs/migration/v3-to-v4/code/services), and [content-type schemas](/dev-docs/migration/v3-to-v4/code/content-type-schema).
 :::

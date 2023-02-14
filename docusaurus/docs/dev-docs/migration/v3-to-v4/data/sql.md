@@ -1,5 +1,5 @@
 ---
-title: SQL v3 to v4 migration - Strapi Developer Docs
+title: SQL v3 to v4 migration
 description: Migrate a SQL database from Strapi v3 to Strapi v4
 displayed_sidebar: devDocsSidebar
 ---
