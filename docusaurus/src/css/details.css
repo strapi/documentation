@@ -15,6 +15,11 @@ details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-st
   border: none;
 }
 
+details div div {
+  /* trying to remove the blue/green border applied on collapsibleCOntent_* elements */
+  border-top: none !important;
+}
+
 [data-theme='light'] details,
 [data-theme='light'] details.details_node_modules-\@docusaurus-theme-common-lib-components-Details-styles-module {
   background-color: var(--strapi-neutral-150);
