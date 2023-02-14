@@ -408,7 +408,7 @@ strapi install <name>
 - **strapi install &#60;name&#62;**<br/>
   Installs a plugin called **&#60;name&#62;**.
 
-  Example: `strapi install graphql` will install the plugin `strapi-plugin-graphql`
+  Example: `strapi install graphql` will install the plugin `@strapi/plugin-graphql`
 
 :::caution
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
@@ -427,12 +427,12 @@ options [--delete-files]
 - **strapi uninstall &#60;name&#62;**<br/>
   Uninstalls a plugin called **&#60;name&#62;**.
 
-  Example: `strapi uninstall graphql` will remove the plugin `strapi-plugin-graphql`
+  Example: `strapi uninstall graphql` will remove the plugin `@strapi/plugin-graphql`
 
 - **strapi uninstall &#60;name&#62; --delete-files**<br/>
   Uninstalls a plugin called **&#60;name&#62;** and removes the files in `./extensions/name/`
 
-  Example: `strapi uninstall graphql --delete-files` will remove the plugin `strapi-plugin-graphql` and all the files in `./extensions/graphql`
+  Example: `strapi uninstall graphql --delete-files` will remove the plugin `@strapi/plugin-graphql` and all the files in `./extensions/graphql`
 
 :::caution
 
