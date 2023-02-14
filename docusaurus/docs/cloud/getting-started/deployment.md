@@ -7,7 +7,11 @@ canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
 
 # Strapi Cloud
 
-This is a step-by-step guide for deploying your Strapi application on Strapi Cloud. Before you are able to access Strapi Cloud, you must first [request access](#requesting-access) to the Beta release.
+This is a step-by-step guide for deploying your Strapi application on Strapi Cloud.
+
+:::strapi
+During the soft launch of Strapi Cloud, a progressively increasing number of users will be able to access the service. Access will be granted to a mix of users currently on the waitlist as well as new users that can sign up each day.
+:::
 
 ## Prerequisites
 
@@ -17,10 +21,6 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 * Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
-
-:::warning
-Importing data from an existing Strapi application and data backups for a Strapi Cloud application are not supported at this time. These features will be available in the future.
-:::
 
 ## Getting started
 
