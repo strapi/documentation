@@ -280,37 +280,6 @@ await pluginStore.set({
 });
 ```
 
-## Databases installation guides
-
-Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
-
-The following documentation covers how to install SQLite locally (for development purposes):
-
-<DatabasesLinks>
-</DatabasesLinks>
-
-:::caution
-Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
-:::
-
-:::note
-When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
-
-To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
-
-```shell
-# Create a new database user with a secure password
-$ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
-
-# Connect to the database as the PostgreSQL admin
-$ \c my_strapi_db_name admin_user
-
-# Grant schema privileges to the user
-$ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
-```
-
-:::
-
 ## Environment variables in database configurations
 
 Strapi version v4.6.2 and higher comes with the database configuration options included in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you chose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated config file:
@@ -549,3 +518,34 @@ For deployed versions of your application the database environment variables sho
 | Virtual private server/virtual machine (e.g. AWS EC2) | `ecosystem.config.js` or `.env` |
 | DigitalOcean App Platform                             | `Environment Variables` table   |
 | Heroku                                                | `Config vars`                   |
+
+## Databases installation guides
+
+Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
+
+The following documentation covers how to install SQLite locally (for development purposes):
+
+<DatabasesLinks>
+</DatabasesLinks>
+
+:::caution
+Installation guides for other databases (MySQL, MariaDB) are being reworked. [Contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
+:::
+
+:::note
+When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
+
+To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
+
+```shell
+# Create a new database user with a secure password
+$ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
+
+# Connect to the database as the PostgreSQL admin
+$ \c my_strapi_db_name admin_user
+
+# Grant schema privileges to the user
+$ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
+```
+
+:::
