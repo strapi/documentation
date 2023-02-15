@@ -163,7 +163,7 @@ The destination Strapi instance should be running with the `start` command and n
 | `--to` {destinationURL}      | URL of the destination Strapi instance. Include the `/admin` endpoint.                                                                                            |      required     |
 | `--to-token` {transferToken} | Transfer token for the remote Strapi destination                                                                                   |      required     |
 | `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                  |         -         |
-| `--exclude`                  | Exclude data using comma-separated data types. Include only these data. The available types are: `content`, `files`, and `config`. |         -          |
+| `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |         -          |
 | `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                |         -         |
 | `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                       |         -         |
 
