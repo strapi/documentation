@@ -7,7 +7,7 @@ slug: /user-docs/plugins
 
 Strapi is built around different types of plugins. Every default Strapi application comes with the following pre-installed plugins:
 
-* Content Manager (see [Introduction to the Content Manager](/user-docs/content-manager/introduction-to-content-manager/))
+* Content Manager (see [Introduction to the Content Manager](/user-docs/content-manager))
 * Content Type Builder (see [Introduction to the Content-type Builder](/user-docs/content-type-builder/))
 * Email
 * Media Library (implemented via the [Upload plugin](/dev-docs/plugins/upload/))
@@ -38,4 +38,4 @@ Currently, the only plugins designed to work with providers are the:
 
 Some plugins can add _custom fields_ to Strapi. Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components.
 
-Once added to Strapi (see [Marketplace](./installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/user-docs/content-types-builder/configuring-fields-content-type#custom-fields) and used in the [Content Manager](/user-docs/content-manager/writing-content/).
+Once added to Strapi (see [Marketplace](./installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/user-docs/content-type-builder/configuring-fields-content-type#custom-fields) and used in the [Content Manager](/user-docs/content-manager/writing-content/).

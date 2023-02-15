@@ -6,7 +6,7 @@ displayed_sidebar: devDocsSidebar
 
 # Data migration: SQL relations in Strapi v3 and v4
 
-This documentation is part of the [SQL migration guide](/dev-docs/migration-guides/sql) included in the [data migration guide](/dev-docs/migration-guides/data-migration) and designed to help you migrate from Strapi v3.6.x to Strapi v4.0.x.
+This documentation is part of the [SQL migration guide](/dev-docs/migration/v3-to-v4/data/sql) included in the [data migration guide](/dev-docs/migration/v3-to-v4/data-migration) and designed to help you migrate from Strapi v3.6.x to Strapi v4.0.x.
 
 :::strapi v3 / v4 comparison
 

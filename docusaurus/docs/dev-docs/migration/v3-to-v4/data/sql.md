@@ -275,7 +275,7 @@ In Strapi v4, the data structure of the [Upload plugin](/dev-docs/plugins/upload
 
 ### Internationalization (i18n) plugin
 
-In Strapi v4, localization tables used by the [Internationalization (i18n)](/dev-docs/plugins/i18n) plugin follow the [circular many-to-many relationships migration](/dev-docs/migration-guides/sql-relations#circular-relations) and are renamed from `entities__localizations` to `entities_localizations_links`.
+In Strapi v4, localization tables used by the [Internationalization (i18n)](/dev-docs/plugins/i18n) plugin follow the [circular many-to-many relationships migration](/dev-docs/migration/v3-to-v4/data/sql-relations#circular-relations) and are renamed from `entities__localizations` to `entities_localizations_links`.
 
 <Columns>
 

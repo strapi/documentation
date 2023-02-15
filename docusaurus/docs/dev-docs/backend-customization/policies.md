@@ -173,7 +173,7 @@ export default {
 
 ### Plugin policies
 
-[Plugins](/dev-docs/plugins) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
+[Plugins](/dev-docs/plugins) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/users-roles-permissions) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
 
 <Tabs groupId="js-ts">
 

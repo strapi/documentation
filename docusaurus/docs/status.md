@@ -88,7 +88,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
     - [ ] Custom fields (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/custom-fields.html#))
     - [x] [TypeScript](/dev-docs/typescript)
-    - [x] [Providers](/dev/docs/providers)
+    - [x] [Providers](/dev-docs/providers)
   - [ ] 💻 Developer Resources
     - [x] [REST API](/dev-docs/api/rest)
       - [x] [API endpoints](/dev-docs/api/rest)

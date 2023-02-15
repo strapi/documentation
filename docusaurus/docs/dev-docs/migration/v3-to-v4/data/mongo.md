@@ -222,5 +222,5 @@ To migrate the local data to the production database:
 3. Deploy the application with the updated connector (see [prepare the migration locally](#prepare-the-migration-locally) for configuration details).
 
 :::strapi Next steps
-If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration-guides/sql).
+If the present guide was used to migrate from Strapi v3 to Strapi v4, the next step in the data migration process is to proceed to the [SQL migration from Strapi v3 to Strapi v4](/dev-docs/migration/v3-to-v4/data/sql).
 :::

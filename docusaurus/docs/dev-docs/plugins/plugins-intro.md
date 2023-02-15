@@ -28,6 +28,6 @@ Installed plugins can also be manually enabled or disabled.
 To disable a plugin without uninstalling it, switch its `enabled` key to `false` in the [`/config/plugins.js` file](/dev-docs/configurations/plugins).
 
 :::strapi To go further
-* To know more about plugins installation, see the [User guide](/user-docs/plugins/introduction-to-plugins).
+* To know more about plugins installation, see the [User guide](/user-docs/plugins).
 * Existing plugins can be [extended](/dev-docs/plugins-extension), or you can even [create your own](/dev-docs/plugins-development)!
 :::

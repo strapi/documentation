@@ -45,7 +45,7 @@ npx create-strapi-app@latest my-project --quickstart
 </Tabs>
 
 :::info
-The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](./setup-deployment-guides/installation/cli)).
+The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
 :::
 
 ### Step 2: Register the first administrator user

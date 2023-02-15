@@ -39,7 +39,7 @@ To provide the best possible environment for Strapi the following requirements a
 <DatabaseRequire components={props.components} />
 
 :::strapi Database deployment
-Deploying databases along with Strapi is covered in the [databases guide](/dev-docs/configurations/databases#databases-installation-guides).
+Deploying databases along with Strapi is covered in the [databases guide](/dev-docs/configurations/database#databases-installation-guides).
 :::
 
 - A supported operating system:
