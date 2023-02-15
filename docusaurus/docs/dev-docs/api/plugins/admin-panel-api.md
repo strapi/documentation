@@ -627,11 +627,9 @@ export default {
           'contentType.pluginOptions.i18n.localized',
           false
         );
-
         if (!isFieldLocalized) {
           return { displayedHeaders, layout };
         }
-
         return {
           layout,
           displayedHeaders: [
