@@ -442,7 +442,7 @@ export default = ({ env }) => {
 </code-block>
 </code-group>
 
-The following are examples of the corresponding `.env` file `# Database` section for each of the possible databases:
+The following are examples of the corresponding `.env` file database-related keys for each of the possible databases:
 
 <code-group>
 <code-block title="MySQL">
