@@ -96,6 +96,7 @@ code {
   line-height: 24px;
   padding-left: 8px;
   padding-right: 8px;
+  border-radius: 4px;
 }
 
 p code,
@@ -107,6 +108,7 @@ table code {
 [data-theme='light'] code {
   background-color: var(--strapi-primary-100);
   color: var(--strapi-primary-600);
+  border-color: var(--strapi-primary-200);
 }
 [data-theme='dark'] code {
   /* Commented out for now because I find that the contrast is better without these */
