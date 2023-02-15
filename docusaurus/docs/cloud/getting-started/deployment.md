@@ -3,6 +3,7 @@ title: Deployment
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
+sidebar_position: 2
 ---
 
 # Strapi Cloud

@@ -1,7 +1,7 @@
 ---
 sidebar_label: 'Usage & Billing'
 displayed_sidebar: cloudSidebar
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # Usage & Billing
