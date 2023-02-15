@@ -4,7 +4,7 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
-# Data transfer
+# Data transfer<BetaBadge />
 
 :::strapi Install the beta version
 `strapi transfer` is only available in the current beta version. To create a new project using the beta version, run the following command in your terminal:
@@ -14,7 +14,6 @@ npx create-strapi-app@beta <project-name>
 ```
 
 :::
-
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas.
 
 :::caution
@@ -40,12 +39,12 @@ The CLI command consists of the following arguments:
 - a remote Strapi instance and another remote Strapi instance.
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/latest/settings/managing-global-settings.md#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/latest/settings/managing-global-settings#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
 :::
 
 ## Generate a transfer token
 
-The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/latest/settings/managing-global-settings.md#creating-a-new-transfer-token).
+The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/latest/settings/managing-global-settings#creating-a-new-transfer-token).
 
 
 ## Setup and run the data transfer
@@ -174,11 +173,11 @@ The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to d
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
 
-Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.md).
+Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/docs/dev-docs/configurations/environment).
 
 ## Test the transfer command locally
 
-The `transfer` command is not intended for transferring data between two local instances. The [`export`](#export-data-using-the-cli-tool) and [`import`](#import-data-using-the-cli-tool) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
+The `transfer` command is not intended for transferring data between two local instances. The [`export`](/docs/dev-docs/data-management/export) and [`import`](/docs/dev-docs/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
 
 ### Create and clone a new Strapi project
 
@@ -188,7 +187,7 @@ The `transfer` command is not intended for transferring data between two local i
     npx create-strapi-app@beta <project-name> --quickstart
     ```
 
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start.md) if you need instructions on creating your first content type.
+2. Create at least 1 content type in the project. See the [Quick Start Guide](/docs/dev-docs/quick-start) if you need instructions on creating your first content type.
 
     :::caution
     Do not add any data to your project at this step.
@@ -239,7 +238,7 @@ npm run build && npm run start
 </Tabs>
 
 2. Register an admin user.
-3. [Create and copy a Transfer token](user-docs/latest/settings/managing-global-settings.md#managing-transfer-tokens).
+3. [Create and copy a Transfer token](/docs/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 4. Leave the server running.
 
 ### Transfer your data

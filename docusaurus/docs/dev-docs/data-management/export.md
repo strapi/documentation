@@ -6,7 +6,11 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/export.html
 ---
 # Data export
 
-The `strapi export` command by default exports data as an encrypted and compressed `tar.gz.enc` file. The default export command exports:
+:::strapi v4.6.0 feature
+Data export is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/docs/dev-docs/update-version) to upgrade your application.
+:::
+
+The `strapi export` command is used to export data from a local Strapi instance. The `strapi export` command, by default, exports data as an encrypted and compressed `tar.gz.enc` file. The default export command exports:
 
 - the project configuration,
 - entities: all of your content,
@@ -14,6 +18,8 @@ The `strapi export` command by default exports data as an encrypted and compress
 - assets: files stored in the uploads folder,
 - schemas,
 - the `metadata.json` file.
+
+The following documentation details the available options to customize your data export. The export command and all of the available options are run using the [Strapi CLI](/docs/dev-docs/cli).
 
 :::caution
 Admin users and API tokens are not exported.
