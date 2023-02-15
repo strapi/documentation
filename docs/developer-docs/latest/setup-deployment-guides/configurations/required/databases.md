@@ -45,7 +45,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. Available in v4.6.2+                    | `String`                  |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in v4.6.2+**                    | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
@@ -489,7 +489,8 @@ DATABASE_FILENAME=.tmp/data.db
 </code-block>
 </code-group>
 
-:::strapi
+### Environment variables for Strapi applications before v4.6.2
+
 If you started your project with a version prior to v4.6.2 you can convert your `database.js|database.ts` configuration file following this procedure:
 
 1. Update your application to v4.6.2 or a later version. See the [Updates and Migrations](/developer-docs/latest/update-migration-guides/migration-guides/migration-guides.md) section for any breaking changes that require specific fixes.
@@ -497,9 +498,8 @@ If you started your project with a version prior to v4.6.2 you can convert your 
 3. Add the environment variables from the preceding code example to your `.env` file.
 4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
 5. Save the changes and restart your application.
-::::caution
+:::caution
 Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOKEN_SALT`, and `ADMIN_JWT_SECRET`.
-::::
 :::
 
 ### Database connections using `connectionString`
@@ -512,11 +512,11 @@ Many managed database solutions use the property `connectionString` to connect a
 ### Database management by environment
 
 Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as `SQLite`. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, usually `MySQL`, `MariaDB`, or `PostgreSQL`. Database environment variables allow you to switch the attached database. To switch the database connection:
+
 * set a minimum of the `DATABASE_CLIENT` and `DATABASE_URL` for `MySQL`, `MariaDB`, and `PostgreSQL`,
 * or set a minimum of `DATABASE_CLIENT` and `DATABASE_FILENAME` for `SQLite`.
 
 For deployed versions of your application the database environment variables should be stored wherever your other secrets are stored. The following table gives examples of where the database environment variables should be stored:
-
 
 | Hosting option                                        | environment variable storage    |
 |-------------------------------------------------------|---------------------------------|
