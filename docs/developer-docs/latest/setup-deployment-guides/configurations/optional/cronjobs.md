@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guid
 # Cron jobs
 
 :::prerequisites
-The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects)  [file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
+The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
 :::
 
 `cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
@@ -83,9 +83,7 @@ export default {
 </code-block>
 </code-group>
 
-
 If the cron job requires running on a specific timezone:
-
 
 <code-group>
 <code-block title="JAVASCRIPT">
@@ -94,21 +92,22 @@ If the cron job requires running on a specific timezone:
 // path: ./config/cron-tasks.js
 
 module.exports = {
-   /**
+  /**
    * Cron job with timezone example.
    * Every Monday at 1am for Asia/Dhaka timezone.
    * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
-  
-myJob: {
-     task: ({ strapi }) => {/* Add your own logic here */ },
-     options: {
-        rule: '0 0 1 * * 1',
-        tz: 'Asia/Dhaka',
-     },
-   },
- };
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: '0 0 1 * * 1',
+      tz: 'Asia/Dhaka',
+    },
+  },
+};
 ```
 
 </code-block>
@@ -119,25 +118,73 @@ myJob: {
 // path: ./config/cron-tasks.ts
 
 export default {
-   /**
+  /**
    * Cron job with timezone example.
    * Every Monday at 1am for Asia/Dhaka timezone.
    * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
-  
-myJob: {
-     task: ({ strapi }) => {/* Add your own logic here */ },
-     options: {
-        rule: '0 0 1 * * 1',
-        tz: 'Asia/Dhaka',
-     },
-   },
- };
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: '0 0 1 * * 1',
+      tz: 'Asia/Dhaka',
+    },
+  },
+};
 ```
 
 </code-block>
 </code-group>
+
+If you want to start and end a cron task
+
+```js
+// path: ./config/cron-tasks.js
+
+module.exports = {
+  /**
+   * Cron job with start and end times
+   */
+
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      // runs every second
+      rule: '* * * * * *',
+      // starts in 10 seconds (defaults to now)
+      start: new Date(Date.now() + 10000),
+      // ends in 20 seconds (defaults to never)
+      end: new Date(Date.now() + 20000),
+    },
+  },
+};
+```
+If you want to run a 1 off cron task
+```js
+// path: ./config/cron-tasks.js
+
+module.exports = {
+  /**
+   * Run a 1 off cron job
+   */
+
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // runs once in 10 seconds
+    options: new Date(Date.now() + 10000),
+  },
+};
+```
+### Programmatic cron jobs
+Check out the [Server API](/developer-docs/latest/developer-resources/plugin-api-reference/server.html#cron) if you want to run cron jobs programmatically.
+
 
 ## Enabling cron jobs
 
@@ -149,18 +196,17 @@ To enable cron jobs, set `cron.enabled` to `true` in the [server configuration f
 ```js
 // path: ./config/server.js
 
-const cronTasks = require("./cron-tasks");
+const cronTasks = require('./cron-tasks');
 
 module.exports = ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
   cron: {
     enabled: true,
     tasks: cronTasks,
   },
 });
 ```
-
 
 </code-block>
 
@@ -169,11 +215,11 @@ module.exports = ({ env }) => ({
 ```js
 // path: ./config/server.ts
 
-import cronTasks from "./cron-tasks";
+import cronTasks from './cron-tasks';
 
 export default ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
   cron: {
     enabled: true,
     tasks: cronTasks,
@@ -181,7 +227,5 @@ export default ({ env }) => ({
 });
 ```
 
-
 </code-block>
 </code-group>
-
