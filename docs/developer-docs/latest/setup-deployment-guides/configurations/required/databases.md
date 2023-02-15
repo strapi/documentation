@@ -282,7 +282,7 @@ await pluginStore.set({
 
 ## Environment variables in database configurations
 
-Strapi version v4.6.2 and higher comes with the database configuration options included in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you chose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated config file:
+Strapi version v4.6.2 and higher includes the database configuration options in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated config file:
 
 <code-group>
 <code-block title="JAVASCRIPT">
@@ -497,18 +497,21 @@ If you started your project with a version prior to v4.6.2 you can convert your 
 3. Add the environment variables from the preceding code example to your `.env` file.
 4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
 5. Save the changes and restart your application.
+::::caution
+Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOKEN_SALT`, and `ADMIN_JWT_SECRET`.
+::::
 :::
 
-### Using database URLs
+### Database connections using `connectionString`
 
 Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi v4.6.2 and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
 
 - overrides the other `connection.connection` properties such as `host` and `port`,
-- can be disabled by setting the property to a empty string: `''`.
+- can be disabled by setting the property to an empty string: `''`.
 
-### Manage databases by environment
+### Database management by environment
 
-Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as `SQLite`. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, usually either `MySQL`, `MariaDB`, or `PostgreSQL`. Database environment variables allow you to switch the attached database. To switch the database connection set a minimum of the `DATABASE_CLIENT` and `DATABASE_URL` for `MySQL`, `MariaDB`, and `PostgreSQL`. Set a minimum of `DATABASE_CLIENT` and `DATABASE_FILENAME` for `SQLite`.
+Development of a Strapi application commonly includes customization in the local development environment with a local development database, such as `SQLite`. When the application is ready for another environment such as production or staging the application is deployed with a different database instance, usually `MySQL`, `MariaDB`, or `PostgreSQL`. Database environment variables allow you to switch the attached database. To switch the database connection set a minimum of the `DATABASE_CLIENT` and `DATABASE_URL` for `MySQL`, `MariaDB`, and `PostgreSQL`. Set a minimum of `DATABASE_CLIENT` and `DATABASE_FILENAME` for `SQLite`.
 
 For deployed versions of your application the database environment variables should be stored wherever your other secrets are stored. The following table gives examples of where the database environment variables should be stored:
 
@@ -517,9 +520,9 @@ For deployed versions of your application the database environment variables sho
 |-------------------------------------------------------|---------------------------------|
 | Virtual private server/virtual machine (e.g. AWS EC2) | `ecosystem.config.js` or `.env` |
 | DigitalOcean App Platform                             | `Environment Variables` table   |
-| Heroku                                                | `Config vars`                   |
+| Heroku                                                | `Config vars` table                   |
 
-## Databases installation guides
+## Database installation guides
 
 Strapi gives you the option to choose the most appropriate database for your project. It currently supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
 
