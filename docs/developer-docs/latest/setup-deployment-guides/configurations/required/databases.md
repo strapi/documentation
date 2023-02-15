@@ -17,7 +17,7 @@ The CLI installation guide details [supported database and versions](/developer-
 :::
 
 :::note
-Strapi v4.6.2 introduced a new format for the database configuration file that allows all of the database configuration properties to be set using environment variables. Only new projects created after the v4.6.2 release will include the new configuration, however, earlier projects can utilize the new configuration by manually modifying the `./config/database.js` or `./config/database.ts` and updating the `.env` file. See [environment variables in database configurations](#environment-variables-in-database-configurations)
+Strapi `v4.6.2` introduced a new format for the database configuration file that allows all of the database configuration properties to be set using environment variables. Only new projects created after the `v4.6.2` release will include the new configuration, however, earlier projects can utilize the new configuration by manually modifying the `./config/database.js` or `./config/database.ts` and updating the `.env` file. See [environment variables in database configurations](#environment-variables-in-database-configurations)
 
 :::
 
@@ -45,7 +45,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in v4.6.2+**                    | `String`                  |
+| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**                    | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
@@ -282,7 +282,7 @@ await pluginStore.set({
 
 ## Environment variables in database configurations
 
-Strapi version v4.6.2 and higher includes the database configuration options in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
+Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
 
 <code-group>
 <code-block title="JAVASCRIPT">
@@ -489,11 +489,11 @@ DATABASE_FILENAME=.tmp/data.db
 </code-block>
 </code-group>
 
-### Environment variables for Strapi applications before v4.6.2
+### Environment variables for Strapi applications before `v4.6.2`
 
-If you started your project with a version prior to v4.6.2 you can convert your `database.js|database.ts` configuration file following this procedure:
+If you started your project with a version prior to `v4.6.2` you can convert your `database.js|database.ts` configuration file following this procedure:
 
-1. Update your application to v4.6.2 or a later version. See the [Updates and Migrations](/developer-docs/latest/update-migration-guides/migration-guides/migration-guides.md) section for any breaking changes that require specific fixes.
+1. Update your application to `v4.6.2` or a later version. See the [Updates and Migrations](/developer-docs/latest/update-migration-guides/migration-guides/migration-guides.md) section for any breaking changes that require specific fixes.
 2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
 3. Add the environment variables from the preceding code example to your `.env` file.
 4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.
@@ -504,7 +504,7 @@ Do not overwrite the environment variables: `HOST`, `PORT`, `APP_KEYS`, `API_TOK
 
 ### Database connections using `connectionString`
 
-Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi v4.6.2 and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
+Many managed database solutions use the property `connectionString` to connect a database to an application. Strapi `v4.6.2` and later versions include the `connectionString` property. The `connectionString` is a concatenation of all the database properties in the `connection.connection` object. The `connectionString`:
 
 - overrides the other `connection.connection` properties such as `host` and `port`,
 - can be disabled by setting the property to an empty string: `''`.
