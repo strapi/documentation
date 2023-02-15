@@ -1,6 +1,6 @@
 ---
 title: Audit Logs - Strapi User Guide
-description: Reviewing the audit logs in Strapi
+description: Reviewing the audit logs in Strapi.
 canonicalUrl: https://docs.strapi.io/user-docs/latest/settings/audit-logs.html
 ---
 
