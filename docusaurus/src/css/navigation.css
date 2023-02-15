@@ -94,6 +94,9 @@
   background-color: var(--strapi-dark-neutral-100) !important;
 }
 
+.theme-doc-sidebar-menu .menu__link:not(.menu__link--sublist).menu__link--active {
+  position: relative;
+}
 .theme-doc-sidebar-menu .menu__link:not(.menu__link--sublist).menu__link--active::before {
   /* highlights the currently active page with a blue-ish bar in the TOC */
   content: '';
@@ -101,7 +104,7 @@
   width: 5px;
   background-color: var(--strapi-primary-600);
   height: 32px;
-  left: 1px;
+  left: -20px; /* TODO: adjust for all levels */
 }
 [data-theme='dark'] .theme-doc-sidebar-menu .menu__link:not(.menu__link--sublist).menu__link--active::before {
   background-color: var(--strapi-dark-primary-600);
