@@ -265,3 +265,18 @@ The following documentation covers how to install databases locally:
 - [SQLite installation guide](/dev-docs/configurations/sqlite),
 - PostgreSQL (coming soon),
 - MySQL/MariaDB (coming soon).
+
+:::note
+When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
+
+To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
+
+```shell
+# Create a new database user with a secure password
+$ CREATE USER my_strapi_db_user WITH PASSWORD 'password';
+# Connect to the database as the PostgreSQL admin
+$ \c my_strapi_db_name admin_user
+# Grant schema privileges to the user
+$ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
+```
+:::

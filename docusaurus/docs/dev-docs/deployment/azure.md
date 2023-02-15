@@ -50,7 +50,7 @@ In this section we'll use the Azure Portal to create the required resources to h
 
    - _Name_ - `my-strapi-app`
    - _Publish_ - `Code`
-   - _Runtime stack_ - `Node 14 LTS`
+   - _Runtime stack_ - `Node 16 LTS`
    - _Operating System_ - `Linux`
    - _Region_ - Select an appropriate region
 
@@ -128,11 +128,11 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az appservice plan create --resource-group $rgName --name $appPlanName --is-linux --number-of-workers 4 --sku S1 --location $location
    ```
 
-3. Create a Web App running Node.js 14.
+3. Create a Web App running Node.js 16.
 
    ```bash
    webAppName=my-strapi-app
-   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|10.14"
+   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|16-lts"
    ```
 
 4. Create a Storage Account.
@@ -164,7 +164,7 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az mysql db create --resource-group $rgName --name $dbName --server-name $serverName
 
    # Allow Azure resources through the firewall
-   az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-range 0.0.0.0 --end-ip-range 0.0.0.0
+   az mysql server firewall-rule create --resource-group $rgName --server-name $serverName --name AllowAllAzureIps --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
    ```
 
 6. Add configuration values to the Web App.

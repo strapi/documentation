@@ -19,7 +19,6 @@ To find what you're looking for on this beta website, you can use one of the fol
 
 Once the initial content is fully converted, we will gradually improve the documentation further, for instance, adding a new homepage and more in-depth and interactive content for both beginners and more advanced users. Stay tuned!
 
-<!-- TODO: update with actual communication link -->
 In the meantime, we would love to hear your feedback, so [please let us know](https://forum.strapi.io)!
 
 ***
@@ -27,7 +26,7 @@ In the meantime, we would love to hear your feedback, so [please let us know](ht
 **Content conversion progress:**
 
 <details>
-<summary>Developer documentation ▮▮▮▮▯▯▯▯▯▯ ~40% complete</summary>
+<summary>Developer documentation ▮▮▮▮▮▮▮▮▮▯ >95% complete</summary>
 
 The following list is a sitemap of all the current and upcoming content for the Developer Docs:
 
@@ -43,7 +42,7 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [Installation](/dev-docs/installation)
       - [x] [CLI](/dev-docs/installation/cli)
       - [x] [Docker](/dev-docs/installation/docker)
-    - [ ] Project structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html))
+    - [x] [Project structure](/dev-docs/project-structure)
     - [x] Required configurations
         - [x] [Database configuration](/dev-docs/configurations/database)
         - [x] [Server configuration](/dev-docs/configurations/server)
@@ -85,8 +84,8 @@ The following list is a sitemap of all the current and upcoming content for the 
       - [x] [Models](/dev-docs/backend-customization/models)
       - [x] [Webhooks](/dev-docs/backend-customization/webhooks)
     - [x] [Admin panel customization](/dev-docs/admin-panel-customization)
-    - [ ] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
-    - [ ] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
+    - [x] Plugins extension (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-extension.html#))
+    - [x] Plugins development (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/plugins-development.html#))
     - [ ] Custom fields (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/development/custom-fields.html#))
     - [x] [TypeScript](/dev-docs/typescript)
     - [x] [Providers](/dev/docs/providers)
@@ -146,38 +145,38 @@ The following list is a sitemap of all the current and upcoming content for the 
     - [x] [Sentry](dev-docs/plugins/sentry)
     - [x] [API Documentation](dev-docs/plugins/documentation)
   - [ ] ♻️ Update & Migration
-    - [ ] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
-    - [ ] Migration
-      - [ ] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
+    - [x] Update (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html))
+    - [x] Migration
+      - [x] v4 migration guides (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html))
       - [ ] v3 to v4 migration guides (→ [docs.strapi.io](#))
-        - [ ] Code migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html))
-          - [ ] Updating the back end (→ [docs.strapi.io](#))
-            - [ ] Configurations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.html))
-            - [ ] Dependencies (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html))
-            - [ ] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html))
-            - [ ] Controllers (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html))
-            - [ ] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html))
-            - [ ] Content-type schema (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html))
-            - [ ] Policies (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html))
-            - [ ] Route middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.html))
-            - [ ] Global middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html))
-            - [ ] GraphQL (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html))
-        - [ ] Updating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html))
-          - [ ] WYSIWYG customization (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html#))
-          - [ ] Translations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html#))
-          - [ ] Webpack configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html))
-          - [ ] Theme customizations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html))
-          - [ ] Strapi global variable calls (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html))
+        - [x] Code migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html))
+          - [x] Updating the back end (→ [docs.strapi.io](#))
+            - [x] Configurations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.html))
+            - [x] Dependencies (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html))
+            - [x] Routes (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html))
+            - [x] Controllers (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html))
+            - [x] Services (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html))
+            - [x] Content-type schema (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html))
+            - [x] Policies (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html))
+            - [x] Route middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.html))
+            - [x] Global middlewares (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html))
+            - [x] GraphQL (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html))
+        - [x] Updating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html))
+          - [x] WYSIWYG customization (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html#))
+          - [x] Translations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html#))
+          - [x] Webpack configuration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html))
+          - [x] Theme customizations (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html))
+          - [x] Strapi global variable calls (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html))
     - [ ] Data migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html#))
       - [ ] SQL v3 to v4 migration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.html))
       - [ ] SQL relations cheatsheet (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.html))
       - [ ] MongoDB v3 to SQL v3 migration (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html))
       - [ ] MongoDB vs. SQL cheatsheet (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.html))
-    - [ ] Plugin migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html))
-      - [ ] Updating the folder structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html))
-      - [ ] Migrating the back end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html))
-      - [ ] Migrating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html))
-      - [ ] Enabling a plugin (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html))
+    - [x] Plugin migration guide (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html))
+      - [x] Updating the folder structure (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html))
+      - [x] Migrating the back end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html))
+      - [x] Migrating the front end (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html))
+      - [x] Enabling a plugin (→ [docs.strapi.io](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html))
 
 </details>
 

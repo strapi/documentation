@@ -53,15 +53,13 @@ const sidebars = {
           ]
         },
         {
+          type: 'doc',
+          id: 'dev-docs/project-structure', 
+        },
+        {
           type: 'category',
           label: 'Configuration',
           link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
             type: 'doc',
             id: 'dev-docs/configurations',
           },
@@ -192,8 +190,10 @@ const sidebars = {
           ]
         },
         'dev-docs/api/plugins/admin-panel-api',
+        'dev-docs/api/plugins/server-api',
       ]
     },
+  
     {
       type: 'category',
       label: '🔧 Development',
@@ -218,11 +218,12 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
+        'dev-docs/plugins-extension',
+        'dev-docs/plugins-development',
         'dev-docs/typescript',
         'dev-docs/providers',
       ]
     },
-
     {
       type: 'category',
       label: '💻 Developer Resources',
@@ -267,7 +268,6 @@ const sidebars = {
         },
       ],
     },
-
     {
       type: 'category',
       collapsed: false,
@@ -295,8 +295,104 @@ const sidebars = {
 
           ]
     },
-  ],
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Update and Migration',
+      items: [
+        'dev-docs/update-version',
+        'dev-docs/migration-guides',
+        {
+          type: 'category',
+          collapsed: true,
+          label: 'v3 to v4 migration guides',
+          items: [
+            {
+              type: 'category',
+              collapsed: true,
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v3-to-v4/code-migration'
+              },
+              label: 'Code migration',
+              items: [
+                {
+                  type: 'category',
+                  collapsed: true,
+                  link: {
+                    type: 'doc',
+                    id: 'dev-docs/migration/v3-to-v4/code/backend'
+                  },
+                  label: 'Backend migration',
+                  items: [
+                          'dev-docs/migration/v3-to-v4/code/configuration',
+                          'dev-docs/migration/v3-to-v4/code/content-type-schema',
+                          'dev-docs/migration/v3-to-v4/code/controllers',
+                          'dev-docs/migration/v3-to-v4/code/dependencies',
+                          'dev-docs/migration/v3-to-v4/code/global-middlewares',
+                          'dev-docs/migration/v3-to-v4/code/graphql',
+                          'dev-docs/migration/v3-to-v4/code/policies',
+                          'dev-docs/migration/v3-to-v4/code/route-middlewares',
+                          'dev-docs/migration/v3-to-v4/code/routes',
+                          'dev-docs/migration/v3-to-v4/code/services',
 
+                  ]
+
+                },
+                {
+                  type: 'category',
+                  collapsed: true,
+                  link: {
+                    type: 'doc',
+                    id: 'dev-docs/migration/v3-to-v4/code/frontend'
+                  },
+                  label: 'Frontend migration',
+                  items: [
+                          'dev-docs/migration/v3-to-v4/code/strapi-global',
+                          'dev-docs/migration/v3-to-v4/code/theming',
+                          'dev-docs/migration/v3-to-v4/code/translations',
+                          'dev-docs/migration/v3-to-v4/code/webpack',
+                          'dev-docs/migration/v3-to-v4/code/wysiwyg',
+                  ]
+
+                },
+              ]
+            },
+            {
+              type: 'category',
+              collapsed: true,
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v3-to-v4/plugin-migration'
+              },
+              label: 'Plugin migration',
+              items: [
+                'dev-docs/migration/v3-to-v4/plugin/update-folder-structure',
+                'dev-docs/migration/v3-to-v4/plugin/migrate-back-end',
+                'dev-docs/migration/v3-to-v4/plugin/migrate-front-end',
+                'dev-docs/migration/v3-to-v4/plugin/enable-plugin',
+              ]
+            },
+            {
+              type: 'category',
+              collapsed: true,
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v3-to-v4/data-migration'
+              },
+              label: 'Data migration',
+              items: [
+                'dev-docs/migration/v3-to-v4/data/sql',
+                'dev-docs/migration/v3-to-v4/data/sql-relations',
+                'dev-docs/migration/v3-to-v4/data/mongo',
+                'dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet',
+              ]
+            },
+          ]
+        }
+      ],
+    },
+  ],
 
   userDocsSidebar: [
     'user-docs/intro',

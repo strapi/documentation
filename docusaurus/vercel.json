@@ -1,8 +1,132 @@
 {
   "redirects": [
     {
-      "source": "/developer-docs/latest/development/admin-customization",
+      "source": "/developer-docs/latest/development/admin-customization.html",
       "destination": "/dev-docs/admin-panel-customization"
+    },
+    {
+      "source": "/developer-docs/latest/development/backend-customization",
+      "destination": "/dev-docs/backend-customization"
+    },
+    {
+      "source": "/developer-docs/latest/development/backend-customization/(.*)",
+      "destination": "/dev-docs/backend-customization"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/cli/CLI",
+      "destination": "/dev-docs/cli"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations.html",
+      "destination": "/dev-docs/configurations"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations/(.*)",
+      "destination": "/dev-docs/configurations"
+    },
+    {
+      "source": "/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html",
+      "destination": "/user-docs/content-type-builder"
+    },
+    {
+      "source": "/user-docs/latest/content-types-builder/(.*)",
+      "destination": "/user-docs/content-type-builder"
+    },
+    {
+      "source": "/developer-docs/latest/development/custom-fields",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/(.*)",
+      "destination": "/dev-docs/deployment"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/(.*)",
+      "destination": "/dev-docs/deployment"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html",
+      "destination": "/dev-docs/deployment/strapi-cloud"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment.html",
+      "destination": "/dev-docs/deployment"
+    },
+    {
+      "source": "/developer-docs/latest/development/error-handling",
+      "destination": "/dev-docs/error-handling"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api",
+      "destination": "/dev-docs/api/graphql"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation.html",
+      "destination": "/dev-docs/installation"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/(.*)",
+      "destination": "/dev-docs/installation"
+    },
+    {
+      "source": "/developer-docs/latest/plugins/i18n",
+      "destination": "/dev-docs/plugins/i18n"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel",
+      "destination": "/dev-docs/api/plugins/admin-panel-api"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
+      "destination": "/dev-docs/api/plugins/server-api"
+    },
+    {
+      "source": "/developer-docs/latest/development/plugins-development.html",
+      "destination": "/dev-docs/plugins-development"
+    },
+    {
+      "source": "/developer-docs/latest/development/plugins-extension.html",
+      "destination": "/dev-docs/plugins-extension"
+    },
+    {
+      "source": "/developer-docs/latest/plugins/plugins-intro.html",
+      "destination": "/dev-docs/plugins"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/file-structure",
+      "destination": "/dev-docs/project-structure"
+    },
+    {
+      "source": "/developer-docs/latest/getting-started/quick-start",
+      "destination": "/dev-docs/quick-start"
+    },
+    {
+      "source": "developer-docs/latest/developer-resources/database-apis-reference/rest-api.html",
+      "destination": "/dev-docs/api/rest"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
+      "destination": "/dev-docs/api/rest/parameters"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html",
+      "destination": "/dev-docs/api/rest/filters-locale-publication"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html",
+      "destination": "/dev-docs/api/rest/populate-select"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html",
+      "destination": "/dev-docs/api/rest/sort-pagination"
+    },
+    {
+      "source": "/developer-docs/latest/development/typescript",
+      "destination": "/dev-docs/typescript"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/unit-testing",
+      "destination": "/dev-docs/testing"
     }
   ]
 }
