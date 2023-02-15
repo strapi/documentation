@@ -25,10 +25,6 @@ Strapi provides the following environment variables:
 | `FAST_REFRESH`                                             | Use [react-refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin) to enable "Fast Refresh" for near-instant feedback while developing the Strapi admin panel.                                                                                                                                       | `boolean` | `true`          |
 
 
-:::note
-In v4.6.2 environment variables were introduced for the database configuration. The default generated `.env` file now contains a `# Database` section and several environment variables depending on the database type. See the [database configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/databases.md#environment-variables-in-database-configurations) to learn about how to use environment variables with your database.
-:::
-
 ## Configuration using environment variables
 
 In most use cases there will be different configurations between environments (e.g. database credentials).
