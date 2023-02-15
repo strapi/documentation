@@ -21,7 +21,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object </li> <li>[Cron](#cron)</li></ul>                                                                                                                                      |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -86,10 +86,10 @@ module.exports = () => ({
 
 **Type**: `Object`
 
-| Parameter   | Type                                           | Description                                                                                                                                              |
-| ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
+| Parameter   | Type                                       | Description                                                                                                                                                                                |
+| ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                                                           |
+| `validator` | Function                                   | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
 
 **Example:**
 
@@ -101,7 +101,7 @@ const config = require('./config');
 module.exports = () => ({
   config: {
     default: ({ env }) => ({ optionA: true }),
-    validator: (config) => { 
+    validator: config => {
       if (typeof config.optionA !== 'boolean') {
         throw new Error('optionA has to be a boolean');
       }
@@ -112,8 +112,8 @@ module.exports = () => ({
 
 Once defined, the configuration can be accessed:
 
-* with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
-* or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+- with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
+- or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
 
 ## Cron
 
@@ -124,14 +124,36 @@ The `cron` object allows you to add cron jobs to the Strapi instance.
 
 module.exports = () => ({
   bootstrap({ strapi }) {
-        strapi.cron.add({
-          // runs every second
-        '* * * * * *': ({ strapi }) => {
-          console.log("hello from plugin")
+    strapi.cron.add({
+      // runs every second
+      '* * * * * *': ({ strapi }) => {
+        console.log('hello from plugin');
+      },
+    });
+    // or with a custom name
+    strapi.cron.add({
+      myJob: {
+        task: ({ strapi }) => {
+          console.log('hello from plugin');
         },
-    })
+        options: {
+          rule: '* * * * * *',
+          name: 'myJob',
+        },
+      },
+    });
   },
 });
+```
+
+To remove a cron job you need to add a cron job with a name as shown above. 
+
+:::note
+Only cron jobs with names can be removed.
+:::
+
+```js
+strapi.cron.remove('myJob')
 ```
 
 ## Backend customization
@@ -151,7 +173,7 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -199,7 +221,7 @@ module.exports = {
     },
     'content-type-builder': {
       visible: false,
-    }
+    },
   },
   attributes: {
     name: {
@@ -208,7 +230,7 @@ module.exports = {
       max: 50,
       configurable: false,
     },
-  }
+  },
 };
 ```
 
@@ -223,7 +245,7 @@ An array of [routes](/developer-docs/latest/development/backend-customization/ro
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -262,11 +284,10 @@ An object with the [controllers](/developer-docs/latest/development/backend-cust
 
 **Example:**
 
-
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -316,7 +337,7 @@ Services should be functions taking `strapi` as a parameter.
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -364,7 +385,7 @@ An object with the [policies](/developer-docs/latest/development/backend-customi
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -395,11 +416,11 @@ module.exports = {
 // path: ./src/plugins/my-plugin/server/policies/policy-a.js
 
 module.exports = (policyContext, config, { strapi }) => {
-    if (ctx.state.user && ctx.state.user.isActive) {
-      return true;
-    }
+  if (ctx.state.user && ctx.state.user.isActive) {
+    return true;
+  }
 
-    return false;
+  return false;
 };
 ```
 
@@ -414,7 +435,7 @@ An object with the [middlewares](/developer-docs/latest/setup-deployment-guides/
 ```js
 // path: ./src/plugins/my-plugin/strapi-server.js
 
-"use strict";
+'use strict';
 
 module.exports = require('./server');
 ```
@@ -444,13 +465,13 @@ module.exports = {
 // path: ./src/plugins/my-plugin/server/middlewares/middleware-a.js
 
 module.exports = (options, { strapi }) => {
- return async (ctx, next) => {
+  return async (ctx, next) => {
     const start = Date.now();
     await next();
     const delta = Math.ceil(Date.now() - start);
 
     strapi.log.http(`${ctx.method} ${ctx.url} (${delta} ms) ${ctx.status}`);
- };
+  };
 };
 ```
 
@@ -461,25 +482,25 @@ Once a plugin is exported and loaded into Strapi, its features are accessible in
 While top-level getters imply chaining functions, global getters are syntactic sugar that allows direct access using a feature's uid:
 
 ```js
-// Access an API or a plugin controller using a top-level getter 
-strapi.api['api-name'].controller('controller-name')
-strapi.plugin('plugin-name').controller('controller-name')
+// Access an API or a plugin controller using a top-level getter
+strapi.api['api-name'].controller('controller-name');
+strapi.plugin('plugin-name').controller('controller-name');
 
 // Access an API or a plugin controller using a global getter
-strapi.controller('api::api-name.controller-name')
-strapi.controller('plugin::plugin-name.controller-name')
+strapi.controller('api::api-name.controller-name');
+strapi.controller('plugin::plugin-name.controller-name');
 ```
 
 :::details Top-level getter syntax examples
 
 ```js
-strapi.plugin('plugin-name').config
-strapi.plugin('plugin-name').routes
-strapi.plugin('plugin-name').controller('controller-name')
-strapi.plugin('plugin-name').service('service-name')
-strapi.plugin('plugin-name').contentType('content-type-name')
-strapi.plugin('plugin-name').policy('policy-name')
-strapi.plugin('plugin-name').middleware('middleware-name')
+strapi.plugin('plugin-name').config;
+strapi.plugin('plugin-name').routes;
+strapi.plugin('plugin-name').controller('controller-name');
+strapi.plugin('plugin-name').service('service-name');
+strapi.plugin('plugin-name').contentType('content-type-name');
+strapi.plugin('plugin-name').policy('policy-name');
+strapi.plugin('plugin-name').middleware('middleware-name');
 ```
 
 :::
