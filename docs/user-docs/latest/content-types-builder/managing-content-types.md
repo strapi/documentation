@@ -20,7 +20,7 @@ Managing a content-type or component can include editing the general settings an
 
 ![Content-type Builder's edition interface](../assets/content-types-builder/content-types-builder_edition.png)
 
-- Next to the name and optional description of the content-type or component, an ![Edit icon](../assets/icons/edit.svg) **Edit** button (1) allows to access the general settings of the content-type or component.
+- Next to the name and optional description of the content-type or component, an ![Edit icon](../assets/icons/edit.svg) **Edit** button (1) allows to access the [general settings](#editing-content-type-or-component-settings) of the content-type or component.
 - In the top right corner:
   - the **Add new field** and **Save** buttons (2) allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/latest/content-types-builder/configuring-fields-content-type.md)), or save any ongoing modification.
   - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](/user-docs/latest/content-manager/configuring-view-of-content-type.md#configuring-the-edit-view))
@@ -32,6 +32,30 @@ Managing a content-type or component can include editing the general settings an
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
 :::
 
+### Editing content-type or component settings
+
+The settings of a content-type or component can be edited through the Content-type Builder. There are two tabs available: **Basic Settings** and **Advanced Settings**.
+
+#### Basic settings
+
+The **Basic Settings** tab allows to edit the following properties of the content-type or component:
+
+![Content-type Builder's basic settings](../assets/content-types-builder/basic-settings.png)
+
+* **Display name**: Name of the content-type or component as it will be displayed in the admin panel.
+* **API ID (singular)**: Name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+* **API ID (plural)**: Plural name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+* **Type**: Type of the content-type or component. It can be either a **Collection type** or a **Single type**.
+
+#### Advanced settings
+
+The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
+
+![Content-type Builder's advanced settings](../assets/content-types-builder/advanced-settings.png)
+
+* **Draft & Publish**: Enable the draft and publish feature for the content-type or component. It is disabled by default.
+* **Internationalization**: Enable the internationalization feature for the content-type or component. It is disabled by default.
+* **Review workflows**: Enable the [review workflow](../settings/review-workflows.md) feature for the content-type or component. It is disabled by default.
 
 ## Deleting content-types
 
