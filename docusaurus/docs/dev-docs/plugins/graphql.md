@@ -886,3 +886,20 @@ mutation {
 </Request>
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
+
+
+## API tokens
+
+To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
+
+:::note
+Using API tokens in the the GraphQL playground requires adding the authorization header with your token in the `HTTP HEADERS` tab:
+
+```http
+{
+  "Authorization" : "Bearer <TOKEN>"
+}
+```
+
+Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
+:::
