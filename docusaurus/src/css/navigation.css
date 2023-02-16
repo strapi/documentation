@@ -107,13 +107,16 @@
   height: 32px;
   left: -20px; /* manually adjusted for lower-level items in the 3 selectors below */
 }
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item .menu__link--active::before {
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-3.menu__list-item .menu__link--active::before,
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-3.menu__list-item .menu__list-item-collapsible--active .menu__link--active::before {
   left: -32px;
 }
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-4.menu__list-item .menu__link--active::before {
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-4.menu__list-item .menu__link--active::before,
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-4.menu__list-item .menu__list-item-collapsible--active .menu__link--active::before {
   left: -44px;
 }
-.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-5.menu__list-item .menu__link--active::before {
+.theme-doc-sidebar-item-link.theme-doc-sidebar-item-link-level-5.menu__list-item .menu__link--active::before,
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-5.menu__list-item .menu__list-item-collapsible--active .menu__link--active::before {
   left: -56px;
 }
 [data-theme='dark'] .theme-doc-sidebar-menu .menu__link:not(.menu__link--sublist).menu__link--active::before {
