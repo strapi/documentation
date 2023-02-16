@@ -54,7 +54,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'dev-docs/project-structure', 
+          id: 'dev-docs/project-structure',
         },
         {
           type: 'category',
@@ -158,21 +158,6 @@ const sidebars = {
             'dev-docs/api/rest/relations',
           ]
         },
-        {
-          type: 'category',
-          label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
-          items: [
-            'dev-docs/api/query-engine/single-operations',
-            'dev-docs/api/query-engine/bulk-operations',
-            'dev-docs/api/query-engine/filtering',
-            'dev-docs/api/query-engine/populating',
-            'dev-docs/api/query-engine/order-pagination',
-          ]
-        },
         'dev-docs/api/graphql',
         {
           type: 'category',
@@ -189,11 +174,26 @@ const sidebars = {
             'dev-docs/api/entity-service/components-dynamic-zones',
           ]
         },
+        {
+          type: 'category',
+          label: 'Query Engine API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/query-engine',
+          },
+          items: [
+            'dev-docs/api/query-engine/single-operations',
+            'dev-docs/api/query-engine/bulk-operations',
+            'dev-docs/api/query-engine/filtering',
+            'dev-docs/api/query-engine/populating',
+            'dev-docs/api/query-engine/order-pagination',
+          ]
+        },
         'dev-docs/api/plugins/admin-panel-api',
         'dev-docs/api/plugins/server-api',
       ]
     },
-  
+
     {
       type: 'category',
       label: '🔧 Development',
