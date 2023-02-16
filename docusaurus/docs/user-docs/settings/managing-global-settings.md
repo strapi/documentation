@@ -77,7 +77,7 @@ To add a new locale:
 
 ## Configuring the Media Library
 
-The [Media Library](/user-docs/media-library/introduction-to-media-library/) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+The [Media Library](/user-docs/media-library) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
 
 ![Media Library settings](/img/assets/settings/settings_media-library.png)
 
