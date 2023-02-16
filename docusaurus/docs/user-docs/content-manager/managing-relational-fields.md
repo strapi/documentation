@@ -73,6 +73,6 @@ To select the relevant relational field's entries:
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the cross button ![Cross icon](../assets/icons/cross.svg) in the selected entries list.
+To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/cross.svg) in the selected entries list.
 
-Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](../assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
