@@ -150,7 +150,7 @@ strapi import
 strapi import -f <your-filepath-and-filename> --key my-key
 ```
 
-## strapi transfer<BetaBadge />
+## strapi transfer <BetaBadge />
 
 [Transfers data](/dev-docs/data-management/transfer) between two Strapi instances. This command is primarily intended for use between a local instance and a remote instance or two remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/docs/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for detailed documentation on creating Transfer tokens.
 
