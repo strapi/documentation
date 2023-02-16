@@ -1,12 +1,12 @@
 /**
  * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
+  - create an ordered group of docs
+  - render a sidebar for each doc of that group
+  - provide next/previous navigation
 
- The sidebars can be generated from the filesystem, or explicitly defined here.
+  The sidebars can be generated from the filesystem, or explicitly defined here.
 
- Create as many sidebars as you want.
+  Create as many sidebars as you want.
  */
 
 // @ts-check
@@ -19,448 +19,433 @@ const sidebars = {
   // But you can create a sidebar manually
   devDocsSidebar: [
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: '🚀 Getting Started',
+      label: "🚀 Getting Started",
       items: [
-        'dev-docs/intro',
-        'dev-docs/quick-start',
-        'dev-docs/faq',
-        'dev-docs/usage-information',
-      ]
+        "dev-docs/intro",
+        "dev-docs/quick-start",
+        "dev-docs/faq",
+        "dev-docs/usage-information",
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: '⚙️ Setup & Deployment',
+      label: "⚙️ Setup & Deployment",
       items: [
         {
-          type: 'category',
-          label: 'Installation',
+          type: "category",
+          label: "Installation",
           link: {
             /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/installation',
+             * Use the 2 lines below to make sure that
+             * "Installation" in the TOC is a clickable link
+             * pointing to a page (i.e., type: 'doc') whose link target
+             * is defined as the 'id' property.
+             */
+            type: "doc",
+            id: "dev-docs/installation",
           },
-          items: [
-            'dev-docs/installation/cli',
-            'dev-docs/installation/docker',
-          ]
+          items: ["dev-docs/installation/cli", "dev-docs/installation/docker"],
         },
         {
-          type: 'doc',
-          id: 'dev-docs/project-structure', 
+          type: "doc",
+          id: "dev-docs/project-structure",
         },
         {
-          type: 'category',
-          label: 'Configuration',
+          type: "category",
+          label: "Configuration",
           link: {
-            type: 'doc',
-            id: 'dev-docs/configurations',
+            type: "doc",
+            id: "dev-docs/configurations",
           },
           items: [
             {
-              type: 'category',
-              label: 'Required configurations',
+              type: "category",
+              label: "Required configurations",
               items: [
-                'dev-docs/configurations/database',
-                'dev-docs/configurations/server',
-                'dev-docs/configurations/admin-panel',
-                'dev-docs/configurations/middlewares',
-              ]
+                "dev-docs/configurations/database",
+                "dev-docs/configurations/server",
+                "dev-docs/configurations/admin-panel",
+                "dev-docs/configurations/middlewares",
+              ],
             },
             {
-              type: 'category',
-              label: 'Optional configurations',
+              type: "category",
+              label: "Optional configurations",
               items: [
-                'dev-docs/configurations/api',
-                'dev-docs/configurations/api-tokens',
-                'dev-docs/configurations/cron',
-                'dev-docs/configurations/environment',
-                'dev-docs/configurations/functions',
-                'dev-docs/configurations/plugins',
-                'dev-docs/configurations/public-assets',
-                'dev-docs/configurations/rbac',
-                'dev-docs/configurations/sso',
-                'dev-docs/configurations/typescript',
-              ]
+                "dev-docs/configurations/api",
+                "dev-docs/configurations/api-tokens",
+                "dev-docs/configurations/cron",
+                "dev-docs/configurations/environment",
+                "dev-docs/configurations/functions",
+                "dev-docs/configurations/plugins",
+                "dev-docs/configurations/public-assets",
+                "dev-docs/configurations/rbac",
+                "dev-docs/configurations/sso",
+                "dev-docs/configurations/typescript",
+              ],
             },
           ],
         },
         {
-          type: 'category',
-          label: 'Deployment',
+          type: "category",
+          label: "Deployment",
           link: {
-            type: 'doc',
-            id: 'dev-docs/deployment',
-        },
+            type: "doc",
+            id: "dev-docs/deployment",
+          },
           items: [
-            'dev-docs/deployment/strapi-cloud',
+            "dev-docs/deployment/strapi-cloud",
             {
-              type: 'category',
-              label: 'Other Hosting Guides',
+              type: "category",
+              label: "Other Hosting Guides",
               link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-            },
+                type: "doc",
+                id: "dev-docs/deployment/hosting-guides",
+              },
               items: [
-                'dev-docs/deployment/amazon-aws',
-                'dev-docs/deployment/azure',
-                'dev-docs/deployment/digitalocean-app-platform',
-                'dev-docs/deployment/digitalocean',
+                "dev-docs/deployment/amazon-aws",
+                "dev-docs/deployment/azure",
+                "dev-docs/deployment/digitalocean-app-platform",
+                "dev-docs/deployment/digitalocean",
                 // 'dev-docs/deployment/google-app-platform',
-                'dev-docs/deployment/heroku',
-
+                "dev-docs/deployment/heroku",
               ],
             },
             {
-              type: 'category',
-              label: 'Optional Software Guides',
+              type: "category",
+              label: "Optional Software Guides",
               link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-            },
+                type: "doc",
+                id: "dev-docs/deployment/optional-software-guides",
+              },
               items: [
-                'dev-docs/deployment/caddy-proxy',
-                'dev-docs/deployment/haproxy-proxy',
-                'dev-docs/deployment/nginx-proxy',
-                'dev-docs/deployment/process-manager',
-
+                "dev-docs/deployment/caddy-proxy",
+                "dev-docs/deployment/haproxy-proxy",
+                "dev-docs/deployment/nginx-proxy",
+                "dev-docs/deployment/process-manager",
               ],
             },
-
-          ]
-        }
-      ]
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      label: '💻 APIs',
-      items: [
-        {
-          type: 'category',
-          label: 'REST API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/rest',
-          },
-          items: [
-            'dev-docs/api/rest/parameters',
-            'dev-docs/api/rest/populate-select',
-            'dev-docs/api/rest/filters-locale-publication',
-            'dev-docs/api/rest/sort-pagination',
-            'dev-docs/api/rest/relations',
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
-          items: [
-            'dev-docs/api/query-engine/single-operations',
-            'dev-docs/api/query-engine/bulk-operations',
-            'dev-docs/api/query-engine/filtering',
-            'dev-docs/api/query-engine/populating',
-            'dev-docs/api/query-engine/order-pagination',
-          ]
-        },
-        'dev-docs/api/graphql',
-        {
-          type: 'category',
-          label: 'Entity Service API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/entity-service',
-          },
-          items: [
-            'dev-docs/api/entity-service/crud',
-            'dev-docs/api/entity-service/filter',
-            'dev-docs/api/entity-service/populate',
-            'dev-docs/api/entity-service/order-pagination',
-            'dev-docs/api/entity-service/components-dynamic-zones',
-          ]
-        },
-        'dev-docs/api/plugins/admin-panel-api',
-        'dev-docs/api/plugins/server-api',
-      ]
-    },
-  
-    {
-      type: 'category',
-      label: '🔧 Development',
-      collapsed: false,
-      items: [
-        'dev-docs/admin-panel-customization',
-        {
-          type: 'category',
-          label: 'Back-end customization',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/backend-customization',
-          },
-          items: [
-            'dev-docs/backend-customization/routes',
-            'dev-docs/backend-customization/policies',
-            'dev-docs/backend-customization/middlewares',
-            'dev-docs/backend-customization/controllers',
-            'dev-docs/backend-customization/requests-responses',
-            'dev-docs/backend-customization/services',
-            'dev-docs/backend-customization/models',
-            'dev-docs/backend-customization/webhooks',
-          ]
-        },
-        'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
-        'dev-docs/typescript',
-        'dev-docs/providers',
-      ]
-    },
-    {
-      type: 'category',
-      label: '💻 Developer Resources',
-      collapsed: false,
-      items: [
-        'dev-docs/cli',
-        'dev-docs/data-management',
-        'dev-docs/error-handling',
-        'dev-docs/testing',
-        {
-          type: 'category',
-          label: 'Integrations',
-          link: {
-            type:'doc',
-            id: 'dev-docs/integrations',
-          },
-
-
-          items: [
-            'dev-docs/integrations/11ty',
-            'dev-docs/integrations/angular',
-            'dev-docs/integrations/dart',
-            'dev-docs/integrations/flutter',
-            'dev-docs/integrations/gatsby',
-            'dev-docs/integrations/girdsome',
-            'dev-docs/integrations/go',
-            'dev-docs/integrations/graphql',
-            'dev-docs/integrations/jekyll',
-            'dev-docs/integrations/laravel',
-            'dev-docs/integrations/next-js',
-            'dev-docs/integrations/nuxt-js',
-            'dev-docs/integrations/php',
-            'dev-docs/integrations/python',
-            'dev-docs/integrations/react',
-            'dev-docs/integrations/ruby',
-            'dev-docs/integrations/sapper',
-            'dev-docs/integrations/svelte',
-            'dev-docs/integrations/vue-js',
-
-
-          ]
+          ],
         },
       ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: '🔌 Plugins',
-      link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/plugins/plugins-intro',
-          },
+      label: "💻 APIs",
       items: [
-            'dev-docs/plugins/documentation',
-            'dev-docs/plugins/email',
-            'dev-docs/plugins/graphql',
-            'dev-docs/plugins/i18n',
-            'dev-docs/plugins/sentry',
-            'dev-docs/plugins/upload',
-            'dev-docs/plugins/users-permissions',
+        {
+          type: "category",
+          label: "REST API",
+          link: {
+            type: "doc",
+            id: "dev-docs/api/rest",
+          },
+          items: [
+            "dev-docs/api/rest/parameters",
+            "dev-docs/api/rest/populate-select",
+            "dev-docs/api/rest/filters-locale-publication",
+            "dev-docs/api/rest/sort-pagination",
+            "dev-docs/api/rest/relations",
+          ],
+        },
+        {
+          type: "category",
+          label: "Entity Service API",
+          link: {
+            type: "doc",
+            id: "dev-docs/api/entity-service",
+          },
+          items: [
+            "dev-docs/api/entity-service/crud",
+            "dev-docs/api/entity-service/filter",
+            "dev-docs/api/entity-service/populate",
+            "dev-docs/api/entity-service/order-pagination",
+            "dev-docs/api/entity-service/components-dynamic-zones",
+          ],
+        },
+        {
+          type: "category",
+          label: "Query Engine API",
+          link: {
+            type: "doc",
+            id: "dev-docs/api/query-engine",
+          },
+          items: [
+            "dev-docs/api/query-engine/single-operations",
+            "dev-docs/api/query-engine/bulk-operations",
+            "dev-docs/api/query-engine/filtering",
+            "dev-docs/api/query-engine/populating",
+            "dev-docs/api/query-engine/order-pagination",
+          ],
+        },
+        "dev-docs/api/graphql",
+        "dev-docs/api/plugins/admin-panel-api",
+        "dev-docs/api/plugins/server-api",
+      ],
+    },
 
-
-
-          ]
+    {
+      type: "category",
+      label: "🔧 Development",
+      collapsed: false,
+      items: [
+        "dev-docs/admin-panel-customization",
+        {
+          type: "category",
+          label: "Back-end customization",
+          link: {
+            type: "doc",
+            id: "dev-docs/backend-customization",
+          },
+          items: [
+            "dev-docs/backend-customization/routes",
+            "dev-docs/backend-customization/policies",
+            "dev-docs/backend-customization/middlewares",
+            "dev-docs/backend-customization/controllers",
+            "dev-docs/backend-customization/requests-responses",
+            "dev-docs/backend-customization/services",
+            "dev-docs/backend-customization/models",
+            "dev-docs/backend-customization/webhooks",
+          ],
+        },
+        "dev-docs/plugins-extension",
+        "dev-docs/plugins-development",
+        "dev-docs/typescript",
+        "dev-docs/providers",
+      ],
     },
     {
-      type: 'category',
+      type: "category",
+      label: "💻 Developer Resources",
       collapsed: false,
-      label: 'Update and Migration',
       items: [
-        'dev-docs/update-version',
-        'dev-docs/migration-guides',
+        "dev-docs/cli",
+        "dev-docs/data-management",
+        "dev-docs/error-handling",
+        "dev-docs/testing",
         {
-          type: 'category',
+          type: "category",
+          label: "Integrations",
+          link: {
+            type: "doc",
+            id: "dev-docs/integrations",
+          },
+
+          items: [
+            "dev-docs/integrations/11ty",
+            "dev-docs/integrations/angular",
+            "dev-docs/integrations/dart",
+            "dev-docs/integrations/flutter",
+            "dev-docs/integrations/gatsby",
+            "dev-docs/integrations/girdsome",
+            "dev-docs/integrations/go",
+            "dev-docs/integrations/graphql",
+            "dev-docs/integrations/jekyll",
+            "dev-docs/integrations/laravel",
+            "dev-docs/integrations/next-js",
+            "dev-docs/integrations/nuxt-js",
+            "dev-docs/integrations/php",
+            "dev-docs/integrations/python",
+            "dev-docs/integrations/react",
+            "dev-docs/integrations/ruby",
+            "dev-docs/integrations/sapper",
+            "dev-docs/integrations/svelte",
+            "dev-docs/integrations/vue-js",
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "🔌 Plugins",
+      link: {
+        /**
+         * Use the 2 lines below to make sure that
+         * "Installation" in the TOC is a clickable link
+         * pointing to a page (i.e., type: 'doc') whose link target
+         * is defined as the 'id' property.
+         */
+        type: "doc",
+        id: "dev-docs/plugins/plugins-intro",
+      },
+      items: [
+        "dev-docs/plugins/documentation",
+        "dev-docs/plugins/email",
+        "dev-docs/plugins/graphql",
+        "dev-docs/plugins/i18n",
+        "dev-docs/plugins/sentry",
+        "dev-docs/plugins/upload",
+        "dev-docs/plugins/users-permissions",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Update and Migration",
+      items: [
+        "dev-docs/update-version",
+        "dev-docs/migration-guides",
+        {
+          type: "category",
           collapsed: true,
-          label: 'v3 to v4 migration guides',
+          label: "v3 to v4 migration guides",
           items: [
             {
-              type: 'category',
+              type: "category",
               collapsed: true,
               link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/code-migration'
+                type: "doc",
+                id: "dev-docs/migration/v3-to-v4/code-migration",
               },
-              label: 'Code migration',
+              label: "Code migration",
               items: [
                 {
-                  type: 'category',
+                  type: "category",
                   collapsed: true,
                   link: {
-                    type: 'doc',
-                    id: 'dev-docs/migration/v3-to-v4/code/backend'
+                    type: "doc",
+                    id: "dev-docs/migration/v3-to-v4/code/backend",
                   },
-                  label: 'Backend migration',
+                  label: "Backend migration",
                   items: [
-                          'dev-docs/migration/v3-to-v4/code/configuration',
-                          'dev-docs/migration/v3-to-v4/code/content-type-schema',
-                          'dev-docs/migration/v3-to-v4/code/controllers',
-                          'dev-docs/migration/v3-to-v4/code/dependencies',
-                          'dev-docs/migration/v3-to-v4/code/global-middlewares',
-                          'dev-docs/migration/v3-to-v4/code/graphql',
-                          'dev-docs/migration/v3-to-v4/code/policies',
-                          'dev-docs/migration/v3-to-v4/code/route-middlewares',
-                          'dev-docs/migration/v3-to-v4/code/routes',
-                          'dev-docs/migration/v3-to-v4/code/services',
-
-                  ]
-
+                    "dev-docs/migration/v3-to-v4/code/configuration",
+                    "dev-docs/migration/v3-to-v4/code/content-type-schema",
+                    "dev-docs/migration/v3-to-v4/code/controllers",
+                    "dev-docs/migration/v3-to-v4/code/dependencies",
+                    "dev-docs/migration/v3-to-v4/code/global-middlewares",
+                    "dev-docs/migration/v3-to-v4/code/graphql",
+                    "dev-docs/migration/v3-to-v4/code/policies",
+                    "dev-docs/migration/v3-to-v4/code/route-middlewares",
+                    "dev-docs/migration/v3-to-v4/code/routes",
+                    "dev-docs/migration/v3-to-v4/code/services",
+                  ],
                 },
                 {
-                  type: 'category',
+                  type: "category",
                   collapsed: true,
                   link: {
-                    type: 'doc',
-                    id: 'dev-docs/migration/v3-to-v4/code/frontend'
+                    type: "doc",
+                    id: "dev-docs/migration/v3-to-v4/code/frontend",
                   },
-                  label: 'Frontend migration',
+                  label: "Frontend migration",
                   items: [
-                          'dev-docs/migration/v3-to-v4/code/strapi-global',
-                          'dev-docs/migration/v3-to-v4/code/theming',
-                          'dev-docs/migration/v3-to-v4/code/translations',
-                          'dev-docs/migration/v3-to-v4/code/webpack',
-                          'dev-docs/migration/v3-to-v4/code/wysiwyg',
-                  ]
-
+                    "dev-docs/migration/v3-to-v4/code/strapi-global",
+                    "dev-docs/migration/v3-to-v4/code/theming",
+                    "dev-docs/migration/v3-to-v4/code/translations",
+                    "dev-docs/migration/v3-to-v4/code/webpack",
+                    "dev-docs/migration/v3-to-v4/code/wysiwyg",
+                  ],
                 },
-              ]
+              ],
             },
             {
-              type: 'category',
+              type: "category",
               collapsed: true,
               link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/plugin-migration'
+                type: "doc",
+                id: "dev-docs/migration/v3-to-v4/plugin-migration",
               },
-              label: 'Plugin migration',
+              label: "Plugin migration",
               items: [
-                'dev-docs/migration/v3-to-v4/plugin/update-folder-structure',
-                'dev-docs/migration/v3-to-v4/plugin/migrate-back-end',
-                'dev-docs/migration/v3-to-v4/plugin/migrate-front-end',
-                'dev-docs/migration/v3-to-v4/plugin/enable-plugin',
-              ]
+                "dev-docs/migration/v3-to-v4/plugin/update-folder-structure",
+                "dev-docs/migration/v3-to-v4/plugin/migrate-back-end",
+                "dev-docs/migration/v3-to-v4/plugin/migrate-front-end",
+                "dev-docs/migration/v3-to-v4/plugin/enable-plugin",
+              ],
             },
             {
-              type: 'category',
+              type: "category",
               collapsed: true,
               link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/data-migration'
+                type: "doc",
+                id: "dev-docs/migration/v3-to-v4/data-migration",
               },
-              label: 'Data migration',
+              label: "Data migration",
               items: [
-                'dev-docs/migration/v3-to-v4/data/sql',
-                'dev-docs/migration/v3-to-v4/data/sql-relations',
-                'dev-docs/migration/v3-to-v4/data/mongo',
-                'dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet',
-              ]
+                "dev-docs/migration/v3-to-v4/data/sql",
+                "dev-docs/migration/v3-to-v4/data/sql-relations",
+                "dev-docs/migration/v3-to-v4/data/mongo",
+                "dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
+              ],
             },
-          ]
-        }
+          ],
+        },
       ],
     },
   ],
 
   userDocsSidebar: [
-    'user-docs/intro',
+    "user-docs/intro",
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Content Manager',
+      label: "Content Manager",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/content-manager'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/content-manager",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Content-type Builder',
+      label: "Content-type Builder",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/content-type-builder'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/content-type-builder",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Media Library',
+      label: "Media Library",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/media-library'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/media-library",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Users, Roles & Permissions',
+      label: "Users, Roles & Permissions",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/users-roles-permissions'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/users-roles-permissions",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Plugins',
+      label: "Plugins",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/plugins'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/plugins",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'General Settings',
+      label: "General Settings",
       items: [
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/settings'
-        }
-      ]
+          type: "autogenerated",
+          dirName: "user-docs/settings",
+        },
+      ],
     },
   ],
 };
