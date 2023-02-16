@@ -91,8 +91,12 @@ Dynamic zones are a combination of components, which themselves are composed of 
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the arrow buttons ![Up icon](/img/assets/icons/up2.svg) ![Down icon](/img/assets/icons/down2.svg) to reorder components in your dynamic zone.
+- Use the drag & drop button ![Drag icon](../assets/icons/drag.svg) to reorder components in your dynamic zone.
 - Use the delete button ![Delete icon](/img/assets/icons/delete.svg) to delete a component from your dynamic zone.
+
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](../assets/icons/drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
 
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.

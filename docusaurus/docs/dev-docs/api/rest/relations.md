@@ -283,6 +283,7 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 - `data: { categories: set: [{ id: 2 }, { id: 4 }] }}`
 - `data: { categories: set: [2, 4] }}`
 - `data: { categories: [2, 4] }` (as used in the [REST API documentation](/dev-docs/api/rest#update-an-entry))
+
 :::
 
 <Tabs groupId="shorthand-longhand">
