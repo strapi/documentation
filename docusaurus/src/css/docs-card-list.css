@@ -1,0 +1,19 @@
+.theme-doc-markdown.markdown section.row article.col--6 a.card {
+  border-radius: 4px;
+}
+.theme-doc-markdown.markdown section.row article.col--6 a.card h2 {
+  font-weight: 700;
+  font-size: 16px;
+}
+.theme-doc-markdown.markdown section.row article.col--6 a.card p {
+  font-weight: 500;
+  color: var(--strapi-neutral-600)
+}
+[data-theme='dark'] .theme-doc-markdown.markdown a.card {
+  background-color: var(--strapi-dark-neutral-0) !important;
+}
+[data-theme='dark'] .theme-doc-markdown.markdown section.row article.col--6 a.card p {
+  color: var(--strapi-dark-neutral-400);
+}
+
+/* TODO for v2: change hover */
