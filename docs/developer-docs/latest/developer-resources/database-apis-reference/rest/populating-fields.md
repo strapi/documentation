@@ -424,7 +424,7 @@ When populating dynamic zones, you can choose between:
 ::::api-call
 :::request Example request for shared populate strategy
 
-`GET /api/articles?populate[testDZ][populate]=%2A`
+`GET /api/articles?populate[testDZ][populate]=*`
 
 :::
 
