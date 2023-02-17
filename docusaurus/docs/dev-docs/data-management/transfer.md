@@ -77,7 +77,6 @@ npm strapi yarn strapi transfer -- --to <destination URL>
 
 4. Add the Transfer token when prompted to do so.
 5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
-6. If you answer **Yes** in step 4, the transfer operation initiates and, when completed, prints a summary of the transferred types in the CLI.
 
 ## Bypass all `transfer` command line prompts
 
