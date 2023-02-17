@@ -153,7 +153,7 @@ To regenerate an API token:
 
 Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
 
-<!-- ![Transfer tokens](/img/assets/settings/settings_transfer-token.png) -->
+ ![Transfer tokens](/img/assets/settings/settings_transfer-token.png)
 
 The *Transfer Tokens* settings sub-section displays a table listing all of the created Transfer tokens.
 
@@ -177,7 +177,7 @@ To create a new Transfer token:
 
 3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button![copy button](/img/assets/icons/duplicate.svg).
 
-    <!-- ![Custom Transfer Token](/img/assets/settings/settings_create-transfer-token.png) -->
+![Custom Transfer Token](/img/assets/settings/settings_create-transfer-token.png)
 
 :::caution
 For security reasons, Transfer tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created Transfer token will be hidden and will not be displayed again.

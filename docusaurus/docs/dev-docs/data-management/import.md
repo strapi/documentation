@@ -7,10 +7,10 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/import.html
 # Data import
 
 :::strapi v4.6.0 feature
-Data import is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/docs/dev-docs/update-version) to upgrade your application.
+Data import is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/update-version) to upgrade your application.
 :::
 
-The `strapi import` command is used to import data from a file created using [`strapi export`](/docs/dev-docs/data-management/export.md). The `strapi import` command, by default, imports all of the data contained in the source file. The default import command imports:
+The `strapi import` command is used to import data from a file created using [`strapi export`](/dev-docs/data-management/export.md). The `strapi import` command, by default, imports all of the data contained in the source file. The default import command imports:
 
 - the project configuration,
 - entities: all of your content,
@@ -19,7 +19,7 @@ The `strapi import` command is used to import data from a file created using [`s
 - schemas,
 - the `metadata.json` file.
 
-The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/docs/dev-docs/cli).
+The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/dev-docs/cli).
 :::warning
 
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.

@@ -173,11 +173,11 @@ The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to d
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
 
-Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/docs/dev-docs/configurations/environment).
+Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/dev-docs/configurations/environment).
 
 ## Test the transfer command locally
 
-The `transfer` command is not intended for transferring data between two local instances. The [`export`](/docs/dev-docs/data-management/export) and [`import`](/docs/dev-docs/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
+The `transfer` command is not intended for transferring data between two local instances. The [`export`](/dev-docs/data-management/export) and [`import`](/dev-docs/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
 
 ### Create and clone a new Strapi project
 
@@ -187,7 +187,7 @@ The `transfer` command is not intended for transferring data between two local i
     npx create-strapi-app@beta <project-name> --quickstart
     ```
 
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/docs/dev-docs/quick-start) if you need instructions on creating your first content type.
+2. Create at least 1 content type in the project. See the [Quick Start Guide](/dev-docs/quick-start) if you need instructions on creating your first content type.
 
     :::caution
     Do not add any data to your project at this step.
@@ -238,7 +238,7 @@ npm run build && npm run start
 </Tabs>
 
 2. Register an admin user.
-3. [Create and copy a Transfer token](/docs/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
+3. [Create and copy a Transfer token](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 4. Leave the server running.
 
 ### Transfer your data
