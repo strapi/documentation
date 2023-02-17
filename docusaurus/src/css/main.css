@@ -39,14 +39,14 @@ h2 {
 
 .theme-doc-markdown.markdown a {
   font-weight: 600;
-}
-
-.theme-doc-markdown.markdown a {
   color: var(--strapi-primary-600);
 }
 [data-theme='dark'] .theme-doc-markdown.markdown a {
   color: var(--strapi-dark-primary-600);
   text-decoration: none;
+}
+[data-theme='dark'] .theme-doc-markdown.markdown a code {
+  font-weight: 700;
 }
 
 [data-theme='light'] .theme-doc-markdown.markdown {
