@@ -74,7 +74,8 @@
   background-color: var(--strapi-secondary-100);
   border-left-color: var(--strapi-secondary-600);
 }
-[data-theme='light'] .theme-admonition-note .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module {
+[data-theme='light'] .theme-admonition-note .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
+[data-theme='light'] .theme-admonition-note > div:first-child {
   /* title color */
   color: var(--strapi-secondary-700);
 }
@@ -89,7 +90,8 @@
   background-color: var(--strapi-warning-100);
   border-left-color: var(--strapi-warning-600);
 }
-[data-theme='light'] .theme-admonition-caution .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module {
+[data-theme='light'] .theme-admonition-caution .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
+[data-theme='light'] .theme-admonition-caution > div:first-child {
   /* title color */
   color: var(--strapi-warning-700);
 }
@@ -111,7 +113,8 @@
 [data-theme='light'] .theme-admonition-warning a {
   color: var(--strapi-danger-600);
 }
-[data-theme='light'] .theme-admonition-warning .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module {
+[data-theme='light'] .theme-admonition-warning .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
+[data-theme='light'] .theme-admonition-warning > div:first-child {
   /* title color */
   color: var(--strapi-danger-700);
 }
