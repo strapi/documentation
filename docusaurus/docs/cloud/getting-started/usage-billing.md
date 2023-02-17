@@ -33,13 +33,14 @@ Billing is based on the usage of your Strapi Cloud account and applications. You
 
 ### Overages
 
-If you exceed the limits of your plan, you will be charged for the overage. For example, if you exceed the limit of 100,000 database entries on the Pro plan, you will be charged for the excess DB entries over 100,000 at the end of the current billing period.
+If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asset Storage, you will be charged for the corresponding overages. 
+
+For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period. Overages are not prorated and are charged in full.
 
 Overages are charged according to the following rates:
 
 | Feature | Rate |
 | :--- | ---: |
-| **CMS Seats** | $15.00 / seat per month |
 | **API Requests** | $1.50 / 25k requests |
 | **Asset Bandwidth** | $25.00 / 100GB |
 | **Asset Storage** | $2.00/GB per month |
