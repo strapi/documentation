@@ -208,7 +208,7 @@ The `transfer` command is not intended for transferring data between two local i
     git clone <path to created git repository>.git/ <new-instance-name>
     ```
 
-### Add data to the first Strap instance
+### Add data to the first Strapi instance
 
 1. Return to the first Strapi instance and add data to the content type.
 2. Stop the server on the first instance.
