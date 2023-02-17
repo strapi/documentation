@@ -136,7 +136,6 @@ module.exports = () => ({
         task: ({ strapi }) => {
           console.log('hello from plugin');
         },
-        name: "myJob"
         options: {
           rule: '* * * * * *',
         },
@@ -148,7 +147,6 @@ module.exports = () => ({
         task: ({ strapi }) => {
           console.log('hello from plugin');
         },
-        name: "myJob"
         // only run once after 10 seconds
         options: new Date(Date.now() + 10000),
       },
@@ -159,7 +157,6 @@ module.exports = () => ({
         task: ({ strapi }) => {
           console.log('hello from plugin');
         },
-        name: "myJob"
         // Starts the cron job 10 seconds from now and ends 10 seconds after that
         options: {
             rule: '* * * * * *',
@@ -172,10 +169,10 @@ module.exports = () => ({
 });
 ```
 
-To remove a cron job you need to add a cron job with a name as shown above.
+To remove a cron job you need to add a cron job in the object format where the key is a unique name for the cron job.
 
 :::note
-Only cron jobs with names can be removed.
+Only cron jobs that don't use the rule as the key can be removed.
 :::
 
 ```js
