@@ -130,7 +130,8 @@
 }
 [data-theme='dark'] .theme-admonition-caution .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-caution a,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-caution code {
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-caution code,
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-caution > div:first-child {
   color: var(--strapi-dark-warning-700);
 }
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-caution code {
@@ -141,15 +142,8 @@
 }
 [data-theme='dark'] .theme-admonition-tip .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-tip a,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip code {
-  color: var(--strapi-success-500);
-}
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip code {
-  background-color: var(--strapi-dark-warning-200);
-}
-[data-theme='dark'] .theme-admonition-tip .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip a,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip code {
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip code,
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-tip > div:first-child {
   color: var(--strapi-success-500);
 }
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-tip code {
@@ -157,7 +151,8 @@
 }
 [data-theme='dark'] .theme-admonition-warning .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-warning a,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-warning code {
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-warning code,
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-warning > div:first-child {
   color: var(--strapi-danger-500);
 }
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-danger code {
@@ -165,7 +160,8 @@
 }
 [data-theme='dark'] .theme-admonition-note .admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module,
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-note a,
-[data-theme='dark'] .theme-doc-markdown .theme-admonition-note code {
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-note code,
+[data-theme='dark'] .theme-doc-markdown .theme-admonition-note > div:first-child {
   color: var(--strapi-secondary-500);
 }
 [data-theme='dark'] .theme-doc-markdown .theme-admonition-note {
