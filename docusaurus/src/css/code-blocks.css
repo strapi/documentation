@@ -44,7 +44,12 @@
 [data-theme='light'] language-sh button,
 [data-theme='light'] language-json button,
 [data-theme='light'] language-js button {
-  /* border: solid 4px tomato; */
   background: #282A36;
   color: #F8F8F2;
+}
+[data-theme='light'] .prism-code clean-btn:hover {
+  background-color: var(--strapi-neutral-900) !important;
+}
+[data-theme='light'] .prism-code clean-btn:hover svg {
+  fill: white;
 }
