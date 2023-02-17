@@ -181,12 +181,11 @@
   background-color: var(--strapi-dark-neutral-100);
   color: var(--strapi-dark-neutral-800);
 }
-
 [data-theme='dark'] .admonition--callout,
 [data-theme='dark'] .admonition--prerequisites {
   /* background-color: var(--strapi-neutral-100); */
   border-left-color: var(--strapi-neutral-500);
- }
+}
 [data-theme='dark'] .admonition--callout a,
 [data-theme='dark'] .admonition--prerequisites a {
   text-decoration-color: var(--strapi-neutral-100);
@@ -198,16 +197,16 @@
 [data-theme='dark'] .admonition--prerequisites svg {
   fill: #e3e3e3;
 }
-
 [data-theme='dark'] .theme-admonition-strapi {
-  border-left-color: var(--strapi-primary-600);
+  border-left-color: var(--strapi-dark-primary-600);
 }
 [data-theme='dark'] .admonition--strapi a {
   color: var(--strapi-primary-100);
   text-decoration-color: var(--strapi-primary-500);
 }
 [data-theme='dark'] .admonition--strapi code {
-  color: var(--strapi-dark-neutral-100);
+  color: var(--strapi-dark-neutral-700);
+  background-color: rgba(255, 255, 255, 0.1);
   background-color: var(--strapi-dark-warning-200);
 }
 [data-theme='dark'] .admonition--strapi .admonition__custom-title {

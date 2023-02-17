@@ -94,8 +94,7 @@ code {
   font-family: 'Menlo';
   font-weight: 400;
   line-height: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
@@ -114,6 +113,9 @@ table code {
   /* Commented out for now because I find that the contrast is better without these */
   /* background-color: var(--strapi-dark-neutral-600);
   color: var(--strapi-dark-neutral-100); */
+}
+[data-theme='dark'] pre:not(.prism-code) code {
+  background-color: var(--strapi-dark-warning-200);
 }
 
 [data-theme='dark'] .container img[width='16'] {
