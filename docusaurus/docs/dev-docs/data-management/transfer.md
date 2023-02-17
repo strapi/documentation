@@ -161,7 +161,7 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 
 </Tabs>
 
-::: warning
+:::warning
 Any types excluded from the transfer will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
 
