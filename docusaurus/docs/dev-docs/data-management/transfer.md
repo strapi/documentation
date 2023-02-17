@@ -161,7 +161,7 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 
 </Tabs>
 
-::: warning
+:::warning
 Any types excluded from the transfer will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
 
@@ -208,7 +208,7 @@ The `transfer` command is not intended for transferring data between two local i
     git clone <path to created git repository>.git/ <new-instance-name>
     ```
 
-### Add data to the first Strap instance
+### Add data to the first Strapi instance
 
 1. Return to the first Strapi instance and add data to the content type.
 2. Stop the server on the first instance.
