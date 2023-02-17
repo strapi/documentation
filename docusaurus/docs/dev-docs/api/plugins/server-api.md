@@ -63,7 +63,7 @@ module.exports = () => ({
 
 ### destroy()
 
-The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is called to cleanup the plugin (close connections, remove listeners…) when the Strapi instance is destroyed.
+The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is called to cleanup the plugin (close connections, remove listeners, etc.) when the Strapi instance is destroyed.
 
 **Type**: `Function`
 
