@@ -105,6 +105,10 @@
       "destination": "/dev-docs/configurations/rbac"
     },
     {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html",
+      "destination": "/dev-docs/configurations/api"
+    },
+    {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations.html",
       "destination": "/dev-docs/configurations"
     },
