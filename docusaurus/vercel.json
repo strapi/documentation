@@ -198,7 +198,11 @@
     },
     {
       "source": "/developer-docs/latest/getting-started/introduction",
-      "destination": "https://docs-next.strapi.io/dev-docs/introdev-docs/intro"
+      "destination": "/dev-docs/intro"
+    },
+    {
+      "source": "/developer-docs/latest/getting-started/introduction.html",
+      "destination": "/dev-docs/intro"
     },
     {
       "source": "/developer-docs/latest/getting-started/troubleshooting.html",
