@@ -130,7 +130,7 @@
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
-      "destination": "/dev-docs/deployment/google-app-engine"
+      "destination": "/dev-docs/deployment"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
