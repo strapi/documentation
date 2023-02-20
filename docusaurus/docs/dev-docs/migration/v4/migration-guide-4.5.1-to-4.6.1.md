@@ -69,11 +69,11 @@ module.exports = ({ env }) => ({
 
 With this, you will no longer receive populated relations in webhooks, and **response times on the Content Manager will be shorter**.
 
-You can see more of the available configuration options in the [server configuration documentation](/developer-docs/latest/setup-deployment-guides/configurations/required/server.md).
+You can see more of the available configuration options in the [server configuration documentation](/dev-docs/configurations/server).
 
 ## Updating the sizeLimit provider configuration
 
-This step is only required if you were using the [`sizeLimit` configuration](/developer-docs/latest/plugins/upload.md#max-file-size) for your upload provider.
+This step is only required if you were using the [`sizeLimit` configuration](/dev-docs/plugins/upload#max-file-size) for your upload provider.
 
 :::caution
 The documentation required the `sizeLimit` to be in bytes, but it was actually in kilobytes. This is now fixed, and the limit will be interpreted as bytes.
