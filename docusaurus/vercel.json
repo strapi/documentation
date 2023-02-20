@@ -385,6 +385,10 @@
       "destination": "/dev-docs/project-structure"
     },
     {
+      "source": "/developer-docs/latest/setup-deployment-guides/file-structure.html",
+      "destination": "/dev-docs/project-structure"
+    },
+    {
       "source": "/developer-docs/latest/development/providers.html",
       "destination": "/dev-docs/providers"
     },
