@@ -465,7 +465,7 @@
       "destination": "/dev-docs/templates"
     },
     {
-      "source": "/developer-docs/latest/development/typescript",
+      "source": "/developer-docs/latest/development/typescript.html",
       "destination": "/dev-docs/typescript"
     },
     {
