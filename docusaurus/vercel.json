@@ -282,11 +282,11 @@
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integrations/nuxt-js"
+      "destination": "/dev-docs/integrations/next-js"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integrations/next-js"
+      "source": "/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html",
+      "destination": "/dev-docs/integrations/nuxt-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/laravel.html",
