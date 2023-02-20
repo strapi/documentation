@@ -225,7 +225,7 @@
       "destination": "/dev-docs/cli"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html",
       "destination": "/dev-docs/api/graphql"
     },
     {
