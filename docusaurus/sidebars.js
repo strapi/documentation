@@ -231,6 +231,7 @@ const sidebars = {
       items: [
         'dev-docs/cli',
         'dev-docs/data-management',
+        'dev-docs/database-migrations',
         'dev-docs/error-handling',
         'dev-docs/testing',
         {
