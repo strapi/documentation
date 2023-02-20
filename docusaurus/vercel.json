@@ -18,7 +18,7 @@
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/middlewares.html",
-      "destination": "/dev-docs/backend-customization/requests-responses"
+      "destination": "/dev-docs/backend-customization/middlewares"
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/models.html",
@@ -26,7 +26,7 @@
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/requests-responses.html",
-      "destination": "/dev-docs/backend-customization/controllers"
+      "destination": "/dev-docs/backend-customization/requests-responses"
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/services.html",
