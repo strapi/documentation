@@ -336,4 +336,4 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 </TabItem>
 </Tabs>
 
-<!-- <FeedbackPlaceholder /> -->
+<FeedbackPlaceholder />
