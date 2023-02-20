@@ -469,7 +469,7 @@
       "destination": "/dev-docs/typescript"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/unit-testing",
+      "source": "/developer-docs/latest/developer-resources/unit-testing.html",
       "destination": "/dev-docs/testing"
     },
     {
