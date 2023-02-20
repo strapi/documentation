@@ -3,7 +3,7 @@ title: Introduction to the Media Library
 slug: /user-docs/media-library
 sidebar_position: 1
 description: Introduction to the Media Library which allows to display and manage all assets uploaded in the application.
-canonicalUrl: https://docs.strapi.io/user-docs/media-library/introduction-to-media-library.html
+
 ---
 
 # Introduction to the Media Library

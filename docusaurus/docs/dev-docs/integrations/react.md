@@ -2,7 +2,7 @@
 title: React 
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with React.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/react.html
+
 ---
 
 # Getting Started with React

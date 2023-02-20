@@ -2,7 +2,7 @@
 title: GraphQL resolvers
 displayed_sidebar: devDocsSidebar
 description: Migrate GraphQL resolvers from Strapi v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html
+
 sidebarDepth: 3
 ---
 

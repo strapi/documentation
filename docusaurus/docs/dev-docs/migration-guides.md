@@ -2,7 +2,7 @@
 title: Migration Guides
 displayed_sidebar: devDocsSidebar
 description: Migration guides for a Strapi v4 application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html
+
 sidebarDepth: 0
 ---
 

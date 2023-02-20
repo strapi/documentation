@@ -1,7 +1,7 @@
 ---
 title: Saving, publishing, and deleting content
 description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/saving-and-publishing-content.html
+
 ---
 
 # Saving, publishing and deleting content

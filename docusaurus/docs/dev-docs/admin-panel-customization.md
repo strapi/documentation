@@ -2,7 +2,7 @@
 title: Admin panel customization
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
 toc_max_heading_level: 4
-canonicalUrl: https://docs.strapi.io/developer-docs/development/admin-customization.html
+
 ---
 
 # Admin panel customization

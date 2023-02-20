@@ -2,7 +2,7 @@
 title: Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html
+
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'

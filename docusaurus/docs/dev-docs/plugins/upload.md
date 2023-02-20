@@ -2,7 +2,7 @@
 title: Upload
 displayed_sidebar: devDocsSidebar
 description: Upload any kind of file on your server or external providers.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/upload.html
+
 ---
 
 # Upload

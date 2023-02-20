@@ -2,7 +2,7 @@
 title: CLI
 displayed_sidebar: devDocsSidebar
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation/cli.html
+
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'

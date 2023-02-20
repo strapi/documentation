@@ -2,7 +2,7 @@
 title: Populate and Select
 description: Use Strapi's REST API to populate or select certain fields.
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html
+
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'

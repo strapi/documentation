@@ -1,7 +1,7 @@
 ---
 title: Installation
 description: Learn many different options to install Strapi and getting started on using it.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/installation.html
+
 ---
 
 # Installation

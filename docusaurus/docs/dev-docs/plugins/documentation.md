@@ -2,7 +2,7 @@
 title: API Documentation
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/documentation.html
+
 ---
 
 # API Documentation

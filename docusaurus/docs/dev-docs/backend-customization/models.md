@@ -22,7 +22,7 @@ _tags: [
 	"afterFindMany"
 ]
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/dev-docs/development/backend-customization/models.html
+
 ---
 
 # Models

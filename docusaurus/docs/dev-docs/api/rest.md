@@ -1,7 +1,7 @@
 ---
 title: REST API 
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest.html
+
 ---
 
 # REST API

@@ -1,7 +1,7 @@
 ---
 title: FAQ
 description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
-canonicalUrl: https://docs.strapi.io/developer-docs/etting-started/troubleshooting.html
+
 ---
 
 # Frequently Asked Questions
