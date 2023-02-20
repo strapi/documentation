@@ -425,7 +425,7 @@
       "destination": "/dev-docs/api/rest"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
       "destination": "/dev-docs/api/rest/parameters"
     },
     {
