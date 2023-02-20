@@ -45,7 +45,7 @@
       "destination": "/dev-docs/backend-customization"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/cli/CLI",
+      "source": "/developer-docs/latest/developer-resources/cli/CLI.html",
       "destination": "/dev-docs/cli"
     },
     {
