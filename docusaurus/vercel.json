@@ -205,6 +205,10 @@
       "destination": "/dev-docs/error-handling"
     },
     {
+      "source": "/developer-docs/latest/developer-resources/error-handling.html",
+      "destination": "/dev-docs/error-handling"
+    },
+    {
       "source": "/developer-docs/latest/getting-started/introduction",
       "destination": "/dev-docs/intro"
     },
