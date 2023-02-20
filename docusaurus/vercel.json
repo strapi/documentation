@@ -201,7 +201,7 @@
       "destination": "/dev-docs/api/entity-service"
     },
     {
-      "source": "/developer-docs/latest/development/error-handling",
+      "source": "/developer-docs/latest/development/error-handling.html",
       "destination": "/dev-docs/error-handling"
     },
     {
