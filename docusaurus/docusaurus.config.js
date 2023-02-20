@@ -97,8 +97,8 @@ const config = {
       navbar: {
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-beta.png',
-          srcDark: 'img/logo-beta-dark.png',
+          src: 'img/logo.png',
+          srcDark: 'img/logo-dark.png',
         },
         items: [
           {
