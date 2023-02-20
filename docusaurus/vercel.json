@@ -50,7 +50,7 @@
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html",
-      "destination": "/dev-docs/configurations/databases"
+      "destination": "/dev-docs/configurations/database"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/admin-panel.html",
