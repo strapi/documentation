@@ -242,91 +242,79 @@
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html",
-      "destination": "/dev-docs/integration/gridsome"
+      "destination": "/dev-docs/integrations/gridsome"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/react"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html",
-      "destination": "/dev-docs/integration/vue-js"
+      "destination": "/dev-docs/integrations/vue-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/svelte.html",
-      "destination": "/dev-docs/integration/svelte"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/svelte"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/sapper.html",
-      "destination": "/dev-docs/integration/sapper"
+      "destination": "/dev-docs/integrations/sapper"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html",
-      "destination": "/dev-docs/integration/gatsby"
+      "destination": "/dev-docs/integrations/gatsby"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/ruby.html",
-      "destination": "/dev-docs/integration/ruby"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/ruby"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/python.html",
-      "destination": "/dev-docs/integration/python"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/python"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/php.html",
-      "destination": "/dev-docs/integration/php"
+      "destination": "/dev-docs/integrations/php"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integration/nuxt-js"
+      "destination": "/dev-docs/integrations/nuxt-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integration/next-js"
+      "destination": "/dev-docs/integrations/next-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/laravel.html",
-      "destination": "/dev-docs/integration/laravel"
+      "destination": "/dev-docs/integrations/laravel"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html",
-      "destination": "/dev-docs/integration/jekyll"
+      "destination": "/dev-docs/integrations/jekyll"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/graphql.html",
-      "destination": "/dev-docs/integration/graphql"
+      "destination": "/dev-docs/integrations/graphql"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/go.html",
-      "destination": "/dev-docs/integration/go"
+      "destination": "/dev-docs/integrations/go"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/flutter.html",
-      "destination": "/dev-docs/integration/flutter"
+      "destination": "/dev-docs/integrations/flutter"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/dart.html",
-      "destination": "/dev-docs/integration/dart"
+      "destination": "/dev-docs/integrations/dart"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/angular.html",
-      "destination": "/dev-docs/integration/angular"
+      "destination": "/dev-docs/integrations/angular"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/11ty.html",
-      "destination": "/dev-docs/integration/11ty"
+      "destination": "/dev-docs/integrations/11ty"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations.html",
