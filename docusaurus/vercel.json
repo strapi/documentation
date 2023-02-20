@@ -721,6 +721,10 @@
       "destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
     },
     {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.6-to-4.1.8.html",
+      "destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
+    },
+    {
       "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.0-to-4.0.6.html",
       "destination": "/dev-docs/migration/v4/migration-guide-4.0.0-to-4.0.6"
     }
