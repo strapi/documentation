@@ -23,6 +23,7 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
 - [Migration guide from 4.3.6 to 4.3.8](/dev-docs/migration/v4/migration-guide-4.3.6-to-4.3.8)
 - [Migration guide from 4.4.3 to 4.4.5](/dev-docs/migration/v4/migration-guide-4.4.3-to-4.4.5)
 - [Migration guide from 4.4.5 to 4.5.1](/dev-docs/migration/v4/migration-guide-4.4.5-to-4.5.1)
+- [Migration guide from 4.5.1 to 4.6.1](/dev-docs/migration/v4/migration-guide-4.5.1-to-4.6.1)
 
 ## v3 to v4 migration guides
 
