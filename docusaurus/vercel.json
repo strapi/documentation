@@ -341,7 +341,7 @@
       "destination": "/dev-docs/migration-guides"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel",
+      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
       "destination": "/dev-docs/api/plugins/admin-panel-api"
     },
     {
