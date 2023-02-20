@@ -429,11 +429,11 @@
       "destination": "/dev-docs/api/rest/parameters"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html",
       "destination": "/dev-docs/api/rest/filters-locale-publication"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html",
       "destination": "/dev-docs/api/rest/populate-select"
     },
     {
@@ -441,7 +441,7 @@
       "destination": "/dev-docs/api/rest/relations"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html",
       "destination": "/dev-docs/api/rest/sort-pagination"
     },
     {
