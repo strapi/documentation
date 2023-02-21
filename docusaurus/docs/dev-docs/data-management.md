@@ -12,16 +12,18 @@ The data management system is under development. Not all use cases are covered b
 
 :::
 
-Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Strapi provides CLI-based commands that allow you to export and import data. Common use cases include:
+The `strapi transfer` command is available in beta release only. See [Transfer data using the CLI tool](#transfer-data-using-the-cli-tool) for beta version installation instructions.
 
-- creating a data backup,
-- restoring data from a backup.
+Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Additionally, the data management system allows you to transfer data between a local Strapi instance and a remote Strapi instance. Strapi provides CLI-based commands that allow you to export, import, and transfer data. Common use cases include:
 
-The following documentation details examples of how to use the `strapi export` and `strapi import` commands.
+- [creating a data backup](#export-data-using-the-cli-tool),
+- [restoring data from a backup](#import-data-using-the-cli-tool),
+- [transfer data from a local to remote instance](#transfer-data-using-the-cli-tool).
 
-:::strapi Using the Command Line Interface (CLI)
-The `strapi export` and `strapi import` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/dev-docs/cli#strapi-export).
-:::
+ The following documentation details examples of how to use the `strapi export`, `strapi import`, and `strapi transfer` commands.
+
+:::strapi Command Line Interface (CLI) shortcut
+If you want to skip the details and examples the `strapi export`, `strapi import`, and `strapi tranfer` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/dev-docs/cli#strapi-export).
 
 ## Export data using the CLI tool
 
@@ -239,7 +241,7 @@ npm run strapi export -- --exclude files,content
 :::warning
 
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.
-- The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
+- The source and destination schemas must match to successfully use `strapi import`, meaning all content types must be identical.
 - Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 
 :::
@@ -297,11 +299,11 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption
 
 </Tabs>
 
-### Bypass all command line prompts
+### Bypass all `import` command line prompts
 
 When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
 
-#### Example of the `--force` option
+#### Example: bypass command line prompts with `--force`
 
 <br/>
 
@@ -330,7 +332,7 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --force --key my-en
 The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 :::warning
-Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
+Any types excluded from the import will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
 
 :::note
