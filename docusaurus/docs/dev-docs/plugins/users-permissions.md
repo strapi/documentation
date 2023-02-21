@@ -833,7 +833,7 @@ Launch the backend and the [react login example app](https://github.com/strapi/s
 Once you have configured strapi and the provider, in your frontend app you have to :
 
 - Create a button that links to `GET STRAPI_BACKEND_URL/api/connect/${provider}` (ex: `https://strapi.mywebsite/api/connect/github`).
-- Create a frontend route like `FRONTEND_URL/connect/${provider}/redirect` that have to handle the `access_token` param and that have to request `STRAPI_BACKEND_URL/api/auth/${provider}/callback` with the `access_token` param. <br/>
+- Create a frontend route like `FRONTEND_URL/connect/${provider}/redirect` that have to handle the `access_token` param and that have to request `STRAPI_BACKEND_URL/api/auth/${provider}/callback` with the `access_token` parameter.<br/>
   The JSON request response will be `{ "jwt": "...", "user": {...} }`.
 
 Now you can make authenticated requests. More info here: [token usage](#token-usage).
