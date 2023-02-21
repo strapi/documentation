@@ -551,7 +551,7 @@ The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to d
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 ```
 
-Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/developer-docs/latest/setup-deployment-guides/configurations/optional/environment).
+Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/dev-docs/configurations/environment).
 
 ### Test the transfer command locally
 
@@ -565,7 +565,7 @@ The `transfer` command is not intended for transferring data between two local i
     npx create-strapi-app@beta <project-name> --quickstart
     ```
 
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/developer-docs/latest/getting-started/quick-start) if you need instructions on creating your first content type.
+2. Create at least 1 content type in the project. See the [Quick Start Guide](/dev-docs/quick-start) if you need instructions on creating your first content type.
 
     :::caution
     Do not add any data to your project at this step.

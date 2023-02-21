@@ -5,8 +5,8 @@ export default function GoldBadge(props) {
   return (
     <span className="badge badge--pricing badge--gold">
       { noLink
-        ? 'Gold'
-        : <a className="badge-link" href={ link }>Gold</a>
+        ? 'Entreprise'
+        : <a className="badge-link" href={ link }>Entreprise</a>
       }
     </span>
   );
