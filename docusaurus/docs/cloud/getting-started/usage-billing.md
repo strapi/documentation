@@ -12,7 +12,7 @@ The usage-based pricing for Strapi Cloud is based on the following criteria and 
 
 | Feature | Free Trial | Pro | Team |
 | --- | --- | --- | --- |
-| **CMS Seats** | 10 | 10 | 20 |
+| **Seats** | 10 | 10 | 20 |
 | **Database Entries** | 100,000 | 100,000 | 1,000,000 |
 | **Assets Storage** | 100GB | 150GB | 500GB |
 | **Assets Bandwidth** | 5GB | 500GB | 1,000GB |
@@ -21,12 +21,28 @@ The usage-based pricing for Strapi Cloud is based on the following criteria and 
 
 Where:
 
-- **CMS Seats** are the maximum number of users that can access the Strapi Admin Panel.
+- **Seats** are the maximum number of users that can access the Strapi Admin Panel.
 - **Database Entries** are the number of entries in your database.
 - **Assets Storage** is the amount of storage used by your assets.
 - **Assets Bandwidth** is the amount of bandwidth used by your assets. 
 - **API Requests** are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
 
+## Seats management
+
+Seats represent the maximum number of users that can access the Strapi Admin Panel. Each plan comes with a default number of seats. 
+
+You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seat can be added from the **Account Settings** -> **Manage Subscription** menu as detailed [here](../account/settings#managing-subscriptions).
+
+### Maximum seats
+
+Each plan has a maximum number of seats that can be added. The maximum number of seats for each plan is as follows:
+
+| Plan | Maximum Seats |
+| --- | --- |
+| **Free Trial** | 10 |
+| **Pro** | 30 |
+| **Team** | 50 |
+ 
 ## Billing
 
 Billing is based on the usage of your Strapi Cloud account and applications. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the [Billing](https://cloud.strapi.io/profile/billing) section of your Strapi Cloud account.
