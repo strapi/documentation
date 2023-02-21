@@ -1,5 +1,5 @@
 ---
-title: Audit Logs - Strapi User Guide
+title: Viewing Audit Logs 
 description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
