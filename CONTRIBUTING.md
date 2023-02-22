@@ -50,14 +50,14 @@ The following procedure allows you to work locally on the Strapi documentation.
     git clone git@github.com:yourgithubname/documentation.git
     ```
     
-3. Enter the `developer-docs` folder to contribute to the [Developer Documentation](https://strapi.io/documentation/developer-docs/latest/getting-started/introduction.html), or the `user-docs` folder to contribute to the [User Guide](https://strapi.io/documentation/user-docs/latest/getting-started/introduction.html).
+3. Enter the `developer-docs` folder to contribute to the [Developer Documentation](https://docs.strapi.io/), or the `user-docs` folder to contribute to the [User Guide](https://docs.strapi.io/user-docs/intro).
     
     ```bash
     # developer documentation
-    cd documentation/docs/developer-docs
+    cd documentation/docusaurus/docs/dev-docs
     
     # user documentation
-    cd documentation/docs/user-docs
+    cd documentation/docusaurus/docs/user-docs
     ```
     
 4. Choose the branch from which to work: either `main` for a contribution on the current version of Strapi or `v[x]` for a contribution on a previous version of Strapi.
@@ -95,19 +95,13 @@ The following procedure allows you to work locally on the Strapi documentation.
 7. Run the docs on your computer
 
   ```bash
-    cd docs
+    cd docs/docusaurus
 
     # Install dependencies
     yarn
 
     # Run user and developer-docs
     yarn dev
-
-    # Run developer-docs only
-    yarn dev:dev
-
-    # Run user-docs only
-    yarn dev:user
 
   ```
 
