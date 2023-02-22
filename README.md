@@ -32,11 +32,10 @@ The following are required if you are submitting pull requests to the documentat
 
 For general help using Strapi, please refer to [the official Strapi documentation](https://strapi.io/documentation/). For additional help, you can use one of these channels to ask a question:
 
-- [Slack](http://slack.strapi.io) (For live discussion with the Community and Strapi team)
+- [Discord](http://discord.strapi.io) (For live discussion with the Community and Strapi team)
 - [Primary GitHub](https://github.com/strapi/strapi) (Bug reports, Contributions)
 - [Community Forum](https://forum.strapi.io) (Questions and Discussions)
-- [Academy](https://academy.strapi.io) (Learn the fundamentals of Strapi)
-- [ProductBoard](https://portal.productboard.com/strapi/tabs/2-under-consideration) (Roadmap, Feature requests)
+- [Canny](https://strapi.canny.io/) (Roadmap, Feature requests)
 - [Twitter](https://twitter.com/strapijs) (Get the news fast)
 - [Facebook](https://www.facebook.com/Strapi-616063331867161)
 - [YouTube Channel](https://www.youtube.com/strapi) (Learn from Video Tutorials)
