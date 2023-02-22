@@ -21,7 +21,7 @@ const FeatureList = [
         Learn how to setup and customize Strapi's core, create plugins, and more by reading the Developer Documentation.
       </>
     ),
-    link: '/docs/dev-docs/intro'
+    link: '/docs/'
   },
   {
     title: 'API consumer',

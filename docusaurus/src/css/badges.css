@@ -1,23 +1,15 @@
 /**
  * Feature badges (alpha, beta)
  */
-.badge.badge--feature {
+.badge {
   position: relative;
   top: -.2em;
   left: .6em;
-  text-transform: uppercase;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   border-radius: 4px;
-  padding: .32em .6em .25em 1.2em;
-}
-
-.badge.badge--feature::before {
-  position: absolute;
-  content: '•';
-  font-size: 1.5em;
-  left: .25em;
-  top: -.05em;
+  padding: .5em .5em;
+  letter-spacing: .3px;
 }
 
 [data-theme='light'] .badge {
@@ -27,63 +19,42 @@
   color: var(--aa-muted-color-alpha);
 }
 
-[data-theme='light'] .badge--feature.badge--alpha {
-  background-color: var(--strapi-danger-100);
-}
-[data-theme='light'] .badge--feature.badge--alpha::before {
-  color: var(--strapi-danger-600);
-}
-[data-theme='dark'] .badge--feature.badge--alpha {
-  background-color: var(--strapi-danger-800);
-}
-[data-theme='dark'] .badge--feature.badge--alpha::before {
-  color: var(--strapi-danger-100);
-}
-
-[data-theme='light'] .badge--feature.badge--beta {
-  background-color: var(--strapi-alternative-100);
-}
-[data-theme='light'] .badge--feature.badge--beta::before {
-  color: var(--strapi-alternative-600);
-}
-[data-theme='dark'] .badge--feature.badge--beta {
-  background-color: var(--strapi-alternative-600);
-}
-[data-theme='dark'] .badge--feature.badge--beta::before {
-  color: var(--strapi-alternative-100);
-}
-
-
 /**
  * Pricing badges (for support plans)
  */
 
 .badge.badge--pricing.badge--gold {
   background-color: rgb(255, 241, 209);
-  margin-left: 5px;
 }
 
-h1 .badge--pricing.badge--gold,
-h2 .badge--pricing.badge--gold,
-h3 .badge--pricing.badge--gold {
+h1 .badge,
+h2 .badge,
+h3 .badge {
   position: relative;
 }
 
-h1 .badge--pricing.badge--gold {
+h1 .badge {
   top: -.5em;
 }
-h2 .badge--pricing.badge--gold {
+h2 .badge {
   top: -.4em;
 }
-h3 .badge--pricing.badge--gold {
+h3 .badge {
   top: -.2em;
 }
 
 .badge.badge--pricing,
 .badge.badge--pricing .badge-link {
   color: rgb(229, 136, 41);
-  font-size: 14px;
   font-weight: 400;
-  padding: .5em .3em;
-  letter-spacing: .3px;
+}
+
+.badge.badge--alpha {
+  background-color: rgb(255,230,228);
+  color: rgb(219, 0, 22);
+}
+
+.badge.badge--beta {
+  color: rgb(160,25,240);
+  background-color: rgb(246, 228, 253);
 }

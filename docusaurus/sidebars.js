@@ -140,7 +140,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: '💻 APIs',
+      label: '📦 APIs',
       items: [
         {
           type: 'category',
@@ -220,6 +220,7 @@ const sidebars = {
         'dev-docs/plugins-extension',
         'dev-docs/plugins-development',
         'dev-docs/typescript',
+        'dev-docs/custom-fields',
         'dev-docs/providers',
       ]
     },
@@ -298,7 +299,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: 'Update and Migration',
+      label: '♻️ Update and Migration',
       items: [
         'dev-docs/update-version',
         'dev-docs/migration-guides',

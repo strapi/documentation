@@ -48,7 +48,9 @@ The following operators are available:
 | `$notNull`      | Is not null                              |
 | `$between`      | Is between                               |
 | `$startsWith`   | Starts with                              |
+| `$startsWithi`  | Starts with (case-insensitive)           |
 | `$endsWith`     | Ends with                                |
+| `$endsWithi`    | Ends with (case-insensitive)             |
 | `$or`           | Joins the filters in an "or" expression  |
 | `$and`          | Joins the filters in an "and" expression |
 
