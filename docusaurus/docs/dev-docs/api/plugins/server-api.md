@@ -130,6 +130,15 @@ module.exports = () => ({
 });
 ```
 
+To remove a cron job you need to add a cron job in the object format where the key is a unique name for the cron job.
+
+:::note
+Cron jobs that are using the key as the rule can not be removed.
+:::
+
+```js
+strapi.cron.remove("myJob");
+```
 ## Backend customization
 
 ### Content-types
