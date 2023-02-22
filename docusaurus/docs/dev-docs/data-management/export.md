@@ -19,7 +19,7 @@ The `strapi export` command is used to export data from a local Strapi instance.
 - schemas,
 - the `metadata.json` file.
 
-The following documentation details the available options to customize your data export. The export command and all of the available options are run using the [Strapi CLI](/dev-docs/cli).
+The following documentation details the available options to customize your data export. The export command and all of the available options are run using the [Strapi CLI](/dev-docs/cli#strapi-export).
 
 :::caution
 Admin users and API tokens are not exported.
@@ -159,7 +159,7 @@ npm run strapi export -- --no-compress
 
 </Tabs>
 
-### Export only selected types of data
+## Export only selected types of data
 
 The default `strapi export` command exports your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to export only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always exported, as schema matching is used for `strapi import`.
 

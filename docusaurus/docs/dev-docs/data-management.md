@@ -15,20 +15,14 @@ The data management system is under development. Not all use cases are covered b
 
 :::
 
-Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Additionally, the data management system allows you to transfer data between a local Strapi instance and a remote Strapi instance. Strapi provides CLI-based commands that allow you to export, import, and transfer data. Common use cases include:
+Occasionally, you need to move data out of or into a Strapi instance. This is possible with the data management system which uses CLI-based commands:
 
-- Use [`strapi export`](/dev-docs/data-management/export) to create a data backup.
+- Use [`strapi export`](/dev-docs/data-management/export) to create a data backup, for archive purposes or to import it in another instance.
 - Use [`strapi import`](/dev-docs/data-management/import) to restore data from a backup.
-- Use [`strapi transfer`](/dev-docs/data-management/transfer) to transfer data from a local to a remote instance.
+- Use [`strapi transfer`](/dev-docs/data-management/transfer) to transfer data from a local to a remote Strapi instance.
 
-The following documentation details examples of how to use the [`strapi export`](/dev-docs/data-management/export), [`strapi import`](/dev-docs/data-management/import), and [`strapi transfer`](/dev-docs/data-management/transfer) commands.
-
-:::strapi Command Line Interface (CLI) shortcut
-If you want to skip the details and examples the `strapi export`, `strapi import`, and `strapi tranfer` CLI commands with all of the available options are documented in the [Command Line Interface documentation](/dev-docs/cli#strapi-export).
-:::
+The following documentation gives explanations and examples for the export, import, and transfer commands, while the [CLI reference documentation](/dev-docs/cli#strapi-export) lists all available flags in a condensed format.
 
 :::caution
 Interactive CLI commands do not currently work with the `npm` package manager. For `strapi export` and `strapi import` this means the encryption key prompt is not visible in the CLI. A fix is anticipated by early March 2023. In the meantime consider using the `yarn` package manager.
 :::
-
-<FeedbackPlaceholder />

@@ -10,7 +10,7 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/import.html
 Data import is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/update-version) to upgrade your application.
 :::
 
-The `strapi import` command is used to import data from a file created using [`strapi export`](/dev-docs/data-management/export.md). The `strapi import` command, by default, imports all of the data contained in the source file. The default import command imports:
+The `strapi import` command is used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,
 - entities: all of your content,
@@ -19,7 +19,8 @@ The `strapi import` command is used to import data from a file created using [`s
 - schemas,
 - the `metadata.json` file.
 
-The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/dev-docs/cli).
+The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/dev-docs/cli#strapi-import).
+
 :::warning
 
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.
@@ -85,7 +86,7 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption
 
 ## Bypass all command line prompts
 
-When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is particularly useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
+When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
 
 ### Example of the `--force` option
 
