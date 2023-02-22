@@ -22,14 +22,17 @@ async function rainProfiles() {
             break;
         }
         let data = await res.json()
-        if (data.length == 0) break;
+        if (data.length == 0) {
+            localStorage.setItem('profiles', JSON.stringify(profiles))
+            // add last updated time to local storage
+            localStorage.setItem('profilesLastUpdated', Date.now())
+            break;
+        }
         page++;
         data.forEach(profile => {
             if (profile.avatar_url) profiles.push(profile.avatar_url)
         })
-        localStorage.setItem('profiles', JSON.stringify(profiles))
-        // add last updated time to local storage
-        localStorage.setItem('profilesLastUpdated', Date.now())
+
     }
 
     const profileDiv = document.createElement('div');
