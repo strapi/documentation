@@ -1,12 +1,12 @@
 async function rainProfiles() {
     const profiles = []
-    let page = 1
     if (localStorage.getItem('profiles') && localStorage.getItem('profilesLastUpdated') && Date.now() - localStorage.getItem('profilesLastUpdated') < 1000 * 60 * 60 * 24 * 7) {
         // load profiles from local storage
         profiles.push(...JSON.parse(localStorage.getItem('profiles')))
         console.log("loaded profiles from local storage")
     }else{
         // fetch all the profiles from github on all the pages
+        let page = 1
         while (true) {    
             let res
             try {
