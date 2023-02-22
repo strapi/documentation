@@ -21,7 +21,7 @@ npx nuxi init nuxt-app
 
 ## Use an HTTP client
 
-For this example we are using the awesome [@nuxt/strapi](https://strapi.nuxtjs.org/) module and Nuxt helper function [$fetch](https://nuxtjs.org/api/utils/dollarfetch/) (based on `ohmyfetch`). You may choose any of this variants.
+For this example we are using the awesome [@nuxt/strapi](https://strapi.nuxtjs.org/) module and Nuxt helper function [$fetch](https://nuxt.com/docs/api/utils/dollarfetch) (based on `ohmyfetch`). You may choose any of this variants.
 
 <Tabs groupid="@nuxtjs/strapi-fetch">
 
