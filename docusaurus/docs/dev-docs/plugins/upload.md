@@ -336,6 +336,36 @@ const response = await fetch('http://localhost:1337/api/upload', {
 You have to send FormData in your request body.
 :::
 
+## Upload NodeJS Buffer
+
+The following parameters are accepted:
+
+| Parameter                    | Description                                          |
+| ---------------------------- | ---------------------------------------------------- |
+| `file`                       | A NodeJS file buffer                                 |
+| `fileName`                   | The filename without the extension                   |
+| `ext`                        | The file extension (e.g `png` or `jpeg`)             |
+| `mime`                       | The file mime type (e.g `image/png` or `image/jpeg`) |
+| `alternativeText` (optional) | Alt text for the image                               |
+| `caption` (optional)         | Caption for the image                                |
+| `folder` (optional)          | ID of the folder                                     |
+
+```js
+const file = fs.readFileSync('./test.png');
+strapi
+  .plugin('upload')
+  .service('upload')
+  .uploadBuffer({
+    file,
+    fileName: 'test',
+    mime: 'image/png',
+    ext: 'png',
+    alternativeText: 'test',
+    caption: 'test',
+    folder: 1,
+  });
+```
+
 ### Upload entry files
 
 Upload one or more files that will be linked to a specific entry.
