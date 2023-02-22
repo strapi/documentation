@@ -20,6 +20,8 @@
   top: -.05em;
 }
 
+
+
 [data-theme='light'] .badge {
   color: var(--strapi-neutral-800);
 }
@@ -59,10 +61,17 @@
  */
 
 .badge.badge--pricing.badge--gold {
-  background-color: var(--strapi-warning-500);
+  background-color: rgb(255, 241, 209);
+  position: relative;
+  top: -.5em;
+  margin-left: 5px;
 }
 
 .badge.badge--pricing,
 .badge.badge--pricing .badge-link {
-  color: #fff;
+  color: rgb(229, 136, 41);
+  font-size: 14px;
+  font-weight: 400;
+  padding: .5em .3em;
+  letter-spacing: .3px;
 }
