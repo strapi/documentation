@@ -221,6 +221,7 @@ const sidebars = {
         'dev-docs/plugins-extension',
         'dev-docs/plugins-development',
         'dev-docs/typescript',
+        'dev-docs/custom-fields',
         'dev-docs/providers',
       ]
     },
