@@ -141,7 +141,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: '💻 APIs',
+      label: '📦 APIs',
       items: [
         {
           type: 'category',
@@ -300,7 +300,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: 'Update and Migration',
+      label: '♻️ Update and Migration',
       items: [
         'dev-docs/update-version',
         'dev-docs/migration-guides',
