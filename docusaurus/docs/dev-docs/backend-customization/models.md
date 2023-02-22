@@ -661,7 +661,7 @@ Each event listener is called sequentially. They can be synchronous or asynchron
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js"
 
 module.exports = {
   beforeCreate(event) {
@@ -683,7 +683,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.ts"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.ts"
 
 export default {
   beforeCreate(event) {
@@ -706,7 +706,7 @@ export default {
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js"
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({
