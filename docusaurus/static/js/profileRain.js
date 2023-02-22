@@ -1,6 +1,5 @@
 async function rainProfiles() {
     const profiles = []
-    // fetch all profile images from the website https://api.github.com/repos/strapi/strapi/contributors?anon=1
     let page = 1
     if (localStorage.getItem('profiles') && localStorage.getItem('profilesLastUpdated') && Date.now() - localStorage.getItem('profilesLastUpdated') < 1000 * 60 * 60 * 24 * 7) {
         // load profiles from local storage
@@ -19,7 +18,6 @@ async function rainProfiles() {
             let data = await res.json()
             if (data.length == 0) {
                 localStorage.setItem('profiles', JSON.stringify(profiles))
-                // add last updated time to local storage
                 localStorage.setItem('profilesLastUpdated', Date.now())
                 break;
             }
