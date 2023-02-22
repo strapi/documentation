@@ -20,8 +20,6 @@
   top: -.05em;
 }
 
-
-
 [data-theme='light'] .badge {
   color: var(--strapi-neutral-800);
 }
@@ -62,9 +60,23 @@
 
 .badge.badge--pricing.badge--gold {
   background-color: rgb(255, 241, 209);
-  position: relative;
-  top: -.5em;
   margin-left: 5px;
+}
+
+h1 .badge--pricing.badge--gold,
+h2 .badge--pricing.badge--gold,
+h3 .badge--pricing.badge--gold {
+  position: relative;
+}
+
+h1 .badge--pricing.badge--gold {
+  top: -.5em;
+}
+h2 .badge--pricing.badge--gold {
+  top: -.4em;
+}
+h3 .badge--pricing.badge--gold {
+  top: -.2em;
 }
 
 .badge.badge--pricing,
