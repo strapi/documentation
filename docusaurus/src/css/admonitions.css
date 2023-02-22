@@ -33,7 +33,7 @@
 .theme-admonition code {
   font-weight: 400;
   font-style: normal;
-  font-family: 'Menlo';
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
   line-height: 24px;
   font-size: 13px;
   border-radius: 4px;
