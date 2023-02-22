@@ -48,7 +48,7 @@ jobs:
 
       # Updates the Algolia Search indexes
       - name: Algolia crawler creation and crawl
-        uses: algolia/algoliasearch-crawler-github-actions@v1.0.10
+        uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
         id: update-algolia-index-prod
         env:
           crawler-user-id: ${{ secrets.CRAWLER_USER_ID }}
