@@ -46,20 +46,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # Gets the Algolia Config
-      - name: Get docsearch config and parse into a variable
-        id: get-algolia-config-prod
-        run: echo "::set-output name=config::$(curl -s https://raw.githubusercontent.com/strapi/documentation/main/.algolia/docsearch.config.json | jq -r tostring)"
-
-      # Outputs parsed Algolia Config (for debugging purposes)
-      - name: Output Algolia debug status
-        run: "echo ${{ steps.get-algolia-config-prod.outputs.config }}"
-
       # Updates the Algolia Search indexes
-      - name: Invalidate Algolia Search Cache
-        uses: signcl/docsearch-scraper-action@master
+      - name: Algolia crawler creation and crawl
+        uses: algolia/algoliasearch-crawler-github-actions@v1.0.10
         id: update-algolia-index-prod
         env:
-          APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
-          API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
-          CONFIG: ${{ steps.get-algolia-config-prod.outputs.config }}
+          crawler-user-id: ${{ secrets.CRAWLER_USER_ID }}
+          crawler-api-key: ${{ secrets.CRAWLER_API_KEY }}
+          algolia-app-id: ${{ secrets.ALGOLIA_APP_ID }}
+          algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
+          site-url: 'https://docs.strapi.io'
