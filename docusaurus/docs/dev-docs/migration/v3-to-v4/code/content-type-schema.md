@@ -2,7 +2,7 @@
 title: Content-Type schema
 displayed_sidebar: devDocsSidebar
 description: Migrate your content-types from Strapi v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/code/backend/content-type-schema.html
+
 sidebarDepth: 3
 ---
 

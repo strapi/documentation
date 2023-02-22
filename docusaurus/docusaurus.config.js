@@ -143,16 +143,16 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/strapi',
-              },
-              {
                 label: 'Discord',
                 href: 'https://discord.strapi.io/',
               },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/strapijs',
+              },
+              {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/strapi',
               },
             ],
           },

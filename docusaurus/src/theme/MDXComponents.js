@@ -13,6 +13,8 @@ import GoldBadge from '../components/GoldBadge';
 import Columns from '../components/Columns';
 import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
+import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
+import CustomDocCard from '../components/CustomDocCard';
 
 export default {
   // Re-use the default mapping
@@ -35,4 +37,6 @@ export default {
   Columns: Columns,
   ColumnLeft: ColumnLeft,
   ColumnRight: ColumnRight,
+  FeedbackPlaceholder: FeedbackPlaceholder,
+  CustomDocCard: CustomDocCard,
 };

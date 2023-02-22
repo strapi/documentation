@@ -2,7 +2,7 @@
 title: Gridsome
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Gridsome.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html
+
 ---
 
 # Getting Started with Gridsome

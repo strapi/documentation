@@ -231,6 +231,7 @@ const sidebars = {
       items: [
         'dev-docs/cli',
         'dev-docs/data-management',
+        'dev-docs/database-migrations',
         'dev-docs/error-handling',
         'dev-docs/testing',
         {
@@ -248,7 +249,7 @@ const sidebars = {
             'dev-docs/integrations/dart',
             'dev-docs/integrations/flutter',
             'dev-docs/integrations/gatsby',
-            'dev-docs/integrations/girdsome',
+            'dev-docs/integrations/gridsome',
             'dev-docs/integrations/go',
             'dev-docs/integrations/graphql',
             'dev-docs/integrations/jekyll',

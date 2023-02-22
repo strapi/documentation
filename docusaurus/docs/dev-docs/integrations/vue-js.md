@@ -2,7 +2,7 @@
 title: Vue.js
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Vue.js.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html
+
 ---
 
 # Getting Started with Vue.js

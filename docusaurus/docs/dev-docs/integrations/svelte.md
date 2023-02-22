@@ -2,7 +2,7 @@
 title: Svelte
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Svelte.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/svelte.html
+
 ---
 
 # Getting Started with Svelte

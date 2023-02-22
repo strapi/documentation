@@ -1,7 +1,7 @@
 ---
 title: Requests and Responses 
 description: Learn more about requests and responses for Strapi, the most popular headless CMS.
-canonicalUrl: https://docs.strapi.io/dev-docs/backend-customization/requests-responses.html
+
 ---
 
 # Requests & Responses

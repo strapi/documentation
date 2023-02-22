@@ -1,7 +1,7 @@
 ---
 title: Managing individual assets
 description: Instructions on how to manage assets uploaded to the Media Library, including editing, moving, and deleting assets, and cropping images.
-canonicalUrl: http://docs.strapi.io/user-docs/media-library/managing-assets.html
+
 ---
 
 # Managing individual assets

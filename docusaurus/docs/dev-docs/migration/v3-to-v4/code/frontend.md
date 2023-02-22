@@ -2,7 +2,7 @@
 title: Frontend code migration
 displayed_sidebar: devDocsSidebar
 description: Migrate the frontend of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html
+
 next: ./frontend/wysiwyg.md
 ---
 
