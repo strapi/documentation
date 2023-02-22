@@ -1,5 +1,5 @@
 {
-  "name": "strapi-docs-docusaurus-poc",
+  "name": "strapi-docs",
   "version": "4.6.2",
   "private": true,
   "scripts": {
