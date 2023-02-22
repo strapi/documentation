@@ -2,7 +2,7 @@
 title: GraphQL
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with GraphQL.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/graphql.html
+
 ---
 
 # Getting Started with GraphQL

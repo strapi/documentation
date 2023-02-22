@@ -2,7 +2,7 @@
 title: Middlewares
 displayed_sidebar: devDocsSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html
+
 ---
 
 # Middlewares configuration
@@ -722,7 +722,7 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 | `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                   | `Boolean`             | `false`       |
 | `crossOriginResourcePolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
 | `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                         | `Boolean`             | `false`       |
-| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Boolean`             | `false`       |
+| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Object`             | `-`       |
 | `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0` | `Boolean`             | `false`       |
 | `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | -             |
 | `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |

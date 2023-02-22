@@ -2,7 +2,7 @@
 title: Migrate from 4.2.x to 4.3.x
 displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.2.x to 4.3.x.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.2.x+-to-4.3.x.html
+
 ---
 
 import PluginsCaution from '/docs/snippets/migrate-plugins-extension-caution.md'

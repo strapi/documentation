@@ -59,10 +59,31 @@
  */
 
 .badge.badge--pricing.badge--gold {
-  background-color: var(--strapi-warning-500);
+  background-color: rgb(255, 241, 209);
+  margin-left: 5px;
+}
+
+h1 .badge--pricing.badge--gold,
+h2 .badge--pricing.badge--gold,
+h3 .badge--pricing.badge--gold {
+  position: relative;
+}
+
+h1 .badge--pricing.badge--gold {
+  top: -.5em;
+}
+h2 .badge--pricing.badge--gold {
+  top: -.4em;
+}
+h3 .badge--pricing.badge--gold {
+  top: -.2em;
 }
 
 .badge.badge--pricing,
 .badge.badge--pricing .badge-link {
-  color: #fff;
+  color: rgb(229, 136, 41);
+  font-size: 14px;
+  font-weight: 400;
+  padding: .5em .3em;
+  letter-spacing: .3px;
 }

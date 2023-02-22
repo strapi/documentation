@@ -2,7 +2,7 @@
 title: Azure Deployment 
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html
+
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 

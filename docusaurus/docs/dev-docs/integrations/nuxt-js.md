@@ -2,7 +2,7 @@
 title: Nuxt
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Nuxt 3.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html
+
 ---
 
 # Getting Started with Nuxt 3

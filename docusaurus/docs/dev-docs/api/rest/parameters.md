@@ -1,7 +1,7 @@
 ---
 title: Parameters 
 description: Use API parameters to refine your Strapi REST API queries.
-canonicalUrl: http://docs.strapi.io/dev-docs/api/rest/parameters.html
+
 next: ./filtering-locale-publication.md
 ---
 

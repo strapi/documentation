@@ -18,7 +18,7 @@
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/middlewares.html",
-      "destination": "/dev-docs/backend-customization/requests-responses"
+      "destination": "/dev-docs/backend-customization/middlewares"
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/models.html",
@@ -26,7 +26,7 @@
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/requests-responses.html",
-      "destination": "/dev-docs/backend-customization/controllers"
+      "destination": "/dev-docs/backend-customization/requests-responses"
     },
     {
       "source": "/developer-docs/latest/development/backend-customization/services.html",
@@ -41,7 +41,11 @@
       "destination": "/dev-docs/backend-customization"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/cli/CLI",
+      "source": "/developer-docs/latest/development/backend-customization.html",
+      "destination": "/dev-docs/backend-customization"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/cli/CLI.html",
       "destination": "/dev-docs/cli"
     },
     {
@@ -50,7 +54,7 @@
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html",
-      "destination": "/dev-docs/configurations/databases"
+      "destination": "/dev-docs/configurations/database"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/admin-panel.html",
@@ -101,6 +105,10 @@
       "destination": "/dev-docs/configurations/rbac"
     },
     {
+      "source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html",
+      "destination": "/dev-docs/configurations/api"
+    },
+    {
       "source": "/developer-docs/latest/setup-deployment-guides/configurations.html",
       "destination": "/dev-docs/configurations"
     },
@@ -130,7 +138,7 @@
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
-      "destination": "/dev-docs/deployment/google-app-engine"
+      "destination": "/dev-docs/deployment"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
@@ -193,12 +201,20 @@
       "destination": "/dev-docs/api/entity-service"
     },
     {
-      "source": "/developer-docs/latest/development/error-handling",
+      "source": "/developer-docs/latest/development/error-handling.html",
+      "destination": "/dev-docs/error-handling"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/error-handling.html",
       "destination": "/dev-docs/error-handling"
     },
     {
       "source": "/developer-docs/latest/getting-started/introduction",
-      "destination": "https://docs-next.strapi.io/dev-docs/introdev-docs/intro"
+      "destination": "/dev-docs/intro"
+    },
+    {
+      "source": "/developer-docs/latest/getting-started/introduction.html",
+      "destination": "/dev-docs/intro"
     },
     {
       "source": "/developer-docs/latest/getting-started/troubleshooting.html",
@@ -213,7 +229,7 @@
       "destination": "/dev-docs/cli"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html",
       "destination": "/dev-docs/api/graphql"
     },
     {
@@ -230,95 +246,83 @@
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html",
-      "destination": "/dev-docs/integration/gridsome"
+      "destination": "/dev-docs/integrations/gridsome"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/react"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html",
-      "destination": "/dev-docs/integration/vue-js"
+      "destination": "/dev-docs/integrations/vue-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/svelte.html",
-      "destination": "/dev-docs/integration/svelte"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/svelte"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/sapper.html",
-      "destination": "/dev-docs/integration/sapper"
+      "destination": "/dev-docs/integrations/sapper"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html",
-      "destination": "/dev-docs/integration/gatsby"
+      "destination": "/dev-docs/integrations/gatsby"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/ruby.html",
-      "destination": "/dev-docs/integration/ruby"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/ruby"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/python.html",
-      "destination": "/dev-docs/integration/python"
-    },
-    {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
-      "destination": "/dev-docs/integration/react"
+      "destination": "/dev-docs/integrations/python"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/php.html",
-      "destination": "/dev-docs/integration/php"
+      "destination": "/dev-docs/integrations/php"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integration/nuxt-js"
+      "destination": "/dev-docs/integrations/next-js"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
-      "destination": "/dev-docs/integration/next-js"
+      "source": "/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html",
+      "destination": "/dev-docs/integrations/nuxt-js"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/laravel.html",
-      "destination": "/dev-docs/integration/laravel"
+      "destination": "/dev-docs/integrations/laravel"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html",
-      "destination": "/dev-docs/integration/jekyll"
+      "destination": "/dev-docs/integrations/jekyll"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/graphql.html",
-      "destination": "/dev-docs/integration/graphql"
+      "destination": "/dev-docs/integrations/graphql"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/go.html",
-      "destination": "/dev-docs/integration/go"
+      "destination": "/dev-docs/integrations/go"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/flutter.html",
-      "destination": "/dev-docs/integration/flutter"
+      "destination": "/dev-docs/integrations/flutter"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/dart.html",
-      "destination": "/dev-docs/integration/dart"
+      "destination": "/dev-docs/integrations/dart"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/angular.html",
-      "destination": "/dev-docs/integration/angular"
+      "destination": "/dev-docs/integrations/angular"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations/11ty.html",
-      "destination": "/dev-docs/integration/11ty"
+      "destination": "/dev-docs/integrations/11ty"
     },
     {
       "source": "/developer-docs/latest/developer-resources/content-api/integrations.html",
-      "destination": "/dev-docs/integration"
+      "destination": "/dev-docs/integrations"
     },
     {
       "source": "/developer-docs/latest/update-migration-guides/update-version.html",
@@ -329,7 +333,7 @@
       "destination": "/dev-docs/migration-guides"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel",
+      "source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
       "destination": "/dev-docs/api/plugins/admin-panel-api"
     },
     {
@@ -381,6 +385,10 @@
       "destination": "/dev-docs/project-structure"
     },
     {
+      "source": "/developer-docs/latest/setup-deployment-guides/file-structure.html",
+      "destination": "/dev-docs/project-structure"
+    },
+    {
       "source": "/developer-docs/latest/development/providers.html",
       "destination": "/dev-docs/providers"
     },
@@ -413,19 +421,23 @@
       "destination": "/dev-docs/quick-start"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md",
+      "source": "/developer-docs/latest/getting-started/quick-start.html",
+      "destination": "/dev-docs/quick-start"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html",
       "destination": "/dev-docs/api/rest"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
       "destination": "/dev-docs/api/rest/parameters"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html",
       "destination": "/dev-docs/api/rest/filters-locale-publication"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html",
       "destination": "/dev-docs/api/rest/populate-select"
     },
     {
@@ -433,7 +445,7 @@
       "destination": "/dev-docs/api/rest/relations"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.md",
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html",
       "destination": "/dev-docs/api/rest/sort-pagination"
     },
     {
@@ -445,11 +457,11 @@
       "destination": "/dev-docs/templates"
     },
     {
-      "source": "/developer-docs/latest/development/typescript",
+      "source": "/developer-docs/latest/development/typescript.html",
       "destination": "/dev-docs/typescript"
     },
     {
-      "source": "/developer-docs/latest/developer-resources/unit-testing",
+      "source": "/developer-docs/latest/developer-resources/unit-testing.html",
       "destination": "/dev-docs/testing"
     },
     {
@@ -593,6 +605,10 @@
       "destination": "/dev-docs/migration/v3-to-v4/plugin-migration"
     },
     {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html",
+      "destination": "/dev-docs/migration/v3-to-v4/code-migration"
+    },
+    {
       "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html",
       "destination": "/dev-docs/migration/v3-to-v4/code-migration/backend/content-type-schema"
     },
@@ -706,6 +722,10 @@
     },
     {
       "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to-4.1.8.html",
+      "destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.6-to-4.1.8.html",
       "destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
     },
     {

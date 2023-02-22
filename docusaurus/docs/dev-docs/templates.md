@@ -2,7 +2,7 @@
 title: Templates
 description: Quickly create a pre-made Strapi application designed for a specific use case. It allows you to quickly bootstrap a custom Strapi application.
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/dev-docs/setup-deployment-guides/installation/templates.md
+
 ---
 
 # Templates

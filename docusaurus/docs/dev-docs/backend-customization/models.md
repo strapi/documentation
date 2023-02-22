@@ -22,7 +22,7 @@ _tags: [
 	"afterFindMany"
 ]
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/dev-docs/development/backend-customization/models.html
+
 ---
 
 # Models
@@ -136,7 +136,7 @@ The `type` parameter of an attribute should be one of the following values:
 | String types | <ul><li>`string`</li> <li>`text`</li> <li>`richtext`</li><li>`enumeration`</li> <li>`email`</li><li>`password`</li><li>[`uid`](#uid-type)</li></ul> |
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
-| Other generic types |<ul><li>`boolean`</li><li>`array`</li><li>`json`</li></ul> |
+| Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
 | Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
 | Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 

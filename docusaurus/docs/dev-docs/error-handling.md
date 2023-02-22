@@ -2,7 +2,7 @@
 title: Error handling
 displayed_sidebar: devDocsSidebar
 description: With Strapi's error handling feature it's easy to send and receive errors in your application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/error-handling.html
+
 ---
 
 # Error handling

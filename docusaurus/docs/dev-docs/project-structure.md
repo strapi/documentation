@@ -2,7 +2,7 @@
 title: Project structure
 displayed_sidebar: devDocsSidebar
 description: Discover the project structure of any default Strapi application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/file-structure.html
+
 ---
 
 import InteractiveProjectStructure from '../../src/components/ProjectStructure.js'

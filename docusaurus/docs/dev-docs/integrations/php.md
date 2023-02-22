@@ -2,7 +2,7 @@
 title: PHP
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with PHP.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/php.html
+
 ---
 
 # Getting Started with PHP

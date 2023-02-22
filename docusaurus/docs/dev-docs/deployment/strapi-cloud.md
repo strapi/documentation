@@ -2,7 +2,7 @@
 title: Strapi Cloud
 displayed_sidebar: devDocsSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html
+
 ---
 
 # Strapi Cloud <BetaBadge />

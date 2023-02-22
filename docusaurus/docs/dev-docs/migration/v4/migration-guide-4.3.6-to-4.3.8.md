@@ -2,7 +2,7 @@
 title: Migrate from 4.3.6 to 4.3.8
 displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.3.6 to 4.3.8.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.6-to-4.3.8.html
+
 ---
 
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'

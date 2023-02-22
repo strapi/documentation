@@ -2,7 +2,7 @@
 title: Ruby
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Ruby.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/ruby.html
+
 ---
 
 # Getting Started with Ruby

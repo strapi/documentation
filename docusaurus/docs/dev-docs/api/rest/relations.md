@@ -1,7 +1,7 @@
 ---
 title: Relations
 description: Use the REST API to manage the order of relations
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html
+
 ---
 
 # Managing relations through the REST API
@@ -336,4 +336,4 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 </TabItem>
 </Tabs>
 
-<!-- <FeedbackPlaceholder /> -->
+<FeedbackPlaceholder />

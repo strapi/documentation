@@ -2,7 +2,7 @@
 title: Command Line Interface
 displayed_sidebar: devDocsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html
+
 
 ---
 
@@ -150,6 +150,29 @@ strapi import
 strapi import -f <your-filepath-and-filename> --key my-key
 ```
 
+## strapi transfer <BetaBadge />
+
+[Transfers data](/dev-docs/data-management#transfer-data-using-the-cli-tool) between two Strapi instances. This command is primarily intended for use between a local instance and a remote instance or two remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for detailed documentation on creating Transfer tokens.
+
+:::caution
+The destination Strapi instance should be running with the `start` command and not the `develop` command.
+:::
+
+| Option                       | description                                                                                                                         | required          |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
+| `--to` {destinationURL}      | URL of the destination Strapi instance. Include the `/admin` endpoint.                                                                                            |      required     |
+| `--to-token` {transferToken} | Transfer token for the remote Strapi destination                                                                                   |      required     |
+| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                  |         -         |
+| `--exclude`                  | Exclude data using comma-separated data types. Include only these data. The available types are: `content`, `files`, and `config`. |         -          |
+| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                |         -         |
+| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                       |         -         |
+
+**Example**
+
+```bash
+ strapi transfer --to http://example.com/admin --to-token <my-transfer-token> 
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
@@ -266,7 +289,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
 
 ```bash
 strapi generate

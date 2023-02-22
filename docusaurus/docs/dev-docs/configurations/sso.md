@@ -80,6 +80,87 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security).
 :::
 
+<details>
+  <summary>Example: Security exception for provider logos</summary>
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="./config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'dl.airtable.com',
+            'www.okta.com', // Base URL of the provider's logo
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+]
+```
+
+  </TabItem>
+</Tabs>
+
+</details>
+
 ### The `createStrategy` Factory
 
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
@@ -636,6 +717,10 @@ npm install --save passport-keycloak-oauth2-oidc
 </TabItem>
 
 </Tabs>
+
+:::caution
+When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
+:::
 
 <details>
   <summary>Configuration example for Keycloak (OpenID Connect):</summary>

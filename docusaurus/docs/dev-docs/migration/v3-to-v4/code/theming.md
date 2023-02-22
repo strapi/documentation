@@ -2,7 +2,7 @@
 title: Theming
 displayed_sidebar: devDocsSidebar
 description: Migrate theme customizations from Strapi v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html
+
 ---
 
 # v4 code migration: Updating theme customizations

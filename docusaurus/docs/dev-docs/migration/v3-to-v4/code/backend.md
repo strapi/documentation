@@ -2,7 +2,7 @@
 title: Backend code migration
 displayed_sidebar: devDocsSidebar
 description: Migrate the backend of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
-canonicalUrl:  http://docs.strapi.io/dev-docs/migration-guides//code/backend.html
+
 pagination_next: dev-docs/migration/v3-to-v4/code/dependencies
 ---
 

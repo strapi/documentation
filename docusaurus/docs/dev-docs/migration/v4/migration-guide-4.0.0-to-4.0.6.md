@@ -2,7 +2,7 @@
 title: Migrate v4.0.0+ to v4.0.6 
 displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.0.0+ to 4.0.6.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to4.0.6.html
+
 ---
 
 import PluginsCaution from '/docs/snippets/migrate-plugins-extension-caution.md'

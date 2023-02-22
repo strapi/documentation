@@ -2,7 +2,7 @@
 title: Heroku
 description: Learn in this guide how to deploy your Strapi application on Heroku.
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html
+
 ---
 
 # Deploy to Heroku

@@ -3,7 +3,7 @@ title: Writing Content
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
 sidebar_position: 3
 displayed_sidebar: userDocsSidebar
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
+
 ---
 
 # Writing content
@@ -82,8 +82,8 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-<img src="/img/assets/content-manager/edit-view_dynamic-zone1.png" alt="Writing content for a dynamic zone" width="80%" />
-<img src="/img/assets/content-manager/edit-view_dynamic-zone3.png" alt="Writing content for a dynamic zone" width="80%" />
+<img src="/img/assets/content-manager/edit-view_dynamic-zone-1.png" alt="Writing content for a dynamic zone" width="80%" />
+<img src="/img/assets/content-manager/edit-view_dynamic-zone-2.png" alt="Writing content for a dynamic zone" width="80%" />
 
 1. Click on the ![Add icon](/img/assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.

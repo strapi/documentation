@@ -2,7 +2,7 @@
 title: DigitalOcean App Platform
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean App Platform.
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html
+
 ---
 
 # Deploy to the DigitalOcean App Platform
