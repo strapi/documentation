@@ -1,8 +1,6 @@
 ---
-title: Strapi Cloud
-displayed_sidebar: devDocsSidebar
+title: Strapi Cloud Deployment 
 description: Learn how to deploy your Strapi application on Strapi Cloud.
-
 ---
 
 # Strapi Cloud <BetaBadge />
@@ -23,7 +21,7 @@ Onboarding of users will be done in batches. You will be notified via email when
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* Strapi version `4.4.x` or higher
+* Strapi version `4.6.x` or higher
 * Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
@@ -34,17 +32,19 @@ Importing data from an existing Strapi application and data backups for a Strapi
 
 ## Getting started
 
-1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
+1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) home page. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
 
     ![Strapi Cloud login page](/img/assets/deployment/cloud/login.png)
 
-2. You are prompted to **Log In with GitHub**. Your Strapi Cloud account is created during this initial login.
-
-3. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
+2. Once logged in, you will be redirected to the Strapi Cloud **Projects** page. From here you can create your first Strapi Cloud project.
 
     ![Strapi Cloud Projects page](/img/assets/deployment/cloud/projects_empty.png)
 
 ### Create a project
+
+The first time logging into Strapi Cloud, a welcome page is displayed providing a link to the terms of service and prompting you to **Start free trial** to continue.
+
+![Strapi Cloud welcome page](/img/assets/deployment/cloud/welcome-screen.png)
 
 1. From the **Projects** page, click the **Create Project** button. You are prompted to **Connect with GitHub**.
 
@@ -66,12 +66,20 @@ Importing data from an existing Strapi application and data backups for a Strapi
     ![Project Setup](/img/assets/deployment/cloud/setup.png)
 
 4. (**Optional**) Select **Show Advanced Settings** to configure the following options:
-    * [**Environment variables**](/dev-docs/configurations/environment.md): Environment variables are used to configure your Strapi app.
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
-
+    * **Environment variables**: Use the **Add variable** button to add any custom [environment variables](/dev-docs/configurations/environment) values to configure your Strapi app.
+    
     ![Advanced Setup](/img/assets/deployment/cloud/advanced.png)
 
-5. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
+5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
+
+    :::tip
+    This is for verification purposes only. You will not be charged during the Beta release, or without notice.
+    :::
+
+    ![Payment and billing](/img/assets/deployment/cloud/billing-info.png)
+
+6. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
 
 ## Managing projects
 
@@ -122,12 +130,61 @@ From this page you can also trigger a new deployment and access the application 
 
 ### Settings
 
-The **Settings** tab enables you to edit the following details for the project:
+The **Settings** tab contains three sections: **General**, **Variables**, and **Billing**.
+
+#### General
+
+The **General** section enables you to edit the following details for the project:
 
 * **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs.
 * **Production branch**: The branch of the linked repository to use for production deployments.
-* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
+* **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
 * **Connected GitHub repository**: The Git repository linked to the project.
+* **Environment variables**: Environment variables are used to configure the environment of your Strapi app.
 * **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
 
-![Project settings](/img/assets/deployment/cloud/settings.png)
+![Project settings](/img/assets/deployment/cloud/settings-general.png)
+
+#### Variables
+
+The **Variables** section displays the list of environment variables configured for the project, and enables you to add new variables.
+
+![Project variables](/img/assets/deployment/cloud/settings-general.png)
+
+#### Billing
+
+The **Billing** section displays the current subscription plan and included usage for the project.
+
+Use the **Manage subscription** button to change the subscription plan.
+
+![Project billing](/img/assets/deployment/cloud/settings-billing.png)
+
+## Profile settings
+
+The **Profile** settings page is accessed from your account icon in the top-left corner and enables you to manage your account details and preferences. There are three sections available: 
+
+### General
+
+The **General** tab enables you to edit the following details for your account:
+
+* **Name**: The name associated with your account.
+
+<!--
+* **Email**: The email address associated with your account.
+* **Delete account**: This will ***permanently and irreversibly*** delete your account and all its associated data.
+-->
+
+### Preferences
+
+The **Preferences** tab enables you to edit the following details for your account:
+<!--
+* **Notifications**: Enable or disable email notifications for project activity.
+    * **Frequency**: Choose the frequency of email notifications.
+-->
+* **Appearance**: Choose between the **Light** and **Dark** themes.
+
+### Billing
+
+The **Billing** tab displays your billing information and enables you to update your payment method.
+
+![Account billing settings](/img/assets/deployment/cloud/account-billing.png)
