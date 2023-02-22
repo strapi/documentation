@@ -38,6 +38,9 @@ async function rainProfiles() {
     const profileDiv = document.createElement('div');
     profileDiv.className = 'profileRainContainer';
     document.body.appendChild(profileDiv);
+    setTimeout(() => {
+        profileDiv.remove();
+    }, 10000);
 
     async function createProfile(url) {
 
