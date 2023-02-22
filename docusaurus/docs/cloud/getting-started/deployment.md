@@ -68,10 +68,6 @@ The first time logging into Strapi Cloud, a welcome page is displayed providing 
 
 5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
 
-    :::tip
-    This is for verification purposes only. You will not be charged during the Beta release, or without notice.
-    :::
-
     ![Payment and billing](/img/assets/cloud/billing-info.png)
 
 6. Click **Create** to finalize the project creation. An initial deployment is triggered and you are redirected to the **Projects** page.
