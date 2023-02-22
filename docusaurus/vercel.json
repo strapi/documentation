@@ -210,11 +210,11 @@
     },
     {
       "source": "/developer-docs/latest/getting-started/introduction",
-      "destination": "/dev-docs/intro"
+      "destination": "/"
     },
     {
       "source": "/developer-docs/latest/getting-started/introduction.html",
-      "destination": "/dev-docs/intro"
+      "destination": "/"
     },
     {
       "source": "/developer-docs/latest/getting-started/troubleshooting.html",

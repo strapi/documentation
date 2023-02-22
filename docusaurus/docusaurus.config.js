@@ -135,7 +135,7 @@ const config = {
               },
               {
                 label: 'Dev Docs',
-                to: '/dev-docs/intro',
+                to: '/',
               },
             ],
           },
