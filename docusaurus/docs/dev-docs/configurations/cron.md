@@ -2,14 +2,14 @@
 title: CRON jobs
 displayed_sidebar: devDocsSidebar
 description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
-
 ---
 
 # Cron jobs
 
 <!--TODO fix the link in the prereq-->
+
 :::prerequisites
-The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects)  [file](/dev-docs/configurations/server).
+The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/dev-docs/configurations/server).
 :::
 
 `cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
@@ -50,14 +50,66 @@ To define a cron job, create a file with the following structure:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/cron-tasks.js"
-
 module.exports = {
   /**
    * Simple example.
    * Every monday at 1am.
    */
 
-  '0 0 1 * * 1': ({ strapi }) => {
+  myJob: {
+    task: ({ strapi }) => {
+      // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  /**
+   * Simple example.
+   * Every monday at 1am.
+   */
+
+  myJob: {
+    task: ({ strapi }) => {
+      // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+    },
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+Key format 
+
+:::warning
+Using the key format creates an anonymous cron job which may cause issues when trying to disable the cron job or with some plugins. It is recommended to use the object format.
+:::
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  /**
+   * Simple example.
+   * Every monday at 1am.
+   */
+
+  "0 0 1 * * 1": ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };
@@ -68,14 +120,13 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
-
 export default {
   /**
    * Simple example.
    * Every monday at 1am.
    */
 
-  '0 0 1 * * 1': ({ strapi }) => {
+  "0 0 1 * * 1": ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };
@@ -92,23 +143,23 @@ If the cron job requires running on a specific timezone:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/cron-tasks.js"
-
 module.exports = {
-   /**
+  /**
    * Cron job with timezone example.
    * Every Monday at 1am for Asia/Dhaka timezone.
    * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
-  
-myJob: {
-     task: ({ strapi }) => {/* Add your own logic here */ },
-     options: {
-        rule: '0 0 1 * * 1',
-        tz: 'Asia/Dhaka',
-     },
-   },
- };
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+      tz: "Asia/Dhaka",
+    },
+  },
+};
 ```
 
 </TabItem>
@@ -116,23 +167,110 @@ myJob: {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/cron-tasks.ts"
-
 export default {
-   /**
+  /**
    * Cron job with timezone example.
    * Every Monday at 1am for Asia/Dhaka timezone.
    * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
    */
 
-  
-myJob: {
-     task: ({ strapi }) => {/* Add your own logic here */ },
-     options: {
-        rule: '0 0 1 * * 1',
-        tz: 'Asia/Dhaka',
-     },
-   },
- };
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+      tz: "Asia/Dhaka",
+    },
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+If you want to do a 1 off cron job
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: new Date(Date.now() + 10000),
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: new Date(Date.now() + 10000),
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+If you want to have start and end times
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "* * * * * *",
+      // start 10 seconds from now
+      start: new Date(Date.now() + 10000),
+      // end 20 seconds from now
+      end: new Date(Date.now() + 20000),
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: {
+      rule: "* * * * * *",
+      // start 10 seconds from now
+      start: new Date(Date.now() + 10000),
+      // end 20 seconds from now
+      end: new Date(Date.now() + 20000),
+    },
+  },
+};
 ```
 
 </TabItem>
@@ -148,7 +286,6 @@ To enable cron jobs, set `cron.enabled` to `true` in the [server configuration f
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/server.js"
-
 const cronTasks = require("./cron-tasks");
 
 module.exports = ({ env }) => ({
@@ -166,7 +303,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/server.ts"
-
 import cronTasks from "./cron-tasks";
 
 export default ({ env }) => ({
