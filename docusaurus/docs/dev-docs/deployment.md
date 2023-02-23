@@ -15,7 +15,7 @@ Strapi provides many deployment options for your project or application. Your St
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
 :::callout ☁️ Strapi Cloud
-Don't want to deploy Strapi by yourself? <a href="https://strp.cc/3rywrsu" target="_blank" id="deployment-section-cloud-link">Join the cloud waitlist</a> to soon get access to a platform to easily deploy and host your project.
+Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to easily deploy and host your project.
 :::
 
 :::strapi Community Guides
