@@ -30,7 +30,6 @@ Admin users and API tokens are not exported.
 Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
 
 ### Example: Export data with a custom filename
-<br/>
 
 <Tabs groupId="yarn-npm">
 
