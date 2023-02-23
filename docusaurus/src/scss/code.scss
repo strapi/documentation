@@ -1,0 +1,50 @@
+/** Element: Code */
+
+:root body {
+  --custom-code-background-color: var(--strapi-primary-100);
+  --custom-code-border-color: var(--strapi-primary-200);
+  --custom-code-border-radius: var(--strapi-spacing-1);
+  --custom-code-color: var(--strapi-primary-600);
+  --custom-code-font-family:
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "Liberation Mono",
+    "Courier New",
+    monospace
+  ;
+
+  --ifm-code-background: var(--custom-code-background-color);
+  --ifm-code-border-radius: var(--custom-code-border-radius);
+  --ifm-code-padding-horizontal: var(--strapi-spacing-2);
+  --ifm-code-padding-vertical: var(--strapi-spacing-1);
+  --ifm-code-font-family: var(--custom-code-font-family);
+
+  --ifm-code-font-size: 80%;
+}
+
+h1, h2, h3, li, p, table {
+  code {
+    background-color: var(--custom-code-background-color);
+    border-color: var(--custom-code-border-color);
+    color: var(--custom-code-color);
+  }
+
+  a code {
+    color: var(--ifm-link-color);
+  }
+}
+
+/** Dark mode */
+@include dark {
+  body {
+    --custom-code-background-color: var(--strapi-neutral-600);
+    --custom-code-border-color: var(--strapi-neutral-600);
+    --custom-code-color: var(--strapi-neutral-100);
+  }
+
+  pre code {
+    --custom-code-color: var(--strapi-neutral-1000);
+  }
+}

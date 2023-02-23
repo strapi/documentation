@@ -1,0 +1,12 @@
+/** Component: Grid */
+
+.row {
+  --custom-grid-spacing: var(--strapi-spacing-2);
+  --ifm-spacing-horizontal: var(--custom-grid-spacing);
+
+  .col {
+    &.margin-bottom--lg {
+      margin-bottom: calc(var(--custom-grid-spacing) * 2) !important;
+    }
+  }
+}

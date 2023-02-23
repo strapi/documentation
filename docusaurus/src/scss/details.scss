@@ -1,0 +1,24 @@
+/** Component: Details */
+
+details.alert {
+  --docusaurus-details-decoration-color: var(--strapi-neutral-800);
+
+  --ifm-alert-background-color: var(--strapi-neutral-150);
+  --ifm-alert-background-color-highlight: var(--strapi-neutral-500);
+  --ifm-alert-border-radius: var(--strapi-spacing-1);
+  --ifm-alert-foreground-color: var( --ifm-color-info-contrast-foreground );
+  --ifm-alert-border-color: transparent;
+
+  summary {
+    p {
+      margin: 0;
+    }
+  }
+
+  /** Content element */
+  > div > div {
+    --docusaurus-details-decoration-color: transparent;
+
+    margin-top: 0;
+  }
+}

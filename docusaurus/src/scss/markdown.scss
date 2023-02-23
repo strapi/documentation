@@ -1,0 +1,20 @@
+/** Component: Markdown */
+
+$selector-markdown: ".theme-doc-markdown.markdown";
+
+#{$selector-markdown} {
+  --custom-markdown-pt: var(--strapi-spacing-0);
+  --custom-markdown-pb: var(--strapi-spacing-2);
+
+  --markdown-link-color: var(--strapi-primary-600);
+
+  font-weight: 400;
+  padding: var(--custom-markdown-pt) 0 var(--custom-markdown-pb);
+}
+
+/** Dark mode */
+@include dark {
+  #{$selector-markdown} {
+    --markdown-link-color: var(--strapi-primary-600);
+  }
+}
