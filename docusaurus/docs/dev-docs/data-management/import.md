@@ -34,8 +34,6 @@ To import data into a Strapi instance use the `strapi import` command in the pro
 
 ### Example: Minimum command to import data from a file in the Strapi project root
 
-<br/>
-
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -62,8 +60,6 @@ If you are importing data from an encrypted file the encryption key can be passe
 
 ### Example: Pass the encryption key with the `strapi import` command
 
-<br/>
-
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -89,8 +85,6 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption
 When using the `strapi import` command, you are required to confirm that the import will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi import` programmatically. For programmatic use, you must also pass the `--key` option for encrypted files.
 
 ### Example of the `--force` option
-
-<br/>
 
 <Tabs groupId="yarn-npm">
 
@@ -126,8 +120,6 @@ Media such as images consist of the file (asset) and the entity in the database.
 
 ### Example: exclude assets from an import
 
-<br/>
-
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -157,8 +149,6 @@ Media such as images consist of the file (asset) and the entity in the database.
 :::
 
 ### Example: import only the project configuration
-
-<br/>
 
 <Tabs groupId="yarn-npm">
 

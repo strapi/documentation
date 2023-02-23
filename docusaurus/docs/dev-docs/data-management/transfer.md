@@ -44,7 +44,6 @@ Data transfers are authorized by Transfer tokens, which are generated in the Adm
 
 The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 
-
 ## Setup and run the data transfer
 
 To initiate a data transfer:
@@ -86,7 +85,6 @@ The `--force` option bypasses all warnings about content deletion.
 
 ### Example: bypass the `transfer` command line prompts with `--force`
 
-<br/>
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -112,7 +110,6 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
 
 ### Example: only transfer files
-<br/>
 
 <Tabs groupId="yarn-npm">
 
@@ -139,8 +136,6 @@ npm run strapi transfer -- --to https://example.com/admin --only files
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
 
 ### Example: exclude files from transfer
-
-<br/>
 
 <Tabs groupId="yarn-npm">
 
