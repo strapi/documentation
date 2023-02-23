@@ -7,11 +7,7 @@ displayed_sidebar: devDocsSidebar
 # Data Management System
 
 :::callout 🚧 Feature under development
-The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io). Significant releases for this feature include:
-
-- v4.6.0: Data export and Data import,
-- Beta release: Data transfer.
-
+The data management system is under development. Not all use cases are covered by the initial release. You can provide feedback about desired functionality on the [Strapi feedback website](https://feedback.strapi.io).
 :::
 
 Occasionally, you need to move data out of or into a Strapi instance. This is possible with the data management system which uses CLI-based commands:
