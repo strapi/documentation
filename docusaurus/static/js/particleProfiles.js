@@ -1,7 +1,7 @@
 
 
 async function strapiParticles() {
-    const profiles = []
+    let profiles = []
     if (localStorage.getItem('profiles') && localStorage.getItem('profilesLastUpdated') && Date.now() - localStorage.getItem('profilesLastUpdated') < 1000 * 60 * 60 * 24 * 7) {
         // load profiles from local storage
         profiles.push(...JSON.parse(localStorage.getItem('profiles')))
@@ -35,7 +35,7 @@ async function strapiParticles() {
     // add id scene to canvas
     bodycanvas.id = 'scene';
     document.body.appendChild(bodycanvas);
-    const canvas = document.querySelector("#scene"),
+    let canvas = document.querySelector("#scene"),
         ctx = canvas.getContext("2d"),
         particles = [],
         amount = 0,
@@ -51,10 +51,10 @@ async function strapiParticles() {
 
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'destination-over';
-    const ww = canvas.width = window.innerWidth;
-    const wh = canvas.height = window.innerHeight;
+    let ww = canvas.width = window.innerWidth;
+    let wh = canvas.height = window.innerHeight;
 
-    const profileIndex = 0
+    let profileIndex = 0
     function Particle(x, y) {
         this.x = Math.random() * ww;
         this.y = Math.random() * wh;
