@@ -29,7 +29,13 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock'],
 
-
+  scripts: [
+    {
+      src:
+        '/js/particleProfiles.js',
+      async: true,
+    },
+  ],
   presets: [
     [
       'classic',
