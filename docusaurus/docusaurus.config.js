@@ -30,10 +30,9 @@ const config = {
   themes: ['@docusaurus/theme-live-codeblock'],
 
   scripts: [
-    
     {
       src:
-        '/js/profileRain.js',
+        '/js/particleProfiles.js',
       async: true,
     },
   ],
