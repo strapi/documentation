@@ -50,7 +50,7 @@ The following procedure allows you to work locally on the Strapi documentation.
     git clone git@github.com:yourgithubname/documentation.git
     ```
     
-3. Enter the `developer-docs` folder to contribute to the [Developer Documentation](https://docs.strapi.io/), or the `user-docs` folder to contribute to the [User Guide](https://docs.strapi.io/user-docs/intro).
+3. Enter the `dev-docs` folder to contribute to the [Developer Documentation](https://docs.strapi.io/), or the `user-docs` folder to contribute to the [User Guide](https://docs.strapi.io/user-docs/intro).
     
     ```bash
     # developer documentation
@@ -60,47 +60,32 @@ The following procedure allows you to work locally on the Strapi documentation.
     cd documentation/docusaurus/docs/user-docs
     ```
     
-4. Choose the branch from which to work: either `main` for a contribution on the current version of Strapi or `v[x]` for a contribution on a previous version of Strapi.
+4. Ensure you are looking at the `main` branch and retrieve the latest modifications:
     
     ```bash
-    #current version of Strapi (i.e. v4)
     git checkout main
-    
-    #previous version of Strapi (e.g. v3)
-    git checkout v3
-    ```
-    
-    <aside>
-    ✋ Previous, non-current versions of the Strapi documentation are only maintained for 6 months after the release of the latest, current version.
-    
-    </aside>
-    
-5. From your chosen branch, retrieve the latest modifications to work on an up-to-date branch.
-    
-    ```bash
     git pull
     ```
     
-6. Create your branch, based on either `main` or `v[x]`, to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
+6. Create your branch to work on your documentation contribution. Make sure your branch name indicates both the type of documentation and the topic.
     
     ```bash
-    # developer documentation
+    # developer docs
     git checkout -b <dev/branch-name>
     
-    # user documentation
+    # user guide
     git checkout -b <user/branch-name>
     
     ```
 
-7. Run the docs on your computer
+7. Run the docs on your computer. From the `documentation/docusaurus` folder:
 
   ```bash
-    cd docs/docusaurus
 
     # Install dependencies
     yarn
 
-    # Run user and developer-docs
+    # Run the local development server
     yarn dev
 
   ```
@@ -113,7 +98,7 @@ You are now ready to contribute to the Strapi documentation! 🚀
 
 The Strapi documentation follows the [Google Style Guide](https://developers.google.com/style). The [Highlights](https://developers.google.com/style/highlights) section provides information on tone, structure, and formatting.
 
-The Strapi [Formatting Style Guide](https://github.com/strapi/documentation/blob/main/formatting_style_guide.pdf) has formatting guidelines and how to implement formatting in markdown files.
+_Formatting guidelines and a syntax guide to both built-in and custom Docusaurus features will be published soon. In the meantime you can look at the official [Docusaurus.io documentation](https://docusaurus.io/docs/) and explore our [custom modifications in the code base](https://github.com/strapi/documentation/tree/main/docusaurus/src)._ 
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information) or use the _Create a new branch for this commit and start a pull request_ option if you are using the GitHub web browser interface (see [the GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)).
 

@@ -2,7 +2,7 @@
  * Quick & easy theme improvements
  */
 
- @media (min-width: 800px) {
+@media (min-width: 800px) {
   main article {
     padding-left: 2em;
     padding-right: 2em;
@@ -33,7 +33,7 @@ h2 {
   font-size: 24px;
 }
 
-[data-theme='light'] .theme-doc-markdown.markdown {
+[data-theme="light"] .theme-doc-markdown.markdown {
   font-weight: 400;
 }
 
@@ -41,48 +41,49 @@ h2 {
   font-weight: 600;
   color: var(--strapi-primary-600);
 }
-[data-theme='dark'] .theme-doc-markdown.markdown a {
+[data-theme="dark"] .theme-doc-markdown.markdown a {
   color: var(--strapi-dark-primary-600);
   text-decoration: none;
 }
-[data-theme='dark'] .theme-doc-markdown.markdown a code {
+[data-theme="dark"] .theme-doc-markdown.markdown a code {
   font-weight: 700;
 }
 
-[data-theme='light'] .theme-doc-markdown.markdown {
+[data-theme="light"] .theme-doc-markdown.markdown {
   color: var(--strapi-neutral-800);
 }
-[data-theme='dark'] .theme-doc-markdown.markdown {
+[data-theme="dark"] .theme-doc-markdown.markdown {
   color: var(--strapi-neutral-100);
 }
 
-[data-theme='light'] h1,
-[data-theme='light'] h2,
-[data-theme='light'] h3,
-[data-theme='light'] h4,
-[data-theme='light'] h5 {
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5 {
   color: var(--strapi-neutral-900);
 }
-[data-theme='dark'] h1,
-[data-theme='dark'] h2,
-[data-theme='dark'] h3,
-[data-theme='dark'] h4,
-[data-theme='dark'] h5 {
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5 {
   color: var(--strapi-dark-neutral-900);
 }
 
-[data-theme='dark'] .main-wrapper,
-[data-theme='dark'] .navbar,
-[data-theme='dark'] .collapseSidebarButton_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-CollapseButton-styles-module {
+[data-theme="dark"] .main-wrapper,
+[data-theme="dark"] .navbar,
+[data-theme="dark"]
+  .collapseSidebarButton_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-CollapseButton-styles-module {
   background-color: var(--strapi-dark-neutral-0);
 }
 
-[data-theme='dark'] .navbar {
+[data-theme="dark"] .navbar {
   border-bottom: solid 1px var(--strapi-dark-neutral-150);
 }
 
 footer.footer.footer--dark {
-  background-color: #4A4A6A;
+  background-color: #4a4a6a;
 }
 footer.footer.footer--dark a:hover {
   text-decoration: none;
@@ -104,23 +105,30 @@ table code {
   font-size: 13px;
 }
 
-[data-theme='light'] code {
+[data-theme="light"] code {
   background-color: var(--strapi-primary-100);
   color: var(--strapi-primary-600);
   border-color: var(--strapi-primary-200);
 }
-[data-theme='dark'] code {
+[data-theme="dark"] code {
   /* Commented out for now because I find that the contrast is better without these */
   /* background-color: var(--strapi-dark-neutral-600);
   color: var(--strapi-dark-neutral-100); */
 }
-[data-theme='dark'] pre:not(.prism-code) code {
+[data-theme="dark"] pre:not(.prism-code) code {
   background-color: var(--strapi-dark-warning-200);
 }
 
-[data-theme='dark'] .container img[width='16'] {
+[data-theme="dark"] .container img[width="16"] {
   /* 'Temporary' fix while we figure a way to display white icons in dark mode 😅  */
   background-color: white;
   border-radius: 2px;
   padding: 1px;
+}
+#scene {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
 }
