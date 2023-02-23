@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # Managing global settings
@@ -48,7 +48,7 @@ To configure the SSO feature settings:
 
 ## Configuring Internationalization locales
 
-The [Internationalization plugin](../plugins/strapi-plugins#internationalization-plugin) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](../plugins/installing-plugins-via-marketplace)), administrators can manage locales from the *Global settings > Internationalization* sub-section of the settings interface.
+The [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#internationalization-plugin) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from the *Global settings > Internationalization* sub-section of the settings interface.
 
 ![i18n settings](/img/assets/settings/settings-i18n.png)
 
@@ -77,7 +77,7 @@ To add a new locale:
 
 ## Configuring the Media Library
 
-The [Media Library](/user-docs/media-library/introduction-to-media-library/) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+The [Media Library](/user-docs/media-library) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
 
 ![Media Library settings](/img/assets/settings/settings_media-library.png)
 
@@ -143,6 +143,53 @@ To regenerate an API token:
 2. Click on the **Regenerate** button.
 3. Click on the **Regenerate** button to confirm in the dialog.
 4. Copy the new API token displayed at the top of the interface.
+## Managing transfer tokens <BetaBadge />
+
+:::prerequisites
+* Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
+* The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.
+:::
+
+Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management#transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
+
+![Transfer tokens](/img/assets/settings/settings_transfer-token.png)
+
+The *Transfer Tokens* settings sub-section displays a table listing all of the created Transfer tokens.
+
+The table displays each Transfer token's name, description, date of creation, and date of last use. From the table, administrators can also:
+
+- Click on the edit button <!-- icon --> to edit an Transfer token's name, description, type, duration or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the delete button <!-- icon --> to delete a Transfer token.
+
+### Creating a new transfer token
+
+To create a new Transfer token:
+
+1. Click on the **Create new Transfer Token** button.
+2. In the Transfer token edition interface, configure the new Transfer token:
+
+    | Setting name   | Instructions                                                                  |
+    | -------------- | ----------------------------------------------------------------------------- |
+    | Name           | Write the name of the Transfer token.                                         |
+    | Description    | (optional) Write a description for the Transfer token.                        |
+    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
+
+3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
+
+    ![Custom Transfer Token](/img/assets/settings/settings_create-transfer-token.png)
+
+:::caution
+For security reasons, Transfer tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created Transfer token will be hidden and will not be displayed again.
+:::
+
+### Regenerating a Transfer token
+
+To regenerate an Transfer token:
+
+1. Click on the Transfer token's edit button.
+2. Click on the **Regenerate** button.
+3. Click on the **Regenerate** button to confirm in the dialog.
+4. Copy the new Transfer token displayed at the top of the interface.
 
 ## Managing transfer tokens<BetaBadge />
 
@@ -194,4 +241,4 @@ To regenerate an Transfer token:
 
 ## Configuring other plugins
 
-Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, below the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).
+Installed plugins can add their own settings sub-sections. These sections are found at the bottom of the list of sub-sections, following the settings for pre-installed Strapi plugins. Settings for 3rd party plugins are described in the plugin's documentation on the [Marketplace](https://market.strapi.io).

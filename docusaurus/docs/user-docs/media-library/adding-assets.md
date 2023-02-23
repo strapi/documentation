@@ -1,7 +1,7 @@
 ---
 title: Adding assets
 description: Instructions to add assets to the Media Library
-canonicalUrl: https://docs.strapi.io/user-docs/latest/media-library/adding-assets.html
+
 ---
 
 # Adding assets

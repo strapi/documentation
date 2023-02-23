@@ -29,7 +29,13 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock'],
 
-
+  scripts: [
+    {
+      src:
+        '/js/particleProfiles.js',
+      async: true,
+    },
+  ],
   presets: [
     [
       'classic',
@@ -77,13 +83,13 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      announcementBar: {
-        id: 'support_us',
-        content: "We're rebuilding our documentation from the ground up (see <a href='/'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
-        backgroundColor: '#F3E5FA',
-        textColor: '#091E42',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   id: 'support_us',
+      //   content: "We're rebuilding our documentation from the ground up (see <a href='/'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
+      //   backgroundColor: '#F3E5FA',
+      //   textColor: '#091E42',
+      //   isCloseable: true,
+      // },
       docs: {
         sidebar: {
           hideable: true
@@ -97,8 +103,8 @@ const config = {
       navbar: {
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-beta.png',
-          srcDark: 'img/logo-beta-dark.png',
+          src: 'img/logo.png',
+          srcDark: 'img/logo-dark.png',
         },
         items: [
           {
@@ -135,7 +141,7 @@ const config = {
               },
               {
                 label: 'Dev Docs',
-                to: '/dev-docs/intro',
+                to: '/',
               },
             ],
           },
@@ -143,16 +149,16 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/strapi',
-              },
-              {
                 label: 'Discord',
                 href: 'https://discord.strapi.io/',
               },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/strapijs',
+              },
+              {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/strapi',
               },
             ],
           },

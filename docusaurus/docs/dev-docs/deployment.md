@@ -2,7 +2,7 @@
 title: Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html
+
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
@@ -39,7 +39,7 @@ To provide the best possible environment for Strapi the following requirements a
 <DatabaseRequire components={props.components} />
 
 :::strapi Database deployment
-Deploying databases along with Strapi is covered in the [databases guide](/dev-docs/configurations/databases#databases-installation-guides).
+Deploying databases along with Strapi is covered in the [databases guide](/dev-docs/configurations/database#databases-installation-guides).
 :::
 
 - A supported operating system:

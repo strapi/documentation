@@ -26,8 +26,8 @@ To create a new content-type:
 
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-      | Draft & Publish | Click on **ON** to activate the Draft & Publish feature for your content-type (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). Click on **OFF** to deactivate the feature. |
-      | Enable localization for this Content-Type | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed) Tick the box to allow the content-type to be managed in various locales. |
+      | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). |
+      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
 
 6. Click on the **Continue** button.
 7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
@@ -39,7 +39,7 @@ New content-types are only considered created once they have been saved. Saving 
 
 ## Creating a new component
 
-![Component creation](/img/assets/content-type-builder/component-creation.png)
+![Component creation](/img/assets/content-type-builder/component-creation-1.png)
 
 Components are created from the same-named category of the Content-type Builder's sub navigation.
 

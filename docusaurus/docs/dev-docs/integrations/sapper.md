@@ -2,7 +2,7 @@
 title: Sapper
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Sapper.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/sapper.html
+
 ---
 
 # Getting Started with Sapper

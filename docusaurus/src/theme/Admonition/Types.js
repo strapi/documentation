@@ -5,10 +5,10 @@ import CheckboxIcon from '../../components/CheckBoxIcon.svg';
 function StrapiAdmonition(props) {
   return (
     <div
-      className="theme-admonition theme-admonition-caution admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--strapi">
+      className="theme-admonition theme-admonition-strapi admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--strapi">
       <div className="admonitionHeading_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module">
         <span className="admonitionIcon_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module admonition__custom-title">
-          {props.title}
+          🤓 {props.title}
         </span>
       </div>
       <div
@@ -23,10 +23,10 @@ function StrapiAdmonition(props) {
 function GenericAdmonition(props) {
   return (
     <div
-      className="theme-admonition theme-admonition-caution admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--callout">
+      className="theme-admonition theme-admonition-callout admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--callout">
       { props.title && <div className="admonitionHeading_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module">
         <span className="admonitionIcon_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module admonition__custom-title">
-          {props.title}
+          👀 {props.title}
         </span>
       </div>}
       <div
@@ -41,10 +41,10 @@ function GenericAdmonition(props) {
 function PrerequisitesAdmonition(props) {
   return (
     <div
-      className="theme-admonition theme-admonition-caution admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--prerequisites">
+      className="theme-admonition theme-admonition-prerequisites admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module alert alert--warning admonition--prerequisites">
       <div className="admonitionHeading_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module">
         <span className="admonitionIcon_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-Layout-styles-module admonition__custom-title">
-        <CheckboxIcon className="checkbox-icon"/> PREREQUISITES
+        ✔︎ Prerequisites
         </span>
       </div>
       <div

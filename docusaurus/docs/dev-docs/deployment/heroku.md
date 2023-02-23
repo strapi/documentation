@@ -2,7 +2,7 @@
 title: Heroku
 description: Learn in this guide how to deploy your Strapi application on Heroku.
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html
+
 ---
 
 # Deploy to Heroku
@@ -350,4 +350,4 @@ If you encounter the error `'heroku' does not appear to be a git repository` whe
 
 Like with project updates on Heroku, the file system doesn't support local uploading of files as they are deleted when Heroku "cycles" the dyno. This type of file system is called [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem), which means the file system only lasts until the dyno is restarted (with Heroku this happens any time the application is redeployed or during the regular restart which can happen every few hours or every day).
 
-Due to Heroku's filesystem, an upload provider such as AWS S3 or Cloudinary is required. Additional details are available in the [installing providers documentation](/dev-docs/providers). The [Strapi Market](market.strapi.io/providers) contains providers from both Strapi and the community. Additional community providers are available from [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).
+Due to Heroku's filesystem, an upload provider such as AWS S3 or Cloudinary is required. Additional details are available in the [installing providers documentation](/dev-docs/providers). The [Strapi Market](https://market.strapi.io/providers) contains providers from both Strapi and the community. Additional community providers are available from [npmjs.com](https://www.npmjs.com/search?q=strapi-provider-upload-&page=0&perPage=20).

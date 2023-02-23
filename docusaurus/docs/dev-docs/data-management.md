@@ -2,7 +2,6 @@
 title: Data management system 
 description: Import, export, and transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/dev-docs/data-management.html
 ---
 
 # Data Management System

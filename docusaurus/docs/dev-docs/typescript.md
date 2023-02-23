@@ -2,7 +2,7 @@
 title: Typescript
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use Typescript for your Strapi application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/typescript.html
+
 ---
 
 # TypeScript development

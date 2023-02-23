@@ -2,7 +2,7 @@
 title: Gatsby
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Gatsby.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html
+
 ---
 
 # Getting Started with Gatsby

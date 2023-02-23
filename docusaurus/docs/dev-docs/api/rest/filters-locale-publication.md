@@ -2,7 +2,7 @@
 title: Filters, Locale, and Publication State
 description: Use Strapi's REST API to filter the results of your requests.
 sidebarDepth: 3
-canonicalUrl: https:/.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html
+
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
@@ -48,7 +48,9 @@ The following operators are available:
 | `$notNull`      | Is not null                              |
 | `$between`      | Is between                               |
 | `$startsWith`   | Starts with                              |
+| `$startsWithi`  | Starts with (case-insensitive)           |
 | `$endsWith`     | Ends with                                |
+| `$endsWithi`    | Ends with (case-insensitive)             |
 | `$or`           | Joins the filters in an "or" expression  |
 | `$and`          | Joins the filters in an "and" expression |
 

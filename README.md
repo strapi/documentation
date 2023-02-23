@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://strapi.io">
-    <img src="./images/logo.png" width="318px" alt="Strapi logo" />
+    <img src="./docusaurus/static/img/logo.png" width="314px" alt="Strapi logo" />
   </a>
 </p>
 <h3 align="center">API creation made simple, secure and fast.</h3>
@@ -24,7 +24,7 @@ Strapi is a free and open-source headless CMS delivering your content anywhere y
 
 The following are required if you are submitting pull requests to the documentation. For more information on how to contribute please see our [contribution guide](./CONTRIBUTING.md)
 
-- NodeJS >=14.19.1 <=18.x.x
+- NodeJS >=16.14 <=18.x.x
 - NPM >= 6.x
 - Yarn >= 1.22.x
 
@@ -32,11 +32,10 @@ The following are required if you are submitting pull requests to the documentat
 
 For general help using Strapi, please refer to [the official Strapi documentation](https://strapi.io/documentation/). For additional help, you can use one of these channels to ask a question:
 
-- [Slack](http://slack.strapi.io) (For live discussion with the Community and Strapi team)
+- [Discord](http://discord.strapi.io) (For live discussion with the Community and Strapi team)
 - [Primary GitHub](https://github.com/strapi/strapi) (Bug reports, Contributions)
 - [Community Forum](https://forum.strapi.io) (Questions and Discussions)
-- [Academy](https://academy.strapi.io) (Learn the fundamentals of Strapi)
-- [ProductBoard](https://portal.productboard.com/strapi/tabs/2-under-consideration) (Roadmap, Feature requests)
+- [Canny](https://strapi.canny.io/) (Roadmap, Feature requests)
 - [Twitter](https://twitter.com/strapijs) (Get the news fast)
 - [Facebook](https://www.facebook.com/Strapi-616063331867161)
 - [YouTube Channel](https://www.youtube.com/strapi) (Learn from Video Tutorials)

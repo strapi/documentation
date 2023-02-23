@@ -32,7 +32,7 @@ Plugins can be extended in 2 ways:
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
 :::warning
-* New versions of Strapi are released with [migration guides](/dev-docs/migration/migration-guides), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required. 
+* New versions of Strapi are released with [migration guides](/dev-docs/migration-guides), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required. 
 * Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future major versions of Strapi.
 :::
 

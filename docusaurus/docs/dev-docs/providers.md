@@ -1,7 +1,7 @@
 ---
 title: Providers
 description: Install and use providers to extend the functionality of available plugins.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/development/providers.html
+
 ---
 
 # Providers
@@ -11,7 +11,7 @@ Certain [plugins](../../../user-docs/plugins) can be extended via the installati
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
 :::note
-Only the [Upload](../plugins/upload) and [Email](../plugins/email) plugins are currently designed to work with providers. 
+Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email) plugins are currently designed to work with providers. 
 :::
 
 For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).

@@ -2,7 +2,7 @@
 title: Next.js
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Next.js.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/next-js.html
+
 ---
 
 # Getting Started with Next.js

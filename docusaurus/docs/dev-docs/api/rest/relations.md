@@ -1,7 +1,7 @@
 ---
 title: Relations
 description: Use the REST API to manage the order of relations
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html
+
 ---
 
 # Managing relations through the REST API
@@ -32,6 +32,10 @@ Using `connect` in the body of a request performs a partial update, connecting t
 You can also use the longhand syntax to [reorder relations](#relations-reordering).
 
 `connect` can be used in combination with [`disconnect`](#disconnect).
+
+:::caution
+`connect` can not be used for media attributes.
+:::
 
 <Tabs groupId="shorthand-longhand">
 
@@ -90,7 +94,7 @@ Positional arguments can be passed to the longhand syntax of `connect` to define
 The longhand syntax accepts an array of objects, each object containing the `id` of the entry to be connected and an optional `position` object to define where to connect the relation.
 
 :::note Different syntaxes for different relations
-The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#requests)).
+The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/dev-docs/api/rest#requests)).
 :::
 
 To define the `position` for a relation, pass one of the following 4 different positional attributes:
@@ -282,7 +286,8 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 
 - `data: { categories: set: [{ id: 2 }, { id: 4 }] }}`
 - `data: { categories: set: [2, 4] }}`
-- `data: { categories: [2, 4] }` (as used in the [REST API documentation](/developer-docs/latest/developer-resources/database-apis-reference/rest-api.md#update-an-entry))
+- `data: { categories: [2, 4] }` (as used in the [REST API documentation](/dev-docs/api/rest#update-an-entry))
+
 :::
 
 <Tabs groupId="shorthand-longhand">

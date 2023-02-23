@@ -5,7 +5,7 @@ sidebar_position: 2
 title: Quick Start Guide - Strapi Developer Docs
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
 # next: ./troubleshooting
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/getting-started/quick-start.html
+
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
@@ -45,7 +45,7 @@ npx create-strapi-app@latest my-project --quickstart
 </Tabs>
 
 :::info
-The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](./setup-deployment-guides/installation/cli)).
+The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
 :::
 
 ### Step 2: Register the first administrator user
@@ -123,7 +123,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 #### Create an entry for the "Restaurant" collection type
 
 1. Go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation.
-2. Click on **Add new entry**.
+2. Click on **Create new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 5. Click **Save**.
@@ -136,7 +136,7 @@ The restaurant is now listed in the [Collection types - Restaurant](http://local
 
 Let's go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Category](http://localhost:1337/admin/content-manager/collectionType/api::category.category) and create 2 categories:
 
-1. Click on **Add new entry**.
+1. Click on **Create new entry**.
 2. Type `French Food` in the _Name_ field.
 3. Click **Save**.
 4. Go back to _Collection types - Category_, then click again on **Add new entry**.  

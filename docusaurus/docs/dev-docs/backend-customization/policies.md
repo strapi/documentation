@@ -2,7 +2,7 @@
 title: Policies
 description: Strapi policies are functions that execute specific logic on each request before it reaches the controller. Policies can be customized according to your needs.
 displayed_sidebar: devDocsSidebar
-canonicalUrl: https://docs.strapi.io/dev-docs/backend-customization/policies.html
+
 ---
 
 # Policies
@@ -122,7 +122,7 @@ Global policies can be associated to any route in a project.
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/restaurant/routes/router.js"
+```js title="./src/api/restaurant/routes/custom-restaurant.js"
 
 module.exports = {
   routes: [
@@ -147,7 +147,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/api/restaurant/routes/router.ts"
+```ts title="./src/api/restaurant/routes/custom-restaurant.ts"
 
 export default {
   routes: [
@@ -173,13 +173,13 @@ export default {
 
 ### Plugin policies
 
-[Plugins](/dev-docs/plugins) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
+[Plugins](/dev-docs/plugins) can add and expose policies to an application. For example, the [Users & Permissions plugin](/user-docs/users-roles-permissions) comes with policies to ensure that the user is authenticated or has the rights to perform an action:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/restaurant/routes/router.js"
+```js title="./src/api/restaurant/routes/custom-restaurant.js"
 
 module.exports = {
   routes: [
@@ -203,7 +203,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/api/restaurant/routes/router.ts"
+```ts title="./src/api/restaurant/routes/custom-restaurant.ts"
 
 export default {
   routes: [
@@ -246,7 +246,7 @@ module.exports = async (policyContext, config, { strapi }) => {
 };
 ```
 
-```js title="./src/api/restaurant/routes/router.js"
+```js title="./src/api/restaurant/routes/custom-restaurant.js"
 
 module.exports = {
   routes: [
@@ -285,7 +285,7 @@ export default (policyContext, config, { strapi }) => {
 
 ```
 
-```ts title="./src/api/restaurant/routes/router.ts"
+```ts title="./src/api/restaurant/routes/custom-restaurant.ts"
 
 export default {
   routes: [
@@ -315,7 +315,7 @@ To use a policy in another API, reference it with the following syntax: `api::[a
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/category/routes/router.js"
+```js title="./src/api/category/routes/custom-category.js"
 
 module.exports = {
   routes: [
@@ -339,7 +339,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/api/category/routes/router.ts"
+```ts title="./src/api/category/routes/custom-category.ts"
 
 export default {
   routes: [

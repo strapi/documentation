@@ -1,8 +1,8 @@
 ---
-title: Update
+title: Upgrade Strapi version
 displayed_sidebar: devDocsSidebar
 description: The following documentation covers how to upgrade your application to the latest version of Strapi.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/update-migration-guides/update-version.html
+
 ---
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'
@@ -21,7 +21,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 :::prerequisites
 
 - Stop the server before starting the upgrade.
-- Confirm there are no [migrations](/dev-docs/update-migration-guides/migration-guides) between the current and ultimate Strapi versions.
+- Confirm there are no [migrations](/dev-docs/migration-guides) between the current and ultimate Strapi versions.
 :::
 
 1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version:

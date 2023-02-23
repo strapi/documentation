@@ -2,16 +2,24 @@
 title: Command Line Interface
 displayed_sidebar: devDocsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html
+
 
 ---
 
 # Command Line Interface (CLI)
 
-Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
+
+:::caution
+Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. A fix for the `npm` package manager is anticipated by March 2023. In the meantime, consider using the `yarn` package manager.
+:::
 
 :::note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
+
+To pass options with `npm` use the syntax: `npm run strapi <command> -- --<option>`.
+
+To pass options with `yarn` use the syntax: `yarn run strapi <command> --<option>`
 :::
 
 ## strapi new
@@ -110,13 +118,15 @@ strapi export
 
 The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
-| Option           | Type    | Description                                                                                               |
-|------------------|---------|----------------------------------------------------------------------------|
-| `--no-encrypt`     |         | Disables file encryption and disables the `key` option.                                                   |
-| `--no-compress`    |         | Disables file compression.                                                                                |
-| `-k`, `--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |                                |
-| `-f`, `--file`       | string  | Specifies the export filename. Do not include a file extension.                                           |
-| `-h`, `--help`       |         | Displays help for the `strapi export` command.                                                            |
+| Option           | Type    | Description                                                                                                  |
+|------------------|:-------:|--------------------------------------------------------------------------------------------------------------|
+| `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
+| `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
+| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
+| `-f`, <br/>`--file`| string   | Specifies the export filename. Do not include a file extension.                                           |
+| `--exclude`        | string   | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |
+| `--only`           | string   | Include only these data. The available types are: `content`, `files`, and `config`.                       |
+| `-h`, <br/>`--help`|     -    | Displays help for the `strapi export` command.                                                            |
 
 **Examples**
 
@@ -170,9 +180,8 @@ The destination Strapi instance should be running with the `start` command and n
 **Example**
 
 ```bash
- strapi transfer --to http://example.com/admin --to-token my-transfer-token
+strapi transfer --to http://example.com/admin --to-token my-transfer-token
 ```
-
 
 ## strapi configuration:dump
 
@@ -290,7 +299,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
 
 ```bash
 strapi generate
@@ -389,7 +398,7 @@ strapi install <name>
 - **strapi install &#60;name&#62;**<br/>
   Installs a plugin called **&#60;name&#62;**.
 
-  Example: `strapi install graphql` will install the plugin `strapi-plugin-graphql`
+  Example: `strapi install graphql` will install the plugin `@strapi/plugin-graphql`
 
 :::caution
 Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
@@ -408,15 +417,16 @@ options [--delete-files]
 - **strapi uninstall &#60;name&#62;**<br/>
   Uninstalls a plugin called **&#60;name&#62;**.
 
-  Example: `strapi uninstall graphql` will remove the plugin `strapi-plugin-graphql`
+  Example: `strapi uninstall graphql` will remove the plugin `@strapi/plugin-graphql`
 
 - **strapi uninstall &#60;name&#62; --delete-files**<br/>
   Uninstalls a plugin called **&#60;name&#62;** and removes the files in `./extensions/name/`
 
-  Example: `strapi uninstall graphql --delete-files` will remove the plugin `strapi-plugin-graphql` and all the files in `./extensions/graphql`
+  Example: `strapi uninstall graphql --delete-files` will remove the plugin `@strapi/plugin-graphql` and all the files in `./extensions/graphql`
 
 :::caution
-Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
+- In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
+- Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::
 
 ## strapi telemetry:disable

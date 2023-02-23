@@ -3,7 +3,7 @@ title: Writing Content
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
 sidebar_position: 3
 displayed_sidebar: userDocsSidebar
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/writing-content.html
+
 ---
 
 # Writing content
@@ -30,7 +30,7 @@ To write or edit content:
 | Email       | Write a complete and valid email address.                                                                                                                                                                                                                                                                                                                                 |
 | Password    | Write a password. <br /><br /> 💡 Click the eye icon, displayed on the right of the box, to show the password.                                                                                                                                                                                                                                                                |
 | Enumeration | 1. Click the drop-down list. <br /> 2. Choose an entry from the list.                                                                                                                                                                                                                                                                                                       |
-| Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/user-docs/media-library/introduction-to-media-library.md) or from a [folder](/user-docs/media-library/organizing-assets-with-folders.md) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
+| Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/user-docs/media-library) or from a [folder](/user-docs/media-library/organizing-assets-with-folders.md) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
 | JSON        | Write your content, in JSON format, in the code textbox.                                                                                                                                                                                                                                                                                                                  |
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows to automatically generate a UID based on the content-type name.                                                                                                                                                                                                |
 :::note
@@ -82,8 +82,8 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-<img src="/img/assets/content-manager/edit-view_dynamic-zone1.png" alt="Writing content for a dynamic zone" width="80%" />
-<img src="/img/assets/content-manager/edit-view_dynamic-zone3.png" alt="Writing content for a dynamic zone" width="80%" />
+<img src="/img/assets/content-manager/edit-view_dynamic-zone-1.png" alt="Writing content for a dynamic zone" width="80%" />
+<img src="/img/assets/content-manager/edit-view_dynamic-zone-2.png" alt="Writing content for a dynamic zone" width="80%" />
 
 1. Click on the ![Add icon](/img/assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
@@ -91,8 +91,12 @@ Dynamic zones are a combination of components, which themselves are composed of 
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the arrow buttons ![Up icon](/img/assets/icons/up2.svg) ![Down icon](/img/assets/icons/down2.svg) to reorder components in your dynamic zone.
+- Use the drag & drop button ![Drag icon](/img/assets/icons/drag.svg) to reorder components in your dynamic zone.
 - Use the delete button ![Delete icon](/img/assets/icons/delete.svg) to delete a component from your dynamic zone.
+
+:::tip
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](/img/assets/icons/drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+:::
 
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.

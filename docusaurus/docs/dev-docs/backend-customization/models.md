@@ -22,7 +22,7 @@ _tags: [
 	"afterFindMany"
 ]
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/dev-docs/development/backend-customization/models.html
+
 ---
 
 # Models
@@ -103,7 +103,6 @@ The `info` key in the model's schema describes information used to display the m
 | `singularName` | String | Singular form of the content-type name.<br />Used to generate the API routes and databases/tables collection.<br /><br />Should be kebab-case. |
 | `pluralName`   | String | Plural form of the content-type name.<br />Used to generate the API routes and databases/tables collection.<br /><br />Should be kebab-case.    |
 | `description`  | String | Description of the model                                                                                                                   |
-| `icon`<br/><br />_Optional,_<br />_only for Components_       | String      | [FontAwesome](https://fontawesome.com/) (v5) icon name to use for the component's icon in the admin panel
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
@@ -137,7 +136,7 @@ The `type` parameter of an attribute should be one of the following values:
 | String types | <ul><li>`string`</li> <li>`text`</li> <li>`richtext`</li><li>`enumeration`</li> <li>`email`</li><li>`password`</li><li>[`uid`](#uid-type)</li></ul> |
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
-| Other generic types |<ul><li>`boolean`</li><li>`array`</li><li>`json`</li></ul> |
+| Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
 | Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
 | Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
@@ -662,7 +661,7 @@ Each event listener is called sequentially. They can be synchronous or asynchron
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js"
 
 module.exports = {
   beforeCreate(event) {
@@ -684,7 +683,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.ts"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.ts"
 
 export default {
   beforeCreate(event) {
@@ -707,7 +706,7 @@ export default {
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
-```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
+```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js"
 
 // registering a subscriber
 strapi.db.lifecycles.subscribe({

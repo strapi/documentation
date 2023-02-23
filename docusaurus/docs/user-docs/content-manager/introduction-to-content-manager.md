@@ -4,7 +4,7 @@ sidebar_position: 1
 displayed_sidebar: userDocsSidebar
 slug: /user-docs/content-manager
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/introduction-to-content-manager.html
+
 ---
 
 # Introduction to the Content Manager

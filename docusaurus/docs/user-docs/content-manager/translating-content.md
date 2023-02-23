@@ -3,7 +3,7 @@ title: Translating content
 displayed_sidebar: userDocsSidebar
 description: Instructions to translate content in various locales with i18n plugin.
 sidebar_position: 5
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/translating-content.html
+
 ---
 
 # Translating content

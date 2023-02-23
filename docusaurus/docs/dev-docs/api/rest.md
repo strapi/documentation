@@ -1,7 +1,7 @@
 ---
 title: REST API 
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest.html
+
 ---
 
 # REST API
@@ -274,8 +274,8 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 </ApiCall>
 
 :::note NOTES
-* Even with the [Internationalization (i18n) plugin](/developer-docs/latest/plugins/i18n.md) installed, it's currently not possible to [update the locale of an entry](/developer-docs/latest/plugins/i18n.md#updating-an-entry).
-* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/developer-docs/latest/developer-resources/database-apis-reference/rest/relations.md) for more details).
+* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
+* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
 
 ### Delete an entry

@@ -2,7 +2,7 @@
 title: Laravel
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Laravel.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/laravel.html
+
 ---
 
 # Getting Started with Laravel

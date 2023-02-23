@@ -2,7 +2,7 @@
 title: Jekyll
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Jekyll.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html
+
 ---
 
 # Getting Started with Jekyll

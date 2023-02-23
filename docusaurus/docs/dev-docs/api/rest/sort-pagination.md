@@ -2,7 +2,7 @@
 title: Sort and Pagination
 description: Use Strapi's REST API to sort or paginate your data.
 sidebarDepth: 3
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html
+
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
@@ -224,7 +224,7 @@ To paginate results by offset, use the following parameters:
 | `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
 
 :::tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/setup-deployment-guides/configurations/optional/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/configurations//api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
 
 <ApiCall>

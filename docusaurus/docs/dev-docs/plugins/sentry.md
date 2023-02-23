@@ -2,7 +2,7 @@
 title: Sentry
 displayed_sidebar: devDocsSidebar
 description: Track errors in your Strapi application.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/plugins/sentry.html
+
 ---
 
 # Sentry

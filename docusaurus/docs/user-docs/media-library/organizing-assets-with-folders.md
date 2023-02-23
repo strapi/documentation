@@ -2,7 +2,7 @@
 title: Organizing assets with folders
 displayed_sidebar: userDocsSidebar
 description: Instructions on how to use folders in the Media Library, including adding, editing, and deleting folders, and browsing their content.
-canonicalUrl: http://docs.strapi.io/user-docs/media-library/organizing-assets-with-folders.html
+
 ---
 
 # Organizing assets with folders
@@ -12,7 +12,7 @@ Folders in the Media Library help you organize uploaded assets. Folders sit at t
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
 :::note
-Folders follow the permission system of assets (see [Users, Roles & Permissions](/user-docs/users-roles-permissions/introduction-to-users-roles-permissions.md)). It is not yet possible to define specific permissions for a folder.
+Folders follow the permission system of assets (see [Users, Roles & Permissions](/user-docs/users-roles-permissions)). It is not yet possible to define specific permissions for a folder.
 :::
 
 ## Browsing folders

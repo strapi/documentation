@@ -2,7 +2,7 @@
 title: Flutter
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Flutter.
-canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/flutter.html
+
 ---
 
 # Getting Started with Flutter

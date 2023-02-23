@@ -607,8 +607,7 @@ export default {
 
 #### Predefined hook
 
-<!-- TODO: use proper link when CM section of user guide is converted -->
-Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/docs/user-docs/intro).
+Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/intro).
 
 <details>
 <summary>Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column</summary>
@@ -627,11 +626,9 @@ export default {
           'contentType.pluginOptions.i18n.localized',
           false
         );
-
         if (!isFieldLocalized) {
           return { displayedHeaders, layout };
         }
-
         return {
           layout,
           displayedHeaders: [

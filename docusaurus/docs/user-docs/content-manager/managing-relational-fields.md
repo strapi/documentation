@@ -2,7 +2,7 @@
 title: Managing relational fields
 description: Instructions to manage relation-type fields, called "relational fields", which establish a relation between two content-types.
 sidebar_position: 4
-canonicalUrl: https://docs.strapi.io/user-docs/latest/content-manager/managing-relational-fields.html
+
 ---
 
 # Managing relational fields
@@ -57,7 +57,7 @@ You can click on the name of the selected entry to be redirected to the edit vie
 
 To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/clear.svg).
 
-## Managing multiple-choices relational fields
+## Managing multiple-choice relational fields
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
@@ -73,4 +73,6 @@ To select the relevant relational field's entries:
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the remove button ![Minus icon](/img/assets/icons/minus.svg) in the selected entries list.
+To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/cross.svg) in the selected entries list.
+
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
