@@ -40,4 +40,4 @@ You can join [GitHub](https://github.com/strapi/strapi), the [Forum](https://for
 
 Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
 
-For enterprise support, please see our [Enterprise Support platform](https://support.strapi.io/support/home), please note that you will need to have an active enterprise license to place tickets.
+For enterprise support, please see our [Enterprise Support platform](https://support.strapi.io/support/home). Please note that you will need to have an active enterprise license to place tickets.
