@@ -84,8 +84,6 @@ To disable encryption, pass the `--no-encrypt` option with the `strapi export` c
 
 ### Example: Export data without encryption
 
-<br/>
-
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -108,7 +106,6 @@ npm run strapi export -- --no-encrypt
 
 ### Example: Export data with the encryption `--key` option
 
-<br/>
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="yarn">
@@ -136,7 +133,6 @@ The default `strapi export` command compresses your project data using `gzip` co
 To disable compression, pass the `--no-compress` option with the `strapi export` command.
 
 ### Example: Export data without compression
-<br/>
 
 <Tabs groupId="yarn-npm">
 
@@ -198,7 +194,6 @@ Media such as images consist of the file (asset) and the entity in the database.
 :::
 
 ### Example: Export data excluding assets, entities, and relations
-<br/>
 
 <Tabs groupId="yarn-npm">
 
