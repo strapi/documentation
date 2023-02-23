@@ -92,8 +92,7 @@ footer.footer.footer--dark a:hover {
 }
 
 code {
-  font-family: "SFMono-Regular", "Menlo", "Monaco", "Consolas",
-    "Liberation Mono", "Courier New", monospace;
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
   font-weight: 400;
   line-height: 24px;
   padding: 4px 8px;
