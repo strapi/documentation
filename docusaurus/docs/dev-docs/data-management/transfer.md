@@ -4,7 +4,7 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
-# Data transfer<BetaBadge />
+# Data transfer
 
 :::strapi Install the beta version
 `strapi transfer` is only available in the current beta version. To create a new project using the beta version, run the following command in your terminal:
