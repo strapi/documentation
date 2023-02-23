@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'Introduction'
 displayed_sidebar: cloudSidebar
+slug: /cloud/intro
 sidebar_position: 1
 ---
 
