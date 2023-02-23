@@ -17,7 +17,7 @@ async function strapiParticles() {
                 console.log(e)
                 break;
             }
-            let data = await res.json()
+            const data = await res.json()
             if (data.length == 0) {
                 localStorage.setItem('profiles', JSON.stringify(profiles))
                 localStorage.setItem('profilesLastUpdated', Date.now())
@@ -35,7 +35,7 @@ async function strapiParticles() {
     // add id scene to canvas
     bodycanvas.id = 'scene';
     document.body.appendChild(bodycanvas);
-    var canvas = document.querySelector("#scene"),
+    const canvas = document.querySelector("#scene"),
         ctx = canvas.getContext("2d"),
         particles = [],
         amount = 0,
@@ -51,10 +51,10 @@ async function strapiParticles() {
 
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'destination-over';
-    var ww = canvas.width = window.innerWidth;
-    var wh = canvas.height = window.innerHeight;
+    const ww = canvas.width = window.innerWidth;
+    const wh = canvas.height = window.innerHeight;
 
-    let profileIndex = 0
+    const profileIndex = 0
     function Particle(x, y) {
         this.x = Math.random() * ww;
         this.y = Math.random() * wh;
@@ -108,10 +108,10 @@ async function strapiParticles() {
 
 
 
-        var a = this.x - mouse.x;
-        var b = this.y - mouse.y;
+        const a = this.x - mouse.x;
+        const b = this.y - mouse.y;
 
-        var distance = Math.sqrt(a * a + b * b);
+        const distance = Math.sqrt(a * a + b * b);
         if (distance < (radius * 70)) {
             this.accX = (this.x - mouse.x) / 100;
             this.accY = (this.y - mouse.y) / 100;
@@ -137,7 +137,7 @@ async function strapiParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Create an image object and load the image file
-        var img = new Image();
+        const img = new Image();
         img.src = "/img/strapi.png";
 
         // Once the image is loaded, draw it on the canvas
@@ -150,13 +150,13 @@ async function strapiParticles() {
             ctx.drawImage(img, padding / 2, (wh - img.height) / 2, newWidth, newHeight);
 
             // Get the image data and create particles
-            var data = ctx.getImageData(0, 0, ww, wh).data;
+            const data = ctx.getImageData(0, 0, ww, wh).data;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.globalCompositeOperation = "screen";
 
             particles = [];
-            for (var i = 0; i < ww; i += Math.round(ww / 80)) {
-                for (var j = 0; j < wh; j += Math.round(ww / 80)) {
+            for (let i = 0; i < ww; i += Math.round(ww / 80)) {
+                for (let j = 0; j < wh; j += Math.round(ww / 80)) {
                     if (data[((i + j * ww) * 4) + 3] > 80) {
                         particles.push(new Particle(i, j));
                     }
@@ -190,7 +190,7 @@ async function strapiParticles() {
 
 }
 const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-let pressed = [];
+const pressed = [];
 window.addEventListener('keydown', (e) => {
     pressed.push(e.code);
     pressed.splice(-konamiCode.length - 1, pressed.length - konamiCode.length);
