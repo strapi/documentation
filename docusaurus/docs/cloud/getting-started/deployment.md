@@ -68,6 +68,7 @@ The first time logging into Strapi Cloud, a welcome page is displayed providing 
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default DB used by Strapi Cloud. See the [Database Configuration documentation](/dev-docs/configurations/database#environment-variables-in-database-configurations) for details.
+    You can also set up here a custom email provider (Sendgrid is set as the default one for the Strapi apps hosted on Cloud). See the [Providers Configuration](/dev-docs/providers#configuring-providers) for details.
     :::
 
 5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
