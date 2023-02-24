@@ -8,7 +8,7 @@ class Ball {
         this.radius = 12;
         this.speed = 8;
         // set speed to 12 if the user is on linux
-        if (navigator.platform.includes("Linux")) {
+        if (navigator?.platform?.includes("Linux")) {
             this.speed = 12;
         }
         this.speedMargin = 2;
