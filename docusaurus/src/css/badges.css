@@ -3,8 +3,6 @@
  */
 .badge {
   position: relative;
-  top: -.2em;
-  left: .6em;
   font-size: 14px;
   font-weight: 400;
   border-radius: 4px;
