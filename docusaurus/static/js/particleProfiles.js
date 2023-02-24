@@ -239,10 +239,10 @@ async function strapiParticles() {
 
 
         });
-        // set back to the original title
-        document.title = document.ogTitle;
         // stop animating title
         clearInterval(titleInterval);
+        // set back to the original title
+        document.title = document.ogTitle;
 
     }
     function startGame() {
