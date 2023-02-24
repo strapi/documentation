@@ -185,12 +185,13 @@ As of Strapi v4.7.0 and greater it's strongly recommended you sanitize your inco
 
 Within the Strapi factories there are 2 functions exposed that can be used for sanitization:
 
-| Function Name    | Parameters    | Description                                |
-|------------------|---------------|--------------------------------------------|
-| `sanitizeParams` | `ctx`         | Sanitizes the request parameters and query |
-| `sanitizeOutput` | `data`, `ctx` | Sanitizes the output data                  |
+| Function Name    | Parameters                 | Description                                                                          |
+|------------------|----------------------------|--------------------------------------------------------------------------------------|
+| `sanitizeParams` | `ctx`                      | Sanitizes the request query                                                          |
+| `sanitizeOutput` | `entity`/`entities`, `ctx` | Sanitizes the output data where entity/entities should be an object or array of data |
+| `sanitizeInput`  | `data`, `ctx`              | Sanitizes the input data                                                             |
 
-These two function will automatically inherit the sanitization settings from the model and will sanitize the data accordingly based on the content type schema and users-permissions plugin's permissions.
+These two function will automatically inherit the sanitization settings from the model and will sanitize the data accordingly based on the content type schema and any of the content API authentication strategies such as the Users-Permissions plugin or API Tokens.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -236,11 +237,11 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 
 Within custom controllers, there are 3 primary functions exposed via the `@strapi/utils` package that can be used for sanitization:
 
-| Function Name       | Parameters               | Description                                                                                                                            |
-|---------------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `contentAPI.input`  | `data`, `schema`, `auth` | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
-| `contentAPI.output` | `data`, `schema`, `auth` | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins |
-| `contentAPI.params` | `ctx.query`, `schema`, `auth` | Sanitizes the request params and query including filters, sort, fields, and populate |
+| Function Name       | Parameters                    | Description                                                                                                                            |
+|---------------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
+| `contentAPI.params` | `ctx.query`, `schema`, `auth` | Sanitizes the request params and query including filters, sort, fields, and populate                                                   |
 
 :::note
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for especially when combining the data from multiple sources.
