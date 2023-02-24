@@ -48,12 +48,12 @@ async function strapiParticles() {
     Particle.particles = [];
     Particle.amount = 0;
     Particle.radius = 1;
-    var game = new Game(document.querySelector("#scene"), destroy);
+    const game = new Game(document.querySelector("#scene"), destroy);
     Particle.game = game;
     const ctx = game.ctx;
     const canvas = game.canvas;
-    var bar = null;
-    var ball = null;
+    let bar = null;
+    let ball = null;
 
     // delete canvas if user hits escape
     document.addEventListener("keydown", function (event) {
@@ -122,7 +122,7 @@ async function strapiParticles() {
         if(!game) return;
         requestAnimationFrame(render);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (var i = 0; i < Particle.amount; i++) {
+        for (let i = 0; i < Particle.amount; i++) {
             Particle.particles[i].render(ctx, game.active, game.gameOver);
         }
         bar?.render(ctx, game);
