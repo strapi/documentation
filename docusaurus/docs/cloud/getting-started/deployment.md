@@ -67,7 +67,7 @@ The first time logging into Strapi Cloud, a welcome page is displayed providing 
     ![Advanced Setup](/img/assets/cloud/advanced.png)
 
     :::strapi Using Environment Variables
-    You can use environment variable to connect your project to an extrnal database rather than the default DB used by Strapi Cloud. See the [Database Configuration documentation](/dev-docs/configurations/database#environment-variables-in-database-configurations) for details.
+    You can use environment variable to connect your project to an external database rather than the default DB used by Strapi Cloud. See the [Database Configuration documentation](/dev-docs/configurations/database#environment-variables-in-database-configurations) for details.
     :::
 
 5. Click **Next** to proceed to the **Payment and billing** page. Enter the corresponding billing details.
