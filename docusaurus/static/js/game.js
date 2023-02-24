@@ -12,23 +12,24 @@ class Game {
         this.gameOver = false;
         this.ctx = canvas.getContext("2d")
         this.destroyCallback = destroyCallback;
-
+        let leftKeys = ["ArrowLeft", "KeyA"]
+        let rightKeys = ["ArrowRight", "KeyD"]
         window.addEventListener("keydown", (e) => {
             // set left and right press and if any of the valid keys are pressed reset the mouse move events
-            if (e.code === "ArrowLeft" || e.code === "KeyA") {
+            if (leftKeys.includes(e.code)) {
                 Game.leftPressed = true;
                 Game.mouseMoveEvents = 0;
             }
-            if (e.code === "ArrowRight" || e.code === "KeyD") {
+            if (rightKeys.includes(e.code)) {
                 Game.rightPressed = true;
                 Game.mouseMoveEvents = 0;
             }
         });
         window.addEventListener("keyup", (e) => {
-            if (e.code === "ArrowLeft") {
+            if (leftKeys.includes(e.code)) {
                 Game.leftPressed = false;
             }
-            if (e.code === "ArrowRight") {
+            if (rightKeys.includes(e.code)) {
                 Game.rightPressed = false;
             }
         });
