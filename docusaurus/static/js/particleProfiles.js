@@ -141,7 +141,6 @@ async function strapiParticles() {
       for (let i = 0; i < ww; i += Math.round(ww / 80)) {
         for (let j = 0; j < wh; j += Math.round(ww / 80)) {
           if (data[(i + j * ww) * 4 + 3] > 80) {
-            console.log(ww);
             Particle.particles.push(new Particle(i, j, ww, wh, game));
           }
         }

@@ -5,6 +5,7 @@ class Bar {
     this.wh = wh;
     this.x = ww / 2;
     this.name = "bar";
+    this.color = "#7B79FF";
     this.bottomOffset = 100;
     this.barWidth = 200;
     this.barHeight = 10;
@@ -33,7 +34,7 @@ class Bar {
 
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.barWidth, this.barHeight);
-    ctx.fillStyle = "#7B79FF";
+    ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
   }
