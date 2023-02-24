@@ -10,6 +10,7 @@ class Bar {
     this.barWidth = 200;
     this.barHeight = 10;
     this.movementSpeed = 10;
+    this.month = new Date().getMonth()
   }
   render(ctx) {
     // check if left or right arrow is pressed
@@ -36,7 +37,7 @@ class Bar {
     ctx.rect(this.x, this.y, this.barWidth, this.barHeight);
     // fill the rectangle with a rainbow gradient
     // check if month is june
-    if (new Date().getMonth() === 5) {
+    if (this.month === 5) {
       let gradient = ctx.createLinearGradient(
         this.x,
         0,
