@@ -30,7 +30,6 @@ class Particle {
   }
   destroy() {
     Particle.particles.splice(Particle.particles.indexOf(this), 1);
-    console.log(this.game);
     this.game.increaseScore();
   }
   render(ctx, gameActive, gameOver) {
