@@ -15,7 +15,7 @@ async function strapiParticles() {
     localStorage.getItem("profiles") &&
     localStorage.getItem("profilesLastUpdated") &&
     Date.now() - localStorage.getItem("profilesLastUpdated") <
-      1000 * 60 * 60 * 24 * 7
+    1000 * 60 * 60 * 24 * 7
   ) {
     // load profiles from local storage
     profiles.push(...JSON.parse(localStorage.getItem("profiles")));
@@ -28,7 +28,7 @@ async function strapiParticles() {
       try {
         res = await fetch(
           "https://api.github.com/repos/strapi/strapi/contributors?per_page=100&page=" +
-            page
+          page
         );
       } catch (e) {
         console.log(e);
@@ -54,6 +54,7 @@ async function strapiParticles() {
   Particle.particles = [];
   Particle.radius = 1;
   game = new Game(document.querySelector("#scene"), destroy, setScore);
+  window.game = game;
   const ctx = game.ctx;
   const canvas = game.canvas;
   let ww = (canvas.width = window.innerWidth);
