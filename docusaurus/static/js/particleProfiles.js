@@ -3,6 +3,13 @@ import Particle from "/js/particle.js";
 import Game from "/js/game.js";
 import Bar from "/js/bar.js";
 import Ball from "/js/ball.js";
+import Firework from "/js/firework.js";
+
+
+let game = null
+let bar = null
+let ball = null
+let rendering = { value: true }
 async function strapiParticles() {
     let profiles = Particle.profiles;
     if (
@@ -40,20 +47,21 @@ async function strapiParticles() {
             });
         }
     }
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'KeyP') {
+            rendering.value = !rendering.value
+        }
+    })
     // create canvas element and append to body
     const bodycanvas = document.createElement("canvas");
     bodycanvas.id = "scene";
     document.body.appendChild(bodycanvas);
     // init game
     Particle.particles = [];
-    Particle.amount = 0;
     Particle.radius = 1;
-    const game = new Game(document.querySelector("#scene"), destroy);
-    Particle.game = game;
+    game = new Game(document.querySelector("#scene"), destroy, setScore);
     const ctx = game.ctx;
     const canvas = game.canvas;
-    let bar = null;
-    let ball = null;
 
     // delete canvas if user hits escape
     document.addEventListener("keydown", function (event) {
@@ -65,9 +73,39 @@ async function strapiParticles() {
     let ww = (canvas.width = window.innerWidth);
     let wh = (canvas.height = window.innerHeight);
 
+    function setScore(score) {
+        document.getElementById("breakout-score").innerText = "Score: " + score;
+    }
     function initScene() {
         ww = canvas.width = window.innerWidth;
         wh = canvas.height = window.innerHeight;
+
+        //add score to the navbar by adding a span with the class name navbar__item and id breakout-score
+        const score = document.createElement("span");
+        score.className = "navbar__item navbar__link";
+        score.id = "breakout-score";
+        score.innerText = "Score: 0";
+        function setupDom(){
+            document.querySelector(".navbar__items").appendChild(score);
+            // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
+            document.querySelectorAll("h1").forEach((h1) => {
+                // store the original text in the data-original-text attribute
+                h1.setAttribute("data-original-text", h1.innerText);
+                h1.innerText = "Strapi Breakout - Press Enter To Start";
+            
+
+            });
+            // set scroll to top
+            window.scrollTo(0, 0);
+        }
+// if window is loaded just add if not wait for onload
+        if (document.readyState === "complete") {
+            setupDom()
+        } else {
+            window.addEventListener("load", setupDom)
+        }
+
+
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -99,15 +137,23 @@ async function strapiParticles() {
             for (let i = 0; i < ww; i += Math.round(ww / 80)) {
                 for (let j = 0; j < wh; j += Math.round(ww / 80)) {
                     if (data[(i + j * ww) * 4 + 3] > 80) {
-                        Particle.particles.push(new Particle(i, j, ww, wh));
+                        Particle.particles.push(new Particle(i, j, ww, wh, game));
                     }
                 }
             }
+            for (let i = 0; i < 100; i++) {
+                const x = Math.random() * ww;
+                const y = Math.random() * wh;
+                const size = Math.random() * 25 + 10;
+                const color = `${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)}`;
+                Firework.fireworks.push(new Firework(x, y, size, color));
+            }
             bar = new Bar(ww, wh);
             ball = new Ball(ww, wh, bar);
+            window.bar = bar
+            window.ball = ball
 
 
-            Particle.amount = Particle.particles.length;
         };
     }
 
@@ -118,21 +164,56 @@ async function strapiParticles() {
         }
     }
 
+    let then = Date.now();
+    const fps = 60;
+    const interval = 1000 / fps;
+
     function render(a) {
-        if(!game) return;
+        // console.log(rendering)
+        if (!game) return;
+        // cap the framerate to 60fps
+        const now = Date.now();
+        const delta = now - then;
+        if (delta < interval) {
+            requestAnimationFrame(render);
+            return;
+        }
+        then = now - (delta % interval);
+        if (!rendering.value) {
+            requestAnimationFrame(render);
+            return;
+        }
         requestAnimationFrame(render);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < Particle.amount; i++) {
+        for (let i = 0; i < Particle.particles.length; i++) {
             Particle.particles[i].render(ctx, game.active, game.gameOver);
         }
         bar?.render(ctx, game);
         ball?.render(ctx, game);
+        if (game.gameOver && Particle.particles.length === 0) {
+            for (let i = 0; i < Firework.fireworks.length; i++) {
+                Firework.fireworks[i].update(ctx);
+                Firework.fireworks[i].render(ctx);
+
+                // Remove the firework from the array if it has finished exploding
+                if (Firework.fireworks[i].isFinished()) {
+                    Firework.fireworks.splice(i, 1);
+                    i--;
+                }
+            }
+        }
     }
     function destroy() {
         bar = null;
         ball = null;
         game = null;
+        document.getElementById("breakout-score").remove();
         bodycanvas.remove();
+        document.querySelectorAll("h1").forEach((h1) => {
+            // set back to the original text
+            h1.innerText = h1.getAttribute("data-original-text");
+
+        });
     }
     function startGame() {
         game.start();
@@ -168,3 +249,11 @@ window.addEventListener("keydown", (e) => {
         strapiParticles();
     }
 });
+
+window.game = game
+window.Particle = Particle
+window.Firework = Firework
+window.Bar = Bar
+window.Ball = Ball
+window.Game = Game
+window.rendering = rendering

@@ -38,6 +38,12 @@ const config = {
     },
     {
       src:
+        '/js/firework.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src:
         '/js/ball.js',
       type: 'module',
       async: true,

@@ -6,8 +6,7 @@ class Particle {
     static particles = []
     static amount = 0
     static radius = 1
-    static game = null
-    constructor(x, y, ww, wh) {
+    constructor(x, y, ww, wh, game) {
         this.x = Math.random() * ww;
         this.y = Math.random() * wh;
         this.dest = {
@@ -21,6 +20,7 @@ class Particle {
         this.accX = 0;
         this.accY = 0;
         this.friction = Math.random() * 0.002 + 0.94;
+        this.game = game
 
         // this.color = colors[Math.floor(Math.random()*6)];
         this.image = new Image();
@@ -29,7 +29,8 @@ class Particle {
     }
     destroy() {
         Particle.particles.splice(Particle.particles.indexOf(this), 1)
-        Particle.amount--
+        console.log(this.game)
+        this.game.increaseScore()
     }
     render(ctx, gameActive, gameOver) {
         if (gameOver) {
