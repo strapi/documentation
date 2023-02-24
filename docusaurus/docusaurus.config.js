@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs-next.strapi.io/',
+  url: 'https://docs.strapi.io/',
   baseUrl: '/',
   onBrokenLinks: 'warn', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'warn',
