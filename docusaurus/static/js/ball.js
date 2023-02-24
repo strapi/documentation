@@ -74,11 +74,6 @@ class Ball {
             // alert("GAME OVER");
             game.gameOver = true;
             game.active = false;
-            // wait 5 seconds then destroy the game
-            setTimeout(() => {
-                game.destroy();
-            }, 5000);
-            console.log("game over");
         }
         let particles = Particle.particles;
         // check if the ball hits a particle then bounce off of it and destroy the particle
