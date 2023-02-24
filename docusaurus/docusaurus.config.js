@@ -32,7 +32,31 @@ const config = {
   scripts: [
     {
       src:
-        '/js/particleProfiles.js',
+        '/js/particle.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src:
+        '/js/ball.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src:
+        '/js/bar.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src:
+        '/js/game.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src: '/js/particleProfiles.js',
+      type: 'module',
       async: true,
     },
   ],
