@@ -120,7 +120,7 @@ class Ball {
   }
   drawBall(ctx) {
     // center the image and shrink it to size of the ball
-    ctx.drawImage(
+    ctx?.drawImage(
       this.image,
       this.x - this.radius,
       this.y - this.radius,

@@ -15,7 +15,7 @@ async function strapiParticles() {
     localStorage.getItem("profiles") &&
     localStorage.getItem("profilesLastUpdated") &&
     Date.now() - localStorage.getItem("profilesLastUpdated") <
-    1000 * 60 * 60 * 24 * 7
+      1000 * 60 * 60 * 24 * 7
   ) {
     // load profiles from local storage
     profiles.push(...JSON.parse(localStorage.getItem("profiles")));
@@ -28,7 +28,7 @@ async function strapiParticles() {
       try {
         res = await fetch(
           "https://api.github.com/repos/strapi/strapi/contributors?per_page=100&page=" +
-          page
+            page
         );
       } catch (e) {
         console.log(e);
@@ -217,6 +217,21 @@ async function strapiParticles() {
           i--;
         }
       }
+      ctx.font = "bold 50px Segoe UI";
+      ctx.fillStyle = "#7B79FF";
+      ctx.textAlign = "center";
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 5;
+
+      ctx.strokeText("You Win", ww / 2, wh / 2);
+
+      ctx.fillText("You Win", ww / 2, wh / 2);
+
+      // write score on the screen
+      ctx.font = "bold 30px Segoe UI";
+
+      ctx.strokeText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
+      ctx.fillText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
     } else if (game.gameOver) {
       // write game over on the screen
       ctx.font = "bold 50px Segoe UI";
@@ -234,9 +249,6 @@ async function strapiParticles() {
 
       ctx.strokeText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
       ctx.fillText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
-
-
-
     }
   }
   function destroy() {
