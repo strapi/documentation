@@ -79,8 +79,13 @@ class Particle {
                 this.accY = (this.y - Game.mouse.y) / 100;
                 this.vx += this.accX;
                 this.vy += this.accY;
+                // enlarge particle relative to distance with the further away particles being closer to ogr
+                this.r = this.ogr + (1 - distance / (Particle.radius * 70)) * 30
 
 
+
+            } else {
+                this.r = this.ogr
             }
         }
     }
