@@ -32,8 +32,6 @@ class Ball {
       this.dx = this.speed;
       this.dy = -this.speed;
     }
-    // this is the ball for the breakout game
-    // render the bar with physics and have it bounce around the screen
     // bounce off the sides of the screen
     if (
       this.x + this.dx > this.ww - this.radius ||
@@ -73,8 +71,6 @@ class Ball {
 
     // trigger game over if the ball goes below the bar
     if (this.y > this.wh - 25) {
-      // game over
-      // alert("GAME OVER");
       game.gameOver = true;
       game.active = false;
     }

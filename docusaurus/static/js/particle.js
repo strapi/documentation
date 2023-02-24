@@ -43,14 +43,9 @@ class Particle {
     this.vy += this.accY;
     this.vx *= this.friction;
     this.vy *= this.friction;
-    //TODO: only lock if breakout mode is on
-    // if (!gameActive) {
     this.x += this.vx;
     this.y += this.vy;
-    // } else {
-    //     this.x = this.dest.x;
-    //     this.y = this.dest.y;
-    // }
+
 
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
