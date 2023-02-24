@@ -222,9 +222,18 @@ async function strapiParticles() {
       ctx.font = "bold 50px Segoe UI";
       ctx.fillStyle = "red";
       ctx.textAlign = "center";
-      // increase font weight
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 5;
+
+      ctx.strokeText("Game Over", ww / 2, wh / 2);
 
       ctx.fillText("Game Over", ww / 2, wh / 2);
+
+      // write score on the screen
+      ctx.font = "bold 30px Segoe UI";
+
+      ctx.strokeText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
+      ctx.fillText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
 
 
 
