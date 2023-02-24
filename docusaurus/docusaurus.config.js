@@ -47,7 +47,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/strapi/documentation',
+            'https://github.com/strapi/documentation/edit/main/docusaurus',
           // lastVersion: '0.1.0',
           admonitions: {
             tag: ':::',
