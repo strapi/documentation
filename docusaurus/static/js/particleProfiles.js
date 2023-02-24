@@ -168,4 +168,3 @@ window.addEventListener("keydown", (e) => {
         strapiParticles();
     }
 });
-strapiParticles();
