@@ -108,7 +108,7 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
-## strapi export <BetaBadge />
+## strapi export
 
 [Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
@@ -138,7 +138,7 @@ strapi export -f myData
 strapi export --no-encrypt  
 ```
 
-## strapi import <BetaBadge />
+## strapi import
 
 [Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
@@ -160,7 +160,7 @@ strapi import
 strapi import -f <your-filepath-and-filename> --key my-key
 ```
 
-## strapi transfer <BetaBadge />
+## strapi transfer
 
 [Transfers data](/dev-docs/data-management#transfer-data-using-the-cli-tool) between two Strapi instances. This command is primarily intended for use between a local instance and a remote instance or two remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for detailed documentation on creating Transfer tokens.
 

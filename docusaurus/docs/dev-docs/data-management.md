@@ -12,15 +12,13 @@ The data management system is under development. Not all use cases are covered b
 
 :::
 
-The `strapi transfer` command is available in beta release only. See [Transfer data using the CLI tool](#transfer-data-using-the-cli-tool) for beta version installation instructions.
-
 Occasionally you need to move data out of or into a Strapi instance. The data management system allows you to efficiently extract data from an existing instance or archive and import that data into a separate instance. Additionally, the data management system allows you to transfer data between a local Strapi instance and a remote Strapi instance. Strapi provides CLI-based commands that allow you to export, import, and transfer data. Common use cases include:
 
 - [creating a data backup](#export-data-using-the-cli-tool),
 - [restoring data from a backup](#import-data-using-the-cli-tool),
 - [transfer data from a local to remote instance](#transfer-data-using-the-cli-tool).
 
- The following documentation details examples of how to use the `strapi export`, `strapi import`, and `strapi transfer` commands.
+The following documentation details examples of how to use the `strapi export`, `strapi import`, and `strapi transfer` commands.
 
 :::strapi Command Line Interface (CLI) shortcut
 If you want to skip the details and examples the `strapi export`, `strapi import`, and `strapi tranfer` CLI commands with all of the available options are listed in the [Command Line Interface documentation](/dev-docs/cli#strapi-export).
@@ -40,11 +38,16 @@ The `strapi export` command by default exports data as an encrypted and compress
 Admin users and API tokens are not exported.
 :::
 
+:::note
+Media from a 3rd party provider such as Cloudinary or AWS S3 are not included in the export as those files do not exist in the upload folders
+:::
+
 ### Name the export file
 
-Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
+Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension as one will be set automatically depending on options provided.
 
 #### Example: Export data with a custom filename
+
 <br/>
 
 <Tabs groupId="yarn-npm">
@@ -394,16 +397,7 @@ npm strapi import -- -f export_20221213105643.tar.gz.enc --only config
 
 </Tabs>
 
-## Transfer data using the CLI tool <BetaBadge />
-
-:::strapi Install the beta version
-`strapi transfer` is only available in the current beta version. To create a new project using the beta version, run the following command in your terminal:
-
-```bash
-npx create-strapi-app@beta <project-name>
-```
-
-:::
+## Transfer data using the CLI tool
 
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas.
 
@@ -424,10 +418,10 @@ The CLI command consists of the following arguments:
 | `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                   |-         |
 | `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                   |-         |
 
- The command allows you to transfer data between:
+The command allows you to transfer data between:
 
-- a local Strapi instance and a remote Strapi instance,
-- a remote Strapi instance and another remote Strapi instance.
+- a local Strapi instance and a remote Strapi instance
+- a remote Strapi instance and another remote Strapi instance
 
 :::tip
 Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
@@ -495,6 +489,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token [my-transfe
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
 
 #### Example: only transfer files
+
 <br/>
 
 <Tabs groupdId="yarn-npm">
@@ -520,6 +515,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token <my-transfe
 The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
 
 #### Example: exclude files from transfer
+
 <br/>
 <Tabs groupdId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -559,10 +555,10 @@ The `transfer` command is not intended for transferring data between two local i
 
 #### Create and clone a new Strapi project
 
-1. Create a new Strapi project using the `beta` installation command:
+1. Create a new Strapi project using the installation command:
 
     ```bash
-    npx create-strapi-app@beta <project-name> --quickstart
+    npx create-strapi-app@latest <project-name> --quickstart
     ```
 
 2. Create at least 1 content type in the project. See the [Quick Start Guide](/dev-docs/quick-start) if you need instructions on creating your first content type.
@@ -647,4 +643,3 @@ In some cases you might receive a connection refused error targeting `localhost`
 :::
 
 <FeedbackPlaceholder />
-
