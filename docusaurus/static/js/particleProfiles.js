@@ -46,11 +46,6 @@ async function strapiParticles() {
       });
     }
   }
-  window.addEventListener("keydown", (e) => {
-    if (e.code === "KeyP") {
-      rendering.value = !rendering.value;
-    }
-  });
   // create canvas element and append to body
   const bodycanvas = document.createElement("canvas");
   bodycanvas.id = "scene";
@@ -61,14 +56,6 @@ async function strapiParticles() {
   game = new Game(document.querySelector("#scene"), destroy, setScore);
   const ctx = game.ctx;
   const canvas = game.canvas;
-
-  // delete canvas if user hits escape
-  document.addEventListener("keydown", function (event) {
-    if (event.code === "Escape") {
-      bodycanvas.remove();
-      game.destroy();
-    }
-  });
   let ww = (canvas.width = window.innerWidth);
   let wh = (canvas.height = window.innerHeight);
 
@@ -153,6 +140,7 @@ async function strapiParticles() {
       for (let i = 0; i < ww; i += Math.round(ww / 80)) {
         for (let j = 0; j < wh; j += Math.round(ww / 80)) {
           if (data[(i + j * ww) * 4 + 3] > 80) {
+            console.log(ww);
             Particle.particles.push(new Particle(i, j, ww, wh, game));
           }
         }
@@ -190,21 +178,17 @@ async function strapiParticles() {
     // cap the framerate to 60fps
     const now = Date.now();
     const delta = now - then;
-    if (delta < interval) {
+    if (delta < interval || !rendering.value) {
       requestAnimationFrame(render);
       return;
     }
     then = now - (delta % interval);
-    if (!rendering.value) {
-      requestAnimationFrame(render);
-      return;
-    }
     requestAnimationFrame(render);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < Particle.particles.length; i++) {
       Particle.particles[i].render(ctx, game.active, game.gameOver);
     }
-    bar?.render(ctx, game);
+    bar?.render(ctx);
     ball?.render(ctx, game);
     if (game.gameOver && Particle.particles.length === 0) {
       for (let i = 0; i < Firework.fireworks.length; i++) {
@@ -251,12 +235,8 @@ async function strapiParticles() {
       ctx.fillText(`Score: ${game.score}`, ww / 2, wh / 2 + 50);
     }
   }
-  function destroy() {
-    bar = null;
-    ball = null;
-    game = null;
-    document.getElementById("breakout-score").remove();
-    bodycanvas.remove();
+  function resetDom() {
+    document.getElementById("breakout-score")?.remove();
     document.querySelectorAll("h1").forEach((h1) => {
       // set back to the original text
       h1.innerText = h1.getAttribute("data-original-text");
@@ -268,15 +248,36 @@ async function strapiParticles() {
     // set back to the original title
     document.title = document.ogTitle;
   }
+  function destroy() {
+    bar = null;
+    ball = null;
+    game = null;
+    bodycanvas?.remove();
+    resetDom();
+  }
   function startGame() {
     game.start();
   }
-  window.addEventListener("resize", initScene);
+  function resetGame() {
+    destroy();
+    strapiParticles();
+  }
   window.addEventListener("mousemove", game.onMouseMove);
   window.addEventListener("click", onMouseClick);
   window.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
-      startGame();
+      if (game.gameOver) {
+        resetGame();
+      } else {
+        startGame();
+      }
+    }
+    if (e.code === "Escape") {
+      bodycanvas.remove();
+      game.destroy();
+    }
+    if (e.code === "KeyP") {
+      rendering.value = !rendering.value;
     }
   });
   initScene();

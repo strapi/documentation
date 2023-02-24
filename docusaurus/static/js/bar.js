@@ -10,7 +10,7 @@ class Bar {
     this.barHeight = 10;
     this.movementSpeed = 10;
   }
-  render(ctx, wh) {
+  render(ctx) {
     // check if left or right arrow is pressed
     if (Game.leftPressed) {
       this.x -= this.movementSpeed;

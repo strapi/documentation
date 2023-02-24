@@ -13,7 +13,10 @@ class Particle {
       x: x,
       y: y,
     };
-    this.ogr = Math.random() * 5 + 10;
+    this.ogy = this.dest.y;
+    // make ogr relative to ww with ww = 1920 as full size and smaller width as smaller size
+    this.ogr = (Math.random() * 5 + 10) * (ww / 1920);
+
     this.r = this.ogr;
     this.vx = (Math.random() - 0.5) * 20;
     this.vy = (Math.random() - 0.5) * 20;
@@ -22,7 +25,6 @@ class Particle {
     this.friction = Math.random() * 0.002 + 0.94;
     this.game = game;
 
-    // this.color = colors[Math.floor(Math.random()*6)];
     this.image = new Image();
     if (Particle.profileIndex >= Particle.profiles.length)
       Particle.profileIndex = 0;
@@ -35,6 +37,8 @@ class Particle {
   render(ctx, gameActive, gameOver) {
     if (gameOver) {
       this.dest.y = 1000;
+    } else if (gameActive) {
+      this.dest.y = this.ogy - 100;
     }
     this.accX = (this.dest.x - this.x) / 100;
     this.accY = (this.dest.y - this.y) / 100;
@@ -44,7 +48,6 @@ class Particle {
     this.vy *= this.friction;
     this.x += this.vx;
     this.y += this.vy;
-
 
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);

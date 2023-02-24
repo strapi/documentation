@@ -40,6 +40,7 @@ class Game {
   }
   start() {
     this.active = true;
+    this.gameOver = false;
     console.log("game has started");
   }
   destroy() {

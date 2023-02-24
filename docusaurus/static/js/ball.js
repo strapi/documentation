@@ -8,7 +8,7 @@ class Ball {
     this.radius = 12;
     this.speed = 8;
     if (navigator?.platform?.toUpperCase().indexOf("MAC") >= 0) {
-      this.speed = 12;
+      this.speed = 9;
     }
     this.speedMargin = 2;
     this.dx = 0;
