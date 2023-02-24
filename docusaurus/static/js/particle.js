@@ -9,6 +9,7 @@ class Particle {
   constructor(x, y, ww, wh, game) {
     this.x = Math.random() * ww;
     this.y = Math.random() * wh;
+    this.wh = wh;
     this.dest = {
       x: x,
       y: y,
@@ -36,7 +37,7 @@ class Particle {
   }
   render(ctx, gameActive, gameOver) {
     if (gameOver) {
-      this.dest.y = 1000;
+      this.dest.y = this.wh + 100;
     } else if (gameActive) {
       this.dest.y = this.ogy - 100;
     }
