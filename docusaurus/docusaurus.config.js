@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs-next.strapi.io/',
+  url: 'https://docs.strapi.io/',
   baseUrl: '/',
   onBrokenLinks: 'warn', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'warn',
@@ -47,7 +47,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/strapi/documentation',
+            'https://github.com/strapi/documentation/edit/main/docusaurus',
           // lastVersion: '0.1.0',
           admonitions: {
             tag: ':::',
