@@ -103,8 +103,8 @@ async function strapiParticles() {
             });
             //store the original title in the data-original-title attribute
             document.ogTitle = document.title;
-            // animate document title with a marquee saying "Strapi Breakout"
-            document.title = "-----Strapi Breakout------";
+            // animate document title with a marquee saying "Strapi Breakout" with padding
+            document.title = `Strapi Breakout - Press Enter to Start - Press Esc to Exit- `; 
             // animate title
             let title = document.title;
             let titleLength = title.length;
@@ -115,7 +115,7 @@ async function strapiParticles() {
                     titleIndex = 0;
                 }
                 document.title = title.slice(titleIndex) + title.slice(0, titleIndex);
-            }, 500);
+            }, 200);
 
             // set scroll to top
             window.scrollTo(0, 0);
