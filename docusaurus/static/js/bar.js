@@ -34,7 +34,22 @@ class Bar {
 
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.barWidth, this.barHeight);
-    ctx.fillStyle = this.color;
+    // fill the rectangle with a rainbow gradient
+    // check if month is june
+    if (new Date().getMonth() === 5) {
+      let gradient = ctx.createLinearGradient(0, 0, this.ww, 0);
+      gradient.addColorStop("0", "magenta");
+      gradient.addColorStop("0.15", "blue");
+      gradient.addColorStop("0.33", "green");
+      gradient.addColorStop("0.5", "yellow");
+      gradient.addColorStop("0.67", "orange");
+      gradient.addColorStop("0.85", "red");
+      gradient.addColorStop("1.0", "violet");
+      ctx.fillStyle = gradient;
+    } else {
+      ctx.fillStyle = this.color;
+    }
+
     ctx.fill();
     ctx.closePath();
   }
