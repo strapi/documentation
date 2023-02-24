@@ -146,7 +146,7 @@ export default {
 
 ### Components
 
-`app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
+`app.customFields.register()` must pass a `components` object with an `Input` React component, which acts as the input for the custom field in the Content Manager's Edit view.
 
 <details>
 <summary>Example: Registering an Input component</summary>
@@ -174,18 +174,17 @@ export default {
 The `Input` React component receives several props. The [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPicker/ColorPickerInput/index.js#L71-L82) in the Strapi codebase gives you an example of how they can be used.
 :::
 
-
 ### Options
 
-`app.customFields.register()` can pass an additional `options` object with the following parameters:
+Custom fields can have their own settings in the Content-type builder. To add settings to a custom field, pass an object `options` to `app.customFields.register()`. The `options` object accepts the following parameters:
 
 | Options parameter | Description                                                                     | Type                    |
 | -------------- | ------------------------------------------------------------------------------- | ----------------------- |
 | `base`         | Settings available in the _Base settings_ tab of the field in the Content-type Builder       | `Object` or  `Array of Objects` |
 | `advanced`     | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder   | `Object` or  `Array of Objects` |
-| `validator`    | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
+| `validator`    | Validator function returning an object, used to validate input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1).  | `Function`              |
 
-Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
+By default, Strapi has options available for its [field model](/developer-docs/latest/backend-customization/models#validations). Use them in your custom field by copying the object value from [the `attributeOptions` file](https://github.com/strapi/strapi/blob/e033275bd0915049fa4fa823f00c17ad53a8fc44/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js#L1) and respecting the following structure:
 
 - a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
 - and a list of `items` as an array of objects.
