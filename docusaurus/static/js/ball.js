@@ -7,8 +7,8 @@ class Ball {
         this.y = wh - (bar.bottomOffset + 100);
         this.radius = 12;
         this.speed = 8;
-        // set speed to 12 if the user is on linux
-        if (navigator?.platform?.includes("Linux")) {
+        // set speed to 12 if the user is on mac
+        if (navigator?.platform?.toUpperCase().indexOf("MAC") >= 0) {
             this.speed = 12;
         }
         this.speedMargin = 2;
