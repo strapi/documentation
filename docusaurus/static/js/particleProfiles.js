@@ -85,20 +85,20 @@ async function strapiParticles() {
         score.className = "navbar__item navbar__link";
         score.id = "breakout-score";
         score.innerText = "Score: 0";
-        function setupDom(){
+        function setupDom() {
             document.querySelector(".navbar__items").appendChild(score);
             // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
             document.querySelectorAll("h1").forEach((h1) => {
                 // store the original text in the data-original-text attribute
                 h1.setAttribute("data-original-text", h1.innerText);
-                h1.innerText = "Strapi Breakout - Press Enter To Start";
-            
+                h1.innerText = "Strapi Breakout - Press Enter To Start - Press Esc to Exit";
+
 
             });
             // set scroll to top
             window.scrollTo(0, 0);
         }
-// if window is loaded just add if not wait for onload
+        // if window is loaded just add if not wait for onload
         if (document.readyState === "complete") {
             setupDom()
         } else {
