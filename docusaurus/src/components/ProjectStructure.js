@@ -9,7 +9,7 @@ export default function InteractiveProjectStructure() {
         <TabItem value="js" label="JavaScript">
 
 
-      <pre>
+      <pre className="prism-code">
         <code>
       . <span class="token comment"># root of the application</span><br/>
 
@@ -81,7 +81,7 @@ export default function InteractiveProjectStructure() {
 
       <TabItem title="TypeScript-based projects" value="TypeScript-based projects">
 
-      <pre>
+      <pre className="prism-code">
         <code>
       . <span class="token comment"># root of the application</span><br/>
 
@@ -89,7 +89,7 @@ export default function InteractiveProjectStructure() {
       ├──── .tmp<br/>
       ├──── config <span class="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api">api.ts</a><br/>
-      │     ├  <a href="/dev-docs/configurations/admin-panel">admin.ts</a><br/>
+      │     ├ <a href="/dev-docs/configurations/admin-panel">admin.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/database#database-configuration">database.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/middlewares">middlewares.ts</a><br/>
@@ -104,9 +104,9 @@ export default function InteractiveProjectStructure() {
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span class="token comment"># admin customization files</span><br/>
-      │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
+      │     │     ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
       │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.example.tsx</a><br/>
-      │     │     └ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.ts</a><br/>
+      │     │     ├ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.ts</a><br/>
       |     |     └ tsconfig.json<br/>
       │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
       │     │     └──── (api-name)<br/>
@@ -121,7 +121,7 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── <a href="/dev-docs/backend-customization/services">services</a><br/>
       │     │           └ index.ts<br/>
       │     │
-      │    ├──── <a href="/dev-docs/backend-customization/models">components</a><br/>
+      │     ├──── <a href="/dev-docs/backend-customization/models">components</a><br/>
       │     │     └──── (category-name)<br/>
       │     │           ├ (componentA).json<br/>
       │     │           └ (componentB).json<br/>

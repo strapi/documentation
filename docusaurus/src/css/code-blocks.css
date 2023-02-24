@@ -53,3 +53,8 @@
 [data-theme='light'] .prism-code clean-btn:hover svg {
   fill: white;
 }
+
+[data-theme='light'] .theme-doc-markdown .prism-code a,
+[data-theme='dark'] .theme-doc-markdown .prism-code a {
+  color: var(--strapi-code-purple);
+}
