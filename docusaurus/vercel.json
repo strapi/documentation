@@ -1,6 +1,14 @@
 {
   "redirects": [
     {
+      "source": "/cloud",
+      "destination": "/cloud/intro"
+    },
+    {
+      "source": "/cloud/intro",
+      "destination": "/dev-docs/deployment/strapi-cloud",
+    },
+    {
       "source": "/developer-docs/latest/development/admin-customization.html",
       "destination": "/dev-docs/admin-panel-customization"
     },
