@@ -10,11 +10,11 @@
     },
     {
       "source": "/dev-docs",
-      "destination": "/dev-docs/intro",
+      "destination": "/dev-docs/intro"
     },
     {
       "source": "/user-docs",
-      "destination": "/user-docs/intro",
+      "destination": "/user-docs/intro"
     },
     {
       "source": "/developer-docs/latest/development/admin-customization.html",
