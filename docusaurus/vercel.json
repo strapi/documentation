@@ -9,6 +9,14 @@
       "destination": "/dev-docs/deployment/strapi-cloud"
     },
     {
+      "source": "/dev-docs",
+      "destination": "/dev-docs/intro",
+    },
+    {
+      "source": "/user-docs",
+      "destination": "/user-docs/intro",
+    },
+    {
       "source": "/developer-docs/latest/development/admin-customization.html",
       "destination": "/dev-docs/admin-panel-customization"
     },
