@@ -76,6 +76,7 @@ async function strapiParticles() {
     function setScore(score) {
         document.getElementById("breakout-score").innerText = "Score: " + score;
     }
+    let titleInterval;
     function initScene() {
         ww = canvas.width = window.innerWidth;
         wh = canvas.height = window.innerHeight;
@@ -100,6 +101,22 @@ async function strapiParticles() {
 
 
             });
+            //store the original title in the data-original-title attribute
+            document.ogTitle = document.title;
+            // animate document title with a marquee saying "Strapi Breakout"
+            document.title = "-----Strapi Breakout------";
+            // animate title
+            let title = document.title;
+            let titleLength = title.length;
+            let titleIndex = 0;
+            titleInterval = setInterval(() => {
+                titleIndex++;
+                if (titleIndex > titleLength) {
+                    titleIndex = 0;
+                }
+                document.title = title.slice(titleIndex) + title.slice(0, titleIndex);
+            }, 500);
+
             // set scroll to top
             window.scrollTo(0, 0);
         }
@@ -222,6 +239,11 @@ async function strapiParticles() {
 
 
         });
+        // set back to the original title
+        document.title = document.ogTitle;
+        // stop animating title
+        clearInterval(titleInterval);
+
     }
     function startGame() {
         game.start();
