@@ -91,7 +91,12 @@ async function strapiParticles() {
             document.querySelectorAll("h1").forEach((h1) => {
                 // store the original text in the data-original-text attribute
                 h1.setAttribute("data-original-text", h1.innerText);
-                h1.innerText = "Strapi Breakout - Press Enter To Start - Press Esc to Exit";
+                h1.innerText = "Strapi Breakout";
+                // add smaller instructions below in an h2
+                const h2 = document.createElement("h2");
+                h2.innerText = "Press Enter to Start \n Press Esc to Exit";
+                h1.parentNode.insertBefore(h2, h1.nextSibling);
+
 
 
             });
@@ -212,6 +217,9 @@ async function strapiParticles() {
         document.querySelectorAll("h1").forEach((h1) => {
             // set back to the original text
             h1.innerText = h1.getAttribute("data-original-text");
+            // remove the h2
+            h1.parentNode.removeChild(h1.nextSibling);
+
 
         });
     }
