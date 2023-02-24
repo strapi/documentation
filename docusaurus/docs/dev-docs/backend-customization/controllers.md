@@ -48,15 +48,13 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     return { data, meta };
   },
 
-  // Method 3: Replacing a core action
-  async findOne(ctx) {
-    const { id } = ctx.params;
-    const { query } = ctx;
+  // Method 3: Replacing a core action with proper sanitization
+  async find(ctx) {
+    const qp = await this.sanitizeParams(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
-    const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
-    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
-
-    return this.transformResponse(sanitizedEntity);
+    return this.transformResponse(sanitizedResults, { pagination });
   }
 }));
 ```
@@ -93,15 +91,13 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
     return { data, meta };
   },
 
-  // Method 3: Replacing a core action
-  async findOne(ctx) {
-    const { id } = ctx.params;
-    const { query } = ctx;
+  // Method 3: Replacing a core action with proper sanitization
+  async find(ctx) {
+    const qp = await this.sanitizeParams(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
-    const entity = await strapi.service('api::restaurant.restaurant').findOne(id, query);
-    const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
-
-    return this.transformResponse(sanitizedEntity);
+    return this.transformResponse(sanitizedResults, { pagination });
   }
 }));
 ```
@@ -179,12 +175,131 @@ export default {
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
+### Sanitization in controllers
+
+:::warning
+As of Strapi v4.7.0 and greater it's strongly recommended you sanitize your incoming request query and parameters utilizing the new `sanitizeParams` function to prevent leaking of private data.
+:::
+
+#### Sanitization when utilizing controller factories
+
+Within the Strapi factories there are 2 functions exposed that can be used for sanitization:
+
+| Function Name    | Parameters    | Description                                |
+|------------------|---------------|--------------------------------------------|
+| `sanitizeParams` | `ctx`         | Sanitizes the request parameters and query |
+| `sanitizeOutput` | `data`, `ctx` | Sanitizes the output data                  |
+
+These two function will automatically inherit the sanitization settings from the model and will sanitize the data accordingly based on the content type schema and users-permissions plugin's permissions.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./src/api/restaurant/controllers/restaurant.js"
+
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+  async findOne(ctx) {
+    const qp = await this.sanitizeParams(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedResults = await this.sanitizeOutput(results, ctx);
+
+    return this.transformResponse(sanitizedResults, { pagination });
+  }
+}));
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="./src/api/restaurant/controllers/restaurant.ts"
+
+import { factories } from '@strapi/strapi'; 
+
+export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
+  async findOne(ctx) {
+    const qp = await this.sanitizeParams(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedResults = await this.sanitizeOutput(results, ctx);
+
+    return this.transformResponse(sanitizedResults, { pagination });
+  }
+}));
+```
+
+</TabItem>
+</Tabs>
+
+#### Sanitization when building custom controllers
+
+Within custom controllers, there are 3 primary functions exposed via the `@strapi/utils` package that can be used for sanitization:
+
+| Function Name       | Parameters               | Description                                                                                                                            |
+|---------------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `contentAPI.input`  | `data`, `schema`, `auth` | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `contentAPI.output` | `data`, `schema`, `auth` | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins |
+| `contentAPI.params` | `ctx.query`, `schema`, `auth` | Sanitizes the request params and query including filters, sort, fields, and populate |
+
+:::note
+Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for especially when combining the data from multiple sources.
+:::
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./src/api/restaurant/controllers/restaurant.js"
+
+const { sanitize } = require('@strapi/utils')
+const { contentAPI } = sanitize;
+
+module.exports = {
+  async findCustom(ctx) {
+    const contentType = strapi.contentType('api::test.test')
+    const qp = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+
+    const entities = await strapi.entityService.findMany(contentType.uid, qp)
+
+    return await contentAPI.output(entities, contentType, ctx.state.auth);
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="./src/api/restaurant/controllers/restaurant.ts"
+
+import { sanitize } from '@strapi/utils';
+const { contentAPI } = sanitize;
+
+export default {
+  async findCustom(ctx) {
+    const contentType = strapi.contentType('api::test.test')
+    const qp = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+
+    const entities = await strapi.entityService.findMany(contentType.uid, qp)
+
+    return await contentAPI.output(entities, contentType, ctx.state.auth);
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
 ### Extending core controllers
 
 Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
 :::tip
 An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
+:::
+
+:::tip
+When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
 
 <details>
