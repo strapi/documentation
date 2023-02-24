@@ -87,6 +87,8 @@ class Particle {
             } else {
                 this.r = this.ogr
             }
+        }else{
+            this.r = this.ogr
         }
     }
 }
