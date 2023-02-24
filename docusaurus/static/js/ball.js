@@ -6,7 +6,11 @@ class Ball {
         this.x = ww / 2;
         this.y = wh - (bar.bottomOffset + 100);
         this.radius = 12;
-        this.speed = 7;
+        this.speed = 8;
+        // set speed to 12 if the user is on linux
+        if (navigator.platform.includes("Linux")) {
+            this.speed = 12;
+        }
         this.speedMargin = 2;
         this.dx = 0;
         this.dy = 0;
