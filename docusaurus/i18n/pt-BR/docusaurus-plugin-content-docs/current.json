@@ -12,19 +12,19 @@
     "description": "The label for category ⚙️ Setup & Deployment in sidebar devDocsSidebar"
   },
   "sidebar.devDocsSidebar.category.Installation": {
-    "message": "Instalacao",
+    "message": "Instalação",
     "description": "The label for category Installation in sidebar devDocsSidebar"
   },
   "sidebar.devDocsSidebar.category.Configuration": {
-    "message": "Configuracao",
+    "message": "Configuração",
     "description": "The label for category Configuration in sidebar devDocsSidebar"
   },
   "sidebar.devDocsSidebar.category.Required configurations": {
-    "message": "Required configurations",
+    "message": "Configurações necessárias",
     "description": "The label for category Required configurations in sidebar devDocsSidebar"
   },
   "sidebar.devDocsSidebar.category.Optional configurations": {
-    "message": "Optional configurations",
+    "message": "Configuralções Opicionais",
     "description": "The label for category Optional configurations in sidebar devDocsSidebar"
   },
   "sidebar.devDocsSidebar.category.Deployment": {

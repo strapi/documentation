@@ -34,7 +34,7 @@ const config = {
         path: 'en',
       },
       'pt-BR': {
-        label: 'Portugues (Brasil)',
+        label: 'Português (Brasil)',
         direction: 'ltr',
         htmlLang: 'pt-BR',
         calendar: 'gregory',
@@ -140,6 +140,10 @@ const config = {
             href: 'https://github.com/strapi/documentation',
             label: 'GitHub',
             position: 'right',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'left',
           },
           // {
           //   type: 'docsVersionDropdown', // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions

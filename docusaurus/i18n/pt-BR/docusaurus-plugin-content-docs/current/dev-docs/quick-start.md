@@ -1,8 +1,8 @@
 ---
-sidebar_label: 'Quick Start Guide'
+sidebar_label: 'Guia Rápido'
 displayed_sidebar: devDocsSidebar
 sidebar_position: 2
-title: Quick Start Guide - Strapi Developer Docs
+title: Guia Rápido - Documentação de Desenvolvimento do Strapi
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
 # next: ./troubleshooting
 
@@ -10,7 +10,7 @@ description: Get ready to get Strapi, your favorite open-source headless cms up 
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
-# Quick Start Guide
+# Guia Rápido
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch.
 
