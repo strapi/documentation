@@ -249,6 +249,8 @@ async function strapiParticles() {
     }
   }
   function resetDom() {
+    document.getElementById("breakout-credit")?.remove();
+
     document.getElementById("breakout-score")?.remove();
     document.querySelectorAll("h1").forEach((h1) => {
       // set back to the original text
