@@ -4,7 +4,6 @@ class Game {
   static rightPressed = false;
   static mouseMoveEvents = 100;
   constructor(canvas, destroyCallback, setScoreCallback) {
-    console.log("new game has been created");
     this.score = 0;
     this.canvas = canvas;
     this.active = false;
