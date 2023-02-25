@@ -1,0 +1,14 @@
+{
+  "item.label.Developer Docs": {
+    "message": "Developer Docs",
+    "description": "Navbar item with label Developer Docs"
+  },
+  "item.label.User Guide": {
+    "message": "User Guide",
+    "description": "Navbar item with label User Guide"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

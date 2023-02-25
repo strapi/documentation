@@ -1,0 +1,130 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.devDocsSidebar.category.🚀 Getting Started": {
+    "message": "🚀 Inicio",
+    "description": "The label for category 🚀 Getting Started in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.⚙️ Setup & Deployment": {
+    "message": "⚙️ Setup & Deployment",
+    "description": "The label for category ⚙️ Setup & Deployment in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Installation": {
+    "message": "Instalacao",
+    "description": "The label for category Installation in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Configuration": {
+    "message": "Configuracao",
+    "description": "The label for category Configuration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Required configurations": {
+    "message": "Required configurations",
+    "description": "The label for category Required configurations in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Optional configurations": {
+    "message": "Optional configurations",
+    "description": "The label for category Optional configurations in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Deployment": {
+    "message": "Deployment",
+    "description": "The label for category Deployment in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Other Hosting Guides": {
+    "message": "Other Hosting Guides",
+    "description": "The label for category Other Hosting Guides in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Optional Software Guides": {
+    "message": "Optional Software Guides",
+    "description": "The label for category Optional Software Guides in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.📦 APIs": {
+    "message": "📦 APIs",
+    "description": "The label for category 📦 APIs in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.REST API": {
+    "message": "REST API",
+    "description": "The label for category REST API in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Entity Service API": {
+    "message": "Entity Service API",
+    "description": "The label for category Entity Service API in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Query Engine API": {
+    "message": "Query Engine API",
+    "description": "The label for category Query Engine API in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.🔧 Development": {
+    "message": "🔧 Development",
+    "description": "The label for category 🔧 Development in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Back-end customization": {
+    "message": "Back-end customization",
+    "description": "The label for category Back-end customization in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.💻 Developer Resources": {
+    "message": "💻 Developer Resources",
+    "description": "The label for category 💻 Developer Resources in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Integrations": {
+    "message": "Integrations",
+    "description": "The label for category Integrations in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.🔌 Plugins": {
+    "message": "🔌 Plugins",
+    "description": "The label for category 🔌 Plugins in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.♻️ Update and Migration": {
+    "message": "♻️ Update and Migration",
+    "description": "The label for category ♻️ Update and Migration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.v3 to v4 migration guides": {
+    "message": "v3 to v4 migration guides",
+    "description": "The label for category v3 to v4 migration guides in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Code migration": {
+    "message": "Code migration",
+    "description": "The label for category Code migration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Backend migration": {
+    "message": "Backend migration",
+    "description": "The label for category Backend migration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Frontend migration": {
+    "message": "Frontend migration",
+    "description": "The label for category Frontend migration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Plugin migration": {
+    "message": "Plugin migration",
+    "description": "The label for category Plugin migration in sidebar devDocsSidebar"
+  },
+  "sidebar.devDocsSidebar.category.Data migration": {
+    "message": "Data migration",
+    "description": "The label for category Data migration in sidebar devDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.Content Manager": {
+    "message": "Content Manager",
+    "description": "The label for category Content Manager in sidebar userDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.Content-type Builder": {
+    "message": "Content-type Builder",
+    "description": "The label for category Content-type Builder in sidebar userDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.Media Library": {
+    "message": "Media Library",
+    "description": "The label for category Media Library in sidebar userDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.Users, Roles & Permissions": {
+    "message": "Users, Roles & Permissions",
+    "description": "The label for category Users, Roles & Permissions in sidebar userDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.Plugins": {
+    "message": "Plugins",
+    "description": "The label for category Plugins in sidebar userDocsSidebar"
+  },
+  "sidebar.userDocsSidebar.category.General Settings": {
+    "message": "General Settings",
+    "description": "The label for category General Settings in sidebar userDocsSidebar"
+  }
+}
