@@ -6,7 +6,7 @@ class Ball {
     this.x = ww / 2;
     this.y = wh - (bar.bottomOffset + 100);
     this.radius = 12;
-    this.speed = 8;
+    this.speed = 10;
     this.speedMargin = 2;
     this.dx = 0;
     this.dy = 0;
@@ -26,8 +26,8 @@ class Ball {
       this.drawBall(ctx);
       return;
     } else if (this.dx == 0 && this.dy == 0) {
-      this.dx = this.speed;
-      this.dy = -this.speed;
+      this.dx = Math.random() * this.speed * 2 - this.speed;
+      this.dy = -this.speed / 2;
     }
     // bounce off the sides of the screen
     if (
@@ -46,8 +46,8 @@ class Ball {
     // bouce off the bar with some margin of error
 
     if (
-      this.y < this.bar.y && // ball previous frame is above the bar
-      this.y + this.dy > this.bar.y && // ball next frame is below the bar
+      this.y <= this.bar.y && // ball previous frame is above the bar
+      this.y + this.dy >= this.bar.y && // ball next frame is below the bar
       this.x > this.bar.x - this.radius &&
       this.x < this.bar.x + this.bar.barWidth + this.radius
     ) {

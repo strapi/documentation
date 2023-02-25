@@ -15,7 +15,7 @@ async function strapiParticles() {
     localStorage.getItem("profiles") &&
     localStorage.getItem("profilesLastUpdated") &&
     Date.now() - localStorage.getItem("profilesLastUpdated") <
-    1000 * 60 * 60 * 24 * 7
+      1000 * 60 * 60 * 24 * 7
   ) {
     // load profiles from local storage
     profiles.push(...JSON.parse(localStorage.getItem("profiles")));
@@ -28,7 +28,7 @@ async function strapiParticles() {
       try {
         res = await fetch(
           "https://api.github.com/repos/strapi/strapi/contributors?per_page=100&page=" +
-          page
+            page
         );
       } catch (e) {
         console.log(e);
@@ -73,7 +73,20 @@ async function strapiParticles() {
     score.className = "navbar__item navbar__link";
     score.id = "breakout-score";
     score.innerText = "Score: 0";
+
+    const credit = document.createElement("span");
+    credit.classname = "navbar__item navbar__link";
+    credit.id = "breakout-credit";
+    credit.innerHTML =
+      'Strapi Breakout made with <span style="color:red">♥</span> by @Cpaczek';
     function setupDom() {
+      document
+        .querySelector(".navbar__items--right")
+        .insertBefore(
+          credit,
+          document.querySelector(".navbar__items--right").firstChild
+        );
+
       document.querySelector(".navbar__items").appendChild(score);
       // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
       document.querySelectorAll("h1").forEach((h1) => {
@@ -268,7 +281,7 @@ async function strapiParticles() {
     if (e.code === "Enter") {
       if (game.gameOver) {
         resetGame();
-      } else {
+      } else if (!game.active) {
         startGame();
       }
     }
