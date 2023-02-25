@@ -78,7 +78,7 @@ async function strapiParticles() {
     credit.classname = "navbar__item navbar__link";
     credit.id = "breakout-credit";
     credit.innerHTML =
-      'Strapi Breakout made with <span style="color:red">♥</span> by @Cpaczek';
+      'Strapi Breakout made with <span style="color:red">♥</span> by @cpaczek';
     function setupDom() {
       document
         .querySelector(".navbar__items--right")
