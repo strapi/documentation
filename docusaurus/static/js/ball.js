@@ -62,24 +62,6 @@ class Ball {
       // dx should have a random speed within the speedMargin
       // get random number between -speedMargin and speedMargin
       let randomSpeed = Math.random() * this.speedMargin * 2 - this.speedMargin;
-      // log everything with labels
-      console.log("distanceFromCenterPercentage", distanceFromCenterPercentage);
-      console.log("randomSpeed", randomSpeed);
-      console.log("this.speed", this.speed);
-      console.log(
-        "this.speed * distanceFromCenterPercentage",
-        this.speed * distanceFromCenterPercentage
-      );
-      console.log(
-        "this.speed * Math.min(-distanceFromCenterPercentage, 0.2)",
-        this.speed * Math.min(-distanceFromCenterPercentage, 0.2)
-      );
-      console.log(
-        "this.speed * Math.min(-distanceFromCenterPercentage, 0.2) + randomSpeed",
-        this.speed * Math.min(Math.abs(distanceFromCenterPercentage), 0.2) +
-          randomSpeed
-      );
-
       this.dx =
         this.speed * Math.min(Math.abs(distanceFromCenterPercentage), 0.5) +
         randomSpeed;
