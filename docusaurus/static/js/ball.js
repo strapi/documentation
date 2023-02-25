@@ -51,7 +51,7 @@ class Ball {
       this.x > this.bar.x - this.radius &&
       this.x < this.bar.x + this.bar.barWidth + this.radius
     ) {
-      this.dy = -this.dy;
+      this.dy = Math.max(-this.dy - this.speedMargin, -this.speed);
       let barCenter = this.bar.x + this.bar.barWidth / 2;
       let ballCenter = this.x + this.radius;
       let distanceFromCenter = barCenter - ballCenter;
@@ -62,8 +62,27 @@ class Ball {
       // dx should have a random speed within the speedMargin
       // get random number between -speedMargin and speedMargin
       let randomSpeed = Math.random() * this.speedMargin * 2 - this.speedMargin;
+      // log everything with labels
+      console.log("distanceFromCenterPercentage", distanceFromCenterPercentage);
+      console.log("randomSpeed", randomSpeed);
+      console.log("this.speed", this.speed);
+      console.log(
+        "this.speed * distanceFromCenterPercentage",
+        this.speed * distanceFromCenterPercentage
+      );
+      console.log(
+        "this.speed * Math.min(-distanceFromCenterPercentage, 0.2)",
+        this.speed * Math.min(-distanceFromCenterPercentage, 0.2)
+      );
+      console.log(
+        "this.speed * Math.min(-distanceFromCenterPercentage, 0.2) + randomSpeed",
+        this.speed * Math.min(Math.abs(distanceFromCenterPercentage), 0.2) +
+          randomSpeed
+      );
+
       this.dx =
-        this.speed * Math.min(-distanceFromCenterPercentage, 0.5) + randomSpeed;
+        this.speed * Math.min(Math.abs(distanceFromCenterPercentage), 0.5) +
+        randomSpeed;
     }
 
     // trigger game over if the ball goes below the bar
