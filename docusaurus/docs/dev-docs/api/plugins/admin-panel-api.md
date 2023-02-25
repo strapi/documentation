@@ -381,14 +381,17 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 #### Using predefined injection zones
 
 <!-- TODO: link to the proper page once CM section of user guide is converted -->
-Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/intro):
 
-<!-- TODO: maybe add screenshots once the design system is ready? -->
+Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/intro):
 
 | View      | Injection zone name & Location                                                                                                                                            |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | List view | <ul><li>`actions`: sits between Filters and the cogs icon</li><li>`deleteModalAdditionalInfos()`: sits at the bottom of the modal displayed when deleting items</li></ul> |
-| Edit view | <ul><li>`informations`: sits at the top right of the edit view</li><li>`right-links`: sits between "Configure the view" and "Edit" buttons</li></ul>                       |
+| Edit view | <ul><li>`informations`: sits at the top right of the edit view</li><li>`right-links`: sits between "Configure the view" and "Edit" buttons</li></ul>                      |
+
+![Actions Injection Zone](/img/assets/injection-zones/actions-light.png#light-mode-only)![Actions Injection Zone](/img/assets/injection-zones/actions-dark.png#dark-mode-only)
+![Delete Modal Injection Zone](/img/assets/injection-zones/deleteModal-light.png#light-mode-only)![Delete Modal Injection Zone](/img/assets/injection-zones/deleteModal-dark.png#dark-mode-only)
+![Edit View Injection Zones](/img/assets/injection-zones/edit-view-light.png#light-mode-only)![Edit View Injection Zones](/img/assets/injection-zones/edit-view-dark.png#dark-mode-only)
 
 #### Creating a custom injection zone
 

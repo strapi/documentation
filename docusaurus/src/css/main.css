@@ -125,6 +125,10 @@ table code {
   border-radius: 2px;
   padding: 1px;
 }
+[data-theme='light'] img[src$='#dark-mode-only'],
+[data-theme='dark'] img[src$='#light-mode-only'] {
+  display: none;
+}
 #scene {
   position: fixed;
   top: 0px;
