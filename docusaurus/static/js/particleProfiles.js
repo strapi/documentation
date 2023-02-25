@@ -1,4 +1,3 @@
-// Path: docusaurus\static\js\app.js
 // Credits:
 // Particles inspired by https://codepen.io/Mamboleoo/pen/obWGYr
 // Breakout inspired by https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript
