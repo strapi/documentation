@@ -296,7 +296,7 @@ async function strapiParticles() {
     
 ---------------------------------------------------
 |  Welcome to the Strapi Breakout Game!                              
-|  Made with ♥ By @cpaczek                                    
+|  Made with ♥ by @cpaczek                                    
 
 |  Use the Arrow/AD keys or Mouse to move the paddle.         
 |  Press Enter to start the game.                             
