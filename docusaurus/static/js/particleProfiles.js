@@ -76,20 +76,7 @@ async function strapiParticles() {
     score.className = "navbar__item navbar__link";
     score.id = "breakout-score";
     score.innerText = "Score: 0";
-
-    const credit = document.createElement("span");
-    credit.classname = "navbar__item navbar__link";
-    credit.id = "breakout-credit";
-    credit.innerHTML =
-      'Strapi Breakout made with <span style="color:red">♥</span> by @cpaczek';
     function setupDom() {
-      document
-        .querySelector(".navbar__items--right")
-        .insertBefore(
-          credit,
-          document.querySelector(".navbar__items--right").firstChild
-        );
-
       document.querySelector(".navbar__items").appendChild(score);
       // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
       document.querySelectorAll("h1").forEach((h1) => {
@@ -252,7 +239,6 @@ async function strapiParticles() {
     }
   }
   function resetDom() {
-    document.getElementById("breakout-credit")?.remove();
 
     document.getElementById("breakout-score")?.remove();
     document.querySelectorAll("h1").forEach((h1) => {
