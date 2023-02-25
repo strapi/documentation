@@ -116,6 +116,9 @@ async function strapiParticles() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // reset profile index to maintain order of profiles.
+    Particle.profileIndex = 0;
+
     // Create an image object and load the image file
     const img = new Image();
     img.src = "/img/strapi.png";
