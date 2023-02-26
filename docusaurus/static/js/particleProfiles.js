@@ -344,6 +344,7 @@ window.addEventListener("keydown", (e) => {
   pressed.push(e.code);
   pressed.splice(-konamiCode.length - 1, pressed.length - konamiCode.length);
   if (pressed.join("").includes(konamiCode.join(""))) {
+    if (document.getElementById("scene")) return;
     strapiParticles();
   }
 });
