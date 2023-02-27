@@ -183,6 +183,30 @@ The destination Strapi instance should be running with the `start` command and n
  strapi transfer --to http://example.com/admin --to-token <my-transfer-token> 
 ```
 
+## strapi debug
+
+Prints out debug information useful for debugging and required when reporting an issue.
+
+| Option                 | description                                                                             |
+| ---------------------- | --------------------------------------------------------------------------------------- |
+| `-o`, `--open`         | Will open a new GitHub issue with the data debug data already populated in the template |
+| `-u`, `--uuid`         | Includes the project UUID                                                               |
+| `-d`, `--dependencies` | Includes project dependencies                                                           |
+| `--verbose`            | Logs all the data                                                                       |
+
+
+**Examples**
+
+Will include the project UUID and dependencies in the output.
+```bash
+strapi debug --uuid --dependencies
+```
+
+Will open and automatically populate a new GitHub issue with the debug data.
+```bash
+strapi debug --open 
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
