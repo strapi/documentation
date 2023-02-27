@@ -109,23 +109,27 @@ module.exports = () => ({
 
 Once defined, the configuration can be accessed:
 
-* with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
-* or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+- with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
+- or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
 
 ## Cron
 
 The `cron` object allows you to add cron jobs to the Strapi instance.
 
 ```js title="path: ./src/plugins/my-plugin/strapi-server.js"
-
 module.exports = () => ({
   bootstrap({ strapi }) {
-        strapi.cron.add({
-          // runs every second
-        '* * * * * *': ({ strapi }) => {
-          console.log("hello from plugin")
+    strapi.cron.add({
+      // runs every second
+      myJob: {
+        task: ({ strapi }) => {
+          console.log("hello from plugin");
         },
-    })
+        options: {
+          rule: "* * * * * *",
+        },
+      },
+    });
   },
 });
 ```
