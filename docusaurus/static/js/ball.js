@@ -6,7 +6,7 @@ class Ball {
     this.x = ww / 2;
     this.y = wh - (bar.bottomOffset + 100);
     this.radius = 12;
-    this.speed = 10;
+    this.speed = 8;
     this.speedMargin = 2;
     this.dx = 0;
     this.dy = 0;
@@ -63,8 +63,7 @@ class Ball {
       // get random number between -speedMargin and speedMargin
       let randomSpeed = Math.random() * this.speedMargin * 2 - this.speedMargin;
       this.dx =
-        this.speed * Math.min(Math.abs(distanceFromCenterPercentage), 0.5) +
-        randomSpeed;
+        this.speed * Math.min(-distanceFromCenterPercentage, 0.5) + randomSpeed;
     }
 
     // trigger game over if the ball goes below the bar
