@@ -17,6 +17,10 @@
       "destination": "/"
     },
     {
+      "source": "/user-docs/getting-started/introduction.html",
+      "destination": "/user-docs"
+    },
+    {
       "source": "/user-docs",
       "destination": "/user-docs/intro"
     },
