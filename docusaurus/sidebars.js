@@ -231,7 +231,20 @@ const sidebars = {
       collapsed: false,
       items: [
         'dev-docs/cli',
-        'dev-docs/data-management',
+        {
+        type: 'category',
+        label: 'Data management',
+        link: {
+          type: 'doc',
+          id: 'dev-docs/data-management',
+         },
+
+         items: [
+          'dev-docs/data-management/export',
+          'dev-docs/data-management/import',
+          'dev-docs/data-management/transfer'
+         ],
+        },
         'dev-docs/database-migrations',
         'dev-docs/error-handling',
         'dev-docs/testing',

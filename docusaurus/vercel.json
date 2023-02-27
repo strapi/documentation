@@ -9,8 +9,16 @@
       "destination": "/dev-docs/deployment/strapi-cloud"
     },
     {
+      "source": "/developer-docs",
+      "destination": "/dev-docs"
+    },
+    {
       "source": "/dev-docs",
       "destination": "/"
+    },
+    {
+      "source": "/user-docs/getting-started/introduction.html",
+      "destination": "/user-docs"
     },
     {
       "source": "/user-docs",

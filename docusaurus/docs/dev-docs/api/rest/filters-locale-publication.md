@@ -53,6 +53,7 @@ The following operators are available:
 | `$endsWithi`    | Ends with (case-insensitive)             |
 | `$or`           | Joins the filters in an "or" expression  |
 | `$and`          | Joins the filters in an "and" expression |
+| `$not`          | Joins the filters in an "not" expression |
 
 <ApiCall>
 <Request title="Find users having 'John' as first name">
