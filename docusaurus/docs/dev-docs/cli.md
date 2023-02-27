@@ -189,7 +189,7 @@ Prints out debug information useful for debugging and required when reporting an
 
 | Option                 | description                                                                             |
 | ---------------------- | --------------------------------------------------------------------------------------- |
-| `-o`, `--open`         | Will open a new GitHub issue with the data debug data already populated in the template |
+| `-o`, `--open`         | Opens a new GitHub issue with the data debug data already populated in the template |
 | `-u`, `--uuid`         | Includes the project UUID                                                               |
 | `-d`, `--dependencies` | Includes project dependencies                                                           |
 | `--verbose`            | Logs all the data                                                                       |
