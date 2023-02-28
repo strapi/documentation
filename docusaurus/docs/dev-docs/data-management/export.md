@@ -22,12 +22,13 @@ The `strapi export` command is used to export data from a local Strapi instance.
 The following documentation details the available options to customize your data export. The export command and all of the available options are run using the [Strapi CLI](/dev-docs/cli#strapi-export).
 
 :::caution
-Admin users and API tokens are not exported.
+* Admin users and API tokens are not exported.
+* Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the export as those files do not exist in the upload folders.
 :::
 
 ## Name the export file
 
-Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension.
+Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension as one will be set automatically depending on options provided.
 
 ### Example: Export data with a custom filename
 
