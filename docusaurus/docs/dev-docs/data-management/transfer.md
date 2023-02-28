@@ -169,10 +169,10 @@ The `transfer` command is not intended for transferring data between two local i
 
 ### Create and clone a new Strapi project
 
-1. Create a new Strapi project using the `beta` installation command:
+1. Create a new Strapi project using the installation command:
 
     ```bash
-    npx create-strapi-app@beta <project-name> --quickstart
+    npx create-strapi-app@latest <project-name> --quickstart
     ```
 
 2. Create at least 1 content type in the project. See the [Quick Start Guide](/dev-docs/quick-start) if you need instructions on creating your first content type.
