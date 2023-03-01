@@ -70,31 +70,6 @@ module.exports = ({ env }) => ({
 });
 
 
-<!-- If you need tabs (JS and TS code examples, see example syntax in next section) -->
-
-## Heading title for additional step 2, if any
-
-<!-- TODO: fill in this section if needed -->
-<!-- use the same structure as with previous section: quick description, procedure, code example. -->
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./config/plugins.js"
-
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```js title="./config/plugins.ts"
-
-```
-
-</TabItem>
-
-</Tabs>
 
 <BuildCommand components={props.components} />
 <DevelopCommand components={props.components} />
