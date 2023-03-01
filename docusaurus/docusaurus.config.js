@@ -220,6 +220,12 @@ const config = {
     }),
 
   plugins: [
+    [
+      '@docusaurus/plugin-google-tag-manager',
+      {
+        containerId: 'GTM-KN9JRWG',
+      },
+    ],
     // 'plugin-image-zoom', // temp. disabled while we fix the bug
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,

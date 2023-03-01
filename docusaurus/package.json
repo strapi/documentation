@@ -16,6 +16,7 @@
   "dependencies": {
     "@docusaurus/core": "0.0.0-5304",
     "@docusaurus/plugin-client-redirects": "^2.3.1",
+    "@docusaurus/plugin-google-tag-manager": "^2.3.1",
     "@docusaurus/preset-classic": "0.0.0-5304",
     "@docusaurus/theme-live-codeblock": "0.0.0-5304",
     "@mdx-js/react": "^1.6.22",
