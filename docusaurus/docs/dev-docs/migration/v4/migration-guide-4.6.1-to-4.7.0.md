@@ -9,16 +9,12 @@ import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
 # v4.6.1+ to v4.7.0 migration guide
 
-The Strapi v4.6.1+ to v4.7.0 migration guide upgrades v4.6.1+ to v4.7.0. We [describe in 1-2 sentences what we introduced in 4.7.0 and why the migration is needed] 
-<!-- TODO: fill sentence above -->
+The Strapi v4.6.1+ to v4.7.0 migration guide upgrades v4.6.1+ to v4.7.0. We added a [data management system](/dev-docs/data-management) to v4.7 that allows transferring data from a Strapi instance to another instance. The data transfer features require generating transfer tokens that use a salt which need to be manually added when you migrate from a previous version of Strapi.
 
 The migration guide consists of:
 
-<!-- TODO: describe "additional steps" below -->
 - Upgrading the application dependencies
-- additional step 1 specific to this migration_
-- additional step 2 specific to this migration_
-- …
+- Enabling the data transfer feature
 - Reinitializing the application
 
 ## Upgrading the application dependencies to 4.7.0
@@ -50,14 +46,17 @@ Stop the server before starting the upgrade.
 If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
 :::
 
-<!-- TODO: update title -->
-## Enabling the Data Transfer Features
+## Enabling the data transfer features
 
-In order to enable the new data transfer features (remote data transfer, transfer tokens), a transfer token salt needs to be defined in your admin config.
+In order to enable the new data transfer features (remote data transfer, transfer tokens), a transfer token salt needs to be defined in your [admin panel configuration file](/dev-docs/configurations/admin-panel):
 
-1. Add a new configuration property to your `config/admin.(js|ts)` file under the path `transfer.token.salt` with the value being `env('TRANSFER_TOKEN_SALT')`
-2. Generate a new token salt (string). For instance, you can generate one using Node with `crypto.randomBytes(16).toString('base64')`
-3. Don't forget to add your generated token to your environment
+1. Add a new configuration property to your `config/admin.(js|ts)` file under the path `transfer.token.salt` with the value being `env('TRANSFER_TOKEN_SALT')`.
+2. Generate a new token salt (string). For instance, you can generate one using Node with `crypto.randomBytes(16).toString('base64')`.
+3. Add the generated token to your environment variables.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
 
 ```jsx title="/config/admin.js"
 module.exports = ({ env }) => ({
@@ -68,8 +67,26 @@ module.exports = ({ env }) => ({
     },
   },
 });
+```
 
+</TabItem>
 
+<TabItem value="ts" label="TypeScript">
+
+```jsx title="/config/admin.js"
+export default ({ env }) => ({
+  // ...
+  transfer: {
+    token: {
+      salt: env('TRANSFER_TOKEN_SALT'),
+    },
+  },
+});
+
+```
+
+</TabItem>
+</Tabs>
 
 <BuildCommand components={props.components} />
 <DevelopCommand components={props.components} />
