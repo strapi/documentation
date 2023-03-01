@@ -5,8 +5,8 @@
       "destination": "/cloud/intro"
     },
     {
-      "source": "/cloud/intro",
-      "destination": "/dev-docs/deployment/strapi-cloud"
+      "source": "/dev-docs/deployment/strapi-cloud",
+      "destination": "/cloud/intro"
     },
     {
       "source": "/developer-docs",
