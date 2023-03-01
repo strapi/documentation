@@ -4,7 +4,7 @@ description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
 
-# Audit Logs <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
+# Audit Logs <EntrepriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 

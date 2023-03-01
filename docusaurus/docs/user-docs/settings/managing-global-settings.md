@@ -28,7 +28,7 @@ To customize the logos:
 Once uploaded, the new logo can be replaced with another one ![Add icon](/img/assets/icons/add.svg), or reset ![Reset icon](/img/assets/icons/reset_icon.svg) with the default Strapi logo or the logo set in the configuration files.
 :::
 
-## Configuring Single Sign-On <GoldBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
+## Configuring Single Sign-On <EntrepriseBadge />
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
