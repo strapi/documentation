@@ -22,7 +22,7 @@ The CLI command consists of the following arguments:
 
 | Option     | Description                                                                                                                        | Required |
 |------------|--------------------------------------------------------------| :------: |
-| `--to`       | URL of the destination Strapi instance. The endpoint is `/admin`.                                                                      | Yes |
+| `--to`       | Full URL of the `/admin` endpoint on the destination Strapi instance (e.g. `https://my-beautiful-strapi-website/admin`) | Yes |
 | `‑‑to‑token` | Transfer token from the Strapi destination instance.        |No         |
 | `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |No         |
 | `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                    |No         |
@@ -33,6 +33,10 @@ Data transfers are authorized by Transfer tokens, which are generated in the Adm
 :::
 
 ## Generate a transfer token
+
+:::prerequisites
+- A salt transfer token should be defined in the [admin panel configuration](/dev-docs/configurations/admin-panel) file.
+:::
 
 The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 
