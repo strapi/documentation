@@ -1,5 +1,5 @@
 ---
-title: Admin panel configuration
+title: Admin panel
 displayed_sidebar: devDocsSidebar
 description: Strapi's admin panel offers a single entry point file for its configuration.
 
@@ -31,8 +31,8 @@ The `./config/admin.js` file can include the following parameters:
 | `serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/dev-docs/configurations/middlewares) | boolean       | `true`                                                                                                                              |
 | `forgotPassword`                  | Settings to customize the forgot password email (see [Forgot Password Email](/dev-docs/admin-panel-customization#forgotten-password-email))                                        | object        | {}                                                                                                                                  |
 | `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/dev-docs/plugins/email#using-the-sendtemplatedemail-function)                                                                               | object        | [Default template](https://github.com/strapi/strapi/blob/main/packages/core/admin/server/config/email-templates/forgot-password.js) |
-| `forgotPassword.from`             | Sender mail address                                                                                                                                                                                      | string        | Default value defined in your [provider configuration](/dev-docs/providers#configuring-providers)       |
-| `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                           | string        | Default value defined in your [provider configuration](/dev-docs/providers#configuring-providers)       |
+| `forgotPassword.from`             | Sender mail address                                                                                                                                                                                      | string        | Default value defined in <br />your [provider configuration](/dev-docs/providers#configuring-providers)       |
+| `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                           | string        | Default value defined in <br />your [provider configuration](/dev-docs/providers#configuring-providers)       |
 | `rateLimit`                       | Settings to customize the rate limiting of the admin panel's authentication endpoints, additional configuration options come from [`koa2-ratelimit`](https://www.npmjs.com/package/koa2-ratelimit)       | object        | {}                                                                                                                                  |
 | `rateLimit.enabled`               | Enable or disable the rate limiter                                                                                                                                                                       | boolean       | `true`                                                                                                                              |
 | `rateLimit.interval`              | Time window for requests to be considered as part of the same rate limiting bucket                                                                                                                       | object        | `{ min: 5 }`                                                                                                                        |
@@ -42,6 +42,7 @@ The `./config/admin.js` file can include the following parameters:
 | `rateLimit.prefixKey`             | Prefix for the rate limiting key                                                                                                                                                                         | string        | `${userEmail}:${ctx.request.path}:${ctx.request.ip}`                                                                                |
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                                    | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                | Rate limiting storage location (Memory, Sequelize,  or Redis) and for more information please see the [`koa2-ratelimit documentation`](https://www.npmjs.com/package/koa2-ratelimit)                                                                                                                                                                                     | object        | `MemoryStore` |
+| `transfer.token.salt`                   | Salt used to generate [Transfer tokens](/dev-docs/data-management/transfer#generate-a-transfer-token).<br/>If no transfer token salt is defined, transfer features will be disabled. | string        | Random string                                                                                                                       |
 
 ## Configurations
 
@@ -69,6 +70,11 @@ module.exports = ({ env }) => ({
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
+  },
 });
 
 ```
@@ -85,6 +91,11 @@ export default ({ env }) => ({
   },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+  },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
   },
 });
 ```
@@ -137,6 +148,11 @@ module.exports = ({ env }) => ({
     interval: { hour: 1, min: 30 },
     timeWait: 3*1000,
     max: 10,
+  },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
   },
 });
 
