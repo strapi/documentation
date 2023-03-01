@@ -53,9 +53,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 <!-- TODO: update title -->
 ## Enabling the Data Transfer Features
 
-<!-- TODO: fill in this section -->
-Quickly describe the nature of the change.
-Give a procedure to make the change:
+In order to enable the new data transfer features (remote data transfer, transfer tokens), a transfer token salt needs to be defined in your admin config.
 
 1. do this
 2. do this
