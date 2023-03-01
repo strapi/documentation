@@ -51,7 +51,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 :::
 
 <!-- TODO: update title -->
-## Heading title for specific step 1
+## Enabling the Data Transfer Features
 
 <!-- TODO: fill in this section -->
 Quickly describe the nature of the change.
