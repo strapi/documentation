@@ -42,6 +42,7 @@ The `./config/admin.js` file can include the following parameters:
 | `rateLimit.prefixKey`             | Prefix for the rate limiting key                                                                                                                                                                         | string        | `${userEmail}:${ctx.request.path}:${ctx.request.ip}`                                                                                |
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                                    | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                | Rate limiting storage location (Memory, Sequelize,  or Redis) and for more information please see the [`koa2-ratelimit documentation`](https://www.npmjs.com/package/koa2-ratelimit)                                                                                                                                                                                     | object        | `MemoryStore` |
+| `transfer.token.salt`                   | Salt used to generate [Transfer tokens](/dev-docs/data-management/transfer#generate-a-transfer-token)                                                                                 | string        | Random string                                                                                                                       |
 
 ## Configurations
 
@@ -69,6 +70,11 @@ module.exports = ({ env }) => ({
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
+  },
 });
 
 ```
@@ -85,6 +91,11 @@ export default ({ env }) => ({
   },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+  },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
   },
 });
 ```
@@ -137,6 +148,11 @@ module.exports = ({ env }) => ({
     interval: { hour: 1, min: 30 },
     timeWait: 3*1000,
     max: 10,
+  },
+  transfer: { 
+    token: { 
+      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+    } 
   },
 });
 
