@@ -35,7 +35,7 @@ Data transfers are authorized by Transfer tokens, which are generated in the Adm
 ## Generate a transfer token
 
 :::prerequisites
-- A salt transfer token should be defined in the [admin panel configuration](/dev-docs/configurations/admin-panel) file.
+A salt transfer token should be defined in the [admin panel configuration](/dev-docs/configurations/admin-panel) file.
 :::
 
 The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
