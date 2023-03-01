@@ -55,9 +55,9 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 
 In order to enable the new data transfer features (remote data transfer, transfer tokens), a transfer token salt needs to be defined in your admin config.
 
-1. do this
-2. do this
-3. …
+1. Add a new configuration property to your `config/admin.(js|ts)` file under the path `transfer.token.salt` with the value being `env('TRANSFER_TOKEN_SALT')`
+2. Generate a new token salt (string). For instance, you can generate one using Node with `crypto.randomBytes(16).toString('base64')`
+3. Don't forget to add your generated token to your environment
 
 <!-- TODO: add code example if relevant and update title property -->
 ```jsx title="/path/to/file.js"
