@@ -59,10 +59,16 @@ In order to enable the new data transfer features (remote data transfer, transfe
 2. Generate a new token salt (string). For instance, you can generate one using Node with `crypto.randomBytes(16).toString('base64')`
 3. Don't forget to add your generated token to your environment
 
-<!-- TODO: add code example if relevant and update title property -->
-```jsx title="/path/to/file.js"
-// my beautiful code here
-```
+```jsx title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // ...
+  transfer: {
+    token: {
+      salt: env('TRANSFER_TOKEN_SALT'),
+    },
+  },
+});
+
 
 <!-- If you need tabs (JS and TS code examples, see example syntax in next section) -->
 
