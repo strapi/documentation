@@ -255,9 +255,11 @@ import axios from 'axios';
 
 axios
   .post('http://localhost:1337/api/restaurants', {
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: 'Dolemon Sushi',
+      description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    }
   })
   .then(response => {
     console.log(response);
@@ -279,9 +281,11 @@ fetch('http://localhost:1337/api/restaurants', {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: 'Dolemon Sushi',
+      description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+      categories: [3],
+    }
   }),
 })
   .then(response => response.json())
