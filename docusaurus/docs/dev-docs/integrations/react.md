@@ -31,8 +31,6 @@ yarn create react-app react-app
 npx create-react-app react-app
 ```
 
-</TabItem>
-
 </Tabs>
 
 ## Use an HTTP client
@@ -155,7 +153,7 @@ const App = () => {
   useEffect(() => {
     axios
       .get('http://localhost:1337/api/restaurants')
-      .then(({ data }) => setRestaurants(data))
+      .then(({ data }) => setRestaurants(data.data))
       .catch((error) => setError(error))
   }, [])
 
@@ -167,7 +165,9 @@ const App = () => {
   return (
     <div className="App">
       <ul>
-        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+        {restaurants.map(({ id, attributes }) => (
+          <li key={id}>{attributes.name}</li>
+        ))}
       </ul>
     </div>
   );
@@ -209,7 +209,7 @@ const App = () => {
     fetch('http://localhost:1337/api/restaurants', { headers, method: 'GET' })
       .then(checkStatus)
       .then(parseJSON)
-      .then(({ data }) => setRestaurants(data))
+      .then(({ data }) => setRestaurants(data.data))
       .catch((error) => setError(error))
   }, [])
 
@@ -221,7 +221,9 @@ const App = () => {
   return (
     <div className="App">
       <ul>
-        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+        {restaurants.map(({ id, attributes }) => (
+          <li key={id}>{attributes.name}</li>
+        ))}
       </ul>
     </div>
   );
