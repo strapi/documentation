@@ -612,7 +612,9 @@ import axios from "axios";
 
 axios
   .put("http://localhost:1337/api/restaurants/2", {
-    categories: [2],
+    data: {
+      categories: [2],
+    },
   })
   .then((response) => {
     console.log(response);
@@ -627,13 +629,15 @@ axios
 <Request title="Example PUT request with fetch">
 
 ```js
-fetch("http://localhost:1337/api/restaurants/2", {
+fetch("http://localhost:1337/api/restaurants/3", {
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    categories: [2],
+    data: {
+      categories: [2],
+    },
   }),
 })
   .then((response) => response.json())
@@ -650,23 +654,17 @@ fetch("http://localhost:1337/api/restaurants/2", {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T10:21:30.219Z",
-  "updated_at": "2020-08-04T10:21:30.219Z",
-  "categories": [
-    {
-      "id": 2,
-      "name": "Brunch",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-08-04T10:24:26.901Z",
-      "updated_at": "2020-08-04T10:24:26.911Z"
+  "data": {
+    "id": 3,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2023-03-02T21:40:39.185Z",
+      "updatedAt": "2023-03-02T23:13:47.494Z",
+      "publishedAt": "2023-03-02T21:40:39.118Z"
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 
