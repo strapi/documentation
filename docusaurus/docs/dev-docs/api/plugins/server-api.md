@@ -143,6 +143,15 @@ Cron jobs that are using the key as the rule can not be removed.
 ```js
 strapi.cron.remove("myJob");
 ```
+
+### List Cron Jobs
+
+To list all the cron jobs that are currently running you can call the `jobs` array on the `strapi.cron` object.
+
+```js
+strapi.cron.jobs
+```
+
 ## Backend customization
 
 ### Content-types
