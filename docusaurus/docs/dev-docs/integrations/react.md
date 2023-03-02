@@ -110,37 +110,28 @@ fetch('http://localhost:1337/api/restaurants', {
 <Response>
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-    "created_by": {
+{
+  "data": [
+    {
       "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "updated_by": {
-      "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "created_at": "2020-07-31T11:37:16.964Z",
-    "updated_at": "2020-07-31T11:37:16.975Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-07-31T11:36:23.164Z",
-        "updated_at": "2020-07-31T11:36:23.172Z"
+      "attributes": {
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "createdAt": "2023-03-02T19:24:33.456Z",
+        "updatedAt": "2023-03-02T19:32:01.904Z",
+        "publishedAt": "2023-03-02T19:32:01.902Z"
       }
-    ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
   }
-]
+}
 ```
 
 </Response>
