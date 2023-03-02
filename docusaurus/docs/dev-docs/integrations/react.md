@@ -328,20 +328,23 @@ fetch("http://localhost:1337/api/restaurants", {
 
 ```js
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useId } from "react";
 
-const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
-  <div key={category.id}>
-    <label htmlFor={category.id}>{category.name}</label>
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={isChecked ? onAddCategory : onRemoveCategory}
-      name="categories"
-      id={category.id}
-    />
-  </div>
-);
+const Checkbox = ({ name, isChecked, onAddCategory, onRemoveCategory }) => {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id}>{name}</label>
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={isChecked ? onRemoveCategory : onAddCategory}
+        name="categories"
+        id={id}
+      />
+    </div>
+  );
+};
 
 const App = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -355,11 +358,12 @@ const App = () => {
   const handleInputChange = useCallback(({ target: { name, value } }) => {
     setModifiedData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:1337/api/restaurants", modifiedData)
+      .post("http://localhost:1337/api/restaurants", { data: modifiedData })
       .then((response) => {
         console.log(response);
       })
@@ -371,7 +375,10 @@ const App = () => {
   useEffect(() => {
     axios
       .get("http://localhost:1337/api/categories")
-      .then(({ data }) => setAllCategories(data))
+      .then(({ data }) => {
+        setAllCategories(data.data);
+        console.log(data.data);
+      })
       .catch((error) => setError(error));
   }, []);
 
@@ -406,24 +413,27 @@ const App = () => {
         <div>
           <br />
           <b>Select categories</b>
-          {allCategories.map((category) => (
+          {allCategories.map(({ id, attributes }) => (
             <Checkbox
-              category={category}
-              isChecked={modifiedData.categories.includes(category.id)}
-              onAddCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: [...prevData.categories, category.id],
-                }))
-              }
-              onRemoveCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: prevData.categories.filter(
-                    (id) => id !== category.id
+              key={id}
+              name={attributes.name}
+              isChecked={modifiedData.categories.includes(id)}
+              onAddCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: [...modifiedData.categories, id],
+                };
+                setModifiedData(nextData);
+              }}
+              onRemoveCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: modifiedData.categories.filter(
+                    (catId) => catId !== id
                   ),
-                }))
-              }
+                };
+                setModifiedData(nextData);
+              }}
             />
           ))}
         </div>
@@ -444,7 +454,7 @@ export default App;
 `./src/App.js`
 
 ```js
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useId } from "react";
 
 // Parses the JSON returned by a network request
 const parseJSON = (resp) => (resp.json ? resp.json() : resp);
@@ -462,18 +472,21 @@ const checkStatus = (resp) => {
 
 const headers = { "Content-Type": "application/json" };
 
-const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
-  <div key={category.id}>
-    <label htmlFor={category.id}>{category.name}</label>
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={isChecked ? onAddCategory : onRemoveCategory}
-      name="categories"
-      id={category.id}
-    />
-  </div>
-);
+const Checkbox = ({ name, isChecked, onAddCategory, onRemoveCategory }) => {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id}>{name}</label>
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={isChecked ? onRemoveCategory : onAddCategory}
+        name="categories"
+        id={id}
+      />
+    </div>
+  );
+};
 
 const App = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -487,11 +500,15 @@ const App = () => {
   const handleInputChange = useCallback(({ target: { name, value } }) => {
     setModifiedData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post("http://localhost:1337/api/restaurants", modifiedData)
+    await fetch("http://localhost:1337/api/restaurants", {
+      headers,
+      method: "POST",
+      body: JSON.stringify({ data: modifiedData }),
+    })
       .then((response) => {
         console.log(response);
       })
@@ -539,24 +556,27 @@ const App = () => {
         <div>
           <br />
           <b>Select categories</b>
-          {allCategories.map((category) => (
+          {allCategories.map(({ id, attributes }) => (
             <Checkbox
-              category={category}
-              isChecked={modifiedData.categories.includes(category.id)}
-              onAddCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: [...prevData.categories, category.id],
-                }))
-              }
-              onRemoveCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: prevData.categories.filter(
-                    (id) => id !== category.id
+              key={id}
+              name={attributes.name}
+              isChecked={modifiedData.categories.includes(id)}
+              onAddCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: [...modifiedData.categories, id],
+                };
+                setModifiedData(nextData);
+              }}
+              onRemoveCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: modifiedData.categories.filter(
+                    (catId) => catId !== id
                   ),
-                }))
-              }
+                };
+                setModifiedData(nextData);
+              }}
             />
           ))}
         </div>
