@@ -35,7 +35,7 @@ If you use your Strapi application with the Community Edition (see [Pricing and 
 
 :::
 
-## Creating a new role <EntrepriseBadge />
+## Creating a new role <EnterpriseBadge />
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
 
@@ -46,7 +46,7 @@ Clicking on the **Add new role** button will redirect you to the roles edition i
 In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/duplicate.svg) to create a new role by duplicating an existing one.
 :::
 
-## Deleting a role <EntrepriseBadge />
+## Deleting a role <EnterpriseBadge />
 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
@@ -97,7 +97,7 @@ To configure Collection or Single types permissions for a role:
 5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
-#### Plugins and Settings <EntrepriseBadge />
+#### Plugins and Settings <EnterpriseBadge />
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
 
@@ -143,7 +143,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
-### Setting custom conditions for permissions <EntrepriseBadge />
+### Setting custom conditions for permissions <EnterpriseBadge />
 
 For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 

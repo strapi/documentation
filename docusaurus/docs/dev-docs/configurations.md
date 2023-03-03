@@ -71,5 +71,5 @@ Strapi also offers the following optional configuration options for specific fea
 - [plugins](/dev-docs/configurations/plugins)
 - the [environment and its variables](/dev-docs/configurations/environment)
 - [public assets](/dev-docs/configurations/public-assets)
-- [Single Sign-On](/dev-docs/configurations/sso) <EntrepriseBadge />
-- [Role-Based Access Control](/dev-docs/configurations/rbac) <EntrepriseBadge />
+- [Single Sign-On](/dev-docs/configurations/sso) <EnterpriseBadge />
+- [Role-Based Access Control](/dev-docs/configurations/rbac) <EnterpriseBadge />

@@ -9,7 +9,7 @@ import Response from '../components/Response';
 import ApiCall from '../components/ApiCall';
 import AlphaBadge from '../components/AlphaBadge';
 import BetaBadge from '../components/BetaBadge';
-import EntrepriseBadge from '../components/EntrepriseBadge';
+import EnterpriseBadge from '../components/EnterpriseBadge';
 import Columns from '../components/Columns';
 import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
@@ -33,7 +33,7 @@ export default {
   ApiCall: ApiCall,
   AlphaBadge: AlphaBadge,
   BetaBadge: BetaBadge,
-  EntrepriseBadge: EntrepriseBadge,
+  EnterpriseBadge: EnterpriseBadge,
   Columns: Columns,
   ColumnLeft: ColumnLeft,
   ColumnRight: ColumnRight,
