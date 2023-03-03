@@ -32,6 +32,12 @@ const config = {
   scripts: [
     {
       src:
+        '/js/hotjar.js',
+      type: 'module',
+      async: true,
+    },
+    {
+      src:
         '/js/particle.js',
       type: 'module',
       async: true,
