@@ -19,7 +19,7 @@ Migrations are run using JavaScript migration files stored in `./database/migrat
 Strapi:
 
 - Automatically detects migration files,
-- runs each new migration file 1 time in alphanumerical order at the next startup,
+- runs each new migration file one time in alphanumeric order at the next startup,
 - runs migrations before the database tables are synchronized with the content-types schemas.
 
 ::: warning
