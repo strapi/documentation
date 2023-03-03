@@ -15,7 +15,7 @@ Before going any further into this user guide, we recommend you to acknowledge t
 
 - **Versions** <br/> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version. However, we always keep live both the documentation of the current Strapi version, and the documentation of the previous one - the latter being officially and actively maintained for 6 months after the release of the newest Strapi version.
 
-- **License and Pricing Plans** <br/> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or the [Enterprise Edition](https://strapi.io/pricing-self-hosted). In this user guide, if a feature is only available for the Enterprise Edition, an <EntrepriseBadge /> badge is displayed beside the section's title.
+- **License and Pricing Plans** <br/> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or the [Enterprise Edition](https://strapi.io/pricing-self-hosted). In this user guide, if a feature is only available for the Enterprise Edition, an <EnterpriseBadge /> badge is displayed beside the section's title.
 
 - **Roles and Permissions** <br/> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
 
@@ -37,7 +37,7 @@ To access the admin panel:
 2. Enter your credentials to log in.
 3. Click on the **Login** button. You should be redirected to the homepage of the admin panel.
 
-### Using SSO for authentication <EntrepriseBadge />
+### Using SSO for authentication <EnterpriseBadge />
 
 If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](/user-docs/settings/managing-global-settings#configuring-single-sign-on)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
 
