@@ -12,7 +12,7 @@ Database migrations exist to run one-time queries against the database, typicall
 Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
 :::
 
-## Understand database migration files
+## Understanding database migration files
 
 Migrations are run using JavaScript migration files stored in `./database/migrations`.
 
