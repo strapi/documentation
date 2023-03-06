@@ -591,16 +591,55 @@ To add `createdBy` and `updatedBy` to the API response:
 1. Open the content-type `schema.json` file.
 2. Add `"populateCreatorFields": true` to the `options` object:
 
-```json
-"options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
-  },
-```
+  ```json
+  "options": {
+      "draftAndPublish": true,
+      "populateCreatorFields": true
+    },
+  ```
 
 3. Save the `schema.json`.
+4. Open the controller `[collection-name].js` file inside the corresponding API request.
+5. Add the following piece of code, and make sure you replace the `[collection-name].js` with proper collection name:
+  
+  ```js
+  'use strict';
+  /**
+   *  [collection-name] controller
+   */
+  const { createCoreController } = require('@strapi/strapi').factories;
+  module.exports = createCoreController('api::[collection-name].[collection-name]', ({ strapi }) => ({
+    async find(ctx) {
+      // Calling the default core action
+      const { data, meta } = await super.find(ctx);
+      const query = strapi.db.query('api::[collection-name].[collection-name]');
+      await Promise.all(
+        data.map(async (item, index) => {
+          const foundItem = await query.findOne({
+            where: {
+              id: item.id,
+            },
+            populate: ['createdBy', 'updatedBy'],
+          });
+          
+          data[index].attributes.createdBy = {
+            id: foundItem.createdBy.id,
+            firstname: foundItem.createdBy.firstname,
+            lastname: foundItem.createdBy.lastname,
+          };
+          data[index].attributes.updatedBy = {
+            id: foundItem.updatedBy.id,
+            firstname: foundItem.updatedBy.firstname,
+            lastname: foundItem.updatedBy.lastname,
+          };
+        })
+      );
+      return { data, meta };
+    },
+  }));
+  ```
 
-REST API requests using the `populate` parameter that include the `createdBy` or `updatedBy` fields will populate these fields.
+REST API requests using the `populate` parameter that include the `createdBy` or `updatedBy` fields will now populate these fields.
 
 :::note
 
