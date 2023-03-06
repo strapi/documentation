@@ -304,7 +304,7 @@ Strapi (the backend) will be running on `http://localhost:1337`.
 
 <TabItem title="GitHub" value="GitHub">
 
-#### Using ngrok
+<h4 id="github">Using ngrok</h4>
 
 Github doesn't accept `localhost` urls. <br/>
 Use `ngrok` to serve the backend app.
@@ -315,7 +315,7 @@ ngrok http 1337
 
 Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
 
-#### Github configuration
+<h4 id="github-config">Github configuration</h4>
 
 - Visit the OAuth Apps list page [https://github.com/settings/developers](https://github.com/settings/developers)
 - Click on **New OAuth App** button
@@ -325,7 +325,7 @@ Don't forget to update the server url in the backend config file `config/server.
   - **Application description**: Strapi provider auth description
   - **Authorization callback URL**: `https://65e60559.ngrok.io/api/connect/github/callback`
 
-#### Strapi configuration
+<h4 id="github-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **GitHub** provider
@@ -340,7 +340,7 @@ Don't forget to update the server url in the backend config file `config/server.
 
 <TabItem value="Facebook" title="Facebook">
 
-#### Using ngrok
+<h4 id="facebook">Using ngrok</h4>
 
 Facebook doesn't accept `localhost` urls. <br/>
 Use `ngrok` to serve the backend app.
@@ -351,7 +351,7 @@ ngrok http 1337
 
 Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
 
-#### Facebook configuration
+<h4 id="facebook-config">Facebook configuration</h4>
 
 - Visit the Developer Apps list page <br/> [https://developers.facebook.com/apps/](https://developers.facebook.com/apps/)
 - Click on **Add a New App** button
@@ -364,7 +364,7 @@ Don't forget to update the server url in the backend config file `config/server.
 - Then on **Basic** link
 - You should see your Application ID and secret, save them for later
 
-#### Strapi configuration
+<h4 id="facebook-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Facebook** provider
@@ -378,12 +378,12 @@ Don't forget to update the server url in the backend config file `config/server.
 
 <TabItem title="Google" value="Google">
 
-#### Using ngrok
+<h4 id="google">Using ngrok</h4>
 
 Google accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### Google configuration
+<h4 id="google-config">Google configuration</h4>
 
 - Visit the Google Developer Console <br/> [https://console.developers.google.com/](https://console.developers.google.com/)
 - Click on the **Select a project** dropdown in the top menu
@@ -406,7 +406,7 @@ Wait a few seconds while the application is created.
 - Click on **OAuth 2.0 Client IDs** name of the client you just created
 - You should see your Application ID and secret, save them for later
 
-#### Strapi configuration
+<h4 id="google-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Google** provider
@@ -420,12 +420,12 @@ Wait a few seconds while the application is created.
 
 <TabItem title="AWS Cognito" value="AWS Cognito">
 
-#### Using ngrok
+<h4 id="aws-cognito">Using ngrok</h4>
 
 AWS Cognito accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### AWS Cognito configuration
+<h4 id="aws-cognito-config">AWS Cognito configuration</h4>
 
 - Visit the AWS Management Console <br/> [https://aws.amazon.com/console/](https://aws.amazon.com/console/)
 - If needed, select your **Region** in the top right corner next to the Support dropdown
@@ -441,7 +441,7 @@ The use of `ngrok` is not needed.
 - In the **Oauth 2.0** section select `Authorization code grant` and `Implicit grant` for the **Allowed OAuth Flows** and select `email`, `openid` and `profile` for the **Allowed OAuth Scopes**
 - You can now click on **Save changes** and if you have already configured your domain name then you should be able to see a link to the **Launch Hosted UI**. You can click on it in order to display the AWS Cognito login page. In case you haven't yet configured your domain name, use the link **Choose domain name** at the bottom right of the page in order to configure your domain name. On that page you will have an `Amazon Cognito Domain` section where a `Domain prefix` is already setup. Type a domain prefix to use for the sign-up and sign-in pages that are hosted by Amazon Cognito, this domain prefix together with the `.auth.YOUR_REGION.amazoncognito.com` will be the **Host URI (Subdomain)** value for your strapi configuration later on.
 
-#### Strapi configuration
+<h4 id="aws-cognito-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Cognito** provider
@@ -456,7 +456,7 @@ The use of `ngrok` is not needed.
 
 <TabItem title="Twitter" value="Twitter">
 
-#### Using ngrok
+<h4 id="twitter">Using ngrok</h4>
 
 Twitter doesn't accept `localhost` urls. <br/>
 Use `ngrok` to serve the backend app.
@@ -467,7 +467,7 @@ ngrok http 1337
 
 Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
 
-#### Twitter configuration
+<h4 id="twitter-config">Twitter configuration</h4>
 
 - Visit the Apps list page <br/> [https://developer.twitter.com/en/apps](https://developer.twitter.com/en/apps)
 - Click on **Create an app** button
@@ -484,7 +484,7 @@ Don't forget to update the server url in the backend config file `config/server.
   - **Privacy policy**: `https://d73e70e88872.ngrok.io`
   - **Terms of service**: `https://d73e70e88872.ngrok.io`
 
-#### Strapi configuration
+<h4 id="twitter-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Twitter** provider
@@ -498,12 +498,12 @@ Don't forget to update the server url in the backend config file `config/server.
 
 <TabItem title="Discord" value="Discord">
 
-#### Using ngrok
+<h4 id="discord">Using ngrok</h4>
 
 Discord accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### Discord configuration
+<h4 id="discord-configuration">Discord configuration</h4>
 
 - Visit the Apps list page on the developer portal <br/> [https://discordapp.com/developers/applications/](https://discordapp.com/developers/applications/)
 - Click on **New application** button
@@ -514,7 +514,7 @@ The use of `ngrok` is not needed.
 - Click on **General information** in the left menu
 - You should see your Application ID and secret, save them for later
 
-#### Strapi configuration
+<h4 id="discord-strapi-configuration">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Discord** provider
@@ -528,12 +528,12 @@ The use of `ngrok` is not needed.
 
 <TabItem title="Twitch" value="Twitch">
 
-#### Using ngrok
+<h4 id="twitch">Using ngrok</h4>
 
 Twitch accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### Twitch configuration
+<h4 id="twitch-config">Twitch configuration</h4>
 
 - Visit the Apps list page on the developer console <br/> [https://dev.twitch.tv/console/apps](https://dev.twitch.tv/console/apps)
 - Click on **Register Your Application** button
@@ -545,7 +545,7 @@ The use of `ngrok` is not needed.
 - Generate a new **Client Secret** with the **New Secret** button
 - You should see your Application ID and secret, save them for later
 
-#### Strapi configuration
+<h4 id="twitch-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Twitch** provider
@@ -559,7 +559,7 @@ The use of `ngrok` is not needed.
 
 <TabItem title="Instagram" value="Instagram">
 
-#### Using ngrok
+<h4 id="instagram">Using ngrok</h4>
 
 Facebook doesn't accept `localhost` urls. <br/>
 Use `ngrok` to serve the backend app.
@@ -570,7 +570,7 @@ ngrok http 1337
 
 Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
 
-#### Instagram configuration
+<h4 id="instagram-config">Instagram configuration</h4>
 
 - Visit the Developer Apps list page <br/> [https://developers.facebook.com/apps/](https://developers.facebook.com/apps/)
 - Click on **Add a New App** button
@@ -585,7 +585,7 @@ Don't forget to update the server url in the backend config file `config/server.
 - On the **App Review for Instagram Basic Display** click on **Add to submission** for **instagram_graph_user_profile**.
 - You should see your Application ID and secret, save them for later
 
-#### Strapi configuration
+<h4 id="instagram-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Instagram** provider
@@ -599,12 +599,12 @@ Don't forget to update the server url in the backend config file `config/server.
 
 <TabItem title="VK" value="VK">
 
-#### Using ngrok
+<h4 id="vk">Using ngrok</h4>
 
 VK accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### VK configuration
+<h4 id="vk-config">VK configuration</h4>
 
 - Visit the Apps list page <br/> [https://vk.com/apps?act=manage](https://vk.com/apps?act=manage)
 - Click on **Create app** button
@@ -618,7 +618,7 @@ The use of `ngrok` is not needed.
 - Fill the information:
   - **Authorized redirect URL**: `http://localhost:1337/api/connect/vk/callback`
 
-#### Strapi configuration
+<h4 id="vk-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **VK** provider
@@ -632,12 +632,12 @@ The use of `ngrok` is not needed.
 
 <TabItem title="LinkedIn" value="LinkedIn">
 
-#### Using ngrok
+<h4 id="linkedin">Using ngrok</h4>
 
 LinkedIn accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### LinkedIn configuration
+<h4 id="linkedin-config">LinkedIn configuration</h4>
 
 - Visit the Apps list page <br/> [https://www.linkedin.com/developers/apps](https://www.linkedin.com/developers/apps)
 - Click on **Create app** button
@@ -652,7 +652,7 @@ The use of `ngrok` is not needed.
 - On the app page click on **Products** tab.
 - Select `Sign In with LinkedIn` from the product list to enable it.
 
-#### Strapi configuration
+<h4 id="linkedin-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **LinkedIn** provider
@@ -666,13 +666,13 @@ The use of `ngrok` is not needed.
 
 <TabItem title="CAS" value="CAS">
 
-#### Using ngrok
+<h4 id="cas">Using ngrok</h4>
 
 A remote CAS server can be configured to accept `localhost` URLs or you can run your own CAS server locally that accepts them.
 
 The use of `ngrok` is not needed.
 
-#### CAS configuration
+<h4 id="cas-config">CAS configuration</h4>
 
 - [CAS](https://github.com/apereo/cas) is an SSO server that supports many different methods of verifying a users identity,
   retrieving attributes out the user and communicating that information to applications via protocols such as SAML, OIDC, and the CAS protocol. Strapi can use a CAS server for authentication if CAS is deployed with support for OIDC.
@@ -703,7 +703,7 @@ The use of `ngrok` is not needed.
 }
 ```
 
-#### Strapi configuration
+<h4 id="cas-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/plugins/users-permissions/providers](http://localhost:1337/admin/plugins/users-permissions/providers)
 - Click on the **Cas** provider
@@ -724,12 +724,12 @@ The use of `ngrok` is not needed.
 
 <TabItem title="Reddit" value="Reddit">
 
-#### Using ngrok
+<h4 id="reddit">Using ngrok</h4>
 
 Reddit accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### Reddit configuration
+<h4 id="reddit-config">Reddit configuration</h4>
 
 - Visit the Reddit authorized applications preferences page <br/> [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
 - Click on the **create another app...** button near the bottom
@@ -738,7 +738,7 @@ The use of `ngrok` is not needed.
 - Click the **create app** button
 - Note that the **Client ID** is located under the app type (web app)
 
-#### Strapi configuration
+<h4 id="reddit-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Reddit** provider
@@ -752,12 +752,12 @@ The use of `ngrok` is not needed.
 
 <TabItem title="Auth0" value="Auth0">
 
-#### Using ngrok
+<h4 id="auth0">Using ngrok</h4>
 
 Auth0 accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 
-#### Auth0 configuration
+<h4 id="auth0-config">Auth0 configuration</h4>
 
 - Visit your Auth0 tenant dashboard
 - In API section, create a new API
@@ -772,7 +772,7 @@ The use of `ngrok` is not needed.
   - Refresh Token
   - Client Credentials
 
-#### Strapi configuration
+<h4 id="auth0-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Auth0** provider
@@ -787,7 +787,7 @@ The use of `ngrok` is not needed.
 
 <TabItem value="Patreon" label="Patreon">
 
-#### Using ngrok
+<h4 id="patreon">Using ngrok</h4>
 
 Patreon does not accept `localhost` urls. <br/>
 Use `ngrok` to serve the backend app.
@@ -798,7 +798,7 @@ ngrok http 1337
 
 Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok URL.
 
-#### Patreon configuration
+<h4 id="patreon-config">Patreon configuration</h4>
 
 - You must be a Patreon Creator in order to register an Oauth client.
 - Go to the [Patreon developer portal](https://www.patreon.com/portal)
@@ -813,7 +813,7 @@ Version 2 is probably the best choice. See their
 - Under "Redirect URI's" enter `https://your-site.com/api/connect/patreon/callback`
 - Save the client details and you will then see the Client ID and Client Secret.
 
-#### Strapi configuration
+<h4 id="patreon-strapi-config">Strapi configuration</h4>
 
 - Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
 - Click on the **Patreon** provider
