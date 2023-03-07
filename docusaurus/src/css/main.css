@@ -33,6 +33,12 @@ h2 {
   font-size: 24px;
 }
 
+h3 img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 2px 3px 0;
+}
+
 [data-theme="light"] .theme-doc-markdown.markdown {
   font-weight: 400;
 }
