@@ -23,30 +23,9 @@ At this time and in the future there is no plan to allow model creating or updat
 
 ## Does Strapi handle deploying or migrating of content?
 
-Strapi does not currently provide any tools for migrating or deploying your data changes between different environments (_ie. from development to production_). With the exception being the Content-Manager settings, to read more about this option please see the following [CLI documentation](/dev-docs/cli#strapi-configuration-dump).
+Strapi does offer a feature known as [Data Transfer](/dev-docs/data-transfer) that allows you to export and import content from one Strapi instance to another or exporting and importing from a file archive. This is useful for migrating content from one environment to another.
 
-## User can't login to the admin panel
-
-With the release of the Strapi beta version a fundamental change occurred in that the end users (REST and GraphQL users) were split from the Administrators (admin panel users) in such a way that normal users can not be given access to the admin panel. If you would like to read more on why this change was done, you can read the Strapi [blog post](https://strapi.io/blog/why-we-split-the-management-of-the-admin-users-and-end-users) about it.
-
-Strapi has released the new Admin & Permissions (RBAC - Role based access control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can now also give roles specific permissions for things like content-types, single types, plugins, and settings.
-
-When this new plugin release, there is two versions:
-
-- Community Edition
-- Enterprise Edition
-
-By default, the Community Edition includes 3 pre-defined roles (Administrators, Editor, Author). Upgrading to the Enterprise Edition will unlock an unlimited number of roles. There will be certain other field level permission limitations based on the edition and we will be building a detailed guide as to what is included within the "Basic" vs "Advanced" RBAC features. To learn more about what is included as well as pricing please see our [pricing page](https://strapi.io/pricing-self-hosted).
-
-## Relations aren't maintaining their sort order
-
-With the components there is a hidden field called `order` that allows entries to maintain their sort, however with relations there is no such field. If you consider the typical count of component entries vs relational based entries (in retrospect they function in the backend the same) there is generally a much higher number of relations. If relations were to have an `order` field applied to them as well it could cause significant performance degradation when trying to update the order, and likewise in the case where a relation could be attached to multiple entries it would be quite difficult to maintain the order.
-
-For the time being there is no recommended way to handle this automatically and instead it may be required for you to create custom controllers to handle this within your own project.
-
-We are evaluating if we will natively add support for this in the future. We will add more details when they become available.
-
-## Why are my application's database and uploads resetting on PaaS?
+## Why are my application's database and uploads resetting on PaaS-type services?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, etc.) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
@@ -70,9 +49,7 @@ For all these reasons, and others, we think it'll be a mistake and might confuse
 
 ## How do I customize a plugin?
 
-Strapi uses a system called [extension](/dev-docs/plugins-extension) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi detecting newer versions of files and using that as a replacement for the ones stored within the `node_modules`.
-
-You gain the ability to modify these files without forking the plugin package, however you lose the ability to easily update. After each version release you will need to compare your changes to those in the new version and modify your version of the files accordingly.
+Strapi uses a system called [extension](/dev-docs/plugins-extension) as plugins are stored in the `node_modules` folder. Due to this extensions work by Strapi utilizing programmatic hooks to override certain parts of the plugin.
 
 ## Can I add my own 3rd party auth provider?
 
@@ -106,5 +83,3 @@ TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code ex
 ## Is X feature available yet?
 
 You can see the [public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
-
-<!-- TODO: This will be changed to Canny eventually, leave this note here for Derrick please -->
