@@ -7,7 +7,7 @@ description: In Strapi, RBAC is an approach to restricting access to some featur
 
 # Role-Based Access Control
 
-Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles). The Community Edition of Strapi offers 3 default roles (Author, Editor, and Super Admin). To go further, creating custom conditions for any type of permission is also possible. This requires an [Enterprise Edition license plan](https://strapi.io/pricing).
+Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles).
 
 ## Declaring new conditions
 
