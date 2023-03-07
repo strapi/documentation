@@ -229,7 +229,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/admin/my-route.js"
+```js title="./src/plugins/my-plugin/server/routes/admin/my-route.js"
 module.exports = [
   {
     method: 'GET',
