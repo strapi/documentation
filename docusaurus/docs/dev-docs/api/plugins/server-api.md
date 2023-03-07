@@ -251,7 +251,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/content-api/index.js"
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
 module.exports = {
   type: 'content-api',
   routes: [],
