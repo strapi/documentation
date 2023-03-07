@@ -242,7 +242,7 @@ module.exports = [
 ];
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/admin/index.js"
+```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
 const myRoute = require('./my-route');
 
 module.exports = {
