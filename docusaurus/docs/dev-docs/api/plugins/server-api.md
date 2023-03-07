@@ -35,7 +35,7 @@ This function is called to load the plugin, before the application is [bootstrap
 
 **Example:**
 
-```js title="path ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   register({ strapi }) {
     // execute some register code
@@ -51,7 +51,7 @@ The [bootstrap](/dev-docs/configurations/functions#bootstrap) function is called
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   bootstrap({ strapi }) {
     // execute some bootstrap code
@@ -67,7 +67,7 @@ The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is 
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   destroy({ strapi }) {
     // execute some destroy code
@@ -88,7 +88,7 @@ module.exports = () => ({
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
 const config = require('./config');
 
 module.exports = () => ({
@@ -112,7 +112,7 @@ Once defined, the configuration can be accessed:
 
 The `cron` object allows you to add cron jobs to the Strapi instance.
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   bootstrap({ strapi }) {
     strapi.cron.add({
@@ -148,7 +148,7 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 const contentTypes = require('./content-types');
 
 module.exports = () => ({
@@ -156,7 +156,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/content-types/index.js"
+```js title="./src/plugins/my-plugin/server/content-types/index.js"
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
@@ -166,7 +166,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/content-types/content-type-a.js"
+```js title="./src/plugins/my-plugin/server/content-types/content-type-a.js"
 module.exports = {
   kind: 'collectionType',
   collectionName: 'content-type',
@@ -206,11 +206,11 @@ An array of [routes](/dev-docs/backend-customization/routes) configuration.
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 // ...
 const routes = require('./routes');
 // ...
@@ -222,14 +222,14 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/index.js"
+```js title="./src/plugins/my-plugin/server/routes/index.js"
 module.exports = {
   admin: require('./admin'),
   'content-api': require('./content-api'),
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/admin/my-route.js"
+```js title="./src/plugins/my-plugin/server/routes/admin/my-route.js"
 module.exports = [
   {
     method: 'GET',
@@ -242,7 +242,7 @@ module.exports = [
 ];
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/admin/index.js"
+```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
 const myRoute = require('./my-route');
 
 module.exports = {
@@ -251,7 +251,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/content-api/index.js"
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
 module.exports = {
   type: 'content-api',
   routes: [],
@@ -266,11 +266,11 @@ An object with the [controllers](/dev-docs/backend-customization/controllers) th
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 const controllers = require('./controllers');
 
 module.exports = () => ({
@@ -278,7 +278,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/index.js"
+```js title="./src/plugins/my-plugin/server/controllers/index.js"
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
 
@@ -288,7 +288,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/controller-a.js"
+```js title="./src/plugins/my-plugin/server/controllers/controller-a.js"
 module.exports = ({ strapi }) => ({
   doSomething(ctx) {
     ctx.body = { message: 'HelloWorld' };
@@ -306,11 +306,11 @@ Services should be functions taking `strapi` as a parameter.
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 const services = require('./services');
 
 module.exports = () => ({
@@ -318,7 +318,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/index.js"
+```js title="./src/plugins/my-plugin/server/services/index.js"
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
 
@@ -328,7 +328,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/service-a.js"
+```js title="./src/plugins/my-plugin/server/services/service-a.js"
 module.exports = ({ strapi }) => ({
   someFunction() {
     return [1, 2, 3];
@@ -344,11 +344,11 @@ An object with the [policies](/dev-docs/backend-customization/policies) the plug
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 const policies = require('./policies');
 
 module.exports = () => ({
@@ -356,7 +356,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/index.js"
+```js title="./src/plugins/my-plugin/server/policies/index.js"
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
 
@@ -366,7 +366,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/policy-a.js"
+```js title="./src/plugins/my-plugin/server/policies/policy-a.js"
 module.exports = (policyContext, config, { strapi }) => {
     if (ctx.state.user && ctx.state.user.isActive) {
       return true;
@@ -384,18 +384,18 @@ An object with the [middlewares](/dev-docs/configurations/middlewares) the plugi
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 const middlewares = require('./middlewares');
 module.exports = () => ({
   middlewares,
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/middlewares/index.js"
+```js title="./src/plugins/my-plugin/server/middlewares/index.js"
 const middlewareA = require('./middleware-a');
 const middlewareB = require('./middleware-b');
 
@@ -405,7 +405,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/middlewares/middleware-a.js"
+```js title="./src/plugins/my-plugin/server/middlewares/middleware-a.js"
 module.exports = (options, { strapi }) => {
  return async (ctx, next) => {
     const start = Date.now();
