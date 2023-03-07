@@ -6,9 +6,7 @@ If you do not wish to have the default landing page mounted on `/` you can creat
 This sample configuration expects that the admin panel is accessible on `/admin`. If you used one of the above configurations to change this to `/dashboard` you will also need to adjust this sample configuration.
 :::
 
-**Path —** `./config/middlewares.js`
-
-```js
+```js title="./config/middlewares.js"
 module.exports = ({ env }) => [
 	// ...
 	{ resolve: './src/middlewares/admin-redirect' },
@@ -16,9 +14,7 @@ module.exports = ({ env }) => [
 
 ```
 
-**Path —** `./src/middlewares/admin-redirect.js`
-
-```js
+```js title="./src/middlewares/admin-redirect.js"
 module.exports = (_config, { strapi }) => {
 	const redirects = ['/', '/index.html'].map((path) => ({
 		method: 'GET',
