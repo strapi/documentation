@@ -10,7 +10,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 :::note
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
-- If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge link="https://strapi.io/pricing-self-hosted"/> in this reference guide.
+- If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge /> in this reference guide.
 - All plugin installations can be confirmed in the admin panel by clicking on ![plugins icon](/img/assets/icons/plugins.svg) *Plugins* in the main navigation.
 
 :::
