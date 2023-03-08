@@ -10,8 +10,8 @@ const config = {
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io/',
   baseUrl: '/',
-  onBrokenLinks: 'warn', // replace with 'throw' to stop building if broken links
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
   // GitHub pages deployment config.
