@@ -757,14 +757,6 @@
       "destination": "/dev-docs/migration/v4/migration-guide-4.0.0-to-4.0.6"
     },
     {
-      "source": "http://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html",
-      "destination": "http://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace"
-    },
-    {
-      "source": "https://docs-v3.strapi.io/developer-docs/latest/plugins/users-permissions.html",
-      "destination": "https://docs-v3.strapi.io/developer-docs/latest/plugins/users-permissions"
-    },
-    {
       "source": "/dev-docs/api/admin-panel-api",
       "destination": "/dev-docs/api/plugins/admin-panel-api"
     },
