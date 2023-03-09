@@ -139,14 +139,14 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/api/admin-panel-api">index.tsx</a><br/>
+      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api">index.tsx</a><br/>
       │     │           │           └ pluginId.ts<br/>
       │     │           ├──── <a href="/dev-docs/api/server-api">server</a><br/>
       │     │           │     ├──── <a href="/dev-docs/api/server-api#content-types">content-types</a><br/>
       │     │           │     ├──── <a href="/dev-docs/api/server-api#controllers">controllers</a><br/>
       │     │           │     └──── <a href="/dev-docs/api/server-api#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/api/admin-panel-api">strapi-admin.js</a><br/>
+      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
       │     │           └ <a href="/dev-docs/api/server-api">strapi-server.js</a><br/>
       │     ├─── policies<br/>
       │     └ index.ts <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
