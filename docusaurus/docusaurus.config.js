@@ -27,6 +27,9 @@ const config = {
     locales: ['en'],
   },
 
+  // ** WARNING! DELETE THE NEXT LINE BEFORE MERGING WITH MAIN 👇 **/
+  noIndex: true, // prevents the website from being indexed by search engines
+
   themes: ['@docusaurus/theme-live-codeblock'],
 
   scripts: [
