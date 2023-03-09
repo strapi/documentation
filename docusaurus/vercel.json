@@ -494,119 +494,119 @@
     },
     {
       "source": "/user-docs/latest/users-roles-permissions/managing-end-users.html",
-      "destination": "/user-docs/users-roles-permissions/managing-end-users.html"
+      "destination": "/user-docs/users-roles-permissions/managing-end-users"
     },
     {
       "source": "/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html",
-      "destination": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions.html"
+      "destination": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions"
     },
     {
       "source": "/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html",
-      "destination": "/user-docs/users-roles-permissions/configuring-end-users-roles.html"
+      "destination": "/user-docs/users-roles-permissions/configuring-end-users-roles"
     },
     {
       "source": "/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html",
-      "destination": "/user-docs/users-roles-permissions/configuring-administrator-roles.html"
+      "destination": "/user-docs/users-roles-permissions/configuring-administrator-roles"
     },
     {
       "source": "/user-docs/latest/settings/managing-global-settings.html",
-      "destination": "/user-docs/settings/managing-global-settings.html"
+      "destination": "/user-docs/settings/managing-global-settings"
     },
     {
       "source": "/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html",
-      "destination": "/user-docs/settings/configuring-users-permissions-plugin-settings.html"
+      "destination": "/user-docs/settings/configuring-users-permissions-plugin-settings"
     },
     {
       "source": "/user-docs/latest/settings/audit-logs.html",
-      "destination": "/user-docs/settings/audit-logs.html"
+      "destination": "/user-docs/settings/audit-logs"
     },
     {
       "source": "/user-docs/latest/plugins/strapi-plugins.html",
-      "destination": "/user-docs/plugins/strapi-plugins.html"
+      "destination": "/user-docs/plugins/strapi-plugins"
     },
     {
       "source": "/user-docs/latest/plugins/introduction-to-plugins.html",
-      "destination": "/user-docs/plugins/introduction-to-plugins.html"
+      "destination": "/user-docs/plugins/introduction-to-plugins"
     },
     {
       "source": "/user-docs/latest/plugins/installing-plugins-via-marketplace.html",
-      "destination": "/user-docs/plugins/installing-plugins-via-marketplace.html"
+      "destination": "/user-docs/plugins/installing-plugins-via-marketplace"
     },
     {
       "source": "/user-docs/latest/media-library/organizing-assets-with-folders.html",
-      "destination": "/user-docs/media-library/organizing-assets-with-folders.html"
+      "destination": "/user-docs/media-library/organizing-assets-with-folders"
     },
     {
       "source": "/user-docs/latest/media-library/organizing-assets-with-folders.html",
-      "destination": "/user-docs/media-library/organizing-assets-with-folders.html"
+      "destination": "/user-docs/media-library/organizing-assets-with-folders"
     },
     {
       "source": "/user-docs/latest/media-library/managing-assets.html",
-      "destination": "/user-docs/media-library/managing-assets.html"
+      "destination": "/user-docs/media-library/managing-assets"
     },
     {
       "source": "/user-docs/latest/media-library/introduction-to-media-library.html",
-      "destination": "/user-docs/media-library/introduction-to-media-library.html"
+      "destination": "/user-docs/media-library/introduction-to-media-library"
     },
     {
       "source": "/user-docs/latest/media-library/adding-assets.html",
-      "destination": "/user-docs/media-library/adding-assets.html"
+      "destination": "/user-docs/media-library/adding-assets"
     },
     {
       "source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-      "destination": "/user-docs/content-manager/configuring-view-of-content-type.html"
+      "destination": "/user-docs/content-manager/configuring-view-of-content-type"
     },
     {
       "source": "/user-docs/latest/getting-started/introduction.html",
-      "destination": "/user-docs/getting-started/introduction.html"
+      "destination": "/user-docs/getting-started/introduction"
     },
     {
       "source": "/user-docs/latest/content-types-builder/managing-content-types.html",
-      "destination": "/user-docs/content-types-builder/managing-content-types.html"
+      "destination": "/user-docs/content-types-builder/managing-content-types"
     },
     {
       "source": "/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html",
-      "destination": "/user-docs/content-types-builder/introduction-to-content-types-builder.html"
+      "destination": "/user-docs/content-types-builder/introduction-to-content-types-builder"
     },
     {
       "source": "/user-docs/latest/content-types-builder/creating-new-content-type.html",
-      "destination": "/user-docs/content-types-builder/creating-new-content-type.html"
+      "destination": "/user-docs/content-types-builder/creating-new-content-type"
     },
     {
       "source": "/user-docs/latest/content-types-builder/configuring-fields-content-type.html",
-      "destination": "/user-docs/content-types-builder/configuring-fields-content-type.html"
+      "destination": "/user-docs/content-types-builder/configuring-fields-content-type"
     },
     {
       "source": "/user-docs/latest/content-manager/writing-content.html",
-      "destination": "/user-docs/content-manager/writing-content.html"
+      "destination": "/user-docs/content-manager/writing-content"
     },
     {
       "source": "/user-docs/latest/content-manager/translating-content.html",
-      "destination": "/user-docs/content-manager/translating-content.html"
+      "destination": "/user-docs/content-manager/translating-content"
     },
     {
       "source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-      "destination": "/user-docs/content-manager/configuring-view-of-content-type.html"
+      "destination": "/user-docs/content-manager/configuring-view-of-content-type"
     },
     {
       "source": "/user-docs/latest/content-manager/saving-and-publishing-content.html",
-      "destination": "/user-docs/content-manager/saving-and-publishing-content.html"
+      "destination": "/user-docs/content-manager/saving-and-publishing-content"
     },
     {
       "source": "/user-docs/latest/content-manager/managing-relational-fields.html",
-      "destination": "/user-docs/content-manager/managing-relational-fields.html"
+      "destination": "/user-docs/content-manager/managing-relational-fields"
     },
     {
       "source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-      "destination": "/user-docs/content-manager/configuring-view-of-content-type.html"
+      "destination": "/user-docs/content-manager/configuring-view-of-content-type"
     },
     {
       "source": "/user-docs/latest/content-manager/introduction-to-content-manager.html",
-      "destination": "/user-docs/content-manager/introduction-to-content-manager.html"
+      "destination": "/user-docs/content-manager/introduction-to-content-manager"
     },
     {
       "source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-      "destination": "/user-docs/content-manager/configuring-view-of-content-type.html"
+      "destination": "/user-docs/content-manager/configuring-view-of-content-type"
     },
     {
       "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html",
@@ -755,6 +755,278 @@
     {
       "source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.0-to-4.0.6.html",
       "destination": "/dev-docs/migration/v4/migration-guide-4.0.0-to-4.0.6"
+    },
+    {
+      "source": "http://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace.html",
+      "destination": "http://docs.strapi.io/user-docs/latest/plugins/installing-plugins-via-marketplace"
+    },
+    {
+      "source": "https://docs-v3.strapi.io/developer-docs/latest/plugins/users-permissions.html",
+      "destination": "https://docs-v3.strapi.io/developer-docs/latest/plugins/users-permissions"
+    },
+    {
+      "source": "/dev-docs/api/admin-panel-api",
+      "destination": "/dev-docs/api/plugins/admin-panel-api"
+    },
+    {
+      "source": "/dev-docs/api/server-api",
+      "destination": "/dev-docs/api/plugins/server-api"
+    },
+    {
+      "source": "/dev-docs/user-docs/settings/managing-global-settings",
+      "destination": "/dev-docs/user-docs/settings/managing-global-settings"
+    },
+    {
+      "source": "/developer-",
+      "destination": "/dev-docs"
+    },
+    {
+      "source": "/developer-docs",
+      "destination": "/dev-docs"
+    },
+    {
+      "source": "/developer-docs/getting-started/troublshooting.html",
+      "destination": "/dev-docs/faq"
+    },
+    {
+      "source": "/developer-docs/latest/concepts/draft-and-publish.html",
+      "destination": "/user-docs/content-manager/saving-and-publishing-content"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api/filtering-locale-publication.html",
+      "destination": "/dev-docs/api/rest/filters-locale-publication"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html",
+      "destination": "/dev-docs/api/rest/relations"
+    },
+    {
+      "source": "/developer-docs/latest/developer-resources/database-pabase-apis-reference/rest-reference/rest-api.html",
+      "destination": "/dev-docs/api/rest"
+    },
+    {
+      "source": "/dev-docs/api/plugins/server",
+      "destination": "/dev-docs/api/plugins/server-api"
+    },
+    {
+      "source": "/dev-docs/api/plugins/admin",
+      "destination": "/dev-docs/api/plugins/admin-panel-api"
+    },
+    {
+      "source": "/dev-docs/api/plugins/admin-panel",
+      "destination": "/dev-docs/api/plugins/admin-panel-api"
+    },
+    {
+      "source": "/developer-docs/latest/development/custom-field.html",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/development/custom-fields.html",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/dev-docs/custom-field",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/guides/draft.html",
+      "destination": "/user-docs/content-manager/saving-and-publishing-content#publishing-a-draft"
+    },
+    {
+      "source": "/developer-docs/latest/guides/external-data.html",
+      "destination": "/dev-docs/integrations"
+    },
+    {
+      "source": "/developer-docs/latest/guides/jwt-validation.html",
+      "destination": "/dev-docs/plugins/users-permissions#jwt-configuration"
+    },
+    {
+      "source": "/developer-docs/latest/guides/process-manager.html",
+      "destination": "/dev-docs/deployment/process-manager"
+    },
+    {
+      "source": "/developer-docs/latest/guides/registering-a-field-in-admin.html",
+      "destination": "/dev-docs/custom-fields"
+    },
+    {
+      "source": "/developer-docs/latest/guides/unit-testing.html",
+      "destination": "/dev-docs/testing"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.html",
+      "destination": "/dev-docs/deployment#deployment-guides"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html.",
+      "destination": "/dev-docs/deployment#deployment-guides"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html",
+      "destination": "/dev-docs/deployment#deployment-guides"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html?utm_source=twitter.com&utm_medium=social&utm_campaign=you-can-now-officially-deploy-strapi-wit&utm_content=48876388",
+      "destination": "/dev-docs/deployment#deployment-guides"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html",
+      "destination": "/dev-docs/deployment#deployment-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-1-to-3.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.0.x-to-3.1.x.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.1.x-to-3.2.x.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.3-to-3.2.4.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.5-to-3.3.0.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.3.x-to-3.4.0.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.4.x-to-3.4.4.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.1-to-alpha.12.2.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.3-to-alpha.12.4.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.5-to-alpha.12.6.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.6-to-alpha.12.7.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.7-to-alpha.13.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.13-to-alpha.13.1.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.1-to-alpha.14.2.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.2-to-alpha.14.3.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.4-to-alpha.14.5.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.5-to-alpha.15.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.15-to-alpha.16.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.16-to-alpha.17.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.17-to-alpha.18.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.18-to-alpha.19.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.19-to-alpha.20.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.20-to-alpha.21.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.21-to-alpha.22.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.22-to-alpha.23.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.23-to-alpha.24.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.24-to-alpha.25.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.25-to-alpha.26.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.26-to-beta.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.7.4-to-alpha.8.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.8-to-alpha.9.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.9-to-alpha.10.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.15-to-beta.16.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.16-to-beta.17.4.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.17-to-beta.18.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.18-to-beta.19.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.19.4.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.20.html",
+      "destination": "/dev-docs/migration-guides"
+    },
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.html",
+      "destination": "/dev-docs/migration-guides"
     }
   ]
 }
