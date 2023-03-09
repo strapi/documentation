@@ -195,7 +195,7 @@ export default {
           danger700: '#b72b1a'
         },
       },
-      
+
       // overwrite dark theme properties
       dark: {
          // ...
@@ -553,10 +553,10 @@ In order to extend the usage of webpack v5, define a function that extends its c
 ```js
 module.exports = (config, webpack) => {
   // Note: we provide webpack above so you should not `require` it
-  
+
   // Perform customizations to webpack config
   config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-  
+
   // Important: return the modified config
   return config;
 };

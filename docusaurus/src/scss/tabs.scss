@@ -1,0 +1,43 @@
+/** Component: Tab */
+
+:root body {
+  --custom-tabs-px: var(--strapi-spacing-5);
+  --custom-tabs-py: var(--strapi-spacing-2);
+
+  --ifm-tabs-padding-horizontal: var(--custom-tabs-px);
+  --ifm-tabs-padding-vertical: var(--custom-tabs-py);
+}
+
+.tabs {
+  &__item {
+    border-top: 2px solid transparent;
+  }
+
+  /** Tabs inside Tabs */
+  + div {
+    [role="tabpanel"] {
+      .tabs {
+        font-size: var(--strapi-font-size-ssm);
+
+        &__item {
+          &--active {
+            --ifm-tabs-color-active-border: transparent;
+
+            background-color: var(--ifm-hover-overlay);
+          }
+        }
+
+        + [class*="margin-top"] {
+          margin-top: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+/** Tabs inside Details component */
+details {
+  .tabs {
+    --ifm-tabs-color-active-border: var(--strapi-)
+  }
+}

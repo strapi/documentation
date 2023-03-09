@@ -21,7 +21,7 @@ const customDefaultProps = {
     title: 'Caution',
   },
   warning: {
-    icon: '❗️',
+    icon: '⚠️',
     title: 'Warning',
   },
   danger: {
@@ -32,7 +32,7 @@ const customDefaultProps = {
     icon: '🤓',
   },
   prerequisites: {
-    icon: '👀',
+    icon: '☑️',
     title: 'Prerequisites',
   },
 };
@@ -40,15 +40,15 @@ const customDefaultProps = {
 export default function CustomAdmonition({
   children,
   className,
-  icon,
-  title,
+  icon: propIcon,
+  title: propTitle,
   type,
   ...rest
 }) {
   const { icon: defaultIcon, title: defaultTitle } = (customDefaultProps[type] || {});
-  const finalIcon = (icon || defaultIcon);
-  const finalTitle = (title || defaultTitle);
-  const shouldRenderHeading = !!(finalIcon || finalTitle);
+  const icon = (propIcon || defaultIcon);
+  const title = (propTitle || defaultTitle);
+  const shouldRenderHeading = !!(icon || title);
 
   return (
     <div
@@ -61,12 +61,12 @@ export default function CustomAdmonition({
     >
       {shouldRenderHeading && (
         <div className={`${defaultClassName}__heading`}>
-          {finalIcon && (
+          {icon && (
             <span className={`${defaultClassName}__heading__icon`}>
-              {finalIcon}{' '}
+              {icon}{' '}
             </span>
           )}
-          {title || defaultTitle}
+          {title}
         </div>
       )}
       {children}

@@ -55,10 +55,3 @@ h2 .badge {
 h3 .badge {
   --custom-badge-inside-titles-top: -.2em;
 }
-
-/** Dark mode */
-@include dark {
-  .badge {
-    --custom-badge-color: var(--aa-muted-color-alpha);
-  }
-}

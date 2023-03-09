@@ -1,4 +1,4 @@
-/** Component: Details */
+/** Component: Details/Accordion */
 
 details.alert {
   --docusaurus-details-decoration-color: var(--strapi-neutral-800);
@@ -8,6 +8,9 @@ details.alert {
   --ifm-alert-border-radius: var(--strapi-spacing-1);
   --ifm-alert-foreground-color: var( --ifm-color-info-contrast-foreground );
   --ifm-alert-border-color: transparent;
+
+  --ifm-tabs-color-active: var(--ifm-color-primary);
+  --ifm-tabs-color-active-border: var(--ifm-color-primary);
 
   summary {
     p {

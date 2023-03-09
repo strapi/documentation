@@ -5,6 +5,7 @@
   --custom-code-border-color: var(--strapi-primary-200);
   --custom-code-border-radius: var(--strapi-spacing-1);
   --custom-code-color: var(--strapi-primary-600);
+  --custom-code-font-size: 81.25%;
   --custom-code-font-family:
     "SFMono-Regular",
     "Menlo",
@@ -21,7 +22,17 @@
   --ifm-code-padding-vertical: var(--strapi-spacing-1);
   --ifm-code-font-family: var(--custom-code-font-family);
 
-  --ifm-code-font-size: 80%;
+  --ifm-code-font-size: var(--custom-code-font-size);
+}
+
+pre {
+  --ifm-code-font-size: 100%;
+
+  code {
+    --ifm-code-font-size: var(--custom-code-font-size);
+
+    font-size: var(--ifm-code-font-size);
+  }
 }
 
 h1, h2, h3, li, p, table {
