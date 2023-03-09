@@ -857,10 +857,6 @@
       "destination": "/dev-docs/deployment#deployment-guides"
     },
     {
-      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html?utm_source=twitter.com&utm_medium=social&utm_campaign=you-can-now-officially-deploy-strapi-wit&utm_content=48876388",
-      "destination": "/dev-docs/deployment#deployment-guides"
-    },
-    {
       "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html",
       "destination": "/dev-docs/deployment#deployment-guides"
     },
