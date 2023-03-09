@@ -96,7 +96,7 @@ You are now ready to contribute to the Strapi documentation! 🚀
 
 ### Write technical documentation
 
-The Strapi documentation follows the [Strapi formatting & style guide](STYLE_GUIDE) (also available on [Notion](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide)). Feel free to also take a look at the [Google Style Guide](https://developers.google.com/style) and especially the [Highlights](https://developers.google.com/style/highlights) section for more information on technical writing tone, structure, and formatting.
+The Strapi documentation follows the [Strapi formatting & style guide](STYLE_GUIDE.pdf) (also available on [Notion](https://handbook.strapi.io/user-success-manual/strapi-documentation-style-guide)). Feel free to also take a look at the [Google Style Guide](https://developers.google.com/style) and especially the [Highlights](https://developers.google.com/style/highlights) section for more information on technical writing tone, structure, and formatting.
 
 When you are finished writing, create a pull request from your forked repository to the original `documentation` repository (see [the GitHub docs](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) for more information) or use the _Create a new branch for this commit and start a pull request_ option if you are using the GitHub web browser interface (see [the GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)).
 
