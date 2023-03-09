@@ -656,9 +656,6 @@ The `public` middleware is a static file serving middleware, based on [koa-stati
 | Option         | Description                                                                                  | Type      | Default value |
 |----------------|----------------------------------------------------------------------------------------------|-----------|---------------|
 | `maxAge`       | Cache-control max-age directive, in milliseconds                                             | `Integer` | `60000`       |
-| `hidden`       | Allow transfer of hidden files                                                               | `Boolean` | `false`       |
-| `defer`        | If `true`, serves after `return next()`, allowing any downstream middleware to respond first | `Boolean` | `false`       |
-| `index`        | Default file name                                                                            | `String`  | `index.html`  |
 | `defaultIndex` | Display default index page at `/` and `/index.html`                                          | `Boolean` | `true`        |
 
 :::tip
