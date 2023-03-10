@@ -16,7 +16,7 @@ In Strapi, writing content consists in filling up fields, which are meant to con
 
 To write or edit content:
 
-1. Access the edit view of your collection or a single type.
+1. Access the edit view of your collection type or single type.
 2. Write your content, following the available field schema. You can refer to the table below for more information and instructions on how to fill up each field type.
 
 | Field name  | Instructions                                                                                                                                                                                                                                                                                                                                                              |
