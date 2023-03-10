@@ -29,7 +29,7 @@ yarn create react-app react-app
 ```bash
 npx create-react-app react-app
 ```
-
+</TabItem>
 </Tabs>
 
 ## Use an HTTP client
