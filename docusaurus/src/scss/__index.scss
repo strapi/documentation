@@ -1,0 +1,37 @@
+/**
+ * Any CSS included here will be global.
+ * The classic template bundles Infima by default.
+ * Infima is a CSS framework designed to work well for content-centric websites.
+ */
+
+/** Core */
+@import '_mixins.scss';
+@import '_tokens.scss';
+@import '_tokens-overrides.scss';
+
+/** Base */
+@import '_base.scss';
+
+/** Components */
+@import 'admonition.scss';
+@import 'api-call.scss';
+@import 'badge.scss';
+@import 'breadcrumbs.scss';
+@import 'card.scss';
+@import 'code.scss';
+@import 'code-block.scss';
+@import 'columns.scss';
+@import 'container.scss';
+@import 'details.scss';
+@import 'footer.scss';
+@import 'grid.scss';
+@import 'markdown.scss';
+@import 'navbar.scss';
+@import 'pagination-nav.scss';
+@import 'search.scss';
+@import 'scene.scss';
+@import 'sidebar.scss';
+@import 'table.scss';
+@import 'tabs.scss';
+@import 'table-of-contents.scss';
+@import 'typography.scss';

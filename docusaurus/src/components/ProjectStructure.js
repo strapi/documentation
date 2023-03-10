@@ -11,12 +11,12 @@ export default function InteractiveProjectStructure() {
 
       <pre className="prism-code">
         <code>
-      . <span class="token comment"># root of the application</span><br/>
+      . <span className="token comment"># root of the application</span><br/>
 
-      ├──── .cache <span class="token comment"># files used to build the admin panel</span><br/>
+      ├──── .cache <span className="token comment"># files used to build the admin panel</span><br/>
       ├──── .tmp<br/>
-      ├──── <a href="/dev-docs/admin-panel-customization#build">build</a> <span class="token comment"># build of the admin panel</span><br/>
-      ├──── config <span class="token comment"># API configurations</span><br/>
+      ├──── <a href="/dev-docs/admin-panel-customization#build">build</a> <span className="token comment"># build of the admin panel</span><br/>
+      ├──── config <span className="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api">api.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/admin-panel">admin.js</a><br/>
       │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.js</a><br/>
@@ -26,15 +26,15 @@ export default function InteractiveProjectStructure() {
       │     └ <a href="/dev-docs/configurations/server#server-configuration">server.js</a><br/>
       ├──── database<br/>
       │     └──── migrations<br/>
-      ├──── node_modules <span class="token comment"># npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span class="token comment"># files accessible to the outside world</span><br/>
+      ├──── node_modules <span className="token comment"># npm packages used by the project</span><br/>
+      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
-      │     ├──── admin <span class="token comment"># admin customization files</span><br/>
-      │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
+      │     ├──── admin <span className="token comment"># admin customization files</span><br/>
+      │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># files to extend the admin panel</span><br/>
       │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.js</a><br/>
       │     │     └ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.js</a><br/>
-      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
+      │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
       │     │     └──── (api-name)<br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/models">content-types</a><br/>
       │     │           │     └──── (content-type-name)<br/>
@@ -50,7 +50,7 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (category-name)<br/>
       │     │           ├ (componentA).json<br/>
       │     │           └ (componentB).json<br/>
-      │     ├──── <a href="/dev-docs/plugins-extension">extensions</a> <span class="token comment"># files to extend installed plugins</span><br/>
+      │     ├──── <a href="/dev-docs/plugins-extension">extensions</a> <span className="token comment"># files to extend installed plugins</span><br/>
       │     │     └──── (plugin-to-be-extended)<br/>
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
@@ -58,7 +58,7 @@ export default function InteractiveProjectStructure() {
       │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares">middlewares</a><br/>
       │     │     └──── (middleware-name).js<br/>
-      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span class="token comment"># local plugins files</span><br/>
+      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
@@ -71,7 +71,7 @@ export default function InteractiveProjectStructure() {
       │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
       │     │           └ <a href="/dev-docs/api/plugins/server-api#">strapi-server.js</a><br/>
       │     ├─── <a href="/dev-docs/backend-customization/policies">policies</a><br/>
-      │     └ <a href="/dev-docs/configurations/functions">index.js</a> <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
+      │     └ <a href="/dev-docs/configurations/functions">index.js</a> <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ <a href="/dev-docs/configurations/environment">.env</a><br/>
       └ package.json<br/>
         </code>
@@ -83,11 +83,11 @@ export default function InteractiveProjectStructure() {
 
       <pre className="prism-code">
         <code>
-      . <span class="token comment"># root of the application</span><br/>
+      . <span className="token comment"># root of the application</span><br/>
 
-      ├──── .cache <span class="token comment"># files used to build the admin panel</span><br/>
+      ├──── .cache <span className="token comment"># files used to build the admin panel</span><br/>
       ├──── .tmp<br/>
-      ├──── config <span class="token comment"># API configurations</span><br/>
+      ├──── config <span className="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api">api.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/admin-panel">admin.ts</a><br/>
       │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.ts</a><br/>
@@ -97,18 +97,18 @@ export default function InteractiveProjectStructure() {
       │     └ <a href="/dev-docs/configurations/server#server-configuration">server.ts</a><br/>
       ├──── database<br/>
       │     └──── migrations<br/>
-      ├──── dist <span class="token comment"># build of the backend</span><br/>
-      │     └──── build <span class="token comment"># build of the admin panel</span><br/>
-      ├──── node_modules # <span class="token comment">npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span class="token comment"># files accessible to the outside world</span><br/>
+      ├──── dist <span className="token comment"># build of the backend</span><br/>
+      │     └──── build <span className="token comment"># build of the admin panel</span><br/>
+      ├──── node_modules # <span className="token comment">npm packages used by the project</span><br/>
+      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
-      │     ├──── admin <span class="token comment"># admin customization files</span><br/>
-      │     │     ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span class="token comment"># files to extend the admin panel</span><br/>
+      │     ├──── admin <span className="token comment"># admin customization files</span><br/>
+      │     │     ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># files to extend the admin panel</span><br/>
       │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.example.tsx</a><br/>
       │     │     ├ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.ts</a><br/>
       |     |     └ tsconfig.json<br/>
-      │     ├──── api <span class="token comment"># business logic of the project split into subfolders per API</span><br/>
+      │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
       │     │     └──── (api-name)<br/>
       │     │          <a href="/dev-docs/backend-customization/models">content-types</a><br/>
       │     │           │     └──── (content-type-name)<br/>
@@ -125,7 +125,7 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (category-name)<br/>
       │     │           ├ (componentA).json<br/>
       │     │           └ (componentB).json<br/>
-      │     ├──── <a href="/dev-docs/plugins-extension">extensions</a> <span class="token comment"># files to extend installed plugins</span><br/>
+      │     ├──── <a href="/dev-docs/plugins-extension">extensions</a> <span className="token comment"># files to extend installed plugins</span><br/>
       │     │     └──── (plugin-to-be-extended)<br/>
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
@@ -135,7 +135,7 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (middleware-name)<br/>
       │     │           ├ defaults.json<br/>
       │     │           └ index.ts<br/>
-      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span class="token comment"># local plugins files</span><br/>
+      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
@@ -149,7 +149,7 @@ export default function InteractiveProjectStructure() {
       │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
       │     │           └ <a href="/dev-docs/api/server-api">strapi-server.js</a><br/>
       │     ├─── policies<br/>
-      │     └ index.ts <span class="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
+      │     └ index.ts <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ .env<br/>
       ├ tsconfig.json<br/>
       └ package.json<br/>

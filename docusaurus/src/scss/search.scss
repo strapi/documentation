@@ -1,0 +1,28 @@
+/** Component: Search */
+
+:root body {
+  --docsearch-hit-height: 56px;
+  --docsearch-searchbox-height: 40px;
+  --docsearch-spacing: var(--strapi-spacing-4);
+}
+
+body .DocSearch {
+  --custom-search-hit-pb: var(--strapi-spacing-2);
+
+  &-SearchBar {
+    padding-bottom: var(--strapi-spacing-1);
+  }
+
+  &-Input {
+    --docsearch-text-color: var(--strapi-neutral-800);
+  }
+
+  &-Input,
+  &-Cancel {
+    font-size: var(--strapi-font-size-md);
+  }
+
+  &-Hit {
+    padding-bottom: var(--custom-search-hit-pb);
+  }
+}

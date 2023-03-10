@@ -1,11 +1,13 @@
 import React from 'react'
 
-export default function Response(props) {
-  const { title = 'Example response '} = props;
+export default function Response({
+  children,
+  title = 'Example response',
+}) {
   return (
-      <div className="response">
-        <div className="response-title">{ title }</div>
-        <div className="response-content">{ props.children }</div>
-      </div>
+    <div className="api-call__response">
+      <div className="api-call__response__heading">{title}</div>
+      <div className="api-call__response__content">{children}</div>
+    </div>
   );
 }
