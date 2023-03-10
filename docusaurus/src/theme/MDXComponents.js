@@ -7,36 +7,35 @@ import TabItem from '@theme/TabItem';
 import Request from '../components/Request';
 import Response from '../components/Response';
 import ApiCall from '../components/ApiCall';
-import AlphaBadge from '../components/AlphaBadge';
-import BetaBadge from '../components/BetaBadge';
-import EnterpriseBadge from '../components/EnterpriseBadge';
 import Columns from '../components/Columns';
 import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 
 export default {
   // Re-use the default mapping
   ...MDXComponents,
+
   /**
    * Components below are imported within the global scope,
    * meaning you don't have to insert the typical 'import SomeStuff from '/path/to/stuff' line
    * at the top of a Markdown file before being able to use these components
-  *  — see https://docusaurus.io/docs/next/markdown-features/react#mdx-component-scope
+   *  — see https://docusaurus.io/docs/next/markdown-features/react#mdx-component-scope
    */
-  DocCardList: DocCardList,
-  Tabs: Tabs,
-  TabItem: TabItem,
-  Request: Request,
-  Response: Response,
-  ApiCall: ApiCall,
-  AlphaBadge: AlphaBadge,
-  BetaBadge: BetaBadge,
-  EnterpriseBadge: EnterpriseBadge,
-  Columns: Columns,
-  ColumnLeft: ColumnLeft,
-  ColumnRight: ColumnRight,
-  FeedbackPlaceholder: FeedbackPlaceholder,
-  CustomDocCard: CustomDocCard,
+  DocCardList,
+  Tabs,
+  TabItem,
+  Request,
+  Response,
+  ApiCall,
+  AlphaBadge,
+  BetaBadge,
+  EnterpriseBadge,
+  Columns,
+  ColumnLeft,
+  ColumnRight,
+  FeedbackPlaceholder,
+  CustomDocCard,
 };
