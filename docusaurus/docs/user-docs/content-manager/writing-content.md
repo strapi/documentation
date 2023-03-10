@@ -61,7 +61,7 @@ To delete the non-repeatable component, click on the delete button ![Delete icon
 
 <img src="/img/assets/content-manager/edit-view_component4.png" alt="Writing content for a component" width="80%" />
 
-Repeatable components are also a combination of fields, but they allow to creation of multiple component entries, all following the same combination of fields.
+Repeatable components are also a combination of fields, but they allow the creation of multiple component entries, all following the same combination of fields.
 
 To add a new entry and display its combination of fields:
 
