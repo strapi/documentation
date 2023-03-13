@@ -229,7 +229,7 @@ const config = {
     [
       '@docusaurus/plugin-google-tag-manager',
       {
-        containerId: 'GTM-KN9JRWG',
+        containerId: 'GTM-WT49VGT',
       },
     ],
     'docusaurus-plugin-sass',
