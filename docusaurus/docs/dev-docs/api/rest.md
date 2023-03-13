@@ -9,7 +9,7 @@ description: Interact with your Content-Types using the REST API endpoints Strap
 The REST API allows accessing the [content-types](/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
 :::note
-All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions to query them. See the [Quick Start Guide](/dev-docs/quick-start#step-3-set-roles--permissions) and the [Users & Permissions user guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role) for more details.
+All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/dev-docs/quick-start#step-3-set-roles--permissions) and the [Users & Permissions user guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role) for more details.
 :::
 
 :::caution
