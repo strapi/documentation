@@ -233,6 +233,9 @@ const config = {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      zoom: {
+        selector: '.markdown :not(em) > img',
+      },
     }),
 
   plugins: [
@@ -243,7 +246,7 @@ const config = {
       },
     ],
     'docusaurus-plugin-sass',
-    // 'plugin-image-zoom', // temp. disabled while we fix the bug
+    'docusaurus-plugin-image-zoom',
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
