@@ -37,21 +37,16 @@
     --custom-badge-color: rgb(160,25,240);
   }
 
-  &--gold,
-  &--pricing {
+  &--enterprise {
     --custom-badge-background-color: rgb(255, 241, 209);
     --custom-badge-color: rgb(229, 136, 41);
   }
 }
 
 h1 .badge {
-  --custom-badge-inside-titles-top: -.5em;
-}
-
-h2 .badge {
   --custom-badge-inside-titles-top: -.4em;
 }
 
-h3 .badge {
-  --custom-badge-inside-titles-top: -.2em;
+h2 .badge {
+  --custom-badge-inside-titles-top: -.3em;
 }

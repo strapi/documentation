@@ -1,0 +1,19 @@
+/** Component: Medium Zoom */
+
+.medium-zoom {
+  &-overlay {
+    background: var(--strapi-neutral-150) !important;
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  .medium-zoom {
+    &-image {
+      &--opened {
+        margin-top: var(--ifm-navbar-height) !important;
+        margin-bottom: var(--ifm-navbar-height) !important;
+      }
+    }
+  }
+}
