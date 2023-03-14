@@ -20,7 +20,7 @@ Strapi is a free and open-source headless CMS delivering your content anywhere y
 - **Database agnostic**. You can choose the database you prefer. Strapi works with SQL databases: PostgreSQL, MySQL, MariaDB, and SQLite.
 - **Customizable**. You can quickly build your logic by fully customizing APIs, routes, or plugins to fit your needs perfectly.
 
-## Documentation Contribution Requirements
+## Contribution Requirements
 
 The following are required if you are submitting pull requests to the documentation:
 
@@ -29,6 +29,26 @@ The following are required if you are submitting pull requests to the documentat
 - Yarn >= 1.22.x
 
 For more information on how to contribute, please read our [contribution guide](./CONTRIBUTING.md).
+
+## Requests
+
+Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
+
+## Bugs
+
+Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
+
+- Follow the issue template and fill out as much information as you can.
+- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+  
+Technical questions should be asked using the following resources:
+
+- Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
+- Engage with other community members on our [Community Discord](https://discord.strapi.io)
+
+## Releases
+
+The Strapi documentation is updated on a daily basis, thanks to a continuous integration/continuous delivery workflow. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
 
 ## Community support
 
@@ -51,23 +71,3 @@ The core team and contributors submit pull requests that go through the same val
 ## Code of Conduct
 
 This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold the code.
-
-## Documentation Requests
-
-Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
-
-## Bugs
-
-Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
-
-- Follow the issue template and fill out as much information as you can.
-- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
-  
-Technical questions should be asked using the following resources:
-
-- Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
-- Engage with other community members on our [Community Discord](https://discord.strapi.io)
-
-## Releases
-
-The Strapi documentation is updated on a daily basis, thanks to a continuous integration/continuous delivery workflow. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
