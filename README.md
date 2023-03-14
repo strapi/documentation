@@ -66,8 +66,6 @@ For general help using Strapi, please refer to [the official Strapi documentatio
 
 See the [LICENSE](./LICENSE) file for licensing information.
 
-The core team and contributors submit pull requests that go through the same validation process.
-
 ## Code of Conduct
 
 This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold the code.
