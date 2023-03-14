@@ -40,6 +40,10 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 | `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
 | `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
+::: note
+The `client` value may be replaced by Strapi before being passed to Knex, based on which database driver packages are available in the project
+:::
+
 #### Connection parameters
 
 The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
@@ -534,4 +538,18 @@ $ \c my_strapi_db_name admin_user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
 
+:::
+
+### Alternative database drivers
+
+Strapi attempts to load database drivers for each client based on which packages have been added to the project.
+
+| client   | preferred package, in order of availability |
+| -------- | ------------------------------------------- |
+| mysql    | mysql2, mysql                               |
+| sqlite   | better-sqlite3, @vscode/sqlite3, sqlite3    |
+| postgres | pg                                          |
+
+::: note
+`mysql2` is required for the `caching_sha2_password` auth method used by default in MySQL v8+. If you receive an `"ER_NOT_SUPPORTED_AUTH_MODE"` error when using the `mysql` driver, try adding the `mysql2` package to your project. You should then remove the deprecated `connectionString` parameter from your connection configuration in favor of the `username` and `password` values.
 :::
