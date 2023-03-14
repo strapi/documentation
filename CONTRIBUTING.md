@@ -99,7 +99,7 @@ That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-m
 
 ## Review and management of pull requests
 
-The pull request review process and timeline are based on the availability of Strapi's Documentation team to handle community contributions. The workflow is as follows:
+The pull request review process and timeline are based on the availability of the Strapi Documentation team to handle community contributions. The workflow is as follows:
 
 1. The pull request is assigned to a member of the Documentation team.
 2. At least 1 member of the Documentation team will review the pull request for:
