@@ -43,3 +43,29 @@ For general help using Strapi, please refer to [the official Strapi documentatio
 ## License
 
 See the [LICENSE](./LICENSE) file for licensing information.
+
+The core team and contributors submit pull requests that go through the same validation process.
+
+## Code of Conduct
+
+This project and everyone participating in it are governed by the [Strapi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold the code.
+
+## Documentation Requests
+
+Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
+
+## Bugs
+
+Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
+
+- Follow the issue template and fill out as much information as you can.
+- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+  
+Technical questions should be asked using the following resources:
+
+- Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
+- Engage with other community members on our [Community Discord](https://discord.strapi.io)
+
+## Releases
+
+Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
