@@ -15,8 +15,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       var(--ifm-navbar-padding-vertical)
       var(--custom-navbar-sidebar-horizontal-padding)
     ;
-
-    gap: var(--custom-navbar-items-gap);
   }
 
   &__back {
