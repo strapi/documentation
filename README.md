@@ -28,7 +28,7 @@ The following are required if you are submitting pull requests to the documentat
 - NPM >= 6.x
 - Yarn >= 1.22.x
 
-For more information on how to contribute, please read our [contribution guide](./CONTRIBUTING.md).
+👉 For more information on how to contribute, please read our [contribution guide](./CONTRIBUTING.md).
 
 ## Requests
 
