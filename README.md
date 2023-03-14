@@ -20,7 +20,7 @@ Strapi is a free and open-source headless CMS delivering your content anywhere y
 - **Database agnostic**. You can choose the database you prefer. Strapi works with SQL databases: PostgreSQL, MySQL, MariaDB, and SQLite.
 - **Customizable**. You can quickly build your logic by fully customizing APIs, routes, or plugins to fit your needs perfectly.
 
-## Contribution Requirements
+## Contribution requirements
 
 The following are required if you are submitting pull requests to the documentation:
 
