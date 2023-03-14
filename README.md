@@ -38,17 +38,17 @@ Requests for new documentation are highly encouraged, this is not limited to new
 
 Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
 
-- Follow the issue template and fill out as much information as you can.
-- Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+1. Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+2. Follow the issue template and fill out as much information as you can.
   
 Technical questions should be asked using the following resources:
 
-- Open a Q&A thread on our [Official Forum](https://forum.strapi.io)
-- Engage with other community members on our [Community Discord](https://discord.strapi.io)
+- Open a Q&A thread on our [official forum](https://forum.strapi.io).
+- Engage with other community members on our [community Discord server](https://discord.strapi.io).
 
 ## Releases
 
-The Strapi documentation is updated on a daily basis, thanks to a continuous integration/continuous delivery workflow. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
+The Strapi documentation can be updated on a daily basis, thanks to a continuous integration/continuous delivery workflow. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
 
 ## Community support
 
