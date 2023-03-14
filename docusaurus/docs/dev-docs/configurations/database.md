@@ -542,13 +542,13 @@ $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 
 ### Alternative database driver packages
 
-Strapi attempts to load database drivers for each client based on which packages have been added to the project.
+Strapi checks which database drivers are available in the project for the client before setting the `client` value that is used for Knex.
 
-| client   | order of driver packages selected when available |
-| -------- | ------------------------------------------------ |
-| mysql    | mysql2, mysql                                    |
-| sqlite   | better-sqlite3, @vscode/sqlite3, sqlite3         |
-| postgres | pg                                               |
+| client   | order of driver packages selected when available                                                                 |
+| -------- | ---------------------------------------------------------------------------------------------------------------- |
+| mysql    | [mysql2](https://www.npmjs.com/package/mysql2), [mysql](https://www.npmjs.com/package/mysql)                     |
+| sqlite   | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3), [sqlite3](https://www.npmjs.com/package/sqlite3) |
+| postgres | [pg](https://www.npmjs.com/package/pg)                                                                           |
 
 ::: note
 `mysql2` is required for the `caching_sha2_password` auth method used by default in MySQL v8+. If you receive an `"ER_NOT_SUPPORTED_AUTH_MODE"` error when using the `mysql` driver, try adding the `mysql2` package to your project. You should then remove the deprecated `connectionString` parameter from your connection configuration in favor of the `username` and `password` values.
