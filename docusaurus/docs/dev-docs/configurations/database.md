@@ -544,11 +544,11 @@ $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 
 Strapi attempts to load database drivers for each client based on which packages have been added to the project.
 
-| client   | preferred package, in order of availability |
-| -------- | ------------------------------------------- |
-| mysql    | mysql2, mysql                               |
-| sqlite   | better-sqlite3, @vscode/sqlite3, sqlite3    |
-| postgres | pg                                          |
+| client   | order of driver selected when available  |
+| -------- | ---------------------------------------- |
+| mysql    | mysql2, mysql                            |
+| sqlite   | better-sqlite3, @vscode/sqlite3, sqlite3 |
+| postgres | pg                                       |
 
 ::: note
 `mysql2` is required for the `caching_sha2_password` auth method used by default in MySQL v8+. If you receive an `"ER_NOT_SUPPORTED_AUTH_MODE"` error when using the `mysql` driver, try adding the `mysql2` package to your project. You should then remove the deprecated `connectionString` parameter from your connection configuration in favor of the `username` and `password` values.
