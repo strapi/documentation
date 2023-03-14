@@ -36,7 +36,7 @@ Requests for new documentation are highly encouraged, this is not limited to new
 
 ## Bugs
 
-Bug reports help to improve the documentation. Please use our [Documentation Bug Report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
+Bug reports help to improve the documentation. Please use our [documentation bug report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
 
 1. Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
 2. Follow the issue template and fill out as much information as you can.
