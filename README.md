@@ -22,11 +22,13 @@ Strapi is a free and open-source headless CMS delivering your content anywhere y
 
 ## Documentation Contribution Requirements
 
-The following are required if you are submitting pull requests to the documentation. For more information on how to contribute please see our [contribution guide](./CONTRIBUTING.md).
+The following are required if you are submitting pull requests to the documentation:
 
 - NodeJS >=16.14 <=18.x.x
 - NPM >= 6.x
 - Yarn >= 1.22.x
+
+For more information on how to contribute, please read our [contribution guide](./CONTRIBUTING.md).
 
 ## Community support
 
