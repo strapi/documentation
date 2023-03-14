@@ -41,7 +41,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 | `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 ::: note
-The `client` value may be replaced by Strapi before being passed to Knex, based on which database driver packages are available in the project
+The `client` value may be replaced by Strapi before being passed to Knex, based on which database driver packages are available in the project.
 :::
 
 #### Connection parameters
