@@ -25,6 +25,12 @@ At this time and in the future there is no plan to allow model creating or updat
 
 Strapi does offer a feature known as [Data Transfer](/dev-docs/data-management/transfer) that allows you to export and import content from one Strapi instance to another or exporting and importing from a file archive. This is useful for migrating content from one environment to another.
 
+## User can't login to the admin panel
+
+With the release of the Strapi beta version a fundamental change occurred in that the end users (REST and GraphQL users) were split from the Administrators (admin panel users) in such a way that normal users can not be given access to the admin panel. If you would like to read more on why this change was done, you can read the Strapi [blog post](https://strapi.io/blog/why-we-split-the-management-of-the-admin-users-and-end-users) about it.
+
+Strapi has released the Admin & Permissions (RBAC - Role-Based Access Control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can also give roles specific permissions for things like content-types, single types, plugins, and settings.
+
 ## Why are my application's database and uploads resetting on PaaS-type services?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, etc.) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
