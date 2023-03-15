@@ -1,6 +1,6 @@
 /** Component: API Call / Request / Response */
 
-.api-call {
+:root {
   --custom-api-call-color: var(--strapi-neutral-0);
   --custom-api-call-gap: var(--strapi-spacing-4);
   --custom-api-call-heading-font-size: var(--strapi-font-size-sm);
@@ -12,12 +12,13 @@
   --custom-api-call-response-content-background-color: var(--strapi-neutral-900);
   --custom-api-call-request-heading-background-color: var(--strapi-neutral-600);
   --custom-api-call-request-content-background-color: var(--strapi-neutral-700);
+}
 
+.api-call {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--custom-api-call-gap);
-  color: var(--custom-api-call-color);
   margin-bottom: var(--custom-api-call-gap);
 
   &__request__content,
@@ -25,6 +26,7 @@
   &__response__content,
   &__response__heading {
     background-color: var(--custom-api-call-background-color);
+    color: var(--custom-api-call-color);
   }
 
   &__request,
@@ -90,15 +92,15 @@
 
 /** Dark mode */
 @include dark {
+  --custom-api-call-color: var(--strapi-neutral-1000);
+
+  --custom-api-call-request-heading-background-color: var(--strapi-neutral-300);
+  --custom-api-call-request-content-background-color: var(--strapi-neutral-200);
+
+  --custom-api-call-response-heading-background-color: var(--strapi-neutral-150);
+  --custom-api-call-response-content-background-color: var(--strapi-neutral-100);
+
   .api-call {
-    --custom-api-call-color: var(--strapi-neutral-1000);
-
-    --custom-api-call-request-heading-background-color: var(--strapi-neutral-300);
-    --custom-api-call-request-content-background-color: var(--strapi-neutral-200);
-
-    --custom-api-call-response-heading-background-color: var(--strapi-neutral-150);
-    --custom-api-call-response-content-background-color: var(--strapi-neutral-100);
-
     &__request {
       &__content {
         pre {
