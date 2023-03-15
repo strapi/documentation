@@ -14,8 +14,8 @@
 *.js    @pwizla
 *.jsx   @pwizla
 *.json  @pwizla
-*.css   @pwizla
-*.scss  @pwizla
+*.css   @pwizla @udimberto
+*.scss  @pwizla @udimberto
 
 # With this configuration, @pwizla owns any files in the dev-docs
 # directory located in docusaurus/docs and any of its
