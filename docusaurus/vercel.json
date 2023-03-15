@@ -9,6 +9,10 @@
       "destination": "/cloud/intro"
     },
     {
+      "source": "/dev-docs/intro",
+      "destination": "/dev-docs"
+    },
+    {
       "source": "/developer-docs",
       "destination": "/dev-docs"
     },
