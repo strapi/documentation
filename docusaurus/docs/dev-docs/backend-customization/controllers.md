@@ -241,7 +241,7 @@ Within custom controllers, there are 3 primary functions exposed via the `@strap
 |---------------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 | `contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
-| `contentAPI.params` | `ctx.query`, `schema`, `auth` | Sanitizes the request params and query including filters, sort, fields, and populate                                                   |
+| `contentAPI.query` | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate                                                   |
 
 :::note
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for especially when combining the data from multiple sources.
