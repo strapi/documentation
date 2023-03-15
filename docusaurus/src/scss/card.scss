@@ -1,0 +1,48 @@
+/** Component: Card */
+
+:root body {
+  --custom-card-border-color: var(--strapi-neutral-200);
+
+  --ifm-card-background-color: var(--strapi-neutral-0);
+  --ifm-card-border-radius: var(--strapi-spacing-1);
+}
+
+.card {
+  --ifm-color-emphasis-200: var(--custom-card-border-color);
+
+  border: 1px solid var(--custom-card-border-color);
+  box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1) !important;
+  @include transition;
+
+  &[href] {
+    color: var(--strapi-neutral-600);
+
+    &:hover {
+      --ifm-color-primary: var(--strapi-neutral-300);
+
+      box-shadow: 0px 2px 15px rgba(33, 33, 52, 0.1) !important;
+    }
+  }
+
+  h2 {
+    --ifm-h2-font-size: var(--strapi-font-size-md);
+    margin-bottom: var(--strapi-spacing-2);
+  }
+
+  p {
+    font-size: var(--strapi-font-size-sm);
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .card {
+    &[href] {
+      color: var(--strapi-neutral-700);
+    }
+  }
+}

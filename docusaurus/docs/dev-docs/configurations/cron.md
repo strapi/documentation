@@ -43,7 +43,11 @@ Optionally, cron jobs can be directly created in the `cron.tasks` key of the [se
 
 ## Creating a cron job
 
-To define a cron job, create a file with the following structure:
+A cron job can be created using the [object format](#using-the-object-format) or [key format](#using-the-key-format).
+
+### Using the object format
+
+To define a cron job with the object format, create a file with the following structure:
 
 <Tabs groupId="js-ts">
 
@@ -93,11 +97,169 @@ export default {
 
 </Tabs>
 
-Key format 
+<details>
+<summary>Advanced example #1: Timezones</summary>
+
+The following cron job runs on a specific timezone:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  /**
+   * Cron job with timezone example.
+   * Every Monday at 1am for Asia/Dhaka timezone.
+   * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+   */
+
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+      tz: "Asia/Dhaka",
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  /**
+   * Cron job with timezone example.
+   * Every Monday at 1am for Asia/Dhaka timezone.
+   * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+   */
+
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "0 0 1 * * 1",
+      tz: "Asia/Dhaka",
+    },
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+</details>
+
+<details>
+<summary>Advanced example #2: One-off cron jobs</summary>
+The following cron job is run only once at a given time:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: new Date(Date.now() + 10000),
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: new Date(Date.now() + 10000),
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+</details>
+
+<details>
+<summary>Advanced example #3: Start and end times</summary>
+
+The following cron job uses start and end times:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/cron-tasks.js"
+module.exports = {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    options: {
+      rule: "* * * * * *",
+      // start 10 seconds from now
+      start: new Date(Date.now() + 10000),
+      // end 20 seconds from now
+      end: new Date(Date.now() + 20000),
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/cron-tasks.ts"
+export default {
+  myJob: {
+    task: ({ strapi }) => {
+      /* Add your own logic here */
+    },
+    // only run once after 10 seconds
+    options: {
+      rule: "* * * * * *",
+      // start 10 seconds from now
+      start: new Date(Date.now() + 10000),
+      // end 20 seconds from now
+      end: new Date(Date.now() + 20000),
+    },
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+</details>
+
+### Using the key format
 
 :::warning
 Using the key format creates an anonymous cron job which may cause issues when trying to disable the cron job or with some plugins. It is recommended to use the object format.
 :::
+
+To define a cron job with the key format, create a file with the following structure:
+
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
@@ -136,146 +298,7 @@ export default {
 
 </Tabs>
 
-If the cron job requires running on a specific timezone:
 
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/cron-tasks.js"
-module.exports = {
-  /**
-   * Cron job with timezone example.
-   * Every Monday at 1am for Asia/Dhaka timezone.
-   * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-   */
-
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    options: {
-      rule: "0 0 1 * * 1",
-      tz: "Asia/Dhaka",
-    },
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/cron-tasks.ts"
-export default {
-  /**
-   * Cron job with timezone example.
-   * Every Monday at 1am for Asia/Dhaka timezone.
-   * List of valid timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-   */
-
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    options: {
-      rule: "0 0 1 * * 1",
-      tz: "Asia/Dhaka",
-    },
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
-
-If you want to do a 1 off cron job
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/cron-tasks.js"
-module.exports = {
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    // only run once after 10 seconds
-    options: new Date(Date.now() + 10000),
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/cron-tasks.ts"
-export default {
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    // only run once after 10 seconds
-    options: new Date(Date.now() + 10000),
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
-
-If you want to have start and end times
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/cron-tasks.js"
-module.exports = {
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    options: {
-      rule: "* * * * * *",
-      // start 10 seconds from now
-      start: new Date(Date.now() + 10000),
-      // end 20 seconds from now
-      end: new Date(Date.now() + 20000),
-    },
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/cron-tasks.ts"
-export default {
-  myJob: {
-    task: ({ strapi }) => {
-      /* Add your own logic here */
-    },
-    // only run once after 10 seconds
-    options: {
-      rule: "* * * * * *",
-      // start 10 seconds from now
-      start: new Date(Date.now() + 10000),
-      // end 20 seconds from now
-      end: new Date(Date.now() + 20000),
-    },
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
 
 ## Enabling cron jobs
 

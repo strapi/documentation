@@ -1,11 +1,13 @@
 import React from 'react'
 
-export default function Request(props) {
-  const { title = 'Example request' } = props;
+export default function Request({
+  children,
+  title = 'Example request',
+}) {
   return (
-      <div className="request">
-        <div className="request-title">{ title }</div>
-        <div className="request-content">{ props.children }</div>
-      </div>
+    <div className="api-call__request">
+      <div className="api-call__request__heading">{title}</div>
+      <div className="api-call__request__content">{children}</div>
+    </div>
   );
 }

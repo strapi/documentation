@@ -134,6 +134,24 @@ module.exports = () => ({
 });
 ```
 
+To remove a CRON job you can call the remove function on the `strapi.cron` object and pass in the key corresponding to the CRON job you want to remove.
+
+:::note
+Cron jobs that are using the key as the rule can not be removed.
+:::
+
+```js
+strapi.cron.remove("myJob");
+```
+
+### List cron jobs
+
+To list all the cron jobs that are currently running you can call the `jobs` array on the `strapi.cron` object.
+
+```js
+strapi.cron.jobs
+```
+
 ## Backend customization
 
 ### Content-types

@@ -1,14 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Column from './Column';
 
 export default function ColumnLeft(props) {
-  const { title = '' } = props;
-
   return (
-      <div className="column-left">
-        <div className="column-title">{ title }</div>
-        <div className="column-content">
-          {props.children}
-        </div>
-      </div>
+    <Column
+      {...props}
+      side="left"
+    />
   );
 }

@@ -1,0 +1,42 @@
+/** Component: Breadcrumbs */
+
+.breadcrumbs {
+  --ifm-breadcrumb-item-background-active: transparent;
+  --ifm-breadcrumb-border-radius: var(--strapi-spacing-1);
+  --ifm-breadcrumb-color-active: var(--strapi-neutral-800);
+  --ifm-link-hover-color: var(--strapi-neutral-700);
+
+  --custom-breadcrumbs-font-size: var(--strapi-font-size-xs);
+  --custom-breadcrumbs-pt: var(--strapi-spacing-4);
+  --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-1);
+
+  padding: var(--custom-breadcrumbs-pt) 0 0;
+
+  &__item {
+    &:after {
+      --ifm-breadcrumb-spacing: var(--custom-breadcrumbs-item-caret-mx);
+    }
+
+    &--active {
+      font-weight: 700;
+    }
+  }
+
+  &__link {
+    background-color: transparent;
+    font-size: var(--custom-breadcrumbs-font-size);
+
+    @include transition;
+
+    &:any-link:hover {
+      --ifm-breadcrumb-item-background-active: var(--strapi-neutral-100);
+    }
+  }
+}
+
+@include medium-up {
+  .breadcrumbs {
+    --custom-breadcrumbs-pt: var(--strapi-spacing-6);
+    --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-3);
+  }
+}

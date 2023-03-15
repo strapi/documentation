@@ -1,8 +1,7 @@
 ---
-title: React 
+title: React
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with React.
-
 ---
 
 # Getting Started with React
@@ -30,14 +29,12 @@ yarn create react-app react-app
 ```bash
 npx create-react-app react-app
 ```
-
 </TabItem>
-
 </Tabs>
 
 ## Use an HTTP client
 
- Many HTTP clients are available but in this documentation there are examples using [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+Many HTTP clients are available but in this documentation there are examples using [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
 To install Axios:
 
@@ -76,9 +73,9 @@ Be sure that you activated the `find` permission for the `restaurant` collection
 <Request title="Example GET request with axios">
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 
-axios.get('http://localhost:1337/api/restaurants').then(response => {
+axios.get("http://localhost:1337/api/restaurants").then((response) => {
   console.log(response);
 });
 ```
@@ -92,14 +89,14 @@ axios.get('http://localhost:1337/api/restaurants').then(response => {
 <Request title="Example GET request with fetch">
 
 ```js
-fetch('http://localhost:1337/api/restaurants', {
-  method: 'GET',
+fetch("http://localhost:1337/api/restaurants", {
+  method: "GET",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 })
-  .then(response => response.json())
-  .then(data => console.log(data));
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 ```
 
 </Request>
@@ -110,52 +107,43 @@ fetch('http://localhost:1337/api/restaurants', {
 <Response>
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-    "created_by": {
+{
+  "data": [
+    {
       "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "updated_by": {
-      "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "created_at": "2020-07-31T11:37:16.964Z",
-    "updated_at": "2020-07-31T11:37:16.975Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-07-31T11:36:23.164Z",
-        "updated_at": "2020-07-31T11:36:23.172Z"
+      "attributes": {
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "createdAt": "2023-03-02T19:24:33.456Z",
+        "updatedAt": "2023-03-02T19:32:01.904Z",
+        "publishedAt": "2023-03-02T19:32:01.902Z"
       }
-    ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
   }
-]
+}
 ```
 
 </Response>
 
 ### Example
 
-<Tabs> 
+<Tabs>
 
 <TabItem label="axios" value="axios">
 
 `./src/App.js`
 
 ```js
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const App = () => {
   const [error, setError] = useState(null);
@@ -163,10 +151,10 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:1337/api/restaurants')
-      .then(({ data }) => setRestaurants(data))
-      .catch((error) => setError(error))
-  }, [])
+      .get("http://localhost:1337/api/restaurants")
+      .then(({ data }) => setRestaurants(data.data))
+      .catch((error) => setError(error));
+  }, []);
 
   if (error) {
     // Print errors if any
@@ -176,7 +164,9 @@ const App = () => {
   return (
     <div className="App">
       <ul>
-        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+        {restaurants.map(({ id, attributes }) => (
+          <li key={id}>{attributes.name}</li>
+        ))}
       </ul>
     </div>
   );
@@ -192,7 +182,7 @@ export default App;
 `./src/App.js`
 
 ```js
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 // Parses the JSON returned by a network request
 const parseJSON = (resp) => (resp.json ? resp.json() : resp);
@@ -203,24 +193,24 @@ const checkStatus = (resp) => {
     return resp;
   }
 
-  return parseJSON(resp).then(resp => {
+  return parseJSON(resp).then((resp) => {
     throw resp;
   });
 };
 
-const headers = { 'Content-Type': 'application/json' };
+const headers = { "Content-Type": "application/json" };
 
 const App = () => {
   const [error, setError] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:1337/api/restaurants', { headers, method: 'GET' })
+    fetch("http://localhost:1337/api/restaurants", { headers, method: "GET" })
       .then(checkStatus)
       .then(parseJSON)
-      .then(({ data }) => setRestaurants(data))
-      .catch((error) => setError(error))
-  }, [])
+      .then(({ data }) => setRestaurants(data.data))
+      .catch((error) => setError(error));
+  }, []);
 
   if (error) {
     // Print errors if any
@@ -230,7 +220,9 @@ const App = () => {
   return (
     <div className="App">
       <ul>
-        {restaurants.map(({ id, name }) => <li key={id}>{name}</li>)}
+        {restaurants.map(({ id, attributes }) => (
+          <li key={id}>{attributes.name}</li>
+        ))}
       </ul>
     </div>
   );
@@ -258,15 +250,18 @@ In this example a `japanese` category has been created which has the id: 3.
 <Request title= "Example POST request with axios">
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 
 axios
-  .post('http://localhost:1337/api/restaurants', {
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+  .post("http://localhost:1337/api/restaurants", {
+    data: {
+      name: "Dolemon Sushi",
+      description:
+        "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      categories: [3],
+    },
   })
-  .then(response => {
+  .then((response) => {
     console.log(response);
   });
 ```
@@ -280,19 +275,22 @@ axios
 <Request title="Example POST request with fetch">
 
 ```js
-fetch('http://localhost:1337/api/restaurants', {
-  method: 'POST',
+fetch("http://localhost:1337/api/restaurants", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+    data: {
+      name: "Dolemon Sushi",
+      description:
+        "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      categories: [3],
+    },
   }),
 })
-  .then(response => response.json())
-  .then(data => console.log(data));
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 ```
 
 </Request>
@@ -304,23 +302,17 @@ fetch('http://localhost:1337/api/restaurants', {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T09:57:11.669Z",
-  "updated_at": "2020-08-04T09:57:11.669Z",
-  "categories": [
-    {
-      "id": 3,
-      "name": "Japanese",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-07-31T11:36:23.164Z",
-      "updated_at": "2020-07-31T11:36:23.172Z"
+  "data": {
+    "id": 3,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2023-03-02T21:40:39.185Z",
+      "updatedAt": "2023-03-02T21:40:39.185Z",
+      "publishedAt": "2023-03-02T21:40:39.118Z"
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 
@@ -335,35 +327,43 @@ fetch('http://localhost:1337/api/restaurants', {
 `./src/App.js`
 
 ```js
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import axios from "axios";
+import { useCallback, useEffect, useState, useId } from "react";
 
-const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
-  <div key={category.id}>
-    <label htmlFor={category.id}>{category.name}</label>
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={isChecked ? onAddCategory : onRemoveCategory}
-      name="categories"
-      id={category.id}
-    />
-  </div>
-);
+const Checkbox = ({ name, isChecked, onAddCategory, onRemoveCategory }) => {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id}>{name}</label>
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={isChecked ? onRemoveCategory : onAddCategory}
+        name="categories"
+        id={id}
+      />
+    </div>
+  );
+};
 
 const App = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [modifiedData, setModifiedData] = useState({ categories: [], description: '', name: '' });
+  const [modifiedData, setModifiedData] = useState({
+    categories: [],
+    description: "",
+    name: "",
+  });
 
   const handleInputChange = useCallback(({ target: { name, value } }) => {
     setModifiedData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     await axios
-      .post("http://localhost:1337/api/restaurants", modifiedData)
+      .post("http://localhost:1337/api/restaurants", { data: modifiedData })
       .then((response) => {
         console.log(response);
       })
@@ -374,10 +374,13 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:1337/api/categories')
-      .then(({ data }) => setAllCategories(data))
-      .catch((error) => setError(error))
-  }, [])
+      .get("http://localhost:1337/api/categories")
+      .then(({ data }) => {
+        setAllCategories(data.data);
+        console.log(data.data);
+      })
+      .catch((error) => setError(error));
+  }, []);
 
   if (error) {
     // Print errors if any
@@ -410,24 +413,27 @@ const App = () => {
         <div>
           <br />
           <b>Select categories</b>
-          {allCategories.map((category) => (
+          {allCategories.map(({ id, attributes }) => (
             <Checkbox
-              category={category}
-              isChecked={modifiedData.categories.includes(category.id)}
-              onAddCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: [...prevData.categories, category.id],
-                }))
-              }
-              onRemoveCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: prevData.categories.filter(
-                    (id) => id !== category.id
+              key={id}
+              name={attributes.name}
+              isChecked={modifiedData.categories.includes(id)}
+              onAddCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: [...modifiedData.categories, id],
+                };
+                setModifiedData(nextData);
+              }}
+              onRemoveCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: modifiedData.categories.filter(
+                    (catId) => catId !== id
                   ),
-                }))
-              }
+                };
+                setModifiedData(nextData);
+              }}
             />
           ))}
         </div>
@@ -436,10 +442,9 @@ const App = () => {
       </form>
     </div>
   );
-}
+};
 
 export default App;
-
 ```
 
 </TabItem>
@@ -449,7 +454,7 @@ export default App;
 `./src/App.js`
 
 ```js
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useId } from "react";
 
 // Parses the JSON returned by a network request
 const parseJSON = (resp) => (resp.json ? resp.json() : resp);
@@ -460,39 +465,50 @@ const checkStatus = (resp) => {
     return resp;
   }
 
-  return parseJSON(resp).then(resp => {
+  return parseJSON(resp).then((resp) => {
     throw resp;
   });
 };
 
-const headers = { 'Content-Type': 'application/json' };
+const headers = { "Content-Type": "application/json" };
 
-const Checkbox = ({ category, isChecked, onAddCategory, onRemoveCategory }) => (
-  <div key={category.id}>
-    <label htmlFor={category.id}>{category.name}</label>
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={isChecked ? onAddCategory : onRemoveCategory}
-      name="categories"
-      id={category.id}
-    />
-  </div>
-);
+const Checkbox = ({ name, isChecked, onAddCategory, onRemoveCategory }) => {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id}>{name}</label>
+      <input
+        type="checkbox"
+        checked={isChecked}
+        onChange={isChecked ? onRemoveCategory : onAddCategory}
+        name="categories"
+        id={id}
+      />
+    </div>
+  );
+};
 
 const App = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [modifiedData, setModifiedData] = useState({ categories: [], description: '', name: '' });
+  const [modifiedData, setModifiedData] = useState({
+    categories: [],
+    description: "",
+    name: "",
+  });
 
   const handleInputChange = useCallback(({ target: { name, value } }) => {
     setModifiedData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post("http://localhost:1337/api/restaurants", modifiedData)
+    await fetch("http://localhost:1337/api/restaurants", {
+      headers,
+      method: "POST",
+      body: JSON.stringify({ data: modifiedData }),
+    })
       .then((response) => {
         console.log(response);
       })
@@ -502,12 +518,12 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:1337/api/categories', { headers, method: 'GET' })
+    fetch("http://localhost:1337/api/categories", { headers, method: "GET" })
       .then(checkStatus)
       .then(parseJSON)
       .then(({ data }) => setAllCategories(data))
-      .catch((error) => setError(error))
-  }, [])
+      .catch((error) => setError(error));
+  }, []);
 
   if (error) {
     // Print errors if any
@@ -540,24 +556,27 @@ const App = () => {
         <div>
           <br />
           <b>Select categories</b>
-          {allCategories.map((category) => (
+          {allCategories.map(({ id, attributes }) => (
             <Checkbox
-              category={category}
-              isChecked={modifiedData.categories.includes(category.id)}
-              onAddCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: [...prevData.categories, category.id],
-                }))
-              }
-              onRemoveCategory={() =>
-                setModifiedData((prevData) => ({
-                  ...prevData,
-                  categories: prevData.categories.filter(
-                    (id) => id !== category.id
+              key={id}
+              name={attributes.name}
+              isChecked={modifiedData.categories.includes(id)}
+              onAddCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: [...modifiedData.categories, id],
+                };
+                setModifiedData(nextData);
+              }}
+              onRemoveCategory={() => {
+                const nextData = {
+                  ...modifiedData,
+                  categories: modifiedData.categories.filter(
+                    (catId) => catId !== id
                   ),
-                }))
-              }
+                };
+                setModifiedData(nextData);
+              }}
             />
           ))}
         </div>
@@ -566,10 +585,9 @@ const App = () => {
       </form>
     </div>
   );
-}
+};
 
 export default App;
-
 ```
 
 </TabItem>
@@ -590,13 +608,15 @@ We consider that the id of your restaurant is `2`, and the id of your category i
 <Request title="Example PUT request with axios">
 
 ```js
-import axios from 'axios';
+import axios from "axios";
 
 axios
-  .put('http://localhost:1337/api/restaurants/2', {
-    categories: [2],
+  .put("http://localhost:1337/api/restaurants/2", {
+    data: {
+      categories: [2],
+    },
   })
-  .then(response => {
+  .then((response) => {
     console.log(response);
   });
 ```
@@ -609,17 +629,19 @@ axios
 <Request title="Example PUT request with fetch">
 
 ```js
-fetch('http://localhost:1337/api/restaurants/2', {
-  method: 'PUT',
+fetch("http://localhost:1337/api/restaurants/3", {
+  method: "PUT",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    categories: [2],
+    data: {
+      categories: [2],
+    },
   }),
 })
-  .then(response => response.json())
-  .then(data => {
+  .then((response) => response.json())
+  .then((data) => {
     console.log(data);
   });
 ```
@@ -632,23 +654,17 @@ fetch('http://localhost:1337/api/restaurants/2', {
 
 ```json
 {
-  "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T10:21:30.219Z",
-  "updated_at": "2020-08-04T10:21:30.219Z",
-  "categories": [
-    {
-      "id": 2,
-      "name": "Brunch",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-08-04T10:24:26.901Z",
-      "updated_at": "2020-08-04T10:24:26.911Z"
+  "data": {
+    "id": 3,
+    "attributes": {
+      "name": "Dolemon Sushi",
+      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "createdAt": "2023-03-02T21:40:39.185Z",
+      "updatedAt": "2023-03-02T23:13:47.494Z",
+      "publishedAt": "2023-03-02T21:40:39.118Z"
     }
-  ]
+  },
+  "meta": {}
 }
 ```
 

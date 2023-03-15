@@ -10,8 +10,8 @@ const config = {
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io/',
   baseUrl: '/',
-  onBrokenLinks: 'warn', // replace with 'throw' to stop building if broken links
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
   // GitHub pages deployment config.
@@ -74,28 +74,37 @@ const config = {
   ],
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/strapi/documentation/edit/main/docusaurus',
-          // lastVersion: '0.1.0',
+          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             tag: ':::',
-            keywords: ['strapi', 'callout', 'prerequisites'],
-            extendDefaults: true,
+            keywords: [
+              // Admonitions defaults
+              'note',
+              'tip',
+              'info',
+              'caution',
+              'danger',
+
+              // Admonitions custom
+              'callout',
+              'prerequisites',
+              'strapi',
+              'warning',
+            ],
           },
         },
-        blog: false, // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
+        // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
+        blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/scss/__index.scss'),
         },
-      }),
+      },
     ],
     [
       'redocusaurus',
@@ -220,8 +229,11 @@ const config = {
         ],
       },
       prism: {
-        theme: lightCodeTheme,
+        theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      zoom: {
+        selector: '.markdown :not(em) > img',
       },
     }),
 
@@ -229,10 +241,11 @@ const config = {
     [
       '@docusaurus/plugin-google-tag-manager',
       {
-        containerId: 'GTM-KN9JRWG',
+        containerId: 'GTM-WT49VGT',
       },
     ],
-    // 'plugin-image-zoom', // temp. disabled while we fix the bug
+    'docusaurus-plugin-sass',
+    'docusaurus-plugin-image-zoom',
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's

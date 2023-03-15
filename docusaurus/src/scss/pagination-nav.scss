@@ -1,0 +1,11 @@
+/** Component: Pagination Nav */
+
+.pagination-nav {
+  --ifm-spacing-horizontal: var(--strapi-spacing-4);
+
+  &__link {
+    &:hover {
+      --ifm-pagination-nav-color-hover: var(--custom-card-border-color);
+    }
+  }
+}
