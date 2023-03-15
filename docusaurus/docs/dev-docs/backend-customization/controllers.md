@@ -50,8 +50,8 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
-    const qp = await this.sanitizeParams(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -93,8 +93,8 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
-    const qp = await this.sanitizeParams(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -178,7 +178,7 @@ When a new [content-type](/dev-docs/backend-customization/models#content-types) 
 ### Sanitization in controllers
 
 :::warning
-As of Strapi v4.7.0 and greater it's strongly recommended you sanitize your incoming request query and parameters utilizing the new `sanitizeParams` function to prevent leaking of private data.
+As of Strapi v4.8.0 and greater it's strongly recommended you sanitize your incoming request query and parameters utilizing the new `sanitizeQuery` function to prevent leaking of private data.
 :::
 
 #### Sanitization when utilizing controller factories
@@ -187,7 +187,7 @@ Within the Strapi factories there are 2 functions exposed that can be used for s
 
 | Function Name    | Parameters                 | Description                                                                          |
 |------------------|----------------------------|--------------------------------------------------------------------------------------|
-| `sanitizeParams` | `ctx`                      | Sanitizes the request query                                                          |
+| `sanitizeQuery`  | `ctx`                      | Sanitizes the request query                                                          |
 | `sanitizeOutput` | `entity`/`entities`, `ctx` | Sanitizes the output data where entity/entities should be an object or array of data |
 | `sanitizeInput`  | `data`, `ctx`              | Sanitizes the input data                                                             |
 
@@ -202,8 +202,8 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   async findOne(ctx) {
-    const qp = await this.sanitizeParams(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -221,8 +221,8 @@ import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   async findOne(ctx) {
-    const qp = await this.sanitizeParams(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(qp);
+    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -258,9 +258,9 @@ const { contentAPI } = sanitize;
 module.exports = {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test')
-    const qp = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+    const sanitizedQueryParams = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
 
-    const entities = await strapi.entityService.findMany(contentType.uid, qp)
+    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
 
     return await contentAPI.output(entities, contentType, ctx.state.auth);
   }
@@ -279,9 +279,9 @@ const { contentAPI } = sanitize;
 export default {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test')
-    const qp = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+    const sanitizedQueryParams = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
 
-    const entities = await strapi.entityService.findMany(contentType.uid, qp)
+    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
 
     return await contentAPI.output(entities, contentType, ctx.state.auth);
   }
