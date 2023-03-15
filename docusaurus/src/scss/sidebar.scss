@@ -43,20 +43,29 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 }
 
 .menu {
-  --ifm-menu-color-background-active: transparent;
-  --ifm-menu-color-background-hover: var(--strapi-neutral-100);
-
   --custom-sidebar-caret-size: 1.25rem;
   --custom-sidebar-menu-font-weight: 400;
   --custom-sidebar-menu-padding-y: var(--strapi-spacing-4);
+
+  --ifm-menu-color-background-active: transparent;
+  --ifm-menu-color-background-hover: var(--strapi-neutral-100);
 
   font-weight: var(--custom-sidebar-menu-font-weight);
   padding-top: var(--custom-sidebar-menu-padding-y) !important;
 
   &__caret {
+    margin: 0 0 0 3px;
+    padding: 0;
+
     &:before {
       background-size: var(--custom-sidebar-caret-size);
     }
+  }
+
+  &__caret,
+  &__caret:before {
+    height: 16px;
+    width: 16px;
   }
 
   &__list {
@@ -73,6 +82,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   &__link {
     font-weight: 500;
+    min-height: var(--custom-menu-min-height, 36px);
     @include transition;
 
     &:hover {
@@ -107,9 +117,30 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       --ifm-menu-color-active: var(--strapi-neutral-800);
 
       &:after {
-        background-size: var(--custom-sidebar-caret-size);
+        display: none;
       }
     }
+
+    &--sublist {
+      &.menu__link--with-badge {
+        --custom-menu-link-content-mw: calc(100% - 84px);
+      }
+    }
+
+    &--with-badge {
+      max-width: 100%;
+
+      .menu__link__content {
+        max-width: var(--custom-menu-link-content-mw, calc(100% - 56px));
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .badge {
+    margin: -1px 0 -1px auto;
   }
 
   .theme-doc-sidebar {
@@ -142,6 +173,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           &-3 {
             --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-sm); // next levels will have this same value
             --custom-sidebar-menu-list-item-link-active-left: -32px;
+            --custom-menu-min-height: 32px;
           }
 
           &-4 {
@@ -164,6 +196,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 /** Dark mode */
 @include dark {
+  --ifm-menu-color: var(--strapi-neutral-1000);
+
   .theme-doc-sidebar-container {
     .menu {
       --ifm-menu-color-background-hover: var(--strapi-neutral-100);
