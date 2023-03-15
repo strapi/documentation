@@ -258,7 +258,7 @@ const { contentAPI } = sanitize;
 module.exports = {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test')
-    const sanitizedQueryParams = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+    const sanitizedQueryParams = await contentAPI.query(ctx.query, contentType, ctx.state.auth)
 
     const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
 
@@ -279,7 +279,7 @@ const { contentAPI } = sanitize;
 export default {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test')
-    const sanitizedQueryParams = await contentAPI.params(ctx.query, contentType, ctx.state.auth)
+    const sanitizedQueryParams = await contentAPI.query(ctx.query, contentType, ctx.state.auth)
 
     const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
 
