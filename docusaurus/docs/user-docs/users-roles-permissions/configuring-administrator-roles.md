@@ -26,16 +26,7 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
-:::caution
-If you use your Strapi application with the Community Edition (see [Pricing and Plans](https://strapi.io/pricing-self-hosted)), your use of the RBAC feature will be limited. Only the 3 default roles are available, as you cannot create more roles and cannot delete the default ones. It is however possible to edit them, but to an extent:
-
-- You can only configure permissions for the content-types, but not for the plugins and settings of the Strapi application.
-- Configuring permissions in detail is only available for the Enterprise Edition. With the Community Edition, although you can choose which fields of a content-type are accessible, these fields are automatically fully accessible with all permissions.
-- Custom conditions defined for a specific permission are also only available for the Enterprise Edition.
-
-:::
-
-## Creating a new role <EnterpriseBadge />
+## Creating a new role
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
 
@@ -46,7 +37,7 @@ Clicking on the **Add new role** button will redirect you to the roles edition i
 In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/duplicate.svg) to create a new role by duplicating an existing one.
 :::
 
-## Deleting a role <EnterpriseBadge />
+## Deleting a role
 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
@@ -92,12 +83,12 @@ To configure Collection or Single types permissions for a role:
 
 1. Go to the Collection types or Single types category of the permissions table.
 2. Tick the box on the left of the name of the content-type to give access to. By default, all actions can be performed for all fields of the content-type.
-3. (optional - Enterprise Edition only) Untick the action-related boxes to prevent actions of your choice.
+3. (optional) Untick the action-related boxes to prevent actions of your choice.
 4. (optional) Click the name of the content-type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
 5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 
-#### Plugins and Settings <EnterpriseBadge />
+#### Plugins and Settings
 
 The Plugins and Settings categories both display a sub-category per available plugin or setting of the Strapi application. Each sub-category contains its own specific set of permissions.
 
@@ -143,7 +134,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
-### Setting custom conditions for permissions <EnterpriseBadge />
+### Setting custom conditions for permissions
 
 For each permission of each category, a **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 
