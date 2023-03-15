@@ -114,6 +114,9 @@ env.array('VAR', [1, 2, 3]);
 
 // Cast to date (using new Date(value))
 env.date('VAR', new Date());
+
+// Returns the env matching oneOf union types
+env.oneOf('UPLOAD_PROVIDER', ['local', 'aws'], 'local')
 ```
 
 ## Environment configurations
