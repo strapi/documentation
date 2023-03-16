@@ -371,7 +371,9 @@ If you want to create your own provider without publishing it on npm you can fol
 
 ## Creating private providers
 
-You can configure a provider to be private, which means that asset URLs will be signed for secure access. To enable private providers, you need to implement the `isPrivate()` method and return `true`.
+You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
+
+To enable private providers, you must implement the `isPrivate()` method and return `true`.
 
 ### How It Works
 
