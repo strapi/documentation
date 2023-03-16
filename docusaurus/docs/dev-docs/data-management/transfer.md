@@ -30,7 +30,7 @@ The CLI command consists of the following arguments:
 | `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                    |No         |
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/managing-global-settings#managing-transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
 :::
 
 ## Generate a transfer token
