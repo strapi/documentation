@@ -21,7 +21,8 @@
   top: var(--custom-badge-inside-titles-top);
   font-size: var(--custom-badge-font-size);
   font-weight: 400;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
+  text-align: center;
 
   &-link {
     font-weight: 400;
@@ -41,6 +42,23 @@
     --custom-badge-background-color: rgb(255, 241, 209);
     --custom-badge-color: rgb(229, 136, 41);
   }
+
+  &--new {
+    --custom-badge-background-color: var(--strapi-warning-100);
+    --custom-badge-border-color: var(--strapi-warning-200);
+    --custom-badge-color: var(--strapi-warning-700);
+
+    --ifm-badge-padding-horizontal: 2px;
+    --ifm-badge-padding-vertical: 2px;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    min-width: 52px;
+    border: 1px solid var(--custom-badge-border-color);
+  }
 }
 
 h1 .badge {
@@ -49,4 +67,15 @@ h1 .badge {
 
 h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
+}
+
+/** Dark mode */
+@include dark {
+  .badge {
+    &--new {
+      --custom-badge-background-color: var(--strapi-neutral-100);
+      --custom-badge-border-color: var(--strapi-warning-500);
+      --custom-badge-color: var(--strapi-warning-500);
+    }
+  }
 }

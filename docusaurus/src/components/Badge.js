@@ -9,12 +9,14 @@ export default function Badge({
   variant = '',
   ...rest
 }) {
+  const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
+
   return (
     <span
       className={clsx(
         'badge',
         'badge--feature',
-        (variant && `badge--${variant.toLowerCase()}`),
+        (variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
       )}
       {...rest}
     >
@@ -55,6 +57,16 @@ export function EnterpriseBadge(props) {
     <Badge
       variant="Enterprise"
       link="https://strapi.io/pricing-self-hosted"
+      {...props}
+    />
+  );
+}
+
+
+export function NewBadge(props) {
+  return (
+    <Badge
+      variant="New ✨"
       {...props}
     />
   );
