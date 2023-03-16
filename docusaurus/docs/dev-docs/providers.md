@@ -368,3 +368,58 @@ If you want to create your own provider without publishing it on npm you can fol
 
 4. Update your `./config/plugins.js` file to [configure the provider](#configuring-providers).
 5. Finally, run `yarn install` or `npm install` to install your new custom provider.
+
+## Private Providers
+
+You can configure a provider to be private, which means that asset URLs will be signed for secure access. To enable private providers, you need to implement the `isPrivate()` method and return `true`.
+
+### How It Works
+
+When the provider is set to private, every asset URL displayed in the Content Manager will be signed for secure access.
+
+In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
+
+Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
+
+### Example
+
+Here's an example of how one could create a private `aws-s3` provider:
+
+1. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
+2. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
+
+```
+// aws-s3 provider
+
+module.exports = {
+  init: (config) => {
+    const s3 = new AWS.S3(config);
+
+    return {
+      async upload(file) {
+        // code to upload file to S3
+      },
+
+      async delete(file) {
+        // code to delete file from S3
+      },
+
+      async isPrivate() {
+        return true;
+      },
+
+      async getSignedUrl(file) {
+        const params = {
+          Bucket: config.params.Bucket,
+          Key: file.path,
+          Expires: 60, // URL expiration time in seconds
+          ACL: 'private', // make sure the asset is private and can only be accessed via signed URLs
+        };
+
+        const signedUrl = await s3.getSignedUrlPromise('getObject', params);
+        return { url: signedUrl };
+      },
+    };
+  },
+};
+```
