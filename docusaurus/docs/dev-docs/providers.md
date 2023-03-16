@@ -381,7 +381,7 @@ In the backend, Strapi generates a signed URL for each asset using the `getSigne
 
 Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
 
-### Example
+**Example**
 
 To create a private `aws-s3` provider:
 
