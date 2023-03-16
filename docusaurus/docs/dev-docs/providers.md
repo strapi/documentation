@@ -375,7 +375,6 @@ You can set up a private provider, meaning that every asset URL displayed in the
 
 To enable private providers, you must implement the `isPrivate()` method and return `true`.
 
-### How It Works
 
 When the provider is set to private, every asset URL displayed in the Content Manager will be signed for secure access.
 
