@@ -376,7 +376,6 @@ You can set up a private provider, meaning that every asset URL displayed in the
 To enable private providers, you must implement the `isPrivate()` method and return `true`.
 
 
-When the provider is set to private, every asset URL displayed in the Content Manager will be signed for secure access.
 
 In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
 
