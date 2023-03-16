@@ -30,7 +30,6 @@ const entries = await strapi.db.query('api::article.article').findMany({
       },
     ],
   },
-  },
 });
 ```
 
