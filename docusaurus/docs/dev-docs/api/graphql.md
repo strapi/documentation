@@ -260,7 +260,7 @@ The following operators are available:
 | `containsi`    | Contains, case insensitive         |
 | `notContainsi` | Does not contain, case insensitive |
 | `null`         | Is null                            |
-| `notNull`      | Is null                            |
+| `notNull`      | Is not null                        |
 | `between`      | Is between                         |
 | `startsWith`   | Starts with                        |
 | `endsWith`     | Ends with                          |
