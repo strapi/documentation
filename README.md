@@ -48,7 +48,7 @@ Technical questions should be asked using the following resources:
 
 ## Releases
 
-The Strapi documentation can be updated on a daily basis, thanks to a continuous integration/continuous delivery workflow. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays.
+Thanks to a continuous integration/continuous delivery workflow, the Strapi documentation can be updated up to several times a day, depending on the number and frequency of contributions. . Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays and include a list of changes since the latest release.
 
 ## Community support
 
