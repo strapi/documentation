@@ -168,14 +168,15 @@ strapi import -f your-filepath-and-filename --key my-key
 The destination Strapi instance should be running with the `start` command and not the `develop` command.
 :::
 
-| Option                       | description                                                                                                                         | required          |
+| Option                       | Description                                                                                                                         | Required          |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
-| `--to` {destinationURL}      | URL of the destination Strapi instance. Include the `/admin` endpoint.                                                                                            |      required     |
-| `--to-token` {transferToken} | Transfer token for the remote Strapi destination                                                                                   |      required     |
+| `--to [destinationURL]`      | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)                                                                                             |      Yes     |
+| `--to-token [transferToken]` | Transfer token for the remote Strapi destination                                                                                   |      Yes     |
 | `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                  |         -         |
+| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                  |         No         |
 | `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |         -          |
-| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                |         -         |
-| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                       |         -         |
+| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                |         No         |
+| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                       |         No         |
 
 **Example**
 
