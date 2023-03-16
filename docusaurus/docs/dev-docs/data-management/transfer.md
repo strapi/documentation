@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
 # Data transfer
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data between:
+The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
 
 - from a local Strapi instance to a remote Strapi instance,
 - from a remote Strapi instance to a local Strapi instance,
@@ -25,6 +25,7 @@ The CLI command consists of the following arguments:
 |------------  |--------------------------------------------------------------| :------: |
 | `--to`       | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`) | Yes |
 | `‑‑to‑token` | Transfer token from the Strapi destination instance.        |No         |
+| `--from`     | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) | Yes    |
 | `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |No         |
 | `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                    |No         |
 | `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                    |No         |
@@ -39,7 +40,7 @@ Data transfers are authorized by transfer tokens, which are [managed from the ad
 A salt transfer token should be defined in the [admin panel configuration](/dev-docs/configurations/admin-panel) file.
 :::
 
-The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
+The `strapi transfer` command requires a transfer token issued by the destination instance. To generate a transfer token in the admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 
 ## Setup and run the data transfer
 
