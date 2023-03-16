@@ -388,7 +388,7 @@ Here's an example of how one could create a private `aws-s3` provider:
 1. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
 2. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
 
-```
+```js
 // aws-s3 provider
 
 module.exports = {
