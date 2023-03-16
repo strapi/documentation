@@ -241,7 +241,14 @@ const sidebars = {
          items: [
           'dev-docs/data-management/export',
           'dev-docs/data-management/import',
-          'dev-docs/data-management/transfer'
+          {
+            type: 'doc',
+            label: 'Data transfer',
+            id: 'dev-docs/data-management/transfer',
+            customProps: {
+              new: true,
+            },
+          }
          ],
         },
         'dev-docs/database-migrations',
