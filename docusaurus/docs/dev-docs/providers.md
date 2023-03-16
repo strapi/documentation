@@ -82,6 +82,7 @@ module.exports = ({ env }) => ({
         secretAccessKey: env('AWS_ACCESS_SECRET'),
         region: env('AWS_REGION'),
         params: {
+          ACL: env("AWS_ACL", 'public-read'), // 'private' if you want to make the uploaded files private
           Bucket: env('AWS_BUCKET'),
         },
       },
@@ -107,6 +108,7 @@ export default ({ env }) => ({
         secretAccessKey: env('AWS_ACCESS_SECRET'),
         region: env('AWS_REGION'),
         params: {
+          ACL: env("AWS_ACL", 'public-read'), // 'private' if you want to make the uploaded files private
           Bucket: env('AWS_BUCKET'),
         },
       },
@@ -230,9 +232,20 @@ module.exports = {
         // delete the file in the provider
       },
       checkFileSize(file, { sizeLimit }) {
+        // (optional)
         // implement your own file size limit logic
-        // there is a default logic in place if this
-        // method is not implemented
+      },
+      getSignedUrl(file) {
+        // (optional)
+        // Generate a signed URL for the given file.
+        // The signed URL allows secure access to the file.
+        // Only Content Manager assets will be signed.
+        // Returns an object {url: string}.
+      },
+      isPrivate() {
+        // (optional)
+        // if it is private, file urls will be signed
+        // Returns a boolean
       },
     };
   },
@@ -259,6 +272,22 @@ export default {
       },
       delete(file) {
         // delete the file in the provider
+      },
+      checkFileSize(file, { sizeLimit }) {
+        // (optional)
+        // implement your own file size limit logic
+      },
+      getSignedUrl(file) {
+        // (optional)
+        // Generate a signed URL for the given file.
+        // The signed URL allows secure access to the file.
+        // Only Content Manager assets will be signed.
+        // Returns an object {url: string}.
+      },
+      isPrivate() {
+        // (optional)
+        // if it is private, file urls will be signed
+        // Returns a boolean
       },
     };
   },
