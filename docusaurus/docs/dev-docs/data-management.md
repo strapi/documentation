@@ -16,7 +16,7 @@ Occasionally, you need to move data out of or into a Strapi instance. This is po
 
 - Use [`strapi export`](/dev-docs/data-management/export) to create a data backup, for archive purposes or to import it in another instance.
 - Use [`strapi import`](/dev-docs/data-management/import) to restore data from a backup.
-- Use [`strapi transfer`](/dev-docs/data-management/transfer) to transfer data from a local to a remote Strapi instance.
+- Use [`strapi transfer`](/dev-docs/data-management/transfer) to transfer data between local or remote instances.
 
 The following documentation gives explanations and examples for the export, import, and transfer commands, while the [CLI reference documentation](/dev-docs/cli#strapi-export) lists all available flags in a condensed format.
 
