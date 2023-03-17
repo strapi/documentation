@@ -16,6 +16,8 @@ Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email)
 
 For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
+A provider can be configured to be [private](#configuring-private-providers) to ensure asset URLs will be signed for secure access.
+
 ## Installing providers
 
 New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
@@ -385,10 +387,15 @@ Note that for security reasons, the content API will not provide any signed URLs
 
 To create a private `aws-s3` provider:
 
-1. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
-2. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
+1. Create a `./providers/aws-s3` folder in your application. See [Local Providers](#local-providers) for more information.
+2. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
+3. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
 
-```js
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="./providers/aws-s3/index.js"
 // aws-s3 provider
 
 module.exports = {
@@ -413,13 +420,57 @@ module.exports = {
           Bucket: config.params.Bucket,
           Key: file.path,
           Expires: 60, // URL expiration time in seconds
-          ACL: 'private', // make sure the asset is private and can only be accessed via signed URLs
+          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
         };
 
-        const signedUrl = await s3.getSignedUrlPromise('getObject', params);
+        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
         return { url: signedUrl };
       },
     };
   },
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./providers/aws-s3/index.ts"
+// aws-s3 provider
+
+module.exports = {
+  init: (config) => {
+    const s3 = new AWS.S3(config);
+
+    return {
+      async upload(file) {
+        // code to upload file to S3
+      },
+
+      async delete(file) {
+        // code to delete file from S3
+      },
+
+      async isPrivate() {
+        return true;
+      },
+
+      async getSignedUrl(file) {
+        const params = {
+          Bucket: config.params.Bucket,
+          Key: file.path,
+          Expires: 60, // URL expiration time in seconds
+          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
+        };
+
+        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
+        return { url: signedUrl };
+      },
+    };
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
