@@ -1,0 +1,106 @@
+/** Page: Home */
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-home-faded-bg-display: block;
+  --strapi-home-gap: var(--strapi-spacing-4);
+  --strapi-home-pb: var(--strapi-spacing-4);
+  --strapi-home-bg-color-start: rgba(215, 214, 255, 1);
+  --strapi-home-bg-color-end: rgba(0, 0, 0, 0);
+  --strapi-home-huitd-margin: 15px 0 -15px;
+}
+
+.home {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-bottom: var(--strapi-home-pb);
+  top: calc(var(--ifm-navbar-height) * -1);
+  padding-top: var(--ifm-navbar-height);
+
+  &:before {
+    content: " ";
+    display: var(--strapi-home-faded-bg-display);
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 448px;
+    opacity: 0.5;
+    background: linear-gradient(
+      180deg,
+      var(--strapi-home-bg-color-start) 0%,
+      var(--strapi-home-bg-color-end) 90%
+    );
+  }
+
+  &__carousel {
+    margin-bottom: calc(var(--strapi-home-gap) / 2);
+
+    &__cta {
+      margin: 10px 0 5px;
+    }
+  }
+
+  &__categories {
+    .row {
+      --custom-grid-spacing: var(--strapi-spacing-4);
+    }
+
+    &__item {
+      margin: calc(var(--strapi-home-gap) / 2) 0;
+
+      &__links {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        margin: var(--strapi-home-gap) 0 0 0;
+      }
+    }
+  }
+
+  &__huitd {
+    margin: var(--strapi-home-huitd-margin);
+
+    &__link {
+      background-color: var(--strapi-home-huitd-link-background-color, #F6F6FF);
+      border-radius: 7px;
+      border: 1px solid var(--strapi-home-huitd-link-border-color, var(--strapi-card-border-color));
+      padding: 11px 24px;
+
+      &:hover {
+        --strapi-home-huitd-link-border-color: var(
+          --strapi-home-huitd-link-hover-border-color,
+          var(--strapi-card-hover-border-color)
+        );
+      }
+    }
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  :root {
+    --strapi-home-gap: var(--strapi-spacing-8);
+    --strapi-home-huitd-margin: 20px 0 20px;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --strapi-home-faded-bg-display: none;
+  --strapi-home-pb: var(--strapi-spacing-8);
+  --strapi-home-huitd-link-background-color: var(--strapi-neutral-0);
+
+  .home {
+    &__huitd {
+      &__link {
+        --ifm-link-hover-color: var(--strapi-neutral-1000) !important;
+      }
+    }
+  }
+}

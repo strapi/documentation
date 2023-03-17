@@ -1,0 +1,216 @@
+/** Component: Card */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-card-background: var(--strapi-neutral-0);
+  --strapi-card-border-color: #EDEDFF;
+  --strapi-card-border-radius: 10px;
+  --strapi-card-box-shadow: 0 0 0 transparent;
+  --strapi-card-content-delimited: 395px;
+  --strapi-card-img-border-width: 5px;
+  --strapi-card-img-border-radius: 5px 5px 0 0;
+  --strapi-card-img-bg-scale: 1;
+  --strapi-card-justify-content: center;
+  --strapi-card-position: relative;
+  --strapi-card-overflow: hidden;
+  --strapi-card-text-align: center;
+  --strapi-card-gap: var(--strapi-spacing-2);
+  --strapi-card-px: var(--strapi-spacing-6);
+  --strapi-card-py: var(--strapi-spacing-6);
+  --strapi-card-title-arrow-left: var(--strapi-card-gap);
+  --strapi-card-title-color: #1D1B84;
+  --strapi-card-title-font-size: 17px;
+  --strapi-card-title-font-weight: 700;
+  --strapi-card-title-line-height: 26px;
+  --strapi-card-description-color: #4E6294;
+  --strapi-card-description-font-size: 15px;
+  --strapi-card-description-line-height: 24px;
+  --strapi-card-hover-border-color: #D6D6FF;
+  --strapi-card-hover-img-bg-scale: 1.15;
+}
+
+.card {
+  position: var(--strapi-card-position);
+  overflow: var(--strapi-card-overflow);
+  background: var(--strapi-card-background);
+  border-radius: var(--strapi-card-border-radius);
+  border: 1px solid var(--strapi-card-border-color);
+  box-shadow: var(--strapi-card-box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--strapi-card-gap);
+  align-items: stretch;
+  justify-content: var(--strapi-card-justify-content);
+  text-align: var(--strapi-card-text-align);
+  padding: var(--strapi-card-py) var(--strapi-card-px);
+  transition: all 0.2s ease;
+
+  &:focus, &:hover {
+    --strapi-card-border-color: var(--strapi-card-hover-border-color);
+    --strapi-card-title-arrow-left: var(--strapi-spacing-3);
+    --strapi-card-img-bg-scale: var(--strapi-card-hover-img-bg-scale);
+  }
+
+  &__title {
+    display: block;
+    color: var(--strapi-card-title-color);
+    font-size: var(--strapi-card-title-font-size);
+    font-weight: var(--strapi-card-title-font-weight);
+    line-height: var(--strapi-card-title-line-height);
+    margin: 0;
+
+    &:after {
+      content: none;
+    }
+
+    &__arrow {
+      display: inline-block;
+      line-height: 0;
+      margin-left: var(--strapi-card-title-arrow-left);
+      transition: margin-left 0.1s ease;
+    }
+  }
+
+  &__description {
+    --ifm-link-color: var(--strapi-card-description-color);
+    --ifm-link-decoration: underline;
+
+    color: var(--strapi-card-description-color);
+    opacity: 0.8;
+    font-size: var(--strapi-card-description-font-size);
+    line-height: var(--strapi-card-description-line-height);
+  }
+
+  &__img {
+    border: var(--strapi-card-img-border-width) solid var(--strapi-card-img-border-color, #fff);
+    border-bottom: none;
+    border-radius: var(--strapi-card-img-border-radius);
+    margin-top: var(--strapi-card-gap);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: calc(var(--strapi-card-py) * -1);
+    box-shadow: 0 1px 10px 0 #7A78B61A;
+
+    &-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(var(--strapi-card-img-bg-scale));
+      transition: transform 0.2s ease;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  &--cloud {
+    --strapi-card-background:
+      radial-gradient(
+        133.72% 136.4% at 42.35% 0%,
+        #121170 45.12%,
+        #0B0B47 100%
+      ),
+      linear-gradient(
+        0deg,
+        #FFFFFF,
+        #FFFFFF
+      ),
+      #FFFFFF
+    ;
+    --strapi-card-title-color: #fff;
+    --strapi-card-description-color: #fff;
+  }
+
+  &--cta {
+    --ifm-link-color: currentColor;
+    --strapi-card-background:
+      linear-gradient(
+        310deg,
+        rgba(168, 166, 255, 0.15) 1.16%,
+        rgba(226, 225, 255, 0.15) 69.23%
+      ),
+      #FFFFFF
+    ;
+    --strapi-card-text-align: left;
+    --strapi-card-gap: var(--strapi-spacing-2);
+    --strapi-card-title-font-size: 21px;
+    --strapi-card-title-font-weight: 600;
+    --strapi-card-title-line-height: 28px;
+    --ifm-link-decoration: none;
+    --ifm-link-hover-decoration: none;
+  }
+
+  &--content-delimited {
+    .card {
+      &__title,
+      &__description {
+        width: 100%;
+        max-width: var(--strapi-card-content-delimited);
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  :root {
+    --strapi-card-px: var(--strapi-spacing-8);
+    --strapi-card-py: var(--strapi-spacing-9);
+  }
+
+  .card {
+    &__title {
+      &__arrow {
+        transition: margin-left 0.2s ease;
+        will-change: margin-left;
+      }
+    }
+
+    &:focus, &:hover {
+      &.card--cta {
+        --strapi-card-border-color: #D6D6FF;
+        --strapi-card-box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+      }
+    }
+
+    &--cta {
+      transition: all 0.2s ease;
+      will-change: border-color, box-shadow, color;
+
+      .card {
+        &__img {
+          transition: all 0.2s ease;
+          will-change: border-radius, transform;
+          transform:
+            scale(var(--strapi-card-img-scale, 1))
+            translate(var(--strapi-card-img-translate, '0, 0'))
+          ;
+        }
+      }
+    }
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --strapi-card-border-color: var(--strapi-neutral-150);
+  --strapi-card-title-color: var(--strapi-netral-1000);
+  --strapi-card-description-color: var(--strapi-netral-1000);
+  --strapi-card-img-border-color: rgba(255, 255, 255, 0.5);
+  --strapi-card-hover-border-color: #49494D;
+
+  .card {
+    &--cta {
+      --strapi-card-background: var(--strapi-neutral-0);
+
+      &:focus, &:hover {
+        --strapi-card-border-color: #49494D;
+        --strapi-card-color: var(--strapi-neutral-1000);
+
+        --ifm-link-hover-color: var(--strapi-neutral-1000);
+      }
+    }
+  }
+}

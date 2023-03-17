@@ -1,0 +1,128 @@
+/** Component: Carousel */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-carousel-theme-color: var(--strapi-primary-500);
+
+  --strapi-carousel-navigation-color: var(--strapi-neutral-600);
+  --strapi-carousel-navigation-hover-color: var(--strapi-neutral-700);
+  --strapi-carousel-navigation-size: 32px;
+  --strapi-carousel-navigation-icon-size: 16px;
+  --strapi-carousel-navigation-sides-offset: 8px;
+
+  --strapi-carousel-pagination-button-size: 4px;
+  --strapi-carousel-pagination-button-horizontal-gap: calc(var(--strapi-carousel-pagination-button-size) / 2);
+  --strapi-carousel-pagination-button-color: #BCBAFF;
+  --strapi-carousel-pagination-button-color-active: #7B79FF;
+
+  --strapi-carousel-slide-spacing: 0;
+  --strapi-carousel-slide-size: 100%;
+}
+
+.carousel {
+  position: relative;
+  max-width: 100%;
+
+  &__viewport {
+    overflow: hidden;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-left: calc(var(--strapi-carousel-slide-spacing) * -1);
+  }
+
+  &__slide {
+    flex: 0 0 var(--strapi-carousel-slide-size);
+    min-width: 0;
+    padding-left: var(--strapi-carousel-slide-spacing);
+    position: relative;
+  }
+
+  &__arrow,
+  &__pagination__btn {
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__arrow {
+    z-index: 1;
+    color: var(--strapi-carousel-navigation-color);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: var(--strapi-carousel-navigation-size);
+    height: var(--strapi-carousel-navigation-size);
+    transition: all 0.2s ease;
+
+    &:focus, &:hover {
+      --strapi-carousel-navigation-color: var(--strapi-carousel-navigation-hover-color);
+    }
+
+    &__svg {
+      width: var(var(--strapi-carousel-navigation-icon-size));
+      height: var(var(--strapi-carousel-navigation-icon-size));
+    }
+
+    &--prev {
+      left: var(--strapi-carousel-navigation-sides-offset);
+    }
+
+    &--next {
+      right: var(--strapi-carousel-navigation-sides-offset);
+    }
+  }
+
+  &__pagination {
+    z-index: 1;
+    bottom: 1.2rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__btn {
+      width: var(--strapi-carousel-pagination-button-width, 4px);
+      height: 4px;
+      display: flex;
+      margin: 2px;
+      border-radius: 10px;
+      background-color: var(--strapi-carousel-pagination-button-color);
+      transition: all 0.2s ease;
+
+      &--active {
+        --strapi-carousel-pagination-button-color: var(--strapi-carousel-pagination-button-color-active);
+        --strapi-carousel-pagination-button-width: 16px;
+        cursor: none;
+      }
+    }
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  :root {
+    --strapi-carousel-navigation-sides-offset: 24px;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --strapi-carousel-navigation-hover-color: #8E8EA9;
+}

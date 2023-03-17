@@ -1,0 +1,89 @@
+/** Component: Features List */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-features-list-gap: var(--strapi-spacing-2);
+  --strapi-features-list-margin: 0;
+  --strapi-features-list-py: var(--ifm-spacing-horizontal);
+  --strapi-features-list-px: 0;
+
+  --strapi-features-list-item-inner-gap: 8px;
+  --strapi-features-list-item-icon-background-color: var(--strapi-secondary-100);
+  --strapi-features-list-item-icon-border-color: #D4EDFF;
+  --strapi-features-list-item-icon-color: var(--strapi-secondary-500);
+  --strapi-features-list-item-icon-border-radius: 7px;
+  --strapi-features-list-item-icon-area: 32px;
+  --strapi-features-list-item-icon-size: 16px;
+}
+
+.features-list {
+  margin: var(--strapi-features-list-margin);
+  padding: var(--strapi-features-list-py) var(--strapi-features-list-px);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--strapi-features-list-gap);
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--strapi-features-list-item-inner-gap);
+
+    &__icon {
+      background-color: var(--strapi-features-list-item-icon-background-color);
+      border: 1px solid var(--strapi-features-list-item-icon-border-color);
+      border-radius: var(--strapi-features-list-item-icon-border-radius);
+      color: var(--strapi-features-list-item-icon-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--strapi-features-list-item-icon-area);
+      width: var(--strapi-features-list-item-icon-area);
+      transition: all 0.2s ease;
+
+      &--green {
+        --strapi-features-list-item-icon-background-color: var(--strapi-success-100);
+        --strapi-features-list-item-icon-border-color: #DAF0D8;
+        --strapi-features-list-item-icon-color: var(--strapi-success-500);
+      }
+
+      svg {
+        height: var(--strapi-features-list-item-icon-size);
+        width: var(--strapi-features-list-item-icon-size);
+      }
+    }
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  :root {
+    --strapi-features-list-py: calc(var(--ifm-spacing-horizontal) * 2);
+    --strapi-features-list-px: var(--ifm-spacing-horizontal);
+
+    --strapi-features-list-item-inner-gap: 20px;
+    --strapi-features-list-item-icon-area: 40px;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --strapi-features-list-item-icon-background-color: var(--strapi-secondary-500);
+  --strapi-features-list-item-icon-border-color: var(--strapi-secondary-600);
+
+  .features-list {
+    &__item {
+      &__icon {
+        --strapi-features-list-item-icon-color: #fff;
+
+        &--green {
+          --strapi-features-list-item-icon-background-color: var(--strapi-success-500);
+          --strapi-features-list-item-icon-border-color: var(--strapi-success-600);
+        }
+      }
+    }
+  }
+}

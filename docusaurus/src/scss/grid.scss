@@ -10,3 +10,12 @@
     }
   }
 }
+
+/** Responsive */
+@include medium-up {
+  .row {
+    &--huge {
+      --custom-grid-spacing: var(--strapi-spacing-4);
+    }
+  }
+}

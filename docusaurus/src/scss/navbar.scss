@@ -25,8 +25,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --custom-navbar-logo-img-height: 25px;
   --custom-navbar-logo-img-width: 194px;
   --custom-navbar-toggle-mr: var(--strapi-spacing-1);
+  --custom-navbar-transition: all 0.2s ease;
 
   --ifm-navbar-padding-horizontal: var(--custom-navbar-items-gap);
+
+  transition: var(--custom-navbar-transition);
 
   &__items {
     max-width: var(--custom-navbar-items-width);
@@ -105,7 +108,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 @include small-up {
   .navbar {
     .DocSearch-Button {
-      --custom-navbar-icon-button-hover-background: transparent;
+      --custom-navbar-icon-button-hover-background: var(--strapi-neutral-0);
 
       color: var(--strapi-neutral-400);
       border: var(--strapi-input-border);
@@ -113,6 +116,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       font-family: var(--ifm-font-family-base);
       height: 40px;
       padding: 0 var(--strapi-spacing-3);
+      background-color: var(--custom-navbar-icon-button-hover-background);
 
       svg path {
         stroke-width: 2px;

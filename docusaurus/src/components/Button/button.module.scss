@@ -1,0 +1,52 @@
+/** Component: Button */
+
+.button {
+  --strapi-button-background-color: var(--strapi-primary-600);
+  --strapi-button-border-radius: 4px;
+  --strapi-button-box-shadow: 0 0 0 transparent;
+  --strapi-button-color: #fff;
+  --strapi-button-font-size: 12px;
+  --strapi-button-font-weight: 600;
+  --strapi-button-line-height: 16px;
+  --strapi-button-position: relative;
+  --strapi-button-py: 7px;
+  --strapi-button-px: 15px;
+  --strapi-button-transition-property: color, background, border-color, box-shadow;
+
+  --ifm-button-color: var(--strapi-button-color);
+  --ifm-button-border-radius: var(--strapi-button-border-radius);
+  --ifm-button-font-weight: var(--strapi-button-font-weight);
+  --ifm-button-padding-horizontal: var(--strapi-button-px);
+  --ifm-button-padding-vertical: var(--strapi-button-py);
+  --ifm-button-size-multiplier: 1;
+
+  --ifm-link-hover-color: var(--strapi-button-color);
+  --ifm-link-hover-decoration: none;
+
+  position: var(--strapi-button-position);
+  font-size: var(--strapi-button-font-size);
+  line-height: var(--strapi-button-line-height);
+  box-shadow: var(--strapi-button-box-shadow);
+  transition-property: var(--strapi-button-transition-property);
+
+  &__decorative {
+    position: absolute;
+    font-size: 32px;
+    line-height: 32px;
+    bottom: -16px;
+    right: -8px;
+  }
+
+  &:focus, &:hover {
+    --strapi-button-box-shadow: 0px 9px 10px rgba(44, 56, 148, 0.2475);
+  }
+
+  /** Sizes */
+  &--huge {
+    --strapi-button-border-radius: 6px;
+    --strapi-button-font-size: 15px;
+    --strapi-button-line-height: 23px;
+    --strapi-button-py: 11px;
+    --strapi-button-px: 71px;
+  }
+}
