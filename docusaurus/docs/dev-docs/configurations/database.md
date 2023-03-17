@@ -546,7 +546,7 @@ Strapi checks which database drivers are available in the project for the client
 
 | client   | order of driver packages selected when available                                                                 |
 | -------- | ---------------------------------------------------------------------------------------------------------------- |
-| mysql    | [mysql](https://www.npmjs.com/package/mysql), [mysql2](https://www.npmjs.com/package/mysql2)                     |
+| mysql    | [mysql2](https://www.npmjs.com/package/mysql2), [mysql](https://www.npmjs.com/package/mysql)                     |
 | sqlite   | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3), [sqlite3](https://www.npmjs.com/package/sqlite3) |
 | postgres | [pg](https://www.npmjs.com/package/pg)                                                                           |
 
