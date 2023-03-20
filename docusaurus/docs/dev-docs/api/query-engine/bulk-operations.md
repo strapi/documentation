@@ -23,7 +23,8 @@ Syntax: `createMany(parameters) => { count: number, ids: id[] }`
 | `data`    | Array of objects | Array of input data |
 
 :::caution
-Mysql will only return an array of one id containing the last inserted id not the entire list
+* MySQL will only return an array of one id containing the last inserted id, not the entire list.
+* Prior to Strapi v4.9.0, `createMany()` only returns the `count`. 
 :::
 
 ### Example
