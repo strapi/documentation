@@ -18,7 +18,7 @@ During the soft launch of Strapi Cloud, a progressively increasing number of use
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* Strapi version `4.7.x` or higher
+* Strapi version `4.8.1` or higher
 * Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
