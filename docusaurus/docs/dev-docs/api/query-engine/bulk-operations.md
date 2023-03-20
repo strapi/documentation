@@ -14,29 +14,33 @@ To avoid performance issues, bulk operations are not allowed on relations.
 
 Creates multiple entries.
 
-Syntax: `createMany(parameters) => { count: number }`
+Syntax: `createMany(parameters) => { count: number, ids: id[] }`
 
 ### Parameters
 
-| Parameter | Type       | Description         |
-| --------- | ---------- | ------------------- |
-| `data`      | Array of objects | Array of input data |
+| Parameter | Type             | Description         |
+| --------- | ---------------- | ------------------- |
+| `data`    | Array of objects | Array of input data |
+
+:::caution
+Mysql will only return an array of one id containing the last inserted id not the entire list
+:::
 
 ### Example
 
 ```js
-await strapi.db.query('api::blog.article').createMany({
+await strapi.db.query("api::blog.article").createMany({
   data: [
     {
-      title: 'ABCD',
+      title: "ABCD",
     },
     {
-      title: 'EFGH',
+      title: "EFGH",
     },
   ],
 });
 
-// { count: 2 }
+// { count: 2 , ids: [1,2]}
 ```
 
 ## updateMany()
@@ -47,15 +51,15 @@ Syntax: `updateMany(parameters) => { count: number }`
 
 ### Parameters
 
-| Parameter | Type                       | Description         |
-| --------- | -------------------------- | ------------------- |
-| `where`     | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use             |
-| `data`      | Object                   | Input data |
+| Parameter | Type                                                      | Description                                             |
+| --------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| `where`   | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use |
+| `data`    | Object                                                    | Input data                                              |
 
 ### Example
 
 ```js
-await strapi.db.query('api::shop.article').updateMany({
+await strapi.db.query("api::shop.article").updateMany({
   where: {
     price: 20,
   },
@@ -75,17 +79,17 @@ Syntax: `deleteMany(parameters) => { count: number }`
 
 ### Parameters
 
-| Parameter | Type                       | Description |
-| --------- | -------------------------- | ----------- |
-| `where`     | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use             |
+| Parameter | Type                                                      | Description                                             |
+| --------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| `where`   | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use |
 
 ### Example
 
 ```js
-await strapi.db.query('api::blog.article').deleteMany({
+await strapi.db.query("api::blog.article").deleteMany({
   where: {
     title: {
-      $startsWith: 'v3',
+      $startsWith: "v3",
     },
   },
 });
@@ -103,15 +107,15 @@ Syntax: `count(parameters) => number`
 
 #### Parameters
 
-| Parameter | Type                       | Description |
-| --------- | -------------------------- | ----------- |
-| `where`     | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use             |
+| Parameter | Type                                                      | Description                                             |
+| --------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| `where`   | [`WhereParameter`](/dev-docs/api/query-engine/filtering/) | [Filters](/dev-docs/api/query-engine/filtering/) to use |
 
 ```js
-const count = await strapi.db.query('api::blog.article').count({
+const count = await strapi.db.query("api::blog.article").count({
   where: {
     title: {
-      $startsWith: 'v3',
+      $startsWith: "v3",
     },
   },
 });
