@@ -16,7 +16,7 @@ Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email)
 
 For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
-A provider can be configured to be [private](#configuring-private-providers) to ensure asset URLs will be signed for secure access.
+A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
 
 ## Installing providers
 
