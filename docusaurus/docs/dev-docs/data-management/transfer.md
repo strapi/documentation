@@ -61,7 +61,7 @@ yarn strapi transfer --to destination URL
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi yarn strapi transfer -- --to destination URL
+npm run strapi transfer -- --to destination URL
 ```
 
 </TabItem>
