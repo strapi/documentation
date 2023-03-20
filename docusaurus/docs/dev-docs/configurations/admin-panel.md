@@ -72,7 +72,7 @@ module.exports = ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -94,7 +94,7 @@ export default ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -151,7 +151,7 @@ module.exports = ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -202,7 +202,7 @@ export default ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
