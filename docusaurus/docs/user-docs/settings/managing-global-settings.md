@@ -150,7 +150,7 @@ To regenerate an API token:
 * The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.
 :::
 
-Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management#transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
+Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
 
 ![Transfer tokens](/img/assets/settings/settings_transfer-token.png)
 
@@ -158,7 +158,7 @@ The *Transfer Tokens* settings sub-section displays a table listing all of the c
 
 The table displays each Transfer token's name, description, date of creation, and date of last use. From the table, administrators can also:
 
-- Click on the edit button <!-- icon --> to edit an Transfer token's name, description, type, duration or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the edit button <!-- icon --> to edit an Transfer token's name, description, duration, type or [regenerate the token](#regenerating-a-transfer-token).
 - Click on the delete button <!-- icon --> to delete a Transfer token.
 
 ### Creating a new transfer token
@@ -173,6 +173,7 @@ To create a new Transfer token:
     | Name           | Write the name of the Transfer token.                                         |
     | Description    | (optional) Write a description for the Transfer token.                        |
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
+    | Token type | Choose a token type:<ul><li>*push* to allow transfers from local to remote instances only,</li><li>*pull* to allow transfers from remote to local instances only,</li><li>or *full access* to allow both types of transfer.</li></ul>      |
 
 3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button <!-- icon -->.
 
