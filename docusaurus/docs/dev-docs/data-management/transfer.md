@@ -89,7 +89,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
   <TabItem value="yarn" label="yarn">
 
   ```bash
-  yarn strapi transfer --from remote URL
+  yarn strapi transfer --from remoteURL
   ```
 
   </TabItem>
