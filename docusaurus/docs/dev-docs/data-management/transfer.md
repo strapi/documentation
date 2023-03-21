@@ -44,34 +44,72 @@ The `strapi transfer` command requires a transfer token issued by the destinatio
 
 ## Setup and run the data transfer
 
-To initiate a data transfer:
+Initiating a data transfer depends on whether you want to push data to a remote instance or to pull data from the remote:
 
-1. Start the Strapi server for the destination instance.
-2. In a new terminal window, navigate to the root directory of the source instance.
+<Tabs>
+
+<TabItem value="push" label="Push data to remote">
+
+  1. Start the Strapi server for the destination instance.
+  2. In a new terminal window, navigate to the root directory of the source instance.
+  3. Run the following minimal command to initiate the transfer:
+
+    <Tabs groupId="yarn-npm">
+
+    <TabItem value="yarn" label="yarn">
+
+    ```bash
+    yarn strapi transfer --to destination URL
+    ```
+
+    </TabItem>
+
+    <TabItem value="npm" label="npm">
+
+    ```bash
+    npm run strapi transfer -- --to destination URL
+    ```
+
+    </TabItem>
+
+    </Tabs>
+  
+  4. Add the transfer token when prompted to do so.
+  5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
+
+</TabItem>
+
+<TabItem value="pull" label="Pull data from remote">
+
+1. Start the Strapi server for the source instance.
+2. In a new terminal window, navigate to the root directory of the destination instance.
 3. Run the following minimal command to initiate the transfer:
 
-<Tabs groupId="yarn-npm">
+  <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+  <TabItem value="yarn" label="yarn">
 
-```bash
-yarn strapi transfer --to destination URL
-```
+  ```bash
+  yarn strapi transfer --from remote URL
+  ```
 
-</TabItem>
+  </TabItem>
 
-<TabItem value="npm" label="npm">
+  <TabItem value="npm" label="npm">
 
-```bash
-npm run strapi transfer -- --to destination URL
-```
+  ```bash
+  npm run strapi transfer -- --from remote URL
+  ```
 
-</TabItem>
+  </TabItem>
 
-</Tabs>
+  </Tabs>
 
 4. Add the transfer token when prompted to do so.
-5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
+5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the local database and media files. Are you sure you want to proceed?"
+
+</TabItem>
+</Tabs>
 
 ## Bypass all `transfer` command line prompts
 
