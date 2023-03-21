@@ -168,15 +168,20 @@ strapi import -f your-filepath-and-filename --key my-key
 The destination Strapi instance should be running with the `start` command and not the `develop` command.
 :::
 
-| Option                       | Description                                                                                                                         | Required          |
-|------------------------------|------------------------------------------------------------------------------------------------------------------------------------|:-----------------:|
-| `--to [destinationURL]`      | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)                                                                                             |      Yes     |
-| `--to-token [transferToken]` | Transfer token for the remote Strapi destination                                                                                   |      Yes     |
-| `--from [sourceURL]`     | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from<br />(e.g., `--from https://my-beautiful-strapi-website/admin`) | Yes    |
-| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                  |         No         |
-| `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |         -          |
-| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                |         No         |
-| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                       |         No         |
+| Option                       | Description                                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--to [destinationURL]`      | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)                 |
+| `--to-token [transferToken]` | Transfer token for the remote Strapi destination                                                                                                  |
+| `--from [sourceURL]`         | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from<br />(e.g., `--from https://my-beautiful-strapi-website/admin`) |
+| `‑‑from‑token`               | Transfer token from the Strapi source instance.                                                                                                   |
+| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                 |
+| `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                         |
+| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                               |
+| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                                      |
+
+:::caution
+Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
+:::
 
 **Example**
 

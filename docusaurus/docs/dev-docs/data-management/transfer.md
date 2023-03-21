@@ -20,14 +20,19 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 
 The CLI command consists of the following arguments:
 
-| Option     | Description                                                                                                                        | Required |
-|------------  |--------------------------------------------------------------| :------: |
-| `--to`       | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`) | Yes |
-| `‑‑to‑token` | Transfer token from the Strapi destination instance.        |No         |
-| `--from`     | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) | Yes    |
-| `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |No         |
-| `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                    |No         |
-| `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                    |No         |
+| Option         | Description                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--to`         | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)            |
+| `‑‑to‑token`   | Transfer token from the Strapi destination instance.                                                                                         |
+| `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
+| `‑‑from‑token` | Transfer token from the Strapi source instance.                                                                                              |
+| `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+
+:::caution
+Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
+:::
 
 :::tip
 Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/managing-global-settings#managing-transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
