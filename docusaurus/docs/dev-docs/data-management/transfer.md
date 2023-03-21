@@ -66,7 +66,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
     <TabItem value="npm" label="npm">
 
     ```bash
-    npm run strapi transfer -- --to destination URL
+    npm run strapi transfer -- --to destinationURL
     ```
 
     </TabItem>
