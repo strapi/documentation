@@ -72,7 +72,7 @@ module.exports = ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -94,7 +94,7 @@ export default ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -151,7 +151,7 @@ module.exports = ({ env }) => ({
   },
   transfer: { 
     token: { 
-      salt: env(‘TRANSFER_TOKEN_SALT’, 'anotherRandomLongString’),
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
     } 
   },
 });
@@ -194,6 +194,16 @@ export default ({ env }) => ({
   forgotPassword: {
     from: 'no-reply@example.com',
     replyTo: 'no-reply@example.com',
+  },
+  rateLimit: {
+    interval: { hour: 1, min: 30 },
+    timeWait: 3*1000,
+    max: 10,
+  },
+  transfer: { 
+    token: { 
+      salt: env('TRANSFER_TOKEN_SALT', 'anotherRandomLongString'),
+    } 
   },
 });
 ```
