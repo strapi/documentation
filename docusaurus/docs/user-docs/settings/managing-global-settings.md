@@ -158,7 +158,7 @@ The *Transfer Tokens* settings sub-section displays a table listing all of the c
 
 The table displays each Transfer token's name, description, date of creation, and date of last use. From the table, administrators can also:
 
-- Click on the edit button <!-- icon --> to edit an Transfer token's name, description, duration, type or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the edit button <!-- icon --> to edit a transfer token's name, description, or type, or [regenerate the token](#regenerating-a-transfer-token).
 - Click on the delete button <!-- icon --> to delete a Transfer token.
 
 ### Creating a new transfer token
