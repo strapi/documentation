@@ -964,9 +964,6 @@ application before it even reaches a production environment.
 
 #### Escape
 
-[Escape](https://escape.tech/) is a GraphQL security SaaS platform running an automated pentest tool.
-
-You can effortlessly incorporate this platform into your current CI/CD pipeline such as Github Actions or Gitlab CIs
-which makes it convenient to set up.
+[Escape](https://escape.tech/) is a GraphQL security SaaS platform running an automated pentest tool that can be incorporated into your CI/CD pipeline such as Github Actions or Gitlab CIs
 
 The security notifications will be automatically communicated to your CI/CD platform, enabling you to promptly attend to them.
