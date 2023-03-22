@@ -40,7 +40,7 @@ Data transfers are authorized by transfer tokens, which are [managed from the ad
 :::
 
 :::warning
-If you are using _nginx_, there is a danger of encountering issues when using a server that proxies requests into a localhost. To make sure all the headers are forwared correctly, you need to change the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
+When using nginx and a server that proxies requests into a localhost, issues might occur. To prevent them, ensure all the headers are forwarded correctly by changing the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
 
 ```
 server {
