@@ -8,7 +8,7 @@ sidebar_position: 3
 
 # Notifications
 
-The **Notification center** is accessible from the top navigation bar from anywhere in Cloud dashboard.
+The **Notification center** is accessible from the top navigation of the Cloud dashboard.
 
 ![Projects page - List](/img/assets/cloud/notification-center.png)
 
