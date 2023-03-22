@@ -4,7 +4,7 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
-# Data transfer
+# Data transfer <BetaBadge />
 
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
 
