@@ -4,6 +4,7 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
+
 # Data transfer <BetaBadge />
 
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
@@ -36,6 +37,25 @@ Either `--to` or `--from` is required.
 
 :::tip
 Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/managing-global-settings#managing-transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+:::
+
+:::warning
+When using nginx and a server that proxies requests into a localhost, issues might occur. To prevent them, ensure all the headers are forwarded correctly by changing the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
+
+```
+server {
+    listen 80;
+    server_name <yourdomain>;
+    location / {
+        proxy_pass http://localhost:1337;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        include proxy_params;
+    }
+}
+```
+
 :::
 
 ## Generate a transfer token
@@ -138,7 +158,7 @@ yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force 
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force
 ```
 
 </TabItem>
@@ -147,7 +167,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 ## Include only specified data types during transfer
 
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string  with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
 
 ### Example: only transfer files
 
@@ -219,30 +239,30 @@ The `transfer` command is not intended for transferring data between two local i
 
 1. Create a new Strapi project using the installation command:
 
-    ```bash
-    npx create-strapi-app@latest <project-name> --quickstart
-    ```
+   ```bash
+   npx create-strapi-app@latest <project-name> --quickstart
+   ```
 
 2. Create at least 1 content type in the project. See the [Quick Start Guide](/dev-docs/quick-start) if you need instructions on creating your first content type.
 
-    :::caution
-    Do not add any data to your project at this step.
-    :::
+   :::caution
+   Do not add any data to your project at this step.
+   :::
 
 3. Commit the project to a git repository:
 
-    ```bash
-    git init
-    git add .
-    git commit -m "first commit"
-    ```
+   ```bash
+   git init
+   git add .
+   git commit -m "first commit"
+   ```
 
 4. Clone the project repository:
 
-    ```bash
-    cd .. # move to the parent directory
-    git clone <path to created git repository>.git/ <new-instance-name>
-    ```
+   ```bash
+   cd .. # move to the parent directory
+   git clone <path to created git repository>.git/ <new-instance-name>
+   ```
 
 ### Add data to the first Strapi instance
 
