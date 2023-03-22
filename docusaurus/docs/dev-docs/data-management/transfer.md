@@ -6,10 +6,10 @@ canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
 ---
 # Data transfer
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data between:
+The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
 
-- a local Strapi instance and a remote Strapi instance,
-- a remote Strapi instance and another remote Strapi instance.
+- from a local Strapi instance to a remote Strapi instance
+- from a remote Strapi instance to a local Strapi instance
 
 :::caution
 
@@ -20,16 +20,22 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 
 The CLI command consists of the following arguments:
 
-| Option     | Description                                                                                                                        | Required |
-|------------|--------------------------------------------------------------| :------: |
-| `--to`       | Full URL of the `/admin` endpoint on the destination Strapi instance (e.g. `https://my-beautiful-strapi-website/admin`) | Yes |
-| `‑‑to‑token` | Transfer token from the Strapi destination instance.        |No         |
-| `--force`    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                                          |No         |
-| `--exclude`  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                                                    |No         |
-| `--only`     | Include only these data. The available types are: `content`, `files`, and `config`.                                                                    |No         |
+| Option         | Description                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--to`         | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)            |
+| `‑‑to‑token`   | Transfer token from the Strapi destination instance.                                                                                         |
+| `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
+| `‑‑from‑token` | Transfer token from the Strapi source instance.                                                                                              |
+| `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+
+:::caution
+Either `--to` or `--from` is required.
+:::
 
 :::tip
-Data transfers are authorized by Transfer tokens, which are generated in the Admin panel. From the Admin panel you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`. See the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token) for details on how to create and manage Transfer tokens.
+Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/managing-global-settings#managing-transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
 :::
 
 ## Generate a transfer token
@@ -38,42 +44,80 @@ Data transfers are authorized by Transfer tokens, which are generated in the Adm
 A salt transfer token should be defined in the [admin panel configuration](/dev-docs/configurations/admin-panel) file.
 :::
 
-The `strapi transfer` command requires a Transfer token issued by the destination instance. To generate a Transfer token in the Admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
+The `strapi transfer` command requires a transfer token issued by the destination instance. To generate a transfer token in the admin panel use the instructions in the [User Guide](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 
 ## Setup and run the data transfer
 
-To initiate a data transfer:
+Initiating a data transfer depends on whether you want to push data to a remote instance or to pull data from the remote:
 
-1. Start the Strapi server for the destination instance.
-2. In a new terminal window, navigate to the root directory of the source instance.
+<Tabs>
+
+<TabItem value="push" label="Push data to remote">
+
+  1. Start the Strapi server for the destination instance.
+  2. In a new terminal window, navigate to the root directory of the source instance.
+  3. Run the following minimal command to initiate the transfer:
+
+    <Tabs groupId="yarn-npm">
+
+    <TabItem value="yarn" label="yarn">
+
+    ```bash
+    yarn strapi transfer --to destinationURL
+    ```
+
+    </TabItem>
+
+    <TabItem value="npm" label="npm">
+
+    ```bash
+    npm run strapi transfer -- --to destinationURL
+    ```
+
+    </TabItem>
+
+    </Tabs>
+  
+  4. Add the transfer token when prompted to do so.
+  5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the remote Strapi assets and its database. Are you sure you want to proceed?"
+
+</TabItem>
+
+<TabItem value="pull" label="Pull data from remote">
+
+1. Start the Strapi server for the source instance.
+2. In a new terminal window, navigate to the root directory of the destination instance.
 3. Run the following minimal command to initiate the transfer:
 
-<Tabs groupId="yarn-npm">
+  <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+  <TabItem value="yarn" label="yarn">
 
-```bash
-yarn strapi transfer --to destination URL
-```
+  ```bash
+  yarn strapi transfer --from remoteURL
+  ```
+
+  </TabItem>
+
+  <TabItem value="npm" label="npm">
+
+  ```bash
+  npm run strapi transfer -- --from remoteURL
+  ```
+
+  </TabItem>
+
+  </Tabs>
+
+4. Add the transfer token when prompted to do so.
+5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the local Strapi assets and its database. Are you sure you want to proceed?".
 
 </TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run strapi transfer -- --to destination URL
-```
-
-</TabItem>
-
 </Tabs>
-
-4. Add the Transfer token when prompted to do so.
-5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the remote database and media files. Are you sure you want to proceed?"
 
 ## Bypass all `transfer` command line prompts
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `to-token` option with the Transfer token if you use the `--force` option.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `to-token` option with the transfer token if you use the `--force` option.
 
 :::caution
 The `--force` option bypasses all warnings about content deletion.
@@ -159,7 +203,7 @@ Any types excluded from the transfer will be deleted in your destination instanc
 
 ## Manage data transfer with environment variables
 
-The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings) in the Admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
+The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings) in the admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
 
 ```bash
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
@@ -230,7 +274,7 @@ npm run build && npm run start
 </Tabs>
 
 2. Register an admin user.
-3. [Create and copy a Transfer token](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
+3. [Create and copy a transfer token](/user-docs/settings/managing-global-settings#creating-a-new-transfer-token).
 4. Leave the server running.
 
 ### Transfer your data
@@ -258,7 +302,7 @@ npm run strapi transfer -- --to http://localhost:1337/admin
 
 </Tabs>
 
-3. When prompted, apply the Transfer token.
+3. When prompted, apply the transfer token.
 4. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
 
 :::tip
