@@ -12,7 +12,7 @@ The **Notification center** is accessible from the top navigation of the Cloud d
 
 ![Projects page - List](/img/assets/cloud/notification-center.png)
 
-Currently, there are following notifications:
+The following notifications can be listed in the Notifications center:
 
 * **Deploy completed**: When a deployment is successfully done.
 * **Build failed**: When deployment fails during the build stage.
