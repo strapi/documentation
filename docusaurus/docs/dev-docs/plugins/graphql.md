@@ -950,7 +950,7 @@ module.exports = {
 };
 ```
 
-Read more about graphql armor on the [dev documentation of armor](https://escape.tech/graphql-armor/docs/getting-started).
+Read more about GraphQL Armor in their [dev documentation](https://escape.tech/graphql-armor/docs/getting-started).
 
 ### Continuous security testing
 
