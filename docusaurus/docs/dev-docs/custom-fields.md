@@ -242,7 +242,7 @@ export default {
                 options: [ // List all available "Color format" options
                   {
                     key: 'hex',
-                    value: 'hex',
+                    defaultValue: 'hex',
                     metadatas: {
                       intlLabel: {
                         id: 'color-picker.color.format.hex',
