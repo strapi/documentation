@@ -110,7 +110,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
   </Tabs>
 
 4. Add the transfer token when prompted to do so.
-5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all data in the local database and media files. Are you sure you want to proceed?"
+5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the local Strapi assets and its database. Are you sure you want to proceed?".
 
 </TabItem>
 </Tabs>
