@@ -16,7 +16,7 @@ The following notifications can be listed in the Notifications center:
 
 * **Deploy completed**: When a deployment is successfully done.
 * **Build failed**: When deployment fails during the build stage.
-* **Deploy failed** When it fails during the deployment stage.
+* **Deploy failed** When deployment fails during the deployment stage.
 * **Deploy triggered** When deployment is triggered by new push to the connected repo. This notificaiton isn't sent when you trigger a deployment manually.
 
 Clicking on a deploy-related notification card redirects you to **Log details** of the corresponding deployment.
