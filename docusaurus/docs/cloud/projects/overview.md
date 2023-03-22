@@ -41,7 +41,7 @@ From this tab you can:
 
 * **Trigger deploy**: Click the **Trigger deploy** button to trigger a new deployment
 * **Visit App**: Click the **Visit App** button to access the application
-* Quickly view project [**Usage**](../getting-started/usage-billing)
+* Quickly view project [**Usage**](/cloud/getting-started/usage-billing)
 * Quickly view project [**Deploys**](#deploys)
 
 ### Deploys
