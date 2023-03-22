@@ -31,7 +31,7 @@ The CLI command consists of the following arguments:
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
 
 :::caution
-Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
+Either `--to` or `--from` is required
 :::
 
 :::tip
