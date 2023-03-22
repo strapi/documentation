@@ -928,7 +928,7 @@ Review the [configuration file](/dev-docs/configurations/plugins#graphql-configu
 ### Install graphql armor
 
 [Graphql armor](https://github.com/Escape-Technologies/graphql-armor) is a GraphQL middleware that protects your GraphQL API from malicious queries.
-Installing it is simple and it prevent the most common attacks.
+Installing it is simple and prevents the most common attacks.
 
 Here is a configuration example to protect your GraphQL API :
 
