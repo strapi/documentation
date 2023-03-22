@@ -918,7 +918,7 @@ If you haven't edited the [configuration file](/dev-docs/configurations/plugins#
 
 ### Limit max depth and complexity
 
-A malicious user could send a query with a very high depth, which could your server to stop responding or crash. Therefore, a depth limit can be set to limit the maximum number of nested fields that can be queried in a single request.
+A malicious user could send a query with a very high depth, which could overload your server. Therefore, a depth limit can be set to limit the maximum number of nested fields that can be queried in a single request.
 
 Depending on your use case, such as during testing and development, you can set the `depthLimit` option to a higher value.
 
