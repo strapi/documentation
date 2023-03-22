@@ -19,7 +19,6 @@ The following notifications can be listed in the Notifications center:
 * **Deploy failed** When deployment fails during the deployment stage.
 * **Deploy triggered** When deployment is triggered by a new push to the connected repository. This notification is however not sent when the deployment is triggered manually.
 
-Clicking on a deploy-related notification card redirects you to **Log details** of the corresponding deployment.
 
 :::note
 All notifications older than 30 days are automatically removed from the **Notification center**.
