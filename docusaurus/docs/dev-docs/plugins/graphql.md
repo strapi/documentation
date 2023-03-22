@@ -914,7 +914,7 @@ Neglecting them can expose the API to vulnerabilities like credential leakage or
 ### Disable introspection and playground in production
 
 In production, it is recommended to disable the GraphQL Playground and the introspection query.
-If you havent edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it must be already disabled.
+If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it is already disabled in production by default.
 
 ### Limit max depth and complexity
 
