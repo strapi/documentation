@@ -903,3 +903,70 @@ Using API tokens in the the GraphQL playground requires adding the authorization
 
 Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 :::
+
+## Security
+
+As GraphQL is a query language, it allows users to use a wider pannel of inputs than traditional REST APIs.
+
+Due to this feature, GraphQL APIs are inherently prone to various security risks, but they can be reduced by taking appropriate precautions.
+Neglecting them can expose the API to vulnerabilities like credential leakage or denial of service attacks.
+
+### Disable introspection and playground in production
+
+In production, it is recommended to disable the GraphQL Playground and the introspection query.
+If you havent edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it must be already disabled.
+
+### Limit max depth and complexity
+
+The depth limit is the maximum number of nested fields that can be queried in a single request.
+During your test and depending on your use case, you can set the `depthLimit` option to a higher value.
+
+But a malicious user could send a query with a very high depth, which could your server to stop responding or crash.
+
+Review the [configuration file](/dev-docs/configurations/plugins#graphql-configuration) to set this options.
+
+### Install graphql armor
+
+[Graphql armor](https://github.com/Escape-Technologies/graphql-armor) is a GraphQL middleware that protects your GraphQL API from malicious queries.
+Installing it is simple and it prevent the most common attacks.
+
+Here is a configuration example to protect your GraphQL API :
+
+```js
+const armor = require('@escape.tech/graphql-armor');
+// GraphQL Armor installed via :
+//   npm install @escape.tech/graphql-armor
+
+const ApolloArmor = new armor.ApolloArmor();
+module.exports = {
+  graphql: {
+    config: {
+      apolloServer: {
+        introspection: false,     // <-- your custom config
+        ...ApolloArmor.protect()  // <-- add armor protection
+      },
+    },
+  },
+};
+```
+
+Read more about graphql armor on the [dev documentation of armor](https://escape.tech/graphql-armor/docs/getting-started).
+
+### Continuous security testing
+
+One of the best way to stop wondering about security for your API is to be able to scan it each time you deploy it into
+staging or production environments. As you run your unit tests in your CI/CD pipeline, you can bullet-proof your GraphQL
+application before it even reaches a production environment.
+
+#### graphql.security
+
+[graphql.security](https://graphql.security/) is a free, quick graphql security testing tool, allowing you to quickly assess the most common vulnerabilities in your application.
+
+#### Escape
+
+[Escape](https://escape.tech/) is a GraphQL security SaaS platform running an automated pentest tool.
+
+You can effortlessly incorporate this platform into your current CI/CD pipeline such as Github Actions or Gitlab CIs
+which makes it convenient to set up.
+
+The security notifications will be automatically communicated to your CI/CD platform, enabling you to promptly attend to them.
