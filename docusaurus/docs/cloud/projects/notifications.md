@@ -21,4 +21,6 @@ The following notifications can be listed in the Notifications center:
 
 Clicking on a deploy-related notification card redirects you to **Log details** of the corresponding deployment.
 
+:::note
 All notifications older than 30 days are automatically removed from the **Notification center**.
+:::
