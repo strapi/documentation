@@ -8,7 +8,9 @@ sidebar_position: 3
 
 # Notifications
 
-The **Notification center** is accessible from the top navigation of the Cloud dashboard.
+The **Notification center** could be opened by clicking the bell icon 🔔 in the top navigation of the Cloud dashboard.
+
+It displays a list of the latest notifications for all existing projects. Clicking on a notification card from the list will redirect you to the **Log details** of the corresponding deployment.
 
 ![Projects page - List](/img/assets/cloud/notification-center.png)
 
