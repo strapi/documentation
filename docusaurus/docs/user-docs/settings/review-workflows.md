@@ -8,7 +8,7 @@ description: Managing your review workflows and stages in Strapi.
 The Review Workflows feature allows you to create and manage any desired review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication. Configured review workflows are available in the [Content Manager](/user-docs/content-manager/reviewing-content) and [Content-Types Builder](/user-docs/content-type-builder).
 
 :::note
-Review Workflows are only available with the Enterprise Edition. If for any reason your project would be downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
+Review Workflows are only available with the Enterprise Edition. If for any reason your project was downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
 :::
 
 ## Configuring Review workflows
