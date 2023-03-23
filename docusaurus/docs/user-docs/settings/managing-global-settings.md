@@ -149,6 +149,7 @@ To regenerate an API token:
 :::prerequisites
 * Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
 * The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.
+* A `transfer.token.salt` should be defined in the admin panel configuration file (see [Developer Documentation](/dev-docs/configurations/admin-panel)).
 :::
 
 Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens through the *Global settings > Transfer Tokens* sub-section of the settings interface.
