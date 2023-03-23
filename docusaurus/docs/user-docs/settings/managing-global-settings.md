@@ -174,7 +174,7 @@ To create a new Transfer token:
     | Name           | Write the name of the Transfer token.                                         |
     | Description    | (optional) Write a description for the Transfer token.                        |
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
-    | Token type | Choose a token type:<ul><li>*push* to allow transfers from local to remote instances only,</li><li>*pull* to allow transfers from remote to local instances only,</li><li>or *full access* to allow both types of transfer.</li></ul>      |
+    | Token type | Choose a token type:<ul><li>*Push* to allow transfers from local to remote instances only,</li><li>*Pull* to allow transfers from remote to local instances only,</li><li>or *Full Access* to allow both types of transfer.</li></ul>      |
 
 3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/duplicate.svg).
 
