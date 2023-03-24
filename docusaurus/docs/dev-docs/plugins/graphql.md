@@ -949,6 +949,29 @@ module.exports = {
 };
 ```
 
+If you already have some plugins or validation rules, proceed this way:
+
+```js
+const armor = require('@escape.tech/graphql-armor');
+// GraphQL Armor installed via :
+//   npm install @escape.tech/graphql-armor
+
+const ApolloArmor = new armor.ApolloArmor();
+const protection = armor.protect();
+module.exports = {
+  graphql: {
+    config: {
+      apolloServer: {
+        introspection: false,                                       // <-- your custom config
+        ...protection,                                              // <-- add armor protection
+        plugins: [...protection.plugins, myPlugin1, myPlugin2 ]     // <-- add your plugins
+        validationRules: [ ...protection.validationRules, myRule ]  // <-- add your validation rules
+      },
+    },
+  },
+};
+```
+
 Read more about GraphQL Armor in their [dev documentation](https://escape.tech/graphql-armor/docs/getting-started).
 
 ### Continuous security testing
