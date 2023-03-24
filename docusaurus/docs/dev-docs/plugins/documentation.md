@@ -2,20 +2,13 @@
 title: API Documentation
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
-
 ---
 
 # API Documentation
 
-:::caution
-The Documentation plugin documentation may not be fully updated for Strapi v4. The Strapi team is currently improving that plugin and documentation.
-:::
+Now that you have created your API it's important to document the available endpoints.
 
-Now that you have created your API it's really important to document its available end-points. The documentation plugin takes out most of your pain to generate your API documentation. This plugin uses [SWAGGER UI](https://swagger.io/solutions/api-documentation/) to visualize your API's documentation.
-
-If installed, this plugin will scan all the routes available from your `./api` folder and will try to create the appropriate documentation, infer the parameters needed to create data, the responses you will receive.
-
-You'll be able to visualize all your end-points directly from the SWAGGER UI.
+If installed, this plugin will inspect Content Types and Routes found on all APIs in your project as well as any plugin specified in the config. It will then programatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). It generates the [Paths Objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [Schema Objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object), and converts all Strapi types to [OpenAPI Data Types](https://swagger.io/docs/specification/data-models/data-types/).
 
 ## Installation
 
@@ -41,7 +34,15 @@ npm run strapi install documentation
 
 </Tabs>
 
-When the plugin is installed, starting your application generates your API documentation.
+Once the plugin is installed, starting the application generates the API documentation.
+
+## Swagger UI
+
+The documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select Documentation from the plugins menu and then click “Open Documentation”. Using Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+
+### Authenticated requests
+
+Strapi is secured by default, which means that most of your end-points require the user to be authorized. If the action has not been set to public in users and permission then you must provide your JWT. To do this, click the “Authorize” button and paste your JWT.
 
 ## Administration panel
 
@@ -51,332 +52,212 @@ This plugin comes with an interface that is available in your administration pan
 
 By default, your documentation will be accessible by anyone.
 
-If you want to restrict the access to the API documentation you have to enable the **Restricted Access** option.
+If you want to restrict the access to the API documentation you have to enable the **Restricted Access** option.
 
-- Click the `ON` of **Restricted Access**
-- Select a password in the `password` input
+- Go to **Settings**, **Documentation**
+- Toggle **Restricted Access** to `ON`
+- Select a password in the `password` input
 - Save your settings
 
-The API documentation is now password-restricted.
-
-### Retrieve your JWT token
-
-Strapi is secured by default, which means that most of your end-points require the user to be authorized. You need to paste the JWT token into your SWAGGER UI to test your end-points.
-
-1. Click on the **Retrieve your jwt token** input to copy the token.
-2. Visit your documentation.
-3. Click on the **Authorize** button on the right.
-4. Paste your token in the `value` input.
+The API documentation is now password restricted.
 
 ### Regenerate documentation
 
-Documentation is not updated automatically. Whenyou update your API you need to click on the **Regenerate** button for the documentation version you want to update. It regenerates to the specified version with the current API documentation.
+Documentation is not updated automatically. When you update your API you need to click on the **Regenerate** button for the documentation version you want to update. It regenerates to the specified version with the current API documentation.
 
-## Settings
+## Configuration
 
-You need to create the `./extensions/documentation/config/settings.json` file manually to customize the swagger ui settings.
+The documentation plugin is initialized with the following config and all the properties found here can be altered by providing new values on the documentation plugin's config object in `config/plugins.js`.
 
-Here is the file contents that need to be created in order to change the documentation version, the server URL and so on.
-
-```
+```jsx
 {
-  "openapi": "3.0.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "DOCUMENTATION",
-    "description": "",
-    "termsOfService": "YOUR_TERMS_OF_SERVICE_URL",
-    "contact": {
-      "name": "TEAM",
-      "email": "contact-email@something.io",
-      "url": "mywebsite.io"
+  openapi: '3.0.0',
+  info: {
+    version: '1.0.0',
+    title: 'DOCUMENTATION',
+    description: '',
+    termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
+    contact: {
+      name: 'TEAM',
+      email: 'contact-email@something.io',
+      url: 'mywebsite.io'
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-    }
-  },
-  "x-strapi-config": {
-    "path": "/documentation",
-    "showGeneratedFiles": true,
-    "generateDefaultResponse": true,
-    "plugins": [
-      "email",
-      "upload",
-      "users-permissions"
-    ]
-  },
-  "servers": [
-    {
-      "url": "http://localhost:1337",
-      "description": "Development server"
+    license: {
+      name: 'Apache 2.0',
+      url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
     },
-    {
-      "url": "YOUR_STAGING_SERVER",
-      "description": "Staging server"
-    },
-    {
-      "url": "YOUR_PRODUCTION_SERVER",
-      "description": "Production server"
-    }
-  ],
-  "externalDocs": {
-    "description": "Find out more",
-    "url": "https://strapi.io/documentation/"
   },
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {},
-  "tags": [],
-  "components": {}
+  'x-strapi-config': {
+		// Leave empty to ignore plugins during generation
+    plugins: [ 'upload', 'users-permissions'],
+    path: '/documentation',
+  },
+  servers: [{ url: 'http://localhost:1337/api/api', description: 'Development server' }],
+  externalDocs: {
+    description: 'Find out more',
+    url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
+  },
+  security: [ { bearerAuth: [] } ]
 }
 ```
-
-The `openapi`, `info`, `x-strapi-config`, `servers`, `externalDocs` and `security` fields are located in the `./extensions/documentation/config/settings.json` file. Here you can specify all your environment variables, licenses, external documentation and so on...
-You can add all the entries listed in the [specification](https://swagger.io/specification/).
-
-:::warning
-
-Do not change the `openapi` field of the `settings.json`
-
-:::
-
-:::note
-
-When you change a field in the settings.json file you need to manually restart your server.
-
-:::
 
 ### Create a new version of the documentation
 
-To create a new version of your documentation, you need to update the `version` key.
+To create a new version of your documentation, update the `version` key
 
-```
-{
-  "info": {
-    "version": "2.0.0"
-  }
-}
-```
+```js title="config/plugin.js"
 
-### Change the documentation path
-
-To access your documentation on a custom path, you need to update the `path` key.
-
-```
-{
-  "x-strapi-config": {
-    "path": "/documentation"
-  }
-}
-```
-
-### Indicate which plugins documentation to generate
-
-To generate documentation for specific plugins, you need to indicate the list of all the plugins for which you wish to generate documentation. In order to do that you need to update the `pluginsForWhichToGenerateDoc` key. Leaving this key with an empty array `[]` means that no plugin documentation will be generated. If you wish to generate documentation for all plugins, you have to remove the key from the `settings.json` file.
-
-```
-{
-  "x-strapi-config": {
-    "pluginsForWhichToGenerateDoc": [
-      "email",
-      "upload",
-      "users-permissions"
-    ],
-  }
-}
-```
-
-The previous example generates documentation for the upload, email and users permissions (permissions and roles) plugins.
-
-### Default Response
-
-Sometimes, an operation can return multiple errors with different HTTP status codes, but all of them have the same response structure. You can use the default response to describe these errors collectively, not individually. “Default” means this response is used for all HTTP codes that are not covered individually for this operation.
-
-```
-
-responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        # Definition of all error statuses
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-```
-
-You can set the generation of the default response with the following attribute `generateDefaultResponse`
-
-```json
-{
-  "x-strapi-config": {
-    "generateDefaultResponse": true
-  }
-}
-```
-
-Note: this is configurable as some API Gateways does not support a default response.
-
-## File structure
-
-This plugin follows the OpenApi Specifications ([0AS.3.0.2](https://swagger.io/specification/)) and generates an OpenAPI Document called `full_documentation.json`.
-
-### Plugin's architecture
-
-```
-./extensions
-└─── documentation
-    |
-    └─── documentation // Folder containing your OpenAPI Documents
-         └─── 1.0.0 // OpenAPI Document's version
-         | └─── full_documentation.json // OpenAPI Document used by SWAGGER UI
-         |
-         └─── 2.0.0
-           └─── full_documentation.json
-```
-
-### Generated files
-
-When you start your server with this plugin installed it will automatically create the following files in your APIs (we will see how it works for the plugins). The plugin scans all the routes available in your model to create the `paths` field.
-
-```
-/my-strapi-project
-  └─── api
-        └─── Foo
-            └── documentation // Folder added to your model
-                └── 1.0.0
-                    └── foo.json // File containing all the paths where the responses can be inferred
-                    └── unclassified.json // File containing the manually added route of your `routes.json` file
-                    |
-                    └── overrides // (Optional) Folder to override the generated documentation
-```
-
-## Overriding the suggested documentation
-
-Currently the plugin writes a json file for each API.
-
-In order to customize the responses or to add information to a path you need to create a file in the associated `overrides/<file-name>.json` (the name of the file matters so make sure they are similar). Then you just need to identify the path you want to modify.
-You can modify the default generated tags by adding a new one at the end of the file, it works the same way for the components.
-
-**_NOTE 1_**
-
-Overriding the `full_documentation.json` is a bad idea since it will be regenerated each time you change a model.
-
-**_NOTE 2_**
-
-You can easily modify the description, summary, parameters of a path however, for a response like the `200` you will need to write the full object. Take a look at the `./extensions/users-permissions/documentation/1.0.0/overrides/users-permissions-User.json` for a complete example.
-
-**_NOTE 3_**
-
-To modify your generated swagger files security on a specific model, for example to allow the public to use it, you will need to override the security for each path's action. For example with the route `/comments/count` typically all routes are protected by strapi, however if you allow the public role to use this without authentication you will need to override it in your model. See the below example:
-
-```json
-    "/comments/count": {
-      "get": {
-        "security": []
-      }
+module.exports = {
+  documentation: {
+    enabled: true,
+    config: {
+      info: { version: "2.0.0" },
     },
+  },
+};
 ```
 
-As you can see in that example, you are defining "no security" whereas normally you would need a bearer token to access. You will need to do this manually as the documentation plugin rewrites files and cannot pull permissions from the database as this would require a server restart each time the docs are updated.
+### Indicate which plugins need documentation generated
 
-### `swagger.json` and `openapi.json` files
+If you want plugins to be included in documentation generation they should be included in the `plugins` array on the `x-strapi-config`. By default this array is initialized with `["upload", "users-permissions"]`.
 
-This plugin is able to serve up these files. You need to grant the permission to call the controller action to the roles that can have access.
+Similarly, if you do not want plugins to be included in documentation generation, provide an empty array.
 
-If the default `/documentation` base URL is used, the endpoints exposed are:
+```js title="config/plugins.js"
 
-- `/documentation/swagger.json` or `/documentation/openapi.json`: the OpenAPI spec for the latest version of your API. Both endpoints serve the same
-  document.
-- `/documentation/vN.N.N/swagger.json` or `/documentation/vN.N.N/openapi.json`: request the spec for a specific version of your API. For example: `/documentation/v1.0.0/openapi.json`
-
-## FAQ
-
-### How does it generate the other plugins' documentation?
-
-In order to display a plugin's end-point in the documentation you need to add a `description` key in the `config` object.
-
-For example this is the plugin email `routes.json` file:
-
+module.exports = {
+  documentation: {
+    enabled: true,
+    config: {
+      "x-strapi-config": {
+        // Default
+        plugins: ["upload", "users-permissions"],
+        // Custom
+        plugins: ["upload"],
+        // Do not generate for plugins
+        plugins: [],
+      },
+    },
+  },
+};
 ```
-{
-  "routes": [
-    {
-      "method": "POST",
-      "path": "/",
-      "handler": "Email.send",
-      "config": {
-        "policies": [],
-        "description": "Send an email",
-        "tag": {
-          "plugin": "email",
-          "name": "Email"
+
+## Overriding the generated documentation
+
+### Excluding from generation
+
+If you simply want to exclude certain apis or plugins from being generated you can use the `excludeFromGeneration` function on the override service
+
+**`excludeFromGeneration()`**
+
+| Parameter | Type                       | Description                                              |
+| --------- | -------------------------- | -------------------------------------------------------- |
+| api       | String or Array of Strings | The name of the api/plugin, or list of names, to exclude |
+
+**Example**:
+
+```js title="Application or plugin register lifecycle"
+
+module.exports = {
+  register({ strapi }) {
+    strapi
+      .plugin("documentation")
+      .service("override")
+      .excludeFromGeneration("restaurant");
+    // or several
+    strapi
+      .plugin("documentation")
+      .service("override")
+      .excludeFromGeneration(["address", "upload"]);
+  }
+}
+```
+
+### Providing replacement documentation
+
+If the documentation plugin fails to generate what you expect, it is possible to replace what has been generated.
+
+The documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
+
+To provide an override, use the `registerOverride` method found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+
+**`registerOverride()`**
+
+| Parameter                     | Type                      | Description                                                                                                   |
+| ----------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| override                      | Object                    | OpenAPI object including any of the following keys paths, tags, components. Accepts JavaScript, JSON, or yaml |
+| options                       | Object                    | Accepts pluginOrigin and excludeFromGeneration                                                                |
+| options.pluginOrigin          | String                    | The plugin that is registering the override                                                                   |
+| options.excludeFromGeneration | String or Array of String | The name of the api/plugin, or list of names, to exclude                                                      |
+
+:::note
+Plugin developers providing an override should always specify the `pluginOrigin` options key, otherwise the override will run regardless of the user’s config.
+:::
+
+The documentation plugin will use the registered overrides to replace the value of common keys on the generated documentation with what the override provides. If no common keys are found it will just add the new keys to the generated documentation.
+
+If the override completely replaces what the documentation generates then you can specify that generation is no longer necessary by providing the names of the apis or plugins to exclude in the options key array `excludeFromGeneration`.
+
+If the override should only be applied to a specific version then the override must include a value for `info.version` , otherwise the override will run on all documentation versions.
+
+**Example:**
+
+```js title="Application or plugin register lifecycle"
+
+module.exports = {
+  register({ strapi }) {
+    if (strapi.plugin('documentation')) {
+      const override = {
+        // Only run this override for version 1.0.0
+        info: { version: '1.0.0' },
+        paths: {
+          '/answer-to-everything': {
+            get: {
+              responses: { 200: { description: "*" }}
+            }
+          }
         }
       }
-    },
-    {
-      "method": "GET",
-      "path": "/environments",
-      "handler": "Email.getEnvironments",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/settings/:environment",
-      "handler": "Email.getSettings",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/settings/:environment",
-      "handler": "Email.updateSettings",
-      "config": {
-        "policies": []
-      }
+
+      strapi
+        .plugin('documentation')
+        .service('override')
+        .registerOverride(override, {
+          // Specify the origin in case the user does not want this plugin documented
+          pluginOrigin: 'upload',
+          // The override provides everything don't generate anything
+          excludeFromGeneration: ['upload'],
+        });
     }
-  ]
+  },
 }
 ```
 
-In this file we have only one route that we want to reference in our documentation (`/`). Usually, the tag object is used for the SWAGGER UI, it will group this route under the `Email - Email` dropdown in the documentation. Furthermore, the algorithm will try to find the model to generate the best response possible. If the model is unknown it generates a response like the following `{ foo: "string" }` that you can easily override later.
+The overrides system is provided to try and simplify amending the generated documentation. It is the only way a plugin can add or modify the generated documentation.
 
-There's another property to guide the algorithm to create the best response possible, the `actionType` key.
-When we can't know by the controller name the type of the returned response (like `find` and `findOne`) you can specify it with this key. Here's an example from the `users-permissions` route file.
+The documentation plugin’s config also accepts a `mutateDocumentation` function on `info['x-strapi-config']`. This function receives a draft state of the generated documentation that be can be mutated. It should only be applied from an application and has the final say in what the OpenAPI schema will look like.
 
+**`mutateDocumentation()`**
+
+| Parameter                   | Type   | Description                                                            |
+| --------------------------- | ------ | ---------------------------------------------------------------------- |
+| generatedDocumentationDraft | Object | The generated documentation with applied overrides as a mutable object |
+
+**Example:**
+
+```js title="config/plugins.js"
+
+module.exports = {
+  documentation: {
+    config: {
+      "x-strapi-config": {
+        mutateDocumentation: (generatedDocumentationDraft) => {
+          generatedDocumentationDraft.paths[
+            "/answer-to-everything"
+          ].get.responses["200"].description = "*";
+        },
+      },
+    },
+  },
+};
 ```
-{
-  "method": "GET",
-  "path": "/users/me",
-  "handler": "User.me",
-  "config": {
-    "policies": [],
-    "prefix": "",
-    "description": "Retrieve the logged in user information",
-    "tag": {
-      "plugin": "users-permissions",
-      "name": "User",
-      "actionType": "findOne"
-    }
-  }
-}
-```
-
-### I have created a route in a common API (like product) that queries another model. How to automate this?
-
-You can use the `tag` key in your route. If you provide a `tag` which is a string like `"tag": "Product"` the algorithm will know that the end-point retrieves data from the **`Product`** table. Creating a tag object `{ "tag": { "name": "User", "plugin": "User-Permissions } }` will result in generating a response with the **`User`** model from the plugin users-permissions.
-
-<FeedbackPlaceholder />
