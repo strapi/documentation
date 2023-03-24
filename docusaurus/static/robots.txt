@@ -5,3 +5,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://docs.strapi.io/sitemap.xml
+
+test
