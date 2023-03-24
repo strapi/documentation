@@ -339,3 +339,5 @@ If you want to create your own provider without publishing it on npm you can fol
 
 4. Update your `./config/plugins.js` file to [configure the provider](#configuring-providers).
 5. Finally, run `yarn install` or `npm install` to install your new custom provider.
+
+<FeedbackPlaceholder />

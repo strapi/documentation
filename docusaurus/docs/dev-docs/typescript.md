@@ -1,5 +1,5 @@
 ---
-title: Typescript
+title: TypeScript
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use Typescript for your Strapi application.
 

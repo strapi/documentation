@@ -34,3 +34,5 @@ If you delete a stage that has pending reviews, the reviews will be moved to fir
 To delete a stage, click on the **Delete** button next to the stage you want to remove. A confirmation modal will appear. Click on the **Save** button to confirm the deletion.
 
 ![Deleting a stage](/img/assets/review-workflows/delete-stage.png)
+
+<FeedbackPlaceholder />

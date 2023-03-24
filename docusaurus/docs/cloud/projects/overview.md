@@ -31,8 +31,6 @@ From the **Projects** page, click on any project card to access that project's d
 
 The project details page displays the following tabs: **Deploys** and [**Settings**](./settings/).
 
-<!-- WiP
-
 ### Overview
 
 The **Overview** tab displays a high detail view of the project, including its configuration, usage, and deployment history.
@@ -43,10 +41,8 @@ From this tab you can:
 
 * **Trigger deploy**: Click the **Trigger deploy** button to trigger a new deployment
 * **Visit App**: Click the **Visit App** button to access the application
-* Quickly view project [**Usage**](./setting#usage)
+* Quickly view project [**Usage**](/cloud/getting-started/usage-billing)
 * Quickly view project [**Deploys**](#deploys)
-
--->
 
 ### Deploys
 
