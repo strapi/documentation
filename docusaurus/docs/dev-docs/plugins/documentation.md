@@ -204,7 +204,6 @@ If the override completely replaces what the documentation generates, you can sp
 
 If the override should only be applied to a specific version, the override must include a value for `info.version`. Otherwise, the override will run on all documentation versions.
 
-**Example:**
 
 ```js title="Application or plugin register lifecycle"
 
