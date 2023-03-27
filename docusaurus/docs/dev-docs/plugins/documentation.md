@@ -6,7 +6,7 @@ description: By using Swagger UI, the API documentation plugin takes out most of
 
 # API Documentation
 
-Now that you have created your API it's important to document the available endpoints.
+The Documentation plugin is useful to document the available endpoints once you created an API.
 
 If installed, this plugin will inspect Content Types and Routes found on all APIs in your project as well as any plugin specified in the config. It will then programatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). It generates the [Paths Objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [Schema Objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object), and converts all Strapi types to [OpenAPI Data Types](https://swagger.io/docs/specification/data-models/data-types/).
 
