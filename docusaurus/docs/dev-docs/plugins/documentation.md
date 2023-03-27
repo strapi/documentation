@@ -122,7 +122,7 @@ module.exports = {
 
 ### Indicate which plugins need documentation generated
 
-If you want plugins to be included in documentation generation they should be included in the `plugins` array on the `x-strapi-config`. By default this array is initialized with `["upload", "users-permissions"]`.
+If you want plugins to be included in documentation generation, they should be included in the `plugins` array on the `x-strapi-config`. By default the array is initialized with `["upload", "users-permissions"]`.
 
 Similarly, if you do not want plugins to be included in documentation generation, provide an empty array.
 
