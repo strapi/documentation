@@ -198,7 +198,7 @@ To provide an override, use the `registerOverride` function found on the Documen
 Plugin developers providing an override should always specify the `pluginOrigin` options key, otherwise the override will run regardless of the user’s config.
 :::
 
-The documentation plugin will use the registered overrides to replace the value of common keys on the generated documentation with what the override provides. If no common keys are found it will just add the new keys to the generated documentation.
+The Documentation plugin will use the registered overrides to replace the value of common keys on the generated documentation with what the override provides. If no common keys are found, the plugin will add new keys to the generated documentation.
 
 If the override completely replaces what the documentation generates then you can specify that generation is no longer necessary by providing the names of the apis or plugins to exclude in the options key array `excludeFromGeneration`.
 
