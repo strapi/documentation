@@ -38,7 +38,7 @@ Once the plugin is installed, starting the application generates the API documen
 
 ## Swagger UI
 
-The documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select Documentation from the plugins menu and then click “Open Documentation”. Using Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+The documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select "Documentation" in the left sidebar under the "plugins" section. Then click "Open documentation" to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
 ### Authenticated requests
 
@@ -63,13 +63,16 @@ The API documentation is now password restricted.
 
 ### Regenerate documentation
 
-Documentation is not updated automatically. When you update your API you need to click on the **Regenerate** button for the documentation version you want to update. It regenerates to the specified version with the current API documentation.
+There are two ways to update the documentation after making changes to your API. 
+
+1. Restart your application to regenerate the version of the documentation specified in the documentation plugin's config.
+2. Go the documentation plugin page and click on the **regenerate** button for the documentation version you want to regenerate.
 
 ## Configuration
 
-The documentation plugin is initialized with the following config and all the properties found here can be altered by providing new values on the documentation plugin's config object in `config/plugins.js`.
+The documentation plugin is initialized with the following config. All of these properties can be altered by providing new values to the documentation plugin's config object in `config/plugins.js`.
 
-```jsx
+```js
 {
   openapi: '3.0.0',
   info: {
@@ -146,7 +149,8 @@ module.exports = {
 
 ### Excluding from generation
 
-If you simply want to exclude certain apis or plugins from being generated you can use the `excludeFromGeneration` function on the override service
+If you simply want to exclude certain apis or plugins from being generated you can use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+
 
 **`excludeFromGeneration()`**
 
@@ -179,7 +183,7 @@ If the documentation plugin fails to generate what you expect, it is possible to
 
 The documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
 
-To provide an override, use the `registerOverride` method found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+To provide an override, use the `registerOverride` function found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
 
 **`registerOverride()`**
 
