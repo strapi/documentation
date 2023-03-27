@@ -181,7 +181,7 @@ module.exports = {
 
 If the Documentation plugin fails to generate what you expect, it is possible to replace what has been generated.
 
-The documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
+The Documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
 
 To provide an override, use the `registerOverride` function found on the Documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
 
