@@ -239,7 +239,7 @@ module.exports = {
 
 The overrides system is provided to try and simplify amending the generated documentation. It is the only way a plugin can add or modify the generated documentation.
 
-The documentation plugin’s config also accepts a `mutateDocumentation` function on `info['x-strapi-config']`. This function receives a draft state of the generated documentation that be can be mutated. It should only be applied from an application and has the final say in what the OpenAPI schema will look like.
+The Documentation plugin’s configuration also accepts a `mutateDocumentation` function on `info['x-strapi-config']`. This function receives a draft state of the generated documentation that be can be mutated. It should only be applied from an application and has the final say in the OpenAPI schema.
 
 **`mutateDocumentation()`**
 
