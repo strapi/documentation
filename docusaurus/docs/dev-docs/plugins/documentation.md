@@ -70,7 +70,7 @@ There are 2 ways to update the documentation after making changes to your API.
 
 ## Configuration
 
-The documentation plugin is initialized with the following config. All of these properties can be altered by providing new values to the documentation plugin's config object in `config/plugins.js`.
+The Documentation plugin is initialized with the following configuration, where all properties can be altered by providing new values to the documentation plugin's config object in `config/plugins.js`:
 
 ```js
 {
