@@ -52,7 +52,7 @@ This plugin comes with an interface that is available in your administration pan
 
 By default, your documentation will be accessible by anyone.
 
-If you want to restrict the access to the API documentation you have to enable the **Restricted Access** option.
+If you want to restrict API documentation access, you must enable the **Restricted Access** option.
 
 - Go to **Settings**, **Documentation**
 - Toggle **Restricted Access** to `ON`
