@@ -156,7 +156,7 @@ If you simply want to exclude certain apis or plugins from being generated you c
 
 | Parameter | Type                       | Description                                              |
 | --------- | -------------------------- | -------------------------------------------------------- |
-| api       | String or Array of Strings | The name of the api/plugin, or list of names, to exclude |
+| `api`       | String or Array of Strings | The name of the API/plugin, or list of names, to exclude |
 
 **Example**:
 
