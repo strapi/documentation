@@ -247,7 +247,6 @@ The Documentation plugin’s configuration also accepts a `mutateDocumentation` 
 | --------------------------- | ------ | ---------------------------------------------------------------------- |
 | generatedDocumentationDraft | Object | The generated documentation with applied overrides as a mutable object |
 
-**Example:**
 
 ```js title="config/plugins.js"
 
