@@ -38,7 +38,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
   async find(ctx) {
     // some custom logic here
     ctx.query = { ...ctx.query, local: 'en' }
-    
+
     // Calling the default core action
     const { data, meta } = await super.find(ctx);
 
@@ -51,7 +51,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
+    const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -65,7 +65,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
-import { factories } from '@strapi/strapi'; 
+import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   // Method 1: Creating an entirely custom action
@@ -81,7 +81,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
   async find(ctx) {
     // some custom logic here
     ctx.query = { ...ctx.query, local: 'en' }
-    
+
     // Calling the default core action
     const { data, meta } = await super.find(ctx);
 
@@ -94,7 +94,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
+    const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -133,7 +133,7 @@ module.exports = {
 ```js "title="./src/api/hello/controllers/hello.js"
 
 module.exports = {
-  async index(ctx, next) { // called by GET /hello 
+  async index(ctx, next) { // called by GET /hello
     ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
@@ -159,7 +159,7 @@ export default {
 ```js title="./src/api/hello/controllers/hello.ts"
 
 export default {
-  async index(ctx, next) { // called by GET /hello 
+  async index(ctx, next) { // called by GET /hello
     ctx.body = 'Hello World!'; // we could also send a JSON
   },
 };
@@ -203,7 +203,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   async findOne(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
+    const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -217,12 +217,12 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
-import { factories } from '@strapi/strapi'; 
+import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   async findOne(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
-    const { results, pagination } = await strapi.service(api::restaurant.restaurant).find(sanitizedQueryParams);
+    const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
