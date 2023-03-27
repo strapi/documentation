@@ -179,7 +179,7 @@ module.exports = {
 
 ### Providing replacement documentation
 
-If the documentation plugin fails to generate what you expect, it is possible to replace what has been generated.
+If the Documentation plugin fails to generate what you expect, it is possible to replace what has been generated.
 
 The documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
 
