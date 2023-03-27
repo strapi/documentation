@@ -202,7 +202,7 @@ The Documentation plugin will use the registered overrides to replace the value 
 
 If the override completely replaces what the documentation generates, you can specify that generation is no longer necessary by providing the names of the APIs or plugins to exclude in the options key array `excludeFromGeneration`.
 
-If the override should only be applied to a specific version then the override must include a value for `info.version` , otherwise the override will run on all documentation versions.
+If the override should only be applied to a specific version, the override must include a value for `info.version`. Otherwise, the override will run on all documentation versions.
 
 **Example:**
 
