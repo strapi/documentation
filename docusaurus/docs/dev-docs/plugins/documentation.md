@@ -106,7 +106,7 @@ The Documentation plugin is initialized with the following configuration, where 
 
 ### Create a new version of the documentation
 
-To create a new version of your documentation, update the `version` key
+To create a new version of your documentation, update the `version` key as follows:
 
 ```js title="config/plugin.js"
 
