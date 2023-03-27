@@ -66,7 +66,7 @@ The API documentation is now password restricted.
 There are 2 ways to update the documentation after making changes to your API. 
 
 1. Restart your application to regenerate the version of the documentation specified in the documentation plugin's config.
-2. Go the documentation plugin page and click on the **regenerate** button for the documentation version you want to regenerate.
+2. Go to the Documentation plugin page and click the **regenerate** button for the documentation version you want to regenerate.
 
 ## Configuration
 
