@@ -158,7 +158,6 @@ If you simply want to exclude certain apis or plugins from being generated you c
 | --------- | -------------------------- | -------------------------------------------------------- |
 | `api`       | String or Array of Strings | The name of the API/plugin, or list of names, to exclude |
 
-**Example**:
 
 ```js title="Application or plugin register lifecycle"
 
