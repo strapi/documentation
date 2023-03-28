@@ -2,13 +2,11 @@
 title: Angular
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Angular.
-
 ---
 
- # Getting Started with Angular
+# Getting Started with Angular
 
- This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
-
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Angular](https://angular.io) remains the same except that you do not fetch the same content.
 
@@ -20,27 +18,25 @@ Create a basic Angular application using [angular CLI](https://angular.io/guide/
 npx -p @angular/cli ng new angular-app
 ```
 
-## Use an HTTP client
+## Use the Angular HTTP client
 
-Many HTTP clients are available but in this documentation we'll use [Axios](https://github.com/axios/axios) and [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+At first, import the Angular HttpClientModule.
 
-<Tabs>
+```ts title="./src/app/app.module.ts"
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule } from "@angular/common/http";
 
-<TabItem value="axios" label="axios">
+import { AppComponent } from "./app.component";
 
-```bash
-yarn add axios
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, HttpClientModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
 ```
-
-</TabItem>
-
-<TabItem value="fetch" label="fetch">
-
-No installation needed
-
-</TabItem>
-
-</Tabs>
 
 ## GET Request your collection type
 
@@ -48,175 +44,117 @@ Execute a `GET` request on the `restaurant` collection type in order to fetch al
 
 Be sure that you activated the `find` permission for the `restaurant` collection type.
 
-<Tabs>
+<Request title=" Example GET request">
 
-<TabItem value="axios" label="axios">
-
-<Request title=" Example GET request with axios">
-
-```js
-import axios from 'axios';
-
-axios.get('http://localhost:1337/api/restaurants').then(response => {
-  console.log(response);
-});
+```ts
+// this.http is the Angular HttpClient service.
+this.http
+  .get("http://localhost:1337/api/restaurants", {
+    params: { populate: "*" },
+  })
+  .subscribe((response) => {
+    console.log(response);
+  });
 ```
 
 </Request>
-</TabItem>
-
-<TabItem value="fetch" label="fetch">
-
-<Request title="Example GET request with fetch">
-
-```js
-fetch('http://localhost:1337/api/restaurants', {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then(response => response.json())
-  .then(data => console.log(data));
-```
-
-</Request>
-</TabItem>
-</Tabs>
 
 <Response title="Example response">
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Biscotte Restaurant",
-    "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-    "created_by": {
+{
+  "data": [
+    {
       "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "updated_by": {
-      "id": 1,
-      "firstname": "Paul",
-      "lastname": "Bocuse",
-      "username": null
-    },
-    "created_at": "2020-07-31T11:37:16.964Z",
-    "updated_at": "2020-07-31T11:37:16.975Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "French Food",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-07-31T11:36:23.164Z",
-        "updated_at": "2020-07-31T11:36:23.172Z"
+      "attributes": {
+        "name": "Biscotte Restaurant",
+        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+        "createdAt": "2023-03-25T11:13:41.883Z",
+        "updatedAt": "2023-03-25T11:17:45.737Z",
+        "publishedAt": "2023-03-25T11:17:45.735Z",
+        "categories": {
+          "data": [
+            {
+              "id": 2,
+              "attributes": {
+                "name": "Brunch",
+                "createdAt": "2023-03-25T11:14:20.605Z",
+                "updatedAt": "2023-03-25T11:17:00.158Z",
+                "publishedAt": "2023-03-25T11:17:00.153Z"
+              }
+            }
+          ]
+        }
       }
-    ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
   }
-]
+}
 ```
 
 </Response>
 
 ### Example
 
-<Tabs>
+```ts title="./src/app/app.component.ts"
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { catchError, map, Observable, of } from "rxjs";
 
-<TabItem value="axios" label="axios">
+interface Restaurant {
+  name: string;
+  description: string;
+}
 
-`./src/app/app.component.ts`
+interface Entry<T> {
+  id: number;
+  attributes: T;
+}
 
-```js
-import { Component, OnInit } from '@angular/core';
-import axios from 'axios';
+interface Response {
+  data: Entry<Restaurant>[];
+}
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  title = 'angular-app';
-  restaurants = [];
-  error = null;
+  error: any | undefined;
+  restaurants$: Observable<Restaurant[]> | undefined;
 
-  async ngOnInit() {
-    try {
-      const response = await axios.get('http://localhost:1337/api/restaurants');
-      this.restaurants = response.data;
-    } catch (error) {
-      this.error = error;
-    }
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    const url = "http://localhost:1337/api/restaurants";
+    const opts = { params: { populate: "*" } };
+
+    this.restaurants$ = this.http.get<Response>(url, opts).pipe(
+      catchError((error) => this.handleError(error)),
+      map((response) => response.data.map((x) => x.attributes))
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    this.error = error;
+    return of();
   }
 }
 ```
 
-</TabItem>
+```html title="./src/app/app.component.html"
+<div *ngIf="error">{{error}}</div>
 
-<TabItem value="fetch" label="fetch">
-
-`./src/app/app.component.ts`
-
-```js
-import { Component, OnInit } from '@angular/core';
-
-const parseJSON = resp => (resp.json ? resp.json() : resp);
-
-// Checks if a network request came back fine, and throws an error if not
-const checkStatus = resp => {
-  if (resp.status >= 200 && resp.status < 300) {
-    return resp;
-  }
-  return parseJSON(resp).then(resp => {
-    throw resp;
-  });
-};
-const headers = {
-  'Content-Type': 'application/json',
-};
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-})
-export class AppComponent implements OnInit {
-  title = 'angular-app';
-  restaurants = [];
-  error = null;
-
-  async ngOnInit() {
-    try {
-      const restaurants = await fetch('http://localhost:1337/api/restaurants', {
-        method: 'GET',
-        headers: headers,
-      })
-        .then(checkStatus)
-        .then(parseJSON);
-      this.restaurants = restaurants;
-    } catch (error) {
-      this.error = error;
-    }
-  }
-}
-```
-
-</TabItem>
-</Tabs>
-
-`./src/app/app.component.html`
-
-```html
-<div *ngIf="error">
-  {{ error }}
-</div>
-
-<ul>
-  <li *ngFor="let restaurant of restaurants">{{ restaurant['name'] }}</li>
+<ul *ngIf="restaurants$|async as restaurants">
+  <li *ngFor="let restaurant of restaurants">{{restaurant.name}}</li>
 </ul>
 ```
 
@@ -228,51 +166,25 @@ Be sure that you activated the `create` permission for the `restaurant` collecti
 
 In this example a `japanese` category has been created which has the id: 3.
 
-<Tabs>
-
-<TabItem value="axios" label="axios">
 <Request title="Example POST request with axios">
 
-```js
-import axios from 'axios';
-
-axios
-  .post('http://localhost:1337/api/restaurants', {
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+```ts
+// this.http is the Angular HttpClient service.
+this.http
+  .post("http://localhost:1337/api/restaurants", {
+    data: {
+      name: "Dolemon Sushi",
+      description:
+        "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      categories: [3],
+    },
   })
-  .then(response => {
+  .subscribe((response) => {
     console.log(response);
   });
 ```
 
 </Request>
-</TabItem>
-
-<TabItem value="fetch" label="fetch">
-
-<Request title="Example POST request with fetch">
-
-```js
-fetch('http://localhost:1337/api/restaurants', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: 'Dolemon Sushi',
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
-  }),
-})
-  .then(response => response.json())
-  .then(data => console.log(data));
-```
-
-</Request>
-</TabItem>
-</Tabs>
 
 <Response title="Example response">
 
@@ -299,236 +211,140 @@ fetch('http://localhost:1337/api/restaurants', {
 ```
 
 </Response>
- 
 
 ### Example
- 
-`./src/app.module.ts`
 
-```js
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+```ts title="./src/app/app.module.ts"
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
 ```
 
-<Tabs>
-<TabItem value="axios" label="axios">
-
 `./src/app/app.component.ts`
 
 ```js
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormControl } from '@angular/forms';
-import axios from 'axios'
+import { FormArray, FormBuilder } from '@angular/forms';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
+interface Category {
+  name: string;
+}
+
+interface Entry<T> {
+  id: number;
+  attributes: T;
+}
+
+interface Response<T> {
+  data: Entry<T>[];
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-
 export class AppComponent implements OnInit {
-  modifiedData;
+  allCategories$: Observable<Entry<Category>[]> | undefined;
+  error: any | undefined;
+  modifiedData = {
+    name: '',
+    description: '',
+    categories: new Array<{ id: number; checked: boolean }>(),
+  };
 
-  constructor(
-    private formBuilder: FormBuilder,
-  ) {
-    this.modifiedData = this.formBuilder.group({
-      name: '',
-      description: '',
-      categories: new FormArray([]),
-    });
-  }
+  constructor(private http: HttpClient) {}
 
-  onCheckChange(event) {
-    const formArray: FormArray = this.modifiedData.get('categories') as FormArray;
-
-    if (event.target.checked) {
-      formArray.push(new FormControl(event.target.value));
-    }
-    else {
-      let i: number = 0;
-
-      formArray.controls.forEach((ctrl: FormControl) => {
-        if (ctrl.value == event.target.value) {
-          formArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
-  }
-
-  title = 'angular-app';
-  allCategories = [];
-  error = null;
-
-  async ngOnInit() {
-    try {
-      const response = await axios.get('http://localhost:1337/api/categories');
-      this.allCategories = response.data
-    } catch (error) {
-      this.error = error
-    }
-    console.log(this.allCategories);
-  }
-
-  async onSubmit(restaurantData) {
-    try {
-      const response = await axios.post(
-        'http://localhost:1337/api/restaurants',
-        restaurantData
+  ngOnInit(): void {
+    this.allCategories$ = this.http
+      .get<Response<Category>>('http://localhost:1337/api/categories')
+      .pipe(
+        catchError((error) => this.handleError(error)),
+        map((response) => response.data),
+        tap((data) => {
+          data.forEach((x) => {
+            this.modifiedData.categories.push({ id: x.id, checked: false });
+          });
+        })
       );
-      console.log(response);
-    } catch (error) {
-      this.error = error;
-    }
-    this.modifiedData.reset();
   }
 
-}
-```
+  onSubmit(): void {
+    const body = {
+      data: {
+        name: this.modifiedData.name,
+        description: this.modifiedData.description,
+        categories: this.modifiedData.categories
+          .filter((x) => x.checked)
+          .map((x) => x.id),
+      },
+    };
 
-</TabItem>
-
-<TabItem value="fetch" label="fetch">
-
-`./src/app/app.component.ts`
-
-```js
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormControl } from '@angular/forms';
-
-const parseJSON = resp => (resp.json ? resp.json() : resp);
-
-// Checks if a network request came back fine, and throws an error if not
-const checkStatus = resp => {
-  if (resp.status >= 200 && resp.status < 300) {
-    return resp;
-  }
-  return parseJSON(resp).then(resp => {
-    throw resp;
-  });
-};
-const headers = {
-  'Content-Type': 'application/json',
-};
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-
-export class AppComponent implements OnInit {
-  modifiedData;
-
-  constructor(
-    private formBuilder: FormBuilder,
-  ) {
-    this.modifiedData = this.formBuilder.group({
-      name: '',
-      description: '',
-      categories: new FormArray([]),
-    });
-  }
-
-  onCheckChange(event) {
-    const formArray: FormArray = this.modifiedData.get('categories') as FormArray;
-
-    if (event.target.checked) {
-      formArray.push(new FormControl(event.target.value));
-    }
-    else {
-      let i: number = 0;
-
-      formArray.controls.forEach((ctrl: FormControl) => {
-        if (ctrl.value == event.target.value) {
-          formArray.removeAt(i);
-          return;
-        }
-        i++;
+    this.http
+      .post('http://localhost:1337/api/restaurants', body)
+      .pipe(catchError((error) => this.handleError(error)))
+      .subscribe((response) => {
+        console.log(response);
+        this.resetForm();
       });
-    }
   }
 
-  title = 'angular-app';
-  allCategories = [];
-  error = null;
-
-  async ngOnInit() {
-    try {
-      const allCategories = await fetch('http://localhost:1337/api/categories', {
-        method: 'GET',
-        headers: headers,
-      })
-        .then(checkStatus)
-        .then(parseJSON);
-      this.allCategories = allCategories;
-    } catch (error) {
-      this.error = error
-    }
-    console.log(this.allCategories);
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    this.error = error.message;
+    return of();
   }
 
-  async onSubmit(restaurantData) {
-    try {
-      await fetch('http://localhost:1337/api/restaurants', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(restaurantData),
-      })
-        .then(checkStatus)
-        .then(parseJSON);
-    } catch (error) {
-      this.error = error
-    }
-    this.modifiedData.reset();
+  private resetForm(): void {
+    this.modifiedData.name = '';
+    this.modifiedData.description = '';
+    this.modifiedData.categories.forEach((x) => (x.checked = false));
   }
 }
 ```
 
-</TabItem>
-</Tabs>
+```html title="./src/app/app.component.html"
+<div *ngIf="error">{{error}}</div>
 
-`./src/app/app.component.html`
-
-```html
-<div *ngIf="error">
-  {{ error }}
-</div>
-
-<form [formGroup]="modifiedData" (ngSubmit)="onSubmit(modifiedData.value)">
+<form (ngSubmit)="onSubmit()">
   <div>
-    <label for="name">
-      Name
-    </label>
-    <input id="name" type="text" formControlName="name" />
+    <label for="name"> Name </label>
+    <input name="name" type="text" [(ngModel)]="modifiedData.name" />
   </div>
 
   <div>
-    <label for="address">
-      Description
-    </label>
-    <input id="description" type="text" formControlName="description" />
+    <label for="address"> Description </label>
+    <input
+      name="description"
+      type="text"
+      [(ngModel)]="modifiedData.description"
+    />
   </div>
 
-  <div *ngIf="allCategories">
+  <div *ngIf="allCategories$ | async as allCategories">
     <br />
     Select categories
-    <div *ngFor="let category of allCategories">
-      <label>{{ category.name }}</label>
-      <input [value]="category.id" type="checkbox" (change)="onCheckChange($event)" />
+    <div *ngFor="let category of allCategories; index as i">
+      <label
+        >{{category.attributes.name}}
+        <input
+          type="checkbox"
+          name="category{{i}}"
+          [(ngModel)]="modifiedData.categories[i].checked"
+        />
+      </label>
     </div>
   </div>
 
@@ -544,69 +360,47 @@ Be sure that you activated the `put` permission for the `restaurant` collection 
 
 We consider that the id of your restaurant is `2`.
 and the id of your category is `2`.
-<Tabs>
-<TabItem value="axios" label="axios">
-<Request title="Example PUT request with axios">
 
-```js
-import axios from 'axios';
+<Request title="Example PUT request">
 
-axios
-  .put('http://localhost:1337/api/restaurants/2', {
-    categories: [2],
+```ts
+// this.http is the Angular HttpClient service.
+this.http
+  .put("http://localhost:1337/api/restaurants/2", {
+    data: {
+      categories: [2],
+    },
   })
-  .then(response => {
+  .subscribe((response) => {
     console.log(response);
   });
 ```
 
 </Request>
-</TabItem>
-
-<TabItem value="fetch" label="fetch">
-<Request title="Example PUT request with fetch">
-
-```js
-fetch('http://localhost:1337/api/restaurants/2', {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    categories: [2],
-  }),
-})
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  });
-```
-
-</Request>
-</TabItem>
-</Tabs>
 
 <Response title="Example response">
 
 ```json
 {
   "id": 2,
-  "name": "Dolemon Sushi",
-  "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-  "created_by": null,
-  "updated_by": null,
-  "created_at": "2020-08-04T10:21:30.219Z",
-  "updated_at": "2020-08-04T10:21:30.219Z",
-  "categories": [
-    {
-      "id": 2,
-      "name": "Brunch",
-      "created_by": 1,
-      "updated_by": 1,
-      "created_at": "2020-08-04T10:24:26.901Z",
-      "updated_at": "2020-08-04T10:24:26.911Z"
-    }
-  ]
+  "attributes": {
+    "name": "Dolemon Sushi",
+    "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+    "created_by": null,
+    "updated_by": null,
+    "created_at": "2020-08-04T10:21:30.219Z",
+    "updated_at": "2020-08-04T10:21:30.219Z",
+    "categories": [
+      {
+        "id": 2,
+        "name": "Brunch",
+        "created_by": 1,
+        "updated_by": 1,
+        "created_at": "2020-08-04T10:24:26.901Z",
+        "updated_at": "2020-08-04T10:24:26.911Z"
+      }
+    ]
+  }
 }
 ```
 
