@@ -58,4 +58,11 @@ h1, h2, h3, li, p, table {
   pre code {
     --custom-code-color: var(--strapi-neutral-1000);
   }
+
+  h1, h2, h3, li, p, table {
+    a code {
+      color: var(--custom-code-color);
+      text-decoration: none;
+    }
+  }
 }
