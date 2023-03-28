@@ -5,7 +5,7 @@ description: Using review workflows to manage content throughout the content cre
 
 # Reviewing content <EnterpriseBadge /> <BetaBadge />
 
-Using the [review workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content, and keep moving it between stages as needed.
+Using the [review workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content from the edit view, and keep moving it between stages as needed.
 
 When viewing your content in the Content Manager, you can see the current stage of any item in the **Review Stage** column:
 
@@ -19,6 +19,6 @@ To change the review stage of your content:
 
 1. Access the edit view of your content-type.
 2. In the Information box, click on the *Review stage* drop-down list.
-3. Choose the new review stage of your entry.
+3. Choose the new review stage of your entry. It is automatically saved.
 
 ![Review Stage dropdown](/img/assets/content-manager/review-stage-dropdown.png)
