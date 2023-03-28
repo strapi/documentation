@@ -17,6 +17,7 @@ The `./config/admin.js` file can include the following parameters:
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `apiToken.salt`                   | Salt used to generate [API tokens](/dev-docs/configurations/api-tokens)                                                                                 | string        | Random string                                                                                                                       |
 | `auditLogs.enabled` | Enable or disable the [Audit Logs](/user-docs/settings/audit-logs) feature | boolean | `true` |
+| `auditLogs.retentionDays` | How long [Audit Logs](/user-docs/settings/audit-logs) are kept, in days | integer | 90 |
 | `auth`                            | Authentication configuration                                                                                                                                                                             | object        | -                                                                                                                                   |
 | `auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                         | string        | `undefined`                                                                                                                         |
 | `auth.options`                    | Options object passed to [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)                                                                                                                      | object        | -                                                                                                                                   |
@@ -124,8 +125,9 @@ module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
-  auditLogs: {
+  auditLogs: { // only accessible with an Entreprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+    retentionDays: 120,
   },
   auth: {
     events: {
@@ -178,8 +180,9 @@ export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
-  auditLogs: {
+  auditLogs: { // only accessible with an Entreprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+    retentionDays: 120,
   },
   auth: {
     events: {
