@@ -16,6 +16,7 @@ The `./config/admin.js` file can include the following parameters:
 | Parameter                         | Description                                                                                                                                                                                              | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `apiToken.salt`                   | Salt used to generate [API tokens](/dev-docs/configurations/api-tokens)                                                                                 | string        | Random string                                                                                                                       |
+| `auditLogs.enabled` | Enable or disable the [Audit Logs](/user-docs/settings/audit-logs) feature | boolean | `true` |
 | `auth`                            | Authentication configuration                                                                                                                                                                             | object        | -                                                                                                                                   |
 | `auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                         | string        | `undefined`                                                                                                                         |
 | `auth.options`                    | Options object passed to [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)                                                                                                                      | object        | -                                                                                                                                   |
@@ -24,7 +25,7 @@ The `./config/admin.js` file can include the following parameters:
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                       | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                           | function      | `undefined`                                                                                                                         |
 | `url`                             | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`.                                                                                      | string        | `/admin`                                                                                                                            |
-| `autoOpen`                        | Enable or disabled administration opening on start.                                                                                                                                                      | boolean       | `true`                                                                                                                              |
+| `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                      | boolean       | `true`                                                                                                                              |
 | `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                              | array(string) | `[]`                                                                                                                                |
 | `host`                            | Use a different host for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                            | string        | `localhost`                                                                                                                         |
 | `port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                            | string        | `8000`                                                                                                                              |
@@ -67,6 +68,9 @@ module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
+  auditLogs: {
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+  },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
@@ -88,6 +92,9 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auditLogs: {
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
   },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
@@ -116,6 +123,9 @@ export default ({ env }) => ({
 module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auditLogs: {
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
   },
   auth: {
     events: {
@@ -167,6 +177,9 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auditLogs: {
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
   },
   auth: {
     events: {
