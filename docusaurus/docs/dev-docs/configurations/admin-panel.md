@@ -47,7 +47,7 @@ The `./config/admin.js` file can include the following parameters:
 | `transfer.token.salt`                   | Salt used to generate [Transfer tokens](/dev-docs/data-management/transfer#generate-a-transfer-token).<br/>If no transfer token salt is defined, transfer features will be disabled. | string        | Random string                                                                                                                       |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
-For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in `config/admin.js|ts` configuration file.
+For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
 :::
 
 ## Configurations
