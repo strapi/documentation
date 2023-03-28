@@ -20,7 +20,7 @@ npx -p @angular/cli ng new angular-app
 
 ## Use the Angular HTTP client
 
-At first, import the Angular HttpClientModule.
+Import the Angular HttpClientModule:
 
 ```ts title="./src/app/app.module.ts"
 import { NgModule } from "@angular/core";
