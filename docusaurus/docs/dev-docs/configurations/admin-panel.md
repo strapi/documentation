@@ -73,7 +73,7 @@ module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
-  auditLogs: {
+  auditLogs: { // only accessible with an Enterprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
   },
   auth: {
