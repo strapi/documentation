@@ -249,8 +249,7 @@ const sidebars = {
           type: 'doc',
           id: 'dev-docs/data-management',
          },
-
-         items: [
+        items: [
           'dev-docs/data-management/export',
           'dev-docs/data-management/import',
           {
