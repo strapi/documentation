@@ -225,7 +225,14 @@ const sidebars = {
         'dev-docs/plugins-development',
         'dev-docs/typescript',
         'dev-docs/custom-fields',
-        'dev-docs/providers',
+        {
+          type: 'doc',
+          label: 'Providers',
+          id: 'dev-docs/providers',
+          customProps: {
+            new: true,
+          },
+        }
       ]
     },
     {
