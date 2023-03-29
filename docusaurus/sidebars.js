@@ -244,6 +244,7 @@ const sidebars = {
         {
         type: 'category',
         label: 'Data management',
+        collapsed: false,
         link: {
           type: 'doc',
           id: 'dev-docs/data-management',
