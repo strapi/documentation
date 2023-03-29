@@ -251,12 +251,16 @@ await request(`/api/articles?${query}`);
 ```js
 // Object method
 const qs = require('qs');
-const query = qs.stringify({
-  populate: {
-    categories: true,
-  }, {
-  encodeValuesOnly: true, // prettify URL
-});
+const query = qs.stringify(
+  {
+    populate: {
+      categories: true
+    }
+  },
+  {
+    encodeValuesOnly: true // prettify URL
+  }
+);
 
 await request(`/api/articles?${query}`);
 ```

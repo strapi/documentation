@@ -161,8 +161,8 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 3. Click the **Public** role.
 4. Scroll down under _Permissions_.
 5. In the _Permissions_ tab, find _Restaurant_ and click on it.
-6. Click the checkboxes next to **find** and **findone**.
-7. Repeat with _Category_: click the checkboxes next to **find** and **findone**.
+6. Click the checkboxes next to **find** and **findOne**.
+7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
 8. Finally, click **Save**.
 
 ![Screenshot: Public Role in Users & Permissions plugin](/img/assets/quick-start-guide/qsg-handson-part2-04-roles.png)

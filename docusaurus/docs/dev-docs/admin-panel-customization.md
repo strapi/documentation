@@ -483,7 +483,7 @@ To disable the information box containing the tutorial videos, set the `config.t
 
 #### Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
 #### Theme extension
 
@@ -636,7 +636,8 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});```
+});
+```
 
 ```js title="./config/admin.js"
 
@@ -656,7 +657,8 @@ export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});```
+});
+```
 
 ```js title="./config/admin.ts"
 

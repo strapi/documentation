@@ -474,3 +474,5 @@ module.exports = {
 </TabItem>
 
 </Tabs>
+
+<FeedbackPlaceholder />

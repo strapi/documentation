@@ -67,6 +67,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Required configurations',
+              collapsed: false,
               items: [
                 'dev-docs/configurations/database',
                 'dev-docs/configurations/server',
@@ -77,6 +78,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Optional configurations',
+              collapsed: false,
               items: [
                 'dev-docs/configurations/api',
                 'dev-docs/configurations/api-tokens',
@@ -103,6 +105,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Other Hosting Guides',
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: 'dev-docs/deployment/hosting-guides',
@@ -120,6 +123,7 @@ const sidebars = {
             {
               type: 'category',
               label: 'Optional Software Guides',
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: 'dev-docs/deployment/optional-software-guides',
@@ -241,7 +245,14 @@ const sidebars = {
          items: [
           'dev-docs/data-management/export',
           'dev-docs/data-management/import',
-          'dev-docs/data-management/transfer'
+          {
+            type: 'doc',
+            label: 'Data transfer',
+            id: 'dev-docs/data-management/transfer',
+            customProps: {
+              new: true,
+            },
+          }
          ],
         },
         'dev-docs/database-migrations',
@@ -323,7 +334,7 @@ const sidebars = {
           items: [
             {
               type: 'category',
-              collapsed: true,
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: 'dev-docs/migration/v3-to-v4/code-migration'
@@ -349,9 +360,7 @@ const sidebars = {
                           'dev-docs/migration/v3-to-v4/code/route-middlewares',
                           'dev-docs/migration/v3-to-v4/code/routes',
                           'dev-docs/migration/v3-to-v4/code/services',
-
                   ]
-
                 },
                 {
                   type: 'category',
@@ -368,13 +377,12 @@ const sidebars = {
                           'dev-docs/migration/v3-to-v4/code/webpack',
                           'dev-docs/migration/v3-to-v4/code/wysiwyg',
                   ]
-
                 },
               ]
             },
             {
               type: 'category',
-              collapsed: true,
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: 'dev-docs/migration/v3-to-v4/plugin-migration'
@@ -389,7 +397,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              collapsed: true,
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: 'dev-docs/migration/v3-to-v4/data-migration'

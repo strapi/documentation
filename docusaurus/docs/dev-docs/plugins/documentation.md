@@ -378,3 +378,5 @@ When we can't know by the controller name the type of the returned response (lik
 ### I have created a route in a common API (like product) that queries another model. How to automate this?
 
 You can use the `tag` key in your route. If you provide a `tag` which is a string like `"tag": "Product"` the algorithm will know that the end-point retrieves data from the **`Product`** table. Creating a tag object `{ "tag": { "name": "User", "plugin": "User-Permissions } }` will result in generating a response with the **`User`** model from the plugin users-permissions.
+
+<FeedbackPlaceholder />
