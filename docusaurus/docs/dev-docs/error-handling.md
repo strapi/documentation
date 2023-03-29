@@ -424,6 +424,20 @@ throw new UnauthorizedError('You shall not pass!');
 
 </TabItem>
 
+<TabItem value="NotImplemented" label="NotImplemented">
+
+The `NotImplementedError` class is a specific error class used when the incoming request is attempting to use a feature that is not currently implemented or configured. It accepts the following parameters:
+
+| Parameter | Type | Description | Default |
+| --- | --- | --- | --- |
+| `message` | `string` | The error message | `This feature isn't implemented` |
+
+```js
+throw new NotImplementedError('This isn\'t implemented', { feature: 'test', implemented: false });
+```
+
+</TabItem>
+
 <TabItem value="PayloadTooLarge" label="PayloadTooLarge">
 
 The `PayloadTooLargeError` class is a specific error class used when the incoming request body or attached files exceed the limits of the server. It accepts the following parameters:

@@ -16,6 +16,8 @@ The `./config/admin.js` file can include the following parameters:
 | Parameter                         | Description                                                                                                                                                                                              | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `apiToken.salt`                   | Salt used to generate [API tokens](/dev-docs/configurations/api-tokens)                                                                                 | string        | Random string                                                                                                                       |
+| `auditLogs.enabled` | Enable or disable the [Audit Logs](/user-docs/settings/audit-logs) feature | boolean | `true` |
+| `auditLogs.retentionDays` | How long [Audit Logs](/user-docs/settings/audit-logs) are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._ | integer | 90 |
 | `auth`                            | Authentication configuration                                                                                                                                                                             | object        | -                                                                                                                                   |
 | `auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                         | string        | `undefined`                                                                                                                         |
 | `auth.options`                    | Options object passed to [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)                                                                                                                      | object        | -                                                                                                                                   |
@@ -24,7 +26,7 @@ The `./config/admin.js` file can include the following parameters:
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                       | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                           | function      | `undefined`                                                                                                                         |
 | `url`                             | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`.                                                                                      | string        | `/admin`                                                                                                                            |
-| `autoOpen`                        | Enable or disabled administration opening on start.                                                                                                                                                      | boolean       | `true`                                                                                                                              |
+| `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                      | boolean       | `true`                                                                                                                              |
 | `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                              | array(string) | `[]`                                                                                                                                |
 | `host`                            | Use a different host for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                            | string        | `localhost`                                                                                                                         |
 | `port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                            | string        | `8000`                                                                                                                              |
@@ -43,6 +45,10 @@ The `./config/admin.js` file can include the following parameters:
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                                    | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                | Rate limiting storage location (Memory, Sequelize,  or Redis) and for more information please see the [`koa2-ratelimit documentation`](https://www.npmjs.com/package/koa2-ratelimit)                                                                                                                                                                                     | object        | `MemoryStore` |
 | `transfer.token.salt`                   | Salt used to generate [Transfer tokens](/dev-docs/data-management/transfer#generate-a-transfer-token).<br/>If no transfer token salt is defined, transfer features will be disabled. | string        | Random string                                                                                                                       |
+
+:::note Retention days for self-hosted vs. Strapi Cloud users
+For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
+:::
 
 ## Configurations
 
@@ -67,6 +73,9 @@ module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
   },
+  auditLogs: { // only accessible with an Enterprise plan
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+  },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
   },
@@ -88,6 +97,9 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+   auditLogs: { // only accessible with an Enterprise plan
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
   },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
@@ -116,6 +128,10 @@ export default ({ env }) => ({
 module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auditLogs: { // only accessible with an Enterprise plan
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+    retentionDays: 120,
   },
   auth: {
     events: {
@@ -167,6 +183,10 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+  },
+  auditLogs: { // only accessible with an Enterprise plan
+    enabled: env.bool('AUDIT_LOGS_ENABLED', true),
+    retentionDays: 120,
   },
   auth: {
     events: {
