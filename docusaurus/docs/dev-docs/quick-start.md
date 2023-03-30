@@ -139,7 +139,7 @@ Let's go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.
 1. Click on **Create new entry**.
 2. Type `French Food` in the _Name_ field.
 3. Click **Save**.
-4. Go back to _Collection types - Category_, then click again on **Add new entry**.  
+4. Go back to _Collection types - Category_, then click again on **Create new entry**.  
 5. Type `Brunch` in the _Name_ field, then click **Save**.
 
 ![GIF: Add Categories](/img/assets/quick-start-guide/qsg-handson-categories.gif)
@@ -150,7 +150,7 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 Go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation, and click on "Biscotte Restaurant".
 
-In the right sidebar, in the **Categories** drop-down list, select "Brunch". Click **Save**.
+In the **Categories** drop-down list at the bottom of the page, select "Brunch". Click **Save**.
 
 ### Step 3: Set Roles & Permissions
 
