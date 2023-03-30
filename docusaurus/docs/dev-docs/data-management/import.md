@@ -170,5 +170,4 @@ npm strapi import -- -f export_20221213105643.tar.gz.enc --only config
 
 </Tabs>
 
-
 <FeedbackPlaceholder />

@@ -195,7 +195,7 @@ export default {
           danger700: '#b72b1a'
         },
       },
-      
+
       // overwrite dark theme properties
       dark: {
          // ...
@@ -483,7 +483,7 @@ To disable the information box containing the tutorial videos, set the `config.t
 
 #### Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.release` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
 #### Theme extension
 
@@ -553,10 +553,10 @@ In order to extend the usage of webpack v5, define a function that extends its c
 ```js
 module.exports = (config, webpack) => {
   // Note: we provide webpack above so you should not `require` it
-  
+
   // Perform customizations to webpack config
   config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-  
+
   // Important: return the modified config
   return config;
 };
@@ -636,7 +636,8 @@ module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});```
+});
+```
 
 ```js title="./config/admin.js"
 
@@ -656,7 +657,8 @@ export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: 'http://yourbackend.com',
-});```
+});
+```
 
 ```js title="./config/admin.ts"
 

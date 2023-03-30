@@ -1,0 +1,80 @@
+/** Core: Docusaurus/Infima Style Tokens Overrides */
+
+:root {
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --ifm-background-color: var(--strapi-neutral-0);
+  --ifm-color-content: var(--strapi-neutral-800);
+  --ifm-font-color-base: var(--strapi-neutral-800);
+
+  --ifm-color-content-secondary: var(--strapi-neutral-600);
+  --ifm-color-emphasis-100: var(--strapi-neutral-100);
+  --ifm-color-emphasis-200: var(--strapi-neutral-150);
+  --ifm-color-emphasis-300: var(--strapi-neutral-200);
+  --ifm-color-emphasis-400: var(--strapi-neutral-300);
+  --ifm-color-emphasis-500: var(--strapi-neutral-400);
+  --ifm-color-emphasis-600: var(--strapi-neutral-500);
+  --ifm-color-emphasis-700: var(--strapi-neutral-600);
+  --ifm-color-emphasis-800: var(--strapi-neutral-700);
+  --ifm-color-emphasis-900: var(--strapi-neutral-800);
+  --ifm-color-emphasis-1000: var(--strapi-neutral-1000);
+
+  --ifm-color-primary: var(--strapi-primary-600);
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+
+  --ifm-link-color: var(--strapi-primary-600);
+  --ifm-link-decoration: none;
+  // --ifm-link-hover-decoration: none;
+
+  --ifm-paragraph-margin-bottom: var(--strapi-spacing-4);
+
+  --ifm-scrollbar-track-background-color: var(--strapi-neutral-100);
+  --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-200);
+  --ifm-scrollbar-thumb-hover-background-color: var(--strapi-neutral-300);
+
+  --ifm-table-stripe-background: #DCDCE43E;
+  --ifm-toc-border-color: var(--strapi-neutral-150);
+}
+
+/* Dark mode */
+@include dark {
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  --ifm-background-color: var(--strapi-neutral-0);
+  --ifm-color-content: var(--strapi-neutral-800);
+  --ifm-font-color-base: var(--strapi-neutral-800);
+
+  --ifm-color-emphasis-100: var(--strapi-neutral-100);
+  --ifm-color-emphasis-200: var(--strapi-neutral-150);
+  --ifm-color-emphasis-300: var(--strapi-neutral-200);
+  --ifm-color-emphasis-400: var(--strapi-neutral-300);
+  --ifm-color-emphasis-500: var(--strapi-neutral-400);
+  --ifm-color-emphasis-600: var(--strapi-neutral-500);
+  --ifm-color-emphasis-700: var(--strapi-neutral-600);
+  --ifm-color-emphasis-800: var(--strapi-neutral-700);
+  --ifm-color-emphasis-900: var(--strapi-neutral-800);
+  --ifm-color-emphasis-1000: var(--strapi-neutral-1000);
+
+  --ifm-color-primary: var(--strapi-primary-500);
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+
+  --ifm-link-color: var(--strapi-primary-500);
+
+  --ifm-navbar-background-color: #212134;
+
+  --ifm-scrollbar-track-background-color: var(--strapi-neutral-100);
+  --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-150);
+  --ifm-scrollbar-thumb-hover-background-color: var(--strapi-neutral-200);
+
+  --ifm-toc-border-color: var(--strapi-neutral-150);
+}

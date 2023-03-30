@@ -1,0 +1,26 @@
+/** Component: Footer */
+
+.footer {
+  a {
+    @include transition;
+    font-weight: 400;
+
+    &:hover {
+      font-weight: 700;
+    }
+  }
+
+  &.footer--dark {
+    --ifm-footer-background-color: var(--strapi-neutral-700);
+    --ifm-footer-link-hover-color: var(--strapi-neutral-0);
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .footer {
+    &.footer--dark {
+      --ifm-footer-background-color: var(--strapi-neutral-150);
+    }
+  }
+}

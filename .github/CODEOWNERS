@@ -1,0 +1,41 @@
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @pwizla and @meganelacheny will be requested for
+# review when someone opens a pull request.
+*       @pwizla @meganelacheny
+
+# Order is important; the last matching pattern takes the most
+# precedence. When someone opens a pull request that only
+# modifies code-related files, only @pwizla or @udimberto and 
+# not the global owner(s) will be requested for a review.
+*.js    @pwizla
+*.jsx   @pwizla
+*.json  @pwizla
+*.css   @pwizla @udimberto
+*.scss  @pwizla @udimberto
+
+# With this configuration, @pwizla owns any files in the dev-docs
+# directory located in docusaurus/docs and any of its
+# subdirectories.
+/docusaurus/docs/dev-docs/ @pwizla
+
+# With this configuration, @meganelacheny owns any files in the user-docs
+# directory located in docusaurus/docs and any of its
+# subdirectories.
+/docusaurus/docs/user-docs/ @meganelacheny
+
+# In this example, any change inside the `/docusaurus/docs/cloud` directory
+# will require approval from @pwizla or @meganelacheny.
+/docusaurus/docs/cloud/ @pwizla @meganelacheny
+
+# With this configuration, any change inside the `/docusaurus/src` or
+# `/docusaurus/static` folders will require approval from @pwizla
+/docusaurus/src @pwizla
+/docusaurus/static @pwizla
+
+# With this configuration, any update to `/.github` should be
+# approved either by @derrickmehaffy or @pwizla
+/.github @pwizla @derrickmehaffy

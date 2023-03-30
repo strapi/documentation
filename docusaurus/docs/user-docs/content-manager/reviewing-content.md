@@ -16,3 +16,5 @@ When viewing your content in the Content Manager, you can see the current status
 As content is created and revised among your team, you can assign content to a specific stage in the review workflow. When [writing or editing content](/user-docs/content-manager/writing-content), you can assign content to a specific stage in the review workflow by clicking on the **Review Stage** dropdown menu in the **Information** section of the content editor:
 
 ![Review Stage dropdown](/img/assets/content-manager/review-stage-dropdown.png)
+
+<FeedbackPlaceholder />

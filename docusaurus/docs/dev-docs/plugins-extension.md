@@ -107,7 +107,11 @@ To extend a plugin's interface within `./src/index.js`, use the `bootstrap()` an
 
 module.exports = {
   register({ strapi }) {
-    strapi.contentType('plugin::my-plugin.content-type-name').attributes = {
+    const contentTypeName = strapi.contentType('plugin::my-plugin.content-type-name')  
+    contentTypeName.attributes = {
+      // Spread previous defined attributes
+      ...contentTypeName.attributes,
+      // Add new, or override attributes
       'toto': {
         type: 'string',
       }

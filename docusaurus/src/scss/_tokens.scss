@@ -1,0 +1,121 @@
+/** Core: Strapi Design System Tokens */
+
+:root {
+  /** Spacing */
+  --strapi-spacing-0: 0;          // 0px
+  --strapi-spacing-1: 0.25rem;    // 4px
+  --strapi-spacing-2: 0.5rem;     // 8px
+  --strapi-spacing-3: 0.75rem;    // 12px
+  --strapi-spacing-4: 1rem;       // 16px
+  --strapi-spacing-5: 1.25rem;    // 20px
+  --strapi-spacing-6: 1.5rem;     // 24px
+  --strapi-spacing-7: 2rem;       // 32px
+  --strapi-spacing-8: 2.5rem;     // 40px
+  --strapi-spacing-9: 3rem;       // 48px
+  --strapi-spacing-10: 3.5rem;    // 56px
+  --strapi-spacing-11: 3.75rem;   // 64px
+
+  /** Fonts */
+  --strapi-font-size-tiny: 0.625rem;  // 10px
+  --strapi-font-size-xxs: 0.6875rem;  // 11px
+  --strapi-font-size-xs: 0.75rem;     // 12px
+  --strapi-font-size-ssm: 0.8125rem;  // 13px
+  --strapi-font-size-sm: 0.875rem;    // 14px
+  --strapi-font-size-md: 1rem;        // 16px
+  --strapi-font-size-lg: 1.125rem;    // 18px
+  --strapi-font-size-xl: 2rem;        // 32px
+
+  /** Color: Neutral */
+  --strapi-neutral-1000: #181826;
+  --strapi-neutral-900: #212134;
+  --strapi-neutral-800: #32324D;
+  --strapi-neutral-700: #4A4A6A;
+  --strapi-neutral-600: #666687;
+  --strapi-neutral-500: #8E8EA9;
+  --strapi-neutral-400: #A5A5BA;
+  --strapi-neutral-300: #C0C0CF;
+  --strapi-neutral-200: #DCDCE4;
+  --strapi-neutral-150: #EAEAEF;
+  --strapi-neutral-100: #F6F6F9;
+  --strapi-neutral-0: #FFFFFF;
+
+  /** Color: Primary */
+  --strapi-primary-700: #271FE0;
+  --strapi-primary-600: #4945FF;
+  --strapi-primary-500: #7B79FF;
+  --strapi-primary-200: #D9D8FF;
+  --strapi-primary-100: #F0F0FF;
+
+  /** Color: Secondary */
+  --strapi-secondary-700: #006096;
+  --strapi-secondary-600: #0C75AF;
+  --strapi-secondary-500: #66B7F1;
+  --strapi-secondary-200: #B8E1FF;
+  --strapi-secondary-100: #EAF5FF;
+
+  /** Color: Success */
+  --strapi-success-700: #2F6846;
+  --strapi-success-600: #328048;
+  --strapi-success-500: #5CB176;
+  --strapi-success-300: #BBEFB5; /* not in Figma, used for code blocks */
+  --strapi-success-200: #C6F0C2;
+  --strapi-success-100: #EAFBE7;
+
+  /** Color: Danger */
+  --strapi-danger-800: #4B1113; /* not actually existing in Figma */
+  --strapi-danger-700: #B72B1A;
+  --strapi-danger-600: #D02B20;
+  --strapi-danger-500: #EE5E52;
+  --strapi-danger-200: #F5C0B8;
+  --strapi-danger-100: #FCECEA;
+
+  /** Color: Warning */
+  --strapi-warning-700: #BE5D01;
+  --strapi-warning-600: #D9822F;
+  --strapi-warning-500: #F29D41;
+  --strapi-warning-200: #FAE7B9;
+  --strapi-warning-100: #FDF4DC;
+
+  /** Color: Alternative */
+  --strapi-alternative-600: #9736E8;
+  --strapi-alternative-500: #AC73E6;
+  --strapi-alternative-200: #E0C1F4;
+  --strapi-alternative-100: #F6ECFC;
+
+  /** Color: Code */
+  --strapi-code-fluo-green: #50FA7B;
+  --strapi-code-green: #50FA7B;
+  --strapi-code-rose: #FF79C6;
+  --strapi-code-purple: #BD93F9;
+  --strapi-code-dark-blue: #6272A4;
+
+  /** Components */
+  --strapi-input-border-color: var(--strapi-neutral-200);
+  --strapi-input-border-width: 1px;
+  --strapi-input-border-style: solid;
+  --strapi-input-border:
+    var(--strapi-input-border-width)
+    var(--strapi-input-border-style)
+    var(--strapi-input-border-color)
+  ;
+}
+
+/** Dark mode */
+@include dark {
+  /** Dark Color: Neutral */
+  --strapi-neutral-1000: #FFFFFF; /* both 800 and 900 identical in Figma */
+  --strapi-neutral-900: #FFFFFF; /* both 800 and 900 identical in Figma */
+  --strapi-neutral-800: #FFFFFF;
+  --strapi-neutral-700: #EAEAEF;
+  --strapi-neutral-600: #666687;
+  --strapi-neutral-500: #c0c0cf;
+  --strapi-neutral-400: #A5A5BA; /* incorrecly named in Figma */
+  --strapi-neutral-300: #666687;
+  --strapi-neutral-200: #4A4A6A;
+  --strapi-neutral-150: #32324D;
+  --strapi-neutral-100: #181826;
+  --strapi-neutral-0: #212134;
+
+  /** Dark Color: Primary */
+  --strapi-primary-600: #7B79FF;
+}

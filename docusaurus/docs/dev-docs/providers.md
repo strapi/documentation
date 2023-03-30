@@ -16,6 +16,8 @@ Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email)
 
 For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
+A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
+
 ## Installing providers
 
 New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
@@ -82,6 +84,7 @@ module.exports = ({ env }) => ({
         secretAccessKey: env('AWS_ACCESS_SECRET'),
         region: env('AWS_REGION'),
         params: {
+          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
           Bucket: env('AWS_BUCKET'),
         },
       },
@@ -107,6 +110,7 @@ export default ({ env }) => ({
         secretAccessKey: env('AWS_ACCESS_SECRET'),
         region: env('AWS_REGION'),
         params: {
+          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
           Bucket: env('AWS_BUCKET'),
         },
       },
@@ -230,9 +234,20 @@ module.exports = {
         // delete the file in the provider
       },
       checkFileSize(file, { sizeLimit }) {
+        // (optional)
         // implement your own file size limit logic
-        // there is a default logic in place if this
-        // method is not implemented
+      },
+      getSignedUrl(file) {
+        // (optional)
+        // Generate a signed URL for the given file.
+        // The signed URL allows secure access to the file.
+        // Only Content Manager assets will be signed.
+        // Returns an object {url: string}.
+      },
+      isPrivate() {
+        // (optional)
+        // if it is private, file urls will be signed
+        // Returns a boolean
       },
     };
   },
@@ -259,6 +274,22 @@ export default {
       },
       delete(file) {
         // delete the file in the provider
+      },
+      checkFileSize(file, { sizeLimit }) {
+        // (optional)
+        // implement your own file size limit logic
+      },
+      getSignedUrl(file) {
+        // (optional)
+        // Generate a signed URL for the given file.
+        // The signed URL allows secure access to the file.
+        // Only Content Manager assets will be signed.
+        // Returns an object {url: string}.
+      },
+      isPrivate() {
+        // (optional)
+        // if it is private, file urls will be signed
+        // Returns a boolean
       },
     };
   },
@@ -339,3 +370,109 @@ If you want to create your own provider without publishing it on npm you can fol
 
 4. Update your `./config/plugins.js` file to [configure the provider](#configuring-providers).
 5. Finally, run `yarn install` or `npm install` to install your new custom provider.
+
+## Creating private providers
+
+You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
+
+To enable private providers, you must implement the `isPrivate()` method and return `true`.
+
+
+
+In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
+
+Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
+
+**Example**
+
+To create a private `aws-s3` provider:
+
+1. Create a `./providers/aws-s3` folder in your application. See [Local Providers](#local-providers) for more information.
+2. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
+3. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="./providers/aws-s3/index.js"
+// aws-s3 provider
+
+module.exports = {
+  init: (config) => {
+    const s3 = new AWS.S3(config);
+
+    return {
+      async upload(file) {
+        // code to upload file to S3
+      },
+
+      async delete(file) {
+        // code to delete file from S3
+      },
+
+      async isPrivate() {
+        return true;
+      },
+
+      async getSignedUrl(file) {
+        const params = {
+          Bucket: config.params.Bucket,
+          Key: file.path,
+          Expires: 60, // URL expiration time in seconds
+          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
+        };
+
+        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
+        return { url: signedUrl };
+      },
+    };
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./providers/aws-s3/index.ts"
+// aws-s3 provider
+
+module.exports = {
+  init: (config) => {
+    const s3 = new AWS.S3(config);
+
+    return {
+      async upload(file) {
+        // code to upload file to S3
+      },
+
+      async delete(file) {
+        // code to delete file from S3
+      },
+
+      async isPrivate() {
+        return true;
+      },
+
+      async getSignedUrl(file) {
+        const params = {
+          Bucket: config.params.Bucket,
+          Key: file.path,
+          Expires: 60, // URL expiration time in seconds
+          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
+        };
+
+        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
+        return { url: signedUrl };
+      },
+    };
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+<FeedbackPlaceholder />

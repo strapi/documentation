@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-export default function Columns(props) {
+export default function Columns({ children }) {
   return (
-      <div className="columns">
-        {props.children}
-      </div>
+    <div className="columns">
+      {children}
+    </div>
   );
 }

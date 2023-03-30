@@ -1,0 +1,114 @@
+/** Component: Code Block */
+
+:root {
+  --custom-code-block-background-color: var(--strapi-neutral-1000);
+  --custom-code-block-color: var(--strapi-neutral-0);
+  --custom-code-block-comment-color: var(--strapi-neutral-400);
+  --custom-code-block-key-color: var(--strapi-success-300);
+  --custom-code-block-number-color: var(--strapi-success-500);
+  --custom-code-block-punctuation-color: var(--strapi-primary-200);
+  --custom-code-block-property-color: var(--strapi-success-200);
+  --custom-code-block-value-color: var(--strapi-neutral-0);
+}
+
+pre {
+  --ifm-code-border-radius: 6px;
+  --ifm-pre-border-radius: 6px;
+
+  background: var(--custom-code-block-background-color);
+  color: var(--custom-code-block-color);
+
+  code {
+    --ifm-code-border-radius: 6px;
+    background: var(--custom-code-block-background-color);
+
+    line-height: 1.7 !important;
+
+    a {
+      --ifm-link-color: var(--strapi-alternative-500);
+      --ifm-link-hover-color: var(--strapi-alternative-500);
+
+      font-weight: 700;
+    }
+  }
+}
+
+pre,
+.theme-code-block {
+  --ifm-scrollbar-track-background-color: var(--strapi-neutral-800);
+  --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-700);
+  --ifm-scrollbar-thumb-hover-background-color: var(--strapi-neutral-500);
+
+  --prism-background-color: var(--custom-code-block-background-color) !important;
+  --prism-color: var(--custom-code-block-color);
+}
+
+pre.prism-code {
+  code {
+    .token {
+      &.comment {
+        color: var(--custom-code-block-comment-color) !important;
+        font-style: italic;
+      }
+
+      &.key {
+        color: var(--custom-code-block-key-color) !important;
+      }
+
+      &.number {
+        color: var(--custom-code-block-number-color) !important;
+      }
+
+      &.plain {
+        color: var(--custom-code-block-value-color) !important;
+      }
+
+      &.property {
+        color: var(--custom-code-block-property-color) !important;
+      }
+
+      &.operator,
+      &.punctuation {
+        color: var(--custom-code-block-punctuation-color) !important;
+      }
+    }
+  }
+}
+
+.theme-code-block {
+  &[class*="codeBlockContainer"],
+  [class*="codeBlockContainer"] {
+    background: var(--custom-code-block-background-color);
+  }
+
+  [class*="codeBlockTitle"],
+  pre, pre code {
+    --ifm-code-font-size: 81.25%;
+  }
+
+  /** Title element */
+  [class*="codeBlockTitle"] {
+    border-bottom: none;
+    color: var(--strapi-neutral-400);
+    font-family: var(--custom-code-font-family);
+    padding-bottom: 0;
+
+    + [class*="codeBlockContent"] pre code {
+      padding-top: 0;
+    }
+  }
+}
+
+/** Dark theme */
+@include dark {
+  pre,
+  .theme-code-block {
+    --custom-code-block-background-color: var(--strapi-neutral-100);
+    --custom-code-block-color: var(--strapi-neutral-1000);
+    --custom-code-block-punctuation-color: var(--strapi-primary-200);
+    --custom-code-block-value-color: var(--strapi-neutral-900);
+
+    --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
+    --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-300);
+  }
+}
