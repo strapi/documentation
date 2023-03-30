@@ -1,0 +1,18 @@
+/** Component: Container */
+
+:root {
+  --strapi-container-px: var(--ifm-spacing-horizontal);
+  --strapi-container-mw: calc(863px + calc(var(--strapi-container-px) * 2));
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--strapi-container-px);
+  padding-left: var(--strapi-container-px);
+  max-width: var(--strapi-container-mw);
+  width: 100%;
+}

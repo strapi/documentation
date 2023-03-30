@@ -1,0 +1,55 @@
+/** Component: Hero */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-hero-py: var(--strapi-spacing-6);
+  --strapi-hero-gap: var(--strapi-spacing-4);
+
+  --strapi-hero-title-color: #1D1B84;
+  --strapi-hero-title-font-size: var(--strapi-font-size-xl);
+  --strapi-hero-title-line-height: 1.25;
+
+  --strapi-hero-description-color: #4E6294;
+  --strapi-hero-description-font-size: var(--strapi-font-size-lg);
+  --strapi-hero-description-line-height: 1.25;
+}
+
+.hero {
+  padding-top: var(--strapi-hero-py);
+  padding-bottom: var(--strapi-hero-py);
+  text-align: center;
+
+  &__title {
+    color: var(--strapi-hero-title-color);
+    font-weight: 700;
+    font-size: var(--strapi-hero-title-font-size);
+    line-height: var(--strapi-hero-title-line-height);
+    letter-spacing: 0.4px;
+    margin: 0 0 var(--strapi-hero-gap);
+  }
+
+  &__description {
+    color: var(--strapi-hero-description-color);
+    font-size: var(--strapi-hero-description-font-size);
+    line-height: var(--strapi-hero-description-line-height);
+    margin: 0;
+  }
+}
+
+/** Responsive */
+@include medium-up {
+  :root {
+    --strapi-hero-py: 40px;
+    --strapi-hero-title-font-size: 43px;
+    --strapi-hero-title-line-height: 56px;
+    --strapi-hero-description-font-size: 21px;
+    --strapi-hero-description-line-height: 28px;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --strapi-hero-title-color: white;
+  --strapi-hero-description-color: white;
+}

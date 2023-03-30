@@ -1,7 +1,7 @@
 ---
 sidebar_label: 'Introduction'
 displayed_sidebar: devDocsSidebar
-slug: /
+slug: /dev-docs/intro
 sidebar_position: 1
 ---
 

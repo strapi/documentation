@@ -1,0 +1,53 @@
+/** Component: Link with Arrow */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --strapi-lwa-icon-ml: var(--strapi-spacing-2);
+  --strapi-lwa-font-size: 14px;
+  --strapi-lwa-font-weight: 500;
+  --strapi-lwa-line-height: 20px;
+  --strapi-lwa-hover-icon-ml: var(--strapi-spacing-3);
+}
+
+.lwa {
+  --ifm-link-color: #1D1B84;
+  --ifm-link-decoration: none;
+  --ifm-link-hover-color: #2825B8;
+  --ifm-link-hover-decoration: none;
+
+  font-size: var(--strapi-lwa-font-size);
+  font-weight: var(--strapi-lwa-font-weight);
+  line-height: var(--strapi-lwa-line-height);
+  transition: all 0.2s ease;
+
+  &:focus, &:hover {
+    --strapi-lwa-icon-ml: var(--strapi-lwa-hover-icon-ml);
+  }
+
+  &__icon {
+    display: inline-block;
+    line-height: 0;
+    margin-left: var(--strapi-lwa-icon-ml);
+    transition: margin-left 0.1s ease;
+  }
+
+  &--apart {
+    display: flex;
+    align-items: center;
+
+    .lwa {
+      &__content {
+        flex-grow: 1;
+      }
+    }
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .lwa {
+    --ifm-link-color: var(--strapi-neutral-1000);
+    --ifm-link-hover-color: var(--strapi-neutral-500);
+  }
+}

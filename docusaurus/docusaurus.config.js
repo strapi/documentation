@@ -150,6 +150,7 @@ const config = {
         indexName: 'strapiDocsNextstrapiDocsNext',
       },
       navbar: {
+        hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
           src: 'img/logo.png',
