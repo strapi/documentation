@@ -268,7 +268,7 @@ await pluginStore.set({
 
 ## Environment variables in database configurations
 
-Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/datbase.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
+Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
