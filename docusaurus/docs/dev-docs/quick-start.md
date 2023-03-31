@@ -56,7 +56,7 @@ By completing the form, you create your own account. Once done, you become the f
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![Admin panel screenshot: dashboard](/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel_2.png)
+![Admin panel screenshot: dashboard](/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel.png)
 
 :::callout 🥳 CONGRATULATIONS!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/intro), or proceed to part B below.
@@ -82,15 +82,15 @@ The Content-type Builder plugin helps you create your data structure. When creat
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Go to Plugins ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to Plugins ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
-5. Type `name` in the _Name_ field.
+5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
 8. Choose the Rich text field.
-9. Type `description` under the _Name_ field, then click **Finish**.
+9. Type `Description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
 ![GIF: Create Restaurant collection type in Content-type Builder](/img/assets/quick-start-guide/qsg-handson-restaurant_2.gif)
@@ -105,12 +105,11 @@ It would help getting a bit more organized if our restaurants directory had some
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
-5. Type `name` in the _Name_ field.
+5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
 8. Choose the Relation field.
-9. On the right side, click the _Category_ relational fields box and select "Restaurant".
-10. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/quick-start-guide/icon_manytomany.png). The text should read `Categories has and belongs to many Restaurants`.
+9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/quick-start-guide/icon_manytomany.png). The text should read `Categories has and belongs to many Restaurants`.
 
 ![Admin Panel screenshot: relations](/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
 
@@ -150,7 +149,7 @@ The "French Food" and "Brunch" categories are now listed in the [Collection type
 
 Go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) [Content Manager > Collection types - Restaurant](http://localhost:1337/admin/content-manager/collectionType/api::restaurant.restaurant) in the navigation, and click on "Biscotte Restaurant".
 
-In the **Categories** drop-down list at the bottom of the page, select "Brunch". Click **Save**.
+In the **Categories** drop-down list, select "Brunch". Click **Save**.
 
 ### Step 3: Set Roles & Permissions
 
