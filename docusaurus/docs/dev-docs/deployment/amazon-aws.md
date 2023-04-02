@@ -671,7 +671,7 @@ The next steps will create an Administrator user on the strapi AWS instance.
 
 #### 2. Next, create your **Administrator** user, and login to Strapi
 
-- Go to `http://your-ip-address:1337/`
+- Go to `http://your-ip-address:1337/admin`
 - Complete the registration form.
 - Click `Ready to Start`
 
