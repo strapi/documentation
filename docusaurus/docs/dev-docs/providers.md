@@ -420,7 +420,6 @@ module.exports = {
           Bucket: config.params.Bucket,
           Key: file.path,
           Expires: 60, // URL expiration time in seconds
-          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
         };
 
         const signedUrl = await s3.getSignedUrlPromise("getObject", params);
@@ -460,7 +459,6 @@ module.exports = {
           Bucket: config.params.Bucket,
           Key: file.path,
           Expires: 60, // URL expiration time in seconds
-          ACL: "private", // make sure the asset is private and can only be accessed via signed URLs
         };
 
         const signedUrl = await s3.getSignedUrlPromise("getObject", params);
