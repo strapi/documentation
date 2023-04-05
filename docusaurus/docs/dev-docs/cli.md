@@ -195,7 +195,7 @@ Prints out debug information useful for debugging and required when reporting an
 
 **Examples**
 
-Will include the project UUID and dependencies in the output.
+To include the project UUID and dependencies in the output:
 
 ```bash
 strapi report --uuid --dependencies
