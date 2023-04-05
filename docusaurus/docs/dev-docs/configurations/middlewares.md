@@ -488,7 +488,7 @@ const {
   formats: { prettyPrint, levelFilter },
 } = require('@strapi/logger');
 
-module.exports = [
+module.exports = {
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -498,7 +498,7 @@ module.exports = [
       ),
     }),
   ],
-];
+};
 ```
 
 </TabItem>
