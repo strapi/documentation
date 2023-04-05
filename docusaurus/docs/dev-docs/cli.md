@@ -201,7 +201,7 @@ To include the project UUID and dependencies in the output:
 strapi report --uuid --dependencies
 ```
 
-If you want to log everything you can use the `--all` option.
+To log everything, use the `--all` option:
 
 ```bash
 strapi report --all
