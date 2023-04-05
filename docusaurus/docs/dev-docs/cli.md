@@ -187,7 +187,7 @@ The destination Strapi instance should be running with the `start` command and n
 
 Prints out debug information useful for debugging and required when reporting an issue.
 
-| Option                 | description                   |
+| Option                 | Description                   |
 | ---------------------- | ----------------------------- |
 | `-u`, `--uuid`         | Includes the project UUID     |
 | `-d`, `--dependencies` | Includes project dependencies |
