@@ -919,7 +919,6 @@ If you haven't edited the [configuration file](/dev-docs/configurations/plugins#
 A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/dev-docs/configurations/plugins#graphql-configuration) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
 
 
-Review the [configuration file](/dev-docs/configurations/plugins#graphql-configuration) to set this options.
 
 ### Install graphql armor
 
