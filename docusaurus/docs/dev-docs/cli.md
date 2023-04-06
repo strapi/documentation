@@ -305,7 +305,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins](/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
 
 ```bash
 strapi generate
