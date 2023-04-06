@@ -44,7 +44,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     ![Plan selection page](/img/assets/cloud/plan-selection.png)
 
     :::note
-    We offer a free trial for one project only.
+    Strapi Cloud offers a free trial for only one project.
 
     If you have already used a free trial for a previous project, the option will no longer appear in the plan selection.
     :::
