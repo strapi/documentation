@@ -908,7 +908,6 @@ Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 
 GraphQL is a query language allowing users to use a broader panel of inputs than traditional REST APIs. GraphQL APIs are inherently prone to security risks, such as credential leakage and denial of service attacks, that can be reduced by taking appropriate precautions.
 
-Due to this feature, GraphQL APIs are inherently prone to various security risks, but they can be reduced by taking appropriate precautions.
 Neglecting them can expose the API to vulnerabilities like credential leakage or denial of service attacks.
 
 ### Disable introspection and playground in production
