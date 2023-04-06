@@ -911,7 +911,7 @@ GraphQL is a query language allowing users to use a broader panel of inputs than
 
 ### Disable introspection and playground in production
 
-In production, it is recommended to disable the GraphQL Playground and the introspection query.
+In production environments, disabling the GraphQL Playground and the introspection query is recommended.
 If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it is already disabled in production by default.
 
 ### Limit max depth and complexity
