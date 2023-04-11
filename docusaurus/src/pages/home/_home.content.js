@@ -17,7 +17,7 @@ export default {
         </>
       ),
       button: {
-        children: 'Quick start',
+        label: 'Quick start',
         decorative: '🚀',
         to: '/dev-docs/quick-start',
       },
@@ -35,7 +35,7 @@ export default {
         </>
       ),
       button: {
-        children: 'Strapi Cloud',
+        label: 'Strapi Cloud',
         decorative: '☁️',
         to: '/cloud/intro',
       },
@@ -51,23 +51,23 @@ export default {
       linksIconColor: 'green',
       links: [
         {
-          children: 'Installation guides',
+          label: 'Installation guides',
           to: '/dev-docs/installation',
         },
         {
-          children: 'Database configuration',
+          label: 'Database configuration',
           to: '/dev-docs/configurations/database',
         },
         {
-          children: 'Deployment guides',
+          label: 'Deployment guides',
           to: '/dev-docs/deployment',
         },
         {
-          children: 'REST API',
+          label: 'REST API',
           to: '/dev-docs/api/rest',
         },
         {
-          children: 'GraphQL API',
+          label: 'GraphQL API',
           to: '/dev-docs/api/graphql',
         },
       ],
@@ -81,23 +81,23 @@ export default {
       linksIconColor: 'blue',
       links: [
         {
-          children: 'Getting started in the admin panel',
+          label: 'Getting started in the admin panel',
           to: '/user-docs/intro#accessing-the-admin-panel',
         },
         {
-          children: 'Creating content-types',
+          label: 'Creating content-types',
           to: '/user-docs/content-type-builder/creating-new-content-type',
         },
         {
-          children: 'Configuring content-types fields',
+          label: 'Configuring content-types fields',
           to: '/user-docs/content-type-builder/configuring-fields-content-type',
         },
         {
-          children: 'Writing content',
+          label: 'Writing content',
           to: '/user-docs/content-manager/writing-content',
         },
         {
-          children: 'Setting up the admin panel',
+          label: 'Setting up the admin panel',
           to: '/user-docs/settings/managing-global-settings',
         },
       ],
@@ -106,7 +106,7 @@ export default {
 
   /** Help us to improve the documentation */
   huitd: {
-    children: 'Help us improve the documentation',
+    label: 'Help us improve the documentation',
     href: 'https://github.com/strapi/documentation',
   },
 };

@@ -107,7 +107,9 @@ export default function PageHome() {
                     )}
                     {carouselCardButtonProps && (
                       <div className={styles.home__carousel__cta}>
-                        <Button size="huge" {...carouselCardButtonProps} />
+                        <Button size="huge" {...carouselCardButtonProps}>
+                          {carouselCardButtonProps.children || carouselCardButtonProps.label}
+                        </Button>
                       </div>
                     )}
                   </Card>
@@ -165,7 +167,9 @@ export default function PageHome() {
               apart
               className={styles.home__huitd__link}
               {...content.huitd}
-            />
+            >
+              {content.huitd.label}
+            </LinkWithArrow>
           </Container>
         </section>
       </main>
