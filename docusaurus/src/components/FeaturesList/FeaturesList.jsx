@@ -4,10 +4,12 @@ import styles from './features-list.module.scss';
 import { LinkWithArrow } from '../LinkWithArrow/LinkWithArrow';
 
 export function FeatureListItem({
+  children,
   className,
   href,
   icon: Icon,
   iconColor,
+  label,
   to,
   ...rest
 }) {
@@ -35,7 +37,9 @@ export function FeatureListItem({
         href={href}
         to={to}
         {...rest}
-      />
+      >
+        {children || label}
+      </ContentElement>
     </li>
   );
 }

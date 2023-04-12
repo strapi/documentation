@@ -18,9 +18,8 @@ import {
   HeroTitle,
   LinkWithArrow,
 } from '../../components';
+import content from './_home.content';
 
-const pageTitle = 'Strapi’s documentation';
-const pageDescription = 'Get set up in minutes to build any projects in hours instead of weeks.';
 const NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y = 36;
 
 export default function PageHome() {
@@ -35,17 +34,18 @@ export default function PageHome() {
       setIsNavbarTranslucent(window.scrollY <= NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y);
     }
 
+    scrollListener();
     window.addEventListener('scroll', scrollListener);
 
     return () => {
       window.removeEventListener('scroll', scrollListener);
     };
-  }, [isNavbarTranslucent]);
+  }, []);
 
   return (
     <Layout
-      title={pageTitle}
-      description={pageDescription}
+      title={content.page.title}
+      description={content.page.description}
     >
       <style
         dangerouslySetInnerHTML={{
@@ -74,10 +74,10 @@ export default function PageHome() {
         <Hero id="homeHero">
           <Container>
             <HeroTitle>
-              {pageTitle}
+              {content.page.title}
             </HeroTitle>
             <HeroDescription>
-              {pageDescription}
+              {content.page.description}
             </HeroDescription>
           </Container>
         </Hero>
@@ -87,69 +87,31 @@ export default function PageHome() {
         >
           <Container>
             <Carousel>
-              {[
-                {
-                  isContentDelimited: true,
-                  title: 'Can’t wait to use Strapi?',
-                  description: (
-                    <>
-                      {'If demos are more your thing, we have a '}
-                      <a href="https://youtu.be/zd0_S_FPzKg" target="_blank">video demo</a>
-                      {', or you can request a '}
-                      <a href="https://strapi.io/demo" target="_blank">live demo</a>!
-                    </>
-                  ),
-                  children: (
-                    <div className={styles.home__carousel__cta}>
-                      <Button
-                        to="/dev-docs/quick-start"
-                        size="huge"
-                        decorative="🚀"
-                      >
-                        Quick start
-                      </Button>
-                    </div>
-                  ),
-                },
-                {
-                  imgBgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-                  isContentDelimited: true,
-                  variant: 'cloud',
-                  title: 'Strapi Cloud',
-                  description: (
-                    <>
-                      {'If demos are more your thing, we have a '}
-                      <a href="https://youtu.be/zd0_S_FPzKg" target="_blank">video demo</a>
-                      {', or you can request a '}
-                      <a href="https://strapi.io/demo" target="_blank">live demo</a>!
-                    </>
-                  ),
-                  children: (
-                    <div className={styles.home__carousel__cta}>
-                      <Button
-                        to="/cloud/intro"
-                        size="huge"
-                        decorative="☁️"
-                      >
-                        Strapi Cloud
-                      </Button>
-                    </div>
-                  ),
-                },
-              ].map(({
-                children,
-                description,
-                imgBgSrc,
-                imgSrc,
-                title,
-                ...carouselItem
+              {content.carousel.map(({
+                backgroundImgSrc: carouselCardBackgroundImgSrc,
+                title: carouselCardTitle,
+                description: carouselCardDescription,
+                button: carouselCardButtonProps,
+                ...carouselCardRest
               }, carouselItemIndex) => (
                 <CarouselSlide key={`pageHomeCarouselItem${carouselItemIndex}`}>
-                  <Card {...carouselItem}>
-                    {imgBgSrc && <CardImgBg src={imgBgSrc} />}
-                    {title && <CardTitle as="h2">{title}</CardTitle>}
-                    {description && <CardDescription>{description}</CardDescription>}
-                    {children}
+                  <Card isContentDelimited {...carouselCardRest}>
+                    {carouselCardBackgroundImgSrc && (
+                      <CardImgBg src={carouselCardBackgroundImgSrc} />
+                    )}
+                    {carouselCardTitle && (
+                      <CardTitle as="h2">{carouselCardTitle}</CardTitle>
+                    )}
+                    {carouselCardDescription && (
+                      <CardDescription>{carouselCardDescription}</CardDescription>
+                    )}
+                    {carouselCardButtonProps && (
+                      <div className={styles.home__carousel__cta}>
+                        <Button size="huge" {...carouselCardButtonProps}>
+                          {carouselCardButtonProps.children || carouselCardButtonProps.label}
+                        </Button>
+                      </div>
+                    )}
                   </Card>
                 </CarouselSlide>
               ))}
@@ -162,79 +124,13 @@ export default function PageHome() {
         >
           <Container>
             <div className="row row--huge">
-              {[
-                {
-                  card: {
-                    to: '/dev-docs/intro',
-                    title: 'Developer Documentation',
-                    description: 'All you need to get your project up-and-running, and become a Strapi expert',
-                    imgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
-                  },
-                  linksIcon: require('@site/static/img/assets/icons/code.svg').default,
-                  linksIconColor: 'green',
-                  links: [
-                    {
-                      children: 'Installation guides',
-                      to: '/dev-docs/installation',
-                    },
-                    {
-                      children: 'Database configuration',
-                      to: '/dev-docs/configurations/database',
-                    },
-                    {
-                      children: 'Deployment guides',
-                      to: '/dev-docs/deployment',
-                    },
-                    {
-                      children: 'REST API',
-                      to: '/dev-docs/api/rest',
-                    },
-                    {
-                      children: 'GraphQL API',
-                      to: '/dev-docs/api/graphql',
-                    },
-                  ],
-                },
-                {
-                  card: {
-                    to: '/user-docs/intro',
-                    title: 'User Guide',
-                    description: 'Get the most out of the admin panel with our user guide',
-                    imgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
-                  },
-                  linksIcon: require('@site/static/img/assets/icons/feather.svg').default,
-                  linksIconColor: 'blue',
-                  links: [
-                    {
-                      children: 'Getting started in the admin panel',
-                      to: '/user-docs/intro#accessing-the-admin-panel',
-                    },
-                    {
-                      children: 'Creating content-types',
-                      to: '/user-docs/content-type-builder/creating-new-content-type',
-                    },
-                    {
-                      children: 'Configuring content-types fields',
-                      to: '/user-docs/content-type-builder/configuring-fields-content-type',
-                    },
-                    {
-                      children: 'Writing content',
-                      to: '/user-docs/content-manager/writing-content',
-                    },
-                    {
-                      children: 'Setting up the admin panel',
-                      to: '/user-docs/settings/managing-global-settings',
-                    },
-                  ],
-                },
-              ].map(({ card, ...categoryItem }, categoryItemIndex) => {
-                const {
-                  title: cardTitle,
-                  description: cardDescription,
-                  imgSrc: cardImgSrc,
-                  ...cardRest
-                } = (card || {});
-
+              {content.categories.map(({
+                cardTitle: categoryItemCardTitle,
+                cardDescription: categoryItemCardDescription,
+                cardImgSrc: categoryItemCardImgSrc,
+                cardLink: categoryItemCardLink,
+                ...categoryItem
+              }, categoryItemIndex) => {
                 return (
                   <div
                     key={`pageHomeCategoryItem${categoryItemIndex}`}
@@ -244,16 +140,14 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    {card && (
-                      <Card {...cardRest}>
-                        {cardTitle && <CardTitle withArrow>{cardTitle}</CardTitle>}
-                        {cardDescription && <CardDescription>{cardDescription}</CardDescription>}
-                        {cardImgSrc && <CardImg src={cardImgSrc} />}
-                      </Card>
-                    )}
+                    <Card to={categoryItemCardLink}>
+                      {categoryItemCardTitle && <CardTitle withArrow>{categoryItemCardTitle}</CardTitle>}
+                      {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
+                      {categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} />}
+                    </Card>
                     {categoryItem.links && (
                       <FeaturesList
-                        icon={categoryItem.linksIcon}
+                        icon={categoryItem.linksIconSrc}
                         iconColor={categoryItem.linksIconColor}
                         items={categoryItem.links}
                       />
@@ -265,16 +159,16 @@ export default function PageHome() {
           </Container>
         </section>
         <section
-          id="homeHelpUsToImprove"
+          id="homeHelpUsImproveTheDocumentation"
           className={styles.home__huitd}
         >
           <Container>
             <LinkWithArrow
               apart
               className={styles.home__huitd__link}
-              href="https://github.com/strapi/documentation"
+              {...content.huitd}
             >
-              Help us improve the documentation
+              {content.huitd.label}
             </LinkWithArrow>
           </Container>
         </section>
