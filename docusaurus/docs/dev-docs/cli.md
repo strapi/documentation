@@ -189,6 +189,30 @@ Either `--to` or `--from` is required, but it's not currently allowed to enter b
 strapi transfer --to http://example.com/admin --to-token my-transfer-token
 ```
 
+## strapi report
+
+Prints out debug information useful for debugging and required when reporting an issue.
+
+| Option                 | Description                   |
+| ---------------------- | ----------------------------- |
+| `-u`, `--uuid`         | Includes the project UUID     |
+| `-d`, `--dependencies` | Includes project dependencies |
+| `--all`                | Logs all the data             |
+
+**Examples**
+
+To include the project UUID and dependencies in the output:
+
+```bash
+strapi report --uuid --dependencies
+```
+
+To log everything, use the `--all` option:
+
+```bash
+strapi report --all
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
