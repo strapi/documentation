@@ -206,12 +206,13 @@ In the DigitalOcean App Platform there are Global and Component-level environmen
     :::
 2. Add the key-value pairs for the Strapi secrets to the component environment variables table:
 
-    | Variable name      | value                                 |
-    |--------------------|---------------------------------------|
-    | `APP_KEYS`         | `"unique user-generated secrets here"`|
-    | `API_TOKEN_SALT`   | `"unique user-generated secret here"` |
-    | `ADMIN_JWT_SECRET` | `"unique user-generated secret here"` |
-    | `JWT_SECRET`       | `"unique user-generated secret here"` |
+    | Variable name                     | value                                 |
+    |-----------------------------------|---------------------------------------|
+    | `APP_KEYS`                        | `"unique user-generated secrets here"`|
+    | `API_TOKEN_SALT`                  | `"unique user-generated secret here"` |
+    | `ADMIN_JWT_SECRET`                | `"unique user-generated secret here"` |
+    | `JWT_SECRET`                      | `"unique user-generated secret here"` |
+    | (optional)`TRANSFER_TOKEN_SALT`   | `"unique user-generated secret here"` |
 
 3. Click **Next**.
 
