@@ -60,7 +60,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
     ```
 
 2. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
-3. Choose `runLifecyclesfunction` from the list.
+3. Choose `runLifecyclesfunctions` from the list.
 4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
 ## Generate typings for project schemas

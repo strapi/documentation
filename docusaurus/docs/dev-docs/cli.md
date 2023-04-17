@@ -189,6 +189,30 @@ Either `--to` or `--from` is required, but it's not currently allowed to enter b
 strapi transfer --to http://example.com/admin --to-token my-transfer-token
 ```
 
+## strapi report
+
+Prints out debug information useful for debugging and required when reporting an issue.
+
+| Option                 | Description                   |
+| ---------------------- | ----------------------------- |
+| `-u`, `--uuid`         | Includes the project UUID     |
+| `-d`, `--dependencies` | Includes project dependencies |
+| `--all`                | Logs all the data             |
+
+**Examples**
+
+To include the project UUID and dependencies in the output:
+
+```bash
+strapi report --uuid --dependencies
+```
+
+To log everything, use the `--all` option:
+
+```bash
+strapi report --all
+```
+
 ## strapi configuration:dump
 
 **Alias**: `config:dump`
@@ -305,7 +329,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins]docs/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins](/dev-docs/plugins-development.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
 
 ```bash
 strapi generate

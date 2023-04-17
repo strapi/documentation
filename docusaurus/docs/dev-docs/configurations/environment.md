@@ -24,6 +24,9 @@ Strapi provides the following environment variables:
 | `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` <br/><br/>_Optional_ | Initialization locale for the application, if the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) is installed and enabled on Content-Types (see [Configuration of i18n in production environments](/dev-docs/plugins/i18n#configuration-of-the-default-locale)) | `String`  | `'en'`          |
 | `FAST_REFRESH`                                             | Use [react-refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin) to enable "Fast Refresh" for near-instant feedback while developing the Strapi admin panel.                                                                                                       | `boolean` | `true`          |
 
+:::tip
+Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable to the admin front end (e.g., `STRAPI_ADMIN_MY_PLUGIN_VARIABLE` is accessible through `process.env.STRAPI_ADMIN_MY_PLUGIN_VARIABLE`).
+:::
 
 ## Configuration using environment variables
 

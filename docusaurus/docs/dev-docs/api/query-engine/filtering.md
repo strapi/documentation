@@ -283,7 +283,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 
 ### `$between`
 
-Attribute is between the 2 input values.
+Attribute is between the 2 input values, boundaries included (e.g., `$between[1, 3]` will also return `1` and `3`).
 
 **Example**
 
