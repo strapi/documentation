@@ -7,7 +7,7 @@ displayed_sidebar: devDocsSidebar
 
 # Templates
 
-Templates are pre-made Strapi configurations designed for specific use cases. They allow bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/content-type-builder), [components](/dev-docs/backend-customization/models.md#components-2) and [dynamic zones](/dev-docs/backend-customization/models.md#dynamic-zones), and [plugins](/dev-docs/plugins/plugins-intro.md).
+Templates are pre-made Strapi configurations designed for specific use cases. They allow bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/content-type-builder), [components](/dev-docs/backend-customization/models.md#components-2) and [dynamic zones](/dev-docs/backend-customization/models.md#dynamic-zones), and [plugins](/dev-docs/plugins).
 
 :::strapi Templates vs. Starters
 

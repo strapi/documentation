@@ -5,7 +5,7 @@ displayed_sidebar: devDocsSidebar
 
 # Plugins extension
 
-Strapi comes with [plugins](/dev-docs/plugins/plugins-intro) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
+Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
 
 Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/dev-docs/project-structure)). Some plugins automatically create files there, ready to be modified.
 

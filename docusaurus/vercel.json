@@ -405,7 +405,7 @@
       "destination": "/dev-docs/plugins-extension"
     },
     {
-      "source": "/developer-docs/latest/plugins/plugins-intro.html",
+      "source": "/developer-docs/latest/plugins/plugins.html",
       "destination": "/dev-docs/plugins"
     },
     {
