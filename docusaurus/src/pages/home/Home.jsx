@@ -47,16 +47,21 @@ export default function PageHome() {
       title={content.page.title}
       description={content.page.description}
     >
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            ${isNavbarTranslucent && `
+      {isNavbarTranslucent && (
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
               .navbar {
                 --ifm-navbar-background-color: transparent;
                 --ifm-navbar-shadow: none;
               }
-            `}
-
+            `
+          }}
+        />
+      )}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
             html[data-theme='dark'] {
               --ifm-background-color: #181826;
               --ifm-navbar-background-color: #181826;
