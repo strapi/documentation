@@ -17,7 +17,7 @@ A Strapi v3 plugin was enabled if it was manually installed or found in the `plu
 
 In Strapi v4:
 
-- Installed plugins following the [automatic plugins discovery](/dev-docs/plugins/plugins-intro.md#automatic-plugins-discovery) pattern will automatically be enabled.
+- Installed plugins following the [automatic plugins discovery](/dev-docs/plugins#automatic-plugins-discovery) pattern will automatically be enabled.
 - While developing a local plugin, the plugin must explicitly be enabled in [the `./config/plugins.js` file](/dev-docs/configurations//plugins.md) of the Strapi application.
 :::
 

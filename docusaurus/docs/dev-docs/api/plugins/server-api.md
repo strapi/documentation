@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 # Server API for plugins
 
-A Strapi [plugin](/dev-docs/plugins/plugins-intro) can interact with the backend or the [frontend](/dev-docs/api/plugins/admin-panel-api) of the Strapi application. The Server API is about the backend part.
+A Strapi [plugin](/dev-docs/plugins) can interact with the backend or the [frontend](/dev-docs/api/plugins/admin-panel-api) of the Strapi application. The Server API is about the backend part.
 
 Creating and using a plugin interacting with the Server API consists of 2 steps:
 

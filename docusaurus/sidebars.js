@@ -312,7 +312,7 @@ const sidebars = {
             * is defined as the 'id' property.
             */
             type: 'doc',
-            id: 'dev-docs/plugins/plugins-intro',
+            id: 'dev-docs/plugins',
           },
       items: [
             'dev-docs/plugins/documentation',
