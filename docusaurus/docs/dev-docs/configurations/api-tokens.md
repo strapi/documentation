@@ -10,7 +10,7 @@ Authentication strategies in Strapi can either be based on the use of the [Users
 
 Using API tokens allows executing a request on [REST API](/dev-docs/api/rest) or [GraphQL API](/dev-docs/api/graphql) endpoints as an authenticated user. 
 
-It is **useful when you want to give access to people or applications without managing a user account or changing anything in the user roles and permission.**
+API tokens can be helpful to give access to people or applications without managing a user account or changing anything in the Users & Permissions plugin.
 
 ## Creation
 
