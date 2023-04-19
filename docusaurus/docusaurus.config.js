@@ -233,6 +233,10 @@ const config = {
                 label: 'GitHub',
                 href: 'https://github.com/strapi/documentation',
               },
+              {
+                label: 'Strapi.io',
+                href: 'https://strapi.io',
+              }
             ],
           },
         ],
