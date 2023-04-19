@@ -9,16 +9,12 @@
       "destination": "/cloud/intro"
     },
     {
-      "source": "/dev-docs/intro",
-      "destination": "/dev-docs"
-    },
-    {
       "source": "/developer-docs",
       "destination": "/dev-docs"
     },
     {
       "source": "/dev-docs",
-      "destination": "/"
+      "destination": "/dev-docs/intro"
     },
     {
       "source": "/user-docs/getting-started/introduction.html",
