@@ -10,9 +10,9 @@ description: Learn more about requests and responses for Strapi, the most popula
 
 The context object (`ctx`) contains all the requests related information. They are accessible through `ctx.request`, from [controllers](/dev-docs/backend-customization/controllers.md) and [policies](/dev-docs/backend-customization/policies.md).
 
-Strapi passes the `body` on `ctx.request.body` and `files` through `ctx.request.files`
+Strapi passes the `body` on `ctx.request.body`, `query` on `ctx.request.query`, `params` on `ctx.request.params` and `files` through `ctx.request.files`
 
-For more information, please refer to the [Koa request documentation](http://koajs.com/#request).
+For more information, please refer to the [Koa request documentation](http://koajs.com/#request) and [Koa Router documentation](https://github.com/koajs/router/blob/master/API.md).
 
 ## Responses
 
