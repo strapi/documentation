@@ -192,13 +192,17 @@ const config = {
             title: 'Docs',
             items: [
               {
+                label: 'Dev Docs',
+                to: '/dev-docs/intro',
+              },
+              {
                 label: 'User Guide',
                 to: '/user-docs/intro',
               },
               {
-                label: 'Dev Docs',
-                to: '/',
-              },
+                label: 'Strapi Cloud',
+                to: '/cloud/intro'
+              }
             ],
           },
           {
