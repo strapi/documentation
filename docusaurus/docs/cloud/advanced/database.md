@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
 
 # Database
 
-Strapi Cloud provides a pre-configured PostgreSQL database by default. However, it can also be configured to utilize an external SQL database, if needed.
+Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
 :::caution
 While supported, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues.
@@ -67,8 +67,8 @@ To deploy the project and utilize the external database, push the changes from e
 
 ![deployment](https://res.cloudinary.com/dz7knyfbp/image/upload/v1681936928/deploy_h49uly.png)
 
-Once the application is finished building, the project will be using the external database.
+Once the application finishes building, the project will use the external database.
 
 ## Reverting to the default database
 
-To revert back to the default database, remove the previously added environment variables from the Strapi Cloud project dashboard. This will trigger a rebuild and new deployment of the Strapi cloud project.
+To revert back to the default database, remove the previously added environment variables related to the external database from the Strapi Cloud project dashboard. This action will trigger a rebuild and new deployment of the Strapi cloud project.
