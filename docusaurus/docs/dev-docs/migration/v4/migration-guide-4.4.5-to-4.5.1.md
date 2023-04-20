@@ -78,13 +78,17 @@ const getLinkTables = ({ strapi }) => {
   const contentTypes = strapi.db.metadata;
   const tablesToUpdate = {};
 
-  contentTypes.forEach(contentType => {
+  contentTypes.forEach((contentType) => {
     // Get attributes
     const attributes = contentType.attributes;
 
     // For each relation type, add the joinTable name to tablesToUpdate
-    Object.values(attributes).forEach(attribute => {
-      if (attribute.type === 'relation' && attribute.joinTable) {
+    Object.values(attributes).forEach((attribute) => {
+      if (
+        attribute.type === 'relation' &&
+        attribute.joinTable &&
+        !attribute.relation.startsWith('morph') // Ignore polymorphic relations
+      ) {
         tablesToUpdate[attribute.joinTable.name] = attribute.joinTable;
       }
     });
