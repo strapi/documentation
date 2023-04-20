@@ -10,13 +10,7 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
 :::caution
-While supported, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues.
-
-### Caveats
-
-- Network latency may impact performance.
-- Strapi cannot provide security for external databases.
-- Strapi cannot provide support for external databases.
+While supported, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). Strapi cannot provide security or support for external databases.
 
 :::
 
@@ -24,46 +18,42 @@ While supported, it is not recommended to use an external database with Strapi C
 
 - A local Strapi project running on `v4.8.1+`.
 - Credentials for external database.
-- If using an existing database,
-- the schema must match the Strapi project schema.
+- If using an existing database, the schema must match the Strapi project schema.
 
 :::
 
 ## Configuration
 
-It is important to ensure that the project `./config/database.js` or `./config/database.ts` file matches the configuration found in the [Environment variables in database configurations](https://docs.strapi.io/dev-docs/configurations/database#environment-variables-in-database-configurations) section.
+The project `./config/database.js` or `./config/database.ts` file must match the configuration found in the [environment variables in database configurations](https://docs.strapi.io/dev-docs/configurations/database#environment-variables-in-database-configurations) section.
 
-:::tip
-Before pushing changes, it is recommended to log into the Strapi Cloud project dashboard to add the environment variables.
+Before pushing changes, add environment variables to the Strapi Cloud project:
 
-:::
+1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
+2.  Click on the **Settings** tab and choose **Variables** in the left menu.
+3.  Add the following environment variables:
 
-In the Strapi Cloud project dashboard, navigate to the `Variables` section under the `Settings` tab and click `Add variable`. Once the variables are added, click `Save`.
+    | Variable                           | Value            |
+    | ---------------------------------- | ---------------- |
+    | `DATABASE_CLIENT`                  | your_db          |
+    | `DATABASE_HOST`                    | your_db_host     |
+    | `DATABASE_PORT`                    | your_db_port     |
+    | `DATABASE_NAME`                    | your_db_name     |
+    | `DATABASE_USERNAME`                | your_db_username |
+    | `DATABASE_PASSWORD`                | your_db_password |
+    | `DATABASE_SSL`                     | true             |
+    | `DATABASE_SSL_REJECT_UNAUTHORIZED` | false            |
+    | `DATABASE_SCHEMA`                  | public           |
 
-![environment variables](https://res.cloudinary.com/dz7knyfbp/image/upload/v1681936336/env_var_rw55uy.png)
+4.  Click **Save**.
 
-The following environment variables will need to be set:
-
-| Variable                           | Value            |
-| ---------------------------------- | ---------------- |
-| `DATABASE_CLIENT`                  | your_db          |
-| `DATABASE_HOST`                    | your_db_host     |
-| `DATABASE_PORT`                    | your_db_port     |
-| `DATABASE_NAME`                    | your_db_name     |
-| `DATABASE_USERNAME`                | your_db_username |
-| `DATABASE_PASSWORD`                | your_db_password |
-| `DATABASE_SSL`                     | true             |
-| `DATABASE_SSL_REJECT_UNAUTHORIZED` | false            |
-| `DATABASE_SCHEMA`                  | public           |
-
-:::tip
+:::caution
 To ensure a smooth deployment, it is recommended to not change the names of the environment variables.
 
 :::
 
 ## Deployment
 
-To deploy the project and utilize the external database, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi cloud project.
+To deploy the project and utilize the external database, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
 ![deployment](https://res.cloudinary.com/dz7knyfbp/image/upload/v1681936928/deploy_h49uly.png)
 
@@ -71,4 +61,4 @@ Once the application finishes building, the project will use the external databa
 
 ## Reverting to the default database
 
-To revert back to the default database, remove the previously added environment variables related to the external database from the Strapi Cloud project dashboard. This action will trigger a rebuild and new deployment of the Strapi cloud project.
+To revert back to the default database, remove the previously added environment variables related to the external database from the Strapi Cloud project dashboard. This action will trigger a rebuild and new deployment of the Strapi Cloud project.
