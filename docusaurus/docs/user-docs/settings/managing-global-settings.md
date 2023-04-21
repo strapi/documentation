@@ -144,7 +144,7 @@ To regenerate an API token:
 3. Click on the **Regenerate** button to confirm in the dialog.
 4. Copy the new API token displayed at the top of the interface.
 
-## Managing transfer tokens <BetaBadge />
+## Managing transfer tokens
 
 :::prerequisites
 * Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
