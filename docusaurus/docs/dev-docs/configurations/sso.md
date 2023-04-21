@@ -161,6 +161,55 @@ export default [
 
 </details>
 
+:::note
+When deploying the admin panel to a different location or on a different subdomain an additional configuration is required to set the common domain for the cookies. This is required to ensure that the cookies are shared across the different domains.
+:::
+
+:::caution
+Deploying the admin and backend on entirely different unrelated domains is not possible at this time when using SSO.
+:::
+
+<details>
+  <summary>Example: Setting custom cookie domain</summary>
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="./config/admin.js"
+module.exports = ({ env }) => ({
+  auth: {
+    domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
+    providers: [
+      // ...
+    ],
+  },
+  url: env("ADMIN_URL", "http://admin.test.example.com"),
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./config/admin.ts"
+export default ({ env }) => ({
+  auth: {
+    domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
+    providers: [
+      // ...
+    ],
+  },
+  url: env("ADMIN_URL", "http://admin.test.example.com"),
+  // ...
+});
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
 ### The `createStrategy` Factory
 
 A passport strategy is usually built by instantiating it using 2 parameters: the configuration object, and the verify function.
