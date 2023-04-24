@@ -518,6 +518,7 @@ const sidebars = {
             'user-docs/settings/API-tokens',
             'user-docs/settings/internationalization',
             'user-docs/settings/media-library-settings',
+            'user-docs/settings/review-workflows',
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
           ]
