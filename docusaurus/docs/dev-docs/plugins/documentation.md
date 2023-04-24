@@ -153,6 +153,11 @@ module.exports = {
 
 If you simply want to exclude certain apis or plugins from being generated you can use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
 
+:::note
+`excludeFromGeneration` gives more fine grained control over what is generated.
+
+For example, pluginA might create several new apis while pluginB may only want to generate documentation for some of those apis. In that case pluginB could still benefit from the generated documentation it does need by excluding only what it does not need.
+:::
 
 **`excludeFromGeneration()`**
 
