@@ -40,7 +40,6 @@ Before pushing changes, add environment variables to the Strapi Cloud project:
     | `DATABASE_NAME`                    | your_db_name     |
     | `DATABASE_USERNAME`                | your_db_username |
     | `DATABASE_PASSWORD`                | your_db_password |
-    | `DATABASE_SSL`                     | true             |
     | `DATABASE_SSL_REJECT_UNAUTHORIZED` | false            |
     | `DATABASE_SCHEMA`                  | public           |
 
