@@ -10,7 +10,7 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
 :::caution
-While supported, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). Strapi cannot provide security or support for external databases.
+While possible, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). Strapi cannot provide security or support with configuring external databases.
 
 :::
 
