@@ -2,7 +2,11 @@
 title: Middlewares
 ---
 
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+
 # Middlewares customization
+
+<FeedbackCallout components={props.components}/>
 
 :::strapi Different types of middlewares
 
