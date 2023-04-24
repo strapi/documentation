@@ -440,7 +440,7 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 
 :::note
-Both logos can also be customized directly via the admin panel (see [User Guide](/user-docs/settings/managing-global-settings.md)).
+Both logos can also be customized directly via the admin panel (see [User Guide](/user-docs/settings/admin-panel.md)).
 Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
