@@ -480,28 +480,6 @@ const sidebars = {
         }
       ]
     },
-/*     {
-      type: 'category',
-      collapsed: false,
-      label: 'General Settings',
-      items: [
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'General Settings',
-          items: [
-            '/user-docs/admin-panel',
-            '/user-docs/single-sign-on',
-            '/user-docs/internationalization',
-            '/user-docs/single-sign-on',
-            '/user-docs/media-library-settings',
-            '/user-docs/API-tokens',
-            '/user-docs/transfer-tokens',
-          ]
-        },
-    
-      ]
-    }, */
     {
       type: 'category',
       collapsed: false,
