@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+title: Single Sign-On
 ---
 
 # Configuring Single Sign-On <EnterpriseBadge />

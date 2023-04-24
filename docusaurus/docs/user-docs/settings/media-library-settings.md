@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+title: Media Library
 ---
 
 # Configuring the Media Library

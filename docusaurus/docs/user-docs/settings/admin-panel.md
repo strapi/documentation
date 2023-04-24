@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+title: Overview & Custom logo
 ---
 
 # Customizing the admin panel

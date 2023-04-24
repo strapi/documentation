@@ -1,5 +1,5 @@
 ---
-title: Managing Review Workflows
+title: Review Workflows
 description: Managing your review workflows and stages in Strapi.
 ---
 

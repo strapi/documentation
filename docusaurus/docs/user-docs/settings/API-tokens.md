@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+title: API tokens
 ---
 
 # Managing API tokens
