@@ -54,25 +54,24 @@ This plugin comes with an interface that is available in your administration pan
 
 By default, your documentation will be accessible by anyone.
 
-If you want to restrict API documentation access, you must enable the **Restricted Access** option.
+To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
 
-- Go to **Settings**, **Documentation**
-- Toggle **Restricted Access** to `ON`
-- Select a password in the `password` input
-- Save your settings
-
-The API documentation is now password restricted.
+1. Navigate to ![Settings icon](/img/assets/icons/settings.svg) *Settings* in the main navigation of the admin panel.
+2. Choose **Documentation**.
+3. Toggle **Restricted Access** to `ON`.
+4. Define a password in the `password` input.
+5. Save the settings.
 
 ### Regenerate documentation
 
-There are 2 ways to update the documentation after making changes to your API. 
+There are 2 ways to update the documentation after making changes to your API:
 
-1. Restart your application to regenerate the version of the documentation specified in the documentation plugin's config.
-2. Go to the Documentation plugin page and click the **regenerate** button for the documentation version you want to regenerate.
+- restart your application to regenerate the version of the documentation specified in the Documentation plugin's configuration,
+- or go to the Documentation plugin page and click the **regenerate** button for the documentation version you want to regenerate.
 
 ## Configuration
 
-The Documentation plugin is initialized with the following configuration, where all properties can be altered by providing new values to the documentation plugin's config object in `config/plugins.js`:
+The Documentation plugin is initialized with the following configuration, where all properties can be altered by providing new values to the documentation plugin's configuration object in `config/plugins.js`:
 
 ```js
 {
@@ -124,9 +123,9 @@ module.exports = {
 
 ### Indicate which plugins need documentation generated
 
-If you want plugins to be included in documentation generation, they should be included in the `plugins` array on the `x-strapi-config`. By default the array is initialized with `["upload", "users-permissions"]`.
+If you want plugins to be included in documentation generation, they should be included in the `plugins` array on the `x-strapi-config`. By default, the array is initialized with `["upload", "users-permissions"]`.
 
-Similarly, if you do not want plugins to be included in documentation generation, provide an empty array.
+Similarly, if you do not want plugins to be included in documentation generation, provide an empty array:
 
 ```js title="config/plugins.js"
 
@@ -151,12 +150,12 @@ module.exports = {
 
 ### Excluding from generation
 
-If you simply want to exclude certain apis or plugins from being generated you can use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
 
 :::note
-`excludeFromGeneration` gives more fine grained control over what is generated.
+`excludeFromGeneration` gives more fine-grained control over what is generated.
 
-For example, pluginA might create several new apis while pluginB may only want to generate documentation for some of those apis. In that case pluginB could still benefit from the generated documentation it does need by excluding only what it does not need.
+For example, pluginA might create several new APIs while pluginB may only want to generate documentation for some of those APIs. In that case, pluginB could still benefit from the generated documentation it does need by excluding only what it does not need.
 :::
 
 **`excludeFromGeneration()`**
@@ -164,7 +163,6 @@ For example, pluginA might create several new apis while pluginB may only want t
 | Parameter | Type                       | Description                                              |
 | --------- | -------------------------- | -------------------------------------------------------- |
 | `api`       | String or Array of Strings | The name of the API/plugin, or list of names, to exclude |
-
 
 ```js title="Application or plugin register lifecycle"
 
@@ -195,13 +193,13 @@ To provide an override, use the `registerOverride` function found on the Documen
 
 | Parameter                     | Type                      | Description                                                                                                   |
 | ----------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| override                      | Object                    | OpenAPI object including any of the following keys paths, tags, components. Accepts JavaScript, JSON, or yaml |
-| options                       | Object                    | Accepts pluginOrigin and excludeFromGeneration                                                                |
-| options.pluginOrigin          | String                    | The plugin that is registering the override                                                                   |
-| options.excludeFromGeneration | String or Array of String | The name of the api/plugin, or list of names, to exclude                                                      |
+| `override`                     | Object                    | OpenAPI object including any of the following keys paths, tags, components. Accepts JavaScript, JSON, or yaml |
+| `options`                      | Object                    | Accepts `pluginOrigin` and `excludeFromGeneration`                                                               |
+| `options.pluginOrigin`          | String                    | The plugin that is registering the override                                                                   |
+| `options.excludeFromGeneration` | String or Array of String | The name of the API/plugin, or list of names, to exclude                                                      |
 
 :::caution
-Plugin developers providing an override should always specify the `pluginOrigin` options key. Otherwise the override will run regardless of the user’s config.
+Plugin developers providing an override should always specify the `pluginOrigin` options key. Otherwise the override will run regardless of the user’s configuration.
 :::
 
 The Documentation plugin will use the registered overrides to replace the value of common keys on the generated documentation with what the override provides. If no common keys are found, the plugin will add new keys to the generated documentation.
