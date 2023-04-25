@@ -151,7 +151,7 @@ const Home = ({ restaurants, error }) => {
   return (
     <ul>
       {restaurants.data.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.attributes.name}</li>
+        <li key={restaurant.id}>{restaurant.attributes.Name}</li>
       ))}
     </ul>
   );
@@ -184,7 +184,7 @@ const Home = ({ restaurants, error }) => {
   return (
     <ul>
       {restaurants.data.map(restaurant => (
-        <li key={restaurant.id}>{restaurant.attributes.name}</li>
+        <li key={restaurant.id}>{restaurant.attributes.Name}</li>
       ))}
     </ul>
   );
@@ -378,7 +378,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.attributes.name}</label>
+        <label htmlFor={category.id}>{category.attributes.Name}</label>
         <input
           type="checkbox"
           checked={isChecked}
@@ -508,7 +508,7 @@ const Home = ({ allCategories, errorCategories }) => {
     };
     return (
       <div key={category.id}>
-        <label htmlFor={category.id}>{category.attributes.name}</label>
+        <label htmlFor={category.id}>{category.attributes.Name}</label>
         <input
           type="checkbox"
           checked={isChecked}
