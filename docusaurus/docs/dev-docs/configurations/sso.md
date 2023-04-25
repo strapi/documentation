@@ -162,7 +162,7 @@ export default [
 </details>
 
 :::note
-When deploying the admin panel to a different location or on a different subdomain an additional configuration is required to set the common domain for the cookies. This is required to ensure that the cookies are shared across the different domains.
+When deploying the admin panel to a different location or on a different subdomain, an additional configuration is required to set the common domain for the cookies. This is required to ensure the cookies are shared across the domains.
 :::
 
 :::caution
