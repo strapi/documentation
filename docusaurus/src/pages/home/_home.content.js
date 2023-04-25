@@ -11,7 +11,7 @@ export default {
       description: (
         <>
           {'If demos are more your thing, we have a '}
-          <a href="https://youtu.be/zd0_S_FPzKg" target="_blank">video demo</a>
+          <a href="https://youtu.be/h9vETeRiulY" target="_blank">video demo</a>
           {', or you can request a '}
           <a href="https://strapi.io/demo" target="_blank">live demo</a>!
         </>
