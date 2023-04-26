@@ -42,6 +42,12 @@ Once the plugin is installed, starting the application generates the API documen
 
 The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select *Plugins > ![Documentation plugin icon](/img/assets/icons/documentation-plugin.svg) Documentation* in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
+:::tip
+Once installed, the Documentation plugin UI can be accessed at the following URL:
+`<server-url>:<server-port>/documentation/<documentation-version>`
+(e.g., [`localhost:1337/documentation/v1.0.0`](http://localhost:1337/documentation/v1.0.0)).
+:::
+
 ### Authenticated requests
 
 Strapi is secured by default, which means that most of your end-points require the user to be authorized. If the action has not been set to public in users and permission then you must provide your JWT. To do this, click the “Authorize” button and paste your JWT.
