@@ -40,7 +40,13 @@ Once the plugin is installed, starting the application generates the API documen
 
 ## Swagger UI
 
-The documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select "Documentation" in the left sidebar under the "plugins" section. Then click "Open documentation" to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select *Plugins > ![Documentation plugin icon](/img/assets/icons/documentation-plugin.svg) Documentation* in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+
+:::tip
+Once installed, the Documentation plugin UI can be accessed at the following URL:
+`<server-url>:<server-port>/documentation/<documentation-version>`
+(e.g., [`localhost:1337/documentation/v1.0.0`](http://localhost:1337/documentation/v1.0.0)).
+:::
 
 ### Authenticated requests
 
