@@ -229,9 +229,6 @@ const sidebars = {
           type: 'doc',
           label: 'Providers',
           id: 'dev-docs/providers',
-          customProps: {
-            new: true,
-          },
         }
       ]
     },
@@ -256,9 +253,6 @@ const sidebars = {
             type: 'doc',
             label: 'Data transfer',
             id: 'dev-docs/data-management/transfer',
-            customProps: {
-              new: true,
-            },
           }
          ],
         },
@@ -315,7 +309,14 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
-            'dev-docs/plugins/documentation',
+            {
+              type: 'doc',
+              label: 'Documentation',
+              id: 'dev-docs/plugins/documentation',
+              customProps: {
+                new: true,
+              },
+            },
             'dev-docs/plugins/email',
             'dev-docs/plugins/graphql',
             'dev-docs/plugins/i18n',
@@ -496,7 +497,14 @@ const sidebars = {
             'user-docs/settings/API-tokens',
             'user-docs/settings/internationalization',
             'user-docs/settings/media-library-settings',
-            'user-docs/settings/review-workflows',
+            {
+              type: 'doc',
+              label: 'Review Workflows',
+              id: 'user-docs/settings/review-workflows',
+              customProps: {
+                new: true,
+              },
+            },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
           ]
@@ -527,9 +535,6 @@ const sidebars = {
           type: 'doc',
           label: 'Notifications',
           id: 'cloud/projects/notifications',
-          customProps: {
-            new: true,
-          },
         },
       ]
     },
