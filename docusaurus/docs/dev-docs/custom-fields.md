@@ -34,11 +34,19 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 
 `strapi.customFields.register()` registers one or several custom field(s) on the server by passing an object (or an array of objects) with the following parameters:
 
-| Parameter                      | Description                                       | Type     |
-| ------------------------------ | ------------------------------------------------- | -------- |
-| `name`                         | The name of the custom field                      | `String` |
-| `plugin`<br/><br/>(_optional_) | The name of the plugin creating the custom fields | `String` |
-| `type`                         | The data type the custom field will use           | `String` |
+| Parameter                         | Description                                                                 | Type     |
+| --------------------------------- | --------------------------------------------------------------------------- | -------- |
+| `name`                            | The name of the custom field                                                | `String` |
+| `plugin`<br/><br/>(_optional_)    | The name of the plugin creating the custom fields                           | `String` |
+| `type`                            | The data type the custom field will use                                     | `String` |
+| `inputSize`<br/><br/>(_optional_) | Parameters to define the width of a custom field's input in the admin panel | `Object` |
+
+The optional `inputSize` object, when specified, must contain all of the following parameters:
+
+| Parameter     | Description                                                                                                                                               | Type      |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `default`     | The default size in columns that the input field will occupy in the 12-column grid in the admin panel.<br/>The value can either be `4`, `6`, `8` or `12`. | `Integer` |
+| `isResizable` | Whether the input can be resized or not                                                                                                                   | `Boolean` |
 
 :::note
 Currently, custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
@@ -58,6 +66,10 @@ module.exports = ({ strapi }) => {
     name: 'color',
     plugin: 'color-picker',
     type: 'string',
+    inputSize: { // optional
+      default: 4,
+      isResizable: true,
+    },
   });
 };
 ```
@@ -72,6 +84,10 @@ module.exports = {
       name: 'color',
       plugin: 'color-picker',
       type: 'text',
+      inputSize: { // optional
+        default: 4,
+        isResizable: true,
+      },
     });
   },
 };
