@@ -141,3 +141,7 @@ With the above [requirements](#requirements) in mind, follow these steps to crea
 4. Navigate to this path to see your generated template.
 5. If you have modified your application's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. If not, leave it as an empty object.
 6. Enter `npm publish` to make your template available on the npm package registry.
+
+:::strapi List of templates
+[Strapi-maintained](https://github.com/strapi/starters-and-templates) templates and [community-maintained](https://github.com/strapi/community-content/tree/master/templates) templates can be found on GitHub.
+:::
