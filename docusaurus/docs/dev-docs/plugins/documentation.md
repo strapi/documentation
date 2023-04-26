@@ -208,7 +208,6 @@ If the override completely replaces what the documentation generates, you can sp
 
 If the override should only be applied to a specific version, the override must include a value for `info.version`. Otherwise, the override will run on all documentation versions.
 
-
 ```js title="Application or plugin register lifecycle"
 
 module.exports = {
@@ -248,8 +247,7 @@ The Documentation plugin’s configuration also accepts a `mutateDocumentation` 
 
 | Parameter                   | Type   | Description                                                            |
 | --------------------------- | ------ | ---------------------------------------------------------------------- |
-| generatedDocumentationDraft | Object | The generated documentation with applied overrides as a mutable object |
-
+| `generatedDocumentationDraft` | Object | The generated documentation with applied overrides as a mutable object |
 
 ```js title="config/plugins.js"
 
