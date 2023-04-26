@@ -5,7 +5,7 @@ description: Track errors in your Strapi application.
 
 ---
 
-# Sentry
+# Sentry plugin
 
 This plugin enables you to track errors in your Strapi application using [Sentry](https://sentry.io/welcome/).
 

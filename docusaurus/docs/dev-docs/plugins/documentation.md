@@ -1,10 +1,10 @@
 ---
-title: API Documentation
+title: Documentation
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 ---
 
-# API Documentation
+# Documentation plugin
 
 The Documentation plugin is useful to document the available endpoints once you created an API.
 

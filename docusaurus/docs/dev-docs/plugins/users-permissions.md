@@ -6,7 +6,7 @@ description: Protect your API with a full authentication process based on JWT an
 
 ---
 
-# Users & Permissions
+# Users & Permissions plugin
 
 This plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API. It also provides an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 

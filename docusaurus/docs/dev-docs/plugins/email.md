@@ -5,7 +5,7 @@ description: Send email from your server or externals providers.
 
 ---
 
-# Email
+# Email plugin
 
 The Email plugin enables applications to send emails from a server or an external provider. The Email plugin uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application. Two of the most common use cases are in the Strapi back end and in the admin panel. The following documentation describes how to use the Email plugin in a controller or service for back-end use cases and using a lifecycle hook for admin panel use cases.
 
