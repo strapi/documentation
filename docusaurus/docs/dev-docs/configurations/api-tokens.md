@@ -14,7 +14,7 @@ API tokens can be helpful to give access to people or applications without manag
 
 ## Creation
 
-New API tokens are generated from the [admin panel](/user-docs/settings/managing-global-settings#managing-api-tokens).
+New API tokens are generated from the [admin panel](/user-docs/settings/API-tokens).
 
 ## Usage
 

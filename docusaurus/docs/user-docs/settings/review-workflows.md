@@ -1,42 +1,38 @@
 ---
-title: Managing Review Workflows
+title: Review Workflows
 description: Managing your review workflows and stages in Strapi.
 ---
 
-# Managing Review Workflows <EnterpriseBadge /> <BetaBadge />
+# Managing Review Workflows <EnterpriseBadge />
 
-The Review Workflows feature allows you to create and manage any desired review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication. Configured review workflows are available in the [Content Manager](/user-docs/content-manager/reviewing-content) and [Content-Types Builder](/user-docs/content-type-builder).
-
-:::note
-Review Workflows are only available with the Enterprise Edition. If for any reason your project was downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
-:::
-
-## Configuring Review workflows
+The Review Workflows feature allows you to create and manage any desired review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication. Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content) and [Content-Types Builder](/user-docs/content-type-builder), review workflows should be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*.
 
 :::note
-The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permission. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
+- The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permission. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
+- Review Workflows are only available with the Enterprise Edition. If for any reason your project was downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
 :::
-
-Review workflow settings are available in the **Settings** section of the admin panel. To access the settings, click on the **Settings** icon in the left-hand menu, then click on the **Review Workflows** link in the **Global Settings** section.
 
 ![Review Workflows Settings](/img/assets/review-workflows/review-workflows.png)
 
-There are four stages in the default review workflow available in Strapi: **To do**, **In progress**, **Ready to review**, and **Reviewed**. You can add, edit, or delete stages as needed. 
+There are 4 stages in the default review workflow available in Strapi: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited or deleted as needed, and it is also possible to add new stages.
 
-### Adding a new stage
+## Adding a new stage
 
-To add a new stage, click on the **Add a new stage** button. A new stage will be added to the bottom of the list. You can then edit the stage name and description as needed.
+To add a new stage in the review workflows:
 
-![Adding a new stage](/img/assets/review-workflows/add-stage.png)
+1. Click on the **Add new stage** button.
+2. Write the *Stage name*.
+3. Click on the **Save** button.
 
-### Deleting a stage
+## Deleting a stage
 
 :::warning Pending reviews on deleted stages
 If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow.
 :::
 
-To delete a stage, click on the **Delete** button next to the stage you want to remove. A confirmation modal will appear. Click on the **Save** button to confirm the deletion.
+To delete a stage from the review workflows:
 
-![Deleting a stage](/img/assets/review-workflows/delete-stage.png)
+1. Click on the ![delete button](/img/assets/icons/delete.svg) **Delete** button next to the stage you want to remove.
+2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion.
 
 <FeedbackPlaceholder />

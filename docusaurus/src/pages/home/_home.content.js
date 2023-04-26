@@ -98,7 +98,7 @@ export default {
         },
         {
           label: 'Setting up the admin panel',
-          to: '/user-docs/settings/managing-global-settings',
+          to: '/user-docs/settings/admin-panel',
         },
       ],
     },

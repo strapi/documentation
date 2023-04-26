@@ -3,7 +3,7 @@ title: Reviewing content
 description: Using review workflows to manage content throughout the content creation process.
 ---
 
-# Reviewing content <EnterpriseBadge /> <BetaBadge />
+# Reviewing content <EnterpriseBadge />
 
 Using the [review workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content from the edit view, and keep moving it between stages as needed.
 
