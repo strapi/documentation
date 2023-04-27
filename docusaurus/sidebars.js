@@ -546,6 +546,14 @@ const sidebars = {
         'cloud/account/settings',
       ]
     },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Advanced configuration',
+      items: [
+        'cloud/advanced/database'
+      ]
+    }
   ],
 };
 
