@@ -7,6 +7,12 @@ displayed_sidebar: devDocsSidebar
 
 Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
 
+:::warning
+* Any update to the plugin you extended could make a change that breaks your extensions for that specific plugin.
+* New versions of Strapi are released with [migration guides](/dev-docs/migration-guides) when required, but these guides never cover plugin extensions. Consider forking a plugin if extensive customizations are required.
+* Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future versions of Strapi.
+:::
+
 Plugin extensions code is located in the `./src/extensions` folder (see [project structure](/dev-docs/project-structure)). Some plugins automatically create files there, ready to be modified.
 
 <details> 
@@ -30,11 +36,6 @@ Plugins can be extended in 2 ways:
 
 - [extending the plugin's content-types](#extending-a-plugin-s-content-types)
 - [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
-
-:::warning
-* New versions of Strapi are released with [migration guides](/dev-docs/migration-guides), but these guides might not cover unexpected breaking changes in your plugin extensions. Consider forking a plugin if extensive customizations are required. 
-* Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future major versions of Strapi.
-:::
 
 ## Extending a plugin's content-types
 
