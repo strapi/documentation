@@ -17,5 +17,5 @@ Occasionally, you need to move data out of or into a Strapi instance. This is po
 The following documentation gives explanations and examples for the export, import, and transfer commands, while the [CLI reference documentation](/dev-docs/cli#strapi-export) lists all available flags in a condensed format.
 
 :::caution
-Interactive CLI commands do not currently work with the `npm` package manager. For `strapi export` and `strapi import` this means the encryption key prompt is not visible in the CLI. A fix is anticipated by early March 2023. In the meantime consider using the `yarn` package manager.
+Interactive CLI commands do not currently work with the `npm` package manager. For `strapi export` and `strapi import` this means the encryption key prompt is not visible in the CLI. In the meantime consider using the `yarn` package manager.
 :::
