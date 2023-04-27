@@ -8,7 +8,7 @@ displayed_sidebar: devDocsSidebar
 Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
 
 :::warning
-* Any update to the plugin you extended could make a change that breaks your extensions for that specific plugin.
+* Any plugin update could break this plugin's extensions.
 * New versions of Strapi are released with [migration guides](/dev-docs/migration-guides) when required, but these guides never cover plugin extensions. Consider forking a plugin if extensive customizations are required.
 * Currently, the admin panel part of a plugin can only be extended using [patch-package](https://www.npmjs.com/package/patch-package), but please consider that doing so might break your plugin in future versions of Strapi.
 :::
