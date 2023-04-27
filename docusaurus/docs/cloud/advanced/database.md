@@ -60,4 +60,4 @@ Once the application finishes building, the project will use the external databa
 
 ## Reverting to the default database
 
-To revert back to the default database, remove the previously added environment variables related to the external database from the Strapi Cloud project dashboard. This action will trigger a rebuild and new deployment of the Strapi Cloud project.
+To revert back to the default database, remove the previously added environment variables related to the external database from the Strapi Cloud project dashboard, and save. For the changes to take effect, you must redeploy the Strapi Cloud project.
