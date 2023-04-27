@@ -24,7 +24,7 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 - Confirm there are no [migrations](/dev-docs/migration-guides) between the current and ultimate Strapi versions.
 :::
 
-1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version:
+1. Upgrade all of the Strapi packages version numbers in `package.json` to the latest stable Strapi version (Strapi stable versions are listed on the [GitHub releases page](https://github.com/strapi/strapi/releases)):
 
     ```jsx
     // path: package.json
