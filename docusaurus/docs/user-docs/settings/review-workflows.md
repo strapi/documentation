@@ -14,7 +14,7 @@ The Review Workflows feature allows you to create and manage any desired review 
 
 ![Review Workflows Settings](/img/assets/review-workflows/review-workflows.png)
 
-There are 4 stages in the default review workflow available in Strapi: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited or deleted as needed, and it is also possible to add new stages.
+There are 4 stages in the default review workflow available in Strapi: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
 ## Adding a new stage
 
@@ -22,7 +22,12 @@ To add a new stage in the review workflows:
 
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
+3. Select a *Color*
 3. Click on the **Save** button.
+
+:::tip
+By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/drag.svg) button.
+:::
 
 ## Deleting a stage
 
