@@ -10,6 +10,9 @@ import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'
 
 Strapi provides a Query Engine API to interact with the database layer at a lower level. It should mostly be used by plugin developers and developers adding custom business logic to their applications. In most use cases, it's recommended to use the [Entity Service API](/dev-docs/api/entity-service/) instead.
 
+:::warning
+Only use the Query Engine API if the [Entity Service API](/dev-docs/api/entity-service/) does not cover your use case.
+:::
 :::strapi Entity Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
 :::

@@ -6,6 +6,12 @@ displayed_sidebar: devDocsSidebar
 
 # Filtering
 
+:::warning
+Entity service has the same filter functionality as where only under the filter and not where.
+It is highly recommended you use the entity service over the query engine.
+see [entity service filter documentation](http://localhost:8080/dev-docs/api/entity-service/filter)
+:::
+
 The [Query Engine API](/dev-docs/api/query-engine/) offers the ability to filter results found with its [findMany()](/dev-docs/api/query-engine/single-operations#findmany) method.
 
 Results are filtered with the `where` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.

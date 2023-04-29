@@ -6,6 +6,12 @@ displayed_sidebar: devDocsSidebar
 
 # Populating
 
+:::warning
+Entity service has the same population functionality.
+see [entity service order & pagination documentation](http://localhost:8080/dev-docs/api/entity-service/order-pagination)
+It is highly recommended you use the entity service over the query engine.
+:::
+
 Relations and components have a unified API for populating them.
 
 To populate all the root level relations, use `populate: true`:
