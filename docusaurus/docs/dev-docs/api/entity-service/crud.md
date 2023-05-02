@@ -59,7 +59,7 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 | `limit`   | Number of entries to return (see [pagination](/dev-docs/api/entity-service/order-pagination#pagination)) | `Number`  |
 | `sort`   | [Order](/dev-docs/api/entity-service/order-pagination) definition  | [`OrderByParameter`](/dev-docs/api/entity-service/order-pagination) |
 | `populate`  | Relations, components and dynamic zones to [populate](/dev-docs/api/entity-service/populate)  | [`PopulateParameter`](/dev-docs/api/entity-service/populate)         |
-| `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries (default)</li><li>`preview` to return both draft entries & published entries</li></ul>   | `PublicationStateParameter`  |
+| `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries</li><li>`preview` to return both draft entries & published entries (default)</li></ul>   | `PublicationStateParameter`  |
 
 ### Example
 
