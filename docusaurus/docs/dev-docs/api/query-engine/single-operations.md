@@ -10,7 +10,7 @@ import ManagingRelations from '/docs/snippets/managing-relations.md'
 ## findOne()
 
 :::note
- Only use the Query Engine's findOne if the [Entity Service](/dev-docs/api/entity-service/crud#findone) can't cover your use case.
+ Only use the Query Engine's findOne if the [Entity Service findOne](/dev-docs/api/entity-service/crud#findone) can't cover your use case.
 :::
 Finds the first entry matching the parameters.
 
