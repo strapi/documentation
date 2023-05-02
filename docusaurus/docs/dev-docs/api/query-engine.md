@@ -5,6 +5,7 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'
+import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 
 # Query Engine API
 
@@ -13,6 +14,8 @@ Strapi provides a Query Engine API to interact with the database layer at a lowe
 :::strapi Entity Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
 :::
+
+<RecommendEntityService/>
 
 ## Basic usage
 
