@@ -9,9 +9,8 @@ import ManagingRelations from '/docs/snippets/managing-relations.md'
 
 ## findOne()
 
-:::warning
-Only use if findMany or findOne on the entity service can't solve your problem.
-see [entity service findOne documentation](/dev-docs/api/entity-service/crud#findone)
+:::note
+ Only use the Query Engine's findOne if the [Entity Service](/dev-docs/api/entity-service/crud#findone) can't cover your use case.
 :::
 Finds the first entry matching the parameters.
 
@@ -39,10 +38,10 @@ const entry = await strapi.db.query('api::blog.article').findOne({
 
 ## findMany()
 
-:::warning
-Only findMany on the entity service can't solve your problem.
-see [entity service findMany documentation](/dev-docs/api/entity-service/crud#findmany)
+:::note
+ Only use the Query Engine's findMany if the [Entity Service findMany](/dev-docs/api/entity-service/crud#findmany) can't cover your use case.
 :::
+
 Finds entries matching the parameters.
 
 Syntax: `findMany(parameters) ⇒ Entry[]`
@@ -100,9 +99,8 @@ const [entries, count] = await strapi.db.query('api::blog.article').findWithCoun
 
 ## create()
 
-:::warning
-Only create on the entity service can't solve your problem.
-see [entity service create documentation](/dev-docs/api/entity-service/crud#create)
+:::note
+ Only use the Query Engine's create if the [Entity Service create](/dev-docs/api/entity-service/crud#create) can't cover your use case.
 :::
 
 Creates one entry and returns it.
@@ -131,10 +129,10 @@ const entry = await strapi.db.query('api::blog.article').create({
 
 ## update()
 
-:::warning
-Only update on the entity service can't solve your problem.
-see [entity service update documentation](/dev-docs/api/entity-service/crud#update)
+:::note
+ Only use the Query Engine's update if the [Entity Service update](/dev-docs/api/entity-service/crud#update) can't cover your use case.
 :::
+
 Updates one entry and returns it.
 
 Syntax: `update(parameters) => Entry`
@@ -163,10 +161,10 @@ const entry = await strapi.db.query('api::blog.article').update({
 
 ## delete()
 
-:::warning
-Only delete on the entity service can't solve your problem.
-see [entity service delete documentation](/dev-docs/api/entity-service/crud#delete)
+:::note
+ Only use the Query Engine's delete if the [Entity Service delete](/dev-docs/api/entity-service/crud#delete) can't cover your use case.
 :::
+
 Deletes one entry and returns it.
 
 Syntax: `delete(parameters) => Entry`

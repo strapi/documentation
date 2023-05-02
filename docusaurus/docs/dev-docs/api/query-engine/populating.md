@@ -3,14 +3,11 @@ title: Populating
 description: Use Strapi's Query Engine API to populate relations when querying your content.
 displayed_sidebar: devDocsSidebar
 ---
+import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 
 # Populating
 
-:::warning
-Entity service has the same population functionality.
-see [entity service order & pagination documentation](http://localhost:8080/dev-docs/api/entity-service/order-pagination)
-It is highly recommended you use the entity service over the query engine.
-:::
+<RecommendEntityService/>
 
 Relations and components have a unified API for populating them.
 
