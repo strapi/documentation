@@ -192,7 +192,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
   
 <Tabs>
 
-<TabItem value="Ubantu" label="Ubantu">
+<TabItem value="Ubuntu" label="Ubuntu">
 Run the following from a terminal:
 
 ```bash
