@@ -1,6 +1,4 @@
-## Restarting the application
-
-Run the following command in your project root directory:
+Run the following command in your project root directory to restart the application:
 
 <Tabs groupId="yarn-npm">
 
