@@ -32,9 +32,9 @@ The *Domains* tab enables you to manage domains and connect new ones.
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
 - see its current status:
-    - ![Edit icon](/img/assets/icons/CheckCircle.svg) validated
-    - ![Edit icon](/img/assets/icons/Clock.svg) validation pending
-    - ![Edit icon](/img/assets/icons/CrossCircle.svg) validation not approved
+    - ![Edit icon](/img/assets/icons/CheckCircle.svg) Active: the domain is currently confirmed and active
+    - ![Edit icon](/img/assets/icons/Clock.svg) Pending: the domain transfer is being processed, waiting for DNS changed to propagate
+    - ![Edit icon](/img/assets/icons/CrossCircle.svg) Failed: the domain change request did not complete as an error occured
 - click the ![Edit icon](/img/assets/icons/edit.svg) edit button to access the settings of the domain
 - click the ![Delete icon](/img/assets/icons/delete.svg) delete button to delete the domain
 
@@ -48,8 +48,8 @@ Default domain names are made of 3 randomly generated words. They can be replace
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
 | Domain name               | Write the new domain name (e.g. *custom-domain-name.com*)                 |
-| Hostname                  | Write the hostname. [need more info]                                      |
-| Target                    | Write the target. [need more info]                                        |
+| Hostname                  | Write the hostname (i.e. address end-users enter in web browser, or call through APIs). |
+| Target                    | Write the target (i.e. actual address where users are redirected when entering hostname). |
 | Set as default domain     | Tick the box to make the new domain the default one.                      |
 
 3. Click on the **Save** button.
