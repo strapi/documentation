@@ -1,7 +1,4 @@
-
-## Rebuilding the application
-
-Run the following command in your project root directory:
+Run the following command in your project root directory to rebuild Strapi's admin panel:
 
 <Tabs groupId="yarn-npm">
 

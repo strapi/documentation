@@ -20,7 +20,7 @@ The following API parameters are available:
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/dev-docs/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/dev-docs/api/rest/populate-select#field-selection) |
 | `pagination`       | Object        | [Page through entries](/dev-docs/api/rest/sort-pagination.md#pagination) |
-| `publicationState` | String        | [Select the Draft & Publish state](/dev-docs/api/rest/filters-locale-publication#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`</li><li>`preview`</li></ul> |
+| `publicationState` | String        | [Select the Draft & Publish state](/dev-docs/api/rest/filters-locale-publication#publication-state)<br/><br/>Only accepts the following values:<ul><li>`live`(default)</li><li>`preview`</li></ul> |
 | `locale`           | String or Array  | [Select one or multiple locales](/dev-docs/api/rest/filters-locale-publication#locale) |
 
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)

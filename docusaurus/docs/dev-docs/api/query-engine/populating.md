@@ -3,8 +3,11 @@ title: Populating
 description: Use Strapi's Query Engine API to populate relations when querying your content.
 displayed_sidebar: devDocsSidebar
 ---
+import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 
 # Populating
+
+<RecommendEntityService/>
 
 Relations and components have a unified API for populating them.
 
