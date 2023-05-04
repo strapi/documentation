@@ -176,7 +176,7 @@ npm install pg && npm install pg-connection-string
 
 8. Verify that all of the new and modified files are saved locally.
 
-10. Commit the project to a local repository:
+9. Commit the project to a local repository:
 
   ```sh
   git init
