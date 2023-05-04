@@ -32,11 +32,11 @@ The *Domains* tab enables you to manage domains and connect new ones.
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
 - see its current status:
-    - [] validated
-    - [] validation pending
-    - [] validation not approved
-- click the [] edit button to access the settings of the domain
-- click the [] delete button to delete the domain
+    - ![Edit icon](/img/assets/icons/CheckCircle.svg) validated
+    - ![Edit icon](/img/assets/icons/Clock.svg) validation pending
+    - ![Edit icon](/img/assets/icons/CrossCircle.svg) validation not approved
+- click the ![Edit icon](/img/assets/icons/edit.svg) edit button to access the settings of the domain
+- click the ![Delete icon](/img/assets/icons/delete.svg) delete button to delete the domain
 
 ### Connecting a custom domain
 
