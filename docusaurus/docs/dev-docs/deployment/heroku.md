@@ -173,8 +173,10 @@ npm install pg && npm install pg-connection-string
   :::note
   It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
   :::
+
 8. Verify that all of the new and modified files are saved locally.
-9. Commit the project to a local repository:
+
+10. Commit the project to a local repository:
 
   ```sh
   git init
