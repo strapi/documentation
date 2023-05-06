@@ -628,7 +628,7 @@ export default {
 
 ##### Policies
 
-[Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
+[Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key. Only difference between the GraphQL and REST implementation is that the `config` key becomes `options`.
 
 The `policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/dev-docs/backend-customization/routes#policies)).
 
@@ -639,7 +639,7 @@ The `context` object gives access to:
 * Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
 
 <details>
-<summary> Example of a custom GraphQL policy applied to a resolver </summary>
+<summary> Example of some GraphQL policy applied to a resolver </summary>
 
 <Tabs groupId="js-ts">
 
@@ -663,6 +663,15 @@ module.exports = {
                */ 
               return context.parent !== undefined;
             }
+            /**
+             * Uses a already created policy in strapi.
+             */
+            "api::model.policy-name",
+
+            /**
+             * Uses a already created policy in strapi with custom config.
+             */
+            {name:"api::model.policy-name" options: {/* all config values I want to pass to the strapi middleware */} },
           ],
           auth: false,
         },
@@ -694,6 +703,15 @@ export default {
                */ 
               return context.parent !== undefined;
             }
+            /**
+             * Uses a already created policy in strapi.
+             */
+            "api::model.policy-name",
+
+            /**
+             * Uses a already created policy in strapi with custom config.
+             */
+            {name:"api::model.policy-name" options: {/* all config values I want to pass to the strapi middleware */} },
           ],
           auth: false,
         },
@@ -711,9 +729,9 @@ export default {
 
 #### Middlewares
 
-[Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key.
+[Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key. Only difference between the GraphQL and REST implementation is that the `config` key becomes `options`.  
 
-The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/dev-docs/backend-customization/routes#middlewares)).
+The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered middleware or an implementation that is passed directly (see [middlewares configuration documentation](/dev-docs/backend-customization/routes#middlewares)).
 
 Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's [`parent`, `args`, `context` and `info` objects](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) as arguments.
 
@@ -722,7 +740,7 @@ Middlewares with GraphQL can even act on nested resolvers, which offer a more gr
 :::
 
 <details>
-<summary> Examples of custom GraphQL middlewares applied to a resolver</summary>
+<summary> Examples of GraphQL middlewares applied to a resolver</summary>
 
 <Tabs groupId="js-ts">
 
@@ -771,6 +789,17 @@ module.exports = {
 
               return resolve(parent, ...rest);
             }
+            /**
+             * Basic middleware example #4
+             * Uses a already created middleware in strapi.
+             */
+            "api::model.middleware-name",
+
+            /**
+             * Basic middleware example #5
+             * Uses a already created middleware in strapi with custom config.
+             */
+            { name: "api::model.middleware-name" options: { /* all config values I want to pass to the strapi middleware */ } },
           ],
           auth: false,
         },
@@ -827,6 +856,18 @@ export default {
 
               return resolve(parent, ...rest);
             }
+
+            /**
+             * Basic middleware example #4
+             * Uses a already created middleware in strapi.
+             */
+            "api::model.middleware-name",
+
+            /**
+             * Basic middleware example #5
+             * Uses a already created middleware in strapi with custom config.
+             */
+            {name:"api::model.middleware-name" options: {/* all config values I want to pass to the strapi middleware */} },
           ],
           auth: false,
         },
