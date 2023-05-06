@@ -727,7 +727,7 @@ export default {
 
 </details>
 
-#### Middlewares
+##### Middlewares
 
 [Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key. Only difference between the GraphQL and REST implementation is that the `config` key becomes `options`.  
 
