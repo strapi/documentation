@@ -19,6 +19,8 @@ Strapi automatically detects migration files and run them once at the next start
 
 :::warning
 Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
+
+Strapi will delete any unknown tables without warning this means that database migrations can only be used to keep data when changing the Strapi schema
 :::
 
 Migration files should export the function `up()`, which is used when upgrading (e.g. adding a new table `my_new_table`).
