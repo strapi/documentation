@@ -24,6 +24,11 @@ In addition to the official deployment guides maintained by Strapi that are foun
 
 ## General guidelines
 
+:::caution
+Content should not be deployed from development to production.
+Use git and development mode to create models first, deploy the changes to production, and then add content on the production instance.
+:::
+
 ### Hardware and software requirements
 
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
