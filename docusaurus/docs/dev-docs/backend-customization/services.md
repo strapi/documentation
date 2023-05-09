@@ -395,14 +395,17 @@ async delete(params) {
 </details>
 
 ## Usage
-
+:::note
+ServiceName is the name of your file.
+For plugins the name you used to export the file to services/index.js
+:::
 Once a service is created, it's accessible from [controllers](/dev-docs/backend-customization/controllers.md) or from other services:
 
 ```js
 // access an API service
-strapi.service('api::apiName.apiName').ServiceName();
+strapi.service('api::apiName.serviceName').FunctionName();
 // access a plugin service
-strapi.service('plugin::pluginName.pluginName').ServiceName();
+strapi.service('plugin::pluginName.serviceName').FunctionName();
 ```
 
 :::tip
