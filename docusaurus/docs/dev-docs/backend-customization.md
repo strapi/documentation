@@ -4,30 +4,34 @@ description: All elements of Strapi's back end, like routes, policies, middlewar
 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Back-end customization
 
-<FeedbackCallout components={props.components}/>
+:::strapi Disambiguation: Strapi back end
+As a headless CMS, the Strapi software as a whole can be considered as the "backend" of your website or application.
+But the Strapi software itself includes 2 different parts:
 
-Strapi runs an HTTP server based on [Koa](https://koajs.com/), a back end JavaScript framework. If you are not familiar with the Koa back end framework, we highly recommend you to read the [Koa's documentation introduction](http://koajs.com/#introduction).
+- The back-end part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
+- The front-end part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
-Each part of Strapi's back end can be customized:
+Throughout this developer documentation, 'backend' refers exclusively to the back-end part of Strapi.
 
-- the [requests](/dev-docs/backend-customization/requests-responses#requests) received by the Strapi server,
+The [User Guide](/user-docs/intro) explains how to use the admin panel and the [admin panel customization section](/dev-docs/admin-panel-customization) details the various customization options available for the admin panel.
+:::
 
-- the [routes](/dev-docs/backend-customization/routes) that handle the requests and trigger the execution of their controller handlers,
+The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a back-end JavaScript framework.
 
-- the [policies](/dev-docs/backend-customization/policies) that can block access to a route,
+Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/dev-docs/api/rest) or [GraphQL](/dev-docs/api/graphql) APIs.
 
-- the [middlewares](/dev-docs/backend-customization/middlewares) that can control the request flow and the request before moving forward,
+A request can travel through the Strapi backend as follows:
 
-- the [controllers](/dev-docs/backend-customization/controllers) that execute code once a route has been reached,
+1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
+2. The request hits a [route](/dev-docs/backend-customization/routes).
+3. [Middlewares](/dev-docs/backend-customization/middlewares) control the request flow and the request itself before moving forward.
+4. _(optional)_ [Policies](/dev-docs/backend-customization/policies) can block access to a route.
+5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
+6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
+7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
 
-- the [services](/dev-docs/backend-customization/services) that are used to build custom logic reusable by controllers,
-
-- the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure,
-
-- the [responses](/dev-docs/backend-customization/requests-responses#responses) sent to the application that sent the request,
-
-- and the [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
+:::note
+Strapi also supports [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
+:::
