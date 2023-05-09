@@ -400,9 +400,9 @@ Once a service is created, it's accessible from [controllers](/dev-docs/backend-
 
 ```js
 // access an API service
-strapi.service('api::apiName.serviceName');
+strapi.service('api::apiName.apiName').ServiceName();
 // access a plugin service
-strapi.service('plugin::pluginName.serviceName');
+strapi.service('plugin::pluginName.pluginName').ServiceName();
 ```
 
 :::tip
