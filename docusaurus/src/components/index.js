@@ -4,5 +4,6 @@ export * from './Carousel/Carousel';
 export * from './Container/Container';
 export * from './FeaturesList/FeaturesList';
 export * from './Hero/Hero';
+export * from './InteractiveQueryBuilder/InteractiveQueryBuilder';
 export * from './LinkWithArrow/LinkWithArrow';
 export * from './SearchBar/SearchBar';

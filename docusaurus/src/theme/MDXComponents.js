@@ -13,6 +13,7 @@ import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
+import { InteractiveQueryBuilder } from '../components';
 
 export default {
   // Re-use the default mapping
@@ -38,4 +39,5 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  InteractiveQueryBuilder,
 };
