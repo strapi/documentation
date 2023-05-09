@@ -397,7 +397,7 @@ async delete(params) {
 ## Usage
 :::note
 ServiceName is the name of your file.
-For plugins the name you used to export the file to services/index.js
+For plugins the name you used in services/index.js to export.
 :::
 Once a service is created, it's accessible from [controllers](/dev-docs/backend-customization/controllers.md) or from other services:
 
