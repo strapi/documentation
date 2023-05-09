@@ -395,15 +395,13 @@ async delete(params) {
 </details>
 
 ## Usage
-:::note
-ServiceName is the name of your file.
-For plugins the name you used in services/index.js to export.
-:::
 Once a service is created, it's accessible from [controllers](/dev-docs/backend-customization/controllers.md) or from other services:
 
 ```js
 // access an API service
 strapi.service('api::apiName.serviceName').FunctionName();
+// In the syntax examples above,serviceName is the name of the service file for API services or the name used to export the service file to services/index.js for plugin services.
+
 // access a plugin service
 strapi.service('plugin::pluginName.serviceName').FunctionName();
 ```
