@@ -47,9 +47,9 @@ Default domain names are made of 3 randomly generated words. They can be replace
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
-| Domain name               | Write the new domain name (e.g. *custom-domain-name.com*)                 |
-| Hostname                  | Write the hostname (i.e. address end-users enter in web browser, or call through APIs). |
-| Target                    | Write the target (i.e. actual address where users are redirected when entering hostname). |
+| Domain name               | Type the new domain name (e.g. *custom-domain-name.com*)                  |
+| Hostname                  | Type the hostname (i.e. address end-users enter in web browser, or call through APIs). |
+| Target                    | Type the target (i.e. actual address where users are redirected when entering hostname). |
 | Set as default domain     | Tick the box to make the new domain the default one.                      |
 
 3. Click on the **Save** button.
