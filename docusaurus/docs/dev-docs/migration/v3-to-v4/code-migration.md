@@ -2,7 +2,7 @@
 title: v4 code migration
 displayed_sidebar: devDocsSidebar
 description: Migrate the backend and frontend code of a Strapi application from v3.6.x to v4.0.x with step-by-step instructions
-
+search_weight: 0
 ---
 
 # v4 code migration guide

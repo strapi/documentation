@@ -2,7 +2,7 @@
 title: Filters, Locale, and Publication State
 description: Use Strapi's REST API to filter the results of your requests.
 sidebarDepth: 3
-
+search_weight: 3
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'

@@ -2,7 +2,7 @@
 title: Migrating the back end
 description: Migrate the backend of a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 displayed_sidebar: devDocsSidebar
-
+search_weight: 0
 ---
 
 import PluginMigrationIntro from '/docs/snippets/plugin-migration-intro.md'

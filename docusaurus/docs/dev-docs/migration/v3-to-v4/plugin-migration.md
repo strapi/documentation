@@ -2,7 +2,7 @@
 title: Plugin migration guide
 description: Migrate a Strapi plugin from v3.6.x to v4.0.x with step-by-step instructions
 sidebarDepth: 2
-
+search_weight: 0
 ---
 
 # v4 plugin migration guide

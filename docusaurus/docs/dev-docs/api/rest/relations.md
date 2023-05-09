@@ -1,7 +1,7 @@
 ---
 title: Relations
 description: Use the REST API to manage the order of relations
-
+search_weight: 3
 ---
 
 # Managing relations through the REST API

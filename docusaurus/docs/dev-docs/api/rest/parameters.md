@@ -3,6 +3,7 @@ title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 
 next: ./filtering-locale-publication.md
+search_weight: 3
 ---
 
 import QsIntroShort from '/docs/snippets/qs-intro-short.md'

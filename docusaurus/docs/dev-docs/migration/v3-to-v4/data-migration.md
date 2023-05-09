@@ -1,6 +1,7 @@
 ---
 title: Data migration
 displayed_sidebar: devDocsSidebar
+search_weight: 0
 ---
 
 # Data migration guide

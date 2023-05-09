@@ -2,6 +2,7 @@
 title: Ordering & Pagination
 description: Use Strapi's Entity Service API to order and paginate queries results.
 displayed_sidebar: devDocsSidebar
+search_weight: 1
 ---
 
 # Ordering & Pagination

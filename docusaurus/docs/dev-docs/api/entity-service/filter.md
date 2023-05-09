@@ -2,6 +2,7 @@
 title: Filtering
 description: Use Strapi's Entity Service API to filter your queries results.
 displayed_sidebar: devDocsSidebar
+search_weight: 1
 ---
 
 # Filtering
