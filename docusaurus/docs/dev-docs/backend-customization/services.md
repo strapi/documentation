@@ -400,10 +400,12 @@ Once a service is created, it's accessible from [controllers](/dev-docs/backend-
 
 ```js
 // access an API service
-strapi.service('api::apiName.serviceName');
+strapi.service('api::apiName.serviceName').FunctionName();
 // access a plugin service
-strapi.service('plugin::pluginName.serviceName');
+strapi.service('plugin::pluginName.serviceName').FunctionName();
 ```
+
+In the syntax examples above, `serviceName` is the name of the service file for API services or the name used to export the service file to `services/index.js` for plugin services.
 
 :::tip
 To list all the available services, run `yarn strapi services:list`.
