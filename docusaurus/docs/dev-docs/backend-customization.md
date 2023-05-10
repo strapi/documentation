@@ -32,6 +32,37 @@ A request can travel through the Strapi backend as follows:
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
 7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
 
+```mermaid
+flowchart TD
+    requestResponse[Request/Response] -- The request starts travelling<br/>through the server --> globalMiddleware((Global middleware))
+    globalMiddleware -- A response is sent --> requestResponse
+    globalMiddleware --> routePolicy{Route policy}
+    routePolicy -- Policy returns true --> routeMiddleware((Route middleware)) 
+    routePolicy -- Policy returns false <br/>or sends an error --> globalMiddleware
+    routeMiddleware --> controller(Controller)
+    routeMiddleware --> globalMiddleware
+    controller --> routeMiddleware
+    controller --> services(Services)
+    services --> controller
+    services --> entityService{{Entity Service}}
+    entityService --> queryEngine{{Query Engine}}
+    entityService --> services
+    queryEngine --> database[(Database)]
+    queryEngine --> entityService
+    database --> queryEngine
+    click requestResponse "/dev-docs/backend-customization/requests" "Click to read the requests & responses documentation"
+    click globalMiddleware "/dev-docs/backend-customization/middlewares"
+    click routePolicy "/dev-docs/backend-customization/policies"
+    click routeMiddleware "/dev-docs/backend-customization/routes"
+    click controller "/dev-docs/backend-customization/controller"
+    click services "/dev-docs/backend-customization/services"
+    click entityService "/dev-docs/api/entity-service"
+    click queryEngine "/dev-docs/api/query-engine/"
+    style globalMiddleware fill:#B09AE8,stroke:#333,stroke-width:4px
+    linkStyle 2 stroke:#B09AE8,stroke-width:4px
+    linkStyle 1 stroke:#B09AE8,stroke-width:4px
+```
+
 :::note
 Strapi also supports [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
 :::
