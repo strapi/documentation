@@ -1,5 +1,5 @@
 ---
-title: Parameters 
+title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 
 next: ./filtering-locale-publication.md
@@ -28,15 +28,10 @@ Query parameters use the LHS bracket syntax (i.e. they are encoded using square 
 :::tip
 <QsIntroShort />
 
-<details>
-<summary>Example using qs:</summary>
-
-In the following example, the `qs` library is used to build the following URL:
-`/api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en`
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
+<InteractiveQueryBuilder
+  endpoint="/api/books"
+  code={`
+{
   sort: ['title:asc'],
   filters: {
     title: {
@@ -51,12 +46,8 @@ const query = qs.stringify({
   },
   publicationState: 'live',
   locale: ['en'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
+}
+  `}
+/>
 
-await request(`/api/books?${query}`);
-```
-
-</details>
 :::

@@ -1,7 +1,10 @@
 /** Component: Button */
 
+@import '../../scss/_mixins.scss';
+
 .button {
   --strapi-button-background-color: var(--strapi-primary-600);
+  --strapi-button-border-color: var(--strapi-primary-600);
   --strapi-button-border-radius: 4px;
   --strapi-button-box-shadow: 0 0 0 transparent;
   --strapi-button-color: #fff;
@@ -13,12 +16,21 @@
   --strapi-button-px: 15px;
   --strapi-button-transition-property: color, background, border-color, box-shadow;
 
+  --strapi-button-hover-background-color: var(--strapi-primary-700);
+  --strapi-button-hover-border-color: var(--strapi-primary-700);
+  --strapi-button-hover-box-shadow: 0px 9px 10px rgba(44, 56, 148, 0.2475);
+  --strapi-button-hover-color: #fff;
+
   --ifm-button-color: var(--strapi-button-color);
+  --ifm-button-background-color: var(--strapi-button-background-color);
+  --ifm-button-border-color: var(--strapi-button-border-color);
   --ifm-button-border-radius: var(--strapi-button-border-radius);
   --ifm-button-font-weight: var(--strapi-button-font-weight);
   --ifm-button-padding-horizontal: var(--strapi-button-px);
   --ifm-button-padding-vertical: var(--strapi-button-py);
   --ifm-button-size-multiplier: 1;
+
+  --ifm-color-primary-darker: var(--strapi-primary-200);
 
   --ifm-link-hover-color: var(--strapi-button-color);
   --ifm-link-hover-decoration: none;
@@ -37,8 +49,14 @@
     right: -8px;
   }
 
-  &:focus, &:hover {
-    --strapi-button-box-shadow: 0px 9px 10px rgba(44, 56, 148, 0.2475);
+  &:not(:disabled),
+  &:not([aria-disabled="true"]) {
+    &:focus, &:hover {
+      --strapi-button-box-shadow: var(--strapi-button-hover-box-shadow);
+      --strapi-button-background-color: var(--strapi-button-hover-background-color);
+      --strapi-button-border-color: var(--strapi-button-hover-border-color);
+      --strapi-button-color: var(--strapi-button-hover-color);
+    }
   }
 
   /** Sizes */
@@ -48,5 +66,31 @@
     --strapi-button-line-height: 23px;
     --strapi-button-py: 11px;
     --strapi-button-px: 71px;
+  }
+
+  /** Variants */
+  &--secondary {
+    --strapi-button-background-color: #f0f0ff;
+    --strapi-button-border-color: #d9d8ff;
+    --strapi-button-color: var(--strapi-primary-600);
+
+    --strapi-button-hover-background-color: var(--strapi-neutral-0);
+    --strapi-button-hover-border-color: #d9d8ff;
+    --strapi-button-hover-box-shadow: none;
+    --strapi-button-hover-color: var(--strapi-primary-600);
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .button {
+    /** Dark mode Variants */
+    &--secondary {
+      --strapi-button-background-color: var(--strapi-neutral-100);
+      --strapi-button-border-color: var(--strapi-neutral-200);
+
+      --strapi-button-hover-background-color: var(--strapi-neutral-0);
+      --strapi-button-hover-border-color: var(--strapi-neutral-200);
+    }
   }
 }
