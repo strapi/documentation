@@ -30,7 +30,11 @@ const config = {
   // ** WARNING! DELETE THE NEXT LINE BEFORE MERGING WITH MAIN 👇 **/
   noIndex: true, // prevents the website from being indexed by search engines
 
-  themes: ['@docusaurus/theme-live-codeblock'],
+  markdown: {
+    mermaid: true,
+  },
+
+  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
   scripts: [
     {
