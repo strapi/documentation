@@ -12,6 +12,7 @@ import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 
 export default {
@@ -38,4 +39,5 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  InteractiveQueryBuilder,
 };
