@@ -58,9 +58,6 @@ flowchart TD
     click services "/dev-docs/backend-customization/services"
     click entityService "/dev-docs/api/entity-service"
     click queryEngine "/dev-docs/api/query-engine/"
-    style globalMiddleware fill:#B09AE8,stroke:#333,stroke-width:4px
-    linkStyle 2 stroke:#B09AE8,stroke-width:4px
-    linkStyle 1 stroke:#B09AE8,stroke-width:4px
 ```
 
 :::note
