@@ -25,9 +25,9 @@ Like any HTTP server, the Strapi back end receives requests and send responses. 
 A request can travel through the Strapi backend as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
-2. The request hits a [route](/dev-docs/backend-customization/routes).
-3. [Global middlewares](/dev-docs/backend-customization/middlewares) and [route middlewares](/dev-docs/backend-customization/routes#middlewares) control the request flow and the request itself before moving forward.
-4. _(optional)_ [Policies](/dev-docs/backend-customization/policies) can block access to a route.
+2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are defined in `config/middlewares.js` and run in a sequential order.
+3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)) that you create, and more routes can be added and configured.<br/>Routes code is found in the `src/api/(your-api-name)/(your-content-name)/routes` folders.
+4. _(optional)_ Route [policies](/dev-docs/backend-customization/policies) can block access to a route and [route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
 7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
@@ -59,6 +59,11 @@ flowchart TD
     click entityService "/dev-docs/api/entity-service"
     click queryEngine "/dev-docs/api/query-engine/"
 ```
+
+Both global and route middlewares include an asynchronous callback (i.e.,`await next()`) function. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
+
+* If you return nothing within the code of a middleware, the request will go through it and continue travelling through the various core elements of the backend.
+* If you return something from a middleware, a response will be immediately sent, skipping the rest of the core elements (i.e., controllers, services, and the other layers that interact with the database).
 
 :::note
 Strapi also supports [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
