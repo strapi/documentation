@@ -3,7 +3,7 @@ title: Review Workflows
 description: Use the REST API to query review workflows
 ---
 
-# Querying Review Workflows through the REST API <EntrepriseBadge />
+# Querying Review Workflows through the REST API <EnterpriseBadge />
 
 The admin panel offers a graphical way to manage [Review Workflows](/user-docs/settings/review-workflows) but you can also use the REST API to interact with the Review Workflows feature programmatically.
 
@@ -11,19 +11,22 @@ The admin panel offers a graphical way to manage [Review Workflows](/user-docs/s
 
 ## Endpoints
 
-When the Review Workflows feature is enabled (which requires an <EntrepriseBadge /> edition of Strapi), the following additional endpoints are available:
+When the Review Workflows feature is enabled (which requires an <EnterpriseBadge /> edition of Strapi), the following additional endpoints are available:
 
 <!-- TODO: fill in the table with all available endpoints  -->
 
 | Method   | URL                                         | Description                           |
 | -------- | ------------------------------------------- | ------------------------------------- |
-| `GET`    | `/api/strapi-workflows`                     | [Get a list of …](#header-link)       |
+| `GET`    | `/api/strapi-workflows`                     | [Get a list of …](#get-all-review-workflows)       |
 | `POST`   | `GET /api/strapi-workflows/:workflow_id`    | [description](#header-link)           |
 | …        | …                                           | …                                     |
 
+<!-- TODO: finish the sentence 👇 -->
+The [`populate` parameter](#use-the-populate-parameter) can also be added to queries to…
+
 <!-- TODO: for each endpoint, follow the template below, giving a title and 1 or 2 introductory description sentences, and adding an example request and example response -->
 
-##  Get all review workflows
+###  Get all review workflows
 
 <!-- TODO: complete the description sentence -->
 Returns…
