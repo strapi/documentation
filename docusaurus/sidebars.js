@@ -309,24 +309,21 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
-            {
-              type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
-              customProps: {
-                new: true,
-              },
-            },
-            'dev-docs/plugins/email',
-            'dev-docs/plugins/graphql',
-            'dev-docs/plugins/i18n',
-            'dev-docs/plugins/sentry',
-            'dev-docs/plugins/upload',
-            'dev-docs/plugins/users-permissions',
-
-
-
-          ]
+        {
+          type: 'doc',
+          label: 'Documentation',
+          id: 'dev-docs/plugins/documentation',
+          customProps: {
+            new: true,
+          },
+        },
+        'dev-docs/plugins/email',
+        'dev-docs/plugins/graphql',
+        'dev-docs/plugins/i18n',
+        'dev-docs/plugins/sentry',
+        'dev-docs/plugins/upload',
+        'dev-docs/plugins/users-permissions',
+      ]
     },
     {
       type: 'category',
