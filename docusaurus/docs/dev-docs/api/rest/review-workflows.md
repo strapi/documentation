@@ -18,11 +18,10 @@ When the Review Workflows feature is enabled (which requires an <EnterpriseBadge
 | Method   | URL                                         | Description                           |
 | -------- | ------------------------------------------- | ------------------------------------- |
 | `GET`    | `/api/strapi-workflows`                     | [Get a list of …](#get-all-review-workflows)       |
-| `POST`   | `GET /api/strapi-workflows/:workflow_id`    | [description](#header-link)           |
+| `POST`   | `GET /api/strapi-workflows/:workflow_id`    | [quick description acting as a link to the sub-section](#header-link)           |
 | …        | …                                           | …                                     |
 
-<!-- TODO: finish the sentence 👇 -->
-The [`populate` parameter](#use-the-populate-parameter) can also be added to queries to…
+Queries can also support using the [`populate` parameter](#use-the-populate-parameter).
 
 <!-- TODO: for each endpoint, follow the template below, giving a title and 1 or 2 introductory description sentences, and adding an example request and example response -->
 
