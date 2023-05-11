@@ -26,7 +26,7 @@ A request can travel through the Strapi backend as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
 2. The request hits a [route](/dev-docs/backend-customization/routes).
-3. [Middlewares](/dev-docs/backend-customization/middlewares) control the request flow and the request itself before moving forward.
+3. [Global middlewares](/dev-docs/backend-customization/middlewares) and [route middlewares](/dev-docs/backend-customization/routes#middlewares) control the request flow and the request itself before moving forward.
 4. _(optional)_ [Policies](/dev-docs/backend-customization/policies) can block access to a route.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
