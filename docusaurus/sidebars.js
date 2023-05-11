@@ -159,6 +159,7 @@ const sidebars = {
             'dev-docs/api/rest/filters-locale-publication',
             'dev-docs/api/rest/sort-pagination',
             'dev-docs/api/rest/relations',
+            'dev-docs/api/rest/review-workflows',
           ]
         },
         'dev-docs/api/graphql',
