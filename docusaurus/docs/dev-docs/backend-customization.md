@@ -62,7 +62,7 @@ flowchart TD
 
 Both global and route middlewares include an asynchronous callback (i.e.,`await next()`) function. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
 
-* If you return nothing within the code of a middleware, the request will go through it and continue travelling through the various core elements of the backend.
+* If you return nothing within the code of a middleware, the request will continue travelling through the various core elements of the backend.
 * If you return something from a middleware, a response will be immediately sent, skipping the rest of the core elements (i.e., controllers, services, and the other layers that interact with the database).
 
 :::note
