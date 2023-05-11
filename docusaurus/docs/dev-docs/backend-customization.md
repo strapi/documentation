@@ -32,6 +32,7 @@ A request can travel through the Strapi backend as follows:
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
 7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
 
+<!-- TODO: update this graph by adapting what Derrick shared to me -->
 ```mermaid
 flowchart TD
     requestResponse[Request/Response] -- The request starts travelling<br/>through the server --> globalMiddleware((Global middleware))
