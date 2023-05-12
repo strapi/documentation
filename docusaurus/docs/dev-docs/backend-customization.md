@@ -26,39 +26,26 @@ A request can travel through the Strapi backend as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
 2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are defined in `config/middlewares.js` and run in a sequential order.
-3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)) that you create, and more routes can be added and configured.<br/>Routes code is found in the `src/api/(your-api-name)/(your-content-name)/routes` folders.
-4. _(optional)_ Route [policies](/dev-docs/backend-customization/policies) can block access to a route and [route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and the request itself before moving forward.
+3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.<br/>Routes code is found in the `src/api/(your-api-name)/(your-content-name)/routes` folders.
+4. _(optional)_ Route [policies](/dev-docs/backend-customization/policies) can block access to a route and [route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
 7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
 
-<!-- TODO: update this graph by adapting what Derrick shared to me -->
 ```mermaid
-flowchart TD
-    requestResponse[Request/Response] -- The request starts travelling<br/>through the server --> globalMiddleware((Global middleware))
-    globalMiddleware -- A response is sent --> requestResponse
-    globalMiddleware --> routePolicy{Route policy}
-    routePolicy -- Policy returns true --> routeMiddleware((Route middleware)) 
-    routePolicy -- Policy returns false <br/>or sends an error --> globalMiddleware
-    routeMiddleware --> controller(Controller)
-    routeMiddleware --> globalMiddleware
-    controller --> routeMiddleware
-    controller --> services(Services)
-    services --> controller
-    services --> entityService{{Entity Service}}
-    entityService --> queryEngine{{Query Engine}}
-    entityService --> services
-    queryEngine --> database[(Database)]
-    queryEngine --> entityService
-    database --> queryEngine
-    click requestResponse "/dev-docs/backend-customization/requests" "Click to read the requests & responses documentation"
-    click globalMiddleware "/dev-docs/backend-customization/middlewares"
-    click routePolicy "/dev-docs/backend-customization/policies"
-    click routeMiddleware "/dev-docs/backend-customization/routes"
-    click controller "/dev-docs/backend-customization/controller"
-    click services "/dev-docs/backend-customization/services"
-    click entityService "/dev-docs/api/entity-service"
-    click queryEngine "/dev-docs/api/query-engine/"
+graph
+    requestFromUser[Request] ---> globalMiddlewareA((Global middleware))
+    globalMiddlewareA --Returns nothing--> routePolicy{Route policy}
+    globalMiddlewareA --Returns something-->reponse
+    routePolicy --Returns true--> routeMiddlewareA((Route middleware))
+    routePolicy --Returns false or an error-->reponse
+    routeMiddlewareA --Returns something-->reponse
+    routeMiddlewareA --Returns nothing--> controllerServices{{Controller and Services}}
+    controllerServices --> entityService{{EntityService}}
+    entityService --> database[(Database)]
+    database --> routeMiddlewareB((Route middleware))
+    routeMiddlewareB --> globalMiddlewareB((Global middleware))
+    globalMiddlewareB --> reponse[Response]
 ```
 
 Both global and route middlewares include an asynchronous callback (i.e.,`await next()`) function. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
