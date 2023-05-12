@@ -205,7 +205,7 @@ If you want to remove a stage, simply omit it from the request body.
 
 </ApiCall>
 
-### Create a new stage in the specified workflow
+### Create a new stage in a specific workflow
 
 This endpoint creates a new stage for a specific review workflow based on the provided `workflow_id`. The newly created stage will be put at the end of the stages of the workflow.
 
