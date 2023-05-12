@@ -25,34 +25,46 @@ Like any HTTP server, the Strapi back end receives requests and send responses. 
 A request can travel through the Strapi backend as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
-2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are defined in `config/middlewares.js` and run in a sequential order.
-3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.<br/>Routes code is found in the `src/api/(your-api-name)/(your-content-name)/routes` folders.
-4. _(optional)_ Route [policies](/dev-docs/backend-customization/policies) can block access to a route and [route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
+2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are run in a sequential order.
+3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.
+4. [Route policies](/dev-docs/backend-customization/policies) act as a read-only validation step that can block access to a route. [Route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
-6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure.
-7. The server returns a response with some data, according to the request. The response can travel back through controllers and middlewares before being sent.
+6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Entity Service](/dev-docs/api/entity-service) and [Query Engine](/dev-docs/api/query-engine).
+7. The server returns a [response](/dev-docs/backend-customization/requests-responses#response). The response can travel back through route middlewares and global middlewares before being sent.
+
+Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
+
+* If a middleware returns nothing, the request will continue travelling through the various core elements of the backend (i.e., controllers, services, and the other layers that interact with the database).
+* If a middleware returns something, a response will be immediately sent, skipping the rest of the core elements.
 
 ```mermaid
-graph
-    requestFromUser[Request] ---> globalMiddlewareA((Global middleware))
+graph TB
+    request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
     globalMiddlewareA --Returns nothing--> routePolicy{Route policy}
-    globalMiddlewareA --Returns something-->reponse
-    routePolicy --Returns true--> routeMiddlewareA((Route middleware))
-    routePolicy --Returns false or an error-->reponse
-    routeMiddlewareA --Returns something-->reponse
+    globalMiddlewareA --Returns something-->response
+    routePolicy --Returns true--> routeMiddlewareA(("Route middleware<br/>before await next()"))
+    routePolicy --Returns false or an error-->response
+    routeMiddlewareA --Returns something-->response
     routeMiddlewareA --Returns nothing--> controllerServices{{Controller and Services}}
-    controllerServices --> entityService{{EntityService}}
-    entityService --> database[(Database)]
-    database --> routeMiddlewareB((Route middleware))
-    routeMiddlewareB --> globalMiddlewareB((Global middleware))
-    globalMiddlewareB --> reponse[Response]
+    controllerServices --> entityService{{Entity Service}}
+    entityService --> queryEngine{{Query Engine}}
+    queryEngine --> database[(Database)]
+    database --> routeMiddlewareB(("Route middleware<br/>after await next()"))
+    routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
+    globalMiddlewareB --> response[Response]
+    linkStyle 3 stroke:green,color:green
+    linkStyle 4 stroke:red,color:red
+    linkStyle 2 stroke:purple,color:purple
+    linkStyle 5 stroke:purple,color:purple
+    click globalMiddlewareA "/dev-docs/backend-customization/middlewares"
+    click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
+    click request "/dev-docs/backend-customization/requests-responses"
+    click routePolicy "/dev-docs/backend-customization/routes"
+    click routeMiddlewareA "/dev-docs/backend-customization/routes#middlewares"
+    click routeMiddlewareB "/dev-docs/backend-customization/routes#middlewares"
+    click controllerServices "/dev-docs/backend-customization/controllers"
+    click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
+    click entityService "/dev-docs/api/entity-service/"
+    click queryEngine "/dev-docs/api/query-engine/"
+    click response "/dev-docs/backend-customization/requests-responses"
 ```
-
-Both global and route middlewares include an asynchronous callback (i.e.,`await next()`) function. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
-
-* If you return nothing within the code of a middleware, the request will continue travelling through the various core elements of the backend.
-* If you return something from a middleware, a response will be immediately sent, skipping the rest of the core elements (i.e., controllers, services, and the other layers that interact with the database).
-
-:::note
-Strapi also supports [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
-:::
