@@ -39,23 +39,32 @@ Both global and route middlewares include an asynchronous callback function, `aw
 
 ```mermaid
 graph TB
+
     request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
-    globalMiddlewareA --Returns nothing--> routePolicy{Route policy}
-    globalMiddlewareA --Returns something-->response
+    globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
+    globalMiddlewareA --"Return before next()<br> Current Middleware-1"-->globalMiddlewareB
     routePolicy --Returns true--> routeMiddlewareA(("Route middleware<br/>before await next()"))
-    routePolicy --Returns false or an error-->response
-    routeMiddlewareA --Returns something-->response
-    routeMiddlewareA --Returns nothing--> controllerServices{{Controller and Services}}
-    controllerServices --> entityService{{Entity Service}}
-    entityService --> queryEngine{{Query Engine}}
-    queryEngine --> database[(Database)]
-    database --> routeMiddlewareB(("Route middleware<br/>after await next()"))
+    routePolicy --Returns false or an error-->globalMiddlewareB
+    routeMiddlewareA --"Return before next()<br> Current Middleware-1"-->routeMiddlewareB
+    routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
+    controllerA --"Call Service"--> service{{Service}}
+    controllerA --"Don't call Service" --> routeMiddlewareB
+    service --"Call Entity Service" --> entityService{{Entity Service}}
+    service --"Don't call Entity Service" --> controllerB
+    entityService --> queryEngineA{{Query Engine}}
+    entityService --"Don't call Query Engine" --> ServiceB
+    queryEngineA --> database[(Database)]
+    database --> ServiceB{{"Service<br/>after Entity Service call"}}
+    ServiceB --> controllerB{{"Controller<br/>after service call"}}
+    controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
     routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
     globalMiddlewareB --> response[Response]
+
     linkStyle 3 stroke:green,color:green
     linkStyle 4 stroke:red,color:red
     linkStyle 2 stroke:purple,color:purple
     linkStyle 5 stroke:purple,color:purple
+
     click globalMiddlewareA "/dev-docs/backend-customization/middlewares"
     click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
     click request "/dev-docs/backend-customization/requests-responses"
