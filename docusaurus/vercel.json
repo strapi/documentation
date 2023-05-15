@@ -5,6 +5,10 @@
       "destination": "/cloud/intro"
     },
     {
+      "source": "/cloud/",
+      "destination": "/cloud/intro"
+    },
+    {
       "source": "/dev-docs/deployment/strapi-cloud",
       "destination": "/cloud/intro"
     },
@@ -17,11 +21,19 @@
       "destination": "/dev-docs/intro"
     },
     {
+      "source": "/dev-docs/",
+      "destination": "/dev-docs/intro"
+    },
+    {
       "source": "/user-docs/getting-started/introduction.html",
       "destination": "/user-docs"
     },
     {
       "source": "/user-docs",
+      "destination": "/user-docs/intro"
+    },
+    {
+      "source": "/user-docs/",
       "destination": "/user-docs/intro"
     },
     {

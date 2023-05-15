@@ -78,7 +78,7 @@ npm run strapi telemetry:disable
 
 </Tabs>
 
-Alternatively, the `telemetryDisabled: true` flag in the project `package.json` file will also disable data collection.
+Alternatively, the `strapi.telemetryDisabled: true` flag in the project `package.json` file will also disable data collection.
 
 Data collection can later be re-enabled by deleting the flag or setting it to false, or by using the `telemetry:enable` command.
 
