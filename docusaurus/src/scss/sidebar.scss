@@ -51,6 +51,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   --ifm-menu-color-background-active: transparent;
   --ifm-menu-color-background-hover: var(--strapi-neutral-100);
+  --ifm-menu-link-padding-vertical: var(--strapi-spacing-1);
 
   font-weight: var(--custom-sidebar-menu-font-weight);
   padding-top: var(--custom-sidebar-menu-padding-y) !important;
@@ -72,7 +73,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   &__list {
     &-item {
-      font-size: var(--custom-sidebar-menu-list-item-font-size, inherit);
+      font-size: var(--custom-sidebar-menu-list-item-font-size, --strapi-font-size-md);
 
       &-collapsible {
         &:hover {
@@ -84,7 +85,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   &__link {
     font-weight: 500;
-    min-height: var(--custom-menu-min-height, 36px);
+    min-height: var(--custom-menu-item-link-min-height, 24px);
     @include transition;
 
     &:hover {
@@ -149,14 +150,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     &-item {
       &-category {
         &-level-1 {
-          --custom-sidebar-menu-list-item-py: var(--strapi-spacing-2);
+          --custom-sidebar-menu-list-item-py: var(--strapi-spacing-1);
 
           padding-top: var(--custom-sidebar-menu-list-item-py);
           padding-bottom: var(--custom-sidebar-menu-list-item-py);
 
           > .menu__list-item-collapsible {
             font-weight: 700;
-            font-size: var(--strapi-font-size-lg);
+            font-size: var(--strapi-font-size-md);
           }
         }
       }
@@ -164,26 +165,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       &-category, &-link {
         &-level {
           &-1 {
-            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-lg);
+            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-md);
           }
 
           &-2 {
-            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-md);
-            --custom-sidebar-menu-list-item-link-active-left: -20px;
+            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-sm); // next levels will have this same value
+            --custom-sidebar-menu-list-item-link-active-left: -30px;
+
+            padding-left: 10px;
           }
 
           &-3 {
-            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-sm); // next levels will have this same value
-            --custom-sidebar-menu-list-item-link-active-left: -32px;
-            --custom-menu-min-height: 32px;
+            --custom-sidebar-menu-list-item-link-active-left: -42px;
           }
 
           &-4 {
-            --custom-sidebar-menu-list-item-link-active-left: -44px;
+            --custom-sidebar-menu-list-item-link-active-left: -54px;
           }
 
           &-5 {
-            --custom-sidebar-menu-list-item-link-active-left: -56px;
+            --custom-sidebar-menu-list-item-link-active-left: -66px;
           }
         }
       }
