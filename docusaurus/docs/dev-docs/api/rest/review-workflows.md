@@ -144,7 +144,7 @@ Updates a specific stage of a specific review workflow based on the provided `wo
 
 ### Update all the stages of a workflow
 
-The `/stages` endpoint can be used to update all the stages of a specific review workflow based on the provided `workflow_id`. Use it to change the order, remove, create, and update the stages of a workflow. The request body must contain an array of objects, where each object represents a stage and its properties.
+The `/stages` endpoint can be used to update all the stages of a specific review workflow based on the provided `workflow_id`. Use it to create, remove, or update the stages of a workflow or to change the order of the stages. The request body must contain an array of objects, where each object represents a stage and its properties.
 
 Using this endpoint you can:
 
@@ -241,7 +241,7 @@ Creates a new stage for a specific review workflow based on the provided `workfl
 
 ## Use the `populate` parameter
 
-The `populate` parameter is used to fetch associated data with the resource being queried. In the context of Review Workflows, `populate` allows fetching the stages associated with a workflow in a single API call instead of making a separate API call for each stage.
+The `populate` parameter is used to fetch associated data with the resource being queried. `populate=stages` allows fetching the stages associated with a workflow in a single API call instead of making a separate API call for each stage.
 
 #### Fetch all workflows with their stages
 <ApiCall>
