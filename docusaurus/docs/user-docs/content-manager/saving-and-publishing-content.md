@@ -55,7 +55,8 @@ To publish or unpublish several entries:
 3. In the confirmation dialog box, confirm your choice by clicking on the **Publish** or **Unpublish** button.
 
 :::caution
-If an error occurs, a red message overlay will appear with additional information, and none of your selected entries will be published or unpublished.
+* If an error occurs, a red message overlay will appear with additional information, and none of your selected entries will be published or unpublished.
+* If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
 ## Deleting content
