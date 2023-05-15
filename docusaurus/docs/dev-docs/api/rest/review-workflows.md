@@ -5,12 +5,12 @@ description: Use the REST API to query review workflows
 
 # Querying Review Workflows through the REST API <EnterpriseBadge />
 
-Review workflows are a powerful feature in Strapi that allow users to create and manage customizable workflows for content creation and approval. With review workflows, users can define stages to ensure that content is properly reviewed and approved.
+[Review Workflows](/user-docs/settings/review-workflows) allow users to create and manage customizable workflows for content creation and approval.
 
-While the Strapi admin panel provides a graphical way to manage [Review Workflows](/user-docs/settings/review-workflows), developers may also want to interact with the feature programmatically through the REST API. This can be useful for automating workflows, integrating with other tools, or creating custom interfaces for managing content.
+While the Strapi admin panel provides a graphical way to manage Review Workflows, developers may also want to interact with the feature programmatically through the REST API. This can be useful for automating workflows, integrating with other tools, or creating custom interfaces for managing content.
 
-This documentation will cover how to query review workflows through the Strapi REST API. Specifically, we'll explain how to retrieve information about existing workflows and their stages, as well as how to update workflows using the API.
-
+This documentation explains how to use the REST API to retrieve information about existing workflows and their stages
+and to update existing workflows.
 
 ## Endpoints
 
@@ -29,7 +29,7 @@ Queries can also support using the [`populate` parameter](#use-the-populate-para
 
 ### Get all review workflows
 
-Returns a list of all the review workflows available in the Strapi project.
+Returns a list of all the review workflows available in the project.
 
 <ApiCall>
 
@@ -59,7 +59,7 @@ Returns a list of all the review workflows available in the Strapi project.
 
 ### Get a specific review workflow
 
-This endpoint retrieves a specific review workflow based on the provided `workflow_id`.
+Retrieves a specific review workflow based on the provided `workflow_id`.
 
 <ApiCall>
 
@@ -85,7 +85,7 @@ This endpoint retrieves a specific review workflow based on the provided `workfl
 
 ### Get a specific stage in a specific workflow
 
-This endpoint retrieves a specific stage of a specific review workflow based on the provided `workflow_id` and `stage_id`.
+Retrieves a specific stage of a specific review workflow based on the provided `workflow_id` and `stage_id`.
 
 <ApiCall>
 
@@ -109,10 +109,9 @@ This endpoint retrieves a specific stage of a specific review workflow based on 
 
 </ApiCall>
 
-
 ### Update a specific stage in a specific workflow
 
-This endpoint updates a specific stage of a specific review workflow based on the provided `workflow_id` and `stage_id`.
+Updates a specific stage of a specific review workflow based on the provided `workflow_id` and `stage_id`.
 
 <ApiCall>
 
@@ -143,14 +142,15 @@ This endpoint updates a specific stage of a specific review workflow based on th
 
 </ApiCall>
 
-
 ### Update all the stages of a workflow
 
-This endpoint updates all the stages of a specific review workflow based on the provided `workflow_id`. It can be used to change the order, remove, create, and update the stages of a workflow. The request body should contain an array of objects, where each object represents a stage and its properties.
+The `/stages` endpoint can be used to update all the stages of a specific review workflow based on the provided `workflow_id`. Use it to change the order, remove, create, and update the stages of a workflow. The request body must contain an array of objects, where each object represents a stage and its properties.
 
-When updating a stage, make sure to include the stage's `id` in the object to indicate which stage to update. If the `id` is not provided, a new stage will be created.
+Using this endpoint you can:
 
-If you want to remove a stage, simply omit it from the request body.
+- Update an existing stage by including the stage's `id` in the object.
+- Create a new stage if no stage `id` is provided.
+- Remove a stage by omitting the stage from the request body.
 
 <ApiCall>
 
@@ -207,7 +207,7 @@ If you want to remove a stage, simply omit it from the request body.
 
 ### Create a new stage in a specific workflow
 
-This endpoint creates a new stage for a specific review workflow based on the provided `workflow_id`. The newly created stage will be put at the end of the stages of the workflow.
+Creates a new stage for a specific review workflow based on the provided `workflow_id`. The newly created stage will be put at the end of the stages of the workflow.
 
 <ApiCall>
 
@@ -241,9 +241,7 @@ This endpoint creates a new stage for a specific review workflow based on the pr
 
 ## Use the `populate` parameter
 
-The `populate` parameter is used to fetch associated data with the resource being queried. In the context of Review Workflows, it allows you to fetch the stages associated with a workflow in a single API call instead of making a separate API call for each stage.
-
-Here are some examples of real-world use cases for the `populate` parameter in the context of Review Workflows:
+The `populate` parameter is used to fetch associated data with the resource being queried. In the context of Review Workflows, `populate` allows fetching the stages associated with a workflow in a single API call instead of making a separate API call for each stage.
 
 #### Fetch all workflows with their stages
 <ApiCall>
