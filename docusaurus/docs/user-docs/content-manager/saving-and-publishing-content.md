@@ -42,7 +42,7 @@ Published contents can be unpublished, switching back to being drafts again.
 
 To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
 
-### Bulk publish and unpublish <BetaBadge />
+### Bulk publish and unpublish <AlphaBadge />
 
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously.
 
@@ -56,7 +56,7 @@ To publish or unpublish several entries:
 
 :::caution
 * If an error occurs, a red message overlay will appear with additional information, and none of your selected entries will be published or unpublished.
-* If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+* If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
 ## Deleting content
@@ -71,5 +71,5 @@ You can delete entries from the list view of a collection type, by clicking on t
 :::
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#internationalization-plugin) is installed, entries can only be deleted one locale at the time.
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, entries can only be deleted one locale at the time.
 :::
