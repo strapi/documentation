@@ -17,6 +17,14 @@
       "destination": "/dev-docs"
     },
     {
+      "source": "/developer-docs/latest/getting-started/introduction.html",
+      "destination": "/dev-docs/intro",
+    },
+    {
+      "source": "/developer-docs/latest/guides/auth-request.html",
+      "destination": "/dev-docs/intro",
+    },
+    {
       "source": "/dev-docs",
       "destination": "/dev-docs/intro"
     },
@@ -27,6 +35,22 @@
     {
       "source": "/user-docs/getting-started/introduction.html",
       "destination": "/user-docs"
+    },
+    {
+      "source": "/user-docs/getting-started/introduction",
+      "destination": "/user-docs/intro"
+    },
+    {
+      "source": "/user-docs/latest/settings/managing-global-settings",
+      "destination": "/user-docs/settings/admin-panel",
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions",
+      "destination": "/user-docs/users-roles-permissions",
+    },
+    {
+      "source": "/user-docs/content-manager/introduction-to-content-manager",
+      "destination": "/user-docs/content-manager",
     },
     {
       "source": "/user-docs",
