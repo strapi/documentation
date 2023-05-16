@@ -40,7 +40,7 @@
 			"destination": "/user-docs/intro"
 		},
 		{
-			"source": "/user-docs/latest/settings/managing-global-settings",
+			"source": "/user-docs/settings/managing-global-settings",
 			"destination": "/user-docs/settings/admin-panel"
 		},
 		{
