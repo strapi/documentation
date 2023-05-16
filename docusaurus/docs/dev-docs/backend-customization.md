@@ -39,26 +39,6 @@ Both global and route middlewares include an asynchronous callback function, `aw
 
 ```mermaid
 graph TB
-    subgraph incoming
-        request
-        globalMiddlewareA
-        routePolicy
-        routeMiddlewareA
-        controllerA
-        serviceA
-        entityService
-        lifecyclesBefore
-        queryEngine
-        database
-    end
-    subgraph outgoing
-        lifecyclesAfter
-        serviceB
-        controllerB
-        routeMiddlewareB
-        globalMiddlewareB
-        response
-    end
     request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
     globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
     globalMiddlewareA --"Return before next()<br> Current Middleware-1"-->globalMiddlewareB
@@ -70,10 +50,9 @@ graph TB
     controllerA --"Don't call Service" --> routeMiddlewareB
     serviceA --"Call Entity Service" --> entityService{{Entity Service}}
     serviceA --"Don't call Entity Service" --> controllerB
-    entityService --> queryEngine
-    lifecyclesBefore --> queryEngine{{Query Engine}}
+    entityService --> queryEngineA{{Query Engine}}
     entityService --"Don't call Query Engine" --> serviceB
-    queryEngine --> lifecyclesBefore[/Lifecyle<br> beforeX\] 
+    queryEngineA --> lifecyclesBefore[/Lifecyle<br> beforeX\] 
     lifecyclesBefore[/Lifecyle<br> beforeX\] --> database[(Database)]
     database --> lifecyclesAfter[\Lifecyle<br> afterX/]
     lifecyclesAfter --> serviceB{{"Service<br/>after Entity Service call"}}
