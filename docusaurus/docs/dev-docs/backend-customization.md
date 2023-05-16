@@ -39,7 +39,26 @@ Both global and route middlewares include an asynchronous callback function, `aw
 
 ```mermaid
 graph TB
-
+    subgraph incoming
+        request
+        globalMiddlewareA
+        routePolicy
+        routeMiddlewareA
+        controllerA
+        serviceA
+        entityService
+        lifecyclesBefore
+        queryEngine
+        database
+    end
+    subgraph outgoing
+        lifecyclesAfter
+        serviceB
+        controllerB
+        routeMiddlewareB
+        globalMiddlewareB
+        response
+    end
     request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
     globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
     globalMiddlewareA --"Return before next()<br> Current Middleware-1"-->globalMiddlewareB
@@ -47,15 +66,18 @@ graph TB
     routePolicy --Returns false or an error-->globalMiddlewareB
     routeMiddlewareA --"Return before next()<br> Current Middleware-1"-->routeMiddlewareB
     routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
-    controllerA --"Call Service"--> service{{Service}}
+    controllerA --"Call Service"--> serviceA{{Service}}
     controllerA --"Don't call Service" --> routeMiddlewareB
-    service --"Call Entity Service" --> entityService{{Entity Service}}
-    service --"Don't call Entity Service" --> controllerB
-    entityService --> queryEngineA{{Query Engine}}
-    entityService --"Don't call Query Engine" --> ServiceB
-    queryEngineA --> database[(Database)]
-    database --> ServiceB{{"Service<br/>after Entity Service call"}}
-    ServiceB --> controllerB{{"Controller<br/>after service call"}}
+    serviceA --"Call Entity Service" --> entityService{{Entity Service}}
+    serviceA --"Don't call Entity Service" --> controllerB
+    entityService --> queryEngine
+    lifecyclesBefore --> queryEngine{{Query Engine}}
+    entityService --"Don't call Query Engine" --> serviceB
+    queryEngine --> lifecyclesBefore[/Lifecyle<br> beforeX\] 
+    lifecyclesBefore[/Lifecyle<br> beforeX\] --> database[(Database)]
+    database --> lifecyclesAfter[\Lifecyle<br> afterX/]
+    lifecyclesAfter --> serviceB{{"Service<br/>after Entity Service call"}}
+    serviceB --> controllerB{{"Controller<br/>after service call"}}
     controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
     routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
     globalMiddlewareB --> response[Response]
@@ -65,15 +87,19 @@ graph TB
     linkStyle 2 stroke:purple,color:purple
     linkStyle 5 stroke:purple,color:purple
 
+    click request "/dev-docs/backend-customization/requests-responses"
     click globalMiddlewareA "/dev-docs/backend-customization/middlewares"
     click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
-    click request "/dev-docs/backend-customization/requests-responses"
     click routePolicy "/dev-docs/backend-customization/routes"
     click routeMiddlewareA "/dev-docs/backend-customization/routes#middlewares"
     click routeMiddlewareB "/dev-docs/backend-customization/routes#middlewares"
-    click controllerServices "/dev-docs/backend-customization/controllers"
-    click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
+    click controllerA "/dev-docs/backend-customization/controllers"
+    click controllerB "/dev-docs/backend-customization/controllers"
+    click serviceA "/dev-docs/backend-customization/services"
+    click serviceB "/dev-docs/backend-customization/services"
     click entityService "/dev-docs/api/entity-service/"
+    click lifecyclesBefore "/dev-docs/backend-customization/models#lifecycle-hooks"
     click queryEngine "/dev-docs/api/query-engine/"
+    click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"
     click response "/dev-docs/backend-customization/requests-responses"
 ```
