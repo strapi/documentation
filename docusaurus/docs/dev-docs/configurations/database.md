@@ -40,7 +40,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 | `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
 | `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
-::: note
+:::note
 A `client` value of 'sqlite' will be modified by Strapi to be 'better-sqlite3' if the package is available in your project, or 'sqlite3' if it is not.
 :::
 
