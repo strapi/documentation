@@ -161,7 +161,7 @@ module.exports = {
 
 ### Excluding from generation
 
-To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
 
 :::note
 `excludeFromGeneration` gives more fine-grained control over what is generated.
