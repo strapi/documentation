@@ -268,7 +268,7 @@ module.exports = {
       "x-strapi-config": {
         mutateDocumentation: (generatedDocumentationDraft) => {
           generatedDocumentationDraft.paths[
-            "/answer-to-everything" // Must be an existing path
+            "/answer-to-everything" // must be an existing path
           ].get.responses["200"].description = "*";
         },
       },
