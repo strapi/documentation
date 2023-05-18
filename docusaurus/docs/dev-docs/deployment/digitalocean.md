@@ -495,7 +495,7 @@ After=network.target
 Environment=PATH=your_path
 Type=simple
 User=your-name
-ExecStart=/usr/bin/nodejs /home/your-name/NodeWebHooks/webhook.js
+ExecStart=/usr/bin/node /home/your-name/NodeWebHooks/webhook.js
 Restart=on-failure
 
 [Install]
