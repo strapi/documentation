@@ -25,8 +25,13 @@ The following API parameters are available:
 
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)
 
-:::tip
-<QsIntroShort />
+:::strapi Interactive Query Builder
+
+A wide range of REST API parameters can be used and combined to query your content, which can result in long query URLs. Strapi's codebase uses [the `qs` library](https://github.com/ljharb/qs) to parse and stringify nested objects, and it's recommended to use `qs` directly to generate complex query strings instead of creating them manually. You can use the following interactive query builder, which leverages `qs` to generate URLs:
+
+1. In the _Endpoint_ field, type the path of the endpoint you want to query. The default endpoint path is prefixed with `/api/` and should be kept as-is unless you configured a different API prefix using [the `rest.prefix` API configuration option](/dev-docs/configurations/api). For instance, to query the `books` content-type using the default API prefix, type `/api/books`.
+2. In the _Endpoint query parameters_ field, type whatever parameters and values you would like to use to define a specific query. Refer to the parameters table at the beginning of this page and read the corresponding parameters pages to better understand parameters usage. The _Query String URL_ field is updated as you type.
+3. Click the **Copy to clipboard** button. The automatically generated query string is copied to your clipboard and ready to be pasted in the tool of your choice to query your content.
 
 <InteractiveQueryBuilder
   endpoint="/api/books"
@@ -50,4 +55,8 @@ Query parameters use the LHS bracket syntax (i.e. they are encoded using square 
   `}
 />
 
+:::
+
+:::caution
+The `qs` library and the interactive query builder provided above do not validate the syntax. These tools are only provided to simplify building the query string but do not guarantee a valid syntax or result. 
 :::
