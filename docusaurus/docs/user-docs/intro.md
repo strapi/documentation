@@ -7,7 +7,13 @@ sidebar_label: Welcome!
 
 This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
 
-![Homepage of the Admin Panel](/img/assets/getting-started/admin-panel-homepage.png)
+<ThemedImage
+  alt="Homepage of the Admin Panel"
+  sources={{
+    light: '/img/assets/getting-started/admin-panel-homepage.png',
+    dark: '/img/assets/getting-started/admin-panel-homepage_DARK.png',
+  }}
+/>
 
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
 
@@ -47,7 +53,13 @@ To do so, in the login page of your Strapi application, click on a chosen provid
 
 If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information, such as name, username, email or password. You can also choose the language of the interface for your Strapi application.
 
-![User profile](/img/assets/getting-started/user-information-profile.png)
+<ThemedImage
+  alt="Homepage of the Admin Panel"
+  sources={{
+    light: '/img/assets/getting-started/user-information-profile.png',
+    dark: '/img/assets/getting-started/user-information-profile_DARK.png',
+  }}
+/>
 
 To modify your user information:
 
