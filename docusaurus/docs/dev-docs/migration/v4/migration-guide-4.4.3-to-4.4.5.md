@@ -47,5 +47,10 @@ Stop the server before starting the upgrade.
 4. Run the install command:
 <InstallCommand components={props.components} />
 
+## Rebuild the application
+
 <BuildCommand components={props.components} />
+
+## Restart the application
+
 <DevelopCommand components={props.components} />
