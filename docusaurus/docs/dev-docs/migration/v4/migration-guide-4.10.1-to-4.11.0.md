@@ -11,7 +11,7 @@ import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
 The Strapi v4.10.1+ to v4.11.0 migration guide upgrades v4.10.1+ to v4.11.0.
 
-<!-- TODO: in a few short sentences, describe what are the breaking changes in v4.11 that justify having a manuel migration guide -->
+Breaking change: Users and Permissions new user registration now only accepts email, username, and password fields unless additional fields are added to your configuration. If your application has additional fields added to User and Permissions users that are accepted during registration, please see the Users and Permissions -> Registration -> Configuration documentation for the necessary changes to your configuration.
 
 The migration guide consists of:
 
