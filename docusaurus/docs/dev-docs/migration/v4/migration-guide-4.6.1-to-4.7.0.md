@@ -9,9 +9,7 @@ import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
 # v4.10.1+ to v4.7.0 migration guide
 
-The Strapi v4.6.1+ to v4.7.0 migration guide upgrades v4.6.1+ to v4.7.0. 
-
-TODO: describe what happened in 
+The Strapi v4.6.1+ to v4.7.0 migration guide upgrades v4.6.1+ to v4.7.0. We added a [data management system](/dev-docs/data-management) to v4.7 that allows transferring data from a Strapi instance to another instance. The data transfer features require generating transfer tokens that use a salt which need to be manually added when you migrate from a previous version of Strapi.
 
 The migration guide consists of:
 
