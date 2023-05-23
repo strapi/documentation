@@ -61,5 +61,10 @@ To change the script:
 filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
 ```
 
+## Rebuild the application
+
 <BuildCommand components={props.components} />
+
+## Restart the application
+
 <DevelopCommand components={props.components} />
