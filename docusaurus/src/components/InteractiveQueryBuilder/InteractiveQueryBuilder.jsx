@@ -91,7 +91,7 @@ export function InteractiveQueryBuilder({
             const queryStringified = (
               endpoint +
               '?' +
-              qs.stringify(queryObject, { encodeValuesOnly: true })
+              qs.stringify(queryObject, { encode: false })
             );
 
             return (
