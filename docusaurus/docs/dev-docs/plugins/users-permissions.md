@@ -203,9 +203,9 @@ Setting JWT expiry for more than 30 days is **not recommended** due to security 
 
 #### Configuration
 
-If you have added any additional fields to your user model that need to be accepted on registration, they need to be added to the list of allowed fields in the `register` configuration option, otherwise they will be ignored.
+The Users and Permissions plugin only accepts email, username, and password fields by default. If additional fields were added to your user model and need to be accepted on registration, add these fields to the `allowedFields` in the `register` configuration option, otherwise the fields will be ignored.
 
-For example, if you have added a field called "nickname" that you wish to accept from the user:
+For example, if you have added a field called `nickname` that you wish to accept from the user, update your configuration object as follows:
 
 <Tabs groupId="js-ts">
 
