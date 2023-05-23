@@ -8,7 +8,13 @@ description: Instructions to add assets to the Media Library
 
 The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/media-library) or the [Content Manager](/user-docs/content-manager/writing-content.md#filling-up-fields) when managing a media field.
 
-![🏞 screenshot - "Add new assets" window](/img/assets/media-library/media-library_add-new-assets.png)
+<ThemedImage
+  alt="Add new assets window"
+  sources={{
+    light: '/img/assets/media-library/media-library_add-new-assets.png',
+    dark: '/img/assets/media-library/media-library_add-new-assets_DARK.png',
+  }}
+/>
 
 To add new assets to the media library:
 
