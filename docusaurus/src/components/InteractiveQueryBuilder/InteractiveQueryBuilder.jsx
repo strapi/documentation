@@ -130,6 +130,7 @@ export function InteractiveQueryBuilder({
             value: endpoint,
             onChange: handleEndpointChange,
           }}
+          hint="Please keep the /api/ part unless you explicitly configured it differently in your project."
         />
         <FormField
           id={`${id}-query`}
