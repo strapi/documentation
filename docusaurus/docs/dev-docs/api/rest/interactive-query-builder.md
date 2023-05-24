@@ -48,7 +48,7 @@ Please refer to the [REST API parameters table](/dev-docs/api/rest/parameters) a
 <br />
 
 :::note
-The default endpoint path is prefixed with `/api/` and should be kept as-is unless you configured a different API prefix using [the `rest.prefix` API configuration option](/dev-docs/configurations/api).<br/> For instance, to query the `books` collection type using the default API prefix, type `/api/books`.
+The default endpoint path is prefixed with `/api/` and should be kept as-is unless you configured a different API prefix using [the `rest.prefix` API configuration option](/dev-docs/configurations/api).<br/> For instance, to query the `books` collection type using the default API prefix, type `/api/books` in the _Endpoint_ field.
 :::
 
 :::caution Disclaimer
@@ -57,5 +57,5 @@ The `qs` library and the interactive query builder provided on this page:
 - are not aware of the parameters and values available in a Strapi project,
 - and do not provide autocomplete features.
 
-Currently, these tools are only provided to transform the JavaScript object in an inline query string URL. Using the generated query string URL does not guarantee that proper results will get returned with your API.
+Currently, these tools are only provided to transform the JavaScript object in an inline query string URL. Using the generated query URL does not guarantee that proper results will get returned with your API.
 :::
