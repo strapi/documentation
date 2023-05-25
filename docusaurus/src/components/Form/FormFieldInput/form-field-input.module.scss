@@ -35,4 +35,9 @@
     --strapi-form-field-input-border-color: var(--strapi-primary-600);
     --strapi-form-field-outline-color: var(--strapi-primary-600);
   }
+
+  &--textarea {
+    min-height: 4.625rem;
+    resize: vertical;
+  }
 }

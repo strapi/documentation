@@ -101,6 +101,7 @@ export function InteractiveQueryBuilder({
                   label="Query String URL:"
                   input={{
                     'aria-disabled': true,
+                    as: 'textarea',
                     readOnly: true,
                     value: queryStringified,
                   }}
