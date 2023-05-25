@@ -53,7 +53,7 @@ The default endpoint path is prefixed with `/api/` and should be kept as-is unle
 
 :::caution Disclaimer
 The `qs` library and the interactive query builder provided on this page:
-- do not detect syntax errors,
+- might not detect all syntax errors,
 - are not aware of the parameters and values available in a Strapi project,
 - and do not provide autocomplete features.
 
