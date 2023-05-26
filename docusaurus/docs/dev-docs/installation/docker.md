@@ -58,7 +58,6 @@ FROM node:16-alpine
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
-RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
@@ -66,8 +65,8 @@ RUN yarn config set network-timeout 600000 -g && yarn install
 ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
-RUN chown -R strapi:strapi /opt/app
-USER strapi
+RUN chown -R node:node /opt/app
+USER node
 COPY . .
 RUN ["yarn", "build"]
 EXPOSE 1337
@@ -84,7 +83,6 @@ FROM node:16-alpine
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
-RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
@@ -92,8 +90,8 @@ RUN npm config set network-timeout 600000 -g && npm install
 ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
-RUN chown -R strapi:strapi /opt/app
-USER strapi
+RUN chown -R node:node /opt/app
+USER node
 COPY . .
 RUN ["npm", "run", "build"]
 EXPOSE 1337
@@ -350,7 +348,6 @@ RUN yarn build
 
 # Creating final production image
 FROM node:16-alpine
-RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -360,8 +357,8 @@ WORKDIR /opt/app
 COPY --from=build /opt/app ./
 ENV PATH /opt/node_modules/.bin:$PATH
 
-RUN chown -R strapi:strapi /opt/app
-USER strapi
+RUN chown -R node:node /opt/app
+USER node
 EXPOSE 1337
 CMD ["yarn", "start"]
 ```
@@ -387,7 +384,6 @@ RUN npm run build
 
 # Creating final production image
 FROM node:16-alpine
-RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -397,8 +393,8 @@ WORKDIR /opt/app
 COPY --from=build /opt/app ./
 ENV PATH /opt/node_modules/.bin:$PATH
 
-RUN chown -R strapi:strapi /opt/app
-USER strapi
+RUN chown -R node:node /opt/app
+USER node
 EXPOSE 1337
 CMD ["npm", "run", "start"]
 
