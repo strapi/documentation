@@ -113,13 +113,13 @@ pre.prism-code {
 
 /** Dark theme */
 @include dark {
+  --custom-code-block-background-color: var(--strapi-neutral-100);
+  --custom-code-block-color: var(--strapi-neutral-1000);
+  --custom-code-block-punctuation-color: var(--strapi-primary-200);
+  --custom-code-block-value-color: var(--strapi-neutral-900);
+
   pre,
   .theme-code-block {
-    --custom-code-block-background-color: var(--strapi-neutral-100);
-    --custom-code-block-color: var(--strapi-neutral-1000);
-    --custom-code-block-punctuation-color: var(--strapi-primary-200);
-    --custom-code-block-value-color: var(--strapi-neutral-900);
-
     --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
     --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-300);
   }

@@ -1,0 +1,11 @@
+/** Component: Form Field Label */
+
+.form-field__label {
+  display: var(--strapi-form-field-label-display, block);
+  width: var(--strapi-form-field-label-width, 100%);
+  color: var(--strapi-form-field-label-color, var(--strapi-neutral-800));
+  font-size: var(--strapi-form-field-label-font-size, 0.875rem);
+  font-weight: var(--strapi-form-field-label-font-weight, 600);
+  line-height: var(--strapi-form-field-label-line-height, 1.33);
+  margin-bottom: var(--strapi-form-field-label-mb, 0.25rem);
+}
