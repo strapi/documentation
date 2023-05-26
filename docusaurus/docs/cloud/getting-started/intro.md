@@ -15,7 +15,7 @@ Strapi Cloud is a managed content platform built on top of Strapi, the leading o
 
 Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
 
-The typical workflow is to create your Strapi application locally, extend the application with plugins or custom code, version the application's codebase through GitHub, and deploy the application in seconds with Strapi Cloud (see [deployment and prerequisites](/cloud/getting-started/deployment#prerequisites)).
+The typical workflow is to create your Strapi (v4.8.1 or later) application locally, extend the application with plugins or custom code, version the application's codebase through GitHub, and deploy the application in seconds with Strapi Cloud (see [deployment and prerequisites](/cloud/getting-started/deployment#prerequisites)).
 
 ## Strapi Community
 
