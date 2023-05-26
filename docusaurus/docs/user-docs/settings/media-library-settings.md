@@ -7,7 +7,13 @@ title: Media Library
 
 The [Media Library](/user-docs/media-library) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets. Those settings can be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Media Library*.
 
-![Media Library settings](/img/assets/settings/settings_media-library.png)
+<ThemedImage
+  alt="Media Library settings"
+  sources={{
+    light: '/img/assets/settings/settings_media-library.png',
+    dark: '/img/assets/settings/settings_media-library_DARK.png',
+  }}
+/>
 
 To configure the Media Library settings:
 
