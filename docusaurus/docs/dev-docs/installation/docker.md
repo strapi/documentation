@@ -62,13 +62,12 @@ RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
-ENV PATH /opt/node_modules/.bin:$PATH
-RUN chown -R strapi:strapi /opt/
-USER strapi
-COPY package.json yarn.lock ./
 RUN yarn config set network-timeout 600000 -g && yarn install
+ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
+RUN chown -R strapi:strapi /opt/app
+USER strapi
 COPY . .
 RUN ["yarn", "build"]
 EXPOSE 1337
@@ -89,14 +88,12 @@ RUN addgroup -g 1001 strapi && adduser -u 1001 -G strapi -s /bin/sh -D strapi
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
-
-ENV PATH /opt/node_modules/.bin:$PATH
-RUN chown -R strapi:strapi /opt/
-USER strapi
-COPY package.json package-lock.json ./
 RUN npm config set network-timeout 600000 -g && npm install
+ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
+RUN chown -R strapi:strapi /opt/app
+USER strapi
 COPY . .
 RUN ["npm", "run", "build"]
 EXPOSE 1337
