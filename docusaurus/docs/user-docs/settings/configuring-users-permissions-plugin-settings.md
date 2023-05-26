@@ -10,7 +10,13 @@ The Users & Permissions plugin is managed from the *Users & Permissions plugin* 
 
 The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
 
-![Providers interface](/img/assets/settings/up_providers.png)
+<ThemedImage
+  alt="Providers interface"
+  sources={{
+    light: '/img/assets/settings/up_providers.png',
+    dark: '/img/assets/settings/up_providers_DARK.png',
+  }}
+/>
 
 To enable and configure a provider:
 
@@ -37,7 +43,13 @@ The Users & Permissions plugin uses 2 email templates, "Email address confirmati
 - if their account must be confirmed to be activated,
 - if they need to reset the password of their Strapi account.
 
-![Email templates interface](/img/assets/settings/up_email-templates.png)
+<ThemedImage
+  alt="Email templates interface"
+  sources={{
+    light: '/img/assets/settings/up_email-templates.png',
+    dark: '/img/assets/settings/up_email-templates_DARK.png',
+  }}
+/>
 
 To configure and edit email templates:
 
@@ -59,7 +71,13 @@ To configure and edit email templates:
 
 All settings related to the Users & Permissions plugin are managed from the *Advanced Settings* sub-section, including the choice of a default role for end users, the enablement of sign-ups and email confirmation, as well as the choice of landing page for resetting a password.
 
-![Advanced settings interface](/img/assets/settings/up_settings.png)
+<ThemedImage
+  alt="Advanced settings interface"
+  sources={{
+    light: '/img/assets/settings/up_settings.png',
+    dark: '/img/assets/settings/up_settings_DARK.png',
+  }}
+/>
 
 1. Go to the *Users & Permissions plugin > Advanced settings* sub-section of the settings interface.
 2. Configure the settings:
