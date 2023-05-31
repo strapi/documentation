@@ -37,6 +37,10 @@ Both global and route middlewares include an asynchronous callback function, `aw
 * If a middleware returns nothing, the request will continue travelling through the various core elements of the backend (i.e., controllers, services, and the other layers that interact with the database).
 * If a middleware returns something, a response will be immediately sent, skipping the rest of the core elements.
 
+## Interactive diagram
+
+The following diagram represents how requests travel through the Strapi backend. You can click on any shape to jump to the relevant page in the documentation.
+
 ```mermaid
 graph TB
     request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
