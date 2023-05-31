@@ -31,7 +31,11 @@ Please refer to the [REST API parameters table](/dev-docs/api/rest/parameters) a
       $eq: 'hello',
     },
   },
-  populate: '*',
+  populate: {
+    author: {
+      fields: ['firstName', 'lastName']
+    }
+  },
   fields: ['title'],
   pagination: {
     pageSize: 10,
