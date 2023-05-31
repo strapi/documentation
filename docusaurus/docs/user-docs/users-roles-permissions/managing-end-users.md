@@ -12,7 +12,13 @@ With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permiss
 
 With the Users & Permissions plugin, the end users and their account information are managed as a content-type. When the plugin is installed on a Strapi application, 3 collection types are automatically created (see [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin)), including "User" which is the only one available directly in the Content Manager.
 
-![Managing end users via the Content Manager](/img/assets/users-permissions/end-user_content-manager.png)
+<ThemedImage
+  alt="Managing end users via the Content Manager"
+  sources={{
+    light: '/img/assets/users-permissions/end-user_content-manager.png',
+    dark: '/img/assets/users-permissions/end-user_content-manager_DARK.png',
+  }}
+/>
 
 Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type (see [Introduction to the Content Manager](/user-docs/content-manager) for more information about the Content Manager).
 
