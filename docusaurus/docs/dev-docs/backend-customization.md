@@ -50,11 +50,11 @@ graph TB
     controllerA --"Don't call Service" --> routeMiddlewareB
     serviceA --"Call Entity Service" --> entityService{{Entity Service}}
     serviceA --"Don't call Entity Service" --> controllerB
-    entityService --> queryEngineA{{Query Engine}}
+    entityService --"Call Query Engine"--> queryEngine{{Query Engine}}
     entityService --"Don't call Query Engine" --> serviceB
-    queryEngineA --> lifecyclesBefore[/Lifecyle<br> beforeX\] 
-    lifecyclesBefore[/Lifecyle<br> beforeX\] --> database[(Database)]
-    database --> lifecyclesAfter[\Lifecyle<br> afterX/]
+    queryEngine --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
+    lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
+    database --> lifecyclesAfter[\Lifecycle<br> afterX/]
     lifecyclesAfter --> serviceB{{"Service<br/>after Entity Service call"}}
     serviceB --> controllerB{{"Controller<br/>after service call"}}
     controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
