@@ -29,7 +29,7 @@ When a Strapi project uses TypeScript, an optional `config/typescript.js|ts` con
 
 | Parameter      | Description                                            | Type      | Default |
 | -------------- | ------------------------------------------------------ | --------- | ------- |
-| `autogenerate` | Automatically generate TypeScript typings as you develop (see [generating typings](/dev-docs/typescript#generate-typings-for-project-schemas)) | `Boolean` | `false` |
+| `autogenerate` | Automatically generate typings as you develop (see [generating typings](/dev-docs/typescript#generate-typings-for-project-schemas)) | `Boolean` | `false` |
 
 **Example:**
 
