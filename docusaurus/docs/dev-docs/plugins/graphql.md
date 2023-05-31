@@ -909,9 +909,9 @@ Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 GraphQL is a query language allowing users to use a broader panel of inputs than traditional REST APIs. GraphQL APIs are inherently prone to security risks, such as credential leakage and denial of service attacks, that can be reduced by taking appropriate precautions.
 
 
-### Disable introspection and playground in production
+### Disable playground in production
 
-In production environments, disabling the GraphQL Playground and the introspection query is recommended.
+In production environments, disabling the GraphQL Playground is recommended.
 If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it is already disabled in production by default.
 
 ### Limit max depth and complexity

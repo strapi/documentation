@@ -159,6 +159,7 @@ const sidebars = {
             'dev-docs/api/rest/filters-locale-publication',
             'dev-docs/api/rest/sort-pagination',
             'dev-docs/api/rest/relations',
+            'dev-docs/api/rest/interactive-query-builder',
           ]
         },
         'dev-docs/api/graphql',
@@ -551,7 +552,14 @@ const sidebars = {
       collapsed: false,
       label: 'Advanced configuration',
       items: [
-        'cloud/advanced/database'
+        {
+          type: 'doc',
+          label: 'Database',
+          id: 'cloud/advanced/database',
+          customProps: {
+            new: true,
+          },
+        }
       ]
     }
   ],

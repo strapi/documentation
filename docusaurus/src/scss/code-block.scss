@@ -93,6 +93,18 @@ pre.prism-code {
     font-family: var(--custom-code-font-family);
     padding-bottom: 0;
 
+    &:before {
+      content: " ";
+      display: inline-block;
+      vertical-align: middle;
+      width: 1rem;
+      height: 1rem;
+      margin: -0.1rem 0.5rem 0 -0.1rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1rem' height='1rem' viewBox='0 0 24 33'%3E%3Cpath fill='%23A5A5BA' fill-rule='evenodd' d='m16.39.749 6.915 7.377A2.59 2.59 0 0 1 24 9.877v19.638c0 1.381-1.042 2.493-2.337 2.493H2.337C1.042 32.008 0 30.896 0 29.515V2.5C0 1.827.253 1.22.695.75 1.137.277 1.705.008 2.337.008h12.41c.6 0 1.2.27 1.643.74Zm.473 7.983h5.116L15.82 2.197V7.62c0 .607.474 1.112 1.042 1.112ZM2.337 30.559h19.326c.537 0 .98-.471.98-1.044V10.18h-5.78c-1.326 0-2.4-1.145-2.4-2.56V1.456H2.337a.949.949 0 0 0-.695.303c-.19.203-.284.472-.284.741v27.015c0 .573.442 1.044.979 1.044Zm3.358-5.248h12.442c.379 0 .695.326.726.718 0 .392-.316.718-.694.718H5.695c-.38 0-.695-.326-.695-.718 0-.392.316-.718.695-.718Zm12.442-5.287H5.695c-.38 0-.695.327-.695.718 0 .392.316.718.695.718h12.474c.378 0 .694-.326.694-.718 0-.391-.347-.718-.726-.718ZM5.695 14.738h12.442c.379 0 .726.326.726.718 0 .391-.316.718-.694.718H5.695c-.38 0-.695-.327-.695-.718 0-.392.316-.718.695-.718Z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+      background-position: left center;
+      background-repeat: no-repeat;
+    }
+
     + [class*="codeBlockContent"] pre code {
       padding-top: 0;
     }
@@ -101,13 +113,13 @@ pre.prism-code {
 
 /** Dark theme */
 @include dark {
+  --custom-code-block-background-color: var(--strapi-neutral-100);
+  --custom-code-block-color: var(--strapi-neutral-1000);
+  --custom-code-block-punctuation-color: var(--strapi-primary-200);
+  --custom-code-block-value-color: var(--strapi-neutral-900);
+
   pre,
   .theme-code-block {
-    --custom-code-block-background-color: var(--strapi-neutral-100);
-    --custom-code-block-color: var(--strapi-neutral-1000);
-    --custom-code-block-punctuation-color: var(--strapi-primary-200);
-    --custom-code-block-value-color: var(--strapi-neutral-900);
-
     --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
     --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-300);
   }
