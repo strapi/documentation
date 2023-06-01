@@ -14,7 +14,7 @@ const captionStyle = {fontSize: '12px'}
 
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
+- **Global middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add global middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
 
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
 
