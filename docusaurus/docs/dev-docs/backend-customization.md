@@ -50,8 +50,8 @@ graph TB
     routePolicy --Returns false or an error-->globalMiddlewareB
     routeMiddlewareA --"Return before next()<br> Current Middleware-1"-->routeMiddlewareB
     routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
-    controllerA --"Call Service"--> serviceA{{Service}}
-    controllerA --"Don't call Service" --> routeMiddlewareB
+    controllerA --"Call Service(s)"--> serviceA{{Service}}
+    controllerA --"Don't call Service(s)" --> routeMiddlewareB
     serviceA --"Call Entity Service" --> entityService{{Entity Service}}
     serviceA --"Don't call Entity Service" --> controllerB
     entityService --"Call Query Engine"--> queryEngine{{Query Engine}}
@@ -72,8 +72,8 @@ graph TB
     click globalMiddlewareA "/dev-docs/backend-customization/middlewares"
     click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
     click routePolicy "/dev-docs/backend-customization/routes"
-    click routeMiddlewareA "/dev-docs/backend-customization/routes#middlewares"
-    click routeMiddlewareB "/dev-docs/backend-customization/routes#middlewares"
+    click routeMiddlewareA "/dev-docs/backend-customization/routes"
+    click routeMiddlewareB "/dev-docs/backend-customization/routes"
     click controllerA "/dev-docs/backend-customization/controllers"
     click controllerB "/dev-docs/backend-customization/controllers"
     click serviceA "/dev-docs/backend-customization/services"
