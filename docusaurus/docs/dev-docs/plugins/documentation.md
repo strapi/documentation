@@ -105,7 +105,7 @@ module.exports = {
         plugins: [ 'upload', 'users-permissions'],
         path: '/documentation',
       },
-      servers: [{ url: 'http://localhost:1337/api/api', description: 'Development server' }],
+      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
       externalDocs: {
         description: 'Find out more',
         url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
