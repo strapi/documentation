@@ -40,7 +40,13 @@ New content-types are only considered created once they have been saved. Saving 
 
 ## Creating a new component
 
-![Component creation](/img/assets/content-type-builder/component-creation-1.png)
+<ThemedImage
+  alt="Component creation"
+  sources={{
+    light: '/img/assets/content-type-builder/component-creation-1.png',
+    dark: '/img/assets/content-type-builder/component-creation-1_DARK.png',
+  }}
+/>
 
 Components are created from the same-named category of the Content-type Builder's sub navigation.
 
