@@ -45,10 +45,10 @@ The following diagram represents how requests travel through the Strapi backend.
 graph TB
     request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
     globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
-    globalMiddlewareA --"Return before next()<br> Current Middleware-1"-->globalMiddlewareB
+    globalMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->globalMiddlewareB
     routePolicy --Returns true--> routeMiddlewareA(("Route middleware<br/>before await next()"))
     routePolicy --Returns false or an error-->globalMiddlewareB
-    routeMiddlewareA --"Return before next()<br> Current Middleware-1"-->routeMiddlewareB
+    routeMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->routeMiddlewareB
     routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
     controllerA --"Call Service(s)"--> serviceA{{Service}}
     controllerA --"Don't call Service(s)" --> routeMiddlewareB
