@@ -21,7 +21,7 @@ Once a route exists, reaching it executes some code handled by a controller (see
 
 <figure style={imgStyle}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels throught the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation

@@ -14,7 +14,7 @@ const captionStyle = {fontSize: '12px'}
 
 <figure style={imgStyle}>
   <img src="/img/assets/backend-customization/diagram-requests-responses.png" alt="Simplified Strapi backend diagram with requests and responses highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels throught the Strapi back end, with requests and responses highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with requests and responses highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Requests

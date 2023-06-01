@@ -21,7 +21,7 @@ Policies can be global or scoped. [Global policies](#global-policies) can be ass
 
 <figure style={imgStyle}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes and policies highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels throught the Strapi back end, with policies and routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with policies and routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation

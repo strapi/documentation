@@ -22,7 +22,7 @@ In Strapi, 2 middleware concepts coexist:
 
 <figure style={imgStyle}>
   <img src="/img/assets/backend-customization/diagram-global-middlewares.png" alt="Simplified Strapi backend diagram with global middlewares highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels throught the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation
