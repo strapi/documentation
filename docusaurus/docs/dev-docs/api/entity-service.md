@@ -3,11 +3,15 @@ title: Entity Service API
 description: The Entity Service is the layer that handles Strapi's complex data structures like components and dynamic zones, and uses the Query Engine API under the hood to execute database queries.
 displayed_sidebar: devDocsSidebar
 ---
+
 import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'
+import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink.md'
 
 # Entity Service API
 
-Strapi provides an Entity Service API, built on top of the [Query Engine API](/dev-docs/api/query-engine/). The Entity Service is the layer that handles Strapi's complex data structures like [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.
+The Strapi backend provides an Entity Service API, built on top of the [Query Engine API](/dev-docs/api/query-engine/). The Entity Service is the layer that handles Strapi's complex data structures like [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.
+
+<BackendIntroCrosslink components={props.components} />
 
 :::strapi Entity Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
