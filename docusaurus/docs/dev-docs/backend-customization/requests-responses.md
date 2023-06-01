@@ -5,10 +5,17 @@ description: Learn more about requests and responses for Strapi, the most popula
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const imgStyle = {width: '100%', margin: '0'}
+const captionStyle = {fontSize: '12px'}
 
 # Requests & Responses
 
 <FeedbackCallout components={props.components}/>
+
+<figure style={imgStyle}>
+  <img src="/img/assets/backend-customization/diagram-requests-responses.png" alt="Simplified Strapi backend diagram with requests and responses highlighted" />
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels throught the Strapi back end, with requests and responses highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Requests
 
