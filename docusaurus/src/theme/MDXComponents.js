@@ -18,6 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
+import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 
 export default {
@@ -46,4 +47,6 @@ export default {
   CustomDocCard,
   InteractiveQueryBuilder,
   ThemedImage,
+  SideBySideColumn,
+  SideBySideContainer,
 };
