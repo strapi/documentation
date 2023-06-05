@@ -22,7 +22,7 @@ Strapi also supports types autocompletion in your code editor while you are deve
 | `tsconfig.json` file                      | application root | Manages TypeScript compilation for the server.                                                                                                    |
 | `tsconfig.json` file                      | `./src/admin/`   | Manages TypeScript compilation for the admin panel.                                                                                               |
 
-## Strapi-specific configuration for TypeScript <BetaBadge />
+## Strapi-specific configuration for TypeScript
 
 Strapi supports types autocompletion in your code editor while you are developing. Autocompletion works for both JavaScript and TypeScript projects.
 
