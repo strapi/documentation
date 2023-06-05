@@ -552,14 +552,7 @@ const sidebars = {
       collapsed: false,
       label: 'Advanced configuration',
       items: [
-        {
-          type: 'doc',
-          label: 'Database',
-          id: 'cloud/advanced/database',
-          customProps: {
-            new: true,
-          },
-        }
+        'cloud/advanced/database',
       ]
     }
   ],
