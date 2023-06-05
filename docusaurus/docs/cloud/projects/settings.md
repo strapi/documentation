@@ -27,7 +27,7 @@ The *General* tab enables you to check and update the following details for the 
 
 The *Domains* tab enables you to manage domains and connect new ones.
 
-<!--> Screenshot of Domains interface <-->
+![Domains](/img/assets/cloud/settings_domains.png)
 
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
