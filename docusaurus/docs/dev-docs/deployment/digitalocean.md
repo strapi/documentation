@@ -128,26 +128,34 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
 1. [Install PostgreSQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) (Through **Step 4** - Creating a New Database).
 
-Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database).
+  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database).
 
-2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string. Follow these commands from your terminal to `alter` the `user` you created and `add a password`:
+2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
 
-```bash
-sudo -u postgres psql     //only necessary if you switched away from the postgres@ user
-[sudo] password for your-name:
-psql (10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)) // TODO: Change this later
-Type "help" for help.
+  **Optional:** If you have switched away from the `postgres@` user, run the following:
 
-psql
-postgres=# ALTER USER your-name PASSWORD 'password';
-ALTER ROLE
-postgres=# \q
-exit
-```
+  ```bash
+  sudo -u postgres psql
+  [sudo] password for your-name: # this auth prompt appears
+  psql (14.8 (Ubuntu 14.8-0ubuntu0.22.04.1)) # shell response after password
+  Type "help" for help.
+  ```
 
-- **OPTIONAL:** If in **Development**, your Strapi project uses **SQLite**, you will need to install a dependency package called `pg`:
+  Follow the commands below to `alter` the `user` you created and add a `password`.
 
-  - On your **Development** computer:
+  ```bash
+  psql
+  # Enter SQL command below including quotation marks and semicolon.
+  postgres=# ALTER USER your-name PASSWORD 'your-password';
+  ALTER ROLE # shell response after SQL command
+  # Then quit with the \q command as we don't want to alter role.
+  postgres=# \q
+  exit
+  ```
+
+3. **Optional:** If in **development** and your Strapi project uses **SQLite**, you will need to install a dependency package called `pg`.
+
+  On your **development** computer:
 
   `Path: ./my-project/`
 
@@ -157,7 +165,7 @@ exit
 
   The `pg` package is automatically installed locally if you choose `PostgreSQL` as the initial database choice when you first set-up Strapi.
 
-You will need the **database name**, **username** and **password** for later use, please note these down.
+You will need the **database name**, **username** and **password** for later use, so make note of them.
 
 ### Local Development Configuration
 
