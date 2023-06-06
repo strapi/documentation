@@ -67,31 +67,26 @@ Now the server has been set up, [install Node using a PPA](https://www.digitaloc
 After installing Node (which also installs `npm` by default), you will manually change `npm`'s default directory. The following steps are based on [how to resolve access permissions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) from `npmjs.com`:
 
 - Create a `.npm-global` directory and set the path to this directory for `node_modules`
+  ```bash
+  mkdir ~/.npm-global
+  npm config set prefix '~/.npm-global'
+  ```
 
-```bash
-cd ~
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
-```
+- Create (or modify) a `~/.profile` file by running
+  ```bash
+  sudo nano ~/.profile
+  ```
 
-- Create (or modify) a `~/.profile` file and add this line:
-
-```bash
-sudo nano ~/.profile
-```
-
-Add these lines.
-
-```ini
-# set PATH so global node modules install without permission issues
-export PATH=~/.npm-global/bin:$PATH
-```
+- Paste the below into the the first two lines of the open file. Then `ctrl-x` to exit and `y` to save.
+  ```bash
+  # set PATH so global node modules install without permission issues
+  export PATH=~/.npm-global/bin:$PATH
+  ```
 
 - Lastly, update your system variables:
-
-```bash
-source ~/.profile
-```
+  ```bash
+  source ~/.profile
+  ```
 
 You are now ready to continue to the next section.
 
