@@ -21,9 +21,9 @@ Prior to starting this guide, you should have created a [Strapi project](/dev-do
 Postgres will be used as the database in this documentation so it's easiest to select that during setup of the Strapi app. However, [any](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) of the supported databases can be used apart from `SQLite`.
 :::
 
-### DigitalOcean Install Requirements
+### DigitalOcean installation requirements
 
-- If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/).
+If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/).
 
 ### Create a "Droplet"
 
@@ -98,7 +98,7 @@ After installing Node (which also installs `npm` by default), you will manually 
 
 You are now ready to continue to the next section.
 
-### Install and Configure Git versioning on your server
+### Install and configure Git versioning on your server
 
 A convenient way to maintain your Strapi application and update it during and after initial development is to use [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). In order to use Git, you will need to have it installed on your Droplet. Droplets should have Git installed by default, so you will first check if it is installed and if it is not installed, you will need to install it.
 
@@ -167,10 +167,10 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
 You will need the **database name**, **username** and **password** for later use, so make note of them.
 
-### Local Development Configuration
+### Local development configuration
 
-- You must have [Git installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- You must have created a repository for your Strapi project and have your development project initialized to this repository.
+- You must have `git` [installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
+- [Initialize](https://git-scm.com/docs/git-init) `git` for your Strapi project created previously.
 
 In your code editor, you will need to edit a file called `database.js`. Replace the contents of the file with the following.
 
@@ -237,7 +237,7 @@ git push
 Please continue to the next section, [Deploy from GitHub](#deploy-from-github).
 
 
-### Deploy from Github
+### Deploy from GitHub
 
 You will next deploy your Strapi project to your Droplet by `cloning it from GitHub`.
 
