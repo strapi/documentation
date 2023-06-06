@@ -7,7 +7,7 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 # DigitalOcean Droplets
 
-This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform).
+This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform).
 
 :::tip
 Follow the setup instructions in the order they are presented below.
@@ -132,6 +132,10 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
 2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
 
+  :::note
+  By convention, any variables that the user is expected to substitiute for their own is prefixed with `your-`, e.g. `your-name`.
+  :::
+
   **Optional:** If you have switched away from the `postgres@` user, run the following:
 
   ```bash
@@ -234,14 +238,11 @@ git commit -m "Configured production/database.json"
 git push
 ```
 
-Please continue to the next section, [Deploy from GitHub](#deploy-from-github).
-
-
 ### Deploy from GitHub
 
-You will next deploy your Strapi project to your Droplet by `cloning it from GitHub`.
+You will next deploy your Strapi project to your Droplet by cloning it from GitHub.
 
-From your terminal, `logged in as your non-root user` to your Droplet:
+From your terminal, logged in as your **non-root** user to your Droplet:
 
 ```bash
 cd ~
