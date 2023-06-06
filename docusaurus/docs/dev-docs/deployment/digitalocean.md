@@ -23,7 +23,7 @@ DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocea
 
 #### 1. Log in to your [DigitalOcean account](https://cloud.digitalocean.com/login)
 
-#### 2. `Create a Droplet` by clicking on `New Droplet`
+#### 2. Select the `Create` dropdown near the top right, then select `Droplets`
 
 Choose these options:
 
