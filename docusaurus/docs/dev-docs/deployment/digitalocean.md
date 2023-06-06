@@ -96,23 +96,25 @@ A convenient way to maintain your Strapi application and update it during and af
 
 The next step is to configure Git on your server.
 
-#### 1. Check to see if `Git` is installed
+#### 1. Check to see if Git is installed
 
-If you see a `git version 2.x.x` then you do have `Git` installed. Check with the following command:
+Run the following command:
 
 ```bash
 git --version
 ```
 
-#### 2. **OPTIONAL:** Install Git
+If you see `git version 2.x.x` as the response then you do have `git` installed
+
+#### 2. **Optional:** Install Git
 
 :::note
 Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
 :::
 
-#### 3. Complete the global **username** and **email** settings: [Setting up Git](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git)
+#### 3. Configure Git
 
-After installing and configuring Git on your Droplet. Please continue to the next step, [installing a database](#install-the-database-for-your-project).
+ [Set up](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git) the username and email for Git.
 
 ### Install the database for your project
 
