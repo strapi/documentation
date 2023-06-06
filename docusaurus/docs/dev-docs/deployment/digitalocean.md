@@ -11,7 +11,11 @@ This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](ht
 
 Databases can be on a DigitalOcean [Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
 
-Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start). And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start). Don't use the `--quickstart` flag as this will create an app using `SQLite` which is not desired for remote hosting. Also, have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+
+:::tip
+Postgres will be used as the database in this documentation so it's easiest to select that during setup of the Strapi app. However, [any](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) of the supported databases can be used apart from `SQLite`.
+:::
 
 ### DigitalOcean Install Requirements
 
