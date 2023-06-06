@@ -9,7 +9,7 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 This is a step-by-step guide for deploying a Strapi project to [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform).
 
-Databases can be on a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
+Databases can be on a DigitalOcean [Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
 
 Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start). And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
 
