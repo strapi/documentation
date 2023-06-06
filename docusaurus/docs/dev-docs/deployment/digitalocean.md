@@ -27,7 +27,7 @@ DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocea
 
 Choose these options:
 
-- Ubuntu 18.04 x64
+- Ubuntu `22.04 x64`
 - STARTER `Standard`
 - Choose an appropriate pricing plan. For example, pricing: `$12/mo` _(Scroll to the left)_
   :::tip
@@ -51,22 +51,22 @@ Choose these options:
 
 These next steps will help you to _set up a production server_ and _set up a non-root user_ for managing your server.
 
-Follow the official [DigitalOcean docs for initial server set-up using Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04). These docs will have you complete the following actions:
+Follow the official [DigitalOcean docs for initial server set-up using Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04). These docs will have you complete the following actions:
 
-#### 1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-1-%E2%80%94-logging-in-as-root).
+#### 1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-1-logging-in-as-root).
 
-#### 2. [Creating a new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-2-%E2%80%94-creating-a-new-user).
+#### 2. [Creating a new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-2-creating-a-new-user).
 
-#### 3. [Granting Administrative Privileges to the new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-3-%E2%80%94-granting-administrative-privileges).
+#### 3. [Granting Administrative Privileges to the new user](hhttps://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-3-granting-administrative-privileges).
 
-#### 4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-4-%E2%80%94-setting-up-a-basic-firewall).
+#### 4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-4-setting-up-a-firewall).
 
-#### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04#step-5-%E2%80%94-enabling-external-access-for-your-regular-user) **with SSH key authentication**.
+#### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user) **with SSH key authentication**.
 
 
 #### 6. You will install `Node.js`.
 
-Use the instructions in section **Install Node using a PPA** from the official [DigitalOcean docs for installing a production ready Node.js server](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04#installing-using-a-ppa).
+Use the instructions in section **Install Node using a PPA** from the official [DigitalOcean docs for installing a production ready Node.js server](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa).
 
 After completing the steps to **install Node.js, NPM and the "build-essential package"**, you will manually change npm's default directory. The following steps are based on [how to resolve access permissions from npmjs.com](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally):
 
@@ -116,10 +116,10 @@ git --version
 #### 2. **OPTIONAL:** Install Git
 
 :::note
-Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04).
+Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
 :::
 
-#### 3. Complete the global **username** and **email** settings: [Setting up Git](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-18-04#setting-up-git)
+#### 3. Complete the global **username** and **email** settings: [Setting up Git](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git)
 
 After installing and configuring Git on your Droplet. Please continue to the next step, [installing a database](#install-the-database-for-your-project).
 
@@ -127,16 +127,16 @@ After installing and configuring Git on your Droplet. Please continue to the nex
 
 DigitalOcean has excellent documentation regarding the installation and use of the major databases that work with Strapi. The previous steps above should all be completed prior to continuing. You can find links, and any further instructions, below:
 
-1. [Install PostgresSQL on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)(Through **Step 4** - Creating a New Database).
+1. [Install PostgresSQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) (Through **Step 4** - Creating a New Database).
 
-Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04#step-1-%E2%80%94-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04#step-3-%E2%80%94-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04#step-4-%E2%80%94-creating-a-new-database).
+Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database).
 
 2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string. Follow these commands from your terminal to `alter` the `user` you created and `add a password`:
 
 ```bash
 sudo -u postgres psql     //only necessary if you switched away from the postgres@ user
 [sudo] password for your-name:
-psql (10.8 (Ubuntu 10.8-0ubuntu0.18.04.1))
+psql (10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)) // TODO: Change this later
 Type "help" for help.
 
 psql
@@ -251,7 +251,7 @@ npm install
 NODE_ENV=production npm run build
 ```
 
-Strapi uses `Port: 1337` by default. You will need to configure your `ufw firewall` to allow access to this port, for testing and installation purposes. After you have installed and [configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04), you need to `sudo ufw deny 1337`, to close the port to outside traffic.
+Strapi uses `Port: 1337` by default. You will need to configure your `ufw firewall` to allow access to this port, for testing and installation purposes. After you have installed and [configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04), you need to `sudo ufw deny 1337`, to close the port to outside traffic.
 
 ```bash
 cd ~
@@ -341,7 +341,7 @@ Earlier, `Port 1337` was allowed access for **testing and setup** purposes. Afte
 Follow the steps below to have your app launch on system startup.
 
 :::tip
-These steps are modified from the DigitalOcean [documentation for setting up PM2](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04#step-3-%E2%80%94-installing-pm2).
+These steps are modified from the DigitalOcean [documentation for setting up PM2](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04#step-2-installing-pm2).
 :::
 
 - Generate and configure a startup script to launch PM2, it will generate a Startup Script to copy/paste, do so:
@@ -519,7 +519,7 @@ sudo systemctl status webhook
 
 ### Further steps to take
 
-- You can **add a domain name** or **use a subdomain name** for your Strapi project, you will need to [install NGINX and configure it](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04).
+- You can **add a domain name** or **use a subdomain name** for your Strapi project, you will need to [install NGINX and configure it](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04).
 - Deny traffic to Port 1337. You have set-up a proxy using Nginx, you now need to block access by running the following command:
 
 ```
@@ -527,7 +527,7 @@ cd ~
 sudo ufw deny 1337
 ```
 
-- To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04).
-- Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04) for Ubuntu 18.04.
+- To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04).
+- Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
 
-Your `Strapi` project has been installed on a **DigitalOcean Droplet** using **Ubuntu 18.04**.
+Your `Strapi` project has been installed on a **DigitalOcean Droplet** using **Ubuntu 22.04**.
