@@ -44,13 +44,13 @@ Choose these options:
 - **Optional:** Choose a `Hostname` or leave as-is.
 - Click the `Create Droplet` button at the bottom right.
 
-**DigitalOcean** will create your **Droplet** and indicate the progress with a percentage bar. Once this is complete, you may continue to the next steps.
+**DigitalOcean** will create your **Droplet** and indicate the progress with a loading bar. Once this is complete, you may continue to the next steps.
 
 ### Setup production server and install Node.js
 
 These next steps will help you to _set up a production server_ and _set up a non-root user_ for managing your server.
 
-Follow the official [DigitalOcean docs for initial server set-up using Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04). These docs will have you complete the following actions:
+Follow the official DigitalOcean docs for initial [server set-up](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) using Ubuntu 22.04. These docs will have you complete the following actions:
 
 #### 1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-1-logging-in-as-root).
 
@@ -60,14 +60,11 @@ Follow the official [DigitalOcean docs for initial server set-up using Ubuntu 22
 
 #### 4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-4-setting-up-a-firewall).
 
-#### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user) **with SSH key authentication**.
+#### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user).
 
+Now the server has been set up, [install Node using a PPA](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa).
 
-#### 6. You will install `Node.js`.
-
-Use the instructions in section **Install Node using a PPA** from the official [DigitalOcean docs for installing a production ready Node.js server](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa).
-
-After completing the steps to **install Node.js, NPM and the "build-essential package"**, you will manually change npm's default directory. The following steps are based on [how to resolve access permissions from npmjs.com](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally):
+After installing Node (which also installs `npm` by default), you will manually change `npm`'s default directory. The following steps are based on [how to resolve access permissions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) from `npmjs.com`:
 
 - Create a `.npm-global` directory and set the path to this directory for `node_modules`
 
