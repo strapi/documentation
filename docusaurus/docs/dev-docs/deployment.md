@@ -38,9 +38,7 @@ To provide the best possible environment for Strapi the following requirements a
 - NPM v6 (or the version shipped with the LTS Node versions)
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
-
 <HardwareRequire components={props.components} />
-
 - A supported database version:
 <DatabaseRequire components={props.components} />
 
@@ -49,7 +47,6 @@ Deploying databases along with Strapi is covered in the [databases guide](/dev-d
 :::
 
 - A supported operating system:
-
 <OperatingSystemRequire components={props.components} />
 
 ### Application Configuration
