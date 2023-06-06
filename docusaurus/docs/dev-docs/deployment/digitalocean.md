@@ -27,23 +27,22 @@ DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocea
 
 Choose these options:
 
-- Ubuntu `22.04 x64`
-- STARTER `Standard`
-- Choose an appropriate pricing plan. For example, pricing: `$12/mo` _(Scroll to the left)_
+- Choose a `Region` and `Datacenter` closest to your users
+- Select Ubuntu `22.04 (LTS) x64` as the image from the `OS` tab
+- Choose an appropriate droplet size and pricing plan.
   :::tip
-  The \$6/mo plan is currently unsupported as Strapi will not build with 1G of RAM. At the moment, deploying the Strapi Admin interface requires more than 1g of RAM. Therefore, a minimum standard Droplet of **\$12/mo** or larger instance is needed.
+  The least expensive options are the `Basic` shared CPU and `Regular` SSD. The $4/mo and $6/mo plans are currently unsupported as Strapi [requires](https://docs.strapi.io/dev-docs/deployment#hardware-and-software-requirements) at least 2GB of RAM to build and deploy the admin interface. Therefore, a minimum standard Droplet of **$12/mo** instance is needed.
   :::
-- Choose a `datacenter` region nearest your audience, for example, `New York`.
-- **OPTIONAL:** Select additional options, for example, `[x] IPv6`.
-- Add your SSH key
+- Choose `SSH Key` or `Password` for authentication
   :::tip
-  We recommend you `add your SSH key` for better security.
+  We recommend using a SSH key for better security.
   :::
-  - In your terminal, use `pbcopy < ~/.ssh/id_rsa.pub` to copy your existing SSH public key, on your development computer, to the clipboard.
+  - In your terminal, use `pbcopy < ~/.ssh/id_rsa.pub` to copy your existing SSH public key on your development computer to the clipboard.
   - Click on `New SSH Key` and paste in your `SSH Key`. `Name` this SSH key and then `Save`.
-    (Additional instructions on creating and using SSH Keys can be found [here](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/create-with-openssh/).)
-- **OPTIONAL:** `Choose a hostname` or leave as-is.
-- Click the green `Create` button.
+    (Additional instructions on creating and using SSH Keys can be found [here](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/create-with-openssh/).)
+- **Optional:** Select additional options as required, for example `IPv6`.
+- **Optional:** Choose a `Hostname` or leave as-is.
+- Click the `Create Droplet` button at the bottom right.
 
 **DigitalOcean** will create your **Droplet** and indicate the progress with a percentage bar. Once this is complete, you may continue to the next steps.
 
