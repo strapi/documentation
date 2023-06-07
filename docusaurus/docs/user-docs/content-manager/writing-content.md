@@ -82,8 +82,21 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-<img src="/img/assets/content-manager/edit-view_dynamic-zone-1.png" alt="Writing content for a dynamic zone" width="80%" />
-<img src="/img/assets/content-manager/edit-view_dynamic-zone-2.png" alt="Writing content for a dynamic zone" width="80%" />
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-1.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-1_DARK.png',
+  }}
+/>
+
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-2.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-2_DARK.png',
+  }}
+/>
 
 1. Click on the ![Add icon](/img/assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
