@@ -374,50 +374,48 @@ Follow the steps below to have your app launch on system startup.
 These steps are modified from the DigitalOcean [documentation for setting up PM2](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04#step-2-installing-pm2).
 :::
 
-- Generate and configure a startup script to launch PM2, it will generate a Startup Script to copy/paste, do so:
+- Generate a startup script to launch PM2 by running:
+  ```bash
+  $ cd ~
+  $ pm2 startup systemd
 
-```bash
-$ cd ~
-$ pm2 startup systemd
+  # Shell output
+  [PM2] Init System found: systemd
+  [PM2] To setup the Startup Script, copy/paste the following command:
+  sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
+  ```
 
-[PM2] Init System found: systemd
-[PM2] To setup the Startup Script, copy/paste the following command:
-sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
-```
+- Copy the generated command from above and paste to the terminal:
+  ```bash
+  $ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
 
-- Copy/paste the generated command:
+  # Shell output
+  [PM2] Init System found: systemd
+  Platform systemd
 
-```bash
-$ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
+  # ...
 
-[PM2] Init System found: systemd
-Platform systemd
+  [PM2] [v] Command successfully executed.
+  +---------------------------------------+
+  [PM2] Freeze a process list on reboot via:
+    $ pm2 save
 
-. . .
-
-
-[PM2] [v] Command successfully executed.
-+---------------------------------------+
-[PM2] Freeze a process list on reboot via:
-   $ pm2 save
-
-[PM2] Remove init script via:
-   $ pm2 unstartup systemd
-```
+  [PM2] Remove init script via:
+    $ pm2 unstartup systemd
+  ```
 
 - Next, `Save` the new PM2 process list and environment. Then `Start` the service with `systemctl`:
 
-```bash
-pm2 save
+  ```bash
+  pm2 save
 
-[PM2] Saving current process list...
-[PM2] Successfully saved in /home/your-name/.pm2/dump.pm2
+  # Shell output
+  [PM2] Saving current process list...
+  [PM2] Successfully saved in /home/your-name/.pm2/dump.pm2
 
-```
+  ```
 
-- **OPTIONAL**: You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. You will need to login again with your **non-root user** and then run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working.
-
-Continue below to configure the `webhook`.
+- **Optional**: You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. You will need to login again with your **non-root user** and then run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working. Can also check logs with `pm2 logs strapi-app --lines 20`.
 
 ### Set up a webhook on DigitalOcean / GitHub
 
