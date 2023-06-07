@@ -133,7 +133,6 @@ const sidebars = {
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
                 'dev-docs/deployment/process-manager',
-
               ],
             },
 
@@ -197,7 +196,6 @@ const sidebars = {
         'dev-docs/api/plugins/server-api',
       ]
     },
-
     {
       type: 'category',
       label: '🔧 Development',
@@ -267,8 +265,6 @@ const sidebars = {
             type:'doc',
             id: 'dev-docs/integrations',
           },
-
-
           items: [
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
@@ -289,8 +285,6 @@ const sidebars = {
             'dev-docs/integrations/sapper',
             'dev-docs/integrations/svelte',
             'dev-docs/integrations/vue-js',
-
-
           ]
         },
       ],
@@ -310,23 +304,13 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
-            {
-              type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
-              customProps: {
-                new: true,
-              },
-            },
+            'dev-docs/plugins/documentation',
             'dev-docs/plugins/email',
             'dev-docs/plugins/graphql',
             'dev-docs/plugins/i18n',
             'dev-docs/plugins/sentry',
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
-
-
-
           ]
     },
     {

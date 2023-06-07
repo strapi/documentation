@@ -42,7 +42,7 @@ Published contents can be unpublished, switching back to being drafts again.
 
 To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
 
-### Bulk publish and unpublish <BetaBadge />
+### Bulk publish and unpublish
 
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously.
 
