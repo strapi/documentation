@@ -310,14 +310,7 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
-            {
-              type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
-              customProps: {
-                new: true,
-              },
-            },
+            'dev-docs/plugins/documentation',
             'dev-docs/plugins/email',
             'dev-docs/plugins/graphql',
             'dev-docs/plugins/i18n',
