@@ -65,7 +65,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 
 ## Generate typings for project schemas
 
-To generate typings for your project schemas use the [`ts:generate-types` CLI command](/dev-docs/cli#strapi-ts-generate-types). The `ts:generate-types` command creates the file `schemas.d.ts`, at the project root, which stores the schema typings. The optional `--verbose` flag returns a detailed table of the generated schemas.
+To generate typings for your project schemas use the [`ts:generate-types` CLI command](/dev-docs/cli#strapi-ts-generate-types). The `ts:generate-types` command creates the a folder `types`, at the project root, which stores the typings for your project. The optional `--debug` flag returns a detailed table of the generated schemas.
 
 To use `ts:generate-types`run the following code in a terminal at the project root:
 
@@ -73,7 +73,7 @@ To use `ts:generate-types`run the following code in a terminal at the project ro
 <TabItem value="npm">
 
 ```sh
-npm run strapi ts:generate-types --verbose #optional flag
+npm run strapi ts:generate-types --debug #optional flag to display additional logging
 ```
 
 </TabItem>
@@ -81,11 +81,15 @@ npm run strapi ts:generate-types --verbose #optional flag
 <TabItem value="yarn">
 
 ```sh
-yarn strapi ts:generate-types --verbose #optional flag
+yarn strapi ts:generate-types --debug #optional flag to display additional logging
 ```
 
 </TabItem>
 </Tabs>
+
+:::tip Tip: Automatically generate types
+Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript-).
+:::
 
 ## Develop a plugin using TypeScript
 

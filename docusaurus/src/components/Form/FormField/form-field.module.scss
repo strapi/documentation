@@ -1,0 +1,9 @@
+/** Component: Form Field */
+
+.form-field {
+  display: var(--strapi-form-field-input-display, block);
+  width: var(--strapi-form-field-input-width, 100%);
+  border: var(--strapi-form-field-border, 0);
+  margin: var(--strapi-form-field-my, var(--strapi-spacing-4)) var(--strapi-form-field-mx, 0);
+  padding: var(--strapi-form-field-py, 0) var(--strapi-form-field-px, 0);
+}

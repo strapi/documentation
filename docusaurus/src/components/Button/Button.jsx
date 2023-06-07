@@ -22,7 +22,7 @@ export function Button({
       {...(!to ? {} : { to })}
       className={clsx(
         'button',
-        (variant && `button--${variant}`),
+        (variant && styles[`button--${variant}`]),
         (size && styles[`button--${size}`]),
         styles.button,
         styles[variant],
