@@ -249,6 +249,8 @@ cd ~
 git clone https://github.com/your-handle/your-project.git
 ```
 
+You will be prompted to enter `your-handle` and a password. This is actually a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) as passwords have been [depreciated](https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down).
+
 Next, navigate to the `your-project` folder, the root for Strapi. You will now need to run `npm install` to install the packages for your project.
 
 ```bash
@@ -268,9 +270,7 @@ Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
 ```
 
-Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [create your first user](/dev-docs/quick-start).
-
-You will next need to [install and configure PM2 Runtime](#install-and-configure-pm2-runtime).
+Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [creating your first user](/dev-docs/quick-start).
 
 ### Install and configure PM2 Runtime
 
