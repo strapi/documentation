@@ -40,7 +40,7 @@ All existing domains for your Strapi Cloud project are listed in the *Domains* t
 
 ### Connecting a custom domain
 
-Default domain names are made of 3 randomly generated words. They can be replaced by any custom domain of your choice.
+Default domain names are made of 2 randomly generated words followed by a hash. They can be replaced by any custom domain of your choice.
 
 1. Click the **Connect new domain** button.
 2. In the window that opens, fill in the following fields:
