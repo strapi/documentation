@@ -1,5 +1,5 @@
 ---
-title: TypeScript
+title: TypeScript configuration
 displayed_sidebar: devDocsSidebar
 description: How to configure Strapi for TypeScript development. 
 
