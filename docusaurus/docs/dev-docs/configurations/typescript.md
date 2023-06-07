@@ -13,7 +13,7 @@ Strapi also has dedicated TypeScript features that are configured [in the `confi
  
 ## Project structure and TypeScript-specific configuration files
 
-[TypeScript](/dev-docs/typescript)-enabled Strapi applications have a specific [project structure](/dev-docs/project-structure) with the following dedicated folders and configuration files:
+TypeScript-enabled Strapi applications have a specific [project structure](/dev-docs/project-structure) with the following dedicated folders and configuration files:
 
 | TypeScript-specific directories and files | Location         | Purpose                                                                                                                                           |
 |-------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
