@@ -128,7 +128,7 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
 1. [Install PostgreSQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) (Through **Step 4** - Creating a New Database).
 
-  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database).
+  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database). It is suggested (though not required) that to use the same credentials specified during project setup for the sake of simplicity. You can view these in the local `.env` file for the project.
 
 2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
 
@@ -282,11 +282,11 @@ Ensure you are logged in as a **non-root** user. You will install **PM2** global
 npm install pm2@latest -g
 ```
 
-### The ecosystem.config.js file
+### The _ecosystem.config.js_ and _.env_ files
 
-- You will need to configure an `ecosystem.config.js` file. This file will manage the **database connection variables** Strapi needs to connect to your database. The `ecosystem.config.js` will also be used by `pm2` to restart your project whenever any changes are made to files within the Strapi file system itself (such as when an update arrives from GitHub). You can read more about this file [here](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/).
+You will need to configure an `ecosystem.config.js` file. This file will manage the **database connection variables** Strapi needs to connect to your database. The `ecosystem.config.js` will also be used by `pm2` to restart your project whenever any changes are made to files within the Strapi file system itself (such as when an update arrives from GitHub). You can read more about this file [here](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/).
 
-  - You will need to open your `nano` editor and then `copy/paste` the following:
+Now create the `ecosystem.config.js` file with the command below and open it with the `nano` editor.
 
 ```bash
 cd ~
@@ -294,40 +294,50 @@ pm2 init
 sudo nano ecosystem.config.js
 ```
 
-- Next, replace the boilerplate content in the file, with the following:
+Next, replace the boilerplate content in the file with the following:
 
 ```js
 module.exports = {
   apps: [
     {
-      name: 'strapi',
-      cwd: '/home/your-name/my-strapi-project/my-project',
+      name: 'strapi-app',
+      cwd: '~/your-project', // assuming app installed as previously specified
       script: 'npm',
       args: 'start',
       env: {
         NODE_ENV: 'production',
-        DATABASE_HOST: 'localhost', // database endpoint
-        DATABASE_PORT: '5432',
-        DATABASE_NAME: 'strapi', // DB name
-        DATABASE_USERNAME: 'your-name', // your username for psql
-        DATABASE_PASSWORD: 'password', // your password for psql
       },
     },
   ],
 };
 ```
 
-You can also set your environment variables in a `.env` file in your project like so:
+Go to `your-project` folder to create and open a `.env` file:
 
+```bash
+cd ~/your-project
+sudo nano .env
 ```
-DATABASE_HOST=your-unique-url.rds.amazonaws.com
+
+Then copy the contents of the _local_ `.env` file for the Strapi app to the one currently open in `nano`.
+
+```bash
+HOST=0.0.0.0
+PORT=1337
+APP_KEYS=your-app-keys # auto-generated
+API_TOKEN_SALT=your-api-token-salt # auto-generated
+ADMIN_JWT_SECRET=your-admin-jwt-secret # auto-generated
+TRANSFER_TOKEN_SALT=your-transfer-token-salt # auto-generated
+# Database
+DATABASE_CLIENT=postgres
+DATABASE_HOST=127.0.0.1
 DATABASE_PORT=5432
-DATABASE_NAME=strapi
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=Password
+DATABASE_NAME=your-database-name # specified during project setup
+DATABASE_USERNAME=your-database-username # specified during project setup
+DATABASE_PASSWORD=your-database-password # specified during project setup
+DATABASE_SSL=false
+JWT_SECRET=your-jwt-secret # auto-generated
 ```
-
-We recommend you continue setting the `NODE_ENV` variable in the `ecosystem.config.js` file.
 
 Use the following command to start `pm2`:
 
