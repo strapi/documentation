@@ -73,7 +73,7 @@ To use `ts:generate-types`run the following code in a terminal at the project ro
 <TabItem value="npm">
 
 ```sh
-npm run strapi ts:generate-types --verbose #optional flag
+npm run strapi ts:generate-types --debug #optional flag to display additional logging
 ```
 
 </TabItem>
@@ -81,7 +81,7 @@ npm run strapi ts:generate-types --verbose #optional flag
 <TabItem value="yarn">
 
 ```sh
-yarn strapi ts:generate-types --verbose #optional flag
+yarn strapi ts:generate-types --debug #optional flag to display additional logging
 ```
 
 </TabItem>
