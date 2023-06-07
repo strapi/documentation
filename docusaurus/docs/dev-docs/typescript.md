@@ -88,7 +88,7 @@ yarn strapi ts:generate-types --debug #optional flag to display additional loggi
 </Tabs>
 
 :::tip Tip: Automatically generate types
-Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript).
+Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript-).
 :::
 
 ## Develop a plugin using TypeScript
