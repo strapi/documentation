@@ -9,7 +9,7 @@ description: How to configure Strapi for TypeScript development.
 
 [TypeScript](/dev-docs/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 
-Strapi also has dedicated TypeScript features that are configured [in the `config/typescript.js|ts` file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript).
+Strapi also has dedicated TypeScript features that are configured [in the `config/typescript.js|ts` file](#strapi-specific-configuration-for-typescript).
  
 ## Project structure and TypeScript-specific configuration files
 
