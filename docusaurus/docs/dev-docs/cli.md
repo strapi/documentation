@@ -365,7 +365,7 @@ strapi ts:generate-types
   Generate typings specifying the output directory in which the file will be created.
 
 :::caution
-Strapi requires the project types to be generated in the `types` directory for them to work. The --out-dir option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing types and your updated types after making a change to your content structure.
+Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
 ## strapi routes:list
