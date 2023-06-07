@@ -9,8 +9,8 @@ description: How to configure Strapi for TypeScript development.
 
 [TypeScript](/dev-docs/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 
-Strapi also supports types autocompletion in your code editor while you are developing. This feature is related to TypeScript but works for both JavaScript and TypeScript projects. An additional [configuration parameter in the `config/typescript.js|ts` file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript-) allows Strapi to automatically generate types when content-types are updated.
-
+Strapi also has dedicated TypeScript features that are configured [in the `config/typescript.js|ts` file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript-).
+ 
 ## Project structure and TypeScript-specific configuration files
 
 [TypeScript](/dev-docs/typescript)-enabled Strapi applications have a specific [project structure](/dev-docs/project-structure) with the following dedicated folders and configuration files:
