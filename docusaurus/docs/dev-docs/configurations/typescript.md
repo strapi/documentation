@@ -1,11 +1,11 @@
 ---
-title: TypeScript and autocomplete
+title: TypeScript
 displayed_sidebar: devDocsSidebar
 description: How to configure Strapi for TypeScript development. 
 
 ---
 
-# TypeScript and autocomplete configuration
+# TypeScript configuration
 
 [TypeScript](/dev-docs/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 
