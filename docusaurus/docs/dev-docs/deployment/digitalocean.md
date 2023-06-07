@@ -259,7 +259,7 @@ npm install
 NODE_ENV=production npm run build
 ```
 
-Strapi uses port 1337 by default. You will need to configure your `ufw` firewall to allow access to this port, for testing and installation purposes. After you have [installed and configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04), you need to `sudo ufw deny 1337` to close the port to outside traffic.
+Strapi uses port 1337 by default. You will need to configure your `ufw` firewall to allow access to this port for testing and installation purposes.
 
 ```bash
 cd ~
@@ -271,6 +271,26 @@ Firewall is active and enabled on system startup
 ```
 
 Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [creating your first user](/dev-docs/quick-start).
+
+### Install and configure Nginx web server
+
+Follow the guide [here](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04) to install and configure Nginx. You can **add a domain name** or **use a subdomain name** for your Strapi project this way. Note that references to `your_domain` in step 5 should include the TLD, e.g. `example.com`. The location field in that same step is specified as `try_files $uri $uri/ =404;`. This should be replaced with the following:
+
+```
+proxy_pass http://localhost:1337;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection 'upgrade';
+proxy_set_header Host $host;
+proxy_cache_bypass $http_upgrade;
+```
+
+Now that a proxy has been configured with Nginx, close the port to outside traffic:
+
+```bash
+cd ~
+sudo ufw deny 1337
+```
 
 ### Install and configure PM2 Runtime
 
@@ -347,12 +367,6 @@ pm2 start ecosystem.config.js
 ```
 
 `pm2` is now set-up to use an `ecosystem.config.js` to manage restarting your application upon changes. This is a recommended best practice.
-
-**OPTIONAL:** You may see your project and set-up your first administrator user, by [creating an admin user](/dev-docs/quick-start).
-
-:::tip
-Earlier, `Port 1337` was allowed access for **testing and setup** purposes. After setting up **NGINX**, the **Port 1337** needs to have access **denied**.
-:::
 
 Follow the steps below to have your app launch on system startup.
 
@@ -534,14 +548,6 @@ sudo systemctl status webhook
 - You may test your **webhook** by following the instructions [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook).
 
 ### Further steps to take
-
-- You can **add a domain name** or **use a subdomain name** for your Strapi project, you will need to [install NGINX and configure it](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04).
-- Deny traffic to Port 1337. You have set-up a proxy using Nginx, you now need to block access by running the following command:
-
-```
-cd ~
-sudo ufw deny 1337
-```
 
 - To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04).
 - Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
