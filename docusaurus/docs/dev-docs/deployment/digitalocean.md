@@ -161,7 +161,7 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
   On your **development** computer:
 
-  `Path: ./my-project/`
+  `Path: ./your-project/`
 
   ```bash
   npm install pg --save
@@ -190,7 +190,7 @@ module.exports = ({ env }) => ({
   connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
+        database: env('DATABASE_NAME', 'strapidb'),
         user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
         ssl: env.bool("DATABASE_SSL", false) && {
@@ -214,7 +214,7 @@ export default ({ env }) => ({
   connection: {
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
+        database: env('DATABASE_NAME', 'strapidb'),
         user: env('DATABASE_USERNAME', ''),
         password: env('DATABASE_PASSWORD', ''),
         ssl: env.bool("DATABASE_SSL", false) && {
@@ -246,20 +246,18 @@ From your terminal, logged in as your **non-root** user to your Droplet:
 
 ```bash
 cd ~
-git clone https://github.com/your-name/your-project-repo.git
+git clone https://github.com/your-handle/your-project.git
 ```
 
-Next, navigate to the `my-project` folder, the root for Strapi. You will now need to run `npm install` to install the packages for your project.
-
-`Path: ./my-project/`
+Next, navigate to the `your-project` folder, the root for Strapi. You will now need to run `npm install` to install the packages for your project.
 
 ```bash
-cd ./my-project/
+cd your-project
 npm install
 NODE_ENV=production npm run build
 ```
 
-Strapi uses `Port: 1337` by default. You will need to configure your `ufw firewall` to allow access to this port, for testing and installation purposes. After you have installed and [configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04), you need to `sudo ufw deny 1337`, to close the port to outside traffic.
+Strapi uses port 1337 by default. You will need to configure your `ufw` firewall to allow access to this port, for testing and installation purposes. After you have [installed and configured NGINX](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04), you need to `sudo ufw deny 1337` to close the port to outside traffic.
 
 ```bash
 cd ~
