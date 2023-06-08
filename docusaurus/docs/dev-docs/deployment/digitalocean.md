@@ -253,7 +253,17 @@ cd ~
 git clone https://github.com/your-handle/your-project.git
 ```
 
-You will be prompted to enter `your-handle` and a password. This is actually a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) as passwords have been [depreciated](https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down).
+**Optional:** If using password-based authentication instead of a SSH key:
+
+- You will be prompted to enter `your-handle` and a password when attempting to clone. This is actually a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT) as passwords have been [depreciated](https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down).
+- In order to overcome an [issue](https://stackoverflow.com/questions/22147574/github-fatal-could-not-read-username-for-https-github-com-no-such-file-o) with webhooks later on, run the following commands:
+  ```bash
+  cd ~/your-project
+  git remote add origin https://your-handle:your-pat@github.com/your-handle/your-project.git
+
+  # If response is "fatal: remote origin already exists.", then run:
+  git remote set-url origin https://your-handle:your-pat@github.com/your-handle/your-project.git
+  ```
 
 Next, navigate to the `your-project` folder, the root for Strapi. You will now need to run `npm install` to install the packages for your project.
 
@@ -545,7 +555,7 @@ Providing that your project is set-up on GitHub, you will need to configure your
 
 ### Further steps to take
 
-- To **install SSL**, you will need to [install and run Certbot by Let's Encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04).
+- To **install SSL**, you will need to [install and run Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04) by Let's Encrypt.
 - Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
 
 Your `Strapi` project has been installed on a **DigitalOcean Droplet** using **Ubuntu 22.04**.
