@@ -89,7 +89,7 @@ After installing Node (which also installs `npm` by default), you will manually 
   sudo nano ~/.profile
   ```
 
-- Paste the below into the the first two lines of the open file. Then `ctrl-x` to exit and `y` to save.
+- Paste the below into the the first two lines of the open file. Then `ctrl+x` to exit, `y` to save and `enter` to accept.
   ```bash
   # set PATH so global node modules install without permission issues
   export PATH=~/.npm-global/bin:$PATH
@@ -551,11 +551,11 @@ Providing that your project is set-up on GitHub, you will need to configure your
   sudo systemctl status webhook
   ```
 
-- **Optional:** Test your webhook [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook) or push to the repo and check recent deliveries there.
+- **Optional:** Test your webhook as shown [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook) except using the `node webhook.js` command since `nodejs` is depreciated. Sometimes GitHub will show a successful recent delivery even if there is an authentication failure. So the most reliable way is to push code changes to the GitHub repo and then run `sudo systemctl status webhook` again to see if the latest commit SHA has been registered.
 
 ### Further steps to take
 
 - To **install SSL**, you will need to [install and run Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04) by Let's Encrypt.
 - Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
 
-Your `Strapi` project has been installed on a **DigitalOcean Droplet** using **Ubuntu 22.04**.
+Your **Strapi** project has been installed on a **DigitalOcean Droplet** using **Ubuntu 22.04**.
