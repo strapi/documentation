@@ -7,18 +7,22 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 # DigitalOcean Droplets
 
-This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean](https://www.digitalocean.com/) Droplet. If you want to deploy your Strapi project from GitHub, you can deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform).
+This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean](https://www.digitalocean.com/) Droplet. Alternatively, you can also choose to deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform). However, that is more [expensive](https://www.digitalocean.com/pricing/app-platform) as a monthly subscription to the database needs to be purchased unlike with the droplet.
 
 :::tip
 Follow the setup instructions in the order they are presented below.
 :::
 
-Databases can be on a DigitalOcean [Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
-
-Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start). Don't use the `--quickstart` flag as this will create an app using `SQLite` which is not desired for remote hosting. Also, have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+Databases can be on a DigitalOcean [Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/). We will cover the former option in this guide.
 
 :::tip
 Postgres will be used as the database in this documentation so it's easiest to select that during setup of the Strapi app. However, [any](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) of the supported databases can be used apart from `SQLite`.
+:::
+
+Prior to starting, you should have created a [Strapi project with a local PostgreSQL database](https://tute.io/install-configure-strapi-postgresql) used for testing. Also, have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+
+:::caution
+When creating your project, don't use the `--quickstart` flag as this will create an app using `SQLite` which is not desired for remote hosting.
 :::
 
 ### DigitalOcean installation requirements
