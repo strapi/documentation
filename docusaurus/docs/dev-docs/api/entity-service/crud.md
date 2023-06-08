@@ -72,6 +72,8 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 });
 ```
 
+<br/>
+
 :::tip
 To retrieve only draft entries, combine the `preview` publication state and the `publishedAt` fields:
 
