@@ -137,7 +137,7 @@ The next step is to configure Git on your server.
 2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
 
   :::note
-  By convention, any variables that the user is expected to substitiute for their own is prefixed with `your-`, e.g. `your-name`.
+  By convention, any variables that the user is expected to substitute for their own is prefixed with `your-`, e.g. `your-name`.
   :::
 
   **Optional:** If you have switched away from the `postgres@` user, run the following:
@@ -427,131 +427,121 @@ The Strapi production server should now be available at the domain that was [spe
 
 ### Set up a webhook on DigitalOcean / GitHub
 
-Providing that your project is set-up on GitHub, you will need to configure your **Strapi Project Repository** with a webhook. The following articles provide additional information to the steps below: [GitHub Creating Webhooks Guide](https://developer.github.com/webhooks/creating/) and [DigitalOcean Guide to GitHub WebHooks](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync).
+Providing that your project is set-up on GitHub, you will need to configure your Strapi project repository there with a webhook. The following articles provide additional information to the steps below: [GitHub Creating Webhooks Guide](https://developer.github.com/webhooks/creating/) and [DigitalOcean Guide to GitHub WebHooks](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync).
 
-- You will need to access the `Settings` tab for your `Strapi Project Repository`:
+- Go to `your-project` on GitHub and **set up a webhook** by following [step 1](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-1-setting-up-a-webhook) from the DigitalOcean article linked above. Make note of what was entered for `your-webhook-secret` for later.
 
-  1. Navigate and click to `Settings` for your repository.
-  2. Click on `Webhooks`, then click `Add Webhook`.
-  3. The fields are filled out like this:
-     - Payload URL: Enter `http://your-ip-address:8080`
-     - Content type: Select `application/json`
-     - Which events would you like to trigger this webhook: Select `Just the push event`
-     - Secret: Enter `YourSecret`
-     - Active: Select the checkbox
-  4. Review the fields and click `Add Webhook`.
+- Next, you need to **create a webhook script** on your server. These commands create a new file called `webhook.js` which will hold two variables:
 
-- Next, you need to create a `Webhook Script` on your server. These commands create a new file called `webhook.js` which will hold two variables:
+  ```bash
+  cd ~
+  mkdir NodeWebhooks
+  cd NodeWebhooks
+  sudo nano webhook.js
+  ```
 
-```bash
-cd ~
-mkdir NodeWebHooks
-cd NodeWebHooks
-sudo nano webhook.js
-```
+- In the open `nano` editor, **paste the script** below making sure to update the values for the `secret` and `repo` variables at the top of the file. Then save and exit.
 
-- In the `nano` editor, copy/paste the following script, but make sure to replace `your_secret_key` and `repo` with the values that correspond to your project, then save and exit.
+  ```js
+  var secret = 'your-webhook-secret'; // created in GitHub earlier
+  var repo = '~/your-project';
 
-(This script creates a variable called `PM2_CMD` which is used after pulling from GitHub to update your project. The script first changes to the home directory and then runs the variable `PM2_CMD` as `pm2 restart strapi`.
+  const http = require('http');
+  const crypto = require('crypto');
+  const exec = require('child_process').exec;
 
-```js
-var secret = 'your_secret_key';
-var repo = '~/path-to-your-repo/';
+  const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
 
-const http = require('http');
-const crypto = require('crypto');
-const exec = require('child_process').exec;
+  http
+    .createServer(function(req, res) {
+      req.on('data', function(chunk) {
+        let sig =
+          'sha1=' +
+          crypto
+            .createHmac('sha1', secret)
+            .update(chunk.toString())
+            .digest('hex');
 
-const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
+        if (req.headers['x-hub-signature'] == sig) {
+          exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
+            if (error) {
+              console.error(`exec error: ${error}`);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+          });
+        }
+      });
 
-http
-  .createServer(function(req, res) {
-    req.on('data', function(chunk) {
-      let sig =
-        'sha1=' +
-        crypto
-          .createHmac('sha1', secret)
-          .update(chunk.toString())
-          .digest('hex');
+      res.end();
+    })
+    .listen(8080);
+  ```
 
-      if (req.headers['x-hub-signature'] == sig) {
-        exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`exec error: ${error}`);
-            return;
-          }
-          console.log(`stdout: ${stdout}`);
-          console.log(`stderr: ${stderr}`);
-        });
-      }
-    });
+  :::note
+  The script above declares a variable called `PM2_CMD` which is used after pulling from GitHub to update your project. The script first changes to the home directory and then runs the variable `PM2_CMD` as `pm2 restart strapi`.
+  :::
 
-    res.end();
-  })
-  .listen(8080);
-```
+- Allow the port to communicate with outside web traffic for `port 8080` by **running these scripts**:
 
-- Allow the port to communicate with outside web traffic for `port 8080`:
+  ```bash
+  sudo ufw allow 8080/tcp
+  sudo ufw enable
 
-```bash
-sudo ufw allow 8080/tcp
-sudo ufw enable
+  Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+  Firewall is active and enabled on system startup
+  ```
 
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-```
+  Earlier you setup `pm2` to start the services for `your-project` whenever the Droplet reboots or is started. You will now do the same for the `webhook.js` script.
 
-Earlier you setup `pm2` to start the services (your **Strapi project**) whenever the **Droplet** reboots or is started. You will now do the same for the `webhook` script.
+- Now install the webhook as a `systemd` service. First run `echo $PATH` and copy the output for use in the next step.
 
-- Install the webhook as a `Systemd` service
+  ```bash
+  echo $PATH
 
-  - Run `echo $PATH` and copy the output for use in the next step.
-
-```bash
-echo $PATH
-
-/home/your-name/.npm-global/bin:/home/your-name/bin:/home/your-name/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-```
+  # Shell output
+  /home/your-name/.npm-global/bin:/home/your-name/bin:/home/your-name/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  ```
 
 - Create a `webhook.service` file:
 
-```bash
-cd ~
-sudo nano /etc/systemd/system/webhook.service
-```
+  ```bash
+  sudo nano /etc/systemd/system/webhook.service
+  ```
 
-- In the `nano` editor, copy/paste the following script, but make sure to replace `your-name` **in two places** with your username. Earlier, you ran `echo $PATH`, copy this to the `Environment=PATH=` variable, then save and exit:
+- Paste the configuration details below into the open `nano` editor. Make sure to replace `your-name` **in BOTH places** with your username. Following that, paste the path that was outputted to the shell above in place of `your-path`, then save and exit:
 
-```bash
-[Unit]
-Description=Github webhook
-After=network.target
+  ```bash
+  [Unit]
+  Description=Github webhook
+  After=network.target
 
-[Service]
-Environment=PATH=your_path
-Type=simple
-User=your-name
-ExecStart=/usr/bin/node /home/your-name/NodeWebHooks/webhook.js
-Restart=on-failure
+  [Service]
+  Environment=PATH=your-path
+  Type=simple
+  User=your-name
+  ExecStart=/usr/bin/node /home/your-name/NodeWebhooks/webhook.js
+  Restart=on-failure
 
-[Install]
-WantedBy=multi-user.target
-```
+  [Install]
+  WantedBy=multi-user.target
+  ```
 
 - Enable and start the new service so it starts when the system boots:
 
-```bash
-sudo systemctl enable webhook.service
-sudo systemctl start webhook
-```
+  ```bash
+  sudo systemctl enable webhook.service
+  sudo systemctl start webhook
+  ```
 
 - Check the status of the webhook:
 
-```bash
-sudo systemctl status webhook
-```
+  ```bash
+  sudo systemctl status webhook
+  ```
 
-- You may test your **webhook** by following the instructions [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook).
+- **Optional:** Test your webhook [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook) or push to the repo and check recent deliveries there.
 
 ### Further steps to take
 
