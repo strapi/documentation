@@ -417,6 +417,10 @@ These steps are modified from the DigitalOcean [documentation for setting up PM2
 
 - **Optional**: You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. You will need to login again with your **non-root user** and then run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working. Can also check logs with `pm2 logs strapi-app --lines 20`.
 
+:::tip
+The Strapi production server should now be available at the domain that was [specified](#install-and-configure-nginx-web-server) during Nginx setup. The Admin login screen is available at the `/admin` endpoint to that same domain.
+:::
+
 ### Set up a webhook on DigitalOcean / GitHub
 
 Providing that your project is set-up on GitHub, you will need to configure your **Strapi Project Repository** with a webhook. The following articles provide additional information to the steps below: [GitHub Creating Webhooks Guide](https://developer.github.com/webhooks/creating/) and [DigitalOcean Guide to GitHub WebHooks](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync).
