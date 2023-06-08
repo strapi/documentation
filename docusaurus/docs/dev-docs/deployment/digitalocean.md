@@ -321,7 +321,7 @@ module.exports = {
   apps: [
     {
       name: 'strapi-app',
-      cwd: '~/your-project', // assuming app installed as previously specified
+      cwd: '/home/your-name/your-project', // must have absolute path
       script: 'npm',
       args: 'start',
       env: {
@@ -404,7 +404,7 @@ These steps are modified from the DigitalOcean [documentation for setting up PM2
     $ pm2 unstartup systemd
   ```
 
-- Next, `Save` the new PM2 process list and environment. Then `Start` the service with `systemctl`:
+- Finally, `save` the new PM2 process list and environment.
 
   ```bash
   pm2 save
