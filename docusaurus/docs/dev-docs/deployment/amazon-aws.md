@@ -11,6 +11,10 @@ This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](
 
 Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS. And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
 
+:::tip
+For easier, automated AWS deployments, [Flightcontrol](https://www.flightcontrol.dev?ref=strapi) provides a modern interface for deploying to your own AWS account. Refer to [Flightcontrol's Strapi documentation](https://www.flightcontrol.dev/docs/reference/examples/strapi?ref=strapi) for more information.
+:::
+
 ### Amazon AWS Install Requirements and creating an IAM non-root user
 
 - You must have an [Amazon AWS](https://aws.amazon.com/free) account before doing these steps.
