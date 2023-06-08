@@ -104,25 +104,25 @@ A convenient way to maintain your Strapi application and update it during and af
 
 The next step is to configure Git on your server.
 
-#### 1. Check to see if Git is installed
+1. Check to see if Git is installed
 
-Run the following command:
+  Run the following command:
 
-```bash
-git --version
-```
+  ```bash
+  git --version
+  ```
 
-If you see `git version 2.x.x` as the response then you do have `git` installed
+  If you see `git version 2.x.x` as the response then you do have `git` installed
 
-#### 2. **Optional:** Install Git
+2. **Optional:** Install Git
 
-:::note
-Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
-:::
+  :::note
+  Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
+  :::
 
-#### 3. Configure Git
+3. Configure Git
 
- [Set up](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git) the username and email for Git.
+  [Set up](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git) the username and email for Git.
 
 ### Install the database for your project
 
@@ -417,7 +417,7 @@ These steps are modified from the DigitalOcean [documentation for setting up PM2
 
 - **Optional**: You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. You will need to login again with your **non-root user** and then run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working. Can also check logs with `pm2 logs strapi-app --lines 20`.
 
-:::tip
+:::note
 The Strapi production server should now be available at the domain that was [specified](#install-and-configure-nginx-web-server) during Nginx setup. The Admin login screen is available at the `/admin` endpoint to that same domain.
 :::
 
