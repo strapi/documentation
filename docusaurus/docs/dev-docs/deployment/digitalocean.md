@@ -128,7 +128,7 @@ Only do this step if _not installed_, as above. Please follow these directions o
 
 1. [Install PostgreSQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) (Through **Step 4** - Creating a New Database).
 
-  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database). It is suggested (though not required) that to use the same credentials specified during project setup for the sake of simplicity. You can view these in the local `.env` file for the project.
+  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database). 
 
 2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
 
@@ -339,7 +339,7 @@ cd ~/your-project
 sudo nano .env
 ```
 
-Then copy the contents of the _local_ `.env` file for the Strapi app to the one currently open in `nano`.
+Then copy the contents of the _local_ `.env` file for the Strapi app to the one currently open in `nano`. Replace the database name and credentials with the ones [specified](#install-the-database-for-your-project) during database setup.
 
 ```bash
 HOST=0.0.0.0
@@ -352,9 +352,9 @@ TRANSFER_TOKEN_SALT=your-transfer-token-salt # auto-generated
 DATABASE_CLIENT=postgres
 DATABASE_HOST=127.0.0.1
 DATABASE_PORT=5432
-DATABASE_NAME=your-database-name # specified during project setup
-DATABASE_USERNAME=your-database-username # specified during project setup
-DATABASE_PASSWORD=your-database-password # specified during project setup
+DATABASE_NAME=your-database-name # specified during database setup
+DATABASE_USERNAME=your-database-username # specified during database setup
+DATABASE_PASSWORD=your-database-password # specified during database setup
 DATABASE_SSL=false
 JWT_SECRET=your-jwt-secret # auto-generated
 ```
