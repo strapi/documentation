@@ -7,171 +7,137 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 # DigitalOcean Droplets
 
-This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean](https://www.digitalocean.com/) Droplet. Alternatively, you can also choose to deploy to DigitalOcean's Platform as a Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform). However, that is more [expensive](https://www.digitalocean.com/pricing/app-platform) as a monthly subscription to the database needs to be purchased unlike with the droplet.
+This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/). Alternatively, you can also choose to deploy to DigitalOcean's Platform-as-a-Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform) if database-related requirements and budget better fit with your use case.
 
-:::tip
-Follow the setup instructions in the order they are presented below.
+This guide covers hosting the database on a DigitalOcean Droplet. Another option is to host the database externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/).
+
+:::prerequisites
+- You have created a [Strapi project with a local PostgreSQL database](https://tute.io/install-configure-strapi-postgresql).
+- You have read through the [general deployment configuration](/dev-docs/deployment#application-configuration) section.
+- You have created a DigitalOcean account. You can use [this referral link](https://try.digitalocean.com/strapi/).
 :::
-
-Databases can be on a DigitalOcean [Droplet](https://www.digitalocean.com/docs/droplets/) or hosted externally as a service using [DigitalOcean Managed Databases](https://www.digitalocean.com/products/managed-databases/). We will cover the former option in this guide.
-
-:::tip
-Postgres will be used as the database in this documentation so it's easiest to select that during setup of the Strapi app. However, [any](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) of the supported databases can be used apart from `SQLite`.
-:::
-
-Prior to starting, you should have created a [Strapi project with a local PostgreSQL database](https://tute.io/install-configure-strapi-postgresql) used for testing. Also, have read through the [configuration](/dev-docs/deployment#application-configuration) section.
 
 :::caution
-When creating your project, don't use the `--quickstart` flag as this will create an app using `SQLite` which is not desired for remote hosting.
+When creating your Strapi project, don't use the `--quickstart` flag as this will create an app using SQLite, which is not desired for remote hosting.
+
+This guides cover using PostgreSQL as the database but [MySQL or MariaDB](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) can also be used.
 :::
-
-### DigitalOcean installation requirements
-
-If you don't have a DigitalOcean account you will need to create one, you can use [this referral link](https://try.digitalocean.com/strapi/).
 
 ### Create a "Droplet"
 
-DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocean.com/docs/droplets/). You need to create a new `Droplet` to host your Strapi project.
+DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocean.com/docs/droplets/). Create a new `Droplet` to host your Strapi project:
 
-#### 1. Log in to your [DigitalOcean account](https://cloud.digitalocean.com/login)
+1. Log in to your [DigitalOcean account](https://cloud.digitalocean.com/login).
+2. Select the _Create_ dropdown near the top right, then select **Droplets**.
+3. Choose a _Region_ and _Datacenter_ closest to your users' location.
+4. Select Ubuntu **22.04 (LTS) x64** as the image from the _OS_ tab.
+5. Choose an appropriate droplet size and pricing plan, keeping in mind that Strapi [requires](https://docs.strapi.io/dev-docs/deployment#hardware-and-software-requirements) at least 2GB of RAM to build and deploy the admin interface.
+6. Choose **SSH Key**.
+7. In a terminal instance on your machine, run the following command: `pbcopy < ~/.ssh/id_rsa.pub` to copy your existing SSH public key on your development computer to the clipboard.
+8. Back on the DigitalOcean website, click on _New SSH Key_ and paste in your SSH key. Name this SSH key and then click on **Save**.
+    (Additional instructions on creating and using SSH Keys can be found [on the official DigitalOcean documentation](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/create-with-openssh/).)
+9. _(optional)_ Select additional options as required, for example **IPv6**.
+10. _(optional)_ Choose a _Hostname_ or leave as-is.
+11. Click the **Create Droplet** button at the bottom right.
 
-#### 2. Select the `Create` dropdown near the top right, then select `Droplets`
-
-Choose these options:
-
-- Choose a `Region` and `Datacenter` closest to your users
-- Select Ubuntu `22.04 (LTS) x64` as the image from the `OS` tab
-- Choose an appropriate droplet size and pricing plan.
-  :::tip
-  The least expensive options are the `Basic` shared CPU and `Regular` SSD. The $4/mo and $6/mo plans are currently unsupported as Strapi [requires](https://docs.strapi.io/dev-docs/deployment#hardware-and-software-requirements) at least 2GB of RAM to build and deploy the admin interface. Therefore, a minimum standard Droplet of **$12/mo** instance is needed.
-  :::
-- Choose `SSH Key` or `Password` for authentication
-  :::tip
-  We recommend using a SSH key for better security.
-  :::
-  - In your terminal, use `pbcopy < ~/.ssh/id_rsa.pub` to copy your existing SSH public key on your development computer to the clipboard.
-  - Click on `New SSH Key` and paste in your `SSH Key`. `Name` this SSH key and then `Save`.
-    (Additional instructions on creating and using SSH Keys can be found [here](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/create-with-openssh/).)
-- **Optional:** Select additional options as required, for example `IPv6`.
-- **Optional:** Choose a `Hostname` or leave as-is.
-- Click the `Create Droplet` button at the bottom right.
-
-**DigitalOcean** will create your **Droplet** and indicate the progress with a loading bar. Once this is complete, you may continue to the next steps.
+DigitalOcean will create your Droplet and indicate the progress with a loading bar. Once complete, proceed to setting up a production server and installing Node.js.
 
 ### Setup production server and install Node.js
 
-These next steps will help you to _set up a production server_ and _set up a non-root user_ for managing your server.
+The following next steps will help you to set up a production server and set up a non-root user for managing your server.
 
-Follow the official DigitalOcean docs for initial [server set-up](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) using Ubuntu 22.04. These docs will have you complete the following actions:
+#### Setting up a production server
 
-#### 1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-1-logging-in-as-root).
+Follow the official DigitalOcean documentation for initial [server set-up](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) using Ubuntu 22.04 to complete the following actions:
 
-#### 2. [Creating a new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-2-creating-a-new-user).
+1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-1-logging-in-as-root).
+2. [Creating a new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-2-creating-a-new-user).
+3. [Granting Administrative Privileges to the new user](hhttps://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-3-granting-administrative-privileges).
+4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-4-setting-up-a-firewall).
+5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user).
 
-#### 3. [Granting Administrative Privileges to the new user](hhttps://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-3-granting-administrative-privileges).
+#### Installing and configuring Node.js and npm
 
-#### 4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-4-setting-up-a-firewall).
+Now the server has been set up, install Node using a personal package archive (PPA), as described in the [official DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa).
 
-#### 5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user).
+After installing Node (which also installs `npm` by default), you will manually change `npm`'s default directory. The following steps are based on [how to resolve access permissions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) from the official Node documentation:
 
-Now the server has been set up, [install Node using a PPA](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04#option-2-installing-node-js-with-apt-using-a-nodesource-ppa).
-
-After installing Node (which also installs `npm` by default), you will manually change `npm`'s default directory. The following steps are based on [how to resolve access permissions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) from `npmjs.com`:
-
-- Create a `.npm-global` directory and set the path to this directory for `node_modules`
+1. Create a `.npm-global` directory and set the path to this directory for `node_modules` by running the following commands:
   ```bash
   mkdir ~/.npm-global
   npm config set prefix '~/.npm-global'
   ```
-
-- Create (or modify) a `~/.profile` file by running
+2. Create (or modify) a `~/.profile` file by running the following command:
   ```bash
   sudo nano ~/.profile
   ```
-
-- Paste the below into the the first two lines of the open file. Then `ctrl+x` to exit, `y` to save and `enter` to accept.
+3. Paste the following lines into the first 2 lines of the open `~/.profile` file:
   ```bash
   # set PATH so global node modules install without permission issues
   export PATH=~/.npm-global/bin:$PATH
   ```
-
-- Lastly, update your system variables:
+  Then press `Ctrl+X` to exit, `y` to save and `Enter` to accept.
+4. Update your system variables by running the following command:
   ```bash
   source ~/.profile
   ```
 
-You are now ready to continue to the next section.
+You are now ready to install and configure Git versioning on your server.
 
 ### Install and configure Git versioning on your server
 
-A convenient way to maintain your Strapi application and update it during and after initial development is to use [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). In order to use Git, you will need to have it installed on your Droplet. Droplets should have Git installed by default, so you will first check if it is installed and if it is not installed, you will need to install it.
+A convenient way to maintain your Strapi application and update it during and after initial development is to use [Git](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control). In order to use Git, you will need to have it installed on your Droplet.
 
-The next step is to configure Git on your server.
-
-1. Check to see if Git is installed
-
-  Run the following command:
+Droplets should have Git installed by default. Check if Git is installed by running the following command:
 
   ```bash
   git --version
   ```
 
-  If you see `git version 2.x.x` as the response then you do have `git` installed
+If the terminal returns `git version` followed by some version number (e.g., `git version 2.x.x`), Git is already installed, and you can proceed to [installing the database for your project](#install-the-database-for-your-project).
 
-2. **Optional:** Install Git
-
-  :::note
-  Only do this step if _not installed_, as above. Please follow these directions on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
-  :::
-
-3. Configure Git
-
-  [Set up](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git) the username and email for Git.
+If Git is not installed:
+1. Install Git by following the DigitalOcean documentation on [how to install Git on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04).
+2. Configure Git by setting up the username and email as described in the [DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#setting-up-git).
 
 ### Install the database for your project
 
-1. [Install PostgreSQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) (Through **Step 4** - Creating a New Database).
+Install PostgreSQL on Ubuntu 22.04 by following the [DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04) through to "Step 4 - Creating a New Database". Once done, PostgreSQL is installed and a user and a database are created.
 
-  Complete the steps to [install PostgreSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-1-installing-postgresql), [add a user](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-3-creating-a-new-role) and [create a database](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-22-04#step-4-creating-a-new-database). 
+:::caution
+To connect to a PostgreSQL database with Strapi, the database:
+  * either needs to have a password,
+  * or specifically states there is no password by declaring an empty string (`''`) as the password.
+:::
 
-2. In order to connect to a PostgreSQL database with Strapi, it needs either to have a password, or specifically state there is no password by noting an empty string.
+To connect to the PostgreSQL database with Strapi: 
 
-  :::note
-  By convention, any variables that the user is expected to substitute for their own is prefixed with `your-`, e.g. `your-name`.
-  :::
+1. _(optional)_ If you have switched away from the `postgres@` user, run the following:
 
-  **Optional:** If you have switched away from the `postgres@` user, run the following:
+    ```bash
+    sudo -u postgres psql
+    [sudo] password for your-name: # this auth prompt appears
+    psql (14.8 (Ubuntu 14.8-0ubuntu0.22.04.1)) # shell response after password
+    Type "help" for help.
+    ```
 
-  ```bash
-  sudo -u postgres psql
-  [sudo] password for your-name: # this auth prompt appears
-  psql (14.8 (Ubuntu 14.8-0ubuntu0.22.04.1)) # shell response after password
-  Type "help" for help.
-  ```
+2. Run the following commands to alter the user you created and add a password, replacing `your-name` and `'your-password'` by your own values:
 
-  Follow the commands below to `alter` the `user` you created and add a `password`.
+    ```bash
+    psql
+    # Enter SQL command below including quotation marks and semicolon.
+    postgres=# ALTER USER your-name PASSWORD 'your-password';
+    ALTER ROLE # shell response after SQL command
+    # Then quit with the \q command as we don't want to alter role.
+    postgres=# \q
+    exit
+    ```
 
-  ```bash
-  psql
-  # Enter SQL command below including quotation marks and semicolon.
-  postgres=# ALTER USER your-name PASSWORD 'your-password';
-  ALTER ROLE # shell response after SQL command
-  # Then quit with the \q command as we don't want to alter role.
-  postgres=# \q
-  exit
-  ```
-
-3. **Optional:** If in **development** and your Strapi project uses **SQLite**, you will need to install a dependency package called `pg`.
-
-  On your **development** computer:
-
-  `Path: ./your-project/`
+3. _(optional)_ The `pg` package is automatically installed locally if you chose `PostgreSQL` as the initial database choice when you first set up Strapi (see prerequisites). If your Strapi project uses SQLite, install the `pg` dependency package. On your development machine, run the following command in your Strapi project folder:
 
   ```bash
   npm install pg --save
   ```
-
-  The `pg` package is automatically installed locally if you choose `PostgreSQL` as the initial database choice when you first set-up Strapi.
 
 You will need the **database name**, **username** and **password** for later use, so make note of them.
 
