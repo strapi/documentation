@@ -58,7 +58,7 @@ Globally scoped custom middlewares should be added to the [middlewares configura
 
 API level and plugin middlewares can be added into the specific router that they are relevant to like the following:
 
-```js title="path: ./src/api/[api-name]/routes/[collection-name].js or ./src/plugins/[plugin-name]/server/routes/index.js"
+```js title="./src/api/[api-name]/routes/[collection-name].js or ./src/plugins/[plugin-name]/server/routes/index.js"
 module.exports = {
   routes: [
     {
