@@ -2,6 +2,7 @@
 title: CRUD operations
 description: Use Strapi's Entity Service API to perform CRUD (create, read, update, delete) operations on your content.
 displayed_sidebar: devDocsSidebar
+search_weight: 1
 ---
 import ManagingRelations from '/docs/snippets/managing-relations.md'
 

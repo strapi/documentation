@@ -2,7 +2,7 @@
 title: Populate and Select
 description: Use Strapi's REST API to populate or select certain fields.
 sidebarDepth: 3
-
+search_weight: 3
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'

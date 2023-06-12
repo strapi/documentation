@@ -1,6 +1,7 @@
 ---
 title: GraphQL API
 displayed_sidebar: devDocsSidebar
+search_weight: 2
 ---
 
 # GraphQL API

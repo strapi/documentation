@@ -2,7 +2,7 @@
 title: Enabling a plugin
 description: Enable a Strapi plugin while migrating from v3.6.x to v4.0.x with step-by-step instructions
 displayed_sidebar: devDocsSidebar
-
+search_weight: 0
 # pagination_prev: /dev-docs/migration/v3-to-v4/plugin/migrate-front-end.md
 ---
 
