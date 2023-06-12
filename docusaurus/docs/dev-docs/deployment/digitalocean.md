@@ -18,9 +18,7 @@ This guide covers hosting the database on a DigitalOcean Droplet. Another option
 :::
 
 :::caution
-When creating your Strapi project, don't use the `--quickstart` flag as this will create an app using SQLite, which is not desired for remote hosting.
-
-This guides cover using PostgreSQL as the database but [MySQL or MariaDB](https://docs.strapi.io/dev-docs/installation/cli#preparing-the-installation) can also be used.
+When creating your Strapi project, don't use the `--quickstart` flag as the quick start installation uses SQLite, which is not desired for remote hosting.
 :::
 
 ### Create a "Droplet"
@@ -31,30 +29,27 @@ DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocea
 2. Select the _Create_ dropdown near the top right, then select **Droplets**.
 3. Choose a _Region_ and _Datacenter_ closest to your users' location.
 4. Select Ubuntu **22.04 (LTS) x64** as the image from the _OS_ tab.
-5. Choose an appropriate droplet size and pricing plan, keeping in mind that Strapi [requires](https://docs.strapi.io/dev-docs/deployment#hardware-and-software-requirements) at least 2GB of RAM to build and deploy the admin interface.
+5. Choose an appropriate droplet size and pricing plan, depending on your needs. Strapi [requires](/dev-docs/deployment#hardware-and-software-requirements) at least 2GB of RAM to build and deploy the admin interface.
 6. Choose **SSH Key**.
-7. In a terminal instance on your machine, run the following command: `pbcopy < ~/.ssh/id_rsa.pub` to copy your existing SSH public key on your development computer to the clipboard.
-8. Back on the DigitalOcean website, click on _New SSH Key_ and paste in your SSH key. Name this SSH key and then click on **Save**.
-    (Additional instructions on creating and using SSH Keys can be found [on the official DigitalOcean documentation](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/create-with-openssh/).)
+7. In a terminal instance on your computer, run the following command: `pbcopy < ~/.ssh/id_rsa.pub`. The command copies the existing SSH public key on your development computer to the clipboard.
+8. Back on the DigitalOcean website, paste your public SSH key into the _New SSH Key_ field. Name this SSH key and click on **Save**. 
 9. _(optional)_ Select additional options as required, for example **IPv6**.
 10. _(optional)_ Choose a _Hostname_ or leave as-is.
 11. Click the **Create Droplet** button at the bottom right.
 
 DigitalOcean will create your Droplet and indicate the progress with a loading bar. Once complete, proceed to setting up a production server and installing Node.js.
 
+:::tip
+Additional instructions on creating and using SSH Keys can be found [on the official DigitalOcean documentation](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/create-with-openssh/).
+:::
+
 ### Setup production server and install Node.js
 
-The following next steps will help you to set up a production server and set up a non-root user for managing your server.
+The following next steps will help you to set up a production server and a non-root user for managing the server.
 
 #### Setting up a production server
 
-Follow the official DigitalOcean documentation for initial [server set-up](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) using Ubuntu 22.04 to complete the following actions:
-
-1. [Logging and set up root user access to your server with SSH](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-1-logging-in-as-root).
-2. [Creating a new user](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-2-creating-a-new-user).
-3. [Granting Administrative Privileges to the new user](hhttps://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-3-granting-administrative-privileges).
-4. [Setting up a basic firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-4-setting-up-a-firewall).
-5. [Giving your regular user access to the server](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04#step-5-enabling-external-access-for-your-regular-user).
+Follow the official DigitalOcean documentation for initial [server set-up](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) using Ubuntu 22.04.
 
 #### Installing and configuring Node.js and npm
 
