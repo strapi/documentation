@@ -21,3 +21,9 @@ To configure the SSO feature settings:
 | Local authentication lock-out | Choose among the drop-down list the [roles](/user-docs/users-roles-permissions) for which the local authentication capabilities are disabled.<br />Users locked out of local authentication will be forced to use SSO to login and will not be able to change or reset their password. |
 
 3. Click the **Save** button.
+
+:::danger
+Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely. A fix will be provided soon.
+
+In the meantime, the only way to get in if the Super Admin can't log in is to temporarily disable the SSO feature entirely, log in with username and password to remove the _Super Admin_ role from the _Local authentication lock-out_ list, and then re-enable SSO.
+:::
