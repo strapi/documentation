@@ -54,7 +54,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
-    const sanitizedQueryParams = await this.sanitizeQuery(ctx);
+    const sanitizedQueryParams = await this.sanitizeInput(ctx.query, ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
