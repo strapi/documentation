@@ -8,9 +8,7 @@ import DocCardList from '@theme/DocCardList';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 // Import custom components, globally as well
-import Request from '../components/Request';
-import Response from '../components/Response';
-import ApiCall from '../components/ApiCall';
+import { ApiCall, Request, Response } from '../components/ApiCall';
 import Columns from '../components/Columns';
 import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
