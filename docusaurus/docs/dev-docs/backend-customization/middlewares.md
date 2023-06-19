@@ -54,7 +54,25 @@ export default (config, { strapi })=> {
 </TabItem>
 </Tabs>
 
-Once created, custom middlewares should be added to the [middlewares configuration file](/dev-docs/configurations/middlewares#loading-order) or Strapi won't load them.
+Globally scoped custom middlewares should be added to the [middlewares configuration file](/dev-docs/configurations/middlewares#loading-order) or Strapi won't load them.
+
+API level and plugin middlewares can be added into the specific router that they are relevant to like the following:
+
+```js title="./src/api/[api-name]/routes/[collection-name].js or ./src/plugins/[plugin-name]/server/routes/index.js"
+module.exports = {
+  routes: [
+    {
+      method: "GET",
+      path: "/[collection-name]",
+      handler: "[controller].find",
+      config: {
+        middlewares: ["[middleware-name]"],
+        // See the usage section below for middleware naming conventions
+      },
+    },
+  ],
+};
+```
 
 <details>
 <summary>Example of a custom timer middleware</summary>

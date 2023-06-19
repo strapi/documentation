@@ -31,3 +31,7 @@ Each part of Strapi's back end can be customized:
 - the [responses](/dev-docs/backend-customization/requests-responses#responses) sent to the application that sent the request,
 
 - and the [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
+
+:::info
+Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
+:::

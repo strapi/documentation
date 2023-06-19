@@ -65,9 +65,9 @@ RUN yarn config set network-timeout 600000 -g && yarn install
 ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
+COPY . .
 RUN chown -R node:node /opt/app
 USER node
-COPY . .
 RUN ["yarn", "build"]
 EXPOSE 1337
 CMD ["yarn", "develop"]
@@ -90,9 +90,9 @@ RUN npm config set network-timeout 600000 -g && npm install
 ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
+COPY . .
 RUN chown -R node:node /opt/app
 USER node
-COPY . .
 RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
