@@ -529,7 +529,7 @@ More information can be found on webhooks in general in the [GitHub documentatio
 
 ### Further steps to take
 
-- To **install SSL**, you will need to [install and run Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04) by Let's Encrypt.
+- To install SSL, you will need to [install and run Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04) by Let's Encrypt.
 - Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
 
 🥳 Your Strapi project has been installed on a DigitalOcean Droplet using Ubuntu 22.04.
