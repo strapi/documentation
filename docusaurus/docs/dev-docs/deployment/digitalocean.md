@@ -23,7 +23,7 @@ When creating your Strapi project, don't use the `--quickstart` flag as the quic
 
 ### Create a "Droplet"
 
-DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocean.com/docs/droplets/). Create a new `Droplet` to host your Strapi project:
+DigitalOcean calls a virtual private server, a [Droplet](https://www.digitalocean.com/docs/droplets/). Create a new Droplet to host your Strapi project:
 
 1. Log in to your [DigitalOcean account](https://cloud.digitalocean.com/login).
 2. Select the _Create_ dropdown near the top right, then select **Droplets**.
@@ -128,345 +128,358 @@ To connect to the PostgreSQL database with Strapi:
     exit
     ```
 
-3. _(optional)_ The `pg` package is automatically installed locally if you chose `PostgreSQL` as the initial database choice when you first set up Strapi (see prerequisites). If your Strapi project uses SQLite, install the `pg` dependency package. On your development machine, run the following command in your Strapi project folder:
+3. _(optional)_ The `pg` package is automatically installed locally if you chose `PostgreSQL` as the initial database choice when you first set up Strapi. If your Strapi project uses SQLite, install the `pg` dependency package. On your development machine, run the following command in your Strapi project folder:
 
   ```bash
   npm install pg --save
   ```
 
-You will need the **database name**, **username** and **password** for later use, so make note of them.
+Note the database name, username and password for later use.
 
-### Local development configuration
+### Configure for local development
 
+:::prerequisites
 - You must have `git` [installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- [Initialize](https://git-scm.com/docs/git-init) `git` for your Strapi project created previously.
+- Git should be [initialized](https://git-scm.com/docs/git-init) for your previsouly created Strapi project.
+:::
 
-In your code editor, you will need to edit a file called `database.js`. Replace the contents of the file with the following.
+1. Replace the content of the `config/database.js` with the following:
 
-<Tabs groupId="js-ts">
+  <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JavaScript">
+  <TabItem value="javascript" label="JavaScript">
 
-```js title="path: ./config/database.js"
+  ```js title="path: ./config/database.js"
 
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'postgres', 
-  connection: {
-        host: env('DATABASE_HOST', '127.0.0.1'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapidb'),
-        user: env('DATABASE_USERNAME', ''),
-        password: env('DATABASE_PASSWORD', ''),
-        ssl: env.bool("DATABASE_SSL", false) && {
-          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
-       },
-      },
-      debug: false,
-  },
-});
-```
+  module.exports = ({ env }) => ({
+    connection: {
+      client: 'postgres', 
+    connection: {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapidb'),
+          user: env('DATABASE_USERNAME', ''),
+          password: env('DATABASE_PASSWORD', ''),
+          ssl: env.bool("DATABASE_SSL", false) && {
+            rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+        },
+        },
+        debug: false,
+    },
+  });
+  ```
 
-</TabItem>
+  </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+  <TabItem value="typescript" label="TypeScript">
 
-```ts title="path: ./config/database.ts"
+  ```ts title="path: ./config/database.ts"
 
-export default ({ env }) => ({
-  connection: {
-    client: 'postgres', 
-  connection: {
-        host: env('DATABASE_HOST', '127.0.0.1'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapidb'),
-        user: env('DATABASE_USERNAME', ''),
-        password: env('DATABASE_PASSWORD', ''),
-        ssl: env.bool("DATABASE_SSL", false) && {
-          rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
-       },
-      },
-      debug: false,
-  },
-});
-```
+  export default ({ env }) => ({
+    connection: {
+      client: 'postgres', 
+    connection: {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapidb'),
+          user: env('DATABASE_USERNAME', ''),
+          password: env('DATABASE_PASSWORD', ''),
+          ssl: env.bool("DATABASE_SSL", false) && {
+            rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
+        },
+        },
+        debug: false,
+    },
+  });
+  ```
 
-</TabItem>
+  </TabItem>
 
-</Tabs>
+  </Tabs>
 
-You are now ready to push these changes to Github:
+2. Push these changes to Github by running the following commands:
 
-```bash
-git add .
-git commit -m "Configured production/database.json"
-git push
-```
+  ```bash
+  git add .
+  git commit -m "Configured production/database.json"
+  git push
+  ```
 
 ### Deploy from GitHub
 
-You will next deploy your Strapi project to your Droplet by cloning it from GitHub.
+You will now deploy your Strapi project to your Droplet by cloning it from GitHub.
 
-From your terminal, logged in as your **non-root** user to your Droplet:
+1. From your terminal, logged in as the non-root user to your Droplet, run the following commands, replacing `your-handle` and `your-project` with your GitHub username and project's name:
 
-```bash
-cd ~
-git clone https://github.com/your-handle/your-project.git
-```
-
-**Optional:** If using password-based authentication instead of a SSH key:
-
-- You will be prompted to enter `your-handle` and a password when attempting to clone. This is actually a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT) as passwords have been [depreciated](https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down).
-- In order to overcome an [issue](https://stackoverflow.com/questions/22147574/github-fatal-could-not-read-username-for-https-github-com-no-such-file-o) with webhooks later on, run the following commands:
   ```bash
-  cd ~/your-project
-  git remote add origin https://your-handle:your-pat@github.com/your-handle/your-project.git
-
-  # If response is "fatal: remote origin already exists.", then run:
-  git remote set-url origin https://your-handle:your-pat@github.com/your-handle/your-project.git
+  cd ~
+  git clone https://github.com/your-handle/your-project.git
   ```
 
-Next, navigate to the `your-project` folder, the root for Strapi. You will now need to run `npm install` to install the packages for your project.
+2. (_optional_) If using password-based authentication instead of a SSH key:
 
-```bash
-cd your-project
-npm install
-NODE_ENV=production npm run build
-```
+    - You will be prompted to enter `your-handle` and a password when attempting to clone. This is actually a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT) as passwords have been [deprecated](https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down).
+    - In order to overcome an [issue](https://stackoverflow.com/questions/22147574/github-fatal-could-not-read-username-for-https-github-com-no-such-file-o) with webhooks later on, run the following commands, replacing `your-handle`, `your-pat`, and `your-project` with the appropriate values:
+      ```bash
+      cd ~/your-project
+      git remote add origin https://your-handle:your-pat@github.com/your-handle/your-project.git
 
-Strapi uses port 1337 by default. You will need to configure your `ufw` firewall to allow access to this port for testing and installation purposes.
+      # If response is "fatal: remote origin already exists.", then run:
+      git remote set-url origin https://your-handle:your-pat@github.com/your-handle/your-project.git
+      ```
 
-```bash
-cd ~
-sudo ufw allow 1337/tcp
-sudo ufw enable
+3. Navigate to your project's folder, which is the root folder for Strapi, and install the npm packages for your project by running the following commands, replacing `your-project` by your project's name on GitHub:
 
-Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-Firewall is active and enabled on system startup
-```
+  ```bash
+  cd your-project
+  npm install
+  ```
 
-Your Strapi project is now installed on your **Droplet**. You have a few more steps prior to being able to access Strapi and [creating your first user](/dev-docs/quick-start).
+4. Build Strapi's admin panel by running the following command:
+
+  ```bash
+  NODE_ENV=production npm run build
+  ```
+
+5. As Strapi uses port 1337 by default, you must configure your `ufw` firewall to allow access to this port for testing and installation purposes, by running the following commands:
+
+  ```bash
+  cd ~
+  sudo ufw allow 1337/tcp
+  sudo ufw enable
+  ```
+
+  Press `y` to answer yes to the `Command may disrupt existing ssh connections. Proceed with operation (y|n)?` message. 
+
+Your Strapi project is now installed on your DigitalOcean Droplet. Before being able to create your first user, you must install and configure [Nginx](#install-and-configure-nginx-web-server) and [pm2](#install-and-configure-pm2), configure the [`ecosystem.config.js` file and environment variables](#configure-the-ecosystemconfigjs-and-env-files), and [setup webhooks](#set-up-a-webhook-on-digitalocean--github).
 
 ### Install and configure Nginx web server
 
-Follow the guide [here](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04) to install and configure Nginx. You can **add a domain name** or **use a subdomain name** for your Strapi project this way. Note that references to `your_domain` in step 5 should include the TLD, e.g. `example.com`. The location field in that same step is specified as `try_files $uri $uri/ =404;`. This should be replaced with the following:
+1. Follow the guide on the [official DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04) to install and configure Nginx, keeping in mind the following specificities:
 
-```
-proxy_pass http://localhost:1337;
-proxy_http_version 1.1;
-proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection 'upgrade';
-proxy_set_header Host $host;
-proxy_cache_bypass $http_upgrade;
-```
+    * You can add a domain name or use a subdomain name for your Strapi project.
+    * References to `your_domain` in "Step 5 – Setting Up Server Blocks" should include the TLD, (e.g. `example.com`).
+    * The location field in "Step 5 – Setting Up Server Blocks", specified as `try_files $uri $uri/ =404;`, must be replaced with the following:
 
-Now that a proxy has been configured with Nginx, close the port to outside traffic:
+        ```
+        proxy_pass http://localhost:1337;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        ```
 
-```bash
-cd ~
-sudo ufw deny 1337
-```
+2. Close the port to outside traffic by running the following commands:
 
-### Install and configure PM2 Runtime
+    ```bash
+    cd ~
+    sudo ufw deny 1337
+    ```
 
-[PM2 Runtime](https://pm2.keymetrics.io) allows you to keep your Strapi project alive and to reload it without downtime.
+### Install and configure pm2
 
-Ensure you are logged in as a **non-root** user. You will install **PM2** globally:
+[pm2](https://pm2.keymetrics.io) allows you to keep your Strapi project alive and to reload it without downtime.
+
+Ensure you are logged in as a non-root user and install pm2 globally by running the following command:
 
 ```bash
 npm install pm2@latest -g
 ```
 
-### The _ecosystem.config.js_ and _.env_ files
+### Configure the `ecosystem.config.js` and `.env` files
 
-You will need to configure an `ecosystem.config.js` file. This file will manage the **database connection variables** Strapi needs to connect to your database. The `ecosystem.config.js` will also be used by `pm2` to restart your project whenever any changes are made to files within the Strapi file system itself (such as when an update arrives from GitHub). You can read more about this file [here](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/).
+The `ecosystem.config.js` manages the database connection variables that Strapi needs to connect to your database. `ecosystem.config.js` is also used by `pm2` to restart your project whenever any changes are made to files within the Strapi file system itself, such as when an update arrives from GitHub. You can read more about the `ecosystem.config.js` file in the [official pm2 documentation](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/).
 
-Now create the `ecosystem.config.js` file with the command below and open it with the `nano` editor.
+1. Create the `ecosystem.config.js` file with the command below and open it. We'll use the `nano` editor:
 
-```bash
-cd ~
-pm2 init
-sudo nano ecosystem.config.js
-```
+    ```bash
+    cd ~
+    pm2 init
+    sudo nano ecosystem.config.js
+    ```
 
-Next, replace the boilerplate content in the file with the following:
+2. Replace the boilerplate content in the file with the following:
 
-```js
-module.exports = {
-  apps: [
-    {
-      name: 'strapi-app',
-      cwd: '/home/your-name/your-project', // must have absolute path
-      script: 'npm',
-      args: 'start',
-      env: {
-        NODE_ENV: 'production',
-      },
-    },
-  ],
-};
-```
+    ```js
+    module.exports = {
+      apps: [
+        {
+          name: 'strapi-app',
+          cwd: '/home/your-name/your-project', // must have absolute path
+          script: 'npm',
+          args: 'start',
+          env: {
+            NODE_ENV: 'production',
+          },
+        },
+      ],
+    };
+    ```
 
-Go to `your-project` folder to create and open a `.env` file:
+3. Go to `your-project` folder to create and open a `.env` file:
 
-```bash
-cd ~/your-project
-sudo nano .env
-```
+    ```bash
+    cd ~/your-project
+    sudo nano .env
+    ```
 
-Then copy the contents of the _local_ `.env` file for the Strapi app to the one currently open in `nano`. Replace the database name and credentials with the ones [specified](#install-the-database-for-your-project) during database setup.
+4. Copy the contents of the local `.env` file for the Strapi application to the one currently open in `nano`. Replace the database name and credentials with the ones [specified](#install-the-database-for-your-project) during database setup.
 
-```bash
-HOST=0.0.0.0
-PORT=1337
-APP_KEYS=your-app-keys # auto-generated
-API_TOKEN_SALT=your-api-token-salt # auto-generated
-ADMIN_JWT_SECRET=your-admin-jwt-secret # auto-generated
-TRANSFER_TOKEN_SALT=your-transfer-token-salt # auto-generated
-# Database
-DATABASE_CLIENT=postgres
-DATABASE_HOST=127.0.0.1
-DATABASE_PORT=5432
-DATABASE_NAME=your-database-name # specified during database setup
-DATABASE_USERNAME=your-database-username # specified during database setup
-DATABASE_PASSWORD=your-database-password # specified during database setup
-DATABASE_SSL=false
-JWT_SECRET=your-jwt-secret # auto-generated
-```
+    ```bash
+    HOST=0.0.0.0
+    PORT=1337
+    APP_KEYS=your-app-keys # auto-generated
+    API_TOKEN_SALT=your-api-token-salt # auto-generated
+    ADMIN_JWT_SECRET=your-admin-jwt-secret # auto-generated
+    TRANSFER_TOKEN_SALT=your-transfer-token-salt # auto-generated
+    # Database
+    DATABASE_CLIENT=postgres
+    DATABASE_HOST=127.0.0.1
+    DATABASE_PORT=5432
+    DATABASE_NAME=your-database-name # specified during database setup
+    DATABASE_USERNAME=your-database-username # specified during database setup
+    DATABASE_PASSWORD=your-database-password # specified during database setup
+    DATABASE_SSL=false
+    JWT_SECRET=your-jwt-secret # auto-generated
+    ```
 
-Use the following command to start `pm2`:
+5. Run the following commands to start `pm2`:
 
-```bash
-cd ~
-pm2 start ecosystem.config.js
-```
+    ```bash
+    cd ~
+    pm2 start ecosystem.config.js
+    ```
 
 `pm2` is now set-up to use an `ecosystem.config.js` to manage restarting your application upon changes. This is a recommended best practice.
 
-Follow the steps below to have your app launch on system startup.
+#### Configure `.env` to launch Strapi on system startup
+
+The following steps are modified from the DigitalOcean [documentation for setting up PM2](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04#step-2-installing-pm2):
+
+1. Generate a startup script to launch PM2 by running:
+
+    ```bash
+    $ cd ~
+    $ pm2 startup systemd
+
+    # Shell output
+    [PM2] Init System found: systemd
+    [PM2] To setup the Startup Script, copy/paste the following command:
+    sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
+    ```
+
+2. Copy the generated command from above and paste to the terminal:
+
+    ```bash
+    $ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
+
+    # Shell output
+    [PM2] Init System found: systemd
+    Platform systemd
+
+    # ...
+
+    [PM2] [v] Command successfully executed.
+    +---------------------------------------+
+    [PM2] Freeze a process list on reboot via:
+      $ pm2 save
+
+    [PM2] Remove init script via:
+      $ pm2 unstartup systemd
+    ```
+
+3. Save the new PM2 process list and environment:
+
+    ```bash
+    pm2 save
+
+    # Shell output
+    [PM2] Saving current process list...
+    [PM2] Successfully saved in /home/your-name/.pm2/dump.pm2
+
+    ```
 
 :::tip
-These steps are modified from the DigitalOcean [documentation for setting up PM2](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04#step-2-installing-pm2).
+You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. Login again with your non-root user and run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working. You can also check logs with `pm2 logs strapi-app --lines 20`.
 :::
 
-- Generate a startup script to launch PM2 by running:
-  ```bash
-  $ cd ~
-  $ pm2 startup systemd
+The Strapi production server should now be available at the domain that was [specified](#install-and-configure-nginx-web-server) during Nginx setup. The login screen is available at the `/admin` endpoint to that same domain.
 
-  # Shell output
-  [PM2] Init System found: systemd
-  [PM2] To setup the Startup Script, copy/paste the following command:
-  sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
-  ```
+### Set up a webhook on DigitalOcean/GitHub
 
-- Copy the generated command from above and paste to the terminal:
-  ```bash
-  $ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u your-name --hp /home/your-name
-
-  # Shell output
-  [PM2] Init System found: systemd
-  Platform systemd
-
-  # ...
-
-  [PM2] [v] Command successfully executed.
-  +---------------------------------------+
-  [PM2] Freeze a process list on reboot via:
-    $ pm2 save
-
-  [PM2] Remove init script via:
-    $ pm2 unstartup systemd
-  ```
-
-- Finally, `save` the new PM2 process list and environment.
-
-  ```bash
-  pm2 save
-
-  # Shell output
-  [PM2] Saving current process list...
-  [PM2] Successfully saved in /home/your-name/.pm2/dump.pm2
-
-  ```
-
-- **Optional**: You can test to see if the script above works whenever your system reboots with the `sudo reboot` command. You will need to login again with your **non-root user** and then run `pm2 list` and `systemctl status pm2-your-name` to verify everything is working. Can also check logs with `pm2 logs strapi-app --lines 20`.
+Providing that your project is set up on GitHub, you must configure your Strapi project repository there with a webhook.
 
 :::note
-The Strapi production server should now be available at the domain that was [specified](#install-and-configure-nginx-web-server) during Nginx setup. The Admin login screen is available at the `/admin` endpoint to that same domain.
+More information can be found on webhooks in general in the [GitHub documentation](https://developer.github.com/webhooks/creating/) and [DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync).
 :::
 
-### Set up a webhook on DigitalOcean / GitHub
+1. Go to `your-project` on GitHub and set up a webhook by following [step 1](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-1-setting-up-a-webhook) from the DigitalOcean article. Make note of what was entered for `your-webhook-secret` for later.
 
-Providing that your project is set-up on GitHub, you will need to configure your Strapi project repository there with a webhook. The following articles provide additional information to the steps below: [GitHub Creating Webhooks Guide](https://developer.github.com/webhooks/creating/) and [DigitalOcean Guide to GitHub WebHooks](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync).
+2. Create a webhook script on your server. The following commands create a new file called `webhook.js` which will hold 2 variables:
 
-- Go to `your-project` on GitHub and **set up a webhook** by following [step 1](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-1-setting-up-a-webhook) from the DigitalOcean article linked above. Make note of what was entered for `your-webhook-secret` for later.
+    ```bash
+    cd ~
+    mkdir NodeWebhooks
+    cd NodeWebhooks
+    sudo nano webhook.js
+    ```
 
-- Next, you need to **create a webhook script** on your server. These commands create a new file called `webhook.js` which will hold two variables:
+3. In the open `nano` editor, paste the following script, ensuring to update the values for the `secret` and `repo` variables at the top of the file. Then save and exit.
 
-  ```bash
-  cd ~
-  mkdir NodeWebhooks
-  cd NodeWebhooks
-  sudo nano webhook.js
-  ```
+    ```js
+    var secret = 'your-webhook-secret'; // created in GitHub earlier
+    var repo = '~/your-project';
 
-- In the open `nano` editor, **paste the script** below making sure to update the values for the `secret` and `repo` variables at the top of the file. Then save and exit.
+    const http = require('http');
+    const crypto = require('crypto');
+    const exec = require('child_process').exec;
 
-  ```js
-  var secret = 'your-webhook-secret'; // created in GitHub earlier
-  var repo = '~/your-project';
+    const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
 
-  const http = require('http');
-  const crypto = require('crypto');
-  const exec = require('child_process').exec;
+    http
+      .createServer(function(req, res) {
+        req.on('data', function(chunk) {
+          let sig =
+            'sha1=' +
+            crypto
+              .createHmac('sha1', secret)
+              .update(chunk.toString())
+              .digest('hex');
 
-  const PM2_CMD = 'cd ~ && pm2 startOrRestart ecosystem.config.js';
+          if (req.headers['x-hub-signature'] == sig) {
+            exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
+              if (error) {
+                console.error(`exec error: ${error}`);
+                return;
+              }
+              console.log(`stdout: ${stdout}`);
+              console.log(`stderr: ${stderr}`);
+            });
+          }
+        });
 
-  http
-    .createServer(function(req, res) {
-      req.on('data', function(chunk) {
-        let sig =
-          'sha1=' +
-          crypto
-            .createHmac('sha1', secret)
-            .update(chunk.toString())
-            .digest('hex');
+        res.end();
+      })
+      .listen(8080);
+    ```
 
-        if (req.headers['x-hub-signature'] == sig) {
-          exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
-            if (error) {
-              console.error(`exec error: ${error}`);
-              return;
-            }
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-          });
-        }
-      });
-
-      res.end();
-    })
-    .listen(8080);
-  ```
-
-  :::note
+  :::info
   The script above declares a variable called `PM2_CMD` which is used after pulling from GitHub to update your project. The script first changes to the home directory and then runs the variable `PM2_CMD` as `pm2 restart strapi`.
   :::
 
-- Allow the port to communicate with outside web traffic for `port 8080` by **running these scripts**:
+4. Allow the port to communicate with outside web traffic for port 8080 by running the following scripts:
 
-  ```bash
-  sudo ufw allow 8080/tcp
-  sudo ufw enable
+    ```bash
+    sudo ufw allow 8080/tcp
+    sudo ufw enable
+    ```
 
-  Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
-  Firewall is active and enabled on system startup
-  ```
+    Press `y` to accept the `Command may disrupt existing ssh connections. Proceed with operation (y|n)?` message.
 
   Earlier you setup `pm2` to start the services for `your-project` whenever the Droplet reboots or is started. You will now do the same for the `webhook.js` script.
 
-- Now install the webhook as a `systemd` service. First run `echo $PATH` and copy the output for use in the next step.
+5. Install the webhook as a `systemd` service. First run `echo $PATH` and copy the output for use in the next step.
 
   ```bash
   echo $PATH
@@ -475,13 +488,13 @@ Providing that your project is set-up on GitHub, you will need to configure your
   /home/your-name/.npm-global/bin:/home/your-name/bin:/home/your-name/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
   ```
 
-- Create a `webhook.service` file:
+6. Create a `webhook.service` file:
 
   ```bash
   sudo nano /etc/systemd/system/webhook.service
   ```
 
-- Paste the configuration details below into the open `nano` editor. Make sure to replace `your-name` **in BOTH places** with your username. Following that, paste the path that was outputted to the shell above in place of `your-path`, then save and exit:
+7. Paste the configuration details below into the open `nano` editor. Make sure to replace `your-name` in both places with your username. Following that, paste the path that was outputted to the shell above in place of `your-path`, then save and exit:
 
   ```bash
   [Unit]
@@ -499,24 +512,24 @@ Providing that your project is set-up on GitHub, you will need to configure your
   WantedBy=multi-user.target
   ```
 
-- Enable and start the new service so it starts when the system boots:
+8. Enable and start the new service so it starts when the system boots:
 
   ```bash
   sudo systemctl enable webhook.service
   sudo systemctl start webhook
   ```
 
-- Check the status of the webhook:
+9. Check the status of the webhook:
 
   ```bash
   sudo systemctl status webhook
   ```
 
-- **Optional:** Test your webhook as shown [here](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook) except using the `node webhook.js` command since `nodejs` is depreciated. Sometimes GitHub will show a successful recent delivery even if there is an authentication failure. So the most reliable way is to push code changes to the GitHub repo and then run `sudo systemctl status webhook` again to see if the latest commit SHA has been registered.
+10. (_optional_) Test your webhook as shown [in the DigitalOcean documentation](https://www.digitalocean.com/community/tutorials/how-to-use-node-js-and-github-webhooks-to-keep-remote-projects-in-sync#step-4-testing-the-webhook) except using the `node webhook.js` command since `nodejs` is depreciated. Sometimes GitHub will show a successful recent delivery even if there is an authentication failure. The most reliable way is to push code changes to the GitHub repository and then run `sudo systemctl status webhook` again to see if the latest commit SHA has been registered.
 
 ### Further steps to take
 
 - To **install SSL**, you will need to [install and run Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04) by Let's Encrypt.
 - Set-up [Nginx with HTTP/2 Support](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-22-04) for Ubuntu 22.04.
 
-Your **Strapi** project has been installed on a **DigitalOcean Droplet** using **Ubuntu 22.04**.
+🥳 Your Strapi project has been installed on a DigitalOcean Droplet using Ubuntu 22.04.
