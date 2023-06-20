@@ -2,7 +2,6 @@
 title: Webhooks
 displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
-
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
@@ -34,11 +33,10 @@ You can set webhook configurations inside the file `./config/server`.
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
-      'Custom-Header': 'my-custom-header',
+      "Custom-Header": "my-custom-header",
     },
   },
 };
@@ -49,11 +47,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default {
   webhooks: {
     defaultHeaders: {
-      'Custom-Header': 'my-custom-header',
+      "Custom-Header": "my-custom-header",
     },
   },
 };
@@ -79,11 +76,10 @@ You can configure these global headers by updating the file at `./config/server`
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
-      Authorization: 'Bearer my-very-secured-token',
+      Authorization: "Bearer my-very-secured-token",
     },
   },
 };
@@ -94,11 +90,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config.server.ts"
-
- export default {
+export default {
   webhooks: {
     defaultHeaders: {
-      Authorization: 'Bearer my-very-secured-token',
+      Authorization: "Bearer my-very-secured-token",
     },
   },
 };
@@ -115,7 +110,6 @@ module.exports = {
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
@@ -130,7 +124,6 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default {
   webhooks: {
     defaultHeaders: {
@@ -209,6 +202,14 @@ By default Strapi webhooks can be triggered by the following events:
 | `media.delete`    | Triggered when a media is deleted.                    |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
+
+## Enterprise edition events <EnterpriseBadge />
+
+In Strapi enterprise edition webhooks can also be triggered by the following events:
+
+| Name                                | Description                                                                                                                     |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `review-workflows.updateEntryStage` | Triggered when content is moved between review stages. Read more about [review workflows](/user-docs/settings/review-workflows) |
 
 ## Payloads
 
@@ -436,6 +437,31 @@ This event is triggered only when you delete a media through the media interface
     "createdAt": "2020-01-07T19:34:32.168Z",
     "updatedAt": "2020-01-07T19:34:32.168Z",
     "related": []
+  }
+}
+```
+
+### `review-workflows.updateEntryStage` <EnterpriseBadge/>
+
+This event is triggered when content is moved to a new review stage.
+
+**Example payload**
+
+```json
+{
+  "event": "review-workflows.updateEntryStage",
+  "createdAt": "2020-01-10T11:02:46.232Z",
+  "model": "address",
+  "uid": "api::address.address",
+  "entry": {
+    "entityId": 1,
+    "workflow": {
+      "id": 1,
+      "stages": {
+        "from": 2,
+        "to": 1
+      }
+    }
   }
 }
 ```
