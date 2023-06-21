@@ -18,7 +18,7 @@ The way a webhook works is by delivering information to a receiving application 
 ## User content-type webhooks
 
 To prevent from unintentionally sending any user's information to other applications, Webhooks will not work for the User content-type.
-If you need to notify other applications about changes in the Users collection, you can do so by creating [Lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) inside the file `./extensions/users-permissions/models/User.js`.
+If you need to notify other applications about changes in the Users collection, you can do so by creating [Lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) using the `./src/index.js` example.
 
 ## Available configurations
 

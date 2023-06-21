@@ -649,7 +649,7 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
-| `model`  | Object            | Model object                                                                                                                                                       |
+| `model`  | Array of strings (uid)            | An array of uids of the content-types or single-types you want to listen for events for. Not supplying this argument means it will listen on all models |
 | `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br /><br />Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
@@ -710,32 +710,35 @@ export default {
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
-```js title="./src/api/[api-name]/content-types/[content-type-name]/lifecycles.js"
-
+```js title="./src/index.js"
+module.exports = {
+  async bootstrap({ strapi }) {
 // registering a subscriber
-strapi.db.lifecycles.subscribe({
-  models: [], // optional;
+    strapi.db.lifecycles.subscribe({
+      models: [], // optional;
 
-  beforeCreate(event) {
-    const { data, where, select, populate } = event.params;
+      beforeCreate(event) {
+        const { data, where, select, populate } = event.params;
 
-    event.state = 'doStuffAfterWards';
-  },
+        event.state = 'doStuffAfterWards';
+      },
 
-  afterCreate(event) {
-    if (event.state === 'doStuffAfterWards') {
-    }
+      afterCreate(event) {
+        if (event.state === 'doStuffAfterWards') {
+        }
 
-    const { result, params } = event;
+        const { result, params } = event;
 
-    // do something to the result
-  },
-});
+        // do something to the result
+      },
+    });
 
-// generic subscribe for generic handling
-strapi.db.lifecycles.subscribe((event) => {
-  if (event.action === 'beforeCreate') {
-    // do something
+    // generic subscribe for generic handling
+    strapi.db.lifecycles.subscribe((event) => {
+      if (event.action === 'beforeCreate') {
+        // do something
+      }
+    });
   }
-});
+}
 ```
