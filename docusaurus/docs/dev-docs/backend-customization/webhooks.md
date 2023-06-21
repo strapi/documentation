@@ -436,7 +436,7 @@ This event is triggered only when you delete a media through the media interface
 
 ### `review-workflows.updateEntryStage` <EnterpriseBadge/>
 
-This event is triggered when content is moved to a new review stage.
+This event is triggered when content is moved to a new review stage (see [review workflows](/user-docs/settings/review-workflows))).
 
 **Example payload**
 
