@@ -192,24 +192,17 @@ By default Strapi webhooks can be triggered by the following events:
 
 | Name              | Description                                           |
 | ----------------- | ----------------------------------------------------- |
-| `entry.create`    | Triggered when a Content Type entry is created.       |
-| `entry.update`    | Triggered when a Content Type entry is updated.       |
-| `entry.delete`    | Triggered when a Content Type entry is deleted.       |
-| `entry.publish`   | Triggered when a Content Type entry is published.\*   |
-| `entry.unpublish` | Triggered when a Content Type entry is unpublished.\* |
-| `media.create`    | Triggered when a media is created.                    |
-| `media.update`    | Triggered when a media is updated.                    |
-| `media.delete`    | Triggered when a media is deleted.                    |
+| [`entry.create`](#entrycreate)   | Triggered when a Content Type entry is created.       |
+| [`entry.update`](#entryupdate)    | Triggered when a Content Type entry is updated.       |
+| [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
+| [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
+| [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
+| [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
+| [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
+| [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
+| [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
-
-## Enterprise edition events <EnterpriseBadge />
-
-In Strapi enterprise edition webhooks can also be triggered by the following events:
-
-| Name                                | Description                                                                                                                     |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `review-workflows.updateEntryStage` | Triggered when content is moved between review stages. Read more about [review workflows](/user-docs/settings/review-workflows) |
 
 ## Payloads
 
