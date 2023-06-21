@@ -42,6 +42,23 @@ Published contents can be unpublished, switching back to being drafts again.
 
 To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
 
+### Bulk publish and unpublish
+
+Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously.
+
+![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
+
+To publish or unpublish several entries:
+
+1. From the list view of the Content Manager, select your entries to publish or unpublish by ticking the box on the left side of the entries' record.
+2. Depending on what you want to achieve, click one of the **Publish** or **Unpublish** buttons located above the header of the table. When selecting only published entries, only the **Unpublish** button is shown, while when selecting only draft entries, only the **Publish** button is shown.
+3. In the confirmation dialog box, confirm your choice by clicking on the **Publish** or **Unpublish** button.
+
+:::caution
+* If an error occurs, a red message overlay will appear with additional information, and none of your selected entries will be published or unpublished.
+* If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+:::
+
 ## Deleting content
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
@@ -54,5 +71,5 @@ You can delete entries from the list view of a collection type, by clicking on t
 :::
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#internationalization-plugin) is installed, entries can only be deleted one locale at the time.
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, entries can only be deleted one locale at the time.
 :::

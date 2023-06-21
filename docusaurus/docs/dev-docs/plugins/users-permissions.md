@@ -201,12 +201,58 @@ Setting JWT expiry for more than 30 days is **not recommended** due to security 
 
 ### Registration
 
-Creates a new user in the database with a default role as 'registered'.
+#### Configuration
+
+The Users and Permissions plugin only accepts email, username, and password fields by default. If additional fields were added to your user model and need to be accepted on registration, add these fields to the `allowedFields` in the `register` configuration option, otherwise the fields will be ignored.
+
+For example, if you have added a field called `nickname` that you wish to accept from the user, update your configuration object as follows:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/plugins.js"
+module.exports = ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+export default ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
 
 #### Usage
 
+Creates a new user in the database with a default role as 'registered'.
+
 ```js
-import axios from 'axios';
+import axios from "axios";
 
 // Request API.
 // Add your own code here to customize or restrict how the public can register new users.

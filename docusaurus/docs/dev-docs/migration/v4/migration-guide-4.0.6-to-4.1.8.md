@@ -102,5 +102,10 @@ The [Hosting Provider Guides](/dev-docs/deployment/hosting-guides) are being upd
 
 :::
 
+## Rebuild the application
+
 <BuildCommand components={props.components} />
+
+## Restart the application
+
 <DevelopCommand components={props.components} />

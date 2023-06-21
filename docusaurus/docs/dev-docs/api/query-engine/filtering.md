@@ -3,8 +3,11 @@ title: Filtering
 description: Use Strapi's Query Engine API to filter the results of your queries.
 displayed_sidebar: devDocsSidebar
 ---
+import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 
 # Filtering
+
+<RecommendEntityService/>
 
 The [Query Engine API](/dev-docs/api/query-engine/) offers the ability to filter results found with its [findMany()](/dev-docs/api/query-engine/single-operations#findmany) method.
 

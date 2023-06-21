@@ -40,7 +40,7 @@ module.exports = [
   'strapi::cors',
 
   // custom middleware that does not require any configuration
-  'my-custom-node-module', 
+  'global::my-custom-node-module', 
 
   // custom name to find a package or a path
   {
@@ -123,7 +123,7 @@ Strapi middlewares can be classified into different types depending on their ori
 | Internal          | Built-in middlewares (i.e. included with Strapi), automatically loaded                                                                                                                                                                  | `strapi::middleware-name`                                                                                            |
 | Application-level | Loaded from the `./src/middlewares` folder                                                                                                                                                                                              | `global::middleware-name`                                                                                            |
 | API-level         | Loaded from the `./src/api/[api-name]/middlewares` folder                                                                                                                                                                               | `api::api-name.middleware-name`                                                                                      |
-| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/dev-docs/api/plugins/server-api.md#middlewares)                                                         | `plugin::plugin-name.middleware-name`                                                                                |
+| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/dev-docs/api/plugins/server-api.md#middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
 | External          | Can be:<ul><li>either node modules installed with [npm](https://www.npmjs.com/search?q=strapi-middleware)</li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul> | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
 
 ## Optional configuration
@@ -139,22 +139,22 @@ Middlewares can have an optional configuration with the following parameters:
 
 Strapi's core includes the following internal middlewares, mostly used for performances, security and error handling:
 
-| Middleware                                                                                  | Added by Default | Required |
-| ------------------------------------------------------------------------------------------- | ---------------- | -------- |
-| [body](#body)                                                                               | Yes              | Yes      |
-| [compression](#compression)                                                                 | No               | No       |
-| [cors](#cors)                                                                               | Yes              | Yes      |
-| [errors](#errors)                                                                           | Yes              | Yes      |
-| [favicon](#favicon)                                                                         | Yes              | Yes      |
-| [ip](#ip)                                                                                   | No               | No       |
-| [logger](#logger)                                                                           | Yes              | No       |
-| [poweredBy](#poweredby)                                                                     | Yes              | No       |
-| [query](#query)                                                                             | Yes              | Yes      |
-| [response-time](#response-time)                                                             | No               | No       |
+| Middleware                                                         | Added by Default | Required |
+|--------------------------------------------------------------------|------------------|----------|
+| [body](#body)                                                      | Yes              | Yes      |
+| [compression](#compression)                                        | No               | No       |
+| [cors](#cors)                                                      | Yes              | Yes      |
+| [errors](#errors)                                                  | Yes              | Yes      |
+| [favicon](#favicon)                                                | Yes              | Yes      |
+| [ip](#ip)                                                          | No               | No       |
+| [logger](#logger)                                                  | Yes              | No       |
+| [poweredBy](#poweredby)                                            | Yes              | No       |
+| [query](#query)                                                    | Yes              | Yes      |
+| [response-time](#response-time)                                    | No               | No       |
 | [responses](/dev-docs/backend-customization/requests-responses.md) | Yes              | Yes      |
-| [public](#public)                                                                           | Yes              | Yes      |
-| [security](#security)                                                                       | Yes              | Yes      |
-| [session](#session)                                                                         | Yes              | No       |
+| [public](#public)                                                  | Yes              | Yes      |
+| [security](#security)                                              | Yes              | Yes      |
+| [session](#session)                                                | Yes              | No       |
 
 ### `body`
 
@@ -653,10 +653,10 @@ The middleware doesn't have any configuration options.
 
 The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
 
-| Option         | Description                                                                                  | Type      | Default value |
-|----------------|----------------------------------------------------------------------------------------------|-----------|---------------|
-| `maxAge`       | Cache-control max-age directive, in milliseconds                                             | `Integer` | `60000`       |
-| `defaultIndex` | Display default index page at `/` and `/index.html`                                          | `Boolean` | `true`        |
+| Option         | Description                                         | Type      | Default value |
+|----------------|-----------------------------------------------------|-----------|---------------|
+| `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
+| `defaultIndex` | Display default index page at `/` and `/index.html` | `Boolean` | `true`        |
 
 :::tip
 You can customize the path of the public folder by editing the [server configuration file](/dev-docs/configurations/server.md#available-options).
@@ -717,9 +717,9 @@ The security middleware is based on [koa-helmet](https://helmetjs.github.io/). I
 |-----------------------------|-----------------------------------------------------------------------------------------------|-----------------------|---------------|
 | `crossOriginEmbedderPolicy` | Set the `Cross-Origin-Embedder-Policy` header to `require-corp`                               | `Boolean`             | `false`       |
 | `crossOriginOpenerPolicy`   | Set the `Cross-Origin-Opener-Policy` header                                                   | `Boolean`             | `false`       |
-| `crossOriginResourcePolicy`   | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
+| `crossOriginResourcePolicy` | Set the `Cross-Origin-Resource-Policy` header                                                 | `Boolean`             | `false`       |
 | `originAgentCluster`        | Set the `Origin-Agent-Cluster` header                                                         | `Boolean`             | `false`       |
-| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Object`             | `-`       |
+| `contentSecurityPolicy`     | Set the `Content-Security-Policy` header                                                      | `Object`              | `-`           |
 | `xssFilter`                 | Disable browsers' cross-site scripting filter by setting the `X-XSS-Protection` header to `0` | `Boolean`             | `false`       |
 | `hsts`                      | Set options for the HTTP Strict Transport Security (HSTS) policy.                             | `Object`              | -             |
 | `hsts.maxAge`               | Number of seconds HSTS is in effect                                                           | `Integer`             | `31536000`    |
@@ -732,7 +732,7 @@ When using any 3rd party upload provider, generally it's required to set a custo
 :::
 
 :::note
-The default directives include a `dl.airtable.com` value. This value is set for the [in-app market](/user-docs/plugins/installing-plugins-via-marketplace) and is safe to keep.
+The default directives include a `market-assets.strapi.io` value. This value is set for the [in-app market](/user-docs/plugins/installing-plugins-via-marketplace) and is safe to keep.
 :::
 
 <details>
@@ -757,14 +757,14 @@ module.exports = [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'yourBucketName.s3.yourRegion.amazonaws.com',
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'yourBucketName.s3.yourRegion.amazonaws.com',
           ],
           upgradeInsecureRequests: null,
@@ -795,14 +795,14 @@ export default [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'yourBucketName.s3.yourRegion.amazonaws.com',
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'yourBucketName.s3.yourRegion.amazonaws.com',
           ],
           upgradeInsecureRequests: null,

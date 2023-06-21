@@ -80,34 +80,39 @@ There are 2 ways to update the documentation after making changes to your API:
 The Documentation plugin is initialized with the following configuration, where all properties can be altered by providing new values to the documentation plugin's configuration object in `config/plugins.js`:
 
 ```js
-{
-  openapi: '3.0.0',
-  info: {
-    version: '1.0.0',
-    title: 'DOCUMENTATION',
-    description: '',
-    termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
-    contact: {
-      name: 'TEAM',
-      email: 'contact-email@something.io',
-      url: 'mywebsite.io'
-    },
-    license: {
-      name: 'Apache 2.0',
-      url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-    },
-  },
-  'x-strapi-config': {
-		// Leave empty to ignore plugins during generation
-    plugins: [ 'upload', 'users-permissions'],
-    path: '/documentation',
-  },
-  servers: [{ url: 'http://localhost:1337/api/api', description: 'Development server' }],
-  externalDocs: {
-    description: 'Find out more',
-    url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
-  },
-  security: [ { bearerAuth: [] } ]
+module.exports = {
+  documentation: {
+    enabled: true,
+    config: {
+      openapi: '3.0.0',
+      info: {
+        version: '1.0.0',
+        title: 'DOCUMENTATION',
+        description: '',
+        termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
+        contact: {
+          name: 'TEAM',
+          email: 'contact-email@something.io',
+          url: 'mywebsite.io'
+        },
+        license: {
+          name: 'Apache 2.0',
+          url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+        },
+      },
+      'x-strapi-config': {
+        // Leave empty to ignore plugins during generation
+        plugins: [ 'upload', 'users-permissions'],
+        path: '/documentation',
+      },
+      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
+      externalDocs: {
+        description: 'Find out more',
+        url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
+      },
+      security: [ { bearerAuth: [] } ]
+    }
+  }
 }
 ```
 
@@ -115,7 +120,7 @@ The Documentation plugin is initialized with the following configuration, where 
 
 To create a new version of your documentation, update the `version` key as follows:
 
-```js title="config/plugin.js"
+```js title="config/plugins.js"
 
 module.exports = {
   documentation: {
@@ -156,7 +161,7 @@ module.exports = {
 
 ### Excluding from generation
 
-To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
 
 :::note
 `excludeFromGeneration` gives more fine-grained control over what is generated.
@@ -263,7 +268,7 @@ module.exports = {
       "x-strapi-config": {
         mutateDocumentation: (generatedDocumentationDraft) => {
           generatedDocumentationDraft.paths[
-            "/answer-to-everything"
+            "/answer-to-everything" // must be an existing path
           ].get.responses["200"].description = "*";
         },
       },

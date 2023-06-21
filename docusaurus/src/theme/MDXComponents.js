@@ -1,9 +1,13 @@
 import React from 'react';
 // Import the original mapper
 import MDXComponents from '@theme-original/MDXComponents';
+/** Import built-in Docusaurus components at the global level
+ * so we don't have to re-import them in every file
+ */
 import DocCardList from '@theme/DocCardList';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+// Import custom components, globally as well
 import Request from '../components/Request';
 import Response from '../components/Response';
 import ApiCall from '../components/ApiCall';
@@ -12,7 +16,9 @@ import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
+import ThemedImage from '@theme/ThemedImage';
 
 export default {
   // Re-use the default mapping
@@ -38,4 +44,6 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  InteractiveQueryBuilder,
+  ThemedImage,
 };

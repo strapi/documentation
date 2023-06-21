@@ -22,6 +22,12 @@ Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to eas
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
 :::
 
+:::tip
+If you already created a data structure with the Content-Type Builder and added some data through the Content Manager to your local (development) Strapi instance, you can leverage the [data management system](/dev-docs/data-management) to transfer data from a Strapi instance to another one.
+
+Another possible workflow is to first create the data structure locally, push your project to a git-based repository, deploy the changes to production, and only then add content to the production instance.
+:::
+
 ## General guidelines
 
 ### Hardware and software requirements

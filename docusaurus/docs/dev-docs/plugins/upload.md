@@ -175,6 +175,7 @@ export default {
 ### Responsive Images
 
 When the `Enable responsive friendly upload` setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
+
 | Name    | Largest Dimension |
 | :------ | :--------- |
 | large   | 1000px     |

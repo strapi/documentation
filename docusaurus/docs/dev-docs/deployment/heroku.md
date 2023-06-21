@@ -170,10 +170,12 @@ npm install pg && npm install pg-connection-string
   package-lock.json
   ```
 
-  :::note
-  It is usually recommended to version the `package-lock.json` file, but it is known to cause issues on Heroku.
+  :::info
+  It is usually recommended to version the `package-lock.json` file, but it might cause issues on Heroku.
   :::
+
 8. Verify that all of the new and modified files are saved locally.
+
 9. Commit the project to a local repository:
 
   ```sh
@@ -192,7 +194,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
   
 <Tabs>
 
-<TabItem value="Ubantu" label="Ubantu">
+<TabItem value="Ubuntu" label="Ubuntu">
 Run the following from a terminal:
 
 ```bash

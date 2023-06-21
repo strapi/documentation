@@ -576,7 +576,7 @@ Component fields create a relation between a content-type and a component struct
 
 Dynamic zones create a flexible space in which to compose content, based on a mixed list of [components](#components-2).
 
-Dynamic zones are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'dynamiczone'`. They also accepts a `components` array, where each component should be named following this format: `<category>.<componentName>`.
+Dynamic zones are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'dynamiczone'`. They also accept a `components` array, where each component should be named following this format: `<category>.<componentName>`.
 
 ```json title="./src/api/[api-name]/content-types/article/schema.json"
 

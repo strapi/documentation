@@ -48,12 +48,8 @@ Strapi periodically releases code improvements through upgrades. Upgrades contai
 
 ## Rebuild the application
 
-Rebuild the administration panel:
-
 <BuildCommand components={props.components} />
 
-## Start the application
-
-Start the application and ensure that everything is working as expected:
+## Restart the application
 
 <DevelopCommand components={props.components} />
