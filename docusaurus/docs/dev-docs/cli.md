@@ -356,14 +356,17 @@ Generate [TypeScript](/dev-docs/typescript.md) typings for the project schemas.
 strapi ts:generate-types
 ```
 
-* **strapi ts:generate-types --verbose**<br/>
-  Generate typings with the verbose mode enabled, displaying a detailed table of the generated schemas.
-* **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
-  Generate typings with the silent mode enabled, completely removing all the logs in the terminal.
-* **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
+- **strapi ts:generate-types --debug**<br />
+  [DEPRECATED] **strapi ts:generate-types --verbose**<br/>
+  Generate typings with the debug mode enabled, displaying a detailed table of the generated schemas.
+- **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
+  Generate typings with the silent mode enabled, completely removing all the logs in the terminal. Cannot be combined with `verbose` or `debug`
+- **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
   Generate typings specifying the output directory in which the file will be created.
-* **strapi ts:generate-types --file &#60;filename&#62;** or **strapi ts:generate-types -f &#60;filename&#62;**<br/>
-  Generate typings specifying the name of the file to contain the types declarations.
+
+:::caution
+Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
+:::
 
 ## strapi routes:list
 

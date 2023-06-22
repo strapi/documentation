@@ -10,10 +10,6 @@ sidebar_position: 2
 
 This is a step-by-step guide for deploying your Strapi application on Strapi Cloud.
 
-:::strapi
-During the soft launch of Strapi Cloud, a progressively increasing number of users will be able to access the service. Access will be granted to a mix of users currently on the waitlist as well as new users that can sign up each day.
-:::
-
 ## Prerequisites
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:

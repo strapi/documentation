@@ -19,7 +19,7 @@ const captionStyle = {fontSize: '12px'}
 
 ## Requests
 
-The context object (`ctx`) contains all the requests related information. They are accessible through `ctx.request`, from [controllers](/dev-docs/backend-customization/controllers.md) and [policies](/dev-docs/backend-customization/policies.md).
+When you send requests through the [REST API](/dev-docs/api/rest), the context object (`ctx`) contains all the requests related information. They are accessible through `ctx.request`, from [controllers](/dev-docs/backend-customization/controllers.md) and [policies](/dev-docs/backend-customization/policies.md).
 
 Strapi passes the `body` on `ctx.request.body`, `query` on `ctx.request.query`, `params` on `ctx.request.params` and `files` through `ctx.request.files`
 
