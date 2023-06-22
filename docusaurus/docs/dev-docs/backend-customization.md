@@ -7,13 +7,13 @@ description: All elements of Strapi's back end, like routes, policies, middlewar
 # Back-end customization
 
 :::strapi Disambiguation: Strapi back end
-As a headless CMS, the Strapi software as a whole can be considered as the "backend" of your website or application.
+As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
 
 - The back-end part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
 - The front-end part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
-Throughout this developer documentation, 'backend' refers exclusively to the back-end part of Strapi.
+Throughout this developer documentation, 'back end' refers exclusively to the back-end part of Strapi.
 
 The [User Guide](/user-docs/intro) explains how to use the admin panel and the [admin panel customization section](/dev-docs/admin-panel-customization) details the various customization options available for the admin panel.
 :::
@@ -22,7 +22,7 @@ The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a ba
 
 Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/dev-docs/api/rest) or [GraphQL](/dev-docs/api/graphql) APIs.
 
-A request can travel through the Strapi backend as follows:
+A request can travel through the Strapi back end as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
 2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are run in a sequential order.
@@ -32,14 +32,14 @@ A request can travel through the Strapi backend as follows:
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Entity Service](/dev-docs/api/entity-service) and [Query Engine](/dev-docs/api/query-engine).
 7. The server returns a [response](/dev-docs/backend-customization/requests-responses#response). The response can travel back through route middlewares and global middlewares before being sent.
 
-Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the backend:
+Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the back end:
 
-* If a middleware returns nothing, the request will continue travelling through the various core elements of the backend (i.e., controllers, services, and the other layers that interact with the database).
+* If a middleware returns nothing, the request will continue travelling through the various core elements of the back end (i.e., controllers, services, and the other layers that interact with the database).
 * If a middleware returns something, a response will be immediately sent, skipping the rest of the core elements.
 
 ## Interactive diagram
 
-The following diagram represents how requests travel through the Strapi backend. You can click on any shape to jump to the relevant page in the documentation.
+The following diagram represents how requests travel through the Strapi back end. You can click on any shape to jump to the relevant page in the documentation.
 
 ```mermaid
 graph TB
