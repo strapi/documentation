@@ -129,7 +129,7 @@ Many types of attributes are available:
   - `media` for files uploaded through the [Media library](/user-docs/content-type-builder/configuring-fields-content-type.md#media)
   - `relation` to describe a [relation](#relations) between content-types
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
-  - `component` to define a [component](#components-2) (i.e. a data structure usable in multiple content-types)
+  - `component` to define a [component](#components-1) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md)
 
