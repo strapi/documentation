@@ -22,7 +22,9 @@ export function SideBySideContainer({ className, spaced = true, ...rest }) {
               main article:first-child:not(.col) + nav {
                 --custom-main-width: 120rem;
               }
+            }
 
+            @media (max-width: 1536px) {
               /**
                * Hide the right-side nav (table of contents)
                */
