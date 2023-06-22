@@ -649,7 +649,7 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 | Key      | Type              | Description                                                                                                                                                      |
 | -------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action` | String            | Lifecycle event that has been triggered (see [list](#available-lifecycle-events))                                                                                |
-| `model`  | Array of strings (uid)            | An array of uids of the content-types or single-types you want to listen for events for. Not supplying this argument means it will listen on all models |
+| `model`  | Array of strings (uid)            | An array of uids of the content-types whose events will be listened to.<br />If this argument is not supplied, events are listened on all content-types. |
 | `params` | Object            | Accepts the following parameters:<ul><li>`data`</li><li>`select`</li><li>`where`</li><li>`orderBy`</li><li>`limit`</li><li>`offset`</li><li>`populate`</li></ul> |
 | `result` | Object            | _Optional, only available with `afterXXX` events_<br /><br />Contains the result of the action.                                                                      |
 | `state`  | Object            | Query state, can be used to share state between `beforeXXX` and `afterXXX` events of a query.                                                               |
