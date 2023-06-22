@@ -26,7 +26,7 @@ A request can travel through the Strapi backend as follows:
 
 1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
 2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are run in a sequential order.
-3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates routes for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.
+3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates route files for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.
 4. [Route policies](/dev-docs/backend-customization/policies) act as a read-only validation step that can block access to a route. [Route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Entity Service](/dev-docs/api/entity-service) and [Query Engine](/dev-docs/api/query-engine).
