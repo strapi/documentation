@@ -17,6 +17,9 @@ The [REST API](/dev-docs/api/rest) by default does not populate any relations, m
 <QsIntroFull />
 :::
 
+<SideBySideContainer>
+<SideBySideColumn>
+
 ## Field selection
 
 Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/backend-customization/models#model-attributes) are returned:
@@ -27,6 +30,9 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 - generic types: boolean, array, and JSON.
 
 Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request: Return only title and body fields">
@@ -78,6 +84,9 @@ await request(`/api/users?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
 :::tip
 By default, fields are selected except relations, media, dynamic zones, and components, but you can specify a wildcard `*` instead of an array.
 :::
@@ -107,9 +116,15 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 If the Users & Permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
 :::
 
+<SideBySideContainer>
+<SideBySideColumn>
+
 #### Populate 1 level for all relations
 
 To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -182,12 +197,21 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
 #### Populate 1 level
 
 To populate only specific relations one-level deep, use one of the following method:
 
 - Use the populate parameter as an array and put the relation name inside.
 - Use the populate parameter as an object (using LHS bracket notation) and put the relation name as a key with one of the following values: `true, false, t, f, 1, 0`.
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request: populate categories">
@@ -267,9 +291,18 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
 #### Populate 2 levels
 
 To populate specific relations, one or several levels deep, use the LHS bracket notation for fields names in combination with the `populate` parameter.
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request: populate author and author.company">
@@ -342,15 +375,24 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
 :::note
 There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
+
+<SideBySideContainer>
+<SideBySideColumn>
 
 ### Components & Dynamic Zones
 
 The `populate` parameter is used to explicitly define which Dynamic zones, components, and nested components to populate.
 
 #### Deeply populate a 2-level component & media
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -428,6 +470,12 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
 #### Deeply populate a dynamic zone with 2 components
 
 Dynamic zones are highly dynamic content structures by essence.
@@ -435,6 +483,9 @@ When populating dynamic zones, you can choose between:
 
 - a shared population strategy, applying a unique behavior for all the dynamic zone's components
 - or a detailed population strategy, defining per-component populate queries using the `on` property.
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 <ApiCall noSideBySide>
 <Request title="Example request for shared populate strategy">
@@ -586,6 +637,9 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
 ### Populating createdBy and updatedBy
 
 The creator fields `createdBy` and `updatedBy` are removed from the REST API response by default. The `createdBy` and `updatedBy` fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
@@ -605,7 +659,7 @@ To add `createdBy` and `updatedBy` to the API response:
 3. Save the `schema.json`.
 4. Open the controller `[collection-name].js` file inside the corresponding API request.
 5. Add the following piece of code, and make sure you replace the `[collection-name].js` with proper collection name:
-  
+
   ```js
   'use strict';
   /**
@@ -625,7 +679,7 @@ To add `createdBy` and `updatedBy` to the API response:
             },
             populate: ['createdBy', 'updatedBy'],
           });
-          
+
           data[index].attributes.createdBy = {
             id: foundItem.createdBy.id,
             firstname: foundItem.createdBy.firstname,
@@ -650,6 +704,9 @@ REST API requests using the `populate` parameter that include the `createdBy` or
 The `populateCreatorFields` property is not available to the GraphQL API.
 :::
 
+<SideBySideContainer>
+<SideBySideColumn>
+
 ### Combining Population with other operators
 
 By utilizing the `population` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
@@ -659,6 +716,9 @@ The population and pagination operators cannot be combined.
 :::
 
 See the following complex population examples:
+
+</SideBySideColumn>
+<SideBySideColumn>
 
 #### Populate with field selection
 
@@ -797,3 +857,6 @@ await request(`/api/articles?${query}`);
 ```
 
 </details>
+
+</SideBySideColumn>
+</SideBySideContainer>
