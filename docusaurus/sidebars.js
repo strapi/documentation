@@ -103,6 +103,11 @@ const sidebars = {
         },
           items: [
             {
+              type: 'doc',
+              label: '☁️ Strapi Cloud',
+              id: 'cloud/getting-started/deployment',
+            },
+            {
               type: 'category',
               label: 'Other Hosting Guides',
               collapsed: false,
