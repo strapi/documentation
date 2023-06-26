@@ -6,6 +6,8 @@
     "docusaurus": "docusaurus",
     "dev": "docusaurus start --port 8080 --no-open",
     "build": "docusaurus build",
+    "lint": "markdownlint ./**/*.md",
+    "lint:fix": "markdownlint --fix ./**/*.md",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -34,7 +36,8 @@
     "sass": "^1.58.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.3.1"
+    "@docusaurus/module-type-aliases": "^2.3.1",
+    "markdownlint-cli": "^0.35.0"
   },
   "browserslist": {
     "production": [
