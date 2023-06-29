@@ -2,7 +2,6 @@
 title: Webhooks
 displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
-
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
@@ -34,11 +33,10 @@ You can set webhook configurations inside the file `./config/server`.
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
-      'Custom-Header': 'my-custom-header',
+      "Custom-Header": "my-custom-header",
     },
   },
 };
@@ -49,11 +47,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default {
   webhooks: {
     defaultHeaders: {
-      'Custom-Header': 'my-custom-header',
+      "Custom-Header": "my-custom-header",
     },
   },
 };
@@ -79,11 +76,10 @@ You can configure these global headers by updating the file at `./config/server`
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
-      Authorization: 'Bearer my-very-secured-token',
+      Authorization: "Bearer my-very-secured-token",
     },
   },
 };
@@ -94,11 +90,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config.server.ts"
-
- export default {
+export default {
   webhooks: {
     defaultHeaders: {
-      Authorization: 'Bearer my-very-secured-token',
+      Authorization: "Bearer my-very-secured-token",
     },
   },
 };
@@ -115,7 +110,6 @@ module.exports = {
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = {
   webhooks: {
     defaultHeaders: {
@@ -130,7 +124,6 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default {
   webhooks: {
     defaultHeaders: {
@@ -199,14 +192,15 @@ By default Strapi webhooks can be triggered by the following events:
 
 | Name              | Description                                           |
 | ----------------- | ----------------------------------------------------- |
-| `entry.create`    | Triggered when a Content Type entry is created.       |
-| `entry.update`    | Triggered when a Content Type entry is updated.       |
-| `entry.delete`    | Triggered when a Content Type entry is deleted.       |
-| `entry.publish`   | Triggered when a Content Type entry is published.\*   |
-| `entry.unpublish` | Triggered when a Content Type entry is unpublished.\* |
-| `media.create`    | Triggered when a media is created.                    |
-| `media.update`    | Triggered when a media is updated.                    |
-| `media.delete`    | Triggered when a media is deleted.                    |
+| [`entry.create`](#entrycreate)   | Triggered when a Content Type entry is created.       |
+| [`entry.update`](#entryupdate)    | Triggered when a Content Type entry is updated.       |
+| [`entry.delete`](#entrydelete)    | Triggered when a Content Type entry is deleted.       |
+| [`entry.publish`](#entrypublish)   | Triggered when a Content Type entry is published.\*   |
+| [`entry.unpublish`](#entryunpublish) | Triggered when a Content Type entry is unpublished.\* |
+| [`media.create`](#mediacreate)    | Triggered when a media is created.                    |
+| [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
+| [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
+| [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
@@ -436,6 +430,31 @@ This event is triggered only when you delete a media through the media interface
     "createdAt": "2020-01-07T19:34:32.168Z",
     "updatedAt": "2020-01-07T19:34:32.168Z",
     "related": []
+  }
+}
+```
+
+### `review-workflows.updateEntryStage` <EnterpriseBadge/>
+
+This event is only available with the <EnterpriseBadge/> edition of Strapi.<br />The event is triggered when content is moved to a new review stage (see [Review Workflows](/user-docs/settings/review-workflows)).
+
+**Example payload**
+
+```json
+{
+  "event": "review-workflows.updateEntryStage",
+  "createdAt": "2020-01-10T11:02:46.232Z",
+  "model": "address",
+  "uid": "api::address.address",
+  "entry": {
+    "entityId": 1,
+    "workflow": {
+      "id": 1,
+      "stages": {
+        "from": 2,
+        "to": 1
+      }
+    }
   }
 }
 ```
