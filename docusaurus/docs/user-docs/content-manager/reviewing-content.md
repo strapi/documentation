@@ -9,7 +9,13 @@ Using the [review workflows](/user-docs/settings/review-workflows) feature, you 
 
 When viewing your content in the Content Manager, you can see the current stage of any item in the **Review Stage** column:
 
-![Review Stage column](/img/assets/content-manager/review-stage-column.png)
+<ThemedImage
+  alt="Review Stage column"
+  sources={{
+    light: '/img/assets/content-manager/review-stage-column.png',
+    dark: '/img/assets/content-manager/review-stage-column_DARK.png',
+  }}
+/>
 
 ## Change review stage
 
@@ -21,6 +27,12 @@ To change the review stage of your content:
 2. In the Information box, click on the *Review stage* drop-down list.
 3. Choose the new review stage of your entry. It is automatically saved.
 
-![Review Stage dropdown](/img/assets/content-manager/review-stage-dropdown.png)
+<ThemedImage
+  alt="Review Stage dropdown"
+  sources={{
+    light: '/img/assets/content-manager/review-stage-dropdown.png',
+    dark: '/img/assets/content-manager/review-stage-dropdown_DARK.png',
+  }}
+/>
 
 <FeedbackPlaceholder />
