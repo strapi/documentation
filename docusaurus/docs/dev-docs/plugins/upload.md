@@ -234,6 +234,66 @@ export default ({ env }) => ({
   Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
 :::
 
+### Image processing options
+
+When the `Enable size optimization (without quality loss)` setting is enabled in the settings panel the plugin will generate images using [sharp](https://sharp.pixelplumbing.com/). The [default format options](https://sharp.pixelplumbing.com/api-output) can be overridden in `./config/plugins.js`:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JAVASCRIPT">
+
+```js title="path: ./config/plugins.js"
+
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      formats: {
+        jpeg: {
+          chromaSubsampling: '4:4:4',
+          quality: 95
+        },
+        png: {
+          compressionLevel: 9,
+          progressive: true
+        }
+      }
+    }
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TYPESCRIPT">
+
+```js title="path: ./config/plugins.ts"
+
+export default ({ env }) => ({
+  upload: {
+    config: {
+      formats: {
+        jpeg: {
+          chromaSubsampling: '4:4:4',
+          quality: 95
+        },
+        png: {
+          compressionLevel: 9,
+          progressive: true
+        }
+      }
+    }
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution
+  Format changes will only apply to new images, existing images will not be reprocessed.
+:::
+
 ## Endpoints
 
 <style lang="stylus">
