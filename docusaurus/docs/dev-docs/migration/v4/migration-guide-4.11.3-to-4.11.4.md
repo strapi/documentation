@@ -35,7 +35,7 @@ In versions v4.11.3 the webhook payload has the following structure:
   "model": "model",
   "uid": "uid",
   "entry": {
-    "entityId": 7,
+    "entityId": 2,
     "workflow": {
       "id": 1,
       "stages": {
