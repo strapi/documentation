@@ -45,8 +45,8 @@ For more information, please refer to the [Koa response documentation](http://ko
 | <a name="ctx.request.method" href="#ctx.request.method" class="anchor">`ctx.request.method`</a>| Gives you back the method examples of methods are `GET` or `POST`. | `String` |
 | <a name="ctx.request.path" href="#ctx.request.path" class="anchor">`ctx.request.path`</a>| Gives you back the full url. | `String` |
 | <a name="ctx.request.host" href="#ctx.request.host" class="anchor">`ctx.request.host`</a>| Only gives the host part of the url. | `String` |
-| <a name="ctx.request.host" href="#ctx.request.host" class="anchor">`ctx.request.host`</a>| Only gives the host part of the url without the port | `String` |
-| <a name="ctx.request.host" href="#ctx.request.host" class="anchor">`ctx.request.host`</a>| Protocol being used examples: `https` or `http`. | `String` |
+| <a name="ctx.request.hostname" href="#ctx.request.hostname" class="anchor">`ctx.request.hostname`</a>| Only gives the host part of the url without the port | `String` |
+| <a name="ctx.request.protocol" href="#ctx.request.protocol" class="anchor">`ctx.request.protocol`</a>| Protocol being used examples: `https` or `http`. | `String` |
 | <a name="ctx.request.ips" href="#ctx.request.ips" class="anchor">`ctx.request.ips`</a>| When `X-Forwarded-For` is present and app.proxy is enabled an array of these ips is returned, ordered from upstream -> downstream. For example if the value were "client, proxy1, proxy2", you would receive the array ["client", "proxy1", "proxy2"]. | `Array` |
 | <a name="ctx.request.ips" href="#ctx.request.ip" class="anchor">`ctx.request.ip`</a>| IP of the person who send the request.| `String` |
 | <a name="ctx.request.subdomains" href="#ctx.request.subdomains" class="anchor">`ctx.request.subdomains`</a>| For example, if the domain is "tobi.ferrets.example.com": it is ["ferrets", "tobi"]. | `Array` |
