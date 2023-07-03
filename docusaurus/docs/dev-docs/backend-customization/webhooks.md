@@ -443,16 +443,22 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 ```json
 {
   "event": "review-workflows.updateEntryStage",
-  "createdAt": "2020-01-10T11:02:46.232Z",
-  "model": "address",
-  "uid": "api::address.address",
-  "entry": {
-    "entityId": 1,
-    "workflow": {
-      "id": 1,
-      "stages": {
-        "from": 2,
-        "to": 1
+  "createdAt": "2023-06-26T15:46:35.664Z",
+  "model": "model",
+  "uid": "uid",
+  "entity": {
+    "id": 2
+  },
+  "workflow": {
+    "id": 1,
+    "stages": {
+      "from": {
+        "id": 1,
+        "name": "Stage 1"
+      },
+      "to": {
+        "id": 2,
+        "name": "Stage 2"
       }
     }
   }
