@@ -492,7 +492,7 @@ In Strapi v4.11.3 the webhook payload has the following structure:
 }
 ```
 
-In version v4.11.4 the webhook payload has the following structure:
+In Strapi v4.11.4 the webhook payload has the following structure:
 
 ```json
 {
