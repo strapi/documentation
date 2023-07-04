@@ -12,7 +12,7 @@ import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 # v4.11.3 to v4.11.4 migration guide
 
 This migration guide outlines changes made to the
-`review-workflows.updateEntryStage` webhook payload. The payload was modified in
+[`review-workflows.updateEntryStage` webhook payload](/dev-docs/backend-customization/webhooks#review-workflowsupdateentrystage-). The payload was modified in
 v4.11.4 to be more extensible and provide maximum utility for Strapi users.
 
 :::caution
