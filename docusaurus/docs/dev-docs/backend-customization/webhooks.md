@@ -471,7 +471,7 @@ The payload format for the review-workflows.updateEntryStage changed between Str
 <details>
 <summary>Payload formats for Strapi v4.11.3 vs. Strapi v4.11.4</summary>
 
-In versions v4.11.3 the webhook payload has the following structure:
+In Strapi v4.11.3 the webhook payload has the following structure:
 
 ```json
 {
