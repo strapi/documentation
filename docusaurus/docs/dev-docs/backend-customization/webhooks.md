@@ -466,7 +466,7 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 ```
 
 :::caution Payload format for Strapi v4.11.4+
-The payload format for the review-workflows.updateEntryStage changed between Strapi v4.11.3 and Strapi v4.11.4. Please notice the payload format differences in the following examples and update your integration code accordingly:
+The payload format for the `review-workflows.updateEntryStage` webhook changed between Strapi v4.11.3 and Strapi v4.11.4. Please notice the payload format differences in the following examples and update your integration code accordingly:
 
 <details>
 <summary>Payload formats for Strapi v4.11.3 vs. Strapi v4.11.4</summary>
