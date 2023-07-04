@@ -20,7 +20,7 @@ External integrations using the `review-workflows.updateEntryStage` webhook will
 :::
 
 :::note
-<EnterpriseBadge /> Review Workflows is an enterprise edition feature. This
+Review Workflows is an <EnterpriseBadge /> edition feature. This
 migration guide has no impact on community edition users.
 :::
 
