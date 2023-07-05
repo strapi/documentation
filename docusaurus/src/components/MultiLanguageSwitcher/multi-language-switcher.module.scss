@@ -1,0 +1,172 @@
+/** Component: MultiLanguageSwitcher / Request / Response */
+
+@import '../../scss/_mixins.scss';
+
+:root {
+  --custom-strapi-docs-mls-color: var(--strapi-neutral-0);
+  --custom-strapi-docs-mls-gap: var(--strapi-spacing-4);
+  --custom-strapi-docs-mls-heading-font-size: var(--strapi-font-size-sm);
+  --custom-strapi-docs-mls-heading-font-weight: 700;
+  --custom-strapi-docs-mls-heading-py: var(--strapi-spacing-2);
+  --custom-strapi-docs-mls-heading-px: var(--strapi-spacing-4);
+  --custom-strapi-docs-mls-radius: var(--strapi-spacing-2);
+  --custom-strapi-docs-mls-response-heading-background-color: var(--strapi-neutral-800);
+  --custom-strapi-docs-mls-response-content-background-color: var(--strapi-neutral-900);
+  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-600);
+  --custom-strapi-docs-mls-request-content-background-color: var(--strapi-neutral-700);
+}
+
+.strapi-docs-mls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--custom-strapi-docs-mls-gap);
+  margin-bottom: var(--custom-strapi-docs-mls-gap);
+  position: relative;
+
+  &__switcher {
+    position: absolute;
+    top: .35rem;
+    right: .35rem;
+
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: var(--strapi-spacing-2);
+      transform: translateY(-50%);
+      background-image: url("data:image/svg+xml,%3Csvg width='0.5rem' height='0.5rem' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14 .889a.86.86 0 01-.26.625L7.615 7.736A.834.834 0 017 8a.834.834 0 01-.615-.264L.26 1.514A.861.861 0 010 .889c0-.24.087-.45.26-.625A.834.834 0 01.875 0h12.25c.237 0 .442.088.615.264a.86.86 0 01.26.625z' fill='%23fff'%3E%3C/path%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      content: " ";
+      height: 0.5rem;
+      width: 0.5rem;
+    }
+
+    &:after,
+    &__select {
+      color: var(--custom-strapi-docs-mls-color);
+    }
+
+    &__select {
+      display: inline-block;
+      appearance: none;
+      background: var(--custom-strapi-docs-mls-request-heading-background-color, transparent);
+      border: 2px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: var(--strapi-font-size-sm);
+      outline: 0;
+      padding: var(--strapi-spacing-1) var(--strapi-spacing-5) var(--strapi-spacing-1) var(--strapi-spacing-2);
+      text-align: right;
+      transition: background ease 0.2s;
+
+      &:active, &:focus, &:hover {
+        --custom-strapi-docs-mls-switcher-border: currentColor;
+        --custom-strapi-docs-mls-request-heading-background-color: rgba(0, 0, 0, .15);
+      }
+    }
+  }
+
+  &__request__content,
+  &__request__heading,
+  &__response__content,
+  &__response__heading {
+    background-color: var(--custom-strapi-docs-mls-background-color);
+    color: var(--custom-strapi-docs-mls-color);
+  }
+
+  &__request,
+  &__response {
+    border-radius: var(--custom-strapi-docs-mls-radius);
+
+    &__heading,
+    &__content {
+      *:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__heading {
+      border-top-left-radius: var(--custom-strapi-docs-mls-radius);
+      border-top-right-radius: var(--custom-strapi-docs-mls-radius);
+      font-size: var(--custom-strapi-docs-mls-heading-font-size);
+      font-weight: var(--custom-strapi-docs-mls-heading-font-weight);
+      padding:
+        var(--custom-strapi-docs-mls-heading-py)
+        calc(var(--custom-strapi-docs-mls-heading-px) * 5)
+        var(--custom-strapi-docs-mls-heading-py)
+        var(--custom-strapi-docs-mls-heading-px)
+      ;
+    }
+
+    &__content {
+      border-bottom-left-radius: var(--custom-strapi-docs-mls-radius);
+      border-bottom-right-radius: var(--custom-strapi-docs-mls-radius);
+      padding: var(--custom-strapi-docs-mls-content-py) var(--custom-strapi-docs-mls-content-px);
+    }
+  }
+
+  &__request {
+    &__heading {
+      --custom-strapi-docs-mls-background-color: var(--custom-strapi-docs-mls-request-heading-background-color);
+    }
+
+    &__content {
+      --custom-strapi-docs-mls-background-color: var(--custom-strapi-docs-mls-request-content-background-color);
+      --custom-strapi-docs-mls-content-py: var(--custom-strapi-docs-mls-heading-px);
+      --custom-strapi-docs-mls-content-px: var(--custom-strapi-docs-mls-heading-px);
+
+      --custom-code-block-background-color: var(--custom-strapi-docs-mls-response-heading-background-color);
+
+      --custom-code-background-color: var(--custom-strapi-docs-mls-response-heading-background-color);
+      --custom-code-border-color: transparent;
+      --custom-code-color: currentColor;
+    }
+  }
+
+  &__response {
+    &__heading {
+      --custom-strapi-docs-mls-background-color: var(--custom-strapi-docs-mls-response-heading-background-color);
+    }
+
+    &__content {
+      --custom-strapi-docs-mls-background-color: var(--custom-strapi-docs-mls-response-content-background-color);
+
+      --custom-code-block-background-color: var(--custom-strapi-docs-mls-response-content-background-color);
+    }
+  }
+
+  .theme-code-block {
+    border-radius: var(--custom-strapi-docs-mls-radius);
+  }
+}
+
+/** Dark mode */
+@include dark {
+  --custom-strapi-docs-mls-color: var(--strapi-neutral-1000);
+
+  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-300);
+  --custom-strapi-docs-mls-request-content-background-color: var(--strapi-neutral-200);
+
+  --custom-strapi-docs-mls-response-heading-background-color: var(--strapi-neutral-150);
+  --custom-strapi-docs-mls-response-content-background-color: var(--strapi-neutral-100);
+
+  .strapi-docs-mls {
+    &__request {
+      &__content {
+        pre {
+          --custom-code-block-background-color: var(--custom-strapi-docs-mls-response-heading-background-color);
+        }
+      }
+    }
+
+    &__response {
+      &__content {
+        pre {
+          --custom-code-block-background-color: var(--custom-strapi-docs-mls-response-content-background-color);
+        }
+      }
+    }
+  }
+}

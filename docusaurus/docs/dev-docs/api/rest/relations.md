@@ -43,21 +43,45 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
 
-<Request title="Example request using the shorthand syntax">
+<MultiLanguageSwitcher title="Example request using the shorthand syntax">
+<MultiLanguageSwitcherRequest language="REST">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT` `http://localhost:1337/api/restaurants/1`
 
 ```json
 {
   data: {
-    categories: { 
-      connect: [2, 4],
+    categories: {
+      connect: [2, 4]
     }
   }
 }
 ```
 
-</Request>
+</MultiLanguageSwitcherRequest>
+
+<MultiLanguageSwitcherRequest language="Node">
+
+```js
+const fetch = require('node-fetch');
+
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/1',
+  {
+    method: 'put',
+    body: {
+      data: {
+        categories: {
+          connect: [2, 4]
+        }
+      }
+    }
+  }
+);
+```
+
+</MultiLanguageSwitcherRequest>
+</MultiLanguageSwitcher>
 
 </TabItem>
 
@@ -65,24 +89,51 @@ Sending the following request updates the `restaurant` entity with `id` `1`, usi
 
 Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
 
-<Request title="Example request using the longhand syntax">
+<MultiLanguageSwitcher title="Example request using the longhand syntax">
+<MultiLanguageSwitcherRequest language="REST">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT` `http://localhost:1337/api/restaurants/1`
 
 ```json
 {
   data: {
-    categories: { 
+    categories: {
       connect: [
         { id: 2 },
         { id: 4 }
-      ], 
+      ]
     }
   }
 }
 ```
 
-</Request>
+</MultiLanguageSwitcherRequest>
+
+<MultiLanguageSwitcherRequest language="Node">
+
+```js
+const fetch = require('node-fetch');
+
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/1',
+  {
+    method: 'put',
+    body: {
+      data: {
+        categories: {
+          connect: [
+            { id: 2 },
+            { id: 4 }
+          ]
+        }
+      }
+    }
+  }
+);
+```
+
+</MultiLanguageSwitcherRequest>
+</MultiLanguageSwitcher>
 
 </TabItem>
 </Tabs>
@@ -231,7 +282,7 @@ Sending the following request updates the `restaurant` entity with `id` `1`, dis
 ```json
 {
   data: {
-    categories: { 
+    categories: {
       disconnect: [2, 4],
     }
   }
@@ -253,11 +304,11 @@ Sending the following request updates the `restaurant` entity with `id` `1`, dis
 ```json
 {
   data: {
-    categories: { 
+    categories: {
       disconnect: [
         { id: 2 },
         { id: 4 }
-      ], 
+      ],
     }
   }
 }
@@ -303,7 +354,7 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 ```json
 {
   data: {
-    categories: { 
+    categories: {
       set: [2, 4],
     }
   }
@@ -325,11 +376,11 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 ```json
 {
   data: {
-    categories: { 
+    categories: {
       set: [
         { id: 2 },
         { id: 4 }
-      ], 
+      ],
     }
   }
 }
