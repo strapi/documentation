@@ -19,6 +19,7 @@ import CustomDocCard from '../components/CustomDocCard';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 import ThemedImage from '@theme/ThemedImage';
+import { MultiLanguageSwitcher, MultiLanguageSwitcherRequest, MultiLanguageSwitcherResponse } from '../components/MultiLanguageSwitcher';
 
 export default {
   // Re-use the default mapping
@@ -46,4 +47,7 @@ export default {
   CustomDocCard,
   InteractiveQueryBuilder,
   ThemedImage,
+  MultiLanguageSwitcher,
+  MultiLanguageSwitcherRequest,
+  MultiLanguageSwitcherResponse,
 };
