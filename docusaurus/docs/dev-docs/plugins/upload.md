@@ -236,7 +236,7 @@ export default ({ env }) => ({
 
 ### Image processing options
 
-When the `Enable size optimization (without quality loss)` setting is enabled in the settings panel the plugin will generate images using [sharp](https://sharp.pixelplumbing.com/). The [default format options](https://sharp.pixelplumbing.com/api-output) can be overridden in `./config/plugins.js`:
+When the _Enable size optimization (without quality loss)_ setting is enabled in the settings panel, the plugin will generate images using [sharp](https://sharp.pixelplumbing.com/). The [default format options](https://sharp.pixelplumbing.com/api-output) can be overridden in `./config/plugins.js`:
 
 <Tabs groupId="js-ts">
 
