@@ -20,6 +20,11 @@ import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/I
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
+import {
+  MultiLanguageSwitcher,
+  MultiLanguageSwitcherRequest,
+  MultiLanguageSwitcherResponse,
+} from '../components/MultiLanguageSwitcher';
 
 export default {
   // Re-use the default mapping
@@ -49,4 +54,7 @@ export default {
   ThemedImage,
   SideBySideColumn,
   SideBySideContainer,
+  MultiLanguageSwitcher,
+  MultiLanguageSwitcherRequest,
+  MultiLanguageSwitcherResponse,
 };
