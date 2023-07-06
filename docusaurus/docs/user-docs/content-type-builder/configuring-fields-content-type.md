@@ -137,7 +137,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Time interval  | The interval (in minutes) the timepicker will allow to select (for fields of type datetime and time). |
 
 </TabItem>
 
