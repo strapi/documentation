@@ -53,7 +53,7 @@ Sample `Dockerfile`:
 <TabItem value="yarn" label="yarn">
 
 ```dockerfile title="./Dockerfile"
-FROM node:16-alpine
+FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
@@ -78,7 +78,7 @@ CMD ["yarn", "develop"]
 <TabItem value="npm" label="npm">
 
 ```dockerfile title="./Dockerfile"
-FROM node:16-alpine
+FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
@@ -333,7 +333,7 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 
 ```dockerfile title="./Dockerfile.prod"
 # Creating multi-stage build for production
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -347,7 +347,7 @@ COPY . .
 RUN yarn build
 
 # Creating final production image
-FROM node:16-alpine
+FROM node:18-alpine
 RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -369,7 +369,7 @@ CMD ["yarn", "start"]
 
 ```dockerfile title="./Dockerfile.prod"
 # Creating multi-stage build for production
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -383,7 +383,7 @@ COPY . .
 RUN npm run build
 
 # Creating final production image
-FROM node:16-alpine
+FROM node:18-alpine
 RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
