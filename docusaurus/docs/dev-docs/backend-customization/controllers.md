@@ -205,7 +205,7 @@ These functions automatically inherit the sanitization settings from the model a
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
-  async findOne(ctx) {
+  async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
@@ -224,7 +224,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
-  async findOne(ctx) {
+  async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
