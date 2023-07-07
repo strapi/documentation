@@ -4,11 +4,7 @@ description: All elements of Strapi's back end, like routes, policies, middlewar
 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Back-end customization
-
-<FeedbackCallout components={props.components}/>
 
 Strapi runs an HTTP server based on [Koa](https://koajs.com/), a back end JavaScript framework. If you are not familiar with the Koa back end framework, we highly recommend you to read the [Koa's documentation introduction](http://koajs.com/#introduction).
 

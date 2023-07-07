@@ -4,11 +4,7 @@ description: Learn more about requests and responses for Strapi, the most popula
 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Requests & Responses
-
-<FeedbackCallout components={props.components}/>
 
 ## Requests
 

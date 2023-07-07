@@ -4,11 +4,7 @@ displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Webhooks
-
-<FeedbackCallout components={props.components}/>
 
 Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third party providers to start some processing (CI, build, deployment ...).
 
