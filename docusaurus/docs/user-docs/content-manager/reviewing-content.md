@@ -5,7 +5,7 @@ description: Using review workflows to manage content throughout the content cre
 
 # Reviewing content <EnterpriseBadge />
 
-Using the [review workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content from the edit view, and keep moving it between stages as needed. You can also change the assignee of the content, assigning it to a Strapi admin user for review.
+Using the [Review Workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content from the edit view, and keep moving it between stages as needed. You can also change the assignee of the content, assigning it to a Strapi admin user for review.
 
 When viewing your content in the Content Manager, you can see the current stage in the **Review Stage** and the assignee in the **Assignee** column:
 
@@ -13,7 +13,7 @@ When viewing your content in the Content Manager, you can see the current stage 
 
 ## Change review stage
 
-As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow (see [Managing review workflows](/user-docs/settings/review-workflows)).
+As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow (see [Managing Review Workflows](/user-docs/settings/review-workflows)).
 
 To change the review stage of your content:
 
