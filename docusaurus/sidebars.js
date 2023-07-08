@@ -197,8 +197,6 @@ const sidebars = {
             'dev-docs/api/query-engine/order-pagination',
           ]
         },
-        'dev-docs/api/plugins/admin-panel-api',
-        'dev-docs/api/plugins/server-api',
       ]
     },
     {
@@ -226,9 +224,7 @@ const sidebars = {
           ]
         },
         'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
         'dev-docs/typescript',
-        'dev-docs/custom-fields',
         {
           type: 'doc',
           label: 'Providers',
@@ -318,6 +314,20 @@ const sidebars = {
             'dev-docs/plugins/users-permissions',
           ]
     },
+    {
+      type: 'category',
+      collapsed: false,
+      label: '👨‍💻 Plugin development',
+      items: [
+            'dev-docs/plugin-development/creation',
+            'dev-docs/plugin-development/custom-fields',
+            'dev-docs/plugin-development/injection-zone',
+            'dev-docs/plugin-development/rbac-permissions',
+            'dev-docs/plugin-development/admin-panel-api',
+            'dev-docs/plugin-development/server-api',
+          ]
+    },
+
     {
       type: 'category',
       collapsed: false,
