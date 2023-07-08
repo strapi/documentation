@@ -1,5 +1,6 @@
 {
-	"redirects": [{
+	"redirects": [
+		{
 			"source": "/cloud",
 			"destination": "/cloud/intro"
 		},
@@ -177,7 +178,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/development/custom-fields",
-			"destination": "/dev-docs/custom-fields"
+			"destination": "/dev-docs/plugin-development/custom-fields"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/data-management.html",
@@ -393,11 +394,11 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/api/plugin-development/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/api/plugin-development/server-api"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/email.html",
@@ -793,11 +794,11 @@
 		},
 		{
 			"source": "/dev-docs/api/admin-panel-api",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/api/plugin-development/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/server-api",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/api/plugin-development/server-api"
 		},
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
@@ -833,27 +834,27 @@
 		},
 		{
 			"source": "/dev-docs/api/plugins/server",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/api/plugin-development/server-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/api/plugin-development/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin-panel",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/api/plugin-development/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/development/custom-field.html",
-			"destination": "/dev-docs/custom-fields"
+			"destination": "/dev-docs/plugin-development/custom-fields"
 		},
 		{
 			"source": "/developer-docs/latest/development/custom-fields.html",
-			"destination": "/dev-docs/custom-fields"
+			"destination": "/dev-docs/plugin-development/custom-fields"
 		},
 		{
 			"source": "/dev-docs/custom-field",
-			"destination": "/dev-docs/custom-fields"
+			"destination": "/dev-docs/plugin-development/custom-fields"
 		},
 		{
 			"source": "/developer-docs/latest/guides/draft.html",
@@ -873,7 +874,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/guides/registering-a-field-in-admin.html",
-			"destination": "/dev-docs/custom-fields"
+			"destination": "/dev-docs/plugin-development/custom-fields"
 		},
 		{
 			"source": "/developer-docs/latest/guides/unit-testing.html",
