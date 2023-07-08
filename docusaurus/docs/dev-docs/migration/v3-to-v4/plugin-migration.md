@@ -10,7 +10,7 @@ sidebarDepth: 2
 The goal of this guide is to get a v3 plugin up and running on v4 by resolving breaking changes.
 
 :::note
-This guide is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/dev-docs/api/plugins/server-api.md#server-api-for-plugins) and [Admin Panel API](/dev-docs/api/plugins/admin-panel-api.md#admin-panel-api-for-plugins) documentations.
+This guide is not an exhaustive resource for the v4 plugin APIs, which are described in the [Server API](/dev-docs/plugin-development/server-api.md#server-api-for-plugins) and [Admin Panel API](/dev-docs/plugin-development/admin-panel-api.md#admin-panel-api-for-plugins) documentations.
 :::
 
 Migrating a plugin from Strapi v3.6.x to v4.0.x consists in the following steps:

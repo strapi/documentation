@@ -8,7 +8,7 @@ title: Middlewares
 
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
+- **Strapi middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/dev-docs/plugin-development/server-api)).
 
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
 
@@ -22,7 +22,7 @@ A new application-level or API-level middleware can be implemented:
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/dev-docs/project-structure)):
   - `./src/middlewares/` for application-level middlewares
   - `./src/api/[api-name]/middlewares/` for API-level middlewares
-  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/dev-docs/api/plugins/server-api#middlewares)
+  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/dev-docs/plugin-development/server-api#middlewares)
 
 Middlewares working with the REST API are functions like the following:
 

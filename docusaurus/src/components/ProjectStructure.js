@@ -55,21 +55,21 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
       │     │           │           └ schema.json<br/>
-      │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
+      │     │           └ <a href="/dev-docs/plugin-development/server-api">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares">middlewares</a><br/>
       │     │     └──── (middleware-name).js<br/>
       │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api">index.js</a><br/>
-      │     │           ├──── <a href="/dev-docs/api/plugins/server-api">server</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#content-types">content-types</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#controllers">controllers</a><br/>
-      │     │           │     └──── <a href="/dev-docs/api/plugins/server-api#policies">policies</a><br/>
+      │     │           │           └ <a href="/dev-docs/plugin-development/admin-panel-api">index.js</a><br/>
+      │     │           ├──── <a href="/dev-docs/plugin-development/server-api">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/plugin-development/server-api#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/plugin-development/server-api#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/plugin-development/server-api#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
-      │     │           └ <a href="/dev-docs/api/plugins/server-api#">strapi-server.js</a><br/>
+      │     │           ├ <a href="/dev-docs/plugin-development/admin-panel-api">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/plugin-development/server-api#">strapi-server.js</a><br/>
       │     ├─── <a href="/dev-docs/backend-customization/policies">policies</a><br/>
       │     └ <a href="/dev-docs/configurations/functions">index.js</a> <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ <a href="/dev-docs/configurations/environment">.env</a><br/>
@@ -139,14 +139,14 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api">index.tsx</a><br/>
+      │     │           │           └ <a href="/dev-docs/plugin-development/admin-panel-api">index.tsx</a><br/>
       │     │           │           └ pluginId.ts<br/>
       │     │           ├──── <a href="/dev-docs/api/server-api">server</a><br/>
       │     │           │     ├──── <a href="/dev-docs/api/server-api#content-types">content-types</a><br/>
       │     │           │     ├──── <a href="/dev-docs/api/server-api#controllers">controllers</a><br/>
       │     │           │     └──── <a href="/dev-docs/api/server-api#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
+      │     │           ├ <a href="/dev-docs/plugin-development/admin-panel-api">strapi-admin.js</a><br/>
       │     │           └ <a href="/dev-docs/api/server-api">strapi-server.js</a><br/>
       │     ├─── policies<br/>
       │     └ index.ts <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>

@@ -398,7 +398,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
-			"destination": "/dev-docs/api/plugin-development/server-api"
+			"destination": "/dev-docs/plugin-development/server-api"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/email.html",
@@ -798,7 +798,7 @@
 		},
 		{
 			"source": "/dev-docs/api/server-api",
-			"destination": "/dev-docs/api/plugin-development/server-api"
+			"destination": "/dev-docs/plugin-development/server-api"
 		},
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
@@ -834,7 +834,7 @@
 		},
 		{
 			"source": "/dev-docs/api/plugins/server",
-			"destination": "/dev-docs/api/plugin-development/server-api"
+			"destination": "/dev-docs/plugin-development/server-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin",

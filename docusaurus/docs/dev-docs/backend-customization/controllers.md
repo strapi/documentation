@@ -15,7 +15,7 @@ A new controller can be implemented:
 - with the [interactive CLI command `strapi generate`](/dev-docs/cli)
 - or manually by creating a JavaScript file:
   - in `./src/api/[api-name]/controllers/` for API controllers (this location matters as controllers are auto-loaded by Strapi from there)
-  - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/dev-docs/api/plugins/server-api))
+  - or in a folder like `./src/plugins/[plugin-name]/server/controllers/` for plugin controllers, though they can be created elsewhere as long as the plugin interface is properly exported in the `strapi-server.js` file (see [Server API for Plugins documentation](/dev-docs/plugin-development/server-api))
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">

@@ -93,7 +93,7 @@ npx @strapi/codemods transform change-model-getters-to-content-types [path-to-fi
 To update the syntax for content-types getters manually, replace any instance of `strapi.models` with `strapi.contentTypes`.
 
 :::tip
-Strapi v4 introduced new getters that can be used to refactor the plugin code further (see [Server API usage documentation](/dev-docs/api/plugins/server-api.md#usage)).
+Strapi v4 introduced new getters that can be used to refactor the plugin code further (see [Server API usage documentation](/dev-docs/plugin-development/server-api.md#usage)).
 :::
 
 ## Updating content-types relations
@@ -186,7 +186,7 @@ To update content-type relations, update the `server/content-types/<content-type
 :::strapi v3/v4 comparison
 Strapi v3 defines plugin configurations in a `config` folder.
 
-In Strapi v4, the default configuration of a plugin is defined as an object found in the `config.js` file or in the `config/index.js` file. These are then called from the entry file (see [default plugin configuration documentation](/dev-docs/api/plugins/server-api.md#configuration)).
+In Strapi v4, the default configuration of a plugin is defined as an object found in the `config.js` file or in the `config/index.js` file. These are then called from the entry file (see [default plugin configuration documentation](/dev-docs/plugin-development/server-api.md#configuration)).
 :::
 
 To handle default plugin configurations in Strapi v4 the recommended way:

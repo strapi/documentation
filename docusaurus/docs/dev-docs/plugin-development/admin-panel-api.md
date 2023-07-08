@@ -1,6 +1,6 @@
 # Admin Panel API
 
-A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
+A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/plugin-development/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
@@ -178,7 +178,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
 :::tip Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/plugin-development/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
 :::
 
 :::info

@@ -25,11 +25,11 @@ Migrating the front end of a plugin to Strapi v4 might require:
 Migrating the front end of a plugin to Strapi v4 should be done entirely manually.
 
 :::strapi Going further with the new Admin Panel APIs
-Following this guide should help you migrate a basic plugin with a single view. However, the [Admin Panel APIs](/dev-docs/api/plugins/admin-panel-api.md) introduced in Strapi v4 allow for further customization.
+Following this guide should help you migrate a basic plugin with a single view. However, the [Admin Panel APIs](/dev-docs/plugin-development/admin-panel-api.md) introduced in Strapi v4 allow for further customization.
 
-In addition to the [`register()` lifecycle function](/dev-docs/api/plugins/admin-panel-api.md#register), which is executed as soon as the plugin is loaded, a [`bootstrap()` lifecycle function](/dev-docs/api/plugins/admin-panel-api.md#bootstrap) executes after all plugins are loaded.
+In addition to the [`register()` lifecycle function](/dev-docs/plugin-development/admin-panel-api.md#register), which is executed as soon as the plugin is loaded, a [`bootstrap()` lifecycle function](/dev-docs/plugin-development/admin-panel-api.md#bootstrap) executes after all plugins are loaded.
 
-To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/dev-docs/api/plugins/admin-panel-api.md#available-actions) for all available APIs and their associated lifecycle functions.
+To add a settings link or section, use Redux reducers, hook into other plugins, and modify the user interface with injection zones, consult [the "available actions" table](/dev-docs/plugin-development/admin-panel-api.md#available-actions) for all available APIs and their associated lifecycle functions.
 :::
 
 ## Registering the plugin with the admin panel
@@ -37,14 +37,14 @@ To add a settings link or section, use Redux reducers, hook into other plugins, 
 :::strapi v3/v4 comparison
 A Strapi v3 plugin is registered with the admin panel by using the `strapi.registerPlugin()` function in the `<my-plugin-name>/admin/src/index.js` file.
 
-In Strapi v4, the plugin is registered within the [`register()` lifecycle function](/dev-docs/api/plugins/admin-panel-api.md#register).
+In Strapi v4, the plugin is registered within the [`register()` lifecycle function](/dev-docs/plugin-development/admin-panel-api.md#register).
 :::
 
 To update the front-end registration of a plugin to Strapi v4:
 
 1. If it does not already exist, create an `admin/src/index.js` file at the root of the plugin folder.
 2. In the `<plugin-name>/admin/src/index.js` file, export a function that calls the `register()` lifecycle function, passing the current Strapi application instance as an argument.
-3. Inside the `register()` lifecycle function body, call [the `registerPlugin()` function](/dev-docs/api/plugins/admin-panel-api.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
+3. Inside the `register()` lifecycle function body, call [the `registerPlugin()` function](/dev-docs/plugin-development/admin-panel-api.md#registerplugin) on the application instance, grabbing the `name` and `id` keys from the Strapi v3 configuration object.
 4. Make sure that Strapi is aware of the plugin's front-end interface exported from `admin/src/index.js` by adding the following line to the `<plugin-name>/strapi-admin.js` entry file:
 
     ```jsx
@@ -84,7 +84,7 @@ const { name } = pluginPkg.strapi;
 :::strapi v3/v4 comparison
 A Strapi v3 plugin adds a link to the menu in the admin panel by exporting a `menu` object during the plugin registration.
 
-In Strapi v4, a plugin adds a link to the menu programmatically with the [`addMenuLink()` function](/dev-docs/api/plugins/admin-panel-api.md#menu-api) called in the `register` lifecycle. 
+In Strapi v4, a plugin adds a link to the menu programmatically with the [`addMenuLink()` function](/dev-docs/plugin-development/admin-panel-api.md#menu-api) called in the `register` lifecycle. 
 :::
 
 To migrate to Strapi v4, pass the `menu` key from the Strapi v3 configuration object to `app.addMenuLink()` with the following properties updated:
@@ -163,15 +163,15 @@ export default {
 
 A Strapi v3 plugin adds a settings section by exporting a `settings` property during the plugin registration.
 
-In Strapi v4, a plugin adds a settings section programmatically using the [Settings API](/dev-docs/api/plugins/admin-panel-api.md#settings-api).
+In Strapi v4, a plugin adds a settings section programmatically using the [Settings API](/dev-docs/plugin-development/admin-panel-api.md#settings-api).
 :::
 
 To migrate to Strapi v4, depending on what your Strapi v3 plugin does, use the following table to find the appropriate Settings API method to use, and click on the method name to go to its dedicated documentation:
 
 | Action     | Method |
 |-----|----|
-| Create a new settings section<br/> and define new links to include in this section | [`createSettingsSection()`](/dev-docs/api/plugins/admin-panel-api.md#createsettingsection) |
-| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/dev-docs/api/plugins/admin-panel-api.md#addsettingslink)</li><li>[`addSettingsLinks()`](/dev-docs/api/plugins/admin-panel-api.md#addsettingslinks)</li></ul> |
+| Create a new settings section<br/> and define new links to include in this section | [`createSettingsSection()`](/dev-docs/plugin-development/admin-panel-api.md#createsettingsection) |
+| Add link(s) to an existing settings section:<ul><li>a single link</li><li>multiple links</li></ul> | <br/><ul><li>[`addSettingsLink()`](/dev-docs/plugin-development/admin-panel-api.md#addsettingslink)</li><li>[`addSettingsLinks()`](/dev-docs/plugin-development/admin-panel-api.md#addsettingslinks)</li></ul> |
 
 <details>
 <summary>Example of creating a new settings section</summary>
@@ -228,7 +228,7 @@ register(app) {
 
 A Strapi v3 plugin adds reducers by exporting a `reducers` property during the plugin registration.
 
-In Strapi v4, a plugin adds reducers programmatically using the [Reducers API](/dev-docs/api/plugins/admin-panel-api.md#reducers-api).
+In Strapi v4, a plugin adds reducers programmatically using the [Reducers API](/dev-docs/plugin-development/admin-panel-api.md#reducers-api).
 :::
 
 To migrate to Strapi v4, make sure reducers are added programmatically with the `addReducers()` method.
@@ -267,13 +267,13 @@ export default {
 :::strapi v3/v4 comparison
 A Strapi v3 plugin can inject components into the Content Manager's Edit view, using the `registerField()` method or the `useStrapi` hook within the `Initializer` component.
 
-In Strapi v4, a plugin can inject components into several locations of the Content Manager using the [Injection Zones API](/dev-docs/api/plugins/admin-panel-api.md#injection-zones-api).
+In Strapi v4, a plugin can inject components into several locations of the Content Manager using the [Injection Zones API](/dev-docs/plugin-development/admin-panel-api.md#injection-zones-api).
 :::
 
-To migrate to Strapi v4, make sure components are injected using Strapi v4 [Injection Zones API](/dev-docs/api/plugins/admin-panel-api.md#injection-zones-api). Depending on where the component should be injected, use:
+To migrate to Strapi v4, make sure components are injected using Strapi v4 [Injection Zones API](/dev-docs/plugin-development/admin-panel-api.md#injection-zones-api). Depending on where the component should be injected, use:
 
-- either the `injectContentManagerComponent()` method to inject into [predefined injection zones](/dev-docs/api/plugins/admin-panel-api.md#using-predefined-injection-zones) of the Content Manager
-- or the `injectComponent()` method to inject into [custom zones](/dev-docs/api/plugins/admin-panel-api.md#creating-a-custom-injection-zone)
+- either the `injectContentManagerComponent()` method to inject into [predefined injection zones](/dev-docs/plugin-development/admin-panel-api.md#using-predefined-injection-zones) of the Content Manager
+- or the `injectComponent()` method to inject into [custom zones](/dev-docs/plugin-development/admin-panel-api.md#creating-a-custom-injection-zone)
 
 <details>
 <summary>Example of injecting a component into the Content Manager's Edit view</summary>
@@ -354,7 +354,7 @@ export default {
 
 ## Registering translations
 
-In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/dev-docs/api/plugins/admin-panel-api.md#async-function) for registering translation files.
+In Strapi v4, the front-end plugin interface can export an [asynchronous `registerTrads()` function](/dev-docs/plugin-development/admin-panel-api.md#async-function) for registering translation files.
 
 <details>
 <summary>Example of translation registration</summary>

@@ -145,7 +145,7 @@ It can be used to:
 - [extend plugins](/dev-docs/plugins-extension#extending-a-plugin-s-interface)
 - extend [content-types](/dev-docs/backend-customization/models) programmatically
 - load some [environment variables](/dev-docs/configurations/environment)
-- register a [custom field](/dev-docs/custom-fields) that would be used only by the current Strapi application.
+- register a [custom field](/dev-docs/plugin-development/custom-fields) that would be used only by the current Strapi application.
 
 ## Bootstrap
 
@@ -164,4 +164,4 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 It can be used to gracefully:
 
 - stop [services](/dev-docs/backend-customization/services) that are running
-- [clean up plugin actions](/dev-docs/api/plugins/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+- [clean up plugin actions](/dev-docs/plugin-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
