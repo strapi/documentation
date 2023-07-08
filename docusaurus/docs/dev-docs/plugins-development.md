@@ -1,9 +1,9 @@
 ---
-title: How to create a plugin
+title: Plugins development
 displayed_sidebar: devDocsSidebar
 ---
 
-# How to create a plugin
+# Plugins development
 
 Strapi allows the development of local plugins that work exactly like the external plugins available from the [Marketplace](https://market.strapi.io).
 
