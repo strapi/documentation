@@ -292,7 +292,6 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
 
 </TabItem>
 
