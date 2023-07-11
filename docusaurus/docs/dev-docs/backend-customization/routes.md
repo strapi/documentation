@@ -4,11 +4,7 @@ description: Strapi routes handle requests to your content and are auto-generate
 displayed_sidebar: devDocsSidebar
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Routes
-
-<FeedbackCallout components={props.components}/>
 
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)). Routes can be [added](#implementation) and configured:
 

@@ -16,6 +16,7 @@ import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 import ThemedImage from '@theme/ThemedImage';
 
@@ -43,5 +44,6 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  InteractiveQueryBuilder,
   ThemedImage,
 };

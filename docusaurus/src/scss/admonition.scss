@@ -167,5 +167,9 @@
       --custom-code-background-color: var(--custom-admonition-code-background-color);
       --custom-code-color: var(--custom-admonition-code-color);
     }
+
+    .strapi-iqb {
+      --strapi-iqb-background-color: var(--strapi-neutral-0);
+    }
   }
 }

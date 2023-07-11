@@ -23,7 +23,7 @@ To enable and configure a provider:
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
 2. Click on the provider to enable and configure.
 3. In the provider edition window, click on the **ON** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#setting-up-the-provider-examples)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](/dev-docs/plugins/users-permissions#setting-up-the-provider---examples)).
 5. Click on the **Save** button.
 
 :::note

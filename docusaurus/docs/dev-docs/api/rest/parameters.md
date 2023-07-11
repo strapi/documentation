@@ -1,5 +1,5 @@
 ---
-title: Parameters 
+title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 
 next: ./filtering-locale-publication.md
@@ -26,37 +26,5 @@ The following API parameters are available:
 Query parameters use the LHS bracket syntax (i.e. they are encoded using square brackets `[]`)
 
 :::tip
-<QsIntroShort />
-
-<details>
-<summary>Example using qs:</summary>
-
-In the following example, the `qs` library is used to build the following URL:
-`/api/books?sort[0]=title%3Aasc&filters[title][$eq]=hello&populate=%2A&fields[0]=title&pagination[pageSize]=10&pagination[page]=1&publicationState=live&locale[0]=en`
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  sort: ['title:asc'],
-  filters: {
-    title: {
-      $eq: 'hello',
-    },
-  },
-  populate: '*',
-  fields: ['title'],
-  pagination: {
-    pageSize: 10,
-    page: 1,
-  },
-  publicationState: 'live',
-  locale: ['en'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/books?${query}`);
-```
-
-</details>
+A wide range of REST API parameters can be used and combined to query your content, which can result in long and complex query URLs.<br/>👉 You can use Strapi's [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to build query URLs more conveniently. 🤗
 :::

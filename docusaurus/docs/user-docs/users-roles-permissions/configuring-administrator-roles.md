@@ -96,7 +96,7 @@ To configure Collection or Single types permissions for a role:
 1. Go to the Collection types or Single types category of the permissions table.
 2. Tick the box on the left of the name of the content-type to give access to. By default, all actions can be performed for all fields of the content-type.
 3. (optional) Untick the action-related boxes to prevent actions of your choice.
-4. (optional) Click the name of the content-type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
+4. (optional) Click the name of the content-type to display its full list of fields. Untick the field and action-related boxes to prevent access and/or action for the fields of your choice. If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, define also what permissions should be granted for each available locale.
 5. Repeat steps 2 to 4 for each content-type available to which the role should give access.
 6. Click on the **Save** button on the top right corner.
 

@@ -105,7 +105,7 @@ module.exports = {
         plugins: [ 'upload', 'users-permissions'],
         path: '/documentation',
       },
-      servers: [{ url: 'http://localhost:1337/api/api', description: 'Development server' }],
+      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
       externalDocs: {
         description: 'Find out more',
         url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
@@ -198,7 +198,7 @@ If the Documentation plugin fails to generate what you expect, it is possible to
 
 The Documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
 
-To provide an override, use the `registerOverride` function found on the Documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](http://localhost:8080/dev-docs/api/plugins/admin-panel-api#register).
+To provide an override, use the `registerOverride` function found on the Documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
 
 **`registerOverride()`**
 

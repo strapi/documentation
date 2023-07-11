@@ -2,7 +2,6 @@
 title: Docker
 displayed_sidebar: devDocsSidebar
 description: Quickly create a Docker container from a local project.
-
 ---
 
 import DockerEnvTable from '/docs/snippets/docker-env-table.md'
@@ -54,19 +53,22 @@ Sample `Dockerfile`:
 <TabItem value="yarn" label="yarn">
 
 ```dockerfile title="./Dockerfile"
-
-FROM node:16-alpine
+FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /opt/
-COPY ./package.json ./yarn.lock ./
-ENV PATH /opt/node_modules/.bin:$PATH
+COPY package.json yarn.lock ./
 RUN yarn config set network-timeout 600000 -g && yarn install
+ENV PATH /opt/node_modules/.bin:$PATH
+
 WORKDIR /opt/app
-COPY ./ .
-RUN yarn build
+COPY . .
+RUN chown -R node:node /opt/app
+USER node
+RUN ["yarn", "build"]
 EXPOSE 1337
 CMD ["yarn", "develop"]
 ```
@@ -76,21 +78,25 @@ CMD ["yarn", "develop"]
 <TabItem value="npm" label="npm">
 
 ```dockerfile title="./Dockerfile"
-
-FROM node:16-alpine
+FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /opt/
-COPY ./package.json ./package-lock.json ./
+COPY package.json package-lock.json ./
+RUN npm config set network-timeout 600000 -g && npm install
 ENV PATH /opt/node_modules/.bin:$PATH
-RUN npm install
+
 WORKDIR /opt/app
-COPY ./ .
-RUN npm run build
+COPY . .
+RUN chown -R node:node /opt/app
+USER node
+RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
+
 ```
 
 </TabItem>
@@ -112,8 +118,7 @@ Sample `docker-compose.yml`:
 <TabItem value="mysql" label="MySQL">
 
 ```yml title="./docker-compose.yml"
-
-version: '3'
+version: "3"
 services:
   strapi:
     container_name: strapi
@@ -140,7 +145,7 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
-      - '1337:1337'
+      - "1337:1337"
     networks:
       - strapi
     depends_on:
@@ -162,7 +167,7 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - '3306:3306'
+      - "3306:3306"
     networks:
       - strapi
 
@@ -180,8 +185,7 @@ networks:
 <TabItem value="mariadb" label="MariaDB">
 
 ```yml title="./docker-compose.yml"
-
-version: '3'
+version: "3"
 services:
   strapi:
     container_name: strapi
@@ -208,7 +212,7 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
-      - '1337:1337'
+      - "1337:1337"
     networks:
       - strapi
     depends_on:
@@ -229,7 +233,7 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - '3306:3306'
+      - "3306:3306"
     networks:
       - strapi
 
@@ -247,8 +251,7 @@ networks:
 <TabItem value="postgresql" label="PostgreSQL">
 
 ```yml title="./docker-compose.yml"
-
-version: '3'
+version: "3"
 services:
   strapi:
     container_name: strapi
@@ -275,12 +278,12 @@ services:
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
-      - '1337:1337'
+      - "1337:1337"
     networks:
       - strapi
     depends_on:
       - strapiDB
-      
+
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
@@ -296,7 +299,7 @@ services:
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
 
     ports:
-      - '5432:5432'
+      - "5432:5432"
     networks:
       - strapi
 
@@ -329,28 +332,33 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 <TabItem value="yarn" label="yarn">
 
 ```dockerfile title="./Dockerfile.prod"
-
-FROM node:16-alpine as build
-# Installing libvips-dev for sharp Compatibility
+# Creating multi-stage build for production
+FROM node:18-alpine as build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /opt/
-COPY ./package.json ./yarn.lock ./
-ENV PATH /opt/node_modules/.bin:$PATH
+COPY package.json yarn.lock ./
 RUN yarn config set network-timeout 600000 -g && yarn install --production
+ENV PATH /opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
-COPY ./ .
+COPY . .
 RUN yarn build
 
-FROM node:16-alpine
+# Creating final production image
+FROM node:18-alpine
 RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
+WORKDIR /opt/
 COPY --from=build /opt/node_modules ./node_modules
-ENV PATH /opt/node_modules/.bin:$PATH
+WORKDIR /opt/app
 COPY --from=build /opt/app ./
+ENV PATH /opt/node_modules/.bin:$PATH
+
+RUN chown -R node:node /opt/app
+USER node
 EXPOSE 1337
 CMD ["yarn", "start"]
 ```
@@ -360,33 +368,36 @@ CMD ["yarn", "start"]
 <TabItem value="npm" label="npm">
 
 ```dockerfile title="./Dockerfile.prod"
+# Creating multi-stage build for production
+FROM node:18-alpine as build
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 
-FROM node:16-alpine as build
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev && rm -rf /var/cache/apk/* > /dev/null 2>&1
+WORKDIR /opt/
+COPY package.json package-lock.json ./
+RUN npm config set network-timeout 600000 -g && npm install --only=production
+ENV PATH /opt/node_modules/.bin:$PATH
+WORKDIR /opt/app
+COPY . .
+RUN npm run build
+
+# Creating final production image
+FROM node:18-alpine
+RUN apk add --no-cache vips-dev
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/
-COPY ./package.json ./package-lock.json ./
-ENV PATH /opt/node_modules/.bin:$PATH
-RUN npm install --production
-WORKDIR /opt/app
-COPY ./ .
-RUN npm run build
-
-
-FROM node:16-alpine
-# Installing libvips-dev for sharp Compatibility
-RUN apk add vips-dev
-RUN rm -rf /var/cache/apk/*
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
 COPY --from=build /opt/node_modules ./node_modules
-ENV PATH /opt/node_modules/.bin:$PATH
+WORKDIR /opt/app
 COPY --from=build /opt/app ./
+ENV PATH /opt/node_modules/.bin:$PATH
+
+RUN chown -R node:node /opt/app
+USER node
 EXPOSE 1337
-CMD ["npm", "run","start"]
+CMD ["npm", "run", "start"]
+
 ```
 
 </TabItem>

@@ -7,6 +7,24 @@ export default {
   },
   carousel: [
     {
+      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
+      variant: 'cloud',
+      title: 'Strapi Cloud',
+      description: (
+        <>
+          {'Learn more on the '}
+          <a href="https://strapi.io/cloud" target="_blank">product page</a>
+          {', or start a '}
+          <a href="https://cloud.strapi.io/" target="_blank">free trial</a> today!
+        </>
+      ),
+      button: {
+        label: 'Strapi Cloud docs',
+        decorative: '☁️',
+        to: '/cloud/intro',
+      },
+    },
+    {
       title: 'Can’t wait to use Strapi?',
       description: (
         <>
@@ -20,24 +38,6 @@ export default {
         label: 'Quick start',
         decorative: '🚀',
         to: '/dev-docs/quick-start',
-      },
-    },
-    {
-      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-      variant: 'cloud',
-      title: 'Strapi Cloud',
-      description: (
-        <>
-          {'If demos are more your thing, we have a '}
-          <a href="https://youtu.be/zd0_S_FPzKg" target="_blank">video demo</a>
-          {', or you can request a '}
-          <a href="https://strapi.io/demo" target="_blank">live demo</a>!
-        </>
-      ),
-      button: {
-        label: 'Strapi Cloud',
-        decorative: '☁️',
-        to: '/cloud/intro',
       },
     },
   ],

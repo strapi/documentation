@@ -30,7 +30,7 @@ To write or edit content:
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text   | Write your content in the textbox. Formatting options are available in the top bar of the textbox, as well as a **Preview mode/Markdown mode** button to switch between modes. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview.                |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
-| Date        | 1. Click the date and/or time box. <br /> 2. Choose a date using the calendar and/or a time from the list.                                                                                                                                                                                                                                                                 |
+| Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation.
 | Boolean     | Click on **OFF** or **ON**.                                                                                                                                                                                                                                                                                                                                               |
 | Relation    | Choose an entry from the drop-down list. See [Managing relational fields](/user-docs/content-manager/managing-relational-fields.md) for more information.                                                                                                                                                                                                          |
 | Email       | Write a complete and valid email address.                                                                                                                                                                                                                                                                                                                                 |
@@ -110,16 +110,15 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
 <ThemedImage
-  alt="Dynamic Zone - Component choice"
-  width="80%"
+  alt="Writing content for a dynamic zone"
   sources={{
     light: '/img/assets/content-manager/edit-view_dynamic-zone-1.png',
     dark: '/img/assets/content-manager/edit-view_dynamic-zone-1_DARK.png',
   }}
 />
+
 <ThemedImage
-  alt="Dynamic Zone - Component's entries"
-  width="80%"
+  alt="Writing content for a dynamic zone"
   sources={{
     light: '/img/assets/content-manager/edit-view_dynamic-zone-2.png',
     dark: '/img/assets/content-manager/edit-view_dynamic-zone-2_DARK.png',

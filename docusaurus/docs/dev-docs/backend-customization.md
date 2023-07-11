@@ -4,11 +4,7 @@ description: All elements of Strapi's back end, like routes, policies, middlewar
 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Back-end customization
-
-<FeedbackCallout components={props.components}/>
 
 Strapi runs an HTTP server based on [Koa](https://koajs.com/), a back end JavaScript framework. If you are not familiar with the Koa back end framework, we highly recommend you to read the [Koa's documentation introduction](http://koajs.com/#introduction).
 
@@ -31,3 +27,7 @@ Each part of Strapi's back end can be customized:
 - the [responses](/dev-docs/backend-customization/requests-responses#responses) sent to the application that sent the request,
 
 - and the [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
+
+:::info
+Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
+:::
