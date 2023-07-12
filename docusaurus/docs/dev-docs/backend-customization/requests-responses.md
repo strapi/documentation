@@ -34,7 +34,7 @@ For more information, please refer to the [Koa response documentation](http://ko
 ### `ctx.request`
 | Parameter | Description                                                                                  | Type     |
 | ----------| -------------------------------------------------------------------------------------------- | -------- |
-|  <a name="ctx.request" href="#ctx.request" class="anchor">`ctx.request`</a>| The request you got from the client that did an api request. | `Object` |
+|  <a name="ctx.request" href="#ctx.request" class="anchor">`ctx.request`</a>| Request sent by the client making an API request. | `Object` |
 | <a name="ctx.request.body" href="#ctx.request.body" class="anchor">`ctx.request.body`</a>| Parsed version of the body | `Object` |
 | <a name="ctx.request.params" href="#ctx.request.params" class="anchor">`ctx.request.params`</a>| The params send in the url. Example `/${info.pluralName}/:id` then the `:id` part would create a param named id. To get the example parm you would do `ctx.request.params.id`. | `Object` |
 | <a name="ctx.request.files" href="#ctx.request.files" class="anchor">`ctx.request.files`</a>| the files send with the request. | `Array` |
