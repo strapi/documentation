@@ -24,7 +24,13 @@ I want to assign a category to each of my restaurants, therefore I have establis
 In the Content Manager, from the edit view of my Restaurant entries, I can manage the Category relational field, and choose which entry of Category is relevant for my restaurant.
 </details>
 
-![Relations box in the edit view](/img/assets/content-manager/edit-view_relational-fields2.png)
+<ThemedImage
+  alt="Relational fields in the edit view"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_relational-fields2.png',
+    dark: '/img/assets/content-manager/edit-view_relational-fields2_DARK.png',
+  }}
+/>
 
 The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.
 
@@ -37,14 +43,21 @@ If the Draft & Publish feature (see [Saving, publishing and deleting content](sa
 :::
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
 ## Managing one-choice relational fields
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
-<img src="/img/assets/content-manager/RF_one-choice2.png" alt="One-choice relational fields" width="30%" />
+<ThemedImage
+  alt="One-choice relational fields"
+  width="40%"
+  sources={{
+    light: '/img/assets/content-manager/RF_one-choice2.png',
+    dark: '/img/assets/content-manager/RF_one-choice2_DARK.png',
+  }}
+/>
 
 To select the only relevant relational field's entry:
 
@@ -61,7 +74,14 @@ To remove the entry selected in the drop-down list, click on the delete button !
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
-<img src="/img/assets/content-manager/RF_multiple-choices2.png" alt="Multiple choices relational fields" width="30%" />
+<ThemedImage
+  alt="Multiple choices relational fields"
+  width="40%"
+  sources={{
+    light: '/img/assets/content-manager/RF_multiple-choices2.png',
+    dark: '/img/assets/content-manager/RF_multiple-choices2_DARK.png',
+  }}
+/>
 
 To select the relevant relational field's entries:
 

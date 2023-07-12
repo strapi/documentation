@@ -1,0 +1,20 @@
+/** Component: Interactive Query Builder */
+
+.iqb {
+  &__editor {
+    overflow: hidden;
+    border-radius: 0.25rem;
+    font-family: var(--custom-code-font-family);
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 600;
+    background-color: var(--strapi-iqb-background-color, var(--custom-code-block-background-color)) !important;
+
+    pre, textarea {
+      padding:
+        var(--strapi-iqb-py, var(--strapi-spacing-3))
+        var(--strapi-iqb-px, var(--strapi-spacing-4))
+        !important
+      ;
+    }
+  }
+}

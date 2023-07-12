@@ -8,9 +8,15 @@ sidebar_position: 5
 
 # Translating content
 
-With the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) installed, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
+With the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) installed, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
 
-![Edit view of a localizable content-type](/img/assets/content-manager/content-manager_translate2.png)
+<ThemedImage
+  alt="Edit view of a localizable content-type"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_translate2.png',
+    dark: '/img/assets/content-manager/content-manager_translate2_DARK.png',
+  }}
+/>
 
 In the Content Manager, when the Internationalization plugin is installed, some options are added to the edit view:
 

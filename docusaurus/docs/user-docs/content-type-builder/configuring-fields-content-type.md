@@ -16,7 +16,14 @@ In the Content-type Builder, fields can be added at the creation of a new conten
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
-<img src="/img/assets/content-type-builder/fields-selection.png" alt="Field selection" width="80%" />
+<ThemedImage
+  alt="Fields selection"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-type-builder/fields-selection.png',
+    dark: '/img/assets/content-type-builder/fields-selection_DARK.png',
+  }}
+/>
 
 ## Regular fields
 
@@ -42,7 +49,7 @@ The Text field displays a textbox that can contain small text. This field can be
 | Default value  | Write the default value of the Text field.                                    |
 | RegExp pattern | Write a regular expression to make sure the value of the Text field matches a specific format. |
 | Private field  | Tick to make the field private and prevent it from being found via the API.   |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.    |
 | Unique field   | Tick to prevent another field to be identical to this one.                    |
 | Maximum length | Tick to define a maximum number of characters allowed.                        |
@@ -72,7 +79,7 @@ The Rich Text field displays an editor with formatting options to manage rich te
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Rich Text field.                             |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -103,7 +110,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Number field.                                |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum value  | Tick to define a maximum value allowed.                      |
@@ -134,10 +141,9 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Date field.                                  |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Time interval  | The interval (in minutes) the timepicker will allow to select (for fields of type datetime and time). |
 
 </TabItem>
 
@@ -163,7 +169,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Choose the default value of the Boolean field: *true*, *null* or *false*.   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -227,7 +233,7 @@ The Email field displays an email address field with format validation to ensure
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Email field.                                 |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -257,7 +263,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -291,9 +297,8 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Default value  | Choose the default value of the Enumeration field.                          |
 | Name override for GraphQL | Write a custom GraphQL schema type to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
 
 </TabItem>
 
@@ -323,7 +328,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Select allowed types of media  | Click on the drop-down list to untick media types not allowed for this field. |
@@ -351,7 +356,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -427,7 +432,7 @@ When configuring a component through the Content-type Builder, it is possible to
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
 | Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
 | Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the component to be translated per available locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
 
@@ -454,7 +459,7 @@ Dynamic zones are a combination of components that can be added to content-types
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed and localization is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>
 

@@ -1,0 +1,11 @@
+/** Component: Form Field Hint */
+
+.form-field__hint {
+  display: var(--strapi-form-field-hint-display, block);
+  width: var(--strapi-form-field-hint-width, 100%);
+  color: var(--strapi-form-field-hint-color, var(--strapi-neutral-600));
+  font-size: var(--strapi-form-field-hint-font-size, 0.75rem);
+  font-weight: var(--strapi-form-field-hint-font-weight, 400);
+  line-height: var(--strapi-form-field-hint-line-height, 1.33);
+  margin-top: var(--strapi-form-field-hint-mt, 0.25rem);
+}

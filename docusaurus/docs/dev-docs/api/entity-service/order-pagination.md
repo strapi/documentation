@@ -64,11 +64,20 @@ strapi.entityService.findMany('api::article.article', {
 
 ## Pagination
 
-To paginate results returned by the Entity Service API, use the `start` and `limit` parameters:
+To paginate results returned by the Entity Service API, you can use the `start` and `limit` parameters:
 
 ```js
 strapi.entityService.findMany('api::article.article', {
   start: 10,
   limit: 15,
+});
+```
+
+You may instead use the `page` and `pageSize` parameters:
+
+```js
+strapi.entityService.findMany('api::article.article', {
+  page: 1,
+  pageSize: 15,
 });
 ```

@@ -25,15 +25,22 @@ For each available collection type multiple entries can be created which is why 
 
 The list view of a collection type displays all entries created for that collection type.
 
-![List view of a collection type in the Content Manager](/img/assets/content-manager/content-manager_list-view.png)
+<ThemedImage
+  alt="List view of a collection type in the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_list-view.png',
+    dark: '/img/assets/content-manager/content-manager_list-view_DARK.png',
+  }}
+/>
 
 From the list view, it is possible to:
 
 - create a new entry (1),
 - make a textual search (2) or set filters (3) to find specific entries,
-- if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
+- if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
-- edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](../content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](../content-manager/saving-and-publishing-content.md#deleting-content)) an entry.
+- edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) an entry,
+- select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
@@ -43,7 +50,13 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
-![Filters in the Content Manager](/img/assets/content-manager/content-manager_filters.png)
+<ThemedImage
+  alt="Filters in the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_filters.png',
+    dark: '/img/assets/content-manager/content-manager_filters_DARK.png',
+  }}
+/>
 
 To set a new filter:
 
@@ -75,7 +88,13 @@ Above the list view table, on the right, a "... currently selected" drop-down me
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/cog.svg) (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
-![Displayed fields in the settings of a list view in the Content Manager](/img/assets/content-manager/content-manager_displayed-fields.png)
+<ThemedImage
+  alt="Displayed fields in the settings of a list view in the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_displayed-fields.png',
+    dark: '/img/assets/content-manager/content-manager_displayed-fields_DARK.png',
+  }}
+/>
 
 To temporarily configure the fields displayed in the table:
 
@@ -95,4 +114,10 @@ Unlike collection types which have multiple entries, single types are not create
 
 Clicking on a single type will directly redirect you to the edit view, where you will be able to write the content of your single type (see [Writing content](writing-content.md)).
 
-![Single type in the Content Manager](/img/assets/content-manager/content-manager_single-type.png)
+<ThemedImage
+  alt="Single type in the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_single-type.png',
+    dark: '/img/assets/content-manager/content-manager_single-type_DARK.png',
+  }}
+/>

@@ -20,7 +20,13 @@ The configurations only apply to the list view of the collection type from which
 Note also that the explanations below explain how to permanently configure which fields are displayed in the table of the list view of your collection type. It is also possible to configure the displayed fields temporarily (see [Introduction to Content Manager](/user-docs/content-manager)).
 :::
 
-![Settings of a list view in the Content Manager](/img/assets/content-manager/content-manager_settings-list-view.png)
+<ThemedImage
+  alt="Settings of a list view in the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_settings-list-view.png',
+    dark: '/img/assets/content-manager/content-manager_settings-list-view_DARK.png',
+  }}
+/>
 
 ### List view settings
 
@@ -29,9 +35,9 @@ Note also that the explanations below explain how to permanently configure which
 
 | Setting name           | Instructions                                                                                       |
 | ---------------------- | -------------------------------------------------------------------------------------------------- |
-| Enable search          | Click on **ON** or **OFF** to able or disable the search.                                          |
-| Enable filters         | Click on **ON** or **OFF** to able or disable filters.                                             |
-| Enable bulk actions    | Click on **ON** or **OFF** to able or disable the multiple selection boxes in the list view table. |
+| Enable search          | Click on **TRUE** or **FALSE** to able or disable the search.                                          |
+| Enable filters         | Click on **TRUE** or **FALSE** to able or disable filters.                                             |
+| Enable bulk actions    | Click on **TRUE** or **FALSE** to able or disable the multiple selection boxes in the list view table. |
 | Entries per page       | Choose among the drop-down list the number of entries per page.                                    |
 | Default sort attribute | Choose the sorting field that will be used by default.                                             |
 | Default sort order     | Choose the sorting type that will be applied by default.                                           |
@@ -50,7 +56,7 @@ Note also that the explanations below explain how to permanently configure which
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
 | Label                     | Write the label to be used for the field in the list view table.          |
-| Enable sort on this field | Click on **ON** or **OFF** to able or disable the sort on the field.      |
+| Enable sort on this field | Click on **TRUE** or **FALSE** to able or disable the sort on the field.  |
 
 4. Click on the **Save** button.
 
@@ -71,7 +77,13 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 In the edit view of a content-type, in the right side of the interface, a **Configure the view** button is displayed. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
 
-![Configuring the edit view of the Content Manager](/img/assets/content-manager/edit-view-config2.png)
+<ThemedImage
+  alt="Configuring the edit view of the Content Manager"
+  sources={{
+    light: '/img/assets/content-manager/edit-view-config2.png',
+    dark: '/img/assets/content-manager/edit-view-config2_DARK.png',
+  }}
+/>
 
 ### Edit view settings
 

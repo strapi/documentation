@@ -243,7 +243,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: '.markdown :not(em) > img',
+        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
     }),
 

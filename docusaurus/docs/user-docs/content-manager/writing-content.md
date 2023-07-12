@@ -10,7 +10,13 @@ displayed_sidebar: userDocsSidebar
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
 
-![Edit view to write content](/img/assets/content-manager/edit-view2.png)
+<ThemedImage
+  alt="Edit view to write content"
+  sources={{
+    light: '/img/assets/content-manager/edit-view2.png',
+    dark: '/img/assets/content-manager/edit-view2_DARK.png',
+  }}
+/>
 
 ## Filling up fields
 
@@ -24,7 +30,7 @@ To write or edit content:
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text   | Write your content in the textbox. Formatting options are available in the top bar of the textbox, as well as a **Preview mode/Markdown mode** button to switch between modes. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview.                |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
-| Date        | 1. Click the date and/or time box. <br /> 2. Choose a date using the calendar and/or a time from the list.                                                                                                                                                                                                                                                                 |
+| Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation.
 | Boolean     | Click on **OFF** or **ON**.                                                                                                                                                                                                                                                                                                                                               |
 | Relation    | Choose an entry from the drop-down list. See [Managing relational fields](/user-docs/content-manager/managing-relational-fields.md) for more information.                                                                                                                                                                                                          |
 | Email       | Write a complete and valid email address.                                                                                                                                                                                                                                                                                                                                 |
@@ -45,8 +51,22 @@ There are 2 types of components: non-repeatable and repeatable components.
 
 #### Non-repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component3.png" alt="Writing content for a component" width="80%" />
-<img src="/img/assets/content-manager/edit-view_component2.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Non-repeatable component - No entry yet"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component3.png',
+    dark: '/img/assets/content-manager/edit-view_component3_DARK.png',
+  }}
+/>
+<ThemedImage
+  alt="Non-repeatable component - With entries"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component2.png',
+    dark: '/img/assets/content-manager/edit-view_component2_DARK.png',
+  }}
+/>
 
 Non-repeatable components are a combination of fields that can be used only once.
 
@@ -59,7 +79,14 @@ To delete the non-repeatable component, click on the delete button ![Delete icon
 
 #### Repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component4.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Repeatable component"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component4.png',
+    dark: '/img/assets/content-manager/edit-view_component4_DARK.png',
+  }}
+/>
 
 Repeatable components are also a combination of fields, but they allow the creation of multiple component entries, all following the same combination of fields.
 
@@ -82,8 +109,21 @@ Unlike regular fields, the order of the entries of a repeatable component is imp
 
 Dynamic zones are a combination of components, which themselves are composed of several fields. Writing the content of a dynamic zone requires additional steps in order to access the fields.
 
-<img src="/img/assets/content-manager/edit-view_dynamic-zone-1.png" alt="Writing content for a dynamic zone" width="80%" />
-<img src="/img/assets/content-manager/edit-view_dynamic-zone-2.png" alt="Writing content for a dynamic zone" width="80%" />
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-1.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-1_DARK.png',
+  }}
+/>
+
+<ThemedImage
+  alt="Writing content for a dynamic zone"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_dynamic-zone-2.png',
+    dark: '/img/assets/content-manager/edit-view_dynamic-zone-2_DARK.png',
+  }}
+/>
 
 1. Click on the ![Add icon](/img/assets/icons/add_circle.svg) **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.

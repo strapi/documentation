@@ -140,5 +140,10 @@ module.exports = { up, down };
 ```
 5. Save the file. 
 
+## Rebuild the application
+
 <BuildCommand components={props.components} />
+
+## Restart the application
+
 <DevelopCommand components={props.components} />

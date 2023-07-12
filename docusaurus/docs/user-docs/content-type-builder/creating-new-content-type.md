@@ -12,7 +12,13 @@ The Content-type Builder allows to create new content-types: single and collecti
 
 ## Creating a new content-type
 
-![Content-type creation](/img/assets/content-type-builder/content-type-creation.png)
+<ThemedImage
+  alt="Content-type creation"
+  sources={{
+    light: '/img/assets/content-type-builder/content-type-creation.png',
+    dark: '/img/assets/content-type-builder/content-type-creation_DARK.png',
+  }}
+/>
 
 Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder sub navigation.
 
@@ -27,7 +33,7 @@ To create a new content-type:
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). |
-      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
+      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
       | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
 
 6. Click on the **Continue** button.
@@ -40,7 +46,13 @@ New content-types are only considered created once they have been saved. Saving 
 
 ## Creating a new component
 
-![Component creation](/img/assets/content-type-builder/component-creation-1.png)
+<ThemedImage
+  alt="Component creation"
+  sources={{
+    light: '/img/assets/content-type-builder/component-creation-1.png',
+    dark: '/img/assets/content-type-builder/component-creation-1_DARK.png',
+  }}
+/>
 
 Components are created from the same-named category of the Content-type Builder's sub navigation.
 
@@ -50,7 +62,7 @@ To create a new component:
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
-   - Choose an icon to represent the new component.
+   - _(optional)_ Choose an icon representing the new component. You can use the search ![Search icon](/img/assets/icons/search.svg) to find an icon instead of scrolling through the list.
 3. Click on the **Continue** button.
 4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
 5. Click on the **Save** button.

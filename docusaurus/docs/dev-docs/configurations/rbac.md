@@ -133,7 +133,7 @@ const conditions = [
   {
     displayName: "Entity has same name as user",
     name: "same-name-as-user",
-    plugin: "name of a plugin if created in a plugin"
+    plugin: "name of a plugin if created in a plugin",
     handler: (user) => {
       return { name: user.name };
     },

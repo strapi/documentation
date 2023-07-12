@@ -1,0 +1,43 @@
+/** Component: Form Field Input */
+
+.form-field__input {
+  display: var(--strapi-form-field-input-display, block);
+  width: var(--strapi-form-field-input-width, 100%);
+  min-height: var(--strapi-form-field-input-min-height, 2.25rem);
+  background: var(--strapi-form-field-input-bg, var(--strapi-neutral-0));
+  border-color: var(--strapi-form-field-input-border-color, var(--strapi-neutral-200));
+  border-radius: var(--strapi-form-field-input-border-radius, 0.25rem);
+  border-style: var(--strapi-form-field-input-border-style, solid);
+  border-width: var(--strapi-form-field-input-border-width, 0.0625rem);
+  color: var(--strapi-form-field-input-color, var(--strapi-neutral-800));
+  font-size: var(--strapi-form-field-input-font-size, var(--strapi-font-size-sm));
+  font-weight: var(--strapi-form-field-input-font-weight, 400);
+  line-height: var(--strapi-form-field-input-line-height, 1.33);
+  padding:
+    var(--strapi-form-field-input-py, var(--strapi-spacing-2))
+    var(--strapi-form-field-input-px, var(--strapi-spacing-4))
+  ;
+  outline-color: var(--strapi-form-field-outline-color, transparent);
+  outline-offset: var(--strapi-form-field-outline-offset, 0);
+  outline-style: var(--strapi-form-field-outline-style, solid);
+  outline-width: var(--strapi-form-field-outline-width, 0.125rem);
+  transition: var(--strapi-form-field-input-transition, all ease 0.2s);
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    --strapi-form-field-input-bg: var(--strapi-neutral-150);
+    --strapi-form-field-input-border-color: var(--strapi-neutral-200);
+    --strapi-form-field-input-color: var(--strapi-neutral-600);
+  }
+
+  &:focus,
+  &:focus-visible {
+    --strapi-form-field-input-border-color: var(--strapi-primary-600);
+    --strapi-form-field-outline-color: var(--strapi-primary-600);
+  }
+
+  &--textarea {
+    min-height: 5.75rem;
+    resize: vertical;
+  }
+}
