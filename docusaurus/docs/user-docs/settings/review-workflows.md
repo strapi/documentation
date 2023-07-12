@@ -12,7 +12,13 @@ The Review Workflows feature allows you to create and manage any desired review 
 - Review Workflows are only available with the Enterprise Edition. If for any reason your project was downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
 :::
 
-![Review Workflows Settings](/img/assets/review-workflows/review-workflows.png)
+<ThemedImage
+  alt="Review Workflows Settings"
+  sources={{
+    light: '/img/assets/review-workflows/review-workflows.png',
+    dark: '/img/assets/review-workflows/review-workflows_DARK.png',
+  }}
+/>
 
 There are 4 stages in the default review workflow available in Strapi: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 

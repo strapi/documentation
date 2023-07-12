@@ -7,7 +7,13 @@ title: Internationalization
 
 The [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Internationalization*.
 
-![i18n settings](/img/assets/settings/settings-i18n.png)
+<ThemedImage
+  alt="i18n settings"
+  sources={{
+    light: '/img/assets/settings/settings-i18n.png',
+    dark: '/img/assets/settings/settings-i18n_DARK.png',
+  }}
+/>
 
 The *Internationalization* settings sub-section displays a table listing all locales available for the Strapi application. By default, only the English locale is configured and set as the default locale. 
 

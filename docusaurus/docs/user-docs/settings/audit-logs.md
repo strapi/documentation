@@ -10,7 +10,13 @@ The **Audit Logs** section provides a searchable and filterable display of all a
 
 Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the **Settings** panel.
 
-![Audit Logs panel](/img/assets/settings/settings_audit-logs.png)
+<ThemedImage
+  alt="Audit Logs panel"
+  sources={{
+    light: '/img/assets/settings/settings_audit-logs.png',
+    dark: '/img/assets/settings/settings_audit-logs_DARK.png',
+  }}
+/>
 
 ## Events logged
 
@@ -42,8 +48,13 @@ The **Audit Logs** page displays all logs by default, in reverse chronological o
 * **User**: Select the user to filter by.
 * **Date**: Select a date (range) and time to filter by.
 
-![Audit Logs filters](/img/assets/settings/settings_audit-logs-filters.png)
-
+<ThemedImage
+  alt="Audit Logs filters"
+  sources={{
+    light: '/img/assets/settings/settings_audit-logs-filters.png',
+    dark: '/img/assets/settings/settings_audit-logs-filters_DARK.png',
+  }}
+/>
 
 <!--
 ### Creating a custom filter
@@ -60,6 +71,12 @@ Click the **Search** icon to search for a specific log. The search is performed 
 
 For any log item, click the **Details** icon to display a modal with more details about that action.
 
-![Log details modal](/img/assets/settings/settings_log-details.png)
+<ThemedImage
+  alt="Log details modal"
+  sources={{
+    light: '/img/assets/settings/settings_log-details.png',
+    dark: '/img/assets/settings/settings_log-details_DARK.png',
+  }}
+/>
 
 The **Payload** details are displayed in an interactive JSON component, enabling you to expand and collapse the JSON object.

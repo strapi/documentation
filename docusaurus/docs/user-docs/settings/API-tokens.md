@@ -12,7 +12,13 @@ title: API tokens
 
 API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/dev-docs/configurations/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > API Tokens*.
 
-![API tokens](/img/assets/settings/settings_api-token.png)
+<ThemedImage
+  alt="API tokens"
+  sources={{
+    light: '/img/assets/settings/settings_api-token.png',
+    dark: '/img/assets/settings/settings_api-token_DARK.png',
+  }}
+/>
 
 The *API Tokens* settings sub-section displays a table listing all of the created API tokens.
 
@@ -38,7 +44,13 @@ To create a new API token:
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
 4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button![copy button](/img/assets/icons/duplicate.svg).
 
-    ![Custom API Token](/img/assets/settings/settings_api-token-custom.png)
+<ThemedImage
+  alt="Custom API token"
+  sources={{
+    light: '/img/assets/settings/settings_api-token-custom.png',
+    dark: '/img/assets/settings/settings_api-token-custom_DARK.png',
+  }}
+/>
 
 :::caution
 For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
