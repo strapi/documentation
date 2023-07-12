@@ -29,7 +29,7 @@ For more information, please refer to the [Koa response documentation](http://ko
 ### `ctx`
 | Parameter | Description                                                                                  | Type     |
 | ----------| -------------------------------------------------------------------------------------------- | -------- |
-| <a name="ctx" href="#ctx" class="anchor">`ctx`</a> | Ctx is the context object that is given to every layer within strapi         | `Object` |
+| <a name="ctx" href="#ctx" class="anchor">`ctx`</a> | Context object passed to every layer within Strapi         | `Object` |
 
 ### `ctx.request`
 | Parameter | Description                                                                                  | Type     |
