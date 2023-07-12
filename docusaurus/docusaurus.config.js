@@ -27,7 +27,6 @@ const config = {
     locales: ['en'],
   },
 
-  noIndex: true, // prevents the website from being indexed by search engines
 
   themes: ['@docusaurus/theme-live-codeblock'],
 
