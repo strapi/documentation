@@ -4,34 +4,23 @@ description: Learn more about requests and responses for Strapi, the most popula
 
 ---
 
-# Requests & Responses
+# Requests and Responses
 
-## Requests
+The Strapi back end server is based on [Koa](https://koajs.com/). When you send requests through the [REST API](/dev-docs/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/dev-docs/backend-customization/policies), [controllers](/dev-docs/backend-customization/controllers), [services](/dev-docs/backend-customization/services)) and contains all the request-related information and a list of values and functions useful to manage server responses.
 
-When you send requests through the [REST API](/dev-docs/api/rest), the context object (`ctx`) contains all the requests related information. They are accessible through `ctx.request`, from [controllers](/dev-docs/backend-customization/controllers.md) and [policies](/dev-docs/backend-customization/policies.md).
+:::info
+In addition to the concepts and parameters described in the following documentation, you might find additional information in the [Koa request documentation](http://koajs.com/#request), [Koa Router documentation](https://github.com/koajs/router/blob/master/API.md) and [Koa response documentation](http://koajs.com/#response).
+:::
 
-Strapi passes the `body` on `ctx.request.body`, `query` on `ctx.request.query`, `params` on `ctx.request.params` and `files` through `ctx.request.files`
-
-For more information, please refer to the [Koa request documentation](http://koajs.com/#request) and [Koa Router documentation](https://github.com/koajs/router/blob/master/API.md).
-
-## Responses
-
-The context object (`ctx`) contains a list of values and functions useful to manage server responses. They are accessible through `ctx.response`, from [controllers](/dev-docs/backend-customization/controllers.md) and [policies](/dev-docs/backend-customization/policies.md).
-
-For more information, please refer to the [Koa response documentation](http://koajs.com/#response).
-
-## The `ctx` object
-
-`ctx` is the context object passed to every element of the Strapi back end (e.g., controllers, services, policies).
 `ctx` includes 3 main objects:
 
 - [`ctx.request`](#ctxrequest) for information about the request sent by the client making an API request,
 - [`ctx.state`](#ctxstate) for information about the state of the request within the Strapi back end,
 - and [`ctx.response`](#ctxresponse) for information about the response that the server will return.
 
-### `ctx.request`
+## `ctx.request`
 
-The `ctx.request` object contains the following information:
+The `ctx.request` object contains the following parameters:
 
 | Parameter | Description                                                                                  | Type     |
 | ----------| -------------------------------------------------------------------------------------------- | -------- |
