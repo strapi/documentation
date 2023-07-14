@@ -27,6 +27,7 @@ If there is no specific migration guide between your current version and the lat
 - [Migration guide from 4.4.5 to 4.5.1](/dev-docs/migration/v4/migration-guide-4.4.5-to-4.5.1)
 - [Migration guide from 4.5.1 to 4.6.1](/dev-docs/migration/v4/migration-guide-4.5.1-to-4.6.1)
 - [Migration guide from 4.6.1 to 4.7.0](/dev-docs/migration/v4/migration-guide-4.6.1-to-4.7.0)
+- [Migration guide from 4.7.0 to 4.11.4](/dev-docs/migration/v4/migration-guide-4.7.0-to-4.11.4)
 
 ## v3 to v4 migration guides
 
