@@ -153,8 +153,8 @@ This example shows wrapping a [core service](/dev-docs/backend-customization/ser
 
 ```js title="path: ./src/api/restaurant/services/restaurant.js"
 
-const utils = require('@strapi/utils');
-const { ApplicationError } = utils.errors;
+const { errors } = require('@strapi/utils');
+const { ApplicationError } = errors;
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
@@ -179,10 +179,10 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 ```ts title="path: ./src/api/[api-name]/policies/my-policy.ts"
 
-import utils from '@strapi/utils';
+import { errors } from '@strapi/utils';
 import { factories } from '@strapi/strapi';
 
-const { ApplicationError } = utils.errors;
+const { ApplicationError } = errors;
 
 export default factories.createCoreService('api::restaurant.restaurant', ({ strapi }) =>  ({
   async create(params) {
@@ -219,8 +219,8 @@ This example shows building a [custom model lifecycle](/dev-docs/backend-customi
 
 ```js title="path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
 
-const utils = require('@strapi/utils');
-const { ApplicationError } = utils.errors;
+const { errors } = require('@strapi/utils');
+const { ApplicationError } = errors;
 
 module.exports = {
   beforeCreate(event) {
@@ -241,8 +241,8 @@ module.exports = {
 
 ```ts title="path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts"
 
-import utils from '@strapi/utils';
-const { ApplicationError } = utils.errors;
+import { errors } from '@strapi/utils';
+const { ApplicationError } = errors;
 
 export default {
   beforeCreate(event) {
@@ -282,8 +282,8 @@ This example shows building a [custom policy](/dev-docs/backend-customization/po
 
 ```js title="path: ./src/api/[api-name]/policies/my-policy.js"
 
-const utils = require('@strapi/utils');
-const { PolicyError } = utils.errors;
+const { errors } = require('@strapi/utils');
+const { PolicyError } = errors;
 
 module.exports = (policyContext, config, { strapi }) => {
   let isAllowed = false;
@@ -306,8 +306,8 @@ module.exports = (policyContext, config, { strapi }) => {
 
 ```ts title="path: ./src/api/[api-name]/policies/my-policy.ts"
 
-const utils = require('@strapi/utils');
-const { PolicyError } = utils.errors;
+import { errors } from '@strapi/utils';
+const { PolicyError } = errors;
 
 export default (policyContext, config, { strapi }) => {
   let isAllowed = false;
