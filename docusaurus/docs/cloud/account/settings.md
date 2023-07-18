@@ -7,38 +7,13 @@ canonicalUrl: https://docs.strapi.io/cloud/account/settings.html
 
 # Account Settings
 
-The *Account Settings* page enables you to manage your account details and preferences. There are three tabs available: *General*, *Preferences* and *Billing*.
+The **Account Settings** page enables you to manage your account details and preferences. There are three sections available: 
 
 ## General
 
-The *General* tab enables you to edit the following options for your account:
+The **General** tab enables you to edit the following details for your account:
 
-- Details: to modify the display name associated with your account.
-- Connected Git repository: to change the branch of the GitHub repository used for your project.
-- Delete project: to permanently delete your Strapi Cloud account.
-
-<!-- Add screenshot here -->
-
-### Modifying GitHub repository branch
-
-The GitHub repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the account settings.
-
-1. In the *Connected Git repository* section of the *General* tab, click on the **Edit** button.
-2. In the *Edit Git settings* dialog, edit the available options of your choice:
-
-    | Setting name    | Instructions                                                             |
-    | --------------- | ------------------------------------------------------------------------ |
-    | Selected branch | Choose a branch from the drop-down list.                                 |
-    | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Deploy the project on every commit pushed to this branch | Check the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. |
-
-3. Click on the **Save** button.
-
-<!--
-### Deleting Strapi Cloud account
-
-Document project deletion
--->
+* **Name**: The name associated with your account.
 
 ## Preferences
 
