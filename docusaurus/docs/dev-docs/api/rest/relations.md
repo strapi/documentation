@@ -1,7 +1,7 @@
 ---
 title: Relations
 description: Use the REST API to manage the order of relations
-
+displayed_sidebar: restApiSidebar
 ---
 
 # Managing relations through the REST API
