@@ -545,6 +545,186 @@ const sidebars = {
       ]
     }
   ],
+
+  restApiSidebar: [
+    {
+      type: 'link',
+      label: '⬅️ Back to Dev Docs content',
+      href: '/dev-docs/intro'
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'REST API',
+      items: [
+        {
+          type: 'category',
+          label: 'Endpoints and basic requests',
+          link: {type: 'doc', id: 'dev-docs/api/rest'},
+          collapsed: false,
+          items: [
+            {
+              type: 'link',
+              label: 'Endpoints',
+              href: '/dev-docs/api/rest#endpoints',
+            },
+            {
+              type: 'link',
+              label: 'Get entries',
+              href: '/dev-docs/api/rest#get-entries'
+            },
+            {
+              type: 'link',
+              label: 'Get an entry',
+              href: '/dev-docs/api/rest#get-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Create an entry',
+              href: '/dev-docs/api/rest#create-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Update an entry',
+              href: '/dev-docs/api/rest#update-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Delete an entry',
+              href: '/dev-docs/api/rest#delete-an-entry'
+            },
+          ]
+        },
+        {
+          type: 'doc',
+          id: 'dev-docs/api/rest/interactive-query-builder',
+          label: '✨ Interactive Query Builder'
+        },
+        {
+          type: 'doc',
+          id: 'dev-docs/api/rest/parameters'
+        },
+        {
+          type: 'category',
+          label: 'Populate and Select',
+          link: {type: 'doc', id: 'dev-docs/api/rest/populate-select'},
+          collapsed: false,
+          items: [
+            {
+              type: 'link',
+              label: 'Field selection',
+              href: '/dev-docs/api/rest/populate-select#field-selection',
+            },
+            {
+              type: 'link',
+              label: 'Populate Relations & Media Fields',
+              href: '/dev-docs/api/rest/populate-select#relations--media-fields',
+            },
+            {
+              type: 'link',
+              label: 'Populate Components & Dynamic Zones',
+              href: '/dev-docs/api/rest/populate-select#components--dynamic-zones',
+            },
+            {
+              type: 'link',
+              label: 'Populating createdBy and updatedBy',
+              href: '/dev-docs/api/rest/populate-select#populating-createdby-and-updatedby',
+            },
+            {
+              type: 'link',
+              label: 'Combining populate with other operators',
+              href: '/dev-docs/api/rest/populate-select#combining-population-with-other-operators',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Filters, Locale, Publication State',
+          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
+          items: [
+            {
+              type: 'link',
+              label: 'Filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+            },
+            {
+              type: 'link',
+              label: 'Complex filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#complex-filtering',
+            },
+            {
+              type: 'link',
+              label: 'Deep filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#deep-filtering',
+            },
+            {
+              type: 'link',
+              label: 'Locale',
+              href: '/dev-docs/api/rest/filters-locale-publication#locale',
+            },
+            {
+              type: 'link',
+              label: 'Publication state',
+              href: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Sort and Pagination',
+          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
+          items: [
+            {
+              type: 'link',
+              label: 'Sorting',
+              href: '/dev-docs/api/rest/sort-pagination#sorting'
+            },
+            {
+              type: 'link',
+              label: 'Pagination',
+              href: '/dev-docs/api/rest/sort-pagination#pagination'
+            },
+            {
+              type: 'link',
+              label: 'Pagination by page',
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-page'
+            },
+            {
+              type: 'link',
+              label: 'Pagination by offset',
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset'
+            },
+          ]
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Relations',
+          link: {type: 'doc', id: 'dev-docs/api/rest/relations'},
+          items: [
+            {
+              type: 'link',
+              label: 'connect',
+              href: '/dev-docs/api/rest/relations#connect'
+            },
+            {
+              type: 'link',
+              label: 'disconnect',
+              href: '/dev-docs/api/rest/relations#disconnect'
+            },
+            {
+              type: 'link',
+              label: 'set',
+              href: '/dev-docs/api/rest/relations#set'
+            },
+          ]
+        },
+
+      ]
+    },
+  ]
 };
 
 module.exports = sidebars;
