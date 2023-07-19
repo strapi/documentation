@@ -18,7 +18,7 @@ The *General* tab enables you to check and update the following options for the 
 - Connected Git repository: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
 - Selected region: to see the hosting region of the project.
 - Debug info: to see the internal project name for the project. This is useful for support purposes.
-- Delete project: to permanently delete your Strapi Cloud project.
+- Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 ![Project settings](/img/assets/cloud/settings.png)
 
@@ -36,6 +36,14 @@ The GitHub repository branch and base directory for a Strapi Cloud project are b
     | Deploy the project on every commit pushed to this branch | Check the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. |
 
 3. Click on the **Save** button.
+
+### Deleting Strapi Cloud project
+
+You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
+
+1. In the *Delete project* section of the *General* tab, click on the **Delete project** button.
+2. In the dialog, type `DELETE` in the textbox.
+3. Confirm the deletion of your project by clicking on the **Delete** button.
 
 ## Domains
 
