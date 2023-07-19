@@ -2,21 +2,21 @@
 
 /** Mixin: Responsive */
 @mixin small-up {
-  @media (min-width: 769px) {
+  @media (width >= 769px) {
     @content;
   }
 }
 
 /** Mixin: Responsive */
 @mixin medium-up {
-  @media (min-width: 997px) {
+  @media (width >= 997px) {
     @content;
   }
 }
 
 /** Mixin: Responsive */
 @mixin large-up {
-  @media (min-width: 1536px) {
+  @media (width >= 1536px) {
     @content;
   }
 }

@@ -5,36 +5,36 @@
  */
 
 /** Core */
-@import '_mixins.scss';
-@import '_tokens.scss';
-@import '_tokens-overrides.scss';
+@import '_mixins';
+@import '_tokens';
+@import '_tokens-overrides';
 
 /** Base */
-@import '_fonts.scss';
-@import '_base.scss';
+@import '_fonts';
+@import '_base';
 
 /** Components */
-@import 'admonition.scss';
-@import 'api-call.scss';
-@import 'badge.scss';
-@import 'breadcrumbs.scss';
-@import 'card.scss';
-@import 'code.scss';
-@import 'code-block.scss';
-@import 'columns.scss';
-@import 'container.scss';
-@import 'details.scss';
-@import 'footer.scss';
-@import 'grid.scss';
-@import 'images.scss';
-@import 'markdown.scss';
-@import 'medium-zoom.scss';
-@import 'navbar.scss';
-@import 'pagination-nav.scss';
-@import 'search.scss';
-@import 'scene.scss';
-@import 'sidebar.scss';
-@import 'table.scss';
-@import 'tabs.scss';
-@import 'table-of-contents.scss';
-@import 'typography.scss';
+@import 'admonition';
+@import 'api-call';
+@import 'badge';
+@import 'breadcrumbs';
+@import 'card';
+@import 'code';
+@import 'code-block';
+@import 'columns';
+@import 'container';
+@import 'details';
+@import 'footer';
+@import 'grid';
+@import 'images';
+@import 'markdown';
+@import 'medium-zoom';
+@import 'navbar';
+@import 'pagination-nav';
+@import 'search';
+@import 'scene';
+@import 'sidebar';
+@import 'table';
+@import 'tabs';
+@import 'table-of-contents';
+@import 'typography';
