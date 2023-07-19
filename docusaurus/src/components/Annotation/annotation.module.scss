@@ -1,0 +1,90 @@
+/** Component: Annotation */
+
+@import '../../scss/_mixins.scss';
+
+.annotation {
+  --strapi-docs-annotation-toggle-background-active: var(--custom-selection-background-color);
+  --strapi-docs-annotation-tooltip-left: calc(var(--ifm-spacing-horizontal) * 2);
+  --strapi-docs-annotation-tooltip-right: calc(var(--ifm-spacing-horizontal) * 2);
+
+  position: var(--strapi-docs-annotation-position);
+
+  &__toggle,
+  &__toggle__icon {
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  &__toggle {
+    position: relative;
+    background: transparent;
+    color: white;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0;
+    padding: var(--strapi-spacing-2);
+    margin: calc(var(--strapi-spacing-1) * -1) calc(var(--strapi-spacing-1) * -0.5);
+    z-index: 20;
+
+    &:before {
+      --strapi-docs-annotation-toggle-background-distance: calc(var(--strapi-spacing-1) / 1.5);
+
+      content: " ";
+      position: absolute;
+      top: var(--strapi-docs-annotation-toggle-background-distance);
+      right: var(--strapi-docs-annotation-toggle-background-distance);
+      bottom: var(--strapi-docs-annotation-toggle-background-distance);
+      left: var(--strapi-docs-annotation-toggle-background-distance);
+      background: var(--strapi-docs-annotation-toggle-background, var(--strapi-neutral-400));
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    &:active, &:focus, &:hover {
+      --strapi-docs-annotation-toggle-background: var(--strapi-docs-annotation-toggle-background-active);
+    }
+
+    &__icon {
+      width: 0.5rem;
+      height: 0.5rem;
+      transform: rotate(var(--strapi-docs-annotation-toggle-icon-rotation, -45deg));
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &__tooltip {
+    display: block;
+    position: var(--strapi-docs-annotation-tooltip-position, absolute);
+    width: var(
+      --strapi-docs-annotation-tooltip-width,
+      calc(
+        100% -
+        calc(var(--strapi-docs-annotation-tooltip-left) * 2)
+      )
+    );
+    top: var(--strapi-docs-annotation-tooltip-top);
+    left: var(--strapi-docs-annotation-tooltip-left, var(--ifm-spacing-horizontal));
+    right: var(--strapi-docs-annotation-tooltip-right, var(--ifm-spacing-horizontal));
+    z-index: 10;
+    background: var(--ifm-background-color);
+    color: var(--ifm-font-color-base);
+    font-size: 90%;
+    border: 1px solid var(--strapi-neutral-150);
+    border-radius: var(--strapi-spacing-1);
+    box-shadow: rgba(33, 33, 52, 0.1) 0px 1px 4px;
+    margin-top: var(--strapi-docs-annotation-tooltip-margin-top, calc(var(--strapi-spacing-2) * -1));
+    padding: var(--strapi-spacing-3) var(--strapi-spacing-4);
+  }
+}
+
+@include small-up {
+  .annotation {
+    --strapi-docs-annotation-position: relative;
+    --strapi-docs-annotation-tooltip-margin-top: 0;
+    --strapi-docs-annotation-tooltip-top: var(--strapi-spacing-3);
+    --strapi-docs-annotation-tooltip-left: var(--strapi-spacing-2);
+    --strapi-docs-annotation-tooltip-right: auto;
+  }
+}

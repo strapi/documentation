@@ -25,6 +25,7 @@ import {
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
 } from '../components/MultiLanguageSwitcher';
+import { Annotation } from '../components/Annotation';
 
 export default {
   // Re-use the default mapping
@@ -57,4 +58,5 @@ export default {
   MultiLanguageSwitcher,
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
+  Annotation,
 };
