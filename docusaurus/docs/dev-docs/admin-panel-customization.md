@@ -9,8 +9,6 @@ import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.m
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-# Admin panel customization
-
 The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
 To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
