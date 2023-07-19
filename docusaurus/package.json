@@ -6,14 +6,24 @@
     "docusaurus": "docusaurus",
     "dev": "docusaurus start --port 8080 --no-open",
     "build": "docusaurus build",
-    "lint": "markdownlint ./**/*.md",
-    "lint:fix": "markdownlint --fix ./**/*.md",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "lint": "yarn lint:markdown && yarn lint:css && yarn lint:other",
+    "lint:css": "stylelint src/**/*.{css,scss} ",
+    "lint:other": "npm run prettier:other -- --check",
+    "lint:markdown": "markdownlint ./**/*.md",
+    "format": "yarn format:code && yarn format:other",
+    "format:code": "yarn prettier:code --write",
+    "format:markdown": "markdownlint ./**/*.md --fix",
+    "format:other": "yarn prettier:other --write",
+    "prettier:code": "prettier --cache --cache-strategy content \"**/*.{js,ts}\"",
+    "prettier:markdown": "prettier --cache --cache-strategy content \"**/*.{md}\"",
+    "prettier:other": "prettier --cache --cache-strategy content \"**/*.{css,scss}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@docusaurus/core": "2.4.0",
@@ -37,8 +47,27 @@
     "sass": "^1.58.3"
   },
   "devDependencies": {
+    "@docusaurus/eslint-plugin": "^2.4.1",
     "@docusaurus/module-type-aliases": "2.4.0",
-    "markdownlint-cli": "^0.35.0"
+    "@strapi/eslint-config": "^0.1.2",
+    "babel-eslint": "10.0.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "markdownlint-cli": "^0.35.0",
+    "stylelint": "^15.10.2",
+    "stylelint-config-recommended": "^13.0.0",
+    "stylelint-config-standard-scss": "^10.0.0"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "browserslist": {
     "production": [
