@@ -26,7 +26,9 @@ Your contents can have 2 statuses: draft or published. You can see the current s
 
 By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button on the top right corner of the edit view, until they are ready to be published.
 
-### Publishing a draft
+### Publishing and unpublishing
+
+#### Publishing a draft
 
 To publish a draft, click on the **Publish** button in the top right corner of the content editor.
 
@@ -48,28 +50,44 @@ When a content is not a draft anymore, but has been published, it is indicated o
 To schedule publication, i.e. convert a draft to a published entry at a given date and time, you can follow [this technical guide](https://forum.strapi.io/t/schedule-publications/23184) which requires adding custom code to the Strapi application.
 :::
 
-### Unpublishing content
+#### Unpublishing content
 
 Published contents can be unpublished, switching back to being drafts again.
 
 To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
 
-### Bulk publish and unpublish
+### Bulk publishing and unpublishing
 
-Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously.
+Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
+
+:::caution
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+:::
 
 ![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
 
-To publish or unpublish several entries:
+#### Bulk publishing drafts
 
-1. From the list view of the Content Manager, select your entries to publish or unpublish by ticking the box on the left side of the entries' record.
-2. Depending on what you want to achieve, click one of the **Publish** or **Unpublish** buttons located above the header of the table. When selecting only published entries, only the **Unpublish** button is shown, while when selecting only draft entries, only the **Publish** button is shown.
-3. In the confirmation dialog box, confirm your choice by clicking on the **Publish** or **Unpublish** button.
+To publish several entries at the same time:
 
-:::caution
-* If an error occurs, a red message overlay will appear with additional information, and none of your selected entries will be published or unpublished.
-* If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
-:::
+1. From the list view of the Content Manager, select your entries to publish by ticking the box on the left side of the entries' record.
+2. Click one of the **Publish** button located above the header of the table.
+3. In the *Publish entries* dialog, check the list of selected entries and their status:
+
+   - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry can be published
+   - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
+
+4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/CrossCircle.svg) status, click the ![Edit icon](/img/assets/icons/edit.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish status. You may have to click on the **Refresh** button to update the the *Publish entries* dialog as you fix the various entries issues.
+5. Click the **Publish** button.
+6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
+
+#### Bulk unpublishing content
+
+To unpublish several entries at the same time:
+
+1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
+2. Click on the **Unpublish** button located above the header of the table.
+3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
 
 ## Deleting content
 
