@@ -183,7 +183,7 @@ As of Strapi v4.8.0 and greater it's strongly recommended you sanitize your inco
 
 #### Sanitization when utilizing controller factories
 
-Within the Strapi factories there are 2 functions exposed that can be used for sanitization:
+Within the Strapi factories there are 3 functions exposed that can be used for sanitization:
 
 | Function Name    | Parameters                 | Description                                                                          |
 |------------------|----------------------------|--------------------------------------------------------------------------------------|
