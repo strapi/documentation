@@ -6,6 +6,10 @@ sidebar_position: 2
 
 # Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
+:::info
+Audit Logs is an <EntreprisBadge />-only feature.
+:::
+
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the **Settings** panel.
