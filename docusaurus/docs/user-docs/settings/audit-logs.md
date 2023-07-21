@@ -7,7 +7,7 @@ sidebar_position: 2
 # Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
 :::info
-Audit Logs is an <EntrepriseBadge />-only feature.
+Audit Logs is an <EnterpriseBadge />-only feature.
 :::
 
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
