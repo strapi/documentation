@@ -149,8 +149,8 @@ Basic validations can be applied to attributes using the following parameters:
 | `required`     | Boolean | If `true`, adds a required validator for this property                                                     | `false` |
 | `max`          | Integer | Checks if the value is greater than or equal to the given maximum                                        | -       |
 | `min`          | Integer | Checks if the value is less than or equal to the given minimum                                           | -       |
-| `minLength`    | Integer | Minimum number of characters for a field input value                                                      | -       |
-| `maxLength`    | Integer | Maximum number of characters for a field input value                                                      | -       |
+| `minLength`    | String | Minimum number of characters for a field input value                                                      | -       |
+| `maxLength`    | String | Maximum number of characters for a field input value                                                      | -       |
 | `private`      | Boolean | If `true`, the attribute will be removed from the server response.<br/><br/>💡 This is useful to hide sensitive data. | `false` |
 | `configurable` | Boolean | If `false`, the attribute isn't configurable from the Content-type Builder plugin.                         | `true`  |
 
