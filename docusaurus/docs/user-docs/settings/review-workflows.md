@@ -5,6 +5,10 @@ description: Managing your review workflows and stages in Strapi.
 
 # Managing Review Workflows <EnterpriseBadge />
 
+:::info
+Review Workflows is an <EnterpriseBadge />-only feature.
+:::
+
 The Review Workflows feature allows you to create and manage any desired review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication. Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content) and [Content-Types Builder](/user-docs/content-type-builder), review workflows should be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*.
 
 :::note
