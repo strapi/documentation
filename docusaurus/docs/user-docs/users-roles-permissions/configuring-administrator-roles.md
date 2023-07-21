@@ -4,7 +4,7 @@ displayed_sidebar: userDocsSidebar
 sidebar_position: 2
 ---
 
-# Configuring administrator roles
+# Configuring administrator roles (RBAC)
 
 Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](/img/assets/icons/settings.svg) *Settings* sub navigation.
 
