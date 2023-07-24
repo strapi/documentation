@@ -5,7 +5,7 @@ description: Managing your review workflows and stages in Strapi.
 
 # Managing Review Workflows <EnterpriseBadge />
 
-The Review Workflows feature allows you to create and manage different workflows for different content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
+The Review Workflows feature allows you to create and manage workflows for different content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
 <ThemedImage
   alt="Workflow list view"
@@ -20,8 +20,8 @@ In many organizations different teams review different parts of content. By usin
 Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*.
 
 :::note
-- The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permission. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
-- Review Workflows are only available with the Enterprise Edition. If for any reason your project was downgraded to the Community Edition, all review workflows data would not be deleted but kept until the project goes back to Enterprise.
+- The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
+- The maximum number of [workflows and stages per workflow is limited](https://strapi.io/pricing-cloud).
 :::
 
 
@@ -45,11 +45,6 @@ Before being available in the [Content Manager](/user-docs/content-manager/revie
     | Stages         | Add review stages.                                                       |
 
 3. Click on the **Save** button. The new workflow will be displayed in the list-view and for every content-type assigned.
-
-:::note
-- If a content-type is already assigned to another workflow, it will be re-assigned to the one currently created/ edited.
-- The maximum number of [workflows and stages per workflow is limited](https://strapi.io/pricing-cloud).
-:::
 
 
 ### Adding a new stage
