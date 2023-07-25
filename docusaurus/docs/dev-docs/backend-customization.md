@@ -35,7 +35,7 @@ A request can travel through the Strapi back end as follows:
 Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the back end:
 
 * If a middleware returns nothing, the request will continue travelling through the various core elements of the back end (i.e., controllers, services, and the other layers that interact with the database).
-* If a middleware returns something, a response will be immediately sent, skipping the rest of the core elements.
+* If a middleware returns before calling `await next()`, a response will be immediately sent, skipping the rest of the core elements. Then it will go back down the same chain it came up.
 
 ## Interactive diagram
 
