@@ -18,6 +18,11 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination-by-offset))                                                                      | Integer      | `25`    |
 | `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
 
+:::note 
+If the `maxLimit` value is less than the `defaultLimit` value, `maxLimit` will be the limit used.
+:::
+
+
 **Example:**
 
 <Tabs groupId="js-ts">
