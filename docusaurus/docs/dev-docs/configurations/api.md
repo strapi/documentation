@@ -19,7 +19,7 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
 
 :::note 
-If the `maxLimit` value is less than the `defaultLimit` value, `maxLimit` will be the limit used.
+If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
 :::
 
 
