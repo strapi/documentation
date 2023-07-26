@@ -25,7 +25,7 @@ Like any HTTP server, the Strapi back end receives requests and send responses. 
 
 A request can travel through the Strapi back end as follows:
 
-1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses#requests).
+1. The Strapi server receives a [request](/dev-docs/backend-customization/requests-responses).
 2. The request hits [global middlewares](/dev-docs/backend-customization/middlewares) that are run in a sequential order.
 3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates route files for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.
 4. [Route policies](/dev-docs/backend-customization/policies) act as a read-only validation step that can block access to a route. [Route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
