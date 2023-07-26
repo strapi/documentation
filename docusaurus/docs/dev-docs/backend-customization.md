@@ -87,8 +87,6 @@ graph TB
     click queryEngine "/dev-docs/api/query-engine"
 ```
 
-- and the [webhooks](/dev-docs/backend-customization/webhooks) that are used to notify other applications of events that occurred.
-
 :::info
 Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
 :::
