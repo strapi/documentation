@@ -38,6 +38,11 @@ Both global and route middlewares include an asynchronous callback function, `aw
 * If a middleware returns nothing, the request will continue travelling through the various core elements of the back end (i.e., controllers, services, and the other layers that interact with the database).
 * If a middleware returns before calling `await next()`, a response will be immediately sent, skipping the rest of the core elements. Then it will go back down the same chain it came up.
 
+
+:::info
+Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
+:::
+
 ## Interactive diagram
 
 The following diagram represents how requests travel through the Strapi back end. You can click on any shape to jump to the relevant page in the documentation.
@@ -87,6 +92,3 @@ graph TB
     click queryEngine "/dev-docs/api/query-engine"
 ```
 
-:::info
-Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
-:::
