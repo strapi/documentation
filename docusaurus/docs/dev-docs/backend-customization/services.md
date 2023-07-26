@@ -11,8 +11,6 @@ const captionStyle = {fontSize: '12px'}
 
 # Services
 
-<FeedbackCallout components={props.components}/>
-
 Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/dev-docs/backend-customization/controllers.md) logic.
 
 <figure style={imgStyle}>

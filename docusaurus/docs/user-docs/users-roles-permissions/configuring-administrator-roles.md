@@ -4,13 +4,19 @@ displayed_sidebar: userDocsSidebar
 sidebar_position: 2
 ---
 
-# Configuring administrator roles
+# Configuring administrator roles (RBAC)
 
 Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](/img/assets/icons/settings.svg) *Settings* sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](./managing-administrators)).
 
-![Administrator roles interface](/img/assets/users-permissions/administrator_roles.png)
+<ThemedImage
+  alt="Administrator roles interface"
+  sources={{
+    light: '/img/assets/users-permissions/administrator_roles.png',
+    dark: '/img/assets/users-permissions/administrator_roles_DARK.png',
+  }}
+/>
 
 The *Roles* sub-section of *Administration panel* displays all created roles for the administrators of your Strapi application.
 
@@ -48,7 +54,13 @@ To delete a role:
 
 ## Editing a role
 
-![Administrator roles edition interface](/img/assets/users-permissions/administrator_roles-edition.png)
+<ThemedImage
+  alt="Administrator roles edition interface"
+  sources={{
+    light: '/img/assets/users-permissions/administrator_roles-edition.png',
+    dark: '/img/assets/users-permissions/administrator_roles-edition_DARK.png',
+  }}
+/>
 
 The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/edit.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role-)).
 
@@ -146,7 +158,13 @@ For each permission of each category, a **Settings** button is displayed. It all
 Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/dev-docs/configurations/rbac)).
 :::
 
-<img src="/img/assets/users-permissions/administrator_custom-conditions.png" alt="Custom conditions for administrator role permissions" width="80%" />
+<ThemedImage
+  alt="Custom conditions"
+  sources={{
+    light: '/img/assets/users-permissions/administrator_custom-conditions.png',
+    dark: '/img/assets/users-permissions/administrator_custom-conditions_DARK.png',
+  }}
+/>
 
 To set custom conditions:
 

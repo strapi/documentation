@@ -12,7 +12,13 @@ To manage a content-type or a component, click on its name in the Collection typ
 
 Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type of component, the right side of the Content-type Builder interface displays all available editing options.
 
-![Content-type Builder's edition interface](/img/assets/content-type-builder/content-types-builder_edition.png)
+<ThemedImage
+  alt="Content-type Builder's edition interface"
+  sources={{
+    light: '/img/assets/content-type-builder/content-types-builder_edition.png',
+    dark: '/img/assets/content-type-builder/content-types-builder_edition_DARK.png',
+  }}
+/>
 
 - Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/edit.svg) **Edit** button (1) allows to access the [general settings](#editing-content-type-or-component-settings) of the content-type or component.
 - In the top right corner:
@@ -34,7 +40,13 @@ The settings of a content-type or component can be edited through the Content-ty
 
 The **Basic Settings** tab allows to edit the following properties of the content-type or component:
 
-![Content-type Builder's basic settings](/img/assets/content-type-builder/basic-settings.png)
+<ThemedImage
+  alt="Content-type Builder's basic settings"
+  sources={{
+    light: '/img/assets/content-type-builder/basic-settings.png',
+    dark: '/img/assets/content-type-builder/basic-settings_DARK.png',
+  }}
+/>
 
 * **Display name**: Name of the content-type or component as it will be displayed in the admin panel.
 * **API ID (singular)**: Name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
@@ -45,7 +57,13 @@ The **Basic Settings** tab allows to edit the following properties of the conten
 
 The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
 
-![Content-type Builder's advanced settings](/img/assets/content-type-builder/advanced-settings.png)
+<ThemedImage
+  alt="Content-type Builder's advanced settings"
+  sources={{
+    light: '/img/assets/content-type-builder/advanced-settings.png',
+    dark: '/img/assets/content-type-builder/advanced-settings_DARK.png',
+  }}
+/>
 
 * **Draft & Publish**: Enable the draft and publish feature for the content-type or component. It is disabled by default.
 * **Internationalization**: Enable the internationalization feature for the content-type or component. It is disabled by default.

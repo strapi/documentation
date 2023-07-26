@@ -11,4 +11,10 @@ Some features of the admin panel, as well as the content managed with Strapi its
 
 Depending on what users and their roles and permissions you want to manage, you should either use the Role Based Access Control (RBAC) feature, or the Users & Permissions plugin. Both are managed from ![Settings icon](/img/assets/icons/settings.svg) _Settings_, accessible from the main navigation of the admin panel.
 
-![Users, permissions and roles settings](/img/assets//users-permissions/users-roles-permissions-settings.png)
+<ThemedImage
+  alt="Users, permissions and roles settings"
+  sources={{
+    light: '/img/assets/users-permissions/users-roles-permissions-settings.png',
+    dark: '/img/assets/users-permissions/users-roles-permissions-settings_DARK.png',
+  }}
+/>

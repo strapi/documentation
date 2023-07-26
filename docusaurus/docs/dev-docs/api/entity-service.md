@@ -17,6 +17,10 @@ The Strapi backend provides an Entity Service API, built on top of the [Query En
 <EntityQueryKnex components={props.components} />
 :::
 
+:::info Disambiguation: Services vs. Entity Service
+While [services](/dev-docs/backend-customization/services) can use the Entity Service API, services and the Entity Service API are not directly related. You can find more information about the core elements of the Strapi back end in the [back-end customization](/dev-docs/backend-customization) documentation.
+:::
+
 ## Basic usage
 
 The Entity Service is available through `strapi.entityService`:

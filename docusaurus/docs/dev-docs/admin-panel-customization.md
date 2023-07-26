@@ -2,10 +2,12 @@
 title: Admin panel customization
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
 toc_max_heading_level: 4
-
 ---
 
-# Admin panel customization
+<!-- not required but if we don't include an import line the 2 JavaScript lines below are interpreted as Markdown text 🤷  -->
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const captionStyle = {fontSize: '12px'}
+const imgStyle = {width: '100%', margin: '0' }
 
 The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
@@ -436,6 +438,19 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | ---------------------- | --------------------------- |
 | On the login page      | `config.auth.logo`          |
 | In the main navigation | `config.menu.logo`          |
+
+<details>
+<summary>Logos location in the admin panel:</summary>
+<figure style={imgStyle}>
+  <img src="/img/assets/development/config-auth-logo.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
+  <em><figcaption >The logo handled by <code>config.auth.logo</code> logo is only shown on the login screen.</figcaption></em>
+</figure>
+<br/>
+<figure style={imgStyle}>
+  <img src="/img/assets/development/config-menu-logo.png" alt="Location of Menu logo" />
+  <em><figcaption >The logo handled by <code>config.menu.logo</code> logo is located in the main navigation at the top left corner of the admin panel.</figcaption></em>
+</figure>
+</details>
 
 To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
 

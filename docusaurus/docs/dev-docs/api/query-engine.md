@@ -13,6 +13,7 @@ The Strapi backend provides a Query Engine API to interact with the database lay
 
 <BackendIntroCrosslink components={props.components} />
 
+
 :::strapi Entity Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
 :::

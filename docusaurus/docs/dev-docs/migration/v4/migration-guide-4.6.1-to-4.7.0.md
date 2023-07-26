@@ -51,7 +51,7 @@ If the operation doesn't work, try removing your `yarn.lock` or `package-lock.js
 In order to enable the new data transfer features (remote data transfer, transfer tokens), a transfer token salt needs to be defined in your [admin panel configuration file](/dev-docs/configurations/admin-panel):
 
 1. Add a new configuration property to your `config/admin.(js|ts)` file under the path `transfer.token.salt` with the value being `env('TRANSFER_TOKEN_SALT')`.
-2. Generate a new token salt (string). For instance, you can generate a random string using Node in your terminal by running the following command inside a Node session: `crypto.randomBytes(16).toString('base64')`.
+2. Generate a new token salt, which is a string. For instance, you can generate a random string using Node in your terminal: Run `node` to enter the [Node REPL](https://nodejs.dev/en/learn/how-to-use-the-nodejs-repl/) and run the following command `crypto.randomBytes(16).toString('base64')`, then copy the generated random string (without the single quotes), and finally press Ctrl-C twice to quit the Node REPL.
 3. Add the generated token to your environment variables.
 
 <Tabs groupId="js-ts">

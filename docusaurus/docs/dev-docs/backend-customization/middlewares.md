@@ -8,8 +8,6 @@ const captionStyle = {fontSize: '12px'}
 
 # Middlewares customization
 
-<FeedbackCallout components={props.components}/>
-
 :::strapi Different types of middlewares
 
 In Strapi, 2 middleware concepts coexist:

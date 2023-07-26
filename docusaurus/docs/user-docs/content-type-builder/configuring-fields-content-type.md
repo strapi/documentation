@@ -16,7 +16,14 @@ In the Content-type Builder, fields can be added at the creation of a new conten
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
-<img src="/img/assets/content-type-builder/fields-selection.png" alt="Field selection" width="80%" />
+<ThemedImage
+  alt="Fields selection"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-type-builder/fields-selection.png',
+    dark: '/img/assets/content-type-builder/fields-selection_DARK.png',
+  }}
+/>
 
 ## Regular fields
 
@@ -137,7 +144,6 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Time interval  | The interval (in minutes) the timepicker will allow to select (for fields of type datetime and time). |
 
 </TabItem>
 
@@ -293,7 +299,6 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
 
 </TabItem>
 

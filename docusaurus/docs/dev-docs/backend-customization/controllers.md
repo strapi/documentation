@@ -4,8 +4,6 @@ const captionStyle = {fontSize: '12px'}
 
 # Controllers
 
-<FeedbackCallout components={props.components}/>
-
 Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
 
 In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/backend-customization/services) to organize the code into re-usable parts.
@@ -194,7 +192,7 @@ As of Strapi v4.8.0 and greater it's strongly recommended you sanitize your inco
 
 #### Sanitization when utilizing controller factories
 
-Within the Strapi factories there are 2 functions exposed that can be used for sanitization:
+Within the Strapi factories there are 3 functions exposed that can be used for sanitization:
 
 | Function Name    | Parameters                 | Description                                                                          |
 |------------------|----------------------------|--------------------------------------------------------------------------------------|
@@ -212,7 +210,7 @@ These functions automatically inherit the sanitization settings from the model a
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
-  async findOne(ctx) {
+  async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
@@ -231,7 +229,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
-  async findOne(ctx) {
+  async find(ctx) {
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);

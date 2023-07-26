@@ -3,11 +3,22 @@ sidebar_position: 3
 title: Single Sign-On
 ---
 
-# Configuring Single Sign-On <EnterpriseBadge />
+# Configuring Single Sign-On (SSO) <EnterpriseBadge />
+
+
+:::info
+Single Sign-On is an <EnterpriseBadge />-only feature.
+:::
 
 Single Sign-On (SSO) can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory). SSO configurations can be done from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Single Sign-On*.
 
-![SSO settings](/img/assets/settings/settings-sso.png)
+<ThemedImage
+  alt="SSO settings"
+  sources={{
+    light: '/img/assets/settings/settings-sso.png',
+    dark: '/img/assets/settings/settings-sso.png',
+  }}
+/>
 
 To configure the SSO feature settings:
 

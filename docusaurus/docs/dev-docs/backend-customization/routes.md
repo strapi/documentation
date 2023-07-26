@@ -10,8 +10,6 @@ const captionStyle = {fontSize: '12px'}
 
 # Routes
 
-<FeedbackCallout components={props.components}/>
-
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)). Routes can be [added](#implementation) and configured:
 
 - with [policies](#policies), which are a way to block access to a route,

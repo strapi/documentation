@@ -11,8 +11,6 @@ const captionStyle = {fontSize: '12px'}
 
 # Policies
 
-<FeedbackCallout components={props.components}/>
-
 Policies are functions that execute specific logic on each request before it reaches the [controller](/dev-docs/backend-customization/controllers). They are mostly used for securing business logic.
 
 Each [route](/dev-docs/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.

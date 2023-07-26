@@ -23,7 +23,13 @@ By default, the Media Library displays folders and assets created at the root le
 - the subfolders (2) the current folder contains
 - all assets (3) from this folder
 
-![🏞 screenshot - Media library one folder deep, with back button and updated folder title](/img/assets/media-library/media-library_folder-content.png)
+<ThemedImage
+  alt="Media library one folder deep, with back button and updated folder title"
+  sources={{
+    light: '/img/assets/media-library/media-library_folder-content.png',
+    dark: '/img/assets/media-library/media-library_folder-content_DARK.png',
+  }}
+/>
 
 From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/user-docs/media-library)).
 
@@ -50,7 +56,13 @@ There is no limit to how deep your folders hierarchy can go, but bear in mind it
 
 Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
 
-![🏞 screenshot - "Move elements to" popup](/img/assets/media-library/media-library_move-assets.png)
+<ThemedImage
+  alt="'Move elements to' popup"
+  sources={{
+    light: '/img/assets/media-library/media-library_move-assets.png',
+    dark: '/img/assets/media-library/media-library_move-assets_DARK.png',
+  }}
+/>
 
 To bulk move assets and folders to another folder:
 
