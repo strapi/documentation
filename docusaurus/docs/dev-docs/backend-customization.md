@@ -11,10 +11,10 @@ As a headless CMS, the Strapi software as a whole can be considered as the "back
 But the Strapi software itself includes 2 different parts:
 
 
-- The back-end part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
-- The front-end part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
+- The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
+- The **front-end** part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
 
-Throughout this developer documentation, 'back end' refers exclusively to the back-end part of Strapi.
+Throughout this developer documentation, 'back end' refers _exclusively_ to the back-end part of Strapi.
 
 The [User Guide](/user-docs/intro) explains how to use the admin panel and the [admin panel customization section](/dev-docs/admin-panel-customization) details the various customization options available for the admin panel.
 :::
