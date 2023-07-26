@@ -11,13 +11,13 @@ description: Strapi offers a single entry point file for its middlewares configu
 
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present documentation describes how to configure Strapi middlewares.<br/>Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/dev-docs//backend-customization/middlewares.md)).
+- **Global middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present documentation describes how to configure global middlewares.<br/>Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/dev-docs//backend-customization/middlewares.md)).
 
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [route middlewares documentation](/dev-docs/backend-customization/routes.md#middlewares).
 
 :::
 
-The `./config/middlewares.js` file is used to define all the Strapi middlewares that should be applied by the Strapi server.
+The `./config/middlewares.js` file is used to define all the global middlewares that should be applied by the Strapi server.
 
 Only the middlewares present in `./config/middlewares.js` are applied. Loading middlewares happens in a specific [loading order](#loading-order), with some [naming conventions](#naming-conventions) and an [optional configuration](#optional-configuration) for each middleware.
 
@@ -116,7 +116,7 @@ If you aren't sure where to place a middleware in the stack, add it to the end o
 
 ## Naming conventions
 
-Strapi middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
+Global middlewares can be classified into different types depending on their origin, which defines the following naming conventions:
 
 | Middleware type   | Origin                                                                                                                                                                                                                                  | Naming convention                                                                                                    |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|

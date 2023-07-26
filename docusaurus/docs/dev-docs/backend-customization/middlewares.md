@@ -2,17 +2,26 @@
 title: Middlewares
 ---
 
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const imgStyle = {width: '100%', margin: '0'}
+const captionStyle = {fontSize: '12px'}
+
 # Middlewares customization
 
 :::strapi Different types of middlewares
 
 In Strapi, 2 middleware concepts coexist:
 
-- **Strapi middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add Strapi middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
+- **Global middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add global middlewares (see [Server API documentation](/dev-docs/api/plugins/server-api)).
 
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
 
 :::
+
+<figure style={imgStyle}>
+  <img src="/img/assets/backend-customization/diagram-global-middlewares.png" alt="Simplified Strapi backend diagram with global middlewares highlighted" />
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Implementation
 

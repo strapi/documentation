@@ -4,6 +4,10 @@ description: Strapi routes handle requests to your content and are auto-generate
 displayed_sidebar: devDocsSidebar
 ---
 
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const imgStyle = {width: '100%', margin: '0'}
+const captionStyle = {fontSize: '12px'}
+
 # Routes
 
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)). Routes can be [added](#implementation) and configured:
@@ -12,6 +16,11 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 - and with [middlewares](#middlewares), which are a way to control and change the request flow and the request itself.
 
 Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/dev-docs/backend-customization/controllers)).
+
+<figure style={imgStyle}>
+  <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Implementation
 

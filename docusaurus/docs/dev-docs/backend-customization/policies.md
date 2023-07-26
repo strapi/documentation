@@ -5,6 +5,10 @@ displayed_sidebar: devDocsSidebar
 
 ---
 
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const imgStyle = {width: '100%', margin: '0'}
+const captionStyle = {fontSize: '12px'}
+
 # Policies
 
 Policies are functions that execute specific logic on each request before it reaches the [controller](/dev-docs/backend-customization/controllers). They are mostly used for securing business logic.
@@ -12,6 +16,11 @@ Policies are functions that execute specific logic on each request before it rea
 Each [route](/dev-docs/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.
 
 Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies).
+
+<figure style={imgStyle}>
+  <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes and policies highlighted" />
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with policies and routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Implementation
 

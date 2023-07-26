@@ -4,11 +4,16 @@ description: Learn more about requests and responses for Strapi, the most popula
 
 ---
 
+import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+const imgStyle = {width: '100%', margin: '0'}
+const captionStyle = {fontSize: '12px'}
+
 # Requests and Responses
 
 The Strapi back end server is based on [Koa](https://koajs.com/). When you send requests through the [REST API](/dev-docs/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/dev-docs/backend-customization/policies), [controllers](/dev-docs/backend-customization/controllers), [services](/dev-docs/backend-customization/services)).
 
 `ctx` includes 3 main objects:
+
 
 - [`ctx.request`](#ctxrequest) for information about the request sent by the client making an API request,
 - [`ctx.state`](#ctxstate) for information about the state of the request within the Strapi back end,
@@ -21,6 +26,11 @@ The request's context can also be accessed from anywhere in the code with the [`
 :::info
 In addition to the concepts and parameters described in the following documentation, you might find additional information in the [Koa request documentation](http://koajs.com/#request), [Koa Router documentation](https://github.com/koajs/router/blob/master/API.md) and [Koa response documentation](http://koajs.com/#response).
 :::
+
+<figure style={imgStyle}>
+  <img src="/img/assets/backend-customization/diagram-requests-responses.png" alt="Simplified Strapi backend diagram with requests and responses highlighted" />
+  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with requests and responses highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## `ctx.request`
 
