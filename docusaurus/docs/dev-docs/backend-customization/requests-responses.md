@@ -14,7 +14,6 @@ The Strapi back end server is based on [Koa](https://koajs.com/). When you send 
 
 `ctx` includes 3 main objects:
 
-## Requests
 
 - [`ctx.request`](#ctxrequest) for information about the request sent by the client making an API request,
 - [`ctx.state`](#ctxstate) for information about the state of the request within the Strapi back end,
