@@ -521,6 +521,7 @@ const sidebars = {
       items: [
         'cloud/projects/overview',
         'cloud/projects/settings',
+        'cloud/projects/collaboration',
         {
           type: 'doc',
           label: 'Notifications',
