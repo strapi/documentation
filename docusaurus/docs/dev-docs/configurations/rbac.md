@@ -147,10 +147,12 @@ const conditions = [
   }
 ];
 
-module.exports = async () => {
+module.exports = {
+  async bootstrap(/*{ strapi }*/) {
   // do your boostrap
 
-  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+    await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+  },
 };
 ```
 
