@@ -26,7 +26,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
 
 :::note
-Currently all roles using Review Workflows in the content-manager need to have at least "Read" permission for workflow settings, defined in *Settings > Administration Panel > Roles > Edit a role > Settings > Review Workflows*.
+Currently all roles using Review Workflows in the Content Manager need to have at least "Read" permission for workflow settings, defined in *Settings > Administration Panel > Roles > Edit a role > Settings > Review Workflows*.
 :::
 
 
