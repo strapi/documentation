@@ -17,7 +17,7 @@ import Link from '@docusaurus/Link';
 import {translate} from '@docusaurus/Translate';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import DocSidebarItems from '@theme/DocSidebarItems';
-import { NewBadge } from '../../../components/Badge';
+import { NewBadge, UpdatedBadge } from '../../../components/Badge';
 
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself
@@ -191,6 +191,7 @@ export default function DocSidebarItemCategory({
             />
           )}
           {customProps?.new && <NewBadge />}
+          {customProps?.updated && <UpdatedBadge />}
         </Link>
       </div>
 

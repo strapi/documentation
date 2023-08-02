@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
 import styles from './styles.module.css';
-import { NewBadge } from '../../../components/Badge';
+import { NewBadge, UpdatedBadge } from '../../../components/Badge';
 
 export default function DocSidebarItemHtml({ item, level, index }) {
   const {
@@ -28,6 +28,7 @@ export default function DocSidebarItemHtml({ item, level, index }) {
         dangerouslySetInnerHTML={{__html: value}}
       />
       {customProps?.new && <NewBadge />}
+      {customProps?.updated && <UpdatedBadge />}
     </li>
   );
 }

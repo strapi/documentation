@@ -59,6 +59,25 @@
     min-width: 52px;
     border: 1px solid var(--custom-badge-border-color);
   }
+
+
+  &--updated {
+    --custom-badge-background-color: var(--strapi-secondary-100);
+    --custom-badge-border-color: var(--strapi-secondary-200);
+    --custom-badge-color: var(--strapi-secondary-600);
+
+    --ifm-badge-padding-horizontal: 2px;
+    --ifm-badge-padding-vertical: 2px;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    min-width: 52px;
+    border: 1px solid var(--custom-badge-border-color);
+    flex-shrink: 0;
+  }
 }
 
 h1 .badge {
@@ -76,6 +95,11 @@ h2 .badge {
       --custom-badge-background-color: var(--strapi-neutral-100);
       --custom-badge-border-color: var(--strapi-warning-500);
       --custom-badge-color: var(--strapi-warning-500);
+    }
+    &--updated {
+      --custom-badge-background-color: var(--strapi-neutral-100);
+      --custom-badge-border-color: var(--strapi-secondary-500);
+      --custom-badge-color: var(--strapi-secondary-500);
     }
   }
 }
