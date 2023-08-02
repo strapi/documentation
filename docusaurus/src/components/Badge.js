@@ -71,3 +71,13 @@ export function NewBadge(props) {
     />
   );
 }
+
+
+export function UpdatedBadge(props) {
+  return (
+    <Badge
+      variant="Updated ️🖌"
+      {...props}
+    />
+  );
+}
