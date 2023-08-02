@@ -6,7 +6,7 @@ import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
 import styles from './styles.module.css';
-import { NewBadge } from '../../../components/Badge';
+import { NewBadge, UpdatedBadge } from '../../../components/Badge';
 
 export default function DocSidebarItemLink({
   item,
@@ -58,6 +58,7 @@ export default function DocSidebarItemLink({
         </span>
         {!isInternalLink && <IconExternalLink />}
         {customProps?.new && <NewBadge />}
+        {customProps?.updated && <UpdatedBadge />}
       </Link>
     </li>
   );
