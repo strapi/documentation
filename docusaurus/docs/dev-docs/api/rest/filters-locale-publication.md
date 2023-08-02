@@ -34,6 +34,7 @@ The following operators are available:
 | `$eq`           | Equal                                    |
 | `$eqi`          | Equal (case-insensitive)                 |
 | `$ne`           | Not equal                                |
+| `$nei`          | Not equal (case-insensitive)             |
 | `$lt`           | Less than                                |
 | `$lte`          | Less than or equal to                    |
 | `$gt`           | Greater than                             |
