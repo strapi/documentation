@@ -39,7 +39,7 @@ The *General* tab enables you to edit the following details for your account pro
 
 ### Deleting Strapi Cloud account
 
-You can delete your Strapi Cloud account, but it will be permanent and irreversible. All associated projects and their data will be deleted as well and the subscriptions for the projects will automatically be cancelled.
+You can delete your Strapi Cloud account, but it will be permanent and irreversible. All associated projects and their data will be deleted as well and the subscriptions for the projects will automatically be canceled.
 
 1. In the *Delete account* section of the *General* tab, click on the **Delete account** button.
 2. In the dialog, type `DELETE` in the textbox.
