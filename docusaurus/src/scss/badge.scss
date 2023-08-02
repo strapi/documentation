@@ -76,6 +76,7 @@
     text-transform: uppercase;
     min-width: 52px;
     border: 1px solid var(--custom-badge-border-color);
+    flex-shrink: 0;
   }
 }
 
