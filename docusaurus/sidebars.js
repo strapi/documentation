@@ -539,7 +539,6 @@ const sidebars = {
       label: 'Projects',
       items: [
         'cloud/projects/overview',
-        'cloud/projects/settings',
         {
           type: 'doc',
           label: 'Project Settings',
