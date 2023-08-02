@@ -34,7 +34,7 @@ Another possible workflow is to first create the data structure locally, push yo
 
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
 
-- Node LTS (v14 or v16) **Odd-number releases of Node are not supported (e.g. v13, v15).**
+- Node LTS (currently v16, v18, and v20) **Odd-number releases of Node are not supported (e.g. v17, v19).**
 - NPM v6 (or the version shipped with the LTS Node versions)
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
