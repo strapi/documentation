@@ -142,8 +142,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
 
+  &__link__content {
+    padding-right: 10px;
+  }
+
   .badge {
-    margin: -1px 0 -1px 10px;
+    margin: -1px 0 -1px auto;
   }
 
   .theme-doc-sidebar {
