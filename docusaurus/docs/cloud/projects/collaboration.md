@@ -6,21 +6,20 @@ canonicalUrl: https://docs.strapi.io/cloud/projects/collaboration.md
 sidebar_position: 1
 ---
 
-# Collaboration & shared projects
+# Collaboration on projects
 
 Projects are created by a user via his Strapi Cloud account, which is linked to their GitHub account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their GitHub credentials.
-<!-- Question: What are the names of the 2 types of users? There is written "maintainer" in Figma but nowhere else. Invited user? VS Project creator? Administrator? -->
 
-Users invited to collaborate on a project do not have the same permissions as the project owner. Contrary to the latter, invited users:
+Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the latter, maintainers:
 
 - cannot see the *Usage* section of the Overview tab,
 - cannot share the project themselves to someone else,
 - cannot delete the project from the project settings,
 - and cannot access the *Billing* section of project settings.
 
-## Inviting users by sharing a project
+## Sharing a project
 
-To invite someone to collaborate on a project:
+To invite a new maintainer to collaborate on a project:
 
 1. Go to the *Overview* tab of your project dashboard.
 2. Click on the **Share** button in the top right hand corner.
@@ -29,29 +28,38 @@ To invite someone to collaborate on a project:
 5. (optional) Repeat steps 3 and 4 to invite more people. Email addresses can only entered one by one but invites can be sent to several email addresses at the same time.
 6. Click on the **Send** button.
 
-People invited to collaborate on a project will be sent an email indicating how to join the project <!-- Question: What's on the email? Steps to follow? URL to click on? -->. Once a project is shared, <!-- Questions: How do we call the things that represent the people? Dots? Circles? Do they show profile pictures or only initials? --> will be displayed in the project dashboard next to the **Share** button, to see how many users collaborate on that project and who they are. <!-- Questions: What happens when we hover on those dots? Also, are they only displayed for the project owner or to everyone? -->.
+New maintainers will be sent an email containing a link to click on to join the project. Once a project is shared, avatars representing the maintainers will be displayed in the project dashboard next to the **Share** button, to see how many maintainers collaborate on that project and who they are.
+
+:::tip
+Avatars use GitHub profile pictures, but for pending users only initials will be displayed until the activation of the maintainer account. You can hover over an avatar to display the full name of the maintainer.
+:::
 
 <!-- SCREENSHOT OF DASHBOARD WITH DOTS AND SHARE BUTTON -->
 
-## Managing invited users
+## Managing maintainers
 
-From the *Share [project name]* dialog accessible by clicking on the **Share** button of a project dashboard, projects owners can view the full list of people who have been invited to collaborate on the project. From there, it is possible to see the current status of each invited user and to manage those users.
+From the *Share [project name]* dialog accessible by clicking on the **Share** button of a project dashboard, projects owners can view the full list of maintainers who have been invited to collaborate on the project. From there, it is possible to see the current status of each maintainer and to manage them.
 
 <!-- SCREENSHOT OF DIALOG WITH PEOPLE AND STATUS -->
 
-Invited users whose full name is displayed and dot is blue are users who did activate their account following the invitation email <!-- Not sure that's the correct wording -->. If however there are users in the list whose email address is displayed and dot is grey, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
+Maintainers whose full name is displayed and dot is blue are users who did activate their account following the invitation email. If however there are maintainers in the list whose email address is displayed and dot is grey, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
 
-- Pending: the invitation email has been sent but the person hasn't acted on it yet.
-- Expired: the email has been sent ... time ago <!-- Question: After how long does the invitation expire? --> and the invitation expired.
+- Pending: the invitation email has been sent but the maintainer hasn't acted on it yet.
+- Expired: the email has been sent over 72 hours ago and the invitation expired.
 
 For both Pending and Expired statuses, it is possible to send another invitation email by clicking on the **Manage** button, then **Resend invite**. 
 
-### Revoking invitations
+### Revoking maintainers
 
-To revoke an invited user's access to the project dashboard:
+To revoke a maintainer's access to the project dashboard:
 
 1. Click on the **Share** button in the project dashboard.
-2. In the list of *People with access*, find the user whose access to revoke and click on the **Manage** button.
-3. Click on the **Revoke** button. <!-- Question: Is is done after clicking on the button or is there another confirmation dialog or something? -->
+2. In the list of *People with access*, find the maintainer whose access to revoke and click on the **Manage** button.
+3. Click on the **Revoke** button.
+4. In the confirmation dialog, click again on the **Revoke** button.
 
-The revoked user will completely stop having access to the project dashboard. <!-- Question: Do revoked users received an email/notification? -->
+The revoked maintainer will completely stop having access to the project dashboard.
+
+:::note
+Maintainers whose access to the project has been revoked do not receive any email or notification.
+::: 
