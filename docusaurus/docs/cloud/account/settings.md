@@ -13,9 +13,18 @@ The *Profile* page enables you to manage your account details and preferences. I
 
 The *General* tab enables you to edit the following details for your account profile:
 
-- Details: to modify the name and email address associated with your account (see [Modifying account details](#modifying-account-details)).
+- Details: to see the name associated with your account, which is based on the one defined in your GitHub account.
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
+<ThemedImage
+  alt="General tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-deletion.png',
+    dark: '/img/assets/cloud/account-deletion_DARK.png',
+  }}
+/>
+
+<!--
 ### Modifying profile details
 
 1. In the *Details* section of the *General* tab, modify the information of your choice:
@@ -26,6 +35,7 @@ The *General* tab enables you to edit the following details for your account pro
     | Email           | Write your complete email address in the textbox.                        |
     
 2. Click on the **Save** button.
+-->
 
 ### Deleting Strapi Cloud account
 
@@ -39,11 +49,25 @@ You can delete your Strapi Cloud account, but it will be permanent and irreversi
 
 The *Preferences* tab enables you to choose the appearance of your Strapi Cloud dashboard: either the Light or Dark theme.
 
+<ThemedImage
+  alt="Preferences tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-preferences.png',
+    dark: '/img/assets/cloud/account-preferences_DARK.png',
+  }}
+/>
+
 ## Billing
 
 The *Billing* tab displays your billing information and enables you to update your payment method.
 
-![Account billing settings](/img/assets/cloud/account-billing.png)
+<ThemedImage
+  alt="Billing tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-billing2.png',
+    dark: '/img/assets/cloud/account-billing2_DARK.png',
+  }}
+/>
 
 ### Managing subscriptions
 
