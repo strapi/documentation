@@ -29,14 +29,3 @@ If there is no specific migration guide between your current version and the lat
 - [Migration guide from 4.6.1 to 4.7.0](/dev-docs/migration/v4/migration-guide-4.6.1-to-4.7.0)
 - [Migration guide from 4.7.0 to 4.11.4](/dev-docs/migration/v4/migration-guide-4.7.0-to-4.11.4)
 
-## v3 to v4 migration guides
-
-Migrating from v3.6.x to v4.0.x revolves around 3 topics:
-
-- The [code migration guide](/dev-docs/migration/v3-to-v4/code-migration) helps migrating the built-in back-end and front-end code of the Strapi application to v4.
-- The [data migration guide](/dev-docs/migration/v3-to-v4/data-migration) helps migrating the database content to v4.
-- The [plugin migration guide](/dev-docs/migration/v3-to-v4/plugin-migration) helps migrating a plugin to v4.
-
-## v3 migration guides
-
-v3 migration guides are available in the [v3 documentation](https://docs-v3.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides).
