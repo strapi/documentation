@@ -45,8 +45,9 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 </CustomDocCardsWrapper>
 
-:::tip
-If you already know exactly what you're searching for, use the search bar at the top or navigate using the table of content.
+:::tip Tips
+- If you already know exactly what you're searching for, use the search bar at the top or navigate using the table of content.
+- If you prefer learning more about Strapi while looking at the project code structure, you can use the interactive [project structure](/dev-docs/project-structure) page.
 :::
 ## Open-source & Contribution
 
