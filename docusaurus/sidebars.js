@@ -1,4 +1,5 @@
 /**
+ *
  * Creating a sidebar enables you to:
  - create an ordered group of docs
  - render a sidebar for each doc of that group
@@ -14,7 +15,7 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   devDocsSidebar: [
-    {
+    { // Getting Started
       type: 'category',
       collapsed: false,
       label: '🚀 Getting Started',
@@ -25,41 +26,39 @@ const sidebars = {
         'dev-docs/usage-information',
       ]
     },
-    {
+    { // Setup & Deployment
       type: 'category',
       collapsed: false,
       label: '⚙️ Setup & Deployment',
       items: [
         {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/setup-deployment',
+        },
+        {
           type: 'category',
           label: 'Installation',
-          link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/installation',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/installation',
+            },
             'dev-docs/installation/cli',
             'dev-docs/installation/docker',
           ]
         },
-        {
-          type: 'doc',
-          id: 'dev-docs/project-structure',
-        },
+        'dev-docs/project-structure',
         {
           type: 'category',
           label: 'Configuration',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/configurations',
+            },
             {
               type: 'category',
               label: 'Required configurations',
@@ -93,11 +92,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/deployment',
-        },
           items: [
+           {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/deployment',
+            },
             {
               type: 'doc',
               label: '☁️ Strapi Cloud',
@@ -118,7 +118,6 @@ const sidebars = {
                 'dev-docs/deployment/digitalocean',
                 // 'dev-docs/deployment/google-app-platform',
                 'dev-docs/deployment/heroku',
-
               ],
             },
             {
@@ -136,16 +135,20 @@ const sidebars = {
                 'dev-docs/deployment/process-manager',
               ],
             },
-
           ]
         }
       ]
     },
-    {
+    { // Content APIs
       type: 'category',
       collapsed: false,
-      label: '📦 APIs',
+      label: '📦 Content APIs',
       items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/api/content-apis'
+        },
         {
           type: 'category',
           label: 'REST API',
@@ -163,6 +166,35 @@ const sidebars = {
           ]
         },
         'dev-docs/api/graphql',
+        {
+          type: 'category',
+          label: 'Integrations',
+          link: {
+            type:'doc',
+            id: 'dev-docs/integrations',
+          },
+          items: [
+            'dev-docs/integrations/11ty',
+            'dev-docs/integrations/angular',
+            'dev-docs/integrations/dart',
+            'dev-docs/integrations/flutter',
+            'dev-docs/integrations/gatsby',
+            'dev-docs/integrations/gridsome',
+            'dev-docs/integrations/go',
+            'dev-docs/integrations/graphql',
+            'dev-docs/integrations/jekyll',
+            'dev-docs/integrations/laravel',
+            'dev-docs/integrations/next-js',
+            'dev-docs/integrations/nuxt-js',
+            'dev-docs/integrations/php',
+            'dev-docs/integrations/python',
+            'dev-docs/integrations/react',
+            'dev-docs/integrations/ruby',
+            'dev-docs/integrations/sapper',
+            'dev-docs/integrations/svelte',
+            'dev-docs/integrations/vue-js',
+          ]
+        },
         {
           type: 'category',
           label: 'Entity Service API',
@@ -193,16 +225,58 @@ const sidebars = {
             'dev-docs/api/query-engine/order-pagination',
           ]
         },
-        'dev-docs/api/plugins/admin-panel-api',
-        'dev-docs/api/plugins/server-api',
+
       ]
     },
-    {
+    { // Advanced features
       type: 'category',
-      label: '🔧 Development',
+      label: '🔧 Advanced features',
       collapsed: false,
       items: [
-        'dev-docs/admin-panel-customization',
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/advanced-features',
+        },
+        'dev-docs/cli',
+        'dev-docs/typescript',
+        {
+          type: 'doc',
+          label: 'Providers',
+          id: 'dev-docs/providers',
+        },
+        {
+          type: 'category',
+          label: 'Data management',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/data-management',
+          },
+          items: [
+            'dev-docs/data-management/export',
+            'dev-docs/data-management/import',
+            {
+              type: 'doc',
+              label: 'Data transfer',
+              id: 'dev-docs/data-management/transfer',
+            }
+          ],
+        },
+        'dev-docs/database-migrations',
+        'dev-docs/testing',
+        'dev-docs/error-handling',
+      ]
+    },
+    { // Customization
+      type: 'category',
+      collapsed: false,
+      label: '🛠 Customization',
+      items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/customization',
+        },
         {
           type: 'category',
           label: 'Back-end customization',
@@ -231,76 +305,11 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
-        'dev-docs/typescript',
+        'dev-docs/admin-panel-customization',
         'dev-docs/custom-fields',
-        {
-          type: 'doc',
-          label: 'Providers',
-          id: 'dev-docs/providers',
-        }
       ]
     },
-    {
-      type: 'category',
-      label: '💻 Developer Resources',
-      collapsed: false,
-      items: [
-        'dev-docs/cli',
-        {
-        type: 'category',
-        label: 'Data management',
-        collapsed: false,
-        link: {
-          type: 'doc',
-          id: 'dev-docs/data-management',
-         },
-        items: [
-          'dev-docs/data-management/export',
-          'dev-docs/data-management/import',
-          {
-            type: 'doc',
-            label: 'Data transfer',
-            id: 'dev-docs/data-management/transfer',
-          }
-         ],
-        },
-        'dev-docs/database-migrations',
-        'dev-docs/error-handling',
-        'dev-docs/testing',
-        {
-          type: 'category',
-          label: 'Integrations',
-          link: {
-            type:'doc',
-            id: 'dev-docs/integrations',
-          },
-          items: [
-            'dev-docs/integrations/11ty',
-            'dev-docs/integrations/angular',
-            'dev-docs/integrations/dart',
-            'dev-docs/integrations/flutter',
-            'dev-docs/integrations/gatsby',
-            'dev-docs/integrations/gridsome',
-            'dev-docs/integrations/go',
-            'dev-docs/integrations/graphql',
-            'dev-docs/integrations/jekyll',
-            'dev-docs/integrations/laravel',
-            'dev-docs/integrations/next-js',
-            'dev-docs/integrations/nuxt-js',
-            'dev-docs/integrations/php',
-            'dev-docs/integrations/python',
-            'dev-docs/integrations/react',
-            'dev-docs/integrations/ruby',
-            'dev-docs/integrations/sapper',
-            'dev-docs/integrations/svelte',
-            'dev-docs/integrations/vue-js',
-          ]
-        },
-      ],
-    },
-    {
+    { // Plugins
       type: 'category',
       collapsed: false,
       label: '🔌 Plugins',
@@ -315,6 +324,20 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/plugins'
+        },
+        {
+          type: 'category',
+          label: 'Using plugins',
+          items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/using-plugins'
+            },
             'dev-docs/plugins/documentation',
             'dev-docs/plugins/email',
             'dev-docs/plugins/graphql',
@@ -323,103 +346,62 @@ const sidebars = {
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
           ]
+        },
+        {
+          type: 'category',
+          label: 'Developing plugins',
+          items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/developing-plugins'
+            },
+            'dev-docs/plugins-extension',
+            'dev-docs/plugins-development',
+            {
+              type: 'category',
+              label: 'Plugin APIs',
+              items: [
+                'dev-docs/plugins/admin-panel-api',
+                'dev-docs/plugins/server-api',
+              ]
+            },
+            'dev-docs/plugins/publishing-your-plugin'
+          ]
+        }
+      ]
     },
-    {
+    { // Update & Migration
       type: 'category',
       collapsed: false,
       label: '♻️ Update and Migration',
       items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/update-migration'
+        },
         'dev-docs/update-version',
-        'dev-docs/migration-guides',
+        {
+          type: 'doc',
+          label: 'v5.x migration guides',
+          id: 'dev-docs/migration-guides',
+        },
         {
           type: 'category',
           collapsed: true,
-          label: 'v3 to v4 migration guides',
+          label: 'v4 to v5 migration guides',
           items: [
             {
-              type: 'category',
-              collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/code-migration'
-              },
-              label: 'Code migration',
-              items: [
-                {
-                  type: 'category',
-                  collapsed: true,
-                  link: {
-                    type: 'doc',
-                    id: 'dev-docs/migration/v3-to-v4/code/backend'
-                  },
-                  label: 'Backend migration',
-                  items: [
-                          'dev-docs/migration/v3-to-v4/code/configuration',
-                          'dev-docs/migration/v3-to-v4/code/content-type-schema',
-                          'dev-docs/migration/v3-to-v4/code/controllers',
-                          'dev-docs/migration/v3-to-v4/code/dependencies',
-                          'dev-docs/migration/v3-to-v4/code/global-middlewares',
-                          'dev-docs/migration/v3-to-v4/code/graphql',
-                          'dev-docs/migration/v3-to-v4/code/policies',
-                          'dev-docs/migration/v3-to-v4/code/route-middlewares',
-                          'dev-docs/migration/v3-to-v4/code/routes',
-                          'dev-docs/migration/v3-to-v4/code/services',
-                  ]
-                },
-                {
-                  type: 'category',
-                  collapsed: true,
-                  link: {
-                    type: 'doc',
-                    id: 'dev-docs/migration/v3-to-v4/code/frontend'
-                  },
-                  label: 'Frontend migration',
-                  items: [
-                          'dev-docs/migration/v3-to-v4/code/strapi-global',
-                          'dev-docs/migration/v3-to-v4/code/theming',
-                          'dev-docs/migration/v3-to-v4/code/translations',
-                          'dev-docs/migration/v3-to-v4/code/webpack',
-                          'dev-docs/migration/v3-to-v4/code/wysiwyg',
-                  ]
-                },
-              ]
-            },
-            {
-              type: 'category',
-              collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/plugin-migration'
-              },
-              label: 'Plugin migration',
-              items: [
-                'dev-docs/migration/v3-to-v4/plugin/update-folder-structure',
-                'dev-docs/migration/v3-to-v4/plugin/migrate-back-end',
-                'dev-docs/migration/v3-to-v4/plugin/migrate-front-end',
-                'dev-docs/migration/v3-to-v4/plugin/enable-plugin',
-              ]
-            },
-            {
-              type: 'category',
-              collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v3-to-v4/data-migration'
-              },
-              label: 'Data migration',
-              items: [
-                'dev-docs/migration/v3-to-v4/data/sql',
-                'dev-docs/migration/v3-to-v4/data/sql-relations',
-                'dev-docs/migration/v3-to-v4/data/mongo',
-                'dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet',
-              ]
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/migration/v4-to-v5/introduction'
             },
           ]
         }
       ],
     },
   ],
-
   userDocsSidebar: [
     'user-docs/intro',
     {
@@ -567,7 +549,6 @@ const sidebars = {
       ]
     }
   ],
-
   restApiSidebar: [
     {
       type: 'link',
