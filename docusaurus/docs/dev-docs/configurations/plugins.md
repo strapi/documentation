@@ -12,7 +12,7 @@ Plugin configurations are stored in `./config/plugins.js` (see [project structur
 | Parameter                  | Description                                                                                                                                                            | Type    |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `enabled`                  | Enable (`true`) or disable (`false`) an installed plugin                                                                                                               | Boolean |
-| `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/dev-docs/api/plugins/server-api#configuration)) | Object  |
+| `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/dev-docs/plugins/server-api#configuration)) | Object  |
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
 <Tabs groupId="js-ts">

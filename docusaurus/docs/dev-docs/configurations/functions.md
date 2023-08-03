@@ -164,4 +164,4 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 It can be used to gracefully:
 
 - stop [services](/dev-docs/backend-customization/services) that are running
-- [clean up plugin actions](/dev-docs/api/plugins/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+- [clean up plugin actions](/dev-docs/plugins/server-api#destroy) (e.g. close connections, remove listeners, etc.)

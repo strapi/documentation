@@ -30,7 +30,7 @@ Once created and used, custom fields are defined like any other attribute in the
 
 Strapi's server needs to be aware of all the custom fields to ensure that an attribute using a custom field is valid.
 
-The `strapi.customFields` object exposes a `register()` method on the `Strapi` instance. This method is used to register custom fields on the server during the plugin's server [register lifecycle](/dev-docs/api/plugins/server-api#register).
+The `strapi.customFields` object exposes a `register()` method on the `Strapi` instance. This method is used to register custom fields on the server during the plugin's server [register lifecycle](/dev-docs/plugins/server-api#register).
 
 `strapi.customFields.register()` registers one or several custom field(s) on the server by passing an object (or an array of objects) with the following parameters:
 
