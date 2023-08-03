@@ -29,7 +29,7 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCardsWrapper>
 
-<CustomDocCard emoji="🚀" title="Getting Started" description="The section you're reading right now. Mandatory information for Strapi beginners." link="#" />
+<CustomDocCard emoji="🚀" title="Getting Started" description="The section you're reading right now. Read recommended information for Strapi beginners." link="#" />
 
 <CustomDocCard emoji="⚙️" title="Setup & Deployment" description="Install, configure, and deploy Strapi." link="/dev-docs/setup-deployment" />
 
@@ -37,7 +37,7 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCard emoji="🔧" title="Advanced features" description="Use built-in Strapi features for advanced use cases." link="/dev-docs/advanced-features" />
 
-<CustomDocCard emoji="🛠" title="Customization" description="Information about customizing the Strapi server and admin panel." link="/dev-docs/customization" />
+<CustomDocCard emoji="🛠" title="Customization" description="Customize the Strapi server and admin panel." link="/dev-docs/customization" />
 
 <CustomDocCard emoji="🔌" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
 
