@@ -6,4 +6,22 @@ displayed_sidebar: devDocsSidebar
 
 # Advanced features
 
-Coming soon…
+Strapi provides advanced built-in features for developers who'd like to get the best of the backend server, plugins, and database:
+
+<CustomDocCardsWrapper>
+
+<CustomDocCard title="CLI reference" description="Control Strapi through the Command Line Interface (CLI)." link="/dev-docs/cli" />
+
+<CustomDocCard title="TypeScript" description="Use TypeScript to develop your Strapi project." link="/dev-docs/typescript" />
+
+<CustomDocCard title="Providers" description="Install, configure, and create providers to extend core capabilities of some plugins." link="/dev-docs/providers" />
+
+<CustomDocCard title="Data management" description="Use Strapi's built-in data management system to import, export, or transfer data." link="/dev-docs/data-management" />
+
+<CustomDocCard title="Database migrations" description="Manage database migrations operations." link="/dev-docs/dataabase-migrations" />
+
+<CustomDocCard title="Unit testing" description="Run basic unit tests for a Strapi project." link="/dev-docs/database-migrations" />
+
+<CustomDocCard title="Error handling" description="Handle errors received through REST and GraphQL requests, or throw errors through the backend server." link="/dev-docs/error-handling" />
+
+</CustomDocCardsWrapper>
