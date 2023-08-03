@@ -8,9 +8,9 @@ sidebar_position: 1
 
 # Collaboration on projects
 
-Projects are created by a user via his Strapi Cloud account, which is linked to their GitHub account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their GitHub credentials.
+Projects are created by a user via their Strapi Cloud account, which is linked to their GitHub account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their GitHub credentials.
 
-Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the latter, maintainers:
+Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
 
 - cannot see the *Usage* section of the Overview tab,
 - cannot share the project themselves to someone else,
