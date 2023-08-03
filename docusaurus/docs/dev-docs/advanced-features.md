@@ -6,7 +6,7 @@ displayed_sidebar: devDocsSidebar
 
 # Advanced features
 
-Strapi provides advanced built-in features for developers who'd like to get the best of the backend server, plugins, and database:
+Strapi provides advanced built-in features for developers who'd like to get the best of the backend server, plugins, and database. Click on any of the following cards to read more about a specific feature:
 
 <CustomDocCardsWrapper>
 
