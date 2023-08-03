@@ -7,6 +7,10 @@ displayed_sidebar: devDocsSidebar
 
 # Strapi plugins
 
+_The content of this page will soon be moved to "Using plugins" and replaced by a more general plugins introduction._
+
+***
+
 Strapi comes with these officially supported plugins:
 
 <DocCardList />
