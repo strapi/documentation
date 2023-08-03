@@ -8,6 +8,7 @@ export default function InteractiveProjectStructure() {
       <Tabs>
         <TabItem value="js" label="JavaScript">
 
+        The following diagram is interactive: you can click on any file or folder name highlighted in purple to go to the corresponding documentation page.<br /><br />
 
       <pre className="prism-code">
         <code>
@@ -80,6 +81,8 @@ export default function InteractiveProjectStructure() {
       </TabItem>
 
       <TabItem title="TypeScript-based projects" value="TypeScript-based projects">
+
+      The following diagram is interactive: you can click on any file or folder name highlighted in purple to go to the corresponding documentation page.<br /><br />
 
       <pre className="prism-code">
         <code>
