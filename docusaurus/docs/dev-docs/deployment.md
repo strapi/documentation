@@ -18,9 +18,6 @@ The following documentation covers how to develop locally with Strapi and deploy
 Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to easily deploy and host your project.
 :::
 
-:::strapi Community Guides
-In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
-:::
 
 :::tip
 If you already created a data structure with the Content-Type Builder and added some data through the Content Manager to your local (development) Strapi instance, you can leverage the [data management system](/dev-docs/data-management) to transfer data from a Strapi instance to another one.
@@ -185,8 +182,20 @@ For more information, consult the [TypeScript documentation](/dev-docs/typescrip
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization#deployment).
 
-## Deployment Guides
+## Deployment guides
 
-Manual guides for deployment and optional software:
+Click on any of the following cards to read manual guides for deployment and optional software:
 
-<DocCardList />
+<CustomDocCardsWrapper>
+
+<CustomDocCard emoji="☁️" title="Strapi Cloud" description="Deploy your project to Strapi Cloud." link="/cloud/getting-started/deployment" />
+
+<CustomDocCard emoji="🗃️" title="3rd-party hosting guides" description="Deploy your project to various 3rd-party providers." link="/dev-docs/deployment/hosting-guides" />
+
+<CustomDocCard emoji="➕" title="Optional software guides" description="Compliment or improve the deployment process when using Strapi in a production environment." link="/dev-docs/deployment/optional-software-guides" />
+
+</CustomDocCardsWrapper>
+
+:::strapi Community Guides
+In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
+:::
