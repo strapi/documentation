@@ -78,7 +78,7 @@ Strapi provides programmatic APIs for plugins to hook into some of Strapi's feat
 
 Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
   - `strapi-server.js` for the Server (see [Server API](/dev-docs/plugins/server-api)),
-  - `strapi-admin.js` for the admin panel (see [Admin Panel API](/dev-docs/api/plugins/admin-panel-api)).
+  - `strapi-admin.js` for the admin panel (see [Admin Panel API](/dev-docs/plugins/admin-panel-api)).
 
 :::strapi Custom fields plugins
 Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Strapi.

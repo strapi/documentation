@@ -393,7 +393,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
@@ -793,7 +793,7 @@
 		},
 		{
 			"source": "/dev-docs/api/admin-panel-api",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/server-api",
@@ -837,11 +837,11 @@
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin-panel",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/development/custom-field.html",

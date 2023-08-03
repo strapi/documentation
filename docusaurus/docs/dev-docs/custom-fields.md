@@ -103,7 +103,7 @@ module.exports = {
 
 Custom fields must be registered in Strapi's admin panel to be available in the Content-type Builder and the Content Manager.
 
-The `app.customFields` object exposes a `register()` method on the `StrapiApp` instance. This method is used to register custom fields in the admin panel during the plugin's admin [register lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
+The `app.customFields` object exposes a `register()` method on the `StrapiApp` instance. This method is used to register custom fields in the admin panel during the plugin's admin [register lifecycle](/dev-docs/plugins/admin-panel-api#register).
 
 `app.customFields.register()` registers one or several custom field(s) in the admin panel by passing an object (or an array of objects) with the following parameters:
 
