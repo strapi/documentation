@@ -16,6 +16,7 @@ import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
@@ -51,6 +52,7 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  CustomDocCardsWrapper,
   InteractiveQueryBuilder,
   ThemedImage,
   SideBySideColumn,

@@ -1,0 +1,22 @@
+.custom-cards-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 715px;
+  justify-content: start;
+
+  .custom-doc-card {
+    max-width: 320px;
+    width: 320px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+
+    a {
+      height: 160px;
+    }
+
+    .text--truncate.cardDescription {
+      overflow: auto;
+      white-space: normal;
+    }
+  }
+}
