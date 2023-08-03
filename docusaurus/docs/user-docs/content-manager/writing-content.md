@@ -10,7 +10,13 @@ displayed_sidebar: userDocsSidebar
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
 
-![Edit view to write content](/img/assets/content-manager/edit-view2.png)
+<ThemedImage
+  alt="Edit view to write content"
+  sources={{
+    light: '/img/assets/content-manager/edit-view2.png',
+    dark: '/img/assets/content-manager/edit-view2_DARK.png',
+  }}
+/>
 
 ## Filling up fields
 
@@ -45,8 +51,22 @@ There are 2 types of components: non-repeatable and repeatable components.
 
 #### Non-repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component3.png" alt="Writing content for a component" width="80%" />
-<img src="/img/assets/content-manager/edit-view_component2.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Non-repeatable component - No entry yet"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component3.png',
+    dark: '/img/assets/content-manager/edit-view_component3_DARK.png',
+  }}
+/>
+<ThemedImage
+  alt="Non-repeatable component - With entries"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component2.png',
+    dark: '/img/assets/content-manager/edit-view_component2_DARK.png',
+  }}
+/>
 
 Non-repeatable components are a combination of fields that can be used only once.
 
@@ -59,7 +79,14 @@ To delete the non-repeatable component, click on the delete button ![Delete icon
 
 #### Repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component4.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Repeatable component"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component4.png',
+    dark: '/img/assets/content-manager/edit-view_component4_DARK.png',
+  }}
+/>
 
 Repeatable components are also a combination of fields, but they allow the creation of multiple component entries, all following the same combination of fields.
 

@@ -165,7 +165,7 @@ const App = () => {
     <div className="App">
       <ul>
         {restaurants.map(({ id, attributes }) => (
-          <li key={id}>{attributes.name}</li>
+          <li key={id}>{attributes.Name}</li>
         ))}
       </ul>
     </div>
@@ -221,7 +221,7 @@ const App = () => {
     <div className="App">
       <ul>
         {restaurants.map(({ id, attributes }) => (
-          <li key={id}>{attributes.name}</li>
+          <li key={id}>{attributes.Name}</li>
         ))}
       </ul>
     </div>
@@ -416,7 +416,7 @@ const App = () => {
           {allCategories.map(({ id, attributes }) => (
             <Checkbox
               key={id}
-              name={attributes.name}
+              name={attributes.Name}
               isChecked={modifiedData.categories.includes(id)}
               onAddCategory={() => {
                 const nextData = {
@@ -559,7 +559,7 @@ const App = () => {
           {allCategories.map(({ id, attributes }) => (
             <Checkbox
               key={id}
-              name={attributes.name}
+              name={attributes.Name}
               isChecked={modifiedData.categories.includes(id)}
               onAddCategory={() => {
                 const nextData = {

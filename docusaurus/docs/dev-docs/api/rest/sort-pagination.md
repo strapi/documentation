@@ -2,7 +2,7 @@
 title: Sort and Pagination
 description: Use Strapi's REST API to sort or paginate your data.
 sidebarDepth: 3
-
+displayed_sidebar: restApiSidebar
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
@@ -19,6 +19,7 @@ Entries that are returned by queries to the [REST API](/dev-docs/api/rest) can b
 
 :::
 
+
 ## Sorting
 
 Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntaxes:
@@ -30,6 +31,19 @@ The sorting order can be defined with:
 
 - `:asc` for ascending order (default order, can be omitted)
 - or `:desc` for descending order.
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+### Example: Sort using 2 fields
+
+You can sort by multiple fields by passing fields in a `sort` array.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+<br />
 
 <ApiCall>
 <Request title="Example request: Sort using 2 fields">
@@ -87,10 +101,26 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+### Example: Sort using 2 fields and set the order
+
+Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you can get results sorted in a particular order.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+<br />
+
 <ApiCall>
 <Request title="Example request: Sort using 2 fields and set the order">
 
-`GET /api/articles?sort[0]=title%3Aasc&sort[1]=slug%3Adesc`
+`GET /api/articles?sort[0]=title:asc&sort[1]=slug:desc`
 
 </Request>
 
@@ -144,16 +174,22 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
 ## Pagination
 
 Queries can accept `pagination` parameters. Results can be paginated:
 
-- either by page (i.e. specifying a page number and the number of entries per page)
-- or by offset (i.e. specifying how many entries to skip and to return)
+- either by [page](#pagination-by-page) (i.e., specifying a page number and the number of entries per page)
+- or by [offset](#pagination-by-offset) (i.e., specifying how many entries to skip and to return)
 
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
+
+<SideBySideContainer>
+<SideBySideColumn>
 
 ### Pagination by page
 
@@ -164,6 +200,11 @@ To paginate results by page, use the following parameters:
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+<br />
 
 <ApiCall>
 <Request title="Example request: Return only 10 entries on page 1">
@@ -213,6 +254,12 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
 ### Pagination by offset
 
 To paginate results by offset, use the following parameters:
@@ -224,8 +271,13 @@ To paginate results by offset, use the following parameters:
 | `pagination[withCount]` | Boolean | Toggles displaying the total number of entries to the response | `true`  |
 
 :::tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/configurations//api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
+The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+<br />
 
 <ApiCall>
 <Request title="Example request: Return only the first 10 entries using offset">
@@ -274,3 +326,6 @@ await request(`/api/articles?${query}`);
 ```
 
 </details>
+
+</SideBySideColumn>
+</SideBySideContainer>

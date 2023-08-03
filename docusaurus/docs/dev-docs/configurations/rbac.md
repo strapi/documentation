@@ -5,7 +5,7 @@ description: In Strapi, RBAC is an approach to restricting access to some featur
 
 ---
 
-# Role-Based Access Control
+# Role-Based Access Control (RBAC)
 
 Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles).
 
@@ -133,7 +133,7 @@ const conditions = [
   {
     displayName: "Entity has same name as user",
     name: "same-name-as-user",
-    plugin: "name of a plugin if created in a plugin"
+    plugin: "name of a plugin if created in a plugin",
     handler: (user) => {
       return { name: user.name };
     },
@@ -147,10 +147,12 @@ const conditions = [
   }
 ];
 
-module.exports = async () => {
+module.exports = {
+  async bootstrap(/*{ strapi }*/) {
   // do your boostrap
 
-  await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+    await strapi.admin.services.permission.conditionProvider.registerMany(conditions);
+  },
 };
 ```
 

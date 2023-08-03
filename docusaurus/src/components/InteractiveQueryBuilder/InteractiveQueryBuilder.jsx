@@ -1,6 +1,6 @@
 import qs from 'qs';
 import clsx from 'clsx';
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live';
 import { usePrismTheme } from '@docusaurus/theme-common';
 import { Button } from '../Button/Button';
@@ -9,14 +9,16 @@ import styles from './interactive-query-builder.module.scss';
 
 export function InteractiveQueryBuilder({
   className,
-  code = '',
+  code: inheritCode = '',
   endpoint: inheritEndpoint = '/api/books',
   id: inheritId = '',
 }) {
   const id = (inheritId || `strapi-iqb-${Math.random()}`);
   const localStorageKey = `strapi-iqb-value-for-${inheritEndpoint}`;
   const prismTheme = usePrismTheme();
+  const [code, setCode] = useState(inheritCode.trim());
   const [endpoint, setEndpoint] = useState(inheritEndpoint);
+  const [queryString, setQueryString] = useState('');
   const [clipboardStatus, setClipboardStatus] = useState('');
 
   /**
@@ -62,6 +64,7 @@ export function InteractiveQueryBuilder({
 
   return (
     <form
+      noValidate
       onSubmit={(evt) => evt.preventDefault()}
       className={clsx('strapi-iqb', styles.iqb, className)}
     >
@@ -70,13 +73,10 @@ export function InteractiveQueryBuilder({
         theme={prismTheme}
         code={code.trim()}
         scope={{
-          clipboardStatus,
-          endpoint,
-          handleClickClipboard,
-          id,
           qs,
-          Button,
-          FormField,
+          endpoint,
+          setQueryString,
+          useEffect,
         }}
         transformCode={(writtenQueryByUser) =>
           `() => {
@@ -88,39 +88,15 @@ export function InteractiveQueryBuilder({
 
             ;
 
-            const queryStringified = (
-              endpoint +
-              '?' +
-              qs.stringify(queryObject, { encode: false })
-            );
+            useEffect(() => {
+              setQueryString(
+                endpoint +
+                '?' +
+                qs.stringify(queryObject, { encode: false })
+              );
+            }, [endpoint, queryObject]);
 
-            return (
-              <>
-                <FormField
-                  id={id + '-result'}
-                  label="Query String URL:"
-                  input={{
-                    'aria-disabled': true,
-                    as: 'textarea',
-                    readOnly: true,
-                    value: queryStringified,
-                  }}
-                />
-                <Button
-                  id={id + '-copy-to-clipboard'}
-                  type="button"
-                  variant="secondary"
-                  onClick={() => handleClickClipboard(queryStringified)}
-                >
-                  Copy to clipboard
-                  <span style={{ marginLeft: '0.25rem' }}>
-                    {clipboardStatus === '' && ' 📑'}
-                    {clipboardStatus === 'error' && ' ❌'}
-                    {clipboardStatus === 'success' && ' ✅'}
-                  </span>
-                </Button>
-              </>
-            );
+            return null;
           }`
         }
       >
@@ -138,10 +114,37 @@ export function InteractiveQueryBuilder({
           label="Endpoint Query Parameters:"
           hint="Feel free to modify the code above."
         >
-          <LiveEditor className={clsx(styles.iqb__editor)} />
+          <LiveEditor
+            className={clsx(styles.iqb__editor)}
+            code={code}
+            onChange={setCode}
+          />
         </FormField>
         <LiveError />
         <LivePreview />
+        <FormField
+          id={id + '-result'}
+          label="Query String URL:"
+          input={{
+            'aria-disabled': true,
+            as: 'textarea',
+            readOnly: true,
+            value: queryString,
+          }}
+        />
+        <Button
+          id={id + '-copy-to-clipboard'}
+          type="button"
+          variant="secondary"
+          onClick={() => handleClickClipboard(queryString)}
+        >
+          Copy to clipboard
+          <span style={{ marginLeft: '0.25rem' }}>
+            {clipboardStatus === '' && ' 📑'}
+            {clipboardStatus === 'error' && ' ❌'}
+            {clipboardStatus === 'success' && ' ✅'}
+          </span>
+        </Button>
       </LiveProvider>
     </form>
   );

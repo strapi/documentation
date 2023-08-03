@@ -43,8 +43,20 @@ h1, h2, h3, li, p, table {
   }
 
   a code {
-    color: var(--ifm-link-color);
+    --custom-code-background-color: var(--strapi-primary-100);
+    --custom-code-border-color: var(--strapi-primary-200);
+    --custom-code-color: var(--ifm-link-color);
+
     font-weight: var(--ifm-font-weight-bold);
+  }
+}
+
+/** Special styles when using the tag `code` inside a HTML table. */
+table {
+  code {
+    --custom-code-background-color: var(--custom-code-on-table-background-color, var(--strapi-neutral-150));
+    --custom-code-border-color: var(--custom-code-on-table-border-color, var(--strapi-neutral-200));
+    --custom-code-color: var(--custom-code-on-table-color, var(--strapi-neutral-800));
   }
 }
 
@@ -53,7 +65,7 @@ h1, h2, h3, li, p, table {
   body {
     --custom-code-background-color: var(--strapi-neutral-600);
     --custom-code-border-color: var(--strapi-neutral-600);
-    --custom-code-color: var(--strapi-neutral-100);
+    --custom-code-color: var(--strapi-neutral-800);
   }
 
   pre code {
@@ -62,7 +74,10 @@ h1, h2, h3, li, p, table {
 
   h1, h2, h3, li, p, table {
     a code {
-      color: var(--custom-code-color);
+      --custom-code-background-color: var(--strapi-neutral-150);
+      --custom-code-border-color: var(--strapi-neutral-200);
+      --custom-code-color: var(--strapi-primary-600);
+
       text-decoration: none;
     }
   }

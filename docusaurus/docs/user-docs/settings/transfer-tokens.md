@@ -13,7 +13,13 @@ title: Transfer tokens
 
 Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Transfer Tokens*.
 
-![Transfer tokens](/img/assets/settings/settings_transfer-token.png)
+<ThemedImage
+  alt="Transfer tokens"
+  sources={{
+    light: '/img/assets/settings/settings_transfer-token.png',
+    dark: '/img/assets/settings/settings_transfer-token_DARK.png',
+  }}
+/>
 
 The *Transfer Tokens* settings sub-section displays a table listing all of the created Transfer tokens.
 
@@ -38,7 +44,13 @@ To create a new Transfer token:
 
 3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/duplicate.svg).
 
-    ![Custom Transfer Token](/img/assets/settings/settings_create-transfer-token.png)
+<ThemedImage
+  alt="Custom Transfer Token"
+  sources={{
+    light: '/img/assets/settings/settings_create-transfer-token.png',
+    dark: '/img/assets/settings/settings_create-transfer-token_DARK.png',
+  }}
+/>
 
 :::caution
 For security reasons, Transfer tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created Transfer token will be hidden and will not be displayed again.

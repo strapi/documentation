@@ -10,7 +10,13 @@ Administrators are the users of an admin panel of a Strapi application. Administ
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.
 
-![Edit an administrator account](/img/assets/users-permissions/administrator_list-view.png)
+<ThemedImage
+  alt="Manage administrator accounts"
+  sources={{
+    light: '/img/assets/users-permissions/administrator_list-view.png',
+    dark: '/img/assets/users-permissions/administrator_list-view_DARK.png',
+  }}
+/>
 
 The *Users* sub-section of *Administration panel* displays a table listing all the administrators of your Strapi application.
 
@@ -69,7 +75,13 @@ To delete an administrator:
 
 ## Editing an account
 
-![Edit an administrator account](/img/assets/users-permissions/administrator_edit-info.png)
+<ThemedImage
+  alt="Edit an administrator account"
+  sources={{
+    light: '/img/assets/users-permissions/administrator_edit-info.png',
+    dark: '/img/assets/users-permissions/administrator_edit-info_DARK.png',
+  }}
+/>
 
 The table displayed in the *Administration panel > Users* interface allows to access all information regarding each administrator, where it is also possible to edit that information.
 
@@ -86,7 +98,7 @@ To edit an administrator account:
 | Username              | Write the administrator's username in the textbox.                                          |
 | Password              | Write the new administrator account's password in the textbox.                              |
 | Password confirmation | Write the new password in the textbox for confirmation.                                     |
-| Active                | Click on **ON** to activate the administrator's account.                                    |
+| Active                | Click on **TRUE** to activate the administrator's account.                                  |
 
 3. (optional) In the *Login settings* area, edit the role of the administrator:
 

@@ -27,10 +27,11 @@ const config = {
     locales: ['en'],
   },
 
-  // ** WARNING! DELETE THE NEXT LINE BEFORE MERGING WITH MAIN 👇 **/
-  noIndex: true, // prevents the website from being indexed by search engines
+  markdown: {
+    mermaid: true,
+  },
 
-  themes: ['@docusaurus/theme-live-codeblock'],
+  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
   scripts: [
     {
@@ -101,6 +102,8 @@ const config = {
               'warning',
             ],
           },
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
         blog: false,
@@ -246,7 +249,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: '.markdown :not(em) > img',
+        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
     }),
 
