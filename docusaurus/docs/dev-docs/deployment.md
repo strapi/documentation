@@ -7,6 +7,7 @@ description: Learn how to develop locally with Strapi and deploy Strapi with var
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
 
 # Deployment
 
@@ -14,9 +15,7 @@ Strapi provides many deployment options for your project or application. Your St
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
-:::callout ☁️ Strapi Cloud
-Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to easily deploy and host your project.
-:::
+<ConsiderStrapiCloud />
 
 :::strapi Community Guides
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
