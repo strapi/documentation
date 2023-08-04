@@ -12,6 +12,13 @@
 
     a {
       height: 170px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      .cardTitle {
+        color: var(--strapi-primary-600);
+      }
     }
 
     .text--truncate.cardDescription {
