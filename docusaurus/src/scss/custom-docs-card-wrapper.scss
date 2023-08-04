@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: row wrap;
   max-width: 715px;
-  justify-content: start;
+  justify-content: flex-start;
 
   .custom-doc-card {
     max-width: 320px;
@@ -15,6 +15,7 @@
     }
 
     .text--truncate.cardDescription {
+      // cancel --truncate styles since we can't remove the class
       overflow: auto;
       white-space: normal;
     }
