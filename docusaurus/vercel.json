@@ -13,11 +13,11 @@
 		},
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
-      "destination": "/dev-docs/deployment/digitalocean-app-platform",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
-      "destination": "/dev-docs/deployment/digitalocean-app-platform",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
     },
 		{
 			"source": "/developer-docs",
