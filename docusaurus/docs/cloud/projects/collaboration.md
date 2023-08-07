@@ -12,12 +12,19 @@ Projects are created by a user via their Strapi Cloud account, which is linked t
 
 Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
 
-- cannot see the *Usage* section of the Overview tab,
-- cannot share the project themselves to someone else,
-- cannot delete the project from the project settings,
-- and cannot access the *Billing* section of project settings.
+- Cannot share the project themselves to someone else
+- Cannot delete the project from the project settings
+- Cannot access the *Billing* section of project settings
 
 ## Sharing a project
+
+<ThemedImage
+  alt="Share button and avatar"
+  sources={{
+    light: '/img/assets/cloud/collaboration-projectview.png',
+    dark: '/img/assets/cloud/collaboration-projectview_DARK.png',
+  }}
+/>
 
 To invite a new maintainer to collaborate on a project:
 
@@ -34,20 +41,24 @@ New maintainers will be sent an email containing a link to click on to join the 
 Avatars use GitHub profile pictures, but for pending users only initials will be displayed until the activation of the maintainer account. You can hover over an avatar to display the full name of the maintainer.
 :::
 
-<!-- SCREENSHOT OF DASHBOARD WITH DOTS AND SHARE BUTTON -->
-
 ## Managing maintainers
 
 From the *Share [project name]* dialog accessible by clicking on the **Share** button of a project dashboard, projects owners can view the full list of maintainers who have been invited to collaborate on the project. From there, it is possible to see the current status of each maintainer and to manage them.
 
-<!-- SCREENSHOT OF DIALOG WITH PEOPLE AND STATUS -->
+<ThemedImage
+  alt="Share button and avatar"
+  sources={{
+    light: '/img/assets/cloud/collaboration-dialog.png',
+    dark: '/img/assets/cloud/collaboration-dialog_DARK.png',
+  }}
+/>
 
-Maintainers whose full name is displayed and dot is blue are users who did activate their account following the invitation email. If however there are maintainers in the list whose email address is displayed and dot is grey, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
+Maintainers whose full name is displayed are users who did activate their account following the invitation email. If however there are maintainers in the list whose email address is displayed and avatar is grey, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
 
 - Pending: the invitation email has been sent but the maintainer hasn't acted on it yet.
 - Expired: the email has been sent over 72 hours ago and the invitation expired.
 
-For both Pending and Expired statuses, it is possible to send another invitation email by clicking on the **Manage** button, then **Resend invite**. 
+For Expired statuses, it is possible to send another invitation email by clicking on the **Manage** button, then **Resend invite**. 
 
 ### Revoking maintainers
 
