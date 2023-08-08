@@ -732,6 +732,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Configuration',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/configurations',
+      },
       items: [
         {
           type: 'doc',
@@ -742,6 +746,10 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Base configurations',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations'
+          },
           items: [
             'dev-docs/configurations/database',
             'dev-docs/configurations/server',
@@ -754,6 +762,10 @@ const sidebars = {
           type: 'category',
           label: 'Additional configurations',
           collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations'
+          },
           items: [
             'dev-docs/configurations/plugins',
             'dev-docs/configurations/typescript',
@@ -768,6 +780,10 @@ const sidebars = {
           type: 'category',
           label: 'Guides',
           collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations'
+          },
           items: [
             'dev-docs/configurations/guides/rbac',
             'dev-docs/configurations/guides/access-cast-environment-variables',
