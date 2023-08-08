@@ -1,11 +1,11 @@
 ---
-title: Lifecycle Functions
+title: Lifecycle functions
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 
 ---
 
-# Functions
+# Lifecycle functions
 
 The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/dev-docs/typescript) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
