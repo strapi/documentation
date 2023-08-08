@@ -7,7 +7,7 @@ displayed_sidebar: devDocsSidebar
 
 # Configurations
 
-The project configuration lives in the `/config` folder (see [project structure](/dev-docs/project-structure)).
+The configuration of a Strapi project lives in the `/config` folder (see [project structure](/dev-docs/project-structure)).
 
 ## Required configurations
 
