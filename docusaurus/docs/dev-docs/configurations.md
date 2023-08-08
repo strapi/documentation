@@ -2,7 +2,8 @@
 title: Configurations
 description: Learn how you can manage and customize the configuration of your Strapi application.
 displayed_sidebar: devDocsConfigSidebar
-
+pagination_prev: dev-docs/installation
+pagination_next: dev-docs/setup-deployment
 ---
 
 import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureConfigFiles'
