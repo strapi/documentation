@@ -721,6 +721,62 @@ const sidebars = {
 
       ]
     },
+  ],
+  devDocsConfigSidebar: [
+    {
+      type: 'link',
+      label: '⬅️ Back to Setup & Deployment',
+      href: '/dev-docs/setup-deployment'
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Configurations',
+      items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/configurations',
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Base configurations',
+          items: [
+            'dev-docs/configurations/database',
+            'dev-docs/configurations/server',
+            'dev-docs/configurations/admin-panel',
+            'dev-docs/configurations/middlewares',
+            'dev-docs/configurations/api',
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Additional configurations',
+          collapsed: false,
+          items: [
+            'dev-docs/configurations/plugins',
+            'dev-docs/configurations/typescript',
+            'dev-docs/configurations/api-tokens',
+            'dev-docs/configurations/functions',
+            'dev-docs/configurations/cron',
+            'dev-docs/configurations/environment',
+            'dev-docs/configurations/sso',
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Guides',
+          collapsed: false,
+          items: [
+            'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/guides/access-cast-environment-variables',
+            'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/public-assets',
+          ]
+        }
+      ]
+    },
   ]
 };
 

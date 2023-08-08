@@ -1,7 +1,7 @@
 ---
 title: Server
 description: Strapi offers a single entry point file for its server configuration.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 
 ---
 

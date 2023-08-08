@@ -1,6 +1,6 @@
 ---
 title: TypeScript configuration
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: How to configure Strapi for TypeScript development.
 ---
 

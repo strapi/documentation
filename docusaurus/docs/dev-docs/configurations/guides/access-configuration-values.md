@@ -1,7 +1,7 @@
 ---
-title: How to access configuration values from the code
+title: Access configuration values from the code
 # description: todo
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 ---
 
 # How to access to configuration values from the code

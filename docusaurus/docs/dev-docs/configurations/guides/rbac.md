@@ -1,6 +1,6 @@
 ---
-title: Role-Based Access Control
-displayed_sidebar: devDocsSidebar
+title: Create custom RBAC conditions
+displayed_sidebar: devDocsConfigSidebar
 description: In Strapi, RBAC is an approach to restricting access to some features of the admin panel to some users. The Community Edition of Strapi offers 3 default roles.
 
 ---

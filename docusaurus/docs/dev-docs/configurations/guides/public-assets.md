@@ -1,6 +1,6 @@
 ---
-title: Public assets configuration
-displayed_sidebar: devDocsSidebar
+title: Use public assets
+displayed_sidebar: devDocsConfigSidebar
 description: The public folder of Strapi is used for static files that you want to make accessible to the outside world.
 
 ---

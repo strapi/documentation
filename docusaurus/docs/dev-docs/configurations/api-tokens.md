@@ -1,6 +1,6 @@
 ---
 title: API tokens configuration
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: Using API tokens allows executing a request on Strapi's REST API endpoints as an authenticated user.
 ---
 

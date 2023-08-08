@@ -1,7 +1,7 @@
 ---
-title: How to access and cast environment variables
+title: Access and cast environment variables
 # description: todo
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 ---
 
 # How to access and cast environment variables

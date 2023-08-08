@@ -1,7 +1,7 @@
 ---
 title: Configurations
 description: Learn how you can manage and customize the configuration of your Strapi application.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 
 ---
 
