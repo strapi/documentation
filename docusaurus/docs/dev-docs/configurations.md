@@ -43,8 +43,9 @@ Some specific features require additional configuration:
 | [Environment configuration and variables](/dev-docs/configurations/environment) | In dedicated files and folders for the environment (e.g., `config/env/production/server`) | Optionally used to define different environments and their variables. |
 | [Single Sign-On](/dev-docs/configurations/sso) <EnterpriseBadge /> | In the `config/admin` file | Required to use the Entreprise-only SSO feature if enabled on your project. |
 
-
 ## Guides
+
+The following guides will help you address specific use cases related to the Strapi configuration:
 
 <CustomDocCard small title="How to access configuration values from the code" link="/dev-docs/configurations/guides/access-configuration-values" />
 
