@@ -37,11 +37,16 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     You will be shown a **plan selection** dialog.
     This will allow you to select the most relevant plan for your project. Refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
-    ![Plan selection page](/img/assets/cloud/plan-selection.png)
+    <ThemedImage
+    alt="Plan selection page"
+    sources={{
+        light: '/img/assets/cloud/plan-selection.png',
+        dark: '/img/assets/cloud/plan-selection_DARK.png',
+    }}
+    />
 
     :::note
     Strapi Cloud offers a free trial for only one project.
-
     If you have already used a free trial for a previous project, the option will no longer appear in the plan selection.
     :::
 
@@ -73,7 +78,13 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     The GitHub branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the project name and hosting region setting can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
-    ![Project Setup](/img/assets/cloud/setup.png)
+    <ThemedImage
+    alt="Project Setup"
+    sources={{
+        light: '/img/assets/cloud/setup.png',
+        dark: '/img/assets/cloud/setup_DARK.png',
+    }}
+    />
 
 6. (**Optional**) Select **Show Advanced Settings** to configure the following options:
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.
