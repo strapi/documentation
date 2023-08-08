@@ -731,7 +731,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: 'Configurations',
+      label: 'Configuration',
       items: [
         {
           type: 'doc',
