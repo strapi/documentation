@@ -53,7 +53,7 @@ From the *Share [project name]* dialog accessible by clicking on the **Share** b
   }}
 />
 
-Maintainers whose full name is displayed are users who did activate their account following the invitation email. If however there are maintainers in the list whose email address is displayed and avatar is grey, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
+Maintainers whose full name is displayed are users who did activate their account following the invitation email. If however there are maintainers in the list whose email address is displayed, it means they haven't activated their accounts and can't access the project dashboard yet. In that case, a status should be indicated right next to the email address to explain the issue:
 
 - Pending: the invitation email has been sent but the maintainer hasn't acted on it yet.
 - Expired: the email has been sent over 72 hours ago and the invitation expired.
