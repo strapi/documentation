@@ -28,7 +28,7 @@ export default function InteractiveProjectStructure() {
       ├──── database<br/>
       │     └──── migrations<br/>
       ├──── node_modules <span className="token comment"># npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
+      ├──── <a href="/dev-docs/configurations/guides/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span className="token comment"># admin customization files</span><br/>
@@ -103,7 +103,7 @@ export default function InteractiveProjectStructure() {
       ├──── dist <span className="token comment"># build of the backend</span><br/>
       │     └──── build <span className="token comment"># build of the admin panel</span><br/>
       ├──── node_modules # <span className="token comment">npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
+      ├──── <a href="/dev-docs/configurations/guides/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span className="token comment"># admin customization files</span><br/>

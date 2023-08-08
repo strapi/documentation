@@ -30,6 +30,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '⚙️ Setup & Deployment',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/setup-deployment',
+      },
       items: [
         {
           type: 'doc',
@@ -53,40 +57,30 @@ const sidebars = {
         {
           type: 'category',
           label: 'Configuration',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations',
+          },
           items: [
             {
               type: 'doc',
               label: 'Introduction',
               id: 'dev-docs/configurations',
             },
-            {
-              type: 'category',
-              label: 'Required configurations',
-              collapsed: false,
-              items: [
-                'dev-docs/configurations/database',
-                'dev-docs/configurations/server',
-                'dev-docs/configurations/admin-panel',
-                'dev-docs/configurations/middlewares',
-              ]
-            },
-            {
-              type: 'category',
-              label: 'Optional configurations',
-              collapsed: false,
-              items: [
-                'dev-docs/configurations/api',
-                'dev-docs/configurations/api-tokens',
-                'dev-docs/configurations/cron',
-                'dev-docs/configurations/environment',
-                'dev-docs/configurations/functions',
-                'dev-docs/configurations/plugins',
-                'dev-docs/configurations/public-assets',
-                'dev-docs/configurations/rbac',
-                'dev-docs/configurations/sso',
-                'dev-docs/configurations/typescript',
-              ]
-            },
+            'dev-docs/configurations/database',
+            'dev-docs/configurations/server',
+            'dev-docs/configurations/admin-panel',
+            'dev-docs/configurations/middlewares',
+            'dev-docs/configurations/api',
+            'dev-docs/configurations/plugins',
+            'dev-docs/configurations/typescript',
+            'dev-docs/configurations/api-tokens',
+            'dev-docs/configurations/functions',
+            'dev-docs/configurations/cron',
+            'dev-docs/configurations/environment',
+            'dev-docs/configurations/guides/public-assets',
+            'dev-docs/configurations/sso',
+            'dev-docs/configurations/guides/rbac',
           ],
         },
         {

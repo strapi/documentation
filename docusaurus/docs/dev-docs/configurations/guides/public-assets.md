@@ -5,7 +5,7 @@ description: The public folder of Strapi is used for static files that you want 
 
 ---
 
-# Public assets configuration
+# How to use public assets with Strapi
 
 Public assets are static files (e.g. images, video, CSS files, etc.) that you want to make accessible to the outside world.
 

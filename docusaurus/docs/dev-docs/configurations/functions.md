@@ -155,7 +155,7 @@ It can be used to:
 
 - create an admin user if there isn't one
 - fill the database with some necessary data
-- declare custom conditions for the [Role-Based Access Control (RBAC)](/dev-docs/configurations/rbac) feature
+- declare custom conditions for the [Role-Based Access Control (RBAC)](/dev-docs/configurations/guides/rbac) feature
 
 ## Destroy
 
