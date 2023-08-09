@@ -261,6 +261,68 @@ const sidebars = {
         'dev-docs/error-handling',
       ]
     },
+    { // Plugins
+      type: 'category',
+      collapsed: false,
+      label: '🔌 Plugins',
+      link: {
+            /**
+            * Use the 2 lines below to make sure that
+            * "Installation" in the TOC is a clickable link
+            * pointing to a page (i.e., type: 'doc') whose link target
+            * is defined as the 'id' property.
+            */
+            type: 'doc',
+            id: 'dev-docs/plugins',
+          },
+      items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/plugins'
+        },
+        {
+          type: 'category',
+          label: 'Using plugins',
+          items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/plugins/using-plugins'
+            },
+            'dev-docs/plugins/documentation',
+            'dev-docs/plugins/email',
+            'dev-docs/plugins/graphql',
+            'dev-docs/plugins/i18n',
+            'dev-docs/plugins/sentry',
+            'dev-docs/plugins/upload',
+            'dev-docs/plugins/users-permissions',
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Developing plugins',
+          items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/developing-plugins'
+            },
+            'dev-docs/plugins-extension',
+            'dev-docs/plugins-development',
+            {
+              type: 'category',
+              label: 'Plugin APIs',
+              items: [
+                'dev-docs/plugins/admin-panel-api',
+                'dev-docs/plugins/server-api',
+              ]
+            },
+            'dev-docs/plugins/publishing-your-plugin'
+          ]
+        }
+      ]
+    },
     { // Customization
       type: 'category',
       collapsed: false,
@@ -301,68 +363,6 @@ const sidebars = {
         },
         'dev-docs/admin-panel-customization',
         'dev-docs/custom-fields',
-      ]
-    },
-    { // Plugins
-      type: 'category',
-      collapsed: false,
-      label: '🔌 Plugins',
-      link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/plugins',
-          },
-      items: [
-        {
-          type: 'doc',
-          label: 'Introduction',
-          id: 'dev-docs/plugins'
-        },
-        {
-          type: 'category',
-          label: 'Using plugins',
-          items: [
-            {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/using-plugins'
-            },
-            'dev-docs/plugins/documentation',
-            'dev-docs/plugins/email',
-            'dev-docs/plugins/graphql',
-            'dev-docs/plugins/i18n',
-            'dev-docs/plugins/sentry',
-            'dev-docs/plugins/upload',
-            'dev-docs/plugins/users-permissions',
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Developing plugins',
-          items: [
-            {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/developing-plugins'
-            },
-            'dev-docs/plugins-extension',
-            'dev-docs/plugins-development',
-            {
-              type: 'category',
-              label: 'Plugin APIs',
-              items: [
-                'dev-docs/plugins/admin-panel-api',
-                'dev-docs/plugins/server-api',
-              ]
-            },
-            'dev-docs/plugins/publishing-your-plugin'
-          ]
-        }
       ]
     },
     { // Update & Migration
