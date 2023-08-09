@@ -288,6 +288,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Using plugins',
+          link: { type: 'doc', id: 'dev-docs/plugins/using-plugins' },
           items: [
             {
               type: 'doc',
@@ -797,6 +798,9 @@ const sidebars = {
         }
       ]
     },
+  ],
+  devDocsPluginsSidebar: [
+
   ]
 };
 
