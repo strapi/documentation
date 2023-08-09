@@ -1,5 +1,5 @@
 ---
-title: Email
+title: Email plugin
 displayed_sidebar: devDocsSidebar
 description: Send email from your server or externals providers.
 

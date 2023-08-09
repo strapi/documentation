@@ -1,5 +1,5 @@
 ---
-title: Documentation
+title: Documentation plugin
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 ---

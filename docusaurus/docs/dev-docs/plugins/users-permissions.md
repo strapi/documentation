@@ -1,5 +1,5 @@
 ---
-title: Users & Permissions
+title: Users & Permissions plugin
 displayed_sidebar: devDocsSidebar
 toc_max_heading_level: 4
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.

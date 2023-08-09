@@ -93,7 +93,7 @@ Types can be automatically generated on server restart by adding `autogenerate: 
 
 ## Develop a plugin using TypeScript
 
-New plugins can be generated following the [plugins development documentation](/dev-docs/plugins-development). There are 2 important distinctions for TypeScript applications:
+New plugins can be generated following the [plugins development documentation](/dev-docs/plugins/developing-plugins). There are 2 important distinctions for TypeScript applications:
 
 - After creating the plugin, run `yarn` or `npm install` in the plugin directory `src/admin/plugins/[my-plugin-name]` to install the dependencies for the plugin.
 - Run `yarn build` or `npm run build` in the plugin directory `src/admin/plugins/[my-plugin-name]` to build the admin panel including the plugin.

@@ -5,7 +5,7 @@ displayed_sidebar: devDocsSidebar
 
 # Plugins extension
 
-Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins-development)) or extend the existing ones.
+Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins/developing-plugins)) or extend the existing ones.
 
 :::warning
 * Any plugin update could break this plugin's extensions.

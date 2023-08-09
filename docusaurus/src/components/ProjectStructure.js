@@ -59,7 +59,7 @@ export default function InteractiveProjectStructure() {
       │     │           └ <a href="/dev-docs/plugins/server-api">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares">middlewares</a><br/>
       │     │     └──── (middleware-name).js<br/>
-      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span className="token comment"># local plugins files</span><br/>
+      │     ├──── <a href="/dev-docs/plugins/developing-plugins">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
@@ -138,7 +138,7 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (middleware-name)<br/>
       │     │           ├ defaults.json<br/>
       │     │           └ index.ts<br/>
-      │     ├──── <a href="/dev-docs/plugins-development">plugins</a> <span className="token comment"># local plugins files</span><br/>
+      │     ├──── <a href="/dev-docs/plugins/developing-plugins">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>

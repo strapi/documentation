@@ -295,35 +295,65 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/plugins/using-plugins'
             },
-            'dev-docs/plugins/documentation',
-            'dev-docs/plugins/email',
-            'dev-docs/plugins/graphql',
-            'dev-docs/plugins/i18n',
-            'dev-docs/plugins/sentry',
-            'dev-docs/plugins/upload',
-            'dev-docs/plugins/users-permissions',
+            {
+              type: 'doc',
+              label: 'Documentation',
+              id: 'dev-docs/plugins/documentation',
+            },
+            {
+              type: 'doc',
+              label: 'Email',
+              id: 'dev-docs/plugins/email',
+            },
+            {
+              type: 'doc',
+              label: 'GraphQL',
+              id: 'dev-docs/plugins/graphql',
+            },
+            {
+              type: 'doc',
+              label: 'Internationalization (i18n)',
+              id: 'dev-docs/plugins/i18n',
+            },
+            {
+              type: 'doc',
+              label: 'Sentry',
+              id: 'dev-docs/plugins/sentry',
+            },
+            {
+              type: 'doc',
+              label: 'Upload',
+              id: 'dev-docs/plugins/upload',
+            },
+            {
+              type: 'doc',
+              label: 'Users & Permissions',
+              id: 'dev-docs/plugins/users-permissions',
+            },
+
           ]
         },
         {
           type: 'category',
           label: 'Developing plugins',
+          link: {type: 'doc', id: 'dev-docs/plugins/developing-plugins'},
           items: [
             {
               type: 'doc',
               label: 'Introduction',
-              id: 'dev-docs/developing-plugins'
+              id: 'dev-docs/plugins/developing-plugins'
             },
-            'dev-docs/plugins-extension',
-            'dev-docs/plugins-development',
             {
               type: 'category',
               label: 'Plugin APIs',
+              link: { type: 'doc', id: 'dev-docs/plugins/api'},
               items: [
                 'dev-docs/plugins/admin-panel-api',
                 'dev-docs/plugins/server-api',
               ]
             },
-            'dev-docs/plugins/publishing-your-plugin'
+            'dev-docs/plugins/publishing-your-plugin',
+            'dev-docs/plugins-extension'
           ]
         }
       ]

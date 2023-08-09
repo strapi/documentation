@@ -437,7 +437,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-development.html",
-			"destination": "/dev-docs/plugins-development"
+			"destination": "/dev-docs/plugins/developing-plugins"
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-extension.html",

@@ -12,19 +12,21 @@ pagination_next: dev-docs/customization
 The present section is about the developer-oriented aspects of Strapi plugins. To learn how to install and use plugins from the Strapi admin panel, please read the [User Guide](/user-docs/plugins).
 :::
 
-Strapi's core features can be extended with plugins, and your experience with Strapi plugins will fall under the following 3 use cases:
+Strapi's core features can be extended with plugins, and your experience with Strapi plugins will fall under the following 4 use cases:
 
 - You will use one of the  **built-in plugins** officially maintained by Strapi. Some built-in plugins can already be pre-installed when you create a new Strapi project.
 - You might want to browse **3rd-party plugins** for additional features. 3rd-party plugins can be browsed from the admin panel or from the [Marketplace website](https://market.strapi.io) and installed with the command line interface.
 - You might want to **develop your own plugins**. The plugins you develop can be specific to your Strapi project — these plugins are called "local plugins", or can be submitted to the Marketplace if meant to be distributed to the Strapi community.
+- You might want to **extend an existing plugin** for a specific Strapi project. With this last use case, please proceed carefully, knowing that extensions might break with future updates from the plugin maintainer.
 
 Choose one of the following documentation sections from the table, depending on your profile and use case:
 
 | As a…       | I want to…    | Recommended section to read |
 |-------------|---------------|-----------------------------|
 | User        | Discover and install built-in and 3rd-party plugins |  [User Guide > Plugins](/user-docs/plugins) |
-| Developer   | Setup, configure, and use Strapi built-in plugins | [Dev Docs > Plugins > Using plugins](/dev-docs/plugins/using-plugins) |
-| Developer   | Create my own plugin and submit it to the Marketplace | [Dev Docs > Plugins > Developing plugins](/dev-docs/plugins/developing-plugins) |
+| Developer   | Setup, configure, and use Strapi built-in plugins | [Dev Docs > Using plugins](/dev-docs/plugins/using-plugins) |
+| Developer   | Create my own plugin and submit it to the Marketplace | [Dev Docs > Developing plugins](/dev-docs/plugins/developing-plugins) |
+| Developer   | Extend an existing plugin to customize it for a specific Strapi project️ | [Dev Docs > Extending plugins](/dev-docs/plugins-extension) |
 
 <br/>
 
