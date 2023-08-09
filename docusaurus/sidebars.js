@@ -43,6 +43,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
+          link: {type: 'doc', id: 'dev-docs/installation'},
           items: [
             {
               type: 'doc',
@@ -86,6 +87,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
+          link: {type: 'doc', id: 'dev-docs/deployment'},
           items: [
            {
               type: 'doc',
@@ -137,6 +139,7 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '📦 Content APIs',
+      link: {type: 'doc', id: 'dev-docs/api/content-apis'},
       items: [
         {
           type: 'doc',
@@ -226,6 +229,7 @@ const sidebars = {
       type: 'category',
       label: '🔧 Advanced features',
       collapsed: false,
+      link: {type: 'doc', id: 'dev-docs/advanced-features'},
       items: [
         {
           type: 'doc',
