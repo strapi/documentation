@@ -7,10 +7,6 @@ pagination_prev: dev-docs/plugins
 
 # Developing Strapi plugins
 
-***
-_This content is a work-in-progress and will be reworked soon_
-***
-
 :::info
 This section is about developing Strapi plugins to use them as local plugins or to submit them to the Marketplace. Not what you're looking for? Read the [plugins introduction](/dev-docs/plugins) and find your use case and recommended section to read from there.
 :::
@@ -20,7 +16,9 @@ Strapi allows the development of plugins that work exactly like the built-in or 
 - used a local plugin, working only with a specific Strapi project
 - or submitted to the [Marketplace](https://market.strapi.io) to be shared with the community.
 
-## Create a plugin
+The first step to developing a Strapi plugin is to create it using the CLI-based generator. Then you'll be able to leverage the [plugin APIs](#plugin-apis) to add features to your plugin.
+
+## Plugin creation
 
 Strapi provides a [command line interface (CLI)](/dev-docs/cli) for creating plugins. To create a plugin:
 
@@ -77,18 +75,19 @@ Plugins created using the preceding directions are located in the `plugins` dire
 During plugin development it is helpful to use the `--watch-admin` flag to toggle hot reloading of the admin panel. See the [Admin panel customization](/dev-docs/admin-panel-customization) documentation for more details. (TypeScript specific) While developing your plugin, you can run `yarn develop --watch-admin` or `npm run develop -- --watch-admin` in the plugin directory to watch the changes to the TypeScript server files.
 :::
 
-:::tip
-Check [this blog post](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-publish-on-npm-6-6) to learn how to publish your Strapi plugin on npm.
-:::
+## Plugin APIs
 
-## Add features to a plugin
+Strapi provides the following [programmatic APIs](dev-docs/plugins/api) for plugins to hook into some of Strapi's features:
 
-Strapi provides [programmatic APIs](dev-docs/plugins/api) for plugins to hook into some of Strapi's features.
-
-Plugins can register with the server and/or the admin panel, by looking for entry point files at the root of the package:
-  - `strapi-server.js` for the Server (see [Server API](/dev-docs/plugins/server-api)),
-  - `strapi-admin.js` for the admin panel (see [Admin Panel API](/dev-docs/plugins/admin-panel-api)).
+<CustomDocCardsWrapper>
+<CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/plugins/server-api" />
+<CustomDocCard emoji="" title="Admin Panel API" description="Use the Admin Panel API to have your plugin interact with the admin panel of Strapi." link="/dev-docs/plugins/admin-panel-api" />
+</CustomDocCardsWrapper>
 
 :::strapi Custom fields plugins
 Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Strapi.
 :::
+
+## Guides
+
+<CustomDocCard small emoji="💁" title="How to submit your plugin to the Strapi Marketplace" description="" link="/dev-docs/plugins/guides/marketplace" />

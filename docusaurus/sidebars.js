@@ -344,16 +344,22 @@ const sidebars = {
               id: 'dev-docs/plugins/developing-plugins'
             },
             {
-              type: 'category',
-              label: 'Plugin APIs',
-              link: { type: 'doc', id: 'dev-docs/plugins/api'},
-              items: [
-                'dev-docs/plugins/admin-panel-api',
-                'dev-docs/plugins/server-api',
-              ]
+              type: 'doc',
+              id: 'dev-docs/plugins/admin-panel-api',
+              label: 'Admin Panel API',
             },
-            'dev-docs/plugins/publishing-your-plugin',
-            'dev-docs/plugins-extension'
+            {
+              type: 'doc',
+              id: 'dev-docs/plugins/server-api',
+              label: 'Server API',
+            },
+            'dev-docs/custom-fields',
+            'dev-docs/plugins-extension',
+            {
+              type: 'doc',
+              label: 'Marketplace submission',
+              id: 'dev-docs/plugins/guides/marketplace',
+            }
           ]
         }
       ]
@@ -397,7 +403,6 @@ const sidebars = {
           ]
         },
         'dev-docs/admin-panel-customization',
-        'dev-docs/custom-fields',
       ]
     },
     { // Update & Migration
