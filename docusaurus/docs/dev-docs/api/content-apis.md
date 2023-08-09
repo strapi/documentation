@@ -8,7 +8,7 @@ pagination_next: dev-docs/advanced-features
 
 # Strapi APIs to access your content
 
-Once you've created a Strapi project, created a data structure with the [Content-Type Builder](/user-docs/content-type-builder) and started adding data through the [Content Manager](/user-docs/content-manager), you likely would like to access your content.
+Once you've created and configured a Strapi project, created a data structure with the [Content-Type Builder](/user-docs/content-type-builder) and started adding data through the [Content Manager](/user-docs/content-manager), you likely would like to access your content.
 
 From a front-end application, your content can be accessed through Strapi's Content API, which is exposed through the [REST API](/dev-docs/api/rest) and the [GraphQL API](/dev-docs/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/dev-docs/plugins/graphql).
 
@@ -54,7 +54,7 @@ This documentation section includes reference information about the following St
 
 ## Guides
 
-Click on any of the following cards to read one of the how-to guides about the Content APIs:
+The following guides could help you solve specific use cases when using the Content API:
 
 <CustomDocCard small emoji="💁" title="How to authenticate a REST API request" link="/dev-docs/api/guides/how-to-authenticate-a-rest-api-request" />
 
