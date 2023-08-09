@@ -29,5 +29,5 @@ Choose one of the following documentation sections from the table, depending on 
 <br/>
 
 :::tip
-Before browsing or creating plugins, you might want to double-check that Strapi does not already cover your use case with its [advanced features](/dev-docs/advanced-features). Feel free to [submit some feedback](https://feedback.strapi.io/) if you'd like some additional features to be included in the core Strapi product.
+Before browsing or creating plugins, please double-check that Strapi does not already cover your use case with its built-in [advanced features](/dev-docs/advanced-features). Feel free to [submit feedback](https://feedback.strapi.io/) if you'd like some additional features to be included in the core Strapi product.
 :::
