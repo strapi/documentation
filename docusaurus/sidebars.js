@@ -547,7 +547,14 @@ const sidebars = {
             updated: true,
           },
         },
-        'cloud/projects/collaboration',
+        {
+          type: 'doc',
+          label: 'Collaboration',
+          id: 'cloud/projects/collaboration',
+          customProps: {
+            new: true,
+          },
+        },
         {
           type: 'doc',
           label: 'Notifications',
