@@ -194,7 +194,7 @@ As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the
 <details>
 <summary>Example: A custom text input</summary>
 
-In the following example we're providing a custom text input that is controlled, all inputs should be controlled otherwise their data will not be submitted on save.
+In the following example we're providing a custom text input that is controlled. All inputs should be controlled otherwise their data will not be submitted on save.
 
 ```jsx title="./src/plugins/<plugin-name>/admin/src/components/Input.js"
 import * as React from "react";
