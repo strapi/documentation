@@ -21,7 +21,7 @@ Once created and used, custom fields are defined like any other attribute in the
 
 - Though the recommended way to add a custom field is through creating a plugin, app-specific custom fields can also be registered within the global `register` [function](/dev-docs/configurations/functions) found in `src/index.js` and `src/admin/app/js` files.
 - Custom fields can only be shared using plugins.
-  :::
+:::
 
 ## Registering a custom field on the server
 
