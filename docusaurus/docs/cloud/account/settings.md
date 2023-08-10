@@ -5,27 +5,69 @@ description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/account/settings.html
 ---
 
-# Account Settings
+# Account profile
 
-The **Account Settings** page enables you to manage your account details and preferences. There are three sections available: 
+The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**. There are 3 tabs available in the *Profile* interface: *General*, *Preferences* and *Billing*. 
 
 ## General
 
-The **General** tab enables you to edit the following details for your account:
+The *General* tab enables you to edit the following details for your account profile:
 
-* **Name**: The name associated with your account.
+- Details: to see the name associated with your account, which is based on the one defined in your GitHub account.
+- Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
+
+<ThemedImage
+  alt="General tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-deletion.png',
+    dark: '/img/assets/cloud/account-deletion_DARK.png',
+  }}
+/>
+
+<!--
+### Modifying profile details
+
+1. In the *Details* section of the *General* tab, modify the information of your choice:
+
+    | Setting name    | Instructions                                                             |
+    | --------------- | ------------------------------------------------------------------------ |
+    | Name            | Write your full name in the textbox.                                     |
+    | Email           | Write your complete email address in the textbox.                        |
+    
+2. Click on the **Save** button.
+-->
+
+### Deleting Strapi Cloud account
+
+You can delete your Strapi Cloud account, but it will be permanent and irreversible. All associated projects and their data will be deleted as well and the subscriptions for the projects will automatically be canceled.
+
+1. In the *Delete account* section of the *General* tab, click on the **Delete account** button.
+2. In the dialog, type `DELETE` in the textbox.
+3. Confirm the deletion of your account by clicking on the **Delete** button.
 
 ## Preferences
 
-The **Preferences** tab enables you to edit the following details for your account:
+The *Preferences* tab enables you to choose the appearance of your Strapi Cloud dashboard: either the Light or Dark theme.
 
-* **Appearance**: Choose between the **Light** and **Dark** themes.
+<ThemedImage
+  alt="Preferences tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-preferences.png',
+    dark: '/img/assets/cloud/account-preferences_DARK.png',
+  }}
+/>
 
 ## Billing
 
-The **Billing** tab displays your billing information and enables you to update your payment method.
+The *Billing* tab displays your billing information and enables you to update your payment method.
 
-![Account billing settings](/img/assets/cloud/account-billing.png)
+<ThemedImage
+  alt="Billing tab of Profile page"
+  sources={{
+    light: '/img/assets/cloud/account-billing2.png',
+    dark: '/img/assets/cloud/account-billing2_DARK.png',
+  }}
+/>
 
 ### Managing subscriptions
 
