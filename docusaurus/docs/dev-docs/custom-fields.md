@@ -189,7 +189,7 @@ export default {
 
 </details>
 
-As of `4.13.0` fields in the content-manager can be auto-focussed via the URLSearchParam, `field`. Therefore it's recommended that your input component is wrapped in React's [`forwardRef`](https://react.dev/reference/react/forwardRef) method, you should then pass said `ref` to the `input` element.
+As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's [`forwardRef`](https://react.dev/reference/react/forwardRef) method; you should pass the corresponding `ref` to the `input` element.
 
 <details>
 <summary>Example: A custom text input</summary>
