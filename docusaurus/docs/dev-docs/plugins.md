@@ -16,7 +16,7 @@ Strapi's core features can be extended with plugins, and your experience with St
 
 - You will use one of the  **built-in plugins** officially maintained by Strapi. Some built-in plugins can already be pre-installed when you create a new Strapi project.
 - You might want to browse **3rd-party plugins** for additional features. 3rd-party plugins can be browsed from the admin panel or from the [Marketplace website](https://market.strapi.io) and installed with the command line interface.
-- You might want to **develop your own plugins**. The plugins you develop can be specific to your Strapi project — these plugins are called "local plugins", or can be submitted to the Marketplace if meant to be distributed to the Strapi community.
+- You might want to **develop your own plugins**. The plugins you develop can be specific to your Strapi project — these plugins are called "local plugins", or can be submitted to the Marketplace if meant to be shared with the Strapi community.
 - You might want to **extend an existing plugin** for a specific Strapi project. With this last use case, please proceed carefully, knowing that extensions might break with future updates from the plugin maintainer.
 
 Choose one of the following documentation sections from the table, depending on your profile and use case:
