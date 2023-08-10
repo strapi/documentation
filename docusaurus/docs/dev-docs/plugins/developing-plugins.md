@@ -11,9 +11,9 @@ pagination_prev: dev-docs/plugins
 This section is about developing Strapi plugins to use them as local plugins or to submit them to the Marketplace. Not what you're looking for? Read the [plugins introduction](/dev-docs/plugins) and find your use case and recommended section to read from there.
 :::
 
-Strapi allows the development of plugins that work exactly like the built-in or 3rd-party plugins available from the Marketplace. Once created, your plugin can be:
+Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the Marketplace. Once created, your plugin can be:
 
-- used a local plugin, working only with a specific Strapi project
+- used a local plugin, working only with a specific Strapi project,
 - or submitted to the [Marketplace](https://market.strapi.io) to be shared with the community.
 
 The first step to developing a Strapi plugin is to create it using the CLI-based generator. Then you'll be able to leverage the [plugin APIs](#plugin-apis) to add features to your plugin.
