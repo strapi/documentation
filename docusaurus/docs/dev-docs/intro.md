@@ -37,9 +37,9 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCard emoji="🔧" title="Advanced features" description="Use built-in Strapi features for advanced use cases." link="/dev-docs/advanced-features" />
 
-<CustomDocCard emoji="🔌" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
-
 <CustomDocCard emoji="🛠" title="Customization" description="Customize the Strapi server and admin panel." link="/dev-docs/customization" />
+
+<CustomDocCard emoji="🔌" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
 
 <CustomDocCard emoji="♻️" title="Update & Migration" description="Update your application or migrate from previous Strapi versions." link="/dev-docs/update-migration" />
 
