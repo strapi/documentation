@@ -134,3 +134,86 @@ Middlewares are called different ways depending on their scope:
 :::tip
 To list all the registered middlewares, run `yarn strapi middlewares:list`.
 :::
+
+### Restricting content access with an "is-owner policy"
+
+It is often required that the author of an entry is the only user allowed to edit or delete the entry. In previous versions of Strapi, this was known as an "is-owner policy". With Strapi v4, the recommended way to achieve this behavior is to use a middleware.
+
+Proper implementation largely depends on your project's needs and custom code, but the most basic implementation could be achieved with the following procedure: 
+
+1. From your project's folder, create a middleware with the Strapi CLI generator, by running the `yarn strapi generate` (or `npm run strapi generate`) command in the terminal.
+2. Select `middleware` from the list, using keyboard arrows, and press Enter.
+3. Give the middleware a name, for instance `isOwner`.
+4. Choose `Add middleware to an existing API` from the list.
+5. Select which API you want the middleware to apply.
+6. Replace the code in the `/src/api/[your-api-name]/middlewares/isOwner.js` file with the following, replacing `api::restaurant.restaurant` in line 22 with the identifier corresponding to the API you choose at step 5 (e.g., `api::blog-post.blog-post` if your API name is `blog-post`):
+
+  ```js showLineNumbers title="src/api/blog-post/middlewares/isOwner.js"
+    "use strict";
+
+    /**
+     * `isOwner` middleware
+     */
+
+    module.exports = (config, { strapi }) => {
+      // Add your own logic here.
+      return async (ctx, next) => {
+        const user = ctx.state.user;
+        const entryId = ctx.params.id ? ctx.params.id : undefined;
+        let entry = {};
+
+        /** 
+         * Gets all information about a given entry,
+         * populating every relations to ensure 
+         * the response includes author-related information
+         */
+        if (entryId) {
+          entry = await strapi.entityService.findOne(
+            // highlight-start
+            // replace the next line with your proper content-type identifier
+            "api::restaurant.restaurant",
+            // highlight-end
+            entryId,
+            { populate: "*" }
+          );
+        }
+
+        /**
+         * Compares user id and entry author id
+         * to decide whether the request can be fulfilled
+         * by going forward in the Strapi backend server
+         */
+        if (user.id !== entry.author.id) {
+          return ctx.unauthorized("This action is unauthorized.");
+        } else {
+          return next();
+        }
+      };
+    };
+  ```
+
+7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the methods (`create`, `read`, `update`, `delete`) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET (i.e., `read` method) and POST (i.e., `create` method) requests to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` method) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
+
+    ```js title="src/api/restaurant/routes/restaurant.js"
+
+    /**
+     * restaurant router
+     */
+      
+    const { createCoreRouter } = require("@strapi/strapi").factories;
+
+    module.exports = createCoreRouter("api::restaurant.restaurant", {
+      config: {
+        update: {
+          middlewares: ["api::restaurant.is-owner"],
+        },
+        delete: {
+          middlewares: ["api::restaurant.is-owner"],
+        },
+      },
+    });
+    ```
+
+:::info
+You can find more information about route middlewares in the [routes documentation](/dev-docs/backend-customization/routes).
+:::
