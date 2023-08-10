@@ -567,7 +567,14 @@ const sidebars = {
       collapsed: false,
       label: 'Account Management',
       items: [
-        'cloud/account/settings',
+        {
+          type: 'doc',
+          label: 'Account Settings',
+          id: 'cloud/account/settings',
+          customProps: {
+            updated: true,
+          },
+        },
       ]
     },
     {
