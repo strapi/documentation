@@ -7,7 +7,7 @@ sidebarDepth: 0
 
 # Collected Usage Information
 
-We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today. To that end, Strapi contains a feature in which anonymous and otherwise non-sensitive data is collected. This data is collectively aggregated for all our users, which when taken together give us a better global understanding of how users are interacting and using Strapi.
+We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today. To that end, Strapi contains a feature in which non-sensitive data is collected. This data is collectively aggregated for all our users, which when taken together give us a better global understanding of how users are interacting and using Strapi. We will never share the data collected in any way that would identify our Customers or their users; if shared, this data will always be anonymous.
 
 ## Context
 
@@ -35,7 +35,7 @@ The following data is collected:
 - Build configurations
 
 :::caution GDPR
-The collected data are of a non-sensitive nature and no personal data is collected by Strapi's telemetry system. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and anonymized.
+Any identifiable data collected and aggregated is of a non-sensitive nature. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and then anonymized.
 :::
 
 :::note

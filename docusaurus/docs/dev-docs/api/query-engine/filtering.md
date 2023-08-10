@@ -177,6 +177,22 @@ const entries = await strapi.db.query('api::article.article').findMany({
 });
 ```
 
+### `$nei`
+
+Attribute does not equal input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.db.query('api::article.article').findMany({
+  where: {
+    title: {
+      $nei: 'abcd',
+    },
+  },
+});
+```
+
 ### `$in`
 
 Attribute is contained in the input list.

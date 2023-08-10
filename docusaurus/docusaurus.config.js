@@ -102,6 +102,8 @@ const config = {
               'warning',
             ],
           },
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
         blog: false,

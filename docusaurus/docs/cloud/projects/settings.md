@@ -8,20 +8,42 @@ sidebar_position: 2
 
 # Project Settings
 
-The **Project Settings** page enables you to manage the configuration and settings for this project. It has the following tabs:
+The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 4 tabs available: *General*, *Domains*, *Variables* and *Billing*.
 
 ## General
 
-The *General* tab enables you to check and update the following details for the project:
+The *General* tab enables you to check and update the following options for the project:
 
-* **Project name**: The name of your Strapi app, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. Cannot be edited after creation.
-* **Production branch**: The branch of the linked repository to use for production deployments. Cannot be edited after creation.
-* **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. Cannot be edited after creation.
-* **Connected GitHub repository**: The Git repository linked to the project. Cannot be edited after creation.
-* **Delete project**: This will ***permanently and irreversibly*** delete the project and all its associated data.
-* **Debug info**: Displays the internal project name for your application. This is useful for support purposes.
+- Details: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Deployment](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- Connected Git repository: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
+- Selected region: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Deployment](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- Debug info: to see the internal project name for the project. This is useful for support purposes.
+- Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 ![Project settings](/img/assets/cloud/settings.png)
+
+### Modifying GitHub repository branch
+
+The GitHub repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
+
+1. In the *Connected Git repository* section of the *General* tab, click on the **Edit** button.
+2. In the *Edit Git settings* dialog, edit the available options of your choice:
+
+    | Setting name    | Instructions                                                             |
+    | --------------- | ------------------------------------------------------------------------ |
+    | Selected branch | Choose a branch from the drop-down list.                                 |
+    | Base directory  | Write the path of the base directory in the textbox.                     |
+    | Deploy the project on every commit pushed to this branch | Check the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. |
+
+3. Click on the **Save** button.
+
+### Deleting Strapi Cloud project
+
+You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
+
+1. In the *Delete project* section of the *General* tab, click on the **Delete project** button.
+2. In the dialog, type `DELETE` in the textbox.
+3. Confirm the deletion of your project by clicking on the **Delete** button.
 
 ## Domains
 

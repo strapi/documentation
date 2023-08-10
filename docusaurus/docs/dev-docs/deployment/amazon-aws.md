@@ -5,11 +5,16 @@ description: Learn in this guide how to deploy your Strapi application on AWS EC
 
 ---
 
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+
 # Amazon AWS
+
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/) inside your [AWS VPC](https://aws.amazon.com/vpc/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
 Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS. And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+
+<ConsiderStrapiCloud />
 
 ### Amazon AWS Install Requirements and creating an IAM non-root user
 
@@ -248,18 +253,18 @@ ubuntu@ip-1.2.3.4:~$
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js` `v14.x.x`, `v16.x.x`, and `v18.x.x`. The following steps will install Node.js onto your EC2 server.
+Strapi currently supports `Node.js` `v16.x.x`, `v18.x.x`, and `v20.x.x`. The following steps will install Node.js onto your EC2 server.
 
-```bash title="example using Node.js 14"
+```bash title="example using Node.js 20"
 cd ~
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 ...
 sudo apt-get install nodejs
 ...
 node -v && npm -v
 ```
 
-The last command `node -v && npm -v` should output two versions numbers, eg. `v14.x.x, 6.x.x`.
+The last command `node -v && npm -v` should output two versions numbers, eg. `v20.x.x, 6.x.x`.
 
 #### 4. Create and change npm's default directory.
 
