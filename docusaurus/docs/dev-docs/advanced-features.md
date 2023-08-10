@@ -3,7 +3,7 @@ title: Advanced features
 # description: todo
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-apis
-pagination_next: dev-docs/plugins
+pagination_next: dev-docs/customization
 ---
 
 # Advanced features

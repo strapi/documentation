@@ -265,6 +265,47 @@ const sidebars = {
         'dev-docs/error-handling',
       ]
     },
+    { // Customization
+      type: 'category',
+      collapsed: false,
+      label: '🛠 Customization',
+      items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/customization',
+        },
+        {
+          type: 'category',
+          label: 'Back-end customization',
+          items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization',
+              label: 'Introduction',
+              customProps: {
+                new: true,
+              },
+            },
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/requests-responses',
+              customProps: {
+                updated: true,
+              },
+            },
+            'dev-docs/backend-customization/routes',
+            'dev-docs/backend-customization/policies',
+            'dev-docs/backend-customization/middlewares',
+            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/services',
+            'dev-docs/backend-customization/models',
+            'dev-docs/backend-customization/webhooks',
+          ]
+        },
+        'dev-docs/admin-panel-customization',
+      ]
+    },
     { // Plugins
       type: 'category',
       collapsed: false,
@@ -362,47 +403,6 @@ const sidebars = {
             }
           ]
         }
-      ]
-    },
-    { // Customization
-      type: 'category',
-      collapsed: false,
-      label: '🛠 Customization',
-      items: [
-        {
-          type: 'doc',
-          label: 'Introduction',
-          id: 'dev-docs/customization',
-        },
-        {
-          type: 'category',
-          label: 'Back-end customization',
-          items: [
-            {
-              type: 'doc',
-              id: 'dev-docs/backend-customization',
-              label: 'Introduction',
-              customProps: {
-                new: true,
-              },
-            },
-            {
-              type: 'doc',
-              id: 'dev-docs/backend-customization/requests-responses',
-              customProps: {
-                updated: true,
-              },
-            },
-            'dev-docs/backend-customization/routes',
-            'dev-docs/backend-customization/policies',
-            'dev-docs/backend-customization/middlewares',
-            'dev-docs/backend-customization/controllers',
-            'dev-docs/backend-customization/services',
-            'dev-docs/backend-customization/models',
-            'dev-docs/backend-customization/webhooks',
-          ]
-        },
-        'dev-docs/admin-panel-customization',
       ]
     },
     { // Update & Migration
