@@ -561,6 +561,14 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Collaboration',
+          id: 'cloud/projects/collaboration',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
           label: 'Notifications',
           id: 'cloud/projects/notifications',
         },
@@ -571,7 +579,14 @@ const sidebars = {
       collapsed: false,
       label: 'Account Management',
       items: [
-        'cloud/account/settings',
+        {
+          type: 'doc',
+          label: 'Account Settings',
+          id: 'cloud/account/settings',
+          customProps: {
+            updated: true,
+          },
+        },
       ]
     },
     {
