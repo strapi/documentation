@@ -4,7 +4,7 @@ displayed_sidebar: devDocsSidebar
 sidebar_position: 2
 title: Quick Start Guide - Strapi Developer Docs
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
-# next: ./troubleshooting
+pagination_next: dev-docs/api/content-apis
 
 ---
 
@@ -231,6 +231,7 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 <!-- TODO: uncomment this one when API token page is ready -->
 <!-- - 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API, -->
-- 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
+- 👉 discover Strapi's [Content APIs](/dev-docs/api/content-apis), 
 - 👉 deploy your project on [Strapi Cloud](/cloud/intro),
+- 👉 learn more about [advanced features](/dev-docs/advanced-features) and [plugins](/dev-docs/plugins),
 - 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization).
