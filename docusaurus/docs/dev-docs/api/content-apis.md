@@ -45,7 +45,7 @@ This documentation section includes reference information about the following St
 
 <CustomDocCard emoji="↕️" title="REST API" description="Query the Content API from a front-end application through REST." link="/dev-docs/api/rest" />
 
-<CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/dev-docs/api/rest" />
+<CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/dev-docs/api/graphql" />
 
 <CustomDocCard emoji="🔃" title="Entity Service API" description="Query your data through the backend server or plugins." link="/dev-docs/api/entity-service" />
 
