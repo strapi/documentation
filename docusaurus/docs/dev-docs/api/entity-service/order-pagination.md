@@ -4,7 +4,7 @@ description: Use Strapi's Entity Service API to order and paginate queries resul
 displayed_sidebar: devDocsSidebar
 ---
 
-# Ordering & Pagination
+# Ordering and Paginating with the Entity Service API
 
 The [Entity Service API](/dev-docs/api/entity-service) offers the ability to [order](#ordering) and [paginate](#pagination) results found with its [findMany()](/dev-docs/api/entity-service/crud#findmany) method.
 

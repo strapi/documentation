@@ -4,7 +4,7 @@ description: Use Strapi's Query Engine API to perform operations on multiple ent
 displayed_sidebar: devDocsSidebar
 ---
 
-# Bulk Operations
+# Bulk Operations with the Query Engine AP
 
 :::caution
 To avoid performance issues, bulk operations are not allowed on relations.

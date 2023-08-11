@@ -4,7 +4,7 @@ description: Use Strapi's Entity Service API to filter your queries results.
 displayed_sidebar: devDocsSidebar
 ---
 
-# Filtering
+# Filtering with the Entity Service API
 
 The [Entity Service API](/dev-docs/api/entity-service) offers the ability to filter results found with its [findMany()](/dev-docs/api/entity-service/crud#findmany) method.
 
