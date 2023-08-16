@@ -108,11 +108,15 @@ const sidebars = {
                 id: 'dev-docs/deployment/hosting-guides',
             },
               items: [
+                {
+                  type: 'doc',
+                  label: 'Introduction',
+                  id: 'dev-docs/deployment/hosting-guides',
+                },
                 'dev-docs/deployment/amazon-aws',
                 'dev-docs/deployment/azure',
                 'dev-docs/deployment/digitalocean-app-platform',
                 'dev-docs/deployment/digitalocean',
-                // 'dev-docs/deployment/google-app-platform',
                 'dev-docs/deployment/heroku',
               ],
             },
@@ -125,6 +129,11 @@ const sidebars = {
                 id: 'dev-docs/deployment/optional-software-guides',
             },
               items: [
+                {
+                  type: 'doc',
+                  label: 'Introduction',
+                  id: 'dev-docs/deployment/optional-software-guides',
+                },
                 'dev-docs/deployment/caddy-proxy',
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
