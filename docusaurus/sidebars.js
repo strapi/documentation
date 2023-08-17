@@ -417,7 +417,11 @@ const sidebars = {
     { // Update & Migration
       type: 'category',
       collapsed: false,
-      label: '♻️ Update and Migration',
+      label: '♻️ Updates and Migrations',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/update-migration',
+      },
       items: [
         {
           type: 'doc',
@@ -440,6 +444,8 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/migration/v4-to-v5/introduction'
             },
+            'dev-docs/migration/v4-to-v5/breaking-changes',
+            'dev-docs/migration/v4-to-v5/migration-guides',
           ]
         }
       ],

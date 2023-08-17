@@ -1,16 +1,16 @@
 ---
-title: Upgrade Strapi version
+title: Updates
 displayed_sidebar: devDocsSidebar
-description: The following documentation covers how to upgrade your application to the latest version of Strapi.
+description: The following documentation covers how to update your application to the latest version of Strapi.
 
 ---
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
-# Upgrade Strapi version
+# Update to a newer Strapi version
 
-Strapi periodically releases code improvements through upgrades. Upgrades contain no breaking changes and are announced in both the terminal and in the administration panel. [Migration guides](/dev-docs/migration-guides) are provided whenever a new Strapi version includes breaking changes.
+Strapi periodically releases code improvements through new versions. Updates contain no breaking changes. The present documentation is a generic update guide. The [Updates and Migration introduction](/dev-docs/update-migration) explains the differences between an update and a migration.
 
 :::caution
  [Plugins extension](/dev-docs/plugins/users-permissions) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
