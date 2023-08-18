@@ -43,7 +43,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: {type: 'doc', id: 'dev-docs/installation'},
           items: [
             {
               type: 'doc',
@@ -58,10 +57,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Configuration',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations',
-          },
           items: [
             {
               type: 'doc',
@@ -87,7 +82,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
-          link: {type: 'doc', id: 'dev-docs/deployment'},
           items: [
            {
               type: 'doc',
@@ -103,10 +97,6 @@ const sidebars = {
               type: 'category',
               label: 'Other Hosting Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-            },
               items: [
                 {
                   type: 'doc',
@@ -124,10 +114,6 @@ const sidebars = {
               type: 'category',
               label: 'Optional Software Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-            },
               items: [
                 {
                   type: 'doc',
@@ -158,11 +144,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/rest',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/rest',
+              label: 'Introduction',
+            },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/filters-locale-publication',
@@ -175,11 +162,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Integrations',
-          link: {
-            type:'doc',
-            id: 'dev-docs/integrations',
-          },
           items: [
+            {
+              type:'doc',
+              id: 'dev-docs/integrations',
+              label: 'Introduction',
+            },
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
             'dev-docs/integrations/dart',
@@ -204,11 +192,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Entity Service API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/entity-service',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/api/entity-service',
+            },
             'dev-docs/api/entity-service/crud',
             'dev-docs/api/entity-service/filter',
             'dev-docs/api/entity-service/populate',
@@ -219,11 +208,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/api/query-engine',
+            },
             'dev-docs/api/query-engine/single-operations',
             'dev-docs/api/query-engine/bulk-operations',
             'dev-docs/api/query-engine/filtering',
@@ -255,11 +245,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Data management',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/data-management',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/data-management',
+            },
             'dev-docs/data-management/export',
             'dev-docs/data-management/import',
             {
@@ -319,16 +310,6 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '🔌 Plugins',
-      link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/plugins',
-          },
       items: [
         {
           type: 'doc',
@@ -338,7 +319,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Using plugins',
-          link: { type: 'doc', id: 'dev-docs/plugins/using-plugins' },
           items: [
             {
               type: 'doc',
@@ -386,7 +366,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
-          link: {type: 'doc', id: 'dev-docs/plugins/developing-plugins'},
           items: [
             {
               type: 'doc',
