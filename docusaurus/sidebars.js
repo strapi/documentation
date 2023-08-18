@@ -37,17 +37,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/installation',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/installation',
+              label: 'Introduction'
+            },
             'dev-docs/installation/cli',
             'dev-docs/installation/docker',
           ]
@@ -59,11 +54,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Configuration',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/configurations',
+            },
             {
               type: 'category',
               label: 'Required configurations',
@@ -97,11 +93,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/deployment',
-        },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/deployment',
+              label: 'Introduction',
+            },
             {
               type: 'doc',
               label: '☁️ Strapi Cloud',
@@ -111,11 +108,12 @@ const sidebars = {
               type: 'category',
               label: 'Other Hosting Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-            },
               items: [
+                {
+                  type: 'doc',
+                  id: 'dev-docs/deployment/hosting-guides',
+                  label: 'Introduction',
+                },
                 'dev-docs/deployment/amazon-aws',
                 'dev-docs/deployment/azure',
                 'dev-docs/deployment/digitalocean-app-platform',
@@ -129,11 +127,12 @@ const sidebars = {
               type: 'category',
               label: 'Optional Software Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-            },
               items: [
+                {
+                  type: 'doc',
+                  id: 'dev-docs/deployment/optional-software-guides',
+                  label: 'Introduction',
+                },
                 'dev-docs/deployment/caddy-proxy',
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
@@ -153,11 +152,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/rest',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/rest',
+              label: 'Introduction',
+            },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/filters-locale-publication',
@@ -170,11 +170,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Entity Service API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/entity-service',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/entity-service',
+              label: 'Introduction',
+            },
             'dev-docs/api/entity-service/crud',
             'dev-docs/api/entity-service/filter',
             'dev-docs/api/entity-service/populate',
@@ -185,11 +186,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/query-engine',
+              label: 'Introduction',
+            },
             'dev-docs/api/query-engine/single-operations',
             'dev-docs/api/query-engine/bulk-operations',
             'dev-docs/api/query-engine/filtering',
@@ -255,12 +257,12 @@ const sidebars = {
         {
         type: 'category',
         label: 'Data management',
-        collapsed: false,
-        link: {
-          type: 'doc',
-          id: 'dev-docs/data-management',
-         },
         items: [
+          {
+            type: 'doc',
+            label: 'Introduction',
+            id: 'dev-docs/data-management',
+           },
           'dev-docs/data-management/export',
           'dev-docs/data-management/import',
           {
@@ -276,11 +278,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Integrations',
-          link: {
-            type:'doc',
-            id: 'dev-docs/integrations',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/integrations',
+            },
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
             'dev-docs/integrations/dart',
