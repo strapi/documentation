@@ -201,7 +201,7 @@ When a new [content-type](/dev-docs/backend-customization/models#content-types) 
 ### Sanitization and Validation in controllers
 
 :::warning
-It's strongly recommended you sanitize (v4.8.0) and/or validate (v4.13.0) your incoming request query and parameters utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent leaking of private data.
+It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query and parameters utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
 #### Sanitization when utilizing controller factories
