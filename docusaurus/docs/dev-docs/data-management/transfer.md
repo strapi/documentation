@@ -111,7 +111,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 1. Start the Strapi server for the source instance.
 2. In a new terminal window, navigate to the root directory of the destination instance.
-3. Run the following minimal command to initiate the transfer (don't forget to append /admin to the URL):
+  3. Run the following minimal command to initiate the transfer, ensuring `remoteURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
   <Tabs groupId="yarn-npm">
 
