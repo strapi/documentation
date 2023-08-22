@@ -80,7 +80,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
   1. Start the Strapi server for the destination instance.
   2. In a new terminal window, navigate to the root directory of the source instance.
-  3. Run the following minimal command to initiate the transfer:
+  3. Run the following minimal command to initiate the transfer (don't forget to append /admin to the URL):
 
     <Tabs groupId="yarn-npm">
 
@@ -111,7 +111,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 1. Start the Strapi server for the source instance.
 2. In a new terminal window, navigate to the root directory of the destination instance.
-3. Run the following minimal command to initiate the transfer:
+3. Run the following minimal command to initiate the transfer (don't forget to append /admin to the URL):
 
   <Tabs groupId="yarn-npm">
 
