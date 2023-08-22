@@ -44,7 +44,7 @@ Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-
 :::
 
 :::strapi Experimental: Preview and edit your content live on your website
-By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. A more user-friendly documentation will be provided once the plugin is out of beta.  
+By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
 :::
 
 ### Components
