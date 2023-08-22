@@ -85,7 +85,7 @@ New entries are only considered created once some of their content has been writ
 Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
 
 :::note
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating the admin panel outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/cog.svg) and clicking on the **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/cog.svg) and clicking on the **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
 <ThemedImage
