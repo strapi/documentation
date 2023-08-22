@@ -7,13 +7,13 @@ canonicalUrl: https://docs.strapi.io/cloud/account/settings.html
 
 # Account profile
 
-The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**. There are 3 tabs available in the *Profile* interface: *General*, *Preferences* and *Billing*. 
+The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**. There are 3 tabs available in the *Profile* interface: *General*, *Preferences* and *Billing*.
 
 ## General
 
 The *General* tab enables you to edit the following details for your account profile:
 
-- Details: to see the name associated with your account, which is based on the one defined in your GitHub account.
+- Details: to see the name associated with your account.
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
 <ThemedImage
