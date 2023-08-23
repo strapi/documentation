@@ -657,6 +657,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'REST API',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/api/rest'
+      },
       items: [
         {
           type: 'category',
