@@ -19,7 +19,6 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 :::caution
 
 - If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
-- Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
 
 :::
 
