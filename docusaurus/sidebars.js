@@ -235,6 +235,14 @@ const sidebars = {
             'dev-docs/backend-customization/services',
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/tutorial',
+              label: 'Tutorial',
+              customProps: {
+                new: true,
+              }
+            }
           ]
         },
         'dev-docs/plugins-extension',
