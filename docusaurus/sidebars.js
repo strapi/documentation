@@ -19,6 +19,7 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '🚀 Getting Started',
+      link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
         'dev-docs/intro',
         'dev-docs/quick-start',
@@ -43,6 +44,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
+          link: {type: 'doc', id: 'dev-docs/installation'},
           items: [
             {
               type: 'doc',
@@ -82,6 +84,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/deployment',
+          },
           items: [
            {
               type: 'doc',
@@ -96,6 +102,10 @@ const sidebars = {
             {
               type: 'category',
               label: 'Other Hosting Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/deployment/hosting-guides',
+              },
               collapsed: false,
               items: [
                 {
@@ -113,6 +123,10 @@ const sidebars = {
             {
               type: 'category',
               label: 'Optional Software Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/deployment/optional-software-guides',
+              },
               collapsed: false,
               items: [
                 {
@@ -162,6 +176,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Integrations',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/integrations',
+          },
           items: [
             {
               type:'doc',
@@ -192,6 +210,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Entity Service API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/entity-service',
+          },
           items: [
             {
               type: 'doc',
@@ -208,6 +230,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Query Engine API',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/query-engine',
+          },
           items: [
             {
               type: 'doc',
@@ -221,14 +247,16 @@ const sidebars = {
             'dev-docs/api/query-engine/order-pagination',
           ]
         },
-
       ]
     },
     { // Advanced features
       type: 'category',
       label: '🔧 Advanced features',
       collapsed: false,
-      link: {type: 'doc', id: 'dev-docs/advanced-features'},
+      link: {
+        type: 'doc',
+        id: 'dev-docs/advanced-features'
+      },
       items: [
         {
           type: 'doc',
@@ -245,6 +273,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Data management',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/data-management',
+          },
           items: [
             {
               type: 'doc',
@@ -269,6 +301,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '🛠 Customization',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/customization',
+      },
       items: [
         {
           type: 'doc',
@@ -278,6 +314,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Back-end customization',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/backend-customization'
+          },
           items: [
             {
               type: 'doc',
@@ -310,6 +350,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '🔌 Plugins',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/plugins',
+      },
       items: [
         {
           type: 'doc',
@@ -319,6 +363,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Using plugins',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/plugins/using-plugins'
+          },
           items: [
             {
               type: 'doc',
@@ -360,12 +408,15 @@ const sidebars = {
               label: 'Users & Permissions',
               id: 'dev-docs/plugins/users-permissions',
             },
-
           ]
         },
         {
           type: 'category',
           label: 'Developing plugins',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/plugins/developing-plugins',
+          },
           items: [
             {
               type: 'doc',
@@ -416,6 +467,10 @@ const sidebars = {
         {
           type: 'category',
           collapsed: true,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/migration/v4-to-v5/introduction'
+          },
           label: 'v4 to v5 migration guides',
           items: [
             {
