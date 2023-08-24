@@ -13,12 +13,14 @@ import TOCInline from '@theme/TOCInline';
 - If you want to test and play with the code examples by yourself, ensure you have cloned the [FoodAdvisor](https://github.com/strapi/foodadvisor#1-clone-foodadvisor) repository and setup the project. The Strapi admin panel should be accessible from [`localhost:1337/admin`](http://localhost:1337/admin) and the Next.js-based FoodAdvisor front-end website should be running on [`localhost:3000`](http://localhost:3000).
 :::
 
-The present advanced example tutorial demonstrates how the core components of the back-end server of Strapi can be used in a real-world project. The example project we will use is [FoodAdvisor](https://github.com/strapi/foodadvisor), the official Strapi demo application. FoodAdvisor builds a ready-made restaurants directory powered by a Strapi back end (included in the `/api` folder) and renders a [Next.js](https://nextjs.org/)-powered front-end website (included in the `/client` folder).
+The present tutorial is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project. The example project we will use is [FoodAdvisor](https://github.com/strapi/foodadvisor), the official Strapi demo application. FoodAdvisor builds a ready-made restaurants directory powered by a Strapi back end (included in the `/api` folder) and renders a [Next.js](https://nextjs.org/)-powered front-end website (included in the `/client` folder).
 
 <!-- We will: -->
 <!-- TODO add list? -->
 
 This tutorial will also use some code for front-end pages. Though this front-end code is outside the scope of Strapi back end customization, including it illustrates how the end user can interact with your Strapi-powered website and how actions on the front end interplay with core components from the Strapi back end server.
+
+This tutorial can be read from start to finish, or you might want to jump directly to a specific section to understand how a given core element from the Strapi back-end can be used to solve a real-world use case.
 
 <!-- <TOCInline toc={toc} /> -->
 
