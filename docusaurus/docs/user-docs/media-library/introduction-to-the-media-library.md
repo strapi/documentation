@@ -12,7 +12,13 @@ The Media Library is a Strapi plugin that is always activated by default and can
 
 Administrators can access the Media Library from ![ML icon](/img/assets/icons/media_library.svg) _Media Library_ in the main navigation of the admin panel.
 
-![Media Library overview, annotated](/img/assets/media-library/media-library_overview.png)
+<ThemedImage
+  alt="Media Library overview, annotated"
+  sources={{
+    light: '/img/assets/media-library/media-library_overview.png',
+    dark: '/img/assets/media-library/media-library_overview_DARK.png',
+  }}
+/>
 
 The Media Library displays all assets uploaded in the application, either via the Media Library itself or via the Content Manager when managing a media field. Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/user-docs/content-manager/writing-content#filling-up-fields).
 
@@ -31,7 +37,13 @@ Click the search icon ![Search icon](/img/assets/icons/search.svg) on the right 
 
 Right above the list of folders and assets, on the left side of the interface, a **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
 
-![Filters in the Media Library](/img/assets/media-library/media-library_filters.png)
+<ThemedImage
+  alt="Filters"
+  sources={{
+    light: '/img/assets/media-library/media-library_filters.png',
+    dark: '/img/assets/media-library/media-library_filters_DARK.png',
+  }}
+/>
 
 To set a new filter:
 
@@ -47,7 +59,13 @@ When active, filters are displayed next to the **Filters** button. They can be r
 
 ## Sorting assets
 
-![Sort](/img/assets/media-library/media-library_sort.png)
+<ThemedImage
+  alt="Sort"
+  sources={{
+    light: '/img/assets/media-library/media-library_sort.png',
+    dark: '/img/assets/media-library/media-library_sort_DARK.png',
+  }}
+/>
 
 Just above the list of folders and assets, on the left side of the interface, a **Sort by** button is displayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the button and select an option in the list to automatically display the sorted assets.
 
@@ -55,7 +73,13 @@ Just above the list of folders and assets, on the left side of the interface, a 
 
 Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](/img/assets/icons/settings.svg) to configure the default view for the Media library.
 
-![Configure the view](/img/assets/media-library/media-library_configure-the-view.png)
+<ThemedImage
+  alt="Configure the view"
+  sources={{
+    light: '/img/assets/media-library/media-library_configure-the-view.png',
+    dark: '/img/assets/media-library/media-library_configure-the-view_DARK.png',
+  }}
+/>
 
 From there you can:
 

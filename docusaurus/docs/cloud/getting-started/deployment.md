@@ -14,8 +14,8 @@ This is a step-by-step guide for deploying your Strapi application on Strapi Clo
 
 Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
 
-* Strapi version `4.8.1` or higher
-* Database: Project must be compatible with PostgreSQL. Use of any external database is not supported.
+* Strapi version `4.8.2` or higher
+*  Database: Project must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
 * Project(s) source code hosted on [GitHub](https://github.com)
     * The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 
@@ -37,11 +37,16 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     You will be shown a **plan selection** dialog.
     This will allow you to select the most relevant plan for your project. Refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
-    ![Plan selection page](/img/assets/cloud/plan-selection.png)
+    <ThemedImage
+    alt="Plan selection page"
+    sources={{
+        light: '/img/assets/cloud/plan-selection.png',
+        dark: '/img/assets/cloud/plan-selection_DARK.png',
+    }}
+    />
 
     :::note
     Strapi Cloud offers a free trial for only one project.
-
     If you have already used a free trial for a previous project, the option will no longer appear in the plan selection.
     :::
 
@@ -67,8 +72,19 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     * **Project name**: The name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`).
     * **GitHub branch**: The default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository but can be changed via the drop-down.
     * **Deploy on push**: When enabled, this will automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes.
+    * **Region**: The geographic location of the servers where your Strapi application is hosted. Selected region can either be USA in North America (default) or Amsterdam in Europe.
 
-    ![Project Setup](/img/assets/cloud/setup.png)
+    :::note
+    The GitHub branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the project name and hosting region setting can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    :::
+
+    <ThemedImage
+    alt="Project Setup"
+    sources={{
+        light: '/img/assets/cloud/setup.png',
+        dark: '/img/assets/cloud/setup_DARK.png',
+    }}
+    />
 
 6. (**Optional**) Select **Show Advanced Settings** to configure the following options:
     * **Base directory**: The directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo.

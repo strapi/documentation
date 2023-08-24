@@ -9,7 +9,13 @@ Using the [Review Workflows](/user-docs/settings/review-workflows) feature, you 
 
 When viewing your content in the Content Manager, you can see the current stage in the **Review Stage** and the assignee in the **Assignee** column:
 
-![Review Workflow columns](/img/assets/content-manager/review-workflow-list-view.png)
+<ThemedImage
+  alt="Review Stage column"
+  sources={{
+    light: '/img/assets/content-manager/review-workflow-list-view.png',
+    dark: '/img/assets/content-manager/review-workflow-list-view.png',
+  }}
+/>
 
 ## Change review stage
 
@@ -21,7 +27,13 @@ To change the review stage of your content:
 2. In the Information box, click on the _Review stage_ drop-down list.
 3. Choose the new review stage of your entry. It is automatically saved.
 
-![Review Stage dropdown](/img/assets/content-manager/review-stage-dropdown.png)
+<ThemedImage
+  alt="Review Stage dropdown"
+  sources={{
+    light: '/img/assets/content-manager/review-stage-dropdown.png',
+    dark: '/img/assets/content-manager/review-stage-dropdown_DARK.png',
+  }}
+/>
 
 ## Change assignee
 

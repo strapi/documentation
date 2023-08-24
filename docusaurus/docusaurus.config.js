@@ -27,7 +27,11 @@ const config = {
     locales: ['en'],
   },
 
-  themes: ['@docusaurus/theme-live-codeblock'],
+  markdown: {
+    mermaid: true,
+  },
+
+  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
   scripts: [
     {
@@ -243,7 +247,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        selector: '.markdown :not(em) > img',
+        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
     }),
 

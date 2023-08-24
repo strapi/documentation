@@ -1,7 +1,11 @@
 /** Base: General Styles */
 
+:root {
+  --custom-selection-background-color: var(--strapi-primary-600);
+}
+
 ::selection {
-  background-color:  var(--custom-selection-background-color, var(--strapi-primary-600));
+  background-color:  var(--custom-selection-background-color);
   color: var(--custom-selection-color, var(--strapi-neutral-0));
 }
 

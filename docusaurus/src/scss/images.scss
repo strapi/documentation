@@ -1,0 +1,7 @@
+/** General: Images */
+
+/** Dark Mode images border */
+.theme-doc-markdown.markdown [class*="themedImage--dark"] {
+  border: 0.125rem solid var(--strapi-neutral-200);
+  border-radius: 0.25rem;
+}

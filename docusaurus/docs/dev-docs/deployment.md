@@ -7,6 +7,7 @@ description: Learn how to develop locally with Strapi and deploy Strapi with var
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
 
 # Deployment
 
@@ -14,9 +15,7 @@ Strapi provides many deployment options for your project or application. Your St
 
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
-:::callout ☁️ Strapi Cloud
-Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to easily deploy and host your project.
-:::
+<ConsiderStrapiCloud />
 
 :::strapi Community Guides
 In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
@@ -34,7 +33,7 @@ Another possible workflow is to first create the data structure locally, push yo
 
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
 
-- Node LTS (v14 or v16) **Odd-number releases of Node are not supported (e.g. v13, v15).**
+- Node LTS (currently v16, v18, and v20) **Odd-number releases of Node are not supported (e.g. v17, v19).**
 - NPM v6 (or the version shipped with the LTS Node versions)
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):

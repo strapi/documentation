@@ -11,7 +11,13 @@ The default Strapi logos, displayed in the main navigation of a Strapi applicati
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/dev-docs/admin-panel-customization#logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
 
-![Custom logo settings](/img/assets/settings/settings_custom-logo.png)
+<ThemedImage
+  alt="Custom logo settings"
+  sources={{
+    light: '/img/assets/settings/settings_custom-logo.png',
+    dark: '/img/assets/settings/settings_custom-logo_DARK.png',
+  }}
+/>
 
 To customize the logos:
 

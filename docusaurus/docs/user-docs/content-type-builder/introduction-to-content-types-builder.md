@@ -9,7 +9,13 @@ The Content-type Builder is a core plugin of Strapi. It is a feature that is alw
 
 Administrators can access the Content-type Builder from ![CTB icon](/img/assets/icons/content_types_builder.svg) _Content-type Builder_ in the main navigation of the admin panel.
 
-![Content-type Builder interface](/img/assets/content-type-builder/content-types-builder.png)
+<ThemedImage
+  alt="Content-type Builder interface"
+  sources={{
+    light: '/img/assets/content-type-builder/content-types-builder.png',
+    dark: '/img/assets/content-type-builder/content-types-builder_DARK.png',
+  }}
+/>
 
 From the Content-type Builder, administrators can create and manage content-types: collection types and single types but also components.
 

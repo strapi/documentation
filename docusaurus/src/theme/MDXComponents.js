@@ -18,7 +18,14 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
+import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
+import {
+  MultiLanguageSwitcher,
+  MultiLanguageSwitcherRequest,
+  MultiLanguageSwitcherResponse,
+} from '../components/MultiLanguageSwitcher';
+import { Annotation } from '../components/Annotation';
 
 export default {
   // Re-use the default mapping
@@ -46,4 +53,10 @@ export default {
   CustomDocCard,
   InteractiveQueryBuilder,
   ThemedImage,
+  SideBySideColumn,
+  SideBySideContainer,
+  MultiLanguageSwitcher,
+  MultiLanguageSwitcherRequest,
+  MultiLanguageSwitcherResponse,
+  Annotation,
 };

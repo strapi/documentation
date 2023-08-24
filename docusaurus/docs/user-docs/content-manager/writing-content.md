@@ -10,7 +10,13 @@ displayed_sidebar: userDocsSidebar
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
 
-![Edit view to write content](/img/assets/content-manager/edit-view2.png)
+<ThemedImage
+  alt="Edit view to write content"
+  sources={{
+    light: '/img/assets/content-manager/edit-view2.png',
+    dark: '/img/assets/content-manager/edit-view2_DARK.png',
+  }}
+/>
 
 ## Filling up fields
 
@@ -37,6 +43,10 @@ To write or edit content:
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
+:::strapi Experimental: Preview and edit your content live on your website
+By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
+:::
+
 ### Components
 
 Components are a combination of several fields, which are grouped together in the edit view. Writing their content works exactly like for independent fields, but there are some specificities to components.
@@ -45,8 +55,22 @@ There are 2 types of components: non-repeatable and repeatable components.
 
 #### Non-repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component3.png" alt="Writing content for a component" width="80%" />
-<img src="/img/assets/content-manager/edit-view_component2.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Non-repeatable component - No entry yet"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component3.png',
+    dark: '/img/assets/content-manager/edit-view_component3_DARK.png',
+  }}
+/>
+<ThemedImage
+  alt="Non-repeatable component - With entries"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component2.png',
+    dark: '/img/assets/content-manager/edit-view_component2_DARK.png',
+  }}
+/>
 
 Non-repeatable components are a combination of fields that can be used only once.
 
@@ -59,7 +83,14 @@ To delete the non-repeatable component, click on the delete button ![Delete icon
 
 #### Repeatable components
 
-<img src="/img/assets/content-manager/edit-view_component4.png" alt="Writing content for a component" width="80%" />
+<ThemedImage
+  alt="Repeatable component"
+  width="80%"
+  sources={{
+    light: '/img/assets/content-manager/edit-view_component4.png',
+    dark: '/img/assets/content-manager/edit-view_component4_DARK.png',
+  }}
+/>
 
 Repeatable components are also a combination of fields, but they allow the creation of multiple component entries, all following the same combination of fields.
 

@@ -8,7 +8,9 @@ sidebarDepth: 0
 
 # Migration guides
 
-Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order. If there is no specific migration guide between your current version and the latest release follow the [Upgrade Strapi guide](/dev-docs/update-version.md).
+Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order.
+
+If there is no specific migration guide between your current version and the latest release, you only need to follow the [guide to upgrade Strapi](/dev-docs/update-version.md).
 
 :::caution
 [Plugins extension](/dev-docs/plugins/users-permissions) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
@@ -25,6 +27,7 @@ Migrations are necessary when upgrades to Strapi include breaking changes. The m
 - [Migration guide from 4.4.5 to 4.5.1](/dev-docs/migration/v4/migration-guide-4.4.5-to-4.5.1)
 - [Migration guide from 4.5.1 to 4.6.1](/dev-docs/migration/v4/migration-guide-4.5.1-to-4.6.1)
 - [Migration guide from 4.6.1 to 4.7.0](/dev-docs/migration/v4/migration-guide-4.6.1-to-4.7.0)
+- [Migration guide from 4.7.0 to 4.11.4](/dev-docs/migration/v4/migration-guide-4.7.0-to-4.11.4)
 
 ## v3 to v4 migration guides
 

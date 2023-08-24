@@ -12,7 +12,13 @@ The Media Library allows managing assets, which includes modifying assets' file 
 
 Clicking on the edit ![Edit icon](/img/assets/icons/edit.svg) button of an asset opens up a "Details" window, with all the available options.
 
-![Annotated asset details window screenshot](/img/assets/media-library/media-library_asset-details.png)
+<ThemedImage
+  alt="Annotated asset details window screenshot"
+  sources={{
+    light: '/img/assets/media-library/media-library_asset-details.png',
+    dark: '/img/assets/media-library/media-library_asset-details_DARK.png',
+  }}
+/>
 
 - On the left, above the preview of the asset, control buttons (1) allow performing various actions:
   - click on the delete button ![Delete icon](/img/assets/icons/delete.svg) to delete the asset,

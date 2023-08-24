@@ -16,7 +16,7 @@ While possible, it is not recommended to use an external database with Strapi Cl
 
 :::prerequisites
 
-- A local Strapi project running on `v4.8.1+`.
+- A local Strapi project running on `v4.8.2+`.
 - Credentials for external database.
 - If using an existing database, the schema must match the Strapi project schema.
 

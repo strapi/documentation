@@ -4,11 +4,7 @@ displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-
 # Webhooks
-
-<FeedbackCallout components={props.components}/>
 
 Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third party providers to start some processing (CI, build, deployment ...).
 
@@ -443,18 +439,81 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 ```json
 {
   "event": "review-workflows.updateEntryStage",
-  "createdAt": "2020-01-10T11:02:46.232Z",
-  "model": "address",
-  "uid": "api::address.address",
-  "entry": {
-    "entityId": 1,
-    "workflow": {
-      "id": 1,
-      "stages": {
-        "from": 2,
-        "to": 1
+  "createdAt": "2023-06-26T15:46:35.664Z",
+  "model": "model",
+  "uid": "uid",
+  "entity": {
+    "id": 2
+  },
+  "workflow": {
+    "id": 1,
+    "stages": {
+      "from": {
+        "id": 1,
+        "name": "Stage 1"
+      },
+      "to": {
+        "id": 2,
+        "name": "Stage 2"
       }
     }
   }
 }
 ```
+
+:::caution Payload format for Strapi v4.11.4+
+The payload format for the `review-workflows.updateEntryStage` webhook changed between Strapi v4.11.3 and Strapi v4.11.4. Please notice the payload format differences in the following examples and update your integration code accordingly:
+
+<details>
+<summary>Payload formats for Strapi v4.11.3 vs. Strapi v4.11.4</summary>
+
+In Strapi v4.11.3 the webhook payload has the following structure:
+
+```json
+{
+  "event": "review-workflows.updateEntryStage",
+  "createdAt": "2023-06-30T11:40:00.658Z",
+  "model": "model",
+  "uid": "uid",
+  "entry": {
+    "entityId": 2,
+    "workflow": {
+      "id": 1,
+      "stages": {
+        "from": 1,
+        "to": 2
+      }
+    }
+  }
+}
+```
+
+In Strapi v4.11.4 the webhook payload has the following structure:
+
+```json
+{
+  "event": "review-workflows.updateEntryStage",
+  "createdAt": "2023-06-26T15:46:35.664Z",
+  "model": "model",
+  "uid": "uid",
+  "entity": {
+    "id": 2
+  },
+  "workflow": {
+    "id": 1,
+    "stages": {
+      "from": {
+        "id": 1,
+        "name": "Stage 1"
+      },
+      "to": {
+        "id": 2,
+        "name": "Stage 2"
+      }
+    }
+  }
+}
+```
+
+</details>
+:::

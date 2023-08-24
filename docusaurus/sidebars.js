@@ -37,17 +37,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: {
-            /**
-            * Use the 2 lines below to make sure that
-            * "Installation" in the TOC is a clickable link
-            * pointing to a page (i.e., type: 'doc') whose link target
-            * is defined as the 'id' property.
-            */
-            type: 'doc',
-            id: 'dev-docs/installation',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/installation',
+              label: 'Introduction'
+            },
             'dev-docs/installation/cli',
             'dev-docs/installation/docker',
           ]
@@ -59,11 +54,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Configuration',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/configurations',
+            },
             {
               type: 'category',
               label: 'Required configurations',
@@ -97,11 +93,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Deployment',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/deployment',
-        },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/deployment',
+              label: 'Introduction',
+            },
             {
               type: 'doc',
               label: '☁️ Strapi Cloud',
@@ -111,11 +108,12 @@ const sidebars = {
               type: 'category',
               label: 'Other Hosting Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-            },
               items: [
+                {
+                  type: 'doc',
+                  id: 'dev-docs/deployment/hosting-guides',
+                  label: 'Introduction',
+                },
                 'dev-docs/deployment/amazon-aws',
                 'dev-docs/deployment/azure',
                 'dev-docs/deployment/digitalocean-app-platform',
@@ -129,11 +127,12 @@ const sidebars = {
               type: 'category',
               label: 'Optional Software Guides',
               collapsed: false,
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-            },
               items: [
+                {
+                  type: 'doc',
+                  id: 'dev-docs/deployment/optional-software-guides',
+                  label: 'Introduction',
+                },
                 'dev-docs/deployment/caddy-proxy',
                 'dev-docs/deployment/haproxy-proxy',
                 'dev-docs/deployment/nginx-proxy',
@@ -153,11 +152,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/rest',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/rest',
+              label: 'Introduction',
+            },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/filters-locale-publication',
@@ -170,11 +170,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Entity Service API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/entity-service',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/entity-service',
+              label: 'Introduction',
+            },
             'dev-docs/api/entity-service/crud',
             'dev-docs/api/entity-service/filter',
             'dev-docs/api/entity-service/populate',
@@ -185,11 +186,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/query-engine',
+              label: 'Introduction',
+            },
             'dev-docs/api/query-engine/single-operations',
             'dev-docs/api/query-engine/bulk-operations',
             'dev-docs/api/query-engine/filtering',
@@ -210,16 +212,32 @@ const sidebars = {
         {
           type: 'category',
           label: 'Back-end customization',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/backend-customization',
-          },
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization',
+              label: 'Introduction',
+              customProps: {
+                new: true,
+              },
+            },
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/requests-responses',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
-            'dev-docs/backend-customization/middlewares',
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/middlewares',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/backend-customization/controllers',
-            'dev-docs/backend-customization/requests-responses',
             'dev-docs/backend-customization/services',
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
@@ -245,12 +263,12 @@ const sidebars = {
         {
         type: 'category',
         label: 'Data management',
-        collapsed: false,
-        link: {
-          type: 'doc',
-          id: 'dev-docs/data-management',
-         },
         items: [
+          {
+            type: 'doc',
+            label: 'Introduction',
+            id: 'dev-docs/data-management',
+           },
           'dev-docs/data-management/export',
           'dev-docs/data-management/import',
           {
@@ -266,11 +284,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Integrations',
-          link: {
-            type:'doc',
-            id: 'dev-docs/integrations',
-          },
           items: [
+            {
+              type: 'doc',
+              label: 'Introduction',
+              id: 'dev-docs/integrations',
+            },
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
             'dev-docs/integrations/dart',
@@ -421,11 +440,26 @@ const sidebars = {
       collapsed: false,
       label: 'Content Manager',
       items: [
+        'user-docs/content-manager/introduction-to-content-manager',
+        'user-docs/content-manager/configuring-view-of-content-type',
         {
-          type: 'autogenerated',
-          dirName: 'user-docs/content-manager'
-        }
-      ]
+          type: 'doc',
+          id: 'user-docs/content-manager/writing-content',
+          customProps: {
+            updated: true,
+          },
+        },
+        'user-docs/content-manager/managing-relational-fields',
+        'user-docs/content-manager/translating-content',
+        'user-docs/content-manager/reviewing-content',
+        {
+          type: 'doc',
+          id: 'user-docs/content-manager/saving-and-publishing-content',
+          customProps: {
+            updated: true,
+          },
+        },
+      ],
     },
     {
       type: 'category',
@@ -520,7 +554,22 @@ const sidebars = {
       label: 'Projects',
       items: [
         'cloud/projects/overview',
-        'cloud/projects/settings',
+        {
+          type: 'doc',
+          label: 'Project Settings',
+          id: 'cloud/projects/settings',
+          customProps: {
+            updated: true,
+          },
+        },
+        {
+          type: 'doc',
+          label: 'Collaboration',
+          id: 'cloud/projects/collaboration',
+          customProps: {
+            new: true,
+          },
+        },
         {
           type: 'doc',
           label: 'Notifications',
@@ -533,7 +582,14 @@ const sidebars = {
       collapsed: false,
       label: 'Account Management',
       items: [
-        'cloud/account/settings',
+        {
+          type: 'doc',
+          label: 'Account Settings',
+          id: 'cloud/account/settings',
+          customProps: {
+            updated: true,
+          },
+        },
       ]
     },
     {
@@ -545,6 +601,186 @@ const sidebars = {
       ]
     }
   ],
+
+  restApiSidebar: [
+    {
+      type: 'link',
+      label: '⬅️ Back to Dev Docs content',
+      href: '/dev-docs/intro'
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'REST API',
+      items: [
+        {
+          type: 'category',
+          label: 'Endpoints and basic requests',
+          link: {type: 'doc', id: 'dev-docs/api/rest'},
+          collapsed: false,
+          items: [
+            {
+              type: 'link',
+              label: 'Endpoints',
+              href: '/dev-docs/api/rest#endpoints',
+            },
+            {
+              type: 'link',
+              label: 'Get entries',
+              href: '/dev-docs/api/rest#get-entries'
+            },
+            {
+              type: 'link',
+              label: 'Get an entry',
+              href: '/dev-docs/api/rest#get-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Create an entry',
+              href: '/dev-docs/api/rest#create-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Update an entry',
+              href: '/dev-docs/api/rest#update-an-entry'
+            },
+            {
+              type: 'link',
+              label: 'Delete an entry',
+              href: '/dev-docs/api/rest#delete-an-entry'
+            },
+          ]
+        },
+        {
+          type: 'doc',
+          id: 'dev-docs/api/rest/interactive-query-builder',
+          label: '✨ Interactive Query Builder'
+        },
+        {
+          type: 'doc',
+          id: 'dev-docs/api/rest/parameters'
+        },
+        {
+          type: 'category',
+          label: 'Populate and Select',
+          link: {type: 'doc', id: 'dev-docs/api/rest/populate-select'},
+          collapsed: false,
+          items: [
+            {
+              type: 'link',
+              label: 'Field selection',
+              href: '/dev-docs/api/rest/populate-select#field-selection',
+            },
+            {
+              type: 'link',
+              label: 'Populate Relations & Media Fields',
+              href: '/dev-docs/api/rest/populate-select#relations--media-fields',
+            },
+            {
+              type: 'link',
+              label: 'Populate Components & Dynamic Zones',
+              href: '/dev-docs/api/rest/populate-select#components--dynamic-zones',
+            },
+            {
+              type: 'link',
+              label: 'Populating createdBy and updatedBy',
+              href: '/dev-docs/api/rest/populate-select#populating-createdby-and-updatedby',
+            },
+            {
+              type: 'link',
+              label: 'Combining populate with other operators',
+              href: '/dev-docs/api/rest/populate-select#combining-population-with-other-operators',
+            },
+          ]
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Filters, Locale, Publication State',
+          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
+          items: [
+            {
+              type: 'link',
+              label: 'Filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+            },
+            {
+              type: 'link',
+              label: 'Complex filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#complex-filtering',
+            },
+            {
+              type: 'link',
+              label: 'Deep filtering',
+              href: '/dev-docs/api/rest/filters-locale-publication#deep-filtering',
+            },
+            {
+              type: 'link',
+              label: 'Locale',
+              href: '/dev-docs/api/rest/filters-locale-publication#locale',
+            },
+            {
+              type: 'link',
+              label: 'Publication state',
+              href: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Sort and Pagination',
+          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
+          items: [
+            {
+              type: 'link',
+              label: 'Sorting',
+              href: '/dev-docs/api/rest/sort-pagination#sorting'
+            },
+            {
+              type: 'link',
+              label: 'Pagination',
+              href: '/dev-docs/api/rest/sort-pagination#pagination'
+            },
+            {
+              type: 'link',
+              label: 'Pagination by page',
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-page'
+            },
+            {
+              type: 'link',
+              label: 'Pagination by offset',
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset'
+            },
+          ]
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Relations',
+          link: {type: 'doc', id: 'dev-docs/api/rest/relations'},
+          items: [
+            {
+              type: 'link',
+              label: 'connect',
+              href: '/dev-docs/api/rest/relations#connect'
+            },
+            {
+              type: 'link',
+              label: 'disconnect',
+              href: '/dev-docs/api/rest/relations#disconnect'
+            },
+            {
+              type: 'link',
+              label: 'set',
+              href: '/dev-docs/api/rest/relations#set'
+            },
+          ]
+        },
+
+      ]
+    },
+  ]
 };
 
 module.exports = sidebars;

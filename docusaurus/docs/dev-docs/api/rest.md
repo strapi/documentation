@@ -1,6 +1,7 @@
 ---
-title: REST API 
+title: REST API
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
+displayed_sidebar: restApiSidebar
 
 ---
 
@@ -104,9 +105,17 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
+<SideBySideContainer>
+
+<SideBySideColumn>
+
 ### Get entries
 
 Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
+
+</SideBySideColumn>
+
+<SideBySideColumn>
 
 <ApiCall>
 
@@ -151,10 +160,21 @@ Returns entries matching the query filters (see [API parameters](/dev-docs/api/r
 
 </ApiCall>
 
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+<SideBySideContainer>
+
+<SideBySideColumn>
 
 ### Get an entry
 
 Returns an entry by `id`.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
 
 <ApiCall>
 
@@ -187,11 +207,27 @@ Returns an entry by `id`.
 
 </ApiCall>
 
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+<SideBySideContainer>
+
+<SideBySideColumn>
+
 ### Create an entry
 
 Creates an entry and returns its value.
 
 If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
+
+:::note
+While creating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+:::
+
+</SideBySideColumn>
+
+<SideBySideColumn>
 
 <ApiCall>
 
@@ -232,15 +268,28 @@ If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is instal
 
 </ApiCall>
 
-:::note
-While creating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
-:::
+</SideBySideColumn>
+</SideBySideContainer>
+
+
+<SideBySideContainer>
+
+<SideBySideColumn>
 
 ### Update an entry
 
 Partially updates an entry by `id` and returns its value.
 
 Fields that aren't sent in the query are not changed in the database. Send a `null` value to clear fields.
+
+:::note NOTES
+* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
+* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+:::
+
+</SideBySideColumn>
+
+<SideBySideColumn>
 
 <ApiCall>
 
@@ -277,15 +326,19 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 
 </ApiCall>
 
-:::note NOTES
-* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
-* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
-:::
+</SideBySideColumn>
+</SideBySideContainer >
+
+<SideBySideContainer>
+
+<SideBySideColumn>
 
 ### Delete an entry
 
 Deletes an entry by `id` and returns its value.
+</SideBySideColumn>
 
+<SideBySideColumn>
 <ApiCall>
 
 <Request title="Example request">
@@ -310,3 +363,6 @@ Deletes an entry by `id` and returns its value.
 </Response>
 
 </ApiCall>
+
+</SideBySideColumn>
+</SideBySideContainer>

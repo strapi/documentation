@@ -23,7 +23,13 @@ From the admin panel, administrators are allowed to:
 - discover additional plugins and [providers](#providers) in the ![Marketplace icon](/img/assets/icons/marketplace.svg) _Marketplace_ (see [Managing Marketplace plugins](./installing-plugins-via-marketplace.md))
 - review the currently installed plugins and [providers](#providers) in ![Plugins icon](/img/assets/icons/plugins.svg) _Plugins_
 
-![Plugins settings](/img/assets/plugins/plugins-settings.png)
+<ThemedImage
+  alt="Plugins in Settings section"
+  sources={{
+    light: '/img/assets/plugins/plugins-settings.png',
+    dark: '/img/assets/plugins/plugins-settings_DARK.png',
+  }}
+/>
 
 ## Providers
 

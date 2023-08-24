@@ -1,0 +1,32 @@
+/** Component: Side by Side Container */
+
+@import '../../../scss/_mixins.scss';
+
+:root {
+  --sbs-container-gap: var(--strapi-spacing-6);
+  --sbs-container-my: var(--strapi-spacing-8);
+  --sbs-columns-qtty: 2;
+  --sbs-columns-size: calc(50% - calc(var(--sbs-container-gap) / 2));
+}
+
+.sbs-container {
+  &--spaced {
+    margin-top: var(--sbs-container-my);
+    margin-bottom: var(--sbs-container-my);
+  }
+}
+
+@include medium-up {
+  .sbs-container {
+    position: relative;
+    display: grid;
+    gap: var(--sbs-container-gap);
+    grid-template-columns: repeat(var(--sbs-columns-qtty), var(--sbs-columns-size));
+  }
+}
+
+@include large-up {
+  :root {
+    --sbs-container-gap: var(--strapi-spacing-8);
+  }
+}
