@@ -28,24 +28,40 @@ This tutorial will also use some code for front-end pages. Though this front-end
 
 <SideBySideColumn>
 
-Before diving deeper into the backend customization of Strapi, let's add a basic login page to the front-end part of FoodAdvisor. The following example code renders a login page with elements from the [Formik](https://formik.org/) library.
+Before diving deeper into the backend customization of Strapi, let's add a basic login page to the front-end part of FoodAdvisor. This page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login).
 
-Submitting the form sends a request to the `/auth/local` route of the Strapi backend server and returns a JSON Web Token (JWT) that will be stored into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of your requests.
+</SideBySideColumn>
 
-To achieve this, in the `client` folder of the FoodAdvisor project, you could create a `pages/auth/login.js` file that contains the following example code:
+<SideBySideColumn>
+
+![Login page](/img/assets/backend-customization/tutorial-auth-flow.png)
+
+</SideBySideColumn>
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+Our goal is to:
+
+1. send a request to the `/auth/local` route of the Strapi backend server,
+2. get a JSON Web Token (JWT),
+3. and store the JWT into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of our requests.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
 :::strapi Related concept: Authentication
-The code presented in this section uses JWT authentication from the Strapi built-in Users & Permissions plugin.
+The front-end code presented in this section uses JWT authentication from the Strapi built-in Users & Permissions plugin.
 
 Additional information can be found in the [Users & Permissions plugin](/dev-docs/plugins/users-permissions) documentation.
 :::
 
 </SideBySideColumn>
 </SideBySideContainer>
+
+To achieve this, in the `client` folder of the FoodAdvisor project, you could create a `pages/auth/login.js` file that contains the following example code:
 
 <details>
 <summary>Example code for a basic login view that stores a JWT in localStorage:</summary>
@@ -80,9 +96,12 @@ const Login = () => {
         },
         body: JSON.stringify(values),
       });
+      /**
+       * Gets the JWT from the server response
+       */
       const { jwt } = await res.json();
-			/**
-       * Stores the JWT authentication token in the localStorage. 
+      /**
+       * Stores the JWT in the localStorage of the browser. 
        * A better implementation would be to do this with an authentication context provider
        * or something more sophisticated, but it's not the purpose of this tutorial.
        */
@@ -130,12 +149,14 @@ export default Login;
 
 With FoodAdvisor, you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
 
+### REST API queries from the front end
+
 <SideBySideContainer>
 <SideBySideColumn>
 
-Out of the box, restaurant pages on the front-end website of FoodAdvisor include a Reviews section that is read-only. Adding or updating reviews requires logging in to Strapi's admin panel and entering data into the Content Manager.
+Out of the box, restaurant pages on the front-end website include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and entering data into the Content Manager.
 
-We will add a simple front-end component to restaurant pages to allow a front-end user to write a review directly from the front-end website.
+Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
 </SideBySideColumn>
 
@@ -146,6 +167,32 @@ We will add a simple front-end component to restaurant pages to allow a front-en
 </SideBySideColumn>
 
 </SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+Our goal is to:
+
+* add a form to write a review,
+* display the form on any restaurants page,
+* send a POST request to Strapi's Content API when the form is submitted,
+* and use the [previously stored JWT](#authentication-flow-with-jwt) to authenticate the request.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+:::strapi Related concept: REST API
+The front-end code presented in this section uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to reach an endpoint on the back-end server of Strapi.
+
+Additional information on endpoints can be found in the [REST API](/dev-docs/api/rest#endpoints) documentation.
+:::
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+To achieve this, in the `/client` folder of the FoodAdvisor project, you could create a new `pages/restaurant/RestaurantContent/Reviews/new-review.js` file and update the existing `components/pages/restaurant/RestaurantContent/Reviews/reviews.js` with the following code examples:
 
 <details>
 <summary>Example front-end code to add a component for writing reviews and display it on restaurants pages:</summary>
@@ -170,8 +217,8 @@ const NewReview = () => {
     },
     onSubmit: async (values) => {
       /**
-       * Queries Strapi REST API to create the review
-       * using the JWT previously stored in localStorage
+       * Queries Strapi REST API to reach the reviews endpoint
+       * using the JWT previously stored in localStorage to authenticate
        */
       const res = await fetch(getStrapiURL('/reviews'), {
         method: 'POST',
@@ -247,7 +294,11 @@ const Reviews = ({ reviews }) => {
 
 </details>
 
-We will then customize Strapi's back end server: submitting the review form will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
+### Controllers vs. Services
+
+Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this tutorial the custom controller does not handle any responsibilities and delegate all the business logic to services.
+
+Let's say we would like to customize the back end to achieve the following scenario: submitting the [previously added review form](#rest-api-queries-from-the-front-end) will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
 1. Creating a custom service to [create the review](#custom-service-creating-a-review).
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
@@ -261,29 +312,31 @@ We will then customize Strapi's back end server: submitting the review form will
 
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
-We will update the service file for the Review content-type by replacing its code. The new code:
+Let's update the existing service file for the Review content-type by replacing its code to create a review.
 
-- declares a `create` method,
-- grabs [context](/dev-docs/backend-customization/requests-responses) from the request,
-- uses the `findMany()` method from the [EntityService API](/dev-docs/api/entity-service) to find a restaurant,
-- uses the `create()` method from the EntityService API to append data to the restaurant, [populating](/dev-docs/api/entity-service/populate) the restaurant owner,
-- and returns the new review data.
+Our goal is to:
+
+- declare a `create` method,
+- grab [context](/dev-docs/backend-customization/requests-responses) from the request,
+- use the `findMany()` method from the [EntityService API](/dev-docs/api/entity-service) to find a restaurant,
+- use the `create()` method from the EntityService API to append data to the restaurant, [populating](/dev-docs/api/entity-service/populate) the restaurant owner,
+- and return the new review data.
     
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: Controllers
-The code presented in this section uses one of the possible ways to customize a default controller.
+:::strapi Related concept: Services
+The code presented in this section uses one of the possible ways to create a service.
 
-Additional information can be found in the [Controllers](/dev-docs/backend-customization/controllers) documentation.
+Additional information can be found in the [Services](/dev-docs/backend-customization/services) documentation.
 :::
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-Use the following code example:
+To create such a service, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/services/review.js` file with the following code:
 
 ```jsx title="/api/src/api/review/services/review.js"
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -317,18 +370,63 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 }));
 ```
 
-In a controller's code, the `create` method from this service can be called with `strapi.service('api::review.review').create(ctx)` where `ctx` is the request's context.
-
-:::note
-The provided example code only handles the "happy path". You should also consider handling the different potential errors, for instance when the restaurant doesn’t exist.
+:::tip
+- In a controller's code, the `create` method from this service can be called with `strapi.service('api::review.review').create(ctx)` where `ctx` is the request's [context](/dev-docs/backend-customization/requests-responses).
+- The provided example code does not cover error handling. You should consider handling errors, for instance when the restaurant does not exist. Additional information can be found in the [Error handling](/dev-docs/error-handling) documentation.
 :::
 
 ### Custom Service: Sending an email to the restaurant owner
-    
-    ⚠️ You need to [setup the email provider](https://docs.strapi.io/dev-docs/plugins/email). And also, for this service, I created a Single Type that holds the email configuration:
-    
-    ![Email Single Type in Admin Panel](/img/assets/backend-customization/tutorial-single-type.png)
-    
+
+:::callout 🤗 Optional service
+This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin. If you struggle with the Email provider setup, you can skip this part and jump next to the custom [controller](#custom-controller) example.
+:::
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+:::prerequisites
+- You have setup a [provider for the Email plugin](https://docs.strapi.io/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
+- In Strapi's admin panel, you have [created a basic `Email` Single Type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
+:::
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+![Email Single Type in Admin Panel](/img/assets/backend-customization/tutorial-single-type.png)
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+<SideBySideContainer>
+<SideBySideColumn >
+
+Out of the box, the FoodAdvisor project does not provide any email service.
+
+Let's create an email service file to send an email. We will use it in the custom controller to notify the restaurant owner whenever a new review is created on the front-end website.
+
+Our goal is to:
+- create a new service file,
+- declare a `send()` method for this service,
+- grab the sender address stored in the Email single type using the [Entity Service API](/dev-docs/api/entity-service),
+- send an email using parameters (e.g., recipient's address, subject, and email body) passed when invoking the service.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+:::strapi Related concept: Services
+The code presented in this section uses one of the possible ways to create a service.
+
+Additional information can be found in the [Services](/dev-docs/backend-customization/services) documentation.
+:::
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+To create such a service, in the `/api` folder of the FoodAdvisor project, create a new `src/api/email/services/email.js` file with the following code:
     
   ```jsx
   // src/api/email/services/email.js
@@ -351,6 +449,10 @@ The provided example code only handles the "happy path". You should also conside
     },
   }));
   ```
+
+:::tip
+In a controller's code, the `send` method from this email service can be called with `strapi.service('api::email.email).send(parameters)` where `parameters` is an object with the email's related information (recipient's address, subject, and email body).
+:::
 
 ### Custom controller
 
