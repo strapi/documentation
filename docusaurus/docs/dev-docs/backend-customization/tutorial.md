@@ -30,7 +30,9 @@ This tutorial can be read from start to finish, or you might want to jump direct
 
 <SideBySideColumn>
 
-Before diving deeper into the backend customization of Strapi, let's add a basic login page to the front-end part of FoodAdvisor. This page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login).
+Before diving deeper into the backend customization of Strapi, let's add a basic login page to the front-end part of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project.
+
+The login page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login) and contain a typical email/password login form.
 
 </SideBySideColumn>
 
@@ -44,7 +46,7 @@ Before diving deeper into the backend customization of Strapi, let's add a basic
 <SideBySideContainer>
 <SideBySideColumn>
 
-Our goal is to:
+Our goal is to create a front-end component to:
 
 1. send a request to the `/auth/local` route of the Strapi backend server,
 2. get a JSON Web Token (JWT),
@@ -149,14 +151,14 @@ export default Login;
 
 ## Services and Controllers: Writing a review
 
-With FoodAdvisor, you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
+With [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
 
 ### REST API queries from the front end
 
 <SideBySideContainer>
 <SideBySideColumn>
 
-Out of the box, restaurant pages on the front-end website include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and entering data into the Content Manager.
+Out of the box, restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and entering data into the Content Manager.
 
 Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
@@ -300,7 +302,7 @@ const Reviews = ({ reviews }) => {
 
 Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this tutorial the custom controller does not handle any responsibilities and delegate all the business logic to services.
 
-Let's say we would like to customize the back end to achieve the following scenario: submitting the [previously added review form](#rest-api-queries-from-the-front-end) will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
+Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: submitting the [previously added review form](#rest-api-queries-from-the-front-end) will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
 1. Creating a custom service to [create the review](#custom-service-creating-a-review).
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
@@ -314,7 +316,7 @@ Let's say we would like to customize the back end to achieve the following scena
 
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
-Let's update the existing service file for the Review content-type by replacing its code to create a review.
+Let's update the existing service file for the Review collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) by replacing its code to create a review.
 
 Our goal is to:
 
@@ -404,9 +406,9 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 <SideBySideContainer>
 <SideBySideColumn >
 
-Out of the box, the FoodAdvisor project does not provide any email service.
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any email service.
 
-Let's create an email service file to send an email. We will use it later in a custom controller to notify the restaurant owner whenever a new review is created on the front-end website.
+Let's create an email service file to send an email. We will use it later in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
 
 Our goal is to:
 - create a new service file for the Email single type,
@@ -463,7 +465,7 @@ In a controller's code, the `send` method from this email service can be called 
 
 By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint.
 
-Let's customize the default controller for the Review content-type of the FoodAdvisor project so that, upon a `POST` request, it calls previously created services.
+Let's customize the default controller for the Review collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) so that, upon a `POST` request, it calls previously created services.
 
 Our goal is to:
 - extend the existing controller for the Review collection type,
@@ -487,7 +489,7 @@ Additional information can be found in the [Controllers](/dev-docs/backend-custo
 
 </SideBySideContainer>
 
-To achieve this, in the `api/` folder of the FoodAdvisor project, replace the content of the `src/api/review/controllers/review.js` file with the following code:
+To achieve this, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/controllers/review.js` file with the following code:
 
 ```jsx title="/api/src/api/review/controllers/review.js"
 
