@@ -386,7 +386,7 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 
 :::prerequisites
 - You have setup a [provider for the Email plugin](https://docs.strapi.io/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
-- In Strapi's admin panel, you have [created a basic `Email` Single Type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
+- In Strapi's admin panel, you have [created a basic `Email` single type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
 :::
 
 </SideBySideColumn>
@@ -404,10 +404,10 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 
 Out of the box, the FoodAdvisor project does not provide any email service.
 
-Let's create an email service file to send an email. We will use it in the custom controller to notify the restaurant owner whenever a new review is created on the front-end website.
+Let's create an email service file to send an email. We will use it later in a custom controller to notify the restaurant owner whenever a new review is created on the front-end website.
 
 Our goal is to:
-- create a new service file,
+- create a new service file for the Email single type,
 - declare a `send()` method for this service,
 - grab the sender address stored in the Email single type using the [Entity Service API](/dev-docs/api/entity-service),
 - send an email using parameters (e.g., recipient's address, subject, and email body) passed when invoking the service.
@@ -456,17 +456,47 @@ In a controller's code, the `send` method from this email service can be called 
 
 ### Custom controller
 
-And mixing everything together in the review **controller** we get a customized POST controller that handles the creation of the review and also sends the email:
+<SideBySideContainer>
+<SideBySideColumn>
 
-```jsx
-// Server side - api/review/controllers/review.js
+By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint.
+
+Let's customize the default controller for the Review content-type of the FoodAdvisor project so that, upon a `POST` request, it calls previously created services.
+
+Our goal is to:
+- extend the existing controller for the Review collection type,
+- declare a custom `create()` method,
+- call the 2 previously created services to:
+  - create a new review
+  - and send an email to the restaurant owner about the new review,
+- and sanitize the content to be returned.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+:::strapi Related concept: Controllers
+The code presented in this section uses one of the possible ways to customize a controller.
+
+Additional information can be found in the [Controllers](/dev-docs/backend-customization/controllers) documentation.
+:::
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+To achieve this, in the `api/` folder of the FoodAdvisor project, replace the content of the `src/api/review/controllers/review.js` file with the following code:
+
+```jsx title="/api/src/api/review/controllers/review.js"
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::review.review', ({ strapi }) => ({
   async create(ctx) {
+    // Creates the new review using a service
     const newReview = await strapi.service('api::review.review').create(ctx);
 
+    // Sends an email to the restaurant's owner, using another service
     if (newReview.restaurant?.owner) {
       await strapi.service('api::email.email').send({
         to: newReview.restaurant.owner.email,
