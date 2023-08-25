@@ -163,7 +163,7 @@ In this section we will customize both:
 <SideBySideContainer>
 <SideBySideColumn>
 
-Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding data through the [Content Manager](/user-docs/content-manager).
+Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/user-docs/content-manager).
 
 Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
@@ -315,17 +315,17 @@ To achieve this, in the `/client` folder of the FoodAdvisor project, you could u
 
 Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegate all the business logic to services.
 
-Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: submitting the [previously added review form](#rest-api-queries-from-the-front-end) will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
+Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: when submitting the [previously added review form](#rest-api-queries-from-the-front-end) on the front-end website, Strapi will create a review in the back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
 1. Creating a custom service to [create the review](#custom-service-creating-a-review).
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
-3. [Customizing the default controller](#custom-controller) provided by Strapi for the Review content-type to use the 2 new services instead of only rendering the reviews.
+3. [Customizing the default controller](#custom-controller) provided by Strapi for the Review content-type to use the 2 new services.
 
 ### Custom service: Creating a review
 
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
-Let's update the existing service file for the Review collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) by replacing its code to create a review.
+Let's update the existing `review.js` service file for the "Reviews" collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) by replacing its code to create a review.
 
 <SideBySideContainer>
 
@@ -355,7 +355,7 @@ Additional information can be found in the [Services](/dev-docs/backend-customiz
 
 To create such a service, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/services/review.js` file with the following code:
 
-```jsx title="/api/src/api/review/services/review.js"
+```jsx title="src/api/review/services/review.js"
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::review.review', ({ strapi }) => ({
@@ -363,6 +363,11 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
     const user = ctx.state.user;
     const { body } = ctx.request;
 
+    /**
+     * Queries the Restaurants collection type
+     * using the Entity Service API
+     * to retrieve information about the restaurant.
+     */
     const restaurants = await strapi.entityService.findMany(
       'api::restaurant.restaurant',
       {
@@ -372,6 +377,11 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
       }
     );
 
+    /**
+     * Creates a new entry for the Reviews collection type
+     * and populates data with information about the restaurant's owner
+     * using the Entity Service API.
+     */
     const newReview = await strapi.entityService.create('api::review.review', {
       data: {
         note: body.note,
@@ -396,10 +406,10 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any automated email service feature.
 
-Let's create an email service file to send an email. We could use it in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
+Let's create an `email.js` service file to send an email. We could use it in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
 
 :::callout 🤗 Optional service
-This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin and requires understanding how [plugins](/dev-docs/plugins) and [providers](/dev-docs/providers) work with Strapi. If you struggle with the Email provider setup, you can skip this part and jump next to the custom [controller](#custom-controller) example.
+This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin and requires understanding how [plugins](/dev-docs/plugins) and [providers](/dev-docs/providers) work with Strapi. If you don't need an email service to notify the restaurant's owner, you can skip this part and jump next to the custom [controller](#custom-controller) example.
 :::
 
 <SideBySideContainer>
@@ -407,7 +417,7 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 
 :::prerequisites
 - You have setup a [provider for the Email plugin](/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
-- In Strapi's admin panel, you have [created a basic `Email` single type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
+- In Strapi's admin panel, you have [created an `Email` single type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
 :::
 
 </SideBySideColumn>
@@ -424,10 +434,10 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 <SideBySideColumn >
 
 Our goal is to:
-- create a new service file for the Email single type,
+- create a new service file for the "Email" single type,
 - declare a `send()` method for this service,
 - grab the sender address stored in the Email single type using the [Entity Service API](/dev-docs/api/entity-service),
-- use email details (recipient's address, subject, and email body) passed when invoking to the service send an email using the [Email plugin](/dev-docs/plugins/email) and a previously configured [provider](/dev-docs/providers).
+- use email details (recipient's address, subject, and email body) passed when invoking the service's `send()` method to send an email using the [Email plugin](/dev-docs/plugins/email) and a previously configured [provider](/dev-docs/providers).
 
 </SideBySideColumn>
 
@@ -445,7 +455,7 @@ Additional information can be found in the [Services](/dev-docs/backend-customiz
 
 To create such a service, in the `/api` folder of the FoodAdvisor project, create a new `src/api/email/services/email.js` file with the following code:
     
-  ```jsx title="/api/src/api/email/services/email.js"
+  ```jsx title="src/api/email/services/email.js"
 
   const { createCoreService } = require('@strapi/strapi').factories;
 
@@ -482,19 +492,18 @@ In a controller's code, the `send` method from this email service can be called 
 
 ### Custom controller
 
+By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint. The default code for the controllers can be customized to perform any business logic.
+
+Let's customize the default controller for the "Reviews" collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) with the following scenario: upon a `POST` request to the `/reviews` endpoint, the controller calls previously created services to both [create a review](#custom-service-creating-a-review) and [send an email](#custom-service-sending-an-email-to-the-restaurant-owner) to the restaurant's owner.
+
 <SideBySideContainer>
 <SideBySideColumn>
 
-By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint.
-
-Let's customize the default controller for the Review collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) so that, upon a `POST` request, it calls previously created services.
-
 Our goal is to:
-- extend the existing controller for the Review collection type,
+
+- extend the existing controller for the "Reviews" collection type,
 - declare a custom `create()` method,
-- call the 2 previously created services to:
-  - create a new review
-  - and send an email to the restaurant owner about the new review,
+- call the 2 previously created services,
 - and sanitize the content to be returned.
 
 </SideBySideColumn>
@@ -513,7 +522,7 @@ Additional information can be found in the [Controllers](/dev-docs/backend-custo
 
 To achieve this, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/controllers/review.js` file with the following code:
 
-```jsx title="/api/src/api/review/controllers/review.js"
+```jsx title="src/api/review/controllers/review.js"
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
@@ -538,15 +547,39 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 }));
 ```
 
-
-
-
 ## Policies
 
-Now that we can create reviews as authenticated users, there is a problem. The owners of the restaurants can create fake reviews 😱. So what can we do to stop them from doing it? We can create custom policies that would apply as a permission filter in the specified routes. In this case, we want to create a custom policy to prevent restaurant owners from creating reviews for their restaurants. How can we do that? We can create a `policies` folder inside the `review` content type to create a policy that only applies to that content type. And inside, a file with the name `is-restaurant-owner`.js
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not use any custom policies or route middlewares that could control access to content type endpoints.
 
-```jsx
-// src/api/review/policies/is-owner-review.js
+Let's say we would like to customize the backend of FoodAdvisor to prevent restaurant owners from creating fake reviews for their businesses. In Strapi, controlling access to an endpoint can be done either with a policy or route middleware. Policies are read-only and can only allow a request to pass or return an error, while route middlewares can perform additional business logic. In our example, let's use a policy.
+
+<SideBySideContainer>
+
+<SideBySideColumn>
+
+Our goal is to:
+1. Create a new folder for policies to apply only to the "Reviews" collection type,
+2. Create a new policy file,
+3. Use the `findMany()` method from the [Entity Service API](/dev-docs/api/entity-service) to get information about the owner of a restaurant when the `/reviews` endpoint is reached,
+4. Return an error if the authenticated user is the restaurant's owner, or let the request pass in other cases.
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+:::strapi Related concept: Policies, Route Middlewares
+The code presented in this section uses a custom policy to control access to an endpoint's resources. Route middlewares can also be used.
+
+Additional information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
+:::
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+To achieve this, in the `/api` folder of the FoodAdvisor project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
+
+```jsx title="src/api/review/policies/is-owner-review.js"
 
 const { errors } = require('@strapi/utils');
 const { PolicyError } = errors;
@@ -555,9 +588,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   const { body } = policyContext.request;
   const { user } = policyContext.state;
 
+  // Return an error if there is no authenticated user with the request
   if (!user) {
     return false;
   }
+  /**
+   * Queries the Restaurants collection type
+   * using the Entity Service API
+   * to retrieve information about the restaurant's owner.
+   */ 
   const filteredRestaurants = await strapi.entityService.findMany(
     'api::restaurant.restaurant',
     {
@@ -574,9 +613,16 @@ module.exports = async (policyContext, config, { strapi }) => {
     return false;
   }
 
-  // If the user submitting the request is the owner of the restaurant we don't allow the review creation
+  /**
+   * If the user submitting the request is the restaurant's owner,
+   * we don't allow the review creation.
+   */ 
   if (user.id === restaurant.owner.id) {
-		// We can throw custom policy errors instead of just return false (which would result into a generic Policy Error)
+    /**
+     * Throws a custom policy error
+     * instead of just returning false
+     * (which would result into a generic Policy Error).
+     */ 
     throw new PolicyError('The owner of the restaurant cannot submit reviews', {
       errCode: 'RESTAURANT_OWNER_REVIEW', // can be useful for frontend identification of different errors
     });
@@ -586,12 +632,42 @@ module.exports = async (policyContext, config, { strapi }) => {
 };
 ```
 
+:::caution
+Policies or route middlewares should be configured in the configuration of a route to actually control access. This is covered in the [routes](#routes) section of this documentation.
+:::
+
 ## Routes
 
-To make the reviews policy work, we need to enable it by appending it to the route we use to create reviews, and to do that we write the following:
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not use control acceess to its endpoints. 
 
-```jsx
-// src/api/review/routes/review.js
+Let's say we previsouly created a policy to restrict access to the "Reviews" content-type to some conditions, for instance to prevent a restaurant's owner to create a review for their restaurants. The policy should now be enabled on the route we use to create reviews.
+
+<SideBySideContainer>
+
+<SideBySideColumn>
+
+Our goal is to:
+
+- explicitly define a routes configuration for the "Reviews" content-type
+- append the [previously defined custom policy](#policies) to the route
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+:::strapi Related concept: Routes
+The code presented in this section adds a custom policy to a route.
+
+Additional information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
+:::
+
+</SideBySideColumn>
+
+</SideBySideContainer>
+
+To achieve this, in the `/api` folder of the FoodAdvisor project, replace the content of the `api/src/api/review/routes/review.js` file with the following code:
+
+```jsx title="src/api/review/routes/review.js"
 
 'use strict';
 
@@ -607,9 +683,10 @@ module.exports = createCoreRouter('api::review.review', {
   },
 });
 ```
-
-<aside>
-ℹ️ [Different Policy Errors](https://docs.strapi.io/dev-docs/error-handling#policies)
+<!-- 
+***
+_Content below these lines will be reworked soon._
+***
 
 ### Default Policy Error
 
@@ -852,5 +929,5 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 This video shows how the middleware gets executed in every request, updating the spreadsheet and generating new data:
 
 https://www.loom.com/share/ef9aba68923345b39b6c290501c171b2
-
+ -->
 
