@@ -219,7 +219,7 @@ Within the Strapi factories the following functions are exposed that can be used
 These functions automatically inherit the sanitization settings from the model and sanitize the data accordingly based on the content-type schema and any of the content API authentication strategies, such as the Users & Permissions plugin or API tokens.
 
 :::warning
-Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `@strapi/utils` tools, such as `sanitize.contentAPI.query` described below, or else the result of your query will be sanitized against the wrong model.
+Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `@strapi/utils` tools, such as `sanitize.contentAPI.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
 :::
 
 <Tabs groupId="js-ts">
@@ -263,7 +263,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </TabItem>
 </Tabs>
 
-#### Sanitization and validation when building custom controllers
+#### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
 Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
 
