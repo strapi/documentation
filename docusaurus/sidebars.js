@@ -237,8 +237,8 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
             {
               type: 'doc',
-              id: 'dev-docs/backend-customization/tutorial',
-              label: 'Tutorial',
+              id: 'dev-docs/backend-customization/examples',
+              label: 'Examples cookbook',
               customProps: {
                 new: true,
               }

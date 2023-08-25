@@ -6,33 +6,32 @@ displayed_sidebar: devDocsSidebar
 
 import TOCInline from '@theme/TOCInline';
 
-# Backend customization: An advanced example tutorial with FoodAdvisor
+# Backend customization: An examples collection with FoodAdvisor
+
+The present documentation is intended to developers who would like to get a deeper understanding of the Strapi back end customization possibilities. The page is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project, and how a front-end website can interact with the back end of Strapi.
+
+Examples are meant to extend the features of [FoodAdvisor](https://github.com/strapi/foodadvisor), the official Strapi demo application. FoodAdvisor:
+
+- builds a ready-made restaurants directory powered by a Strapi back end (included in the `/api` folder)
+- and renders a [Next.js](https://nextjs.org/)-powered front-end website (included in the `/client` folder).
+
+This page can be read from start to finish, or you might want to jump directly to a specific section to understand how a given core element from the Strapi back end can be used to solve a real-world use case example.
 
 :::prerequisites
-- You have read the [backend customization introduction](/dev-docs/backend-customization) to get a general understanding of what routes, policies, middlewares, controllers, and services are in Strapi.
-- If you want to test and play with the code examples by yourself, ensure you have cloned the [FoodAdvisor](https://github.com/strapi/foodadvisor#1-clone-foodadvisor) repository and setup the project. The Strapi admin panel should be accessible from [`localhost:1337/admin`](http://localhost:1337/admin) and the Next.js-based FoodAdvisor front-end website should be running on [`localhost:3000`](http://localhost:3000).
+- 👀 You have read the [Quick Start Guide](/dev-docs/quick-start) and/or understood that Strapi is a **headless CMS** <Annotation>A headless CMS is a Content Management System that separates the presentation layer (i.e., the front end, where content is displayed) from the back end (where content is managed).<br /><br/>Strapi is a headless CMS that provides:<ul><li>a back-end server exposing an API for your content,</li><li>and a graphical user interface, called the admin panel, to manage the content.</li></ul>The presentation layer should be handled by another framework.</Annotation> that helps you create a data structure with the [Content-Type Builder](/user-docs/content-type-builder) and add some content through the [Content Manager](/user-docs/content-manager), then exposes the content through APIs.
+- 👀 You have read the [back-end customization introduction](/dev-docs/backend-customization) to get a general understanding of what routes, policies, middlewares, controllers, and services are in Strapi.
+- 👷 If you want to test and play with the code examples by yourself, ensure you have cloned the [FoodAdvisor](https://github.com/strapi/foodadvisor) repository, setup the project, and started both the front-end and back-end servers. The Strapi admin panel should be accessible from [`localhost:1337/admin`](http://localhost:1337/admin) and the Next.js-based FoodAdvisor front-end website should be running on [`localhost:3000`](http://localhost:3000).
 :::
 
-The present tutorial is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project. The example project we will use is [FoodAdvisor](https://github.com/strapi/foodadvisor), the official Strapi demo application. FoodAdvisor builds a ready-made restaurants directory powered by a Strapi back end (included in the `/api` folder) and renders a [Next.js](https://nextjs.org/)-powered front-end website (included in the `/client` folder).
-
-<!-- We will: -->
-<!-- TODO add list? -->
-
-This tutorial will also use some code for front-end pages. Though this front-end code is outside the scope of Strapi back end customization, including it illustrates how the end user can interact with your Strapi-powered website and how actions on the front end interplay with core components from the Strapi back end server.
-
-This tutorial can be read from start to finish, or you might want to jump directly to a specific section to understand how a given core element from the Strapi back-end can be used to solve a real-world use case.
-
-<!-- <TOCInline toc={toc} /> -->
-
 ## Authentication flow with JWT
+
+Out of the box, the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any log in functionality. Logging in is done by accessing Strapi's admin panel at [`localhost:1337/admin`](http://localhost:1337/admin`).
 
 <SideBySideContainer>
 
 <SideBySideColumn>
 
-Before diving deeper into the backend customization of Strapi, let's add a basic login page to the front-end part of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project.
-
-The login page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login) and contain a typical email/password login form.
+Let's add a basic login page to the front-end, [Next.js](https://nextjs.org/)-powered website included in the `/client` folder of FoodAdvisor. The login page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login) and contain a typical email/password login form. This will allow programmatically authenticating API requests sent to Strapi.
 
 </SideBySideColumn>
 
@@ -48,9 +47,10 @@ The login page will be accessible at [`localhost:3000/auth/login`](http://localh
 
 Our goal is to create a front-end component to:
 
-1. send a request to the `/auth/local` route of the Strapi backend server,
-2. get a JSON Web Token (JWT),
-3. and store the JWT into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of our requests.
+1. create a Next.js-powered front-end component to show a login form,
+2. send a request to the `/auth/local` route of the Strapi back-end server to authenticate,
+3. get a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWT),
+4. and store the JWT into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of our requests.
 
 </SideBySideColumn>
 
@@ -65,7 +65,7 @@ Additional information can be found in the [Users & Permissions plugin](/dev-doc
 </SideBySideColumn>
 </SideBySideContainer>
 
-To achieve this, in the `client` folder of the FoodAdvisor project, you could create a `pages/auth/login.js` file that contains the following example code:
+To achieve this, in the `/client` folder of the FoodAdvisor project, you could create a `pages/auth/login.js` file that contains the following example code:
 
 <details>
 <summary>Example code for a basic login view that stores a JWT in localStorage:</summary>
@@ -151,14 +151,19 @@ export default Login;
 
 ## Services and Controllers: Writing a review
 
-With [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
+From the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
+
+In this section we will customize both:
+
+- the front-end website to add a form allowing website visitors to write a review,
+- and the back-end server of Strapi to perform actions whenever a review is created.
 
 ### REST API queries from the front end
 
 <SideBySideContainer>
 <SideBySideColumn>
 
-Out of the box, restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and entering data into the Content Manager.
+Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding data through the [Content Manager](/user-docs/content-manager).
 
 Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
@@ -179,7 +184,7 @@ Our goal is to:
 
 * add a form to write a review,
 * display the form on any restaurants page,
-* send a POST request to Strapi's Content API when the form is submitted,
+* send a POST request to Strapi's REST API when the form is submitted,
 * and use the [previously stored JWT](#authentication-flow-with-jwt) to authenticate the request.
 
 </SideBySideColumn>
@@ -187,120 +192,128 @@ Our goal is to:
 <SideBySideColumn>
 
 :::strapi Related concept: REST API
-The front-end code presented in this section uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to reach an endpoint on the back-end server of Strapi.
+The front-end code presented in this section uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to reach a content type endpoint on the back-end server of Strapi.
 
-Additional information on endpoints can be found in the [REST API](/dev-docs/api/rest#endpoints) documentation.
+Additional information on endpoints for content types can be found in the [REST API](/dev-docs/api/rest#endpoints) documentation.
 :::
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To achieve this, in the `/client` folder of the FoodAdvisor project, you could create a new `pages/restaurant/RestaurantContent/Reviews/new-review.js` file and update the existing `components/pages/restaurant/RestaurantContent/Reviews/reviews.js` with the following code examples:
+To achieve this, in the `/client` folder of the FoodAdvisor project, you could use the following code examples to:
+- create a new `pages/restaurant/RestaurantContent/Reviews/new-review.js` file,
+- and update the existing `components/pages/restaurant/RestaurantContent/Reviews/reviews.js`.
 
 <details>
 <summary>Example front-end code to add a component for writing reviews and display it on restaurants pages:</summary>
 
-Create a new file in the `/client` folder to add a new component for writing reviews with the following code:
+1. Create a new file in the `/client` folder to add a new component for writing reviews with the following code:
 
-```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js'
+  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js'
 
-import { Button, Input, Textarea } from '@nextui-org/react';
-import { useFormik } from 'formik';
-import { useRouter } from 'next/router';
-import React from 'react';
-import { getStrapiURL } from '../../../../../utils';
-
-const NewReview = () => {
-  const router = useRouter();
-
-  const { handleSubmit, handleChange, values } = useFormik({
-    initialValues: {
-      note: '',
-      content: '',
-    },
-    onSubmit: async (values) => {
-      /**
-       * Queries Strapi REST API to reach the reviews endpoint
-       * using the JWT previously stored in localStorage to authenticate
-       */
-      const res = await fetch(getStrapiURL('/reviews'), {
-        method: 'POST',
-        body: JSON.stringify({
-          restaurant: router.query.slug,
-          ...values,
-        }),
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-      });
-    },
-  });
-  /**
-   * Renders the form
+  import { Button, Input, Textarea } from '@nextui-org/react';
+  // highlight-start
+  /** 
+   * The form uses the Formik library (https://formik.org/).
+   * Formik should be added to your project's dependencies;
+   * Use yarn or npm to install it and it will be added to your package.json file.
    */
-  return (
-    <div className="my-6">
-      <h1 className="font-bold text-2xl mb-3">Write your review</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
-        <Input
-          onChange={handleChange}
-          name="note"
-          type="number"
-          min={1}
-          max={5}
-          label="Stars"
-        />
-        <Textarea
-          name="content"
-          onChange={handleChange}
-          placeholder="What do you think about this restaurant?"
-        />
-        <Button
-          type="submit"
-          className="bg-primary text-white rounded-md self-start"
-        >
-          Send
-        </Button>
-      </form>
-    </div>
-  );
-};
+  import { useFormik } from 'formik';
+  // highlight-end
+  import { useRouter } from 'next/router';
+  import React from 'react';
+  import { getStrapiURL } from '../../../../../utils';
 
-export default NewReview;
-```
+  const NewReview = () => {
+    const router = useRouter();
 
-Display the new component on any restaurants page by adding the highlighted lines (7, 8, and 13) to the code used to render restaurant's information:
+    const { handleSubmit, handleChange, values } = useFormik({
+      initialValues: {
+        note: '',
+        content: '',
+      },
+      onSubmit: async (values) => {
+        /**
+         * Queries Strapi REST API to reach the reviews endpoint
+         * using the JWT previously stored in localStorage to authenticate
+         */
+        const res = await fetch(getStrapiURL('/reviews'), {
+          method: 'POST',
+          body: JSON.stringify({
+            restaurant: router.query.slug,
+            ...values,
+          }),
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+          },
+        });
+      },
+    });
+    /**
+     * Renders the form
+     */
+    return (
+      <div className="my-6">
+        <h1 className="font-bold text-2xl mb-3">Write your review</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+          <Input
+            onChange={handleChange}
+            name="note"
+            type="number"
+            min={1}
+            max={5}
+            label="Stars"
+          />
+          <Textarea
+            name="content"
+            onChange={handleChange}
+            placeholder="What do you think about this restaurant?"
+          />
+          <Button
+            type="submit"
+            className="bg-primary text-white rounded-md self-start"
+          >
+            Send
+          </Button>
+        </form>
+      </div>
+    );
+  };
 
-```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/reviews.js' showLineNumbers
-import React from 'react';
-import delve from 'dlv';
+  export default NewReview;
+  ```
 
-import { formatDistance } from 'date-fns';
+2. Display the new form component on any restaurants page by adding the highlighted lines (7, 8, and 13) to the code used to render restaurant's information:
 
-import { getStrapiMedia } from '../../../../../utils';
-// highlight-start
-import { Textarea } from '@nextui-org/react';
-import NewReview from './new-review';
-// highlight-end
+  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/reviews.js' showLineNumbers
+  import React from 'react';
+  import delve from 'dlv';
 
-const Reviews = ({ reviews }) => {
-  return (
-    <div className="col-start-2 col-end-2 mt-24">
-      // highlight-next-line
-      <NewReview />
-      {reviews &&
-        reviews.map((review, index) => (
-  // …
+  import { formatDistance } from 'date-fns';
 
-```
+  import { getStrapiMedia } from '../../../../../utils';
+  // highlight-start
+  import { Textarea } from '@nextui-org/react';
+  import NewReview from './new-review';
+  // highlight-end
+
+  const Reviews = ({ reviews }) => {
+    return (
+      <div className="col-start-2 col-end-2 mt-24">
+        // highlight-next-line
+        <NewReview />
+        {reviews &&
+          reviews.map((review, index) => (
+    // …
+  ```
 
 </details>
 
 ### Controllers vs. Services
 
-Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this tutorial the custom controller does not handle any responsibilities and delegate all the business logic to services.
+Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegate all the business logic to services.
 
 Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: submitting the [previously added review form](#rest-api-queries-from-the-front-end) will create a review in the Strapi back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
@@ -310,13 +323,13 @@ Let's say we would like to customize the back end of [FoodAdvisor](https://githu
 
 ### Custom service: Creating a review
 
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
 Let's update the existing service file for the Review collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) by replacing its code to create a review.
+
+<SideBySideContainer>
+
+<SideBySideColumn>
 
 Our goal is to:
 
@@ -330,10 +343,10 @@ Our goal is to:
 
 <SideBySideColumn>
 
-:::strapi Related concept: Services
-The code presented in this section uses one of the possible ways to create a service.
+:::strapi Related concepts: Services, EntityService API
+The code presented in this section uses one of the possible ways to create a service. The code also illustrates the use of the Entity Service API to query content directly from the back-end server.
 
-Additional information can be found in the [Services](/dev-docs/backend-customization/services) documentation.
+Additional information can be found in the [Services](/dev-docs/backend-customization/services) and [EntityService API](/dev-docs/api/entity-service) documentation.
 :::
 
 </SideBySideColumn>
@@ -374,22 +387,26 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 }));
 ```
 
-:::tip
+:::tip Tips
 - In a controller's code, the `create` method from this service can be called with `strapi.service('api::review.review').create(ctx)` where `ctx` is the request's [context](/dev-docs/backend-customization/requests-responses).
 - The provided example code does not cover error handling. You should consider handling errors, for instance when the restaurant does not exist. Additional information can be found in the [Error handling](/dev-docs/error-handling) documentation.
 :::
 
 ### Custom Service: Sending an email to the restaurant owner
 
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any automated email service feature.
+
+Let's create an email service file to send an email. We could use it in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
+
 :::callout 🤗 Optional service
-This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin. If you struggle with the Email provider setup, you can skip this part and jump next to the custom [controller](#custom-controller) example.
+This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin and requires understanding how [plugins](/dev-docs/plugins) and [providers](/dev-docs/providers) work with Strapi. If you struggle with the Email provider setup, you can skip this part and jump next to the custom [controller](#custom-controller) example.
 :::
 
 <SideBySideContainer>
 <SideBySideColumn>
 
 :::prerequisites
-- You have setup a [provider for the Email plugin](https://docs.strapi.io/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
+- You have setup a [provider for the Email plugin](/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
 - In Strapi's admin panel, you have [created a basic `Email` single type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
 :::
 
@@ -406,24 +423,20 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 <SideBySideContainer>
 <SideBySideColumn >
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any email service.
-
-Let's create an email service file to send an email. We will use it later in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
-
 Our goal is to:
 - create a new service file for the Email single type,
 - declare a `send()` method for this service,
 - grab the sender address stored in the Email single type using the [Entity Service API](/dev-docs/api/entity-service),
-- send an email using parameters (e.g., recipient's address, subject, and email body) passed when invoking the service.
+- use email details (recipient's address, subject, and email body) passed when invoking to the service send an email using the [Email plugin](/dev-docs/plugins/email) and a previously configured [provider](/dev-docs/providers).
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: Services
-The code presented in this section uses one of the possible ways to create a service.
+:::strapi Related concepts: Services, EntityService API
+The code presented in this section uses one of the possible ways to create a service. The code also illustrates the use of the Entity Service API to query content directly from the back-end server.
 
-Additional information can be found in the [Services](/dev-docs/backend-customization/services) documentation.
+Additional information can be found in the [Services](/dev-docs/backend-customization/services) and [EntityService API](/dev-docs/api/entity-service) documentation.
 :::
 
 </SideBySideColumn>
@@ -432,18 +445,27 @@ Additional information can be found in the [Services](/dev-docs/backend-customiz
 
 To create such a service, in the `/api` folder of the FoodAdvisor project, create a new `src/api/email/services/email.js` file with the following code:
     
-  ```jsx
-  // src/api/email/services/email.js
+  ```jsx title="/api/src/api/email/services/email.js"
 
   const { createCoreService } = require('@strapi/strapi').factories;
 
   module.exports = createCoreService('api::email.email', ({ strapi }) => ({
     async send({ to, subject, html }) {
+      /**
+       * Retrieves email configuration data
+       * stored in the Email single type
+       * using the Entity Service API.
+       */
       const emailConfig = await strapi.entityService.findOne(
         'api::email.email',
         1
       );
 
+      /**
+       * Sends an email using:
+       * - parameters to pass when invoking the service
+       * - the 'from' address previously retrieved with the email configuration
+       */
       await strapi.plugins['email'].services.email.send({
         to,
         subject,
