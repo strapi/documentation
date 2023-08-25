@@ -203,7 +203,7 @@ Setting JWT expiry for more than 30 days is **not recommended** due to security 
 
 #### Configuration
 
-If you have added any additional fields to your user model that need to be accepted on registration, they need to be added to the list of allowed fields in the `register` configuration option, otherwise they will be ignored.
+If you have added any additional fields to your user model that need to be accepted on registration, they need to be added to the list of allowed fields in the `register` configuration option, otherwise they will not be accepted.
 
 For example, if you have added a field called "nickname" that you wish to accept from the user:
 
