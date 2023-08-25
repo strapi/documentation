@@ -214,7 +214,7 @@ Within the Strapi factories the following functions are exposed that can be used
 | `sanitizeOutput` | `entity`/`entities`, `ctx` | Sanitizes the output data where entity/entities should be an object or array of data |
 | `sanitizeInput`  | `data`, `ctx`              | Sanitizes the input data                                                             |
 | `validateQuery`  | `ctx`                      | Validates the request query (throws an error on invalid params)                      |
-| `validateInput`  | `data`, `ctx`              | Validates the input data (throws an error on invalid data)                           |
+| `validateInput`  | `data`, `ctx`              | (EXPERIMENTAL) Validates the input data (throws an error on invalid data)                           |
 
 These functions automatically inherit the sanitization settings from the model and sanitize the data accordingly based on the content-type schema and any of the content API authentication strategies, such as the Users & Permissions plugin or API tokens.
 
