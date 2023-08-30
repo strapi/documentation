@@ -201,9 +201,56 @@ Setting JWT expiry for more than 30 days is **not recommended** due to security 
 
 ### Registration
 
-Creates a new user in the database with a default role as 'registered'.
+#### Configuration
+
+If you have added any additional fields to your user model that need to be accepted on registration, they need to be added to the list of allowed fields in the `register` configuration option, otherwise they will not be accepted.
+
+For example, if you have added a field called "nickname" that you wish to accept from the API on user registration:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/plugins.js"
+module.exports = ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+export default ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 
 #### Usage
+
+Creates a new user in the database with a default role as 'registered'.
 
 ```js
 import axios from 'axios';
