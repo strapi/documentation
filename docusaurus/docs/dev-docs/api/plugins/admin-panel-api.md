@@ -1,10 +1,10 @@
 # Admin Panel API for plugins
 
-A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part and allows plugins to customize Strapi's [admin panel](/user-docs/intro).
+A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
 
-The admin panel is a [React](https://reactjs.org/) application.
+The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
-To create a plugin integrating into the admin panel:
+To create a plugin that interacts with the Admin Panel API:
 
 1. Create an [entry file](#entry-file).
 2. Within this file, declare and export a plugin interface that uses the [available actions](#available-actions).
@@ -26,17 +26,17 @@ The entry file for the Admin Panel API is `[plugin-name]/admin/src/index.js`. Th
 | Lifecycle functions | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li></ul> |
 | Async function      | [registerTrads](#registertrads)                                          |
 
-## Available callbacks
+## Lifecycle functions
 
 ### register()
 
 **Type:** `Function`
 
-This function is called while the plugin is loaded, before the admin app is [bootstrapped](#bootstrap). It takes a Strapi instance as an argument (`app`). A
-plugin must [register itself](#registerplugin) to become available in the admin panel.
+This function is called to load the plugin, even before the app is actually [bootstrapped](#bootstrap). It takes the running Strapi application as an argument (`app`).
 
 Within the register function, a plugin can:
 
+* [register itself](#registerplugin) so it's available to the admin panel
 * add a new link to the main navigation (see [Menu API](#menu-api))
 * [create a new settings section](#createsettingsection)
 * define [injection zones](#injection-zones-api)
@@ -54,18 +54,39 @@ This function returns an object with the following parameters:
 | ---------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | `id`             | String                   | Plugin id                                                                                          |
 | `name`           | String                   | Plugin name                                                                                        |
-| `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones-api)                                   |
+| `injectionZones` | Object                   | Declaration of available [injection zones](#injection-zones-api)                                       |
+
+:::note
+Some parameters can be imported from the `package.json` file.
+:::
 
 **Example:**
 
 ```js title="my-plugin/admin/src/index.js"
-import * as React from 'react';
+
+// Auto-generated component
+import PluginIcon from './components/PluginIcon';
+import pluginId from './pluginId'
 
 export default {
   register(app) {
+    app.addMenuLink({
+      to: `/plugins/${pluginId}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${pluginId}.plugin.name`,
+        defaultMessage: 'My plugin',
+      },
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "my-plugin" */ './pages/App');
+
+        return component;
+      },
+      permissions: [], // array of permissions (object), allow a user to access a plugin depending on its permissions
+    });
     app.registerPlugin({
-      id: 'my-plugin',
-      name: 'My Plugin',
+      id: pluginId,
+      name,
     });
   },
 };
@@ -75,29 +96,37 @@ export default {
 
 **Type**: `Function`
 
-This function is called after all plugins are [registered](#register). It takes a Strapi instance as an argument (`app`).
+Exposes the bootstrap function, executed after all the plugins are [registered](#register).
 
 Within the bootstrap function, a plugin can:
 
-* extend another plugin, using `getPlugin('plugin-id')`,
+* extend another plugin, using `getPlugin('plugin-name')`,
 * register hooks (see [Hooks API](#hooks-api))
 * [add links to a settings section](#settings-api)
 
 **Example:**
 
 ```js
-export default {
-  bootstrap(app) {
-    app.injectContentManagerComponent('editView', 'right-links', { name: 'my-component', Component: () => 'my-component' })
-  },
+module.exports = () => {
+  return {
+    // ...
+    bootstrap(app) {
+      // execute some bootstrap code
+      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+    },
+  };
 };
 ```
+
+## Async function
+
+While [`register()`](#register) and [`bootstrap()`](#bootstrap) are lifecycle functions, `registerTrads()` is an async function.
 
 ### registerTrads()
 
 **Type**: `Function`
 
-This function is used to register new translations for the plugin that should be available in your frontend.
+To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files and to create separate chunks for the application translations. It does not need to be modified.
 
 <details>
 <summary>Example: Register a plugin's translation files</summary>
@@ -105,26 +134,36 @@ This function is used to register new translations for the plugin that should be
 ```jsx
 export default {
   async registerTrads({ locales }) {
-    const translations = await Promise.all(
-      locales.map(locale => (
-        import(
+    const importedTrads = await Promise.all(
+      locales.map(locale => {
+        return import(
           /* webpackChunkName: "[pluginId]-[request]" */ `./translations/${locale}.json`
-        ).then(({ default: data }) => ({
-          data: prefixPluginTranslations(data, pluginId),
-          locale,
-        }))
-      ))
+        )
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      })
     );
 
-    return Promise.resolve(translations);
+    return Promise.resolve(importedTrads);
   },
 };
 ```
+
 </details>
 
 ## Available actions
 
-The Admin Panel API allows a plugin to take advantage of several APIs to perform actions.
+The Admin Panel API allows a plugin to take advantage of several small APIs to perform actions. Use this table as a reference:
 
 | Action                                   | API to use                              | Function to use                                   | Related lifecycle function  |
 | ---------------------------------------- | --------------------------------------- | ------------------------------------------------- | --------------------------- |
@@ -138,8 +177,14 @@ The Admin Panel API allows a plugin to take advantage of several APIs to perform
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
-:::tip Replacing the WYSIWYG Editor
-The WYSIWYG editor can be replaced using [custom fields](/dev-docs/custom-fields). An example is the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
+:::tip Replacing the WYSIWYG
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
+:::
+
+:::info
+The admin panel supports dotenv variables.
+
+All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
 :::
 
 ### Menu API
@@ -151,7 +196,7 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `icon`        | React Component       | Icon to display in the main navigation                                                                                                                                                                                   |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   | Function         | Returns a promise resolving an imported module. point                                                                                                                                                                      |
+| `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
 
 :::note
@@ -172,10 +217,12 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My plugin',
       },
-      Component: () => import(/* webpackChunkName: "my-plugin" */ './pages/App'),
-      permissions: [],
+      Component: () => 'My plugin',
+      permissions: [], // permissions to apply to the link
     });
+    app.registerPlugin({ ... });
   },
+  bootstrap() {},
 };
 ```
 
@@ -186,18 +233,18 @@ The Settings API allows:
 * [creating a new setting section](#createsettingsection)
 * adding [a single link](#addsettingslink) or [multiple links at once](#addsettingslinks) to existing settings sections
 
-:::info
-Adding a new section happens during the [register](#register) phase while adding links happens during the [bootstrap](#bootstrap) phase.
+:::note
+Adding a new section happens in the [register](#register) lifecycle while adding links happens during the [bootstrap](#bootstrap) lifecycle.
 :::
 
-All functions expect an object with the following attributes:
+All functions accept links as objects with the following parameters:
 
 | Parameter     | Type             | Description                                                                                                                                                                                                              |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `id`          | String           | React id                                                                                                                                                                                                                 |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component`   | Function         | Returns a promise resolving an imported module.                                                  |
+| `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                       |
 | `permissions` | Array of Objects | Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                          |
 
 #### createSettingSection()
@@ -212,6 +259,7 @@ The function takes 2 arguments:
 | --------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | first argument  | Object           | Section label:<ul><li>`id` (String): section id</li><li>`intlLabel` (Object): localized label for the section, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the section</li></ul></li></ul> |
 | second argument | Array of Objects | Links included in the section                                                                                                                                                                                                                                                                                                 |
+
 :::note
 `intlLabel.id` are ids used in translation files (`[plugin-name]/admin/src/translations/[language].json`)
 :::
@@ -219,6 +267,15 @@ The function takes 2 arguments:
 **Example:**
 
 ```jsx title="my-plugin/admin/src/index.js"
+
+const myComponent = async () => {
+  const component = await import(
+    /* webpackChunkName: "users-providers-settings-page" */ './pages/Providers'
+  );
+
+  return component;
+};
+
 export default {
   register(app) {
     app.createSettingSection(
@@ -229,7 +286,7 @@ export default {
           intlLabel: { id: String, defaultMessage: String },
           id: String,
           to: String,
-          Component: () => import(/* webpackChunkName: "my-plugin" */ './pages/App'),
+          Component: myComponent,
           permissions: Object[],
         },
       ]
@@ -242,11 +299,20 @@ export default {
 
 **Type**: `Function`
 
-Add a new link to an existing settings section.
+Add a unique link to an existing settings section.
 
 **Example:**
 
 ```jsx title="my-plugin/admin/src/index.js"
+
+const myComponent = async () => {
+  const component = await import(
+    /* webpackChunkName: "users-providers-settings-page" */ './pages/Providers'
+  );
+
+  return component;
+};
+
 export default {
   bootstrap(app) {
 		// Adding a single link
@@ -256,7 +322,7 @@ export default {
 				intlLabel: { id: String, defaultMessage: String },
 				id: String,
 				to: String,
-				Component: () => import(/* webpackChunkName: "my-plugin" */ './pages/App'),
+				Component: myComponent,
 				permissions: Object[]
 			}
     )
@@ -273,6 +339,15 @@ Add multiple links to an existing settings section.
 **Example:**
 
 ```jsx title="my-plugin/admin/src/index.js"
+
+const myComponent = async () => {
+  const component = await import(
+    /* webpackChunkName: "users-providers-settings-page" */ './pages/Providers'
+  );
+
+  return component;
+};
+
 export default {
   bootstrap(app) {
     // Adding several links at once
@@ -282,7 +357,7 @@ export default {
           intlLabel: { id: String, defaultMessage: String },
           id: String,
           to: String,
-          Component: () => import(/* webpackChunkName: "my-plugin" */ './pages/App'),
+          Component: myComponent,
           permissions: Object[]
         }]
     )
@@ -342,8 +417,8 @@ Both the `injectComponent()` and `injectContentManagerComponent()` methods accep
 export default {
   bootstrap(app) {
     app.injectContentManagerComponent('editView', 'informations', {
-      name: 'my-plugin-my-component',
-      Component: () => 'my-component',
+      name: 'my-plugin-my-compo',
+      Component: () => 'my-compo',
     });
   }
 }
@@ -373,7 +448,7 @@ const HomePage = () => {
 // Declare this injection zone in the register lifecycle of the plugin
 
 export default {
-  register(app) {
+  register() {
     app.registerPlugin({
       // ...
       injectionZones: {
@@ -390,6 +465,9 @@ export default {
 // Inject the component from a plugin in another plugin
 
 export default {
+  register() {
+    // ...
+  },
   bootstrap(app) {
     app.getPlugin('my-plugin').injectComponent('homePage', 'right', {
       name: 'my-other-plugin-component',
@@ -401,9 +479,9 @@ export default {
 
 </details>
 
-#### Accessing data in the Content Manager edit view using the `useCMEditViewDataManager` hook
+#### Accessing data with the `useCMEditViewDataManager` React hook
 
-Once a component is injected in the Content Manager, it can access all the Edit View data through the `useCMEditViewDataManager` React hook.
+Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useCMEditViewDataManager` React hook.
 
 <details>
 <summary>Example of a basic component using the 'useCMEditViewDataManager' hook</summary>
@@ -411,7 +489,7 @@ Once a component is injected in the Content Manager, it can access all the Edit 
 ```js
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
-const MyComponent = () => {
+const MyCompo = () => {
   const {
     createActionAllowedFields: [], // Array of fields that the user is allowed to edit
     formErrors: {}, // Object errors
@@ -444,7 +522,9 @@ const MyComponent = () => {
     removeComponentFromDynamicZone: () => {},
     removeComponentFromField: () => {},
     removeRepeatableField: () => {},
-  } = useCMEditViewDataManager();
+  } = useCMEditViewDataManager()
+
+  return null
 }
 ```
 
@@ -476,7 +556,9 @@ export default {
   register(app) {
     app.addReducers(reducers)
   },
+  bootstrap() {},
 };
+
 
 ```
 
@@ -515,6 +597,8 @@ export default {
       // important: return the mutated data
       return args
     });
+
+    app.registerPlugin({...})
   }
 }
 ```
@@ -529,17 +613,22 @@ Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` ho
 <summary>Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column</summary>
 
 ```jsx title="./plugins/my-plugin/admin/src/index.js"
+import get from 'lodash/get';
+import cellFormatter from './components/cellFormatter';
+
 export default {
   bootstrap(app) {
     app.registerHook(
       'Admin/CM/pages/ListView/inject-column-in-table',
       ({ displayedHeaders, layout }) => {
-        const isFieldLocalized = layout.contentType.pluginOptions?.i18n?.localized ?? false;
-
+        const isFieldLocalized = get(
+          layout,
+          'contentType.pluginOptions.i18n.localized',
+          false
+        );
         if (!isFieldLocalized) {
           return { displayedHeaders, layout };
         }
-
         return {
           layout,
           displayedHeaders: [
@@ -553,9 +642,8 @@ export default {
               }, // Metadatas for the label
               // Name of the key in the data we will display
               name: 'locales',
-              cellFormatter(data) {
-                return <>custom-component</>
-              },
+              // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
+              cellFormatter,
             },
           ],
         };
@@ -564,4 +652,5 @@ export default {
   },
 }
 ```
+
 </details>
