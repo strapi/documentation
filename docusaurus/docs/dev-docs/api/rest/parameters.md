@@ -28,3 +28,12 @@ Query parameters use the [LHS bracket syntax](https://christiangiacomi.com/posts
 :::tip
 A wide range of REST API parameters can be used and combined to query your content, which can result in long and complex query URLs.<br/>👉 You can use Strapi's [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to build query URLs more conveniently. 🤗
 :::
+
+:::warning
+In Strapi 4.13+, sending invalid query parameters will result in an error status instead of ignoring them. Please ensure that you are only querying fields that:
+- are in the correct format for the parameter
+- are not private or password fields
+- you have read permission on
+
+If you need your API to have the old behavior of ignoring invalid parameters, you will need to customize your controller to only sanitize and not validate.
+:::
