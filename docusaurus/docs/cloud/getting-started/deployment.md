@@ -123,7 +123,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 ## Setting up billing details
 
-1. Click on the **Continue to billing** button to be redirected to the second and final project creation interface. In this interface, you will review all your new project setup information, enter billing details and receive your invoice.
+1. Click on the **Continue to billing** button. If you chose the 14-days free trial, a dialog will open to recapitulate what this plan involves and how it works. Otherwise, you will directly be redirected to the second and final project creation interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
     <ThemedImage
     alt="Payment & Billing"
