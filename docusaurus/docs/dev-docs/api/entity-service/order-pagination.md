@@ -76,7 +76,7 @@ strapi.entityService.findMany('api::article.article', {
 You may instead use the `page` and `pageSize` parameters:
 
 ```js
-strapi.entityService.findMany('api::article.article', {
+strapi.entityService.findPage('api::article.article', {
   page: 1,
   pageSize: 15,
 });
