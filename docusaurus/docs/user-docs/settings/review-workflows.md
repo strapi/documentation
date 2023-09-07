@@ -25,11 +25,6 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 
 Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
 
-:::note
-Currently all roles using Review Workflows in the Content Manager need to have at least "Read" permission for workflow settings, defined in *Settings > Administration Panel > Roles > Edit a role > Settings > Review Workflows*.
-:::
-
-
 ## Creating or editing a workflow
 
 <ThemedImage
@@ -68,9 +63,8 @@ To add a new stage in the review workflows:
 
 By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/drag.svg) button.
 
-:::note
-Setting up roles for each stage can be a tedious task. You can either click "Apply to all stages", to apply the current roles to all other stages
-of the workflow or use "Duplicate stage" of the stage context menu, to ease the process.
+:::tip
+To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
 :::
 
 
