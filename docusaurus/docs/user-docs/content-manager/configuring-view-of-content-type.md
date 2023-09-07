@@ -121,3 +121,13 @@ The settings and display of a component's fields cannot be managed and reordered
 
 Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content-type where the component is used.
 :::
+
+:::caution
+Suggestion: 
+
+Please add more information about where the configuration will be stored, whether in database or somewhere in the source code. 
+
+Right now it seems to be stored in the database, because whenever I add description for input label, I do not see any changes in the source code, event though it is updated on the admin UI. 
+
+Hence, the clarification by specification on this issue would be a nice additive to the documentation page.
+:::
