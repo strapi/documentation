@@ -47,7 +47,7 @@ Currently all roles using Review Workflows in the Content Manager need to have a
     | -------------- | ------------------------------------------------------------------------ |
     | Name           | Write a unique name of workflow.                                         |
     | Content-Types  | (optional) Assign this workflow to one or more existing content-types.   |
-    | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)). |
+    | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 
 3. Click on the **Save** button. The new workflow will be displayed in the list-view and for every content-type assigned.
 
@@ -63,15 +63,28 @@ To add a new stage in the review workflows:
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
 3. Select a *Color*.
-3. Click on the **Save** button.
+4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
+5. Click on the **Save** button.
 
 By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/drag.svg) button.
+
+:::note
+Setting up roles for each stage can be a tedious task. You can either click "Apply to all stages", to apply the current roles to all other stages
+of the workflow or use "Duplicate stage" of the stage context menu, to ease the process.
+:::
+
+
+### Duplicating a stage
+
+1. Click **Duplicate Stage** in the context menu of the stage.
+2. Change the name of the duplicated stage.
+2. Click on the **Save** button.
 
 
 ### Deleting a stage
 
-1. Click on the ![delete button](/img/assets/icons/delete.svg) **Delete** button next to the stage you want to remove.
-2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion.
+1. Click ![Delete](/img/assets/icons/delete.svg) in the context menu of the stage.
+2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion, in case the stage has previously been saved.
 
 If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
 contain at least one stage and therefore it is not possible to delete the last stage.
