@@ -127,7 +127,13 @@ Suggestion:
 
 Please add more information about where the configuration will be stored, whether in database or somewhere in the source code. 
 
-Right now it seems to be stored in the database, because whenever I add description for input label, I do not see any changes in the source code, event though it is updated on the admin UI. 
+Right now it seems to be stored in the database, because whenever description for input label is added, no change is observed in the source code, event though it is updated on the admin UI. 
+
+Understanding where configuration is stored, and whether or not it can be configured in the source code would be crucial for many reasons:
+
+- Project management
+- Development Process
+- Database Allocation ( specially when db for testing and deployment and production is separated )
 
 Hence, the clarification by specification on this issue would be a nice additive to the documentation page.
 :::
