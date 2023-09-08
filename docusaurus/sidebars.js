@@ -604,6 +604,7 @@ const sidebars = {
       label: 'Advanced configuration',
       items: [
         'cloud/advanced/database',
+        'cloud/advanced/email'
       ]
     }
   ],
