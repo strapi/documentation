@@ -51,16 +51,16 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
-```
+
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/).
 
 Below are example configurations for the Email plugins.
-
+<Tabs groupId="js-ts-email">
+<TabItem value="js" label="JavaScript">
 <Tabs groupId="email-examples" >
-
 <TabItem value="sendgrid" label="Sendgrid">
 
-```js
+```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -81,7 +81,7 @@ module.exports = ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-ses" label="Amazon SES">
 
-```js
+```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -104,7 +104,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
-```js
+```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -126,6 +126,80 @@ module.exports = ({ env }) => ({
 ```
 </TabItem>
 </Tabs>
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+<Tabs groupId="email-examples" >
+<TabItem value="sendgrid" label="Sendgrid">
+
+```ts title=./config/env/production/plugins.ts
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid',
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+```
+</TabItem >
+<TabItem value="amazon-ses" label="Amazon SES">
+
+```ts title=./config/env/production/plugins.ts
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'amazon-ses',
+      providerOptions: {
+        key: env('AWS_SES_KEY'),
+        secret: env('AWS_SES_SECRET'),
+        amazon: 'https://email.us-east-1.amazonaws.com',
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+```
+</TabItem>
+<TabItem value="mailgun" label="Mailgun">
+
+```ts title=./config/env/production/plugins.ts
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'mailgun',
+      providerOptions: {
+        key: env('MAILGUN_API_KEY'), // Required
+        domain: env('MAILGUN_DOMAIN'), // Required
+        url: env('MAILGUN_URL', 'https://api.mailgun.net'), //Optional. If domain region is Europe use 'https://api.eu.mailgun.net'
+      },
+      settings: {
+        defaultFrom: 'myemail@protonmail.com',
+        defaultReplyTo: 'myemail@protonmail.com',
+      },
+    },
+  },
+  // ...
+});
+```
+</TabItem>
+</Tabs>
+</TabItem>
+</Tabs>
+
 
 :::caution
 The email provider must be installed as a package dependency in your Strapi project. For example, to use the Sendgrid email provider, install the `@strapi/provider-email-sendgrid` package.
