@@ -213,13 +213,38 @@ Before pushing changes to GitHub, add environment variables to the Strapi Cloud 
 3.  Add the required environment variables specific to the email provider.
 4.  Click **Save**.
 
-### Mailgun Example:
+Below are the required environment variables for each email provider.
+
+<Tabs groupId="env-var">
+<TabItem value="sendgrid" label="SendGrid">
+
+| Variable | Value |
+| -------- | ----- |
+| `SENDGRID_API_KEY` | your_sendgrid_api_key |
+
+
+</TabItem>
+<TabItem value="amazon-ses" label="Amazon SES">
+
+| Variable | Value |
+| -------- | ----- |
+| `AWS_SES_KEY` | your_aws_ses_key |
+| `AWS_SES_SECRET` | your_aws_ses_secret |
+
+</TabItem>
+<TabItem value="mailgun" label="Mailgun">
 
 | Variable | Value |
 | -------- | ----- |
 | `MAILGUN_API_KEY` | your_mailgun_api_key |
 | `MAILGUN_DOMAIN` | your_mailgun_domain |
 | `MAILGUN_URL` | your_mailgun_url |
+
+</TabItem>
+
+</Tabs>
+
+
 
 ## Deployment
 
