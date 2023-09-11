@@ -25,12 +25,32 @@ Please be advised that Strapi are unable to provide support for third-party emai
 To configure a third-party email provider, in your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
 
 
-```js
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title=./config/env/production/plugins.js
+
 module.exports = ({ env }) => ({
   // ...
   Required Email Provider Plugin Configuration
   // ...
 });
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title=./config/env/production/plugins.ts
+
+export default ({ env }) => ({
+  // ...
+  Required Email Provider Plugin Configuration
+  // ...
+});
+```
+</TabItem>
+
+</Tabs>
 ```
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/).
 
