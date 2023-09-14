@@ -76,7 +76,13 @@ From this page you can also trigger a new deployment, cancel a pending deploymen
 
 From the **Deploys** tab, view the deployment history for this project. Use the **Options** menu (`...`) to access the **Deployment details** page for any deployment.
 
-![Deployment details](/img/assets/cloud/deploy_logs.png)
+<ThemedImage
+  alt="Deployment details"
+  sources={{
+    light: '/img/assets/cloud/deploy_logs.png',
+    dark: '/img/assets/cloud/deploy_logs_DARK.png',
+  }}
+/>
 
 The deployment details page displays the following information:
 
