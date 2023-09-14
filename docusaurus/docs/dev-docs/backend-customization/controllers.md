@@ -184,6 +184,10 @@ export default {
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
+:::tip
+To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+:::
+
 ### Sanitization in controllers
 
 :::warning

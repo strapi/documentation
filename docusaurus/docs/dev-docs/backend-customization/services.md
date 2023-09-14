@@ -262,6 +262,10 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 When a new [content-type](/dev-docs/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
 :::
 
+:::tip
+To see a possible advanced usage for custom services, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+:::
+
 ### Extending core services
 
 Core services are created for each content-type and could be used by [controllers](/dev-docs/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
