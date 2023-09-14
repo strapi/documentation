@@ -145,6 +145,7 @@ See the [default error classes](#default-error-classes) section for more informa
 
 <details>
 <summary>Example: Throwing an error in a service</summary>
+
 This example shows wrapping a [core service](/dev-docs/backend-customization/services#extending-core-services) and doing a custom validation on the `create` method:
 
 <Tabs groupId="js-ts">

@@ -236,12 +236,59 @@ const sidebars = {
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
             {
-              type: 'doc',
-              id: 'dev-docs/backend-customization/examples',
-              label: '️✨ Examples cookbook',
-              customProps: {
-                new: true,
-              }
+              type: 'category',
+              label: '✨ Examples',
+              collapsed: true,
+              items: [
+                {
+                  type: 'doc',
+                  label: 'Introduction',
+                  id: 'dev-docs/backend-customization/examples',
+                  customProps: {
+                    new: true,
+                  }
+                },
+                {
+                  type: 'doc',
+                  label: 'Authentication',
+                  id: 'dev-docs/backend-customization/examples/authentication',
+                  customProps: {
+                    new: true,
+                  }
+                },
+                {
+                  type: 'doc',
+                  label: 'Services and Controllers',
+                  id: 'dev-docs/backend-customization/examples/services-and-controllers',
+                  customProps: {
+                    new: true,
+                  }
+                },
+                {
+                  type: 'doc',
+                  label: 'Policies',
+                  id: 'dev-docs/backend-customization/examples/policies',
+                  customProps: {
+                    new: true,
+                  }
+                },
+                {
+                  type: 'doc',
+                  label: 'Routes',
+                  id: 'dev-docs/backend-customization/examples/routes',
+                  customProps: {
+                    new: true,
+                  }
+                },
+                {
+                  type: 'doc',
+                  label: 'Global middlewares',
+                  id: 'dev-docs/backend-customization/examples/middlewares',
+                  customProps: {
+                    new: true,
+                  }
+                },
+              ]
             }
           ]
         },
