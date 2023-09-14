@@ -15,7 +15,7 @@ Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not pr
 
 There are 2 types of middlewares in Strapi: **route middlewares** control access to a route while **global middlewares** have a wider scope (see [reference documentation for middlewares customization](/dev-docs/backend-customization/middlewares)).
 
-Custom route middlewares could be used instead of policies to control access to an endpoint (see [policies cookbook](/dev-doc/backend-customization/examples/policies)) and could modify the context before passing it down to further core elements of the Strapi server. This page will _not_ cover custom route middlewares but rather illustrate a more elaborated usage for **custom global middlewares**.
+Custom route middlewares could be used instead of policies to control access to an endpoint (see [policies cookbook](/dev-docs/backend-customization/examples/policies)) and could modify the context before passing it down to further core elements of the Strapi server. This page will _not_ cover custom route middlewares but rather illustrate a more elaborated usage for **custom global middlewares**.
 
 ## Populating an analytics dashboard in Google Sheets with a custom middleware
 
