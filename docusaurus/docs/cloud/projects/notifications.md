@@ -12,7 +12,13 @@ The **Notification center** can be opened by clicking the bell icon ![Notificati
 
 It displays a list of the latest notifications for all existing projects. Clicking on a notification card from the list will redirect you to the **Log details** of the corresponding deployment.
 
-![Projects page - List](/img/assets/cloud/notification-center.png)
+<ThemedImage
+  alt="Notification center"
+  sources={{
+    light: '/img/assets/cloud/notification-center.png',
+    dark: '/img/assets/cloud/notification-center_DARK.png',
+  }}
+/>
 
 The following notifications can be listed in the Notifications center:
 
